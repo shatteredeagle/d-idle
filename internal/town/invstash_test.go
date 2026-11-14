@@ -55,8 +55,9 @@ func TestUnidentifiedJewelryWaitsWhileThePackHasRoom(t *testing.T) {
 	if _, err := r.T.Chores(context.Background(), town.ChorePlan{Identify: true, Sell: true}); err != nil {
 		t.Fatal(err)
 	}
-	if n := countCode(r, "rin"); n != 3 {
-		t.Errorf("%d rings left, want 3", n)
+	// Kept, not sold: the tidy chore banks rare jewelry in the stash (docs/tidy.md), so count pack plus stash.
+	if n := countCode(r, "rin") + countIn(r, "rin", d2.ContStash); n != 3 {
+		t.Errorf("%d rings left (pack+stash), want 3", n)
 	}
 }
 

@@ -85,6 +85,7 @@ func TestBorderLoopSkipsTheTargetArea(t *testing.T) {
 	g := soakyRig(t, 2)
 	for i := 0; i < borderLoopCrossings; i++ {
 		g.r.noteCrossing(3)
+		g.clock.Sleep(borderLoopGap) // real crossings, not one burst (staletarget)
 	}
 	if _, ok := g.r.avoid[3]; !ok || g.r.avoidWhy[3] != "border-loop" {
 		t.Fatalf("avoid %v why %v", g.r.avoid, g.r.avoidWhy)
@@ -172,6 +173,9 @@ func TestBorderLoopSkipEscalates(t *testing.T) {
 	trip := func(target int) time.Duration {
 		for i := 0; i < borderLoopCrossings; i++ {
 			g.r.noteCrossing(target)
+			if i < borderLoopCrossings-1 {
+				g.clock.Sleep(borderLoopGap)
+			}
 		}
 		return g.r.avoid[target].Sub(g.clock.Now())
 	}
@@ -190,6 +194,7 @@ func TestBorderLoopSkipEscalates(t *testing.T) {
 	g2 := soakyRig(t, 2)
 	for i := 0; i < borderLoopCrossings; i++ {
 		g2.r.noteCrossing(3 + i%2)
+		g2.clock.Sleep(borderLoopGap)
 	}
 	if len(g2.r.avoid) != 0 {
 		t.Fatalf("mixed targets tripped: %v", g2.r.avoid)

@@ -336,6 +336,10 @@ var vendorStep = map[string]bool{"sell": true, "ammo": true, "shop": true, "belt
 func (t *Town) Chores(ctx context.Context, plan ChorePlan) (rep ChoreReport, _ error) {
 	rep = ChoreReport{Bought: map[string]int{}}
 	t.withdrew = false
+	t.reserveGold = 0
+	if t.tune().MercReserve != 0 {
+		t.reserveGold = plan.ReserveGold
+	}
 	s, err := t.current()
 	if err != nil {
 		return rep, err
@@ -359,6 +363,7 @@ func (t *Town) Chores(ctx context.Context, plan ChorePlan) (rep ChoreReport, _ e
 		return rep, err
 	}
 
+	delta := map[string]int{} // gold change per chore that ran, for the town budget line
 	// step runs one chore if its need check says so (or Force).
 	step := func(name string, enabled bool, need func(*d2.Snapshot) bool, run func() error) error {
 		if !enabled {
@@ -386,9 +391,13 @@ func (t *Town) Chores(ctx context.Context, plan ChorePlan) (rep ChoreReport, _ e
 				return err
 			}
 		}
+		g0 := cur.Player.Gold
 		err = run()
 		if ce := ctx.Err(); ce != nil {
 			return ce
+		}
+		if after, aerr := t.current(); aerr == nil && after.Player.Gold != g0 {
+			delta[name] += after.Player.Gold - g0
 		}
 		rep.add(name, true, "", err)
 		if err != nil {
@@ -461,6 +470,7 @@ func (t *Town) Chores(ctx context.Context, plan ChorePlan) (rep ChoreReport, _ e
 	if wasEmpty {
 		t.afterEmptyVisit()
 	}
+	t.logBudget(rep.GoldBefore, delta, plan.ReserveGold)
 	if err := t.h.CloseAll(ctx); err != nil {
 		rep.add("close", true, "", err)
 	}
@@ -850,4 +860,25 @@ func (t *Town) budgetHit(rep *ChoreReport) bool {
 		t.e.Log.Warn("town: resupply budget hit", "budgetS", t.tune().ChoreBudgetS, "spent", rep.Spent, "bought", rep.Bought)
 	}
 	return true
+}
+
+// logBudget writes the one "town budget" line of a visit: the gold in, what each chore that ran added (sell, banked
+// withdrawals) or took (shop, repair, belt, ...), the gold left and the merc revive money the plan asked to keep.
+func (t *Town) logBudget(goldIn int, delta map[string]int, reserve int) {
+	left := goldIn
+	for _, d := range delta {
+		left += d
+	}
+	if s, err := t.current(); err == nil {
+		left = s.Player.Gold
+	}
+	earned, spent := 0, 0
+	for _, d := range delta {
+		if d > 0 {
+			earned += d
+		} else {
+			spent -= d
+		}
+	}
+	t.e.Log.Info("town budget", "in", goldIn, "sold", delta["sell"], "earned", earned, "spent", spent, "byChore", delta, "left", left, "mercReserve", reserve)
 }

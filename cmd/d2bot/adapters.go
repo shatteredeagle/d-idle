@@ -165,7 +165,7 @@ func (a townAdapter) Chores(ctx context.Context, p bot.ChorePlan) (bot.ChoreRepo
 	// Every visit may restock: the shop chore checks its own need, so a trip that came for a quest, a heal or a full
 	// pack still buys the town portal and the potion kit when gold allows (G1 attempt 6).
 	tp := town.ChorePlan{Heal: p.Heal, Identify: p.Identify, Sell: p.Sell, Potions: true, Scrolls: true, Repair: p.Repair,
-		Stash: p.Stash, Gold: true, Insure: p.Insure, Ammo: true, Force: p.Poverty, PotionFloor: p.PotionFloor, Antidotes: p.Antidotes, Cube: a.e.Tune.Bot.CubeJobs && p.Stash}
+		Stash: p.Stash, Gold: true, Insure: p.Insure, Ammo: true, Force: p.Poverty, PotionFloor: p.PotionFloor, ReserveGold: p.ReserveGold, Antidotes: p.Antidotes, Cube: a.e.Tune.Bot.CubeJobs && p.Stash}
 	rep, err := a.t.Chores(ctx, tp)
 	out := bot.ChoreReport{}
 	for _, s := range rep.Steps {

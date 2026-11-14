@@ -134,8 +134,10 @@
 | palprofile2 | proposed | - | `internal/combat/classdata`<br>`internal/combat/lifeprice.go`<br>`docs/palprofile.md` | - |
 | beltfix | in-progress | - | `internal/town/belt`<br>`internal/town/beltfill.go`<br>`internal/town/beltrepair.go`<br>`internal/town/sim`<br>`internal/combat/packdrink.go`<br>`internal/combat/packdrink_test.go`<br>`docs/beltfix.md`<br>`internal/town/beltfix6_test.go`<br>`internal/combat/fighter.go`<br>`internal/combat/safety.go`<br>`internal/loot/fixpickup_test.go`<br>`internal/loot/lootskip_test.go`<br>`internal/town/beltfix_test.go`<br>`cmd/d2bot/beltfill_adapter.go`<br>`cmd/d2bot/wiring_test.go` | - |
 | cut011 | proposed | - | `docs/releases/0.1.1.md`<br>`docs/friend-checklist-0.1.1.md` | - |
+| staletarget | proposed | - | `internal/bot/staletarget.go`<br>`internal/bot/staletarget_test.go`<br>`internal/bot/loop.go`<br>`internal/bot/task.go`<br>`internal/bot/geargate.go`<br>`internal/bot/goal.go`<br>`internal/bot/whyline.go`<br>`internal/task/executor.go`<br>`internal/watch/whyline.json`<br>`internal/env/tuning_bot.go`<br>`docs/staletarget.md`<br>`docs/knobs.md`<br>`internal/bot/areaskip_test.go`<br>`internal/bot/runner.go`<br>`internal/bot/observe.go`<br>`internal/bot/ordersguard.go`<br>`internal/goals/runner.go`<br>`internal/watch/whyline_test.go`<br>`internal/task/executor_unpark_test.go` | - |
 | gameexe-retire-soak | deferred | gameexe-retire-soak | `docs/gameexe-retire.md` | - |
 | tpreserve-live | proposed | - | `docs/probes/tpreserve.md` | - |
+| towntests | proposed | - | `docs/towntests.md`<br>`internal/town/playerstash_test.go`<br>`internal/town/tidy_test.go`<br>`internal/town/invstash_test.go` | - |
 | playsession | proposed | - | `tools/play-session.sh`<br>`docs/play-session.md` | - |
 | upstream-next | proposed | - | `docs/research/upstream-next.md` | - |
 | statusrefresh | proposed | - | `docs/plan/STATUS.md` | - |
@@ -185,14 +187,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- c971e292 11-14 05:49 `Merge agent/decomp16: Merge branch 'main' into TASK-400` (decomp16)
+- df8497de 11-14 05:48 `Merge branch 'main' into TASK-400` (-)
+- 2f609b4c 11-14 05:44 `Merge agent/towntests: Merge origin/main into agent/towntests` (towntests)
+- 72276621 11-14 05:41 `Merge origin/main into agent/towntests` (-)
+- a8522afa 11-14 05:33 `Merge agent/staletarget: Merge branch 'main' into TASK-398` (staletarget)
+- 591b26fc 11-14 05:33 `Merge branch 'main' into TASK-398` (-)
+- efcd0568 11-14 05:26 `Merge agent/sellskip: Merge origin/main into agent/sellskip` (sellskip)
+- 89d7741d 11-14 05:21 `Merge origin/main into agent/staletarget` (-)
+- 490d309e 11-14 05:18 `Merge origin/main into agent/sellskip` (-)
 - 48b09a74 11-14 05:08 `Merge agent/hero14: hero14: leakcheck wording` (hero14)
-- 3ab0a262 11-13 12:03 `Merge agent/botadapt: Merge branch 'main' into TASK-396` (botadapt)
-- 23c14b4f 11-13 12:02 `Merge branch 'main' into TASK-396` (-)
-- 68a0cd99 11-13 11:37 `Merge agent/forkrebase: Merge branch 'main' into TASK-395` (forkrebase)
-- 2d55f677 11-13 11:36 `Merge branch 'main' into TASK-395` (-)
-- 8f9cc34e 11-13 10:19 `Merge agent/target: target: recalibrate first-hour headline target (floor 5 / target 7 / stretch 8-9); SME 13-15 retired` (target)
-- 0a2bbedd 11-12 22:22 `Merge agent/cut011: friends release 0.1.1 built, verified, staged (not published)` (cut011)
-- a2b32a5b 11-12 22:21 `Merge branch 'main' into TASK-393` (-)
-- 52b63449 11-12 22:17 `Merge agent/decomp13: decomp13: merge main, keep both decomp-queue lines` (decomp13)
-- b4cfdc0d 11-12 21:11 `decomp13: merge main, keep both decomp-queue lines` (-)
 <!-- statusgen:end -->
