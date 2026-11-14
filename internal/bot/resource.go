@@ -251,7 +251,7 @@ func (r *Runner) homeBandArea(s *d2.Snapshot, diff string, first int) (int, bool
 	}
 	r.guardedAreas(s, ex)
 	t := r.e.Tune.Bot
-	st, ok := r.d.Plan.Pick(diff, s.Player.Level, PickOptions{Margin: t.LevelMargin, Slack: t.LeaveSlack, Acts: r.allowedActs(s), Exclude: ex, FullKit: r.fullKit(s), Melee: MeleeTank(s.Player.Class)})
+	st, ok := r.d.Plan.Pick(diff, s.Player.Level, PickOptions{Margin: t.LevelMargin, Slack: t.LeaveSlack, Acts: r.allowedActs(s), Exclude: ex, FullKit: r.fullKit(s), Melee: MeleeTank(s.Player.Class), Class: planClass(s.Player.Class), Merc: mercUp()})
 	if !ok || st.Area == first {
 		return 0, false
 	}
