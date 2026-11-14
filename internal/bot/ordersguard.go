@@ -16,7 +16,7 @@ func (r *Runner) OrderGuardWhy(id int) string {
 		return ""
 	}
 	if r.banned(id) {
-		return "banned after repeated deaths"
+		return r.banReason(id)
 	}
 	if w := r.guardWorld(s); w != nil {
 		switch {

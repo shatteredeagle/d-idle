@@ -124,6 +124,8 @@ type observer struct {
 	lastDeathAt   time.Time
 	deathPending  bool // a death was recorded and the loop has not opened its recovery yet
 	targetArea    int  // the area the loop wants to be clearing
+	fromTown      bool // the current area was entered from a town (portal, waypoint, walk out): a jump, never a border crossing
+	crossArea     int  // the area whose border-crossing stamp was already taken (one stamp per arrival)
 	stepLevel     int  // level the reach_level planner last chose for
 
 	lastHealth   time.Time
@@ -506,6 +508,8 @@ func (r *Runner) observe(s *d2.Snapshot, now time.Time) {
 			o.portalFrom = o.area
 		}
 		r.noteArrival(o, p, now)
+		o.fromTown = o.area != 0 && r.d.Plan.IsTown(o.area)
+		o.crossArea = 0
 		o.area = p.Area
 		o.noteRoute(p.Area)
 		o.mons = map[uint32]monTrack{}
