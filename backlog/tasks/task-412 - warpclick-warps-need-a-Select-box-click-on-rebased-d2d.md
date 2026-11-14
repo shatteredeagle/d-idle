@@ -14,7 +14,7 @@ dependencies: []
 priority: high
 ordinal: 251000
 card: "warpclick"
-result: "Cause V: upstream 66aece1a takes a warp only for a click in LvlWarp's Select box (game.exe rule); the bot clicked the tile corner, outside it at the Den, Cave, Underground Passage, Hole. Plus 0ddb6fe7: the walk to a unit on a blocked subtile stops short (Tower 0/8). Fork didle/rebase-20261114b 75891650 reports a click point and walks to the nearest free spot; bot pushes the click point. devp7 built, not swapped: fresh heroes entered the Den on seeds 7 and 11. Verified headless and in throwaway bot runs on the worker host, not on the sandbox."
+result: "Cause V: upstream 66aece1a takes a warp only for a click in LvlWarp's Select box (game.exe rule); the bot clicked the tile corner, outside it at the Den, Cave, Underground Passage, Hole. Plus 0ddb6fe7: the walk to a unit on a blocked subtile stops short (level 20 entrance 0/8). Fork didle/rebase-20261114b 75891650 reports a click point and walks to the nearest free spot; bot pushes the click point. devp7 built, not swapped: fresh heroes entered the Den on seeds 7 and 11. Verified headless and in throwaway bot runs on the worker host, not on the sandbox."
 owns:
   - "internal/d2dctl/parse.go"
   - "internal/d2dctl/parse_test.go"
