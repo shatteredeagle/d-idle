@@ -488,6 +488,7 @@ func (r *Runner) advanceTrip(ctx context.Context, snap *d2.Snapshot, c control) 
 	town := sec(r.cfg.TownTimeoutSec)
 	t.plan.GoldFloor = r.e.Tune.Bot.GoldFloor
 	t.plan.PotionFloor = r.potionFloor(p)
+	t.plan.ReserveGold = r.mercReserve(snap)
 	if t.startGold == 0 {
 		t.startGold = p.Gold
 		t.startBasis = r.resInput(snap).Gold

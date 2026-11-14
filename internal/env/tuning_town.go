@@ -61,6 +61,7 @@ type TownTuning struct {
 	TidyEnabled      int // tidy: 1 = the Tidy chore stashes by the tidy policy and drops pure junk from a full pack (docs/tidy.md); 0 = off
 	TidyMaxActions   int // tidy: most stash and drop actions of one pass (the safety valve)
 	TidyMinPackPct   int // tidy: a pass runs only when the backpack is at least this full, or something is waiting for the stash
+	MercReserve      int // 1: a dead merc's revive price is kept back from the optional shop buys (tome, spare scrolls, mana); healing potions and the first portal scroll still come first; 0 = off
 	FutileGoldStep   int // after a visit that could not fix a trip reason (cannot afford, not sold), NeedsTrip stays quiet about it until gold grew by this
 }
 
@@ -73,7 +74,7 @@ func DefaultTownTuning() TownTuning {
 		NPCStopDist: 4, NPCOpenTries: 3, UITimeoutMs: 2500, ClickSettleMs: 150, MoveTries: 3, DropTries: 6, CursorStuckMax: 3,
 		RebuyGearTier: 1, RebuyPotionPct: 40, RebuyItemMaxPct: 60, PortalSettle: 4500, ChoreBudgetS: 150, SellMaxS: 60, FutileGoldStep: 100, TripMinSpend: 0, TripEmptyHPBelt: 1, MPCapEarly: 0, MPCapLevel: 0, FutileMinutes: 10, SpareKeep: 4, GreetingWaitS: 90, GreetingSkip: 0, PortalReuseDist: 40, PortalClickFails: 2,
 		PotionsFirst: 1, TPFirstLevel: 0, TPScrollPotions: 2, SellLowGems: 1, IDScrollNeed: 1, BankFirst: 1, RepairLatch: 1, EquipKindFails: 2,
-		TidyEnabled: 1, TidyMaxActions: 12, TidyMinPackPct: 60,
+		TidyEnabled: 1, TidyMaxActions: 12, TidyMinPackPct: 60, MercReserve: 1,
 	}
 }
 
@@ -126,6 +127,7 @@ func townKnobs() []Knob {
 		townK("tidyEnabled", "Tidy: on", "0/1", "1: the Tidy chore stashes by the tidy policy table and drops pure junk from a full pack; it never touches equipment or marked items (docs/tidy.md).", d.TidyEnabled, 0, 1, false),
 		townK("tidyMaxActions", "Tidy: actions per pass", "count", "Most stash and drop actions of one tidy pass (safety valve).", d.TidyMaxActions, 1, 40, false),
 		townK("tidyMinPackPct", "Tidy: pack full", "%", "A tidy pass drops junk only when the backpack is at least this full.", d.TidyMinPackPct, 20, 100, false),
+		townK("mercReserve", "Keep the merc revive gold", "0/1", "1: while the merc is dead the shop keeps its revive price back from the tome, spare town portal scrolls and mana potions (hero14: 950 gold went to a tome and scrolls, then 600 for the revive was missing). Healing potions and the first portal scroll still come first. 0 = off.", d.MercReserve, 0, 1, true),
 		townK("spareKeep", "Spare supplies kept", "count", "A full pack sells spare potions and identify scrolls beyond this many per kind (they fill the pack but are never belted).", d.SpareKeep, 0, 30, true),
 		townK("sellMaxS", "Sell chore cap", "s", "Time the sell chore alone may take before it is cut off.", d.SellMaxS, 15, 300, true),
 		townK("potionsFirst", "Potions before first scroll", "bool", "1 buys the kit potions before the first town portal scroll, which then needs gold for the scroll plus tpScrollPotions potions (d2-sme order, decision D3). 0 = scroll first (old).", d.PotionsFirst, 0, 1, true),

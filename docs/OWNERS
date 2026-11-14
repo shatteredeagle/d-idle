@@ -128,6 +128,7 @@ docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-extras.jsonl.gz  gaterun  gate
 # BEGIN GENERATED OWNERS (tools/sharedgen/sharedgen.py from the owns: keys of open tasks; do not edit between the markers)
 cmd/d2bot  credit-runner  wiring2
 cmd/d2bot/adapters.go  credit-runner  goldprio
+cmd/d2bot/adapters.go  credit-runner  sellskip
 cmd/d2bot/behaviors.go  credit-runner  campaign1
 cmd/d2bot/behaviors.go  credit-runner  gearsets
 cmd/d2bot/beltfill_adapter.go  credit-runner  beltfix
@@ -245,6 +246,7 @@ docs/research/pal-skill-matrix.md  credit-runner  palskill-matrix
 docs/research/pal-zeal-trace.md  credit-runner  palskill-matrix
 docs/research/return-screen.md  credit-runner  returnmock
 docs/research/upstream-next.md  credit-runner  upstream-next
+docs/sellskip.md  credit-runner  sellskip
 docs/senses-map.md  credit-runner  maphistory
 docs/senses-map.md  credit-runner  maphistoryA
 docs/senses-map.md  credit-runner  maphistoryB
@@ -274,6 +276,7 @@ internal/bot  credit-runner  wiring2
 internal/bot/areaskip_test.go  credit-runner  passagebounce
 internal/bot/areaskip_test.go  pro-runner  bounce3
 internal/bot/contracts.go  credit-runner  goldprio
+internal/bot/contracts.go  credit-runner  sellskip
 internal/bot/drought.go  credit-runner  freshstart
 internal/bot/exploredpct.go  credit-runner  exploredpct
 internal/bot/exploredpct_test.go  credit-runner  exploredpct
@@ -283,6 +286,7 @@ internal/bot/goal.go  credit-runner  hourfix
 internal/bot/goal.go  credit-runner  hourfix2
 internal/bot/goal.go  credit-runner  maphistoryA
 internal/bot/goal.go  credit-runner  repairtrip
+internal/bot/goal.go  credit-runner  sellskip
 internal/bot/goldfarm.go  credit-runner  repairtrip
 internal/bot/goldprio.go  credit-runner  goldprio
 internal/bot/goldprio_test.go  credit-runner  goldprio
@@ -306,6 +310,7 @@ internal/bot/observe.go  credit-runner  passagebounce
 internal/bot/observe.go  pro-runner  bounce3
 internal/bot/repairtrip.go  credit-runner  repairtrip
 internal/bot/repairtrip_test.go  credit-runner  repairtrip
+internal/bot/resource.go  credit-runner  sellskip
 internal/bot/runner.go  credit-runner  campaign1
 internal/bot/runner.go  credit-runner  goldprio
 internal/bot/runner.go  credit-runner  hourfix
@@ -313,6 +318,7 @@ internal/bot/runner.go  credit-runner  lockscan
 internal/bot/runner.go  credit-runner  maphistoryA
 internal/bot/runner.go  credit-runner  passagebounce
 internal/bot/runner.go  credit-runner  repairtrip
+internal/bot/sellskip_test.go  credit-runner  sellskip
 internal/bot/task.go  credit-runner  hourfix
 internal/bot/whyline.go  credit-runner  repairtrip
 internal/campaign/  credit-runner  campaign1
@@ -355,6 +361,7 @@ internal/env/tuning_loot.go  credit-runner  hourfix
 internal/env/tuning_nav.go  credit-runner  pursuers
 internal/env/tuning_resource.go  credit-runner  freshstart
 internal/env/tuning_resource.go  live-agent  recoverypace
+internal/env/tuning_town.go  credit-runner  sellskip
 internal/env/tuning_town.go  credit-runner  tidy
 internal/fidvendor  live-agent  fidprobe-vendor
 internal/goldfarm  credit-runner  repairtrip
@@ -370,7 +377,9 @@ internal/leveler/playerunequip.go  credit-runner  gearsets
 internal/loot  credit-runner  goldprio
 internal/loot/fixpickup_test.go  credit-runner  beltfix
 internal/loot/ignore_test.go  credit-runner  tidy
+internal/loot/loot.go  credit-runner  sellskip
 internal/loot/lootskip_test.go  credit-runner  beltfix
+internal/loot/sellskip_test.go  credit-runner  sellskip
 internal/nav/covview.go  credit-runner  maptrail
 internal/nav/covview_test.go  credit-runner  maphistoryC
 internal/nav/covview_test.go  credit-runner  maptrail
@@ -412,15 +421,19 @@ internal/town/beltfix6_test.go  credit-runner  beltfix
 internal/town/beltfix_test.go  credit-runner  beltfix
 internal/town/beltrepair.go  credit-runner  beltfix
 internal/town/chores.go  credit-runner  repairtrip
+internal/town/chores.go  credit-runner  sellskip
 internal/town/chores.go  credit-runner  tidy
 internal/town/playerid.go  credit-runner  itemverbs2
 internal/town/playerstash.go  credit-runner  itemverbs2
 internal/town/repairtrip_test.go  credit-runner  repairtrip
+internal/town/sellskip_test.go  credit-runner  sellskip
+internal/town/shop.go  credit-runner  sellskip
 internal/town/sim  credit-runner  beltfix
 internal/town/tidy.go  credit-runner  tidy
 internal/town/tidy_test.go  credit-runner  tidy
 internal/town/town.go  credit-runner  itemverbs2
 internal/town/town.go  credit-runner  repairtrip
+internal/town/town.go  credit-runner  sellskip
 internal/town/town.go  credit-runner  tidy
 internal/watch/gearsets_test.go  credit-runner  gearsets
 internal/watch/hero.go  credit-runner  exploredpct

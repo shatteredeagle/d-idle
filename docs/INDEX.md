@@ -485,6 +485,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [self-update-client.md](self-update-client.md): Self-update client (Tier 2, part 2) (status: CURRENT for the code; nothing here has run against real GitHub or in a real container. Design:...)
 - [self-update-drill.md](self-update-drill.md): Self-update boot shim and drills (Tier 2, part 3) (status: CURRENT for the code; the container drills below are a CHECKLIST that has NOT been run (no image was...)
 - [self-update-release.md](self-update-release.md): Self-update release format and signing (Tier 2, part 1) (status: CURRENT for the format and tools; the workflow `.github/workflows/app-release.yml` is a DRAFT and inert...)
+- [sellskip.md](sellskip.md): sellskip: the sell chore that never ran, the Blood Moor recovery, the revive gold (status: current (TASK-399). Source: the hero14 analysis (docs/probes/hero14-analysis-2026-11-14.md, branch...)
 - [senses-map.md](senses-map.md): Side-panel minimap v1 (TASK-148, sensesmap)
 - [senses-units.md](senses-units.md): Senses tiers 2 and 3: enemy dots, target bar and name (TASK-151, sensesenemies)
 - [senses-unlock.md](senses-unlock.md): Senses unlock ladder (TASK-149, sensesunlock)
