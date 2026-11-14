@@ -121,6 +121,8 @@ type ChorePlan struct {
 	GoldFloor int // gold the visit must not spend
 	// PotionFloor > 0 (recovery): buy healing potions only up to this many in the belt, no mana or rejuvenation.
 	PotionFloor int
+	// ReserveGold > 0: the merc revive price the shop keeps back from optional buys (town.mercReserve).
+	ReserveGold int
 	// Antidotes > 0: top antidote potions up to this many (belt and pack); the Andariel kit (task.BossGate).
 	Antidotes int
 }
