@@ -587,7 +587,7 @@ func (r *runner) fight(ctx context.Context) error {
 			}
 			continue
 		}
-		if k := s.Kite; k != nil && boss.Pos.Dist(v.Pos) < k.Range && r.w.Now().Sub(r.st.lastKite) >= k.Every {
+		if k := s.Kite; k != nil && !v.Melee && boss.Pos.Dist(v.Pos) < k.Range && r.w.Now().Sub(r.st.lastKite) >= k.Every {
 			r.phase("kite")
 			r.st.lastKite = r.w.Now()
 			if err := r.kite(ctx, v, boss); err != nil {

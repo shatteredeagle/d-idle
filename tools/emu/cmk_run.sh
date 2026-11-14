@@ -9,10 +9,10 @@ here=$(cd "$(dirname "$0")" && pwd)
 SRC=${SRC:-$HOME/d2d-lab/pr/monsterai-src}
 S=${D2_SCRATCH:-/tmp/d2agent-covmonskills2}
 AIS=${1:-Duriel}; N=${2:-300}; SEED=${3:-1}
-UP=$HOME/d2d-lab/src
-PY=$HOME/d2d-lab/pr/walk2-venv/bin/python
+UP=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/upstream
+PY=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/venv/bin/python
 mkdir -p "$S/run"
-( cd "$UP/tools/emu" && PYTHONPATH=$here:$UP/tools/emu D2_MPQ_DIR=/tmp/ug-emu nice "$PY" "$here/cmk_ais.py" "$AIS" "$N" "$SEED" ${5:-} --dump "$S/run" ) > "$S/run/acts.txt" 2>&1 || { tail -20 "$S/run/acts.txt"; exit 1; }
+( cd "$UP/tools/emu" && PYTHONPATH=$here:$UP/tools/emu D2_MPQ_DIR=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq nice "$PY" "$here/cmk_ais.py" "$AIS" "$N" "$SEED" ${5:-} --dump "$S/run" ) > "$S/run/acts.txt" 2>&1 || { tail -20 "$S/run/acts.txt"; exit 1; }
 cat "$S/run/acts.txt" | tail -${TAILN:-3000}
 python3 "$here/cmk_patch.py" "$SRC" "$S/run" ${4:-}
 python3 "$here/cmk_fix.py" "$S/run"

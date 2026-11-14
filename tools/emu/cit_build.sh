@@ -16,6 +16,6 @@ if [ ! -x "$OUT/cit_d2d_test" ] || [ "$here/cit_d2d_test.cpp" -nt "$OUT/cit_d2d_
 	nice c++ -DD2D_TEST_SKIPPED=77 -DSTORMLIB_NO_AUTO_LINK $IN -I$HOME/d2d-lab/src/build/_deps/stormlib-src/src -O1 -std=c++26 -include $SRC/cmake/no_near_far.hpp -Wno-missing-field-initializers -o "$OUT/cit_d2d_test" "$here/cit_d2d_test.cpp" components/game/libgame.a _deps/stormlib-build/libstorm.a /usr/lib/libz.so /usr/lib/libbz2.so components/install/libinstall_detect.a >&2
 fi
 if [ -n "${1:-}" ]; then
-	export D2_MPQ_DIR=${D2_MPQ_DIR:-/tmp/ug-emu}
+	export D2_MPQ_DIR=${D2_MPQ_DIR:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq}
 	"$OUT/cit_d2d_test" "--$1"
 fi

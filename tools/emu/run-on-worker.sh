@@ -5,7 +5,7 @@
 # - SCRIPT is a bare file name in tools/emu (this worktree is mirrored to the worker host by labrun, so a script you just wrote there
 #   is already visible). .sh runs with bash, .py with the emulator venv python (PYTHONPATH tools/emu + upstream tools/emu).
 # - The script text is refused if it names sudo, kill, curl, ssh, rsync, wine, docker, systemctl, rm -r/-f, chmod, key or claude paths.
-# - ARGS may only use [A-Za-z0-9 _.,:=@%+/-]; no "..", and an absolute path must sit under /tmp/ug-emu, /tmp/casttrace, ~/d2d-lab or the
+# - ARGS may only use [A-Za-z0-9 _.,:=@%+/-]; no "..", and an absolute path must sit under /tmp/ug-emu, /tmp/casttrace (old names), ~/d2d-lab (the emulator image lives in ~/d2d-lab/emu) or the
 #   agent's scratch /tmp/d2agent-AGENT (exported to the script as D2_SCRATCH, created first).
 # - Runs `timeout TTL` on the worker host and registers the local ssh under tools/agentrun.sh AGENT --ttl TTL+30 (reap: tools/agentreap.sh AGENT).
 # - AGENT = $D2D_JOB (set by the API-credit runner to the job name), else the worktree directory name. Default ttl 900, max 3000. Exit code is the script's (124 = ttl).
@@ -41,7 +41,7 @@ for a in "$@"; do
 	case $a in *..*) die "argument '$a' contains .." ;; esac
 	case $a in
 	/tmp/ug-emu|/tmp/ug-emu/*|/tmp/casttrace|/tmp/casttrace/*|"$scratch"|"$scratch"/*|"$HOME"/d2d-lab/*) ;;
-	/*) die "absolute path '$a' is outside /tmp/ug-emu, /tmp/casttrace, ~/d2d-lab and $scratch" ;;
+	/*) die "absolute path '$a' is outside /tmp/ug-emu, /tmp/casttrace (old names), ~/d2d-lab (the emulator image lives in ~/d2d-lab/emu) and $scratch" ;;
 	esac
 done
 
@@ -56,5 +56,5 @@ else
 	prog=(bash "tools/emu/$script")
 fi
 exec "$AGENTRUN" "$agent" --ttl $((ttl + 30)) -- "$LABRUN" "$D2_LABRUN_HOST" -- \
-	env "D2_SCRATCH=$scratch" D2_MPQ_DIR=/tmp/ug-emu \
+	env "D2_SCRATCH=$scratch" \
 	sh -c 'mkdir -p "$D2_SCRATCH" && exec "$@"' sh timeout "$ttl" "${prog[@]}" "$@"

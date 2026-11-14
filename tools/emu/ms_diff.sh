@@ -7,8 +7,8 @@ here=$(cd "$(dirname "$0")" && pwd)
 OUT=${OUT:-/tmp/ms-run}
 mkdir -p $OUT
 BIN=$HOME/d2d-lab/pr/ms-out/ms_d2d_test
-export D2_MPQ_DIR=${D2_MPQ_DIR:-/tmp/ug-emu}
-export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-$HOME/Downloads/LODPatch_114d.exe}
+export D2_MPQ_DIR=${D2_MPQ_DIR:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq}
+export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe}
 bash $here/ms_build.sh
 nice $BIN --stats > $OUT/d2d.tsv
 nice $BIN --meta > $OUT/meta.tsv

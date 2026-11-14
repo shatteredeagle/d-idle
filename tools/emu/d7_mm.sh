@@ -1,7 +1,7 @@
 #!/bin/bash
 # decomp7 (worker host): TASK-84 monster missile record, game.exe vs the real d2d build (upstream main scratch tree).
 HERE=$(cd "$(dirname "$0")" && pwd)
-export PATH=$HOME/.local/bin:$PATH D2_MPQ_DIR=${D2_MPQ_DIR:-/tmp/ug-emu} D2_PATCH_INSTALLER=$HOME/Downloads/LODPatch_114d.exe
+export PATH=$HOME/.local/bin:$PATH D2_MPQ_DIR=${D2_MPQ_DIR:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq} D2_PATCH_INSTALLER=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe
 T=$HOME/d2d-lab/wt-decomp6 B=$HOME/d2d-lab/build-decomp6 O=$HOME/d2d-lab/d7/mm; mkdir -p $O
 N=${1:-60000} S=${2:-20261109}
 cd $T/tools/emu; git -C $T log --oneline -1

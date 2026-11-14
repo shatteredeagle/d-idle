@@ -2,7 +2,7 @@
 """skzerohit: dump the enchant-event handler table at 0x73c0b8 of game.exe (6 dwords per enchant id).
 Plain PE read (no emulation). usage: skzh_table.py [game.exe] ; prints id, event -> handler VA."""
 import struct, sys
-exe = sys.argv[1] if len(sys.argv) > 1 else "/tmp/casttrace/game.exe"
+exe = sys.argv[1] if len(sys.argv) > 1 else __import__("os").path.join(__import__("os").environ.get("D2_EMU_DIR", __import__("os").path.expanduser("~/d2d-lab/emu")), "casttrace", "game.exe")
 d = open(exe, "rb").read()
 pe = struct.unpack_from("<I", d, 0x3c)[0]
 nsec = struct.unpack_from("<H", d, pe + 6)[0]

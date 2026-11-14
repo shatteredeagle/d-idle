@@ -13,11 +13,11 @@ AIS=${1:-all}; N=${2:-1500}; SEED=${3:-1}; CMD=${4:--}
 [ "$CMD" = "-" ] && CMD=
 LESS=${5:-}; [ "$LESS" = "-" ] && LESS=
 PHASE=${6:-}
-PY=$HOME/d2d-lab/pr/walk2-venv/bin/python
+PY=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/venv/bin/python
 mkdir -p "$S/run"
 if [ "$AIS" = "all" ]; then AIS=Zombie,Brute,BloodHawk,CorruptRogue,CorruptLancer,Fallen,BloodRaven; fi
 if [ "$PHASE" != "replay" ]; then
-	( cd "$SRC/tools/emu" && MAI2_CMD=$CMD PYTHONPATH=$here:$SRC/tools/emu D2_MPQ_DIR=/tmp/ug-emu nice "$PY" "$here/mai2_ais.py" "$AIS" "$N" "$SEED" --dump "$S/run" ) > "$S/run/acts.txt" 2>&1 || { tail -20 "$S/run/acts.txt"; exit 1; }
+	( cd "$SRC/tools/emu" && MAI2_CMD=$CMD PYTHONPATH=$here:$SRC/tools/emu D2_MPQ_DIR=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq nice "$PY" "$here/mai2_ais.py" "$AIS" "$N" "$SEED" --dump "$S/run" ) > "$S/run/acts.txt" 2>&1 || { tail -20 "$S/run/acts.txt"; exit 1; }
 	tail -1 "$S/run/acts.txt"
 	mv "$S/run/mai2_cases.inc" "$S/run/mp_cases.inc"; mv "$S/run/mai2_names.inc" "$S/run/mp_names.inc"
 fi

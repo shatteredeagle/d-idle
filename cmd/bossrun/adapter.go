@@ -114,6 +114,7 @@ func (g *bossGame) viewOf(s *d2.Snapshot) boss.View {
 	if g.e != nil {
 		v.BeltSlots = combat.BeltCapacity(s.Inventory, g.e.Data)
 	}
+	v.Melee = g.f.MeleeClass(p)
 	if s.Inventory != nil {
 		for _, u := range s.Inventory.Items {
 			if u.Item != nil && g.cat.Item(u.Class).Portal {

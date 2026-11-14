@@ -13,7 +13,9 @@ import (
 	"d2lod-bot/internal/combat"
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/leveler"
+	"d2lod-bot/internal/levelplan"
 	"d2lod-bot/internal/plandata"
+	"d2lod-bot/internal/task"
 )
 
 // Difficulty names used by the plan files.
@@ -47,6 +49,8 @@ type Step struct {
 	// or starts a fresh game instead. 0 = the package default earlyGap. Cold Plains sets 1 so that a clvl 4 caster is
 	// never sent there because Blood Moor was cleared (Gate 2 g2f seed 13: died at clvl 4-5 to the Cold Plains pack, V).
 	EarlyGap int
+	// NoMercAdd (level plan v3 "no_merc_add") raises the entry level without a living merc (PickOptions.Merc).
+	NoMercAdd int
 }
 
 func (s Step) earlyGap() int {
@@ -65,6 +69,27 @@ func (s Step) enter(melee bool) int {
 		return s.MeleeMin
 	}
 	return s.EnterLvl
+}
+
+// entry is the entry level of the step under o: the melee rule of enter and the merc rule of NoMercAdd.
+func (s Step) entry(o PickOptions) int {
+	e := s.enter(o.Melee)
+	if !o.Merc {
+		e += s.NoMercAdd
+	}
+	return e
+}
+
+// planClass is the class key of the level plan (lowercased d2.Class name, as campaign and plandata use it).
+func planClass(c d2.Class) string { return strings.ToLower(c.String()) }
+
+// mercUp reports a living merc as the task layer reads it (false when unknown: the stricter entry applies).
+func mercUp() bool {
+	if task.MercAlive == nil {
+		return false
+	}
+	alive, _ := task.MercAlive()
+	return alive
 }
 
 // MeleeTank says whether a class enters the harder early areas earlier (BUILDV2).
@@ -92,13 +117,16 @@ type Run struct {
 
 // Plan is the loaded progression data. Build it with LoadPlan; it is read-only afterwards and safe to share.
 type Plan struct {
-	Areas     map[int]AreaInfo
-	Steps     map[string][]Step // by difficulty name, in progression order
-	Runs      map[string]Run    // by normalised key
-	Waypoints map[int]bool      // area ids with a waypoint
-	Towns     map[int]int       // act (1-based) -> town area id
-	Warnings  []string          // entries that were skipped or odd
-	byName    map[string]int
+	Areas map[int]AreaInfo
+	Steps map[string][]Step // by difficulty name, in progression order
+	// ClassSteps are the farm steps of the active level plan v3 classes (levelplan-<difficulty>.json), by difficulty
+	// and lowercased class; Pick uses them for PickOptions.Class instead of Steps (docs/levelplan3.md).
+	ClassSteps map[string]map[string][]Step
+	Runs       map[string]Run // by normalised key
+	Waypoints  map[int]bool   // area ids with a waypoint
+	Towns      map[int]int    // act (1-based) -> town area id
+	Warnings   []string       // entries that were skipped or odd
+	byName     map[string]int
 }
 
 // LoadPlan reads areas.json, runs.json and progression-<difficulty>.json from dir, falling back per file to the
@@ -106,7 +134,7 @@ type Plan struct {
 // aliases are accepted and malformed entries are skipped with a warning rather than failing the load.
 func LoadPlan(dir string) (*Plan, error) {
 	p := &Plan{
-		Areas: map[int]AreaInfo{}, Steps: map[string][]Step{}, Runs: map[string]Run{},
+		Areas: map[int]AreaInfo{}, Steps: map[string][]Step{}, ClassSteps: map[string]map[string][]Step{}, Runs: map[string]Run{},
 		Waypoints: map[int]bool{}, Towns: map[int]int{}, byName: map[string]int{},
 	}
 	read := func(name string) ([]byte, error) {
@@ -136,6 +164,15 @@ func LoadPlan(dir string) (*Plan, error) {
 		}
 		if err := p.parseSteps(d, b); err != nil {
 			return nil, fmt.Errorf("progression-%s.json: %w", d, err)
+		}
+	}
+	for _, d := range difficulties {
+		b, err := read("levelplan-" + d + ".json")
+		if err != nil {
+			continue // only Normal has a v3 plan; the progression rows serve the rest
+		}
+		if err := p.parseLevelPlan(d, b); err != nil {
+			return nil, fmt.Errorf("levelplan-%s.json: %w", d, err)
 		}
 	}
 	if b, err := read("runs.json"); err == nil {
@@ -290,6 +327,44 @@ func (p *Plan) parseSteps(diff string, b []byte) error {
 	return nil
 }
 
+// parseLevelPlan loads the v3 plan of diff, validated against this plan's areas and waypoints, and turns the farm
+// slices of each active class into steps: one per area, in slice order, with the slice's band and gates.
+func (p *Plan) parseLevelPlan(diff string, b []byte) error {
+	refs, err := levelplan.ShippedRefs()
+	if err != nil {
+		return err
+	}
+	refs.Area = func(id int) bool { a, ok := p.Areas[id]; return ok && !a.Town }
+	refs.WP = func(id int) bool { return p.Waypoints[id] }
+	lp, err := levelplan.Parse(b, refs)
+	if err != nil {
+		return err
+	}
+	byClass := map[string][]Step{}
+	for name, c := range lp.Classes {
+		if !c.Active {
+			continue
+		}
+		for _, sl := range c.Farms() {
+			for _, a := range sl.Areas {
+				byClass[name] = append(byClass[name], Step{Area: a, Name: p.Areas[a].Name, EnterLvl: sl.Entry, LeaveLvl: sl.Exit,
+					KitLvl: sl.KitClvl, NoMercAdd: sl.NoMercAdd, Farm: true, Purpose: "level plan v3 " + sl.ID + ": " + sl.Why})
+			}
+		}
+	}
+	p.ClassSteps[diff] = byClass
+	return nil
+}
+
+// stepsFor are the steps Pick walks: the class's v3 steps when the class has an active plan for diff, else the
+// progression rows (a class without a v3 plan keeps them; it is never given another class's plan).
+func (p *Plan) stepsFor(diff, class string) []Step {
+	if st, ok := p.ClassSteps[diff][class]; ok && class != "" {
+		return st
+	}
+	return p.Steps[diff]
+}
+
 func (p *Plan) parseRuns(b []byte) error {
 	var top rawObj
 	if err := json.Unmarshal(b, &top); err != nil {
@@ -398,6 +473,10 @@ type PickOptions struct {
 	FullKit bool
 	// Melee: the character is a Barbarian or Paladin (steps with a MeleeEnter level open earlier).
 	Melee bool
+	// Class (lowercased d2.Class name) selects the class's level plan v3 steps when it has an active one.
+	Class string
+	// Merc: a living merc; without one a step's NoMercAdd raises its entry level.
+	Merc bool
 	// XP estimates the experience of one kill in a step for this character. When set and the area the plan would
 	// prefer is excluded (unreachable, cleared, guarded), the fallback is the eligible step with the best XP per kill
 	// instead of the last one in progression order (Gate 1 0628: Cold Plains at 3.4 XP per kill at clvl 13 while Crypt
@@ -423,7 +502,7 @@ func (p *Plan) Pick(diff string, level int, o PickOptions) (Step, bool) {
 		}
 	}
 	var eligible []Step
-	for _, s := range p.Steps[diff] {
+	for _, s := range p.stepsFor(diff, o.Class) {
 		if p.IsTown(s.Area) || o.Exclude[s.Area] {
 			continue
 		}
@@ -442,7 +521,7 @@ func (p *Plan) Pick(diff string, level int, o PickOptions) (Step, bool) {
 	var last *Step
 	for i := range eligible {
 		s := &eligible[i]
-		if s.enter(o.Melee)+o.Margin > level {
+		if s.entry(o)+o.Margin > level {
 			continue
 		}
 		last = s
@@ -462,7 +541,7 @@ func (p *Plan) Pick(diff string, level int, o PickOptions) (Step, bool) {
 	// Below every entry level: the first step is still better than nothing, but not when it is far above the character
 	// and an excluded (cleared) step covers the level: a clvl 3 Sorceress with no potions was sent to Burial Grounds
 	// (enter 6) after Blood Moor was cleared (live 2026-10-29, Soaky). The caller starts a fresh game instead.
-	if first := eligible[0]; o.Floor > 0 && first.enter(o.Melee)-level >= first.earlyGap() {
+	if first := eligible[0]; o.Floor > 0 && first.entry(o)-level >= first.earlyGap() {
 		strict := o
 		if first.EarlyGap > 0 {
 			strict.Cleared = nil // a step with its own gap counts every excluded step, not only the cleared ones
@@ -479,8 +558,8 @@ func (p *Plan) Pick(diff string, level int, o PickOptions) (Step, bool) {
 // Floor rule of Pick still applies to a step past its window.
 func (p *Plan) pickByXP(diff string, level int, o PickOptions) (Step, bool) {
 	var inWin, entered []Step
-	for _, s := range p.Steps[diff] {
-		if p.IsTown(s.Area) || o.Exclude[s.Area] || (s.KitLvl > level && !o.FullKit) || (s.FallbackKit && !o.FullKit) || (o.Acts != nil && !o.Acts[p.Act(s.Area)]) || s.enter(o.Melee)+o.Margin > level {
+	for _, s := range p.stepsFor(diff, o.Class) {
+		if p.IsTown(s.Area) || o.Exclude[s.Area] || (s.KitLvl > level && !o.FullKit) || (s.FallbackKit && !o.FullKit) || (o.Acts != nil && !o.Acts[p.Act(s.Area)]) || s.entry(o)+o.Margin > level {
 			continue
 		}
 		entered = append(entered, s)
@@ -519,11 +598,11 @@ func (p *Plan) windowExcluded(diff string, level int, o PickOptions) bool {
 	if o.Cleared != nil {
 		excl = o.Cleared // an area that is only avoided for a while or held back (Den rule) is not a cleared one
 	}
-	for _, s := range p.Steps[diff] {
+	for _, s := range p.stepsFor(diff, o.Class) {
 		if !excl[s.Area] || p.IsTown(s.Area) || o.Acts != nil && !o.Acts[p.Act(s.Area)] {
 			continue
 		}
-		if s.enter(o.Melee)+o.Margin <= level && level <= s.LeaveLvl+o.Slack {
+		if s.entry(o)+o.Margin <= level && level <= s.LeaveLvl+o.Slack {
 			return true
 		}
 	}

@@ -4,7 +4,7 @@
 case $1 in
 sd) f=$(ls $HOME/d2d-lab/pr/palskill/tools/emu/ski?l_damage.py | head -1) ;;
 la) f=$(ls $HOME/d2d-lab/pr/palskill/tools/emu/life_apply.py | head -1) ;;
-mi) f=$HOME/d2d-lab/src/tools/emu/missiles.py ;;
+mi) f=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/upstream/tools/emu/missiles.py ;;
 *) f=$HOME/d2d-lab/$1 ;;
 esac
 echo "== $f"

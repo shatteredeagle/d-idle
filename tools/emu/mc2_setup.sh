@@ -1,5 +1,5 @@
 #!/bin/bash
-# MERC2: build an emulator data dir in the scratch (the shared /tmp/ug-emu is gone): MPQs linked, game.exe from a read-only copy.
+# MERC2: build an emulator data dir in the scratch (the shared ${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq is gone): MPQs linked, game.exe from a read-only copy.
 #   tools/emu/run-on-worker.sh mc2_setup.sh
 set -e
 D=${D2_SCRATCH:?}/ug

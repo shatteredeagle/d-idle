@@ -1,8 +1,8 @@
 #!/bin/bash
 # seeddist (the worker host): every d2d-side sample into $D2_SCRATCH/sd/ (names as sd_game.py's, d2d_ prefix).
 #   tools/emu/run-on-worker.sh --ttl 3000 sd_d2d_all.sh > $D2_SCRATCH/d2d_all.txt 2>&1
-export D2_MPQ_DIR=${D2_MPQ_DIR:-/tmp/ug-emu}
-export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-$HOME/Downloads/LODPatch_114d.exe}
+export D2_MPQ_DIR=${D2_MPQ_DIR:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq}
+export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe}
 S=${D2_SCRATCH:-/tmp/d2agent-seeddist}
 BIN=$S/sd_d2d_test
 OUT=$S/sd

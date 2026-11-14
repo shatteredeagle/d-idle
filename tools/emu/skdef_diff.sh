@@ -8,7 +8,7 @@ UP=${UP:-$HOME/d2d-lab/pr/skmiss}
 S=${D2_SCRATCH:-/tmp/d2agent-skdefenders}
 SEED=${1:-1}
 export PYTHONPATH=$here:$UP/tools/emu:${PYTHONPATH:-}
-PY=${PY:-$HOME/d2d-lab/pr/walk2-venv/bin/python}
+PY=${PY:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/venv/bin/python}
 cd "$UP/tools/emu"
 "$S/test_def" --defend "$S/c$SEED.tsv" > "$S/d$SEED.tsv"
 wc -l "$S/d$SEED.tsv"
