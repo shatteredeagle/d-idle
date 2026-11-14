@@ -35,6 +35,7 @@ owns:
   - "cmd/d2bot/boss.go"
   - "cmd/bossrun/adapter.go"
   - "docs/levelplan.md"
+  - "internal/watch/testdata/campaign"
 exclusive: []
 contracts: []
 result: "Level plan v3 as data (levelplan-normal.json, internal/levelplan): Paladin active (Blood Moor 1-3, Cold Plains 3-6, Stony Field 5-8, Caves 6-9, Black Marsh 7-11, Dark Wood 8-11, Tamoe 9-13, Jail 1 11-14, Catacombs 2/3 12-18, merc +2 from Tamoe; quests named only), Barbarian and Sorceress review rows; bot Pick uses it for the Paladin. Predicted (I) 20.4k XP clvl 6 at 60 min, 63.8k clvl 10 at 120, 170.6k clvl 14 at 240 (plan v2 12.9k / 27.7k on the same model). B1 melee no-kite; Smith journey 14/16; Paladin Andariel 20/18 (floors 17/15). Build-specific: the Paladin slice table (data). Offline only, NOT verified live."
