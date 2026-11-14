@@ -16,7 +16,7 @@ go run ./tools/levelsim/cmd/levelsim -strategy my.json -horizon 60,120,240      
 go run ./tools/levelsim/cmd/levelsim -extract bot.log -run-id 5 -start 2026-11-15T10:00:00Z   # derive a runs.json entry
 ```
 
-Flags: `-horizon` (minutes, comma list), `-mode plan|strict|bold|all` (danger floors, section 4), `-width` (beam width per class, default 60), `-reach` (horizon of the time-to-clvl search, default 480, 0 = skip), `-den-refarm`, `-fitted` (refit the supply parameters first), `-runs FILE` (extra runs added to the embedded ones), `-out DIR` (writes `best-strategies.json`). The full `-optimise -mode all` run takes several minutes on the 4-core box; use the worker host (`labrun orion -- go run ...`) for sweeps.
+Flags: `-horizon` (minutes, comma list), `-mode plan|strict|bold|all` (danger floors, section 4), `-width` (beam width per class, default 60), `-reach` (horizon of the time-to-clvl search, default 480, 0 = skip), `-den-refarm`, `-fitted` (refit the supply parameters first), `-runs FILE` (extra runs added to the embedded ones), `-out DIR` (writes `best-strategies.json`). The full `-optimise -mode all` run takes several minutes on the 4-core box; use the worker host (`labrun <worker> -- go run ...`) for sweeps.
 
 A policy file (`-strategy`) is `{"name": "...", "restart": true, "rows": [{"area": 2, "enter": 1, "leave": 4, "min_f": 0}, ...]}`: rows in priority order, the first row whose clvl window contains the hero and whose area is still alive (more than `min_f` of it, default 0.08) is farmed; with `restart` true a fresh game starts when no row is open. Area ids are the Levels.txt ids of `internal/plandata/areas.json`.
 
@@ -43,7 +43,18 @@ Inputs (derived rows only, `tools/levelsim/data/runs.json`; the raw logs are not
 
 Method: `Replay` feeds a run's logged area sequence and restart times through the kill model (field time in each logged area, no chores, no walking: those are in the log), and compares XP and kills at minute 60 and, for run 4, XP at every logged minute. The free parameters are decay, floor and yield (343 grid points, `Calibrate`); the fresh rates of the three observed areas are fixed from the logs and the rate scale stays 1. A weak prior (yield 0.82, floor 0.4, decay 1: hour 4 section 2.3, Cold Plains cleared at 163 of about 198 units, tails under half the fresh rate) breaks ties because two runs cannot identify three supply parameters.
 
-CALIBRATION_TABLE
+```
+run  obs xp  pred xp  xp err   obs kills  pred kills  kills err  clvl pred/obs  per-minute error
+1    17,032   15,434   -9.4%    528        533         +0.9%      6/6           (no minute rows)
+4    13,883   13,805   -0.6%    494        521         +5.4%      5/5           2.9% of final xp (mean over 59 minutes)
+2    no area sequence: 445 kills x 22..33 xp per kill = 9.8k..14.6k, inside the clvl 5 band (7,875..14,174)
+3    no area sequence: 355 kills x 22..33 xp per kill = 7.8k..11.7k, inside the clvl 5 band
+leave one run out (the fit uses the other run only, 2 runs have area data):
+  run 1 held out: predicts 15,039 xp against 17,032 (-11.7%), kills -2.1%
+  run 4 held out: predicts 13,353 xp against 13,883 (-3.8%), kills +1.8%
+```
+
+`levelsim -calibrate` prints this table. Error summary: on XP at minute 60 the fit is 0.6 and 9.4 percent off on runs 4 and 1; held out, 3.8 and 11.7 percent. The brief's target of 10 percent holds for run 4 in and out of sample and for run 1 in sample (9.4), and misses by 1.7 points when run 1 is held out. Runs 2 and 3 cannot be replayed (U).
 
 Reading (I): both runs are inside the 10 percent target on XP and kills at the default parameters, except run 1 which is 9.4 percent low on XP; run 4 follows its own minute curve within 3 percent of the final XP on average. Run 2 and run 3 have only a consistency check: observed kills times the lowest and highest XP per kill of the starter fields puts the XP inside the observed clvl 5 band (7,875 to 14,174). The old AREAMON route model had 13.1k against 13.9k on hour 4 (6 percent); this model is at 0.6 percent on the same hour, but it was fitted on that hour, so the held-out numbers are the honest ones.
 
@@ -65,7 +76,175 @@ Hard constraints: the Den quest done, Blood Raven done when the hero ends at clv
 
 `plan` is the default and the one the plan v3 agent should treat as "what is safe today"; `strict` and `bold` show what lowering the floors would buy. Today's plan is simulated as a policy (`PlanToday`): the farm rows of `progression-normal.json` in file order, the Den at clvl 3, Burial Grounds at melee 8, a restart when no row is open (`TestPlanRowsMatchPlandata` keeps the data file and the plan in step).
 
-RESULTS_SECTION
+## 5. Results (danger mode `plan` is the answer; `strict` and `bold` show what lower floors would buy)
+
+Every XP number is a model prediction (I) with the calibration error of section 3 (about 10 percent) and the unverified floors of section 4 behind it. "Plan today" is the plan as intended (no bot failure modes); the logged hours reached 17.0k and 13.9k XP at 60 minutes against 19.5k simulated.
+
+| mode | horizon | plan today (xp, clvl) | best found (xp, clvl) | gain | restarts in the best |
+|---|---|---|---|---|---|
+| plan | 60 min | 19511, clvl 6 | 20885, clvl 6 | +7% | 5 |
+| plan | 120 min | 39696, clvl 8 | 53737, clvl 9 | +35% | 10 |
+| plan | 240 min | 101704, clvl 12 | 175537, clvl 14 | +73% | 16 |
+| strict | 60 min | 19511, clvl 6 | 37300, clvl 8 | +91% | 1 |
+| strict | 120 min | 39696, clvl 8 | 91672, clvl 12 | +131% | 4 |
+| strict | 240 min | 101704, clvl 12 | 232828, clvl 16 | +129% | 11 |
+| bold | 60 min | 19511, clvl 6 | 44395, clvl 8 | +128% | 1 |
+| bold | 120 min | 39696, clvl 8 | 102250, clvl 12 | +158% | 7 |
+| bold | 240 min | 101704, clvl 12 | 248217, clvl 16 | +144% | 11 |
+
+Minutes to reach a level on the best path (search horizon 480 minutes, same constraints; blank = not reached):
+
+| mode | clvl 10 | clvl 15 | clvl 20 |
+|---|---|---|---|
+| plan | 121 | 236 | - |
+| strict | 77 | 185 | - |
+| bold | 64 | 170 | - |
+
+### Findings (I unless marked)
+
+1. **Under today's entry floors the first hour is nearly optimal in order and the gap is execution.** `plan` mode: 20.9k XP (clvl 6) against 19.5k for the plan at 60 minutes (+7 percent); the best first hour is Blood Moor to clvl 3, the Den at clvl 3 (the quest), then Cold Plains from clvl 4 with a game restart each time it is swept (5 restarts, 15 s each plus the walk back). The logged hours reached 17.0k and 13.9k: the distance from 19.5k to those is the bot's failure modes (the Den exit that did not fire, three Blood Moor re-sweeps, roaming), not the area order.
+2. **From minute 60 the plan's row order costs 35 percent at 120 minutes and 73 percent at 240** (clvl 8 against 9, clvl 12 against 14). The plan enters Cave 1 at clvl 6 when Cold Plains is swept (385 XP per minute, 66 and 114 kills in two stretches) instead of starting a fresh game and re-clearing Cold Plains (about 600 per minute at clvl 6), keeps Stony Field and Dark Wood behind Burial Grounds and Cave 1, and never restarts while any row is open (the areamon finding B2). The optimum restarts whenever the best field is swept and a fresh game is cheaper than the next row (10 restarts in two hours).
+3. **Time to level (plan mode, best path): clvl 10 at minute 121, clvl 15 at minute 236, clvl 20 not within 480 minutes.** With the `strict` floors: 77 and 185; with `bold`: 64 and 170 (clvl 20 is out of reach in all three: Act 1 Normal XP per kill falls below 150 at clvl 15 and later areas are outside the model).
+4. **The floors dominate everything else.** At 120 minutes the optimum is 53.7k (`plan`), 91.7k (`strict`, clvl 12) and 102k (`bold`). `strict` sends a clvl 5 hero to Black Marsh and a clvl 7 hero to Tamoe Highland (about 1,000 to 1,200 XP per minute); whether that is survivable is exactly the drill X4 of areamon section 12.
+5. **A restart is cheap and worth using: the measured cost is 15 s (V) plus the walk.** At 150 seconds the 120-minute optimum drops 17 percent, at 75 seconds 9 percent (section 6); the model's restart advantage vanishes only above about 4 minutes.
+6. **Candidate rows for the plan v3 agent (mode `plan`, 120-minute best):** Blood Moor 1-3, Den 3-4 (quest, once), Cold Plains 4-7 with restarts, Stony Field 7-8 (enter 7 melee as today), Burial Grounds at 8 for Blood Raven (a 7 to 8 minute stop, 1,200 XP including her 181), Stony Field 8-9, Dark Wood 9-10 (today 9-13), then at 240 minutes Tamoe Highland 10-13 (no plan row today, 1,100 XP per minute), Black Marsh as a short stop, Catacombs 2-3 from 13 (as today). Cave 1, Cave 2, Crypt and Mausoleum never appear in the best path.
+
+### Best strategy, mode `plan`
+
+**60 minutes**: Blood Moor > Den of Evil > Blood Moor > Cold Plains (5 restarts). clvl by minute: 10:3 20:4 30:5 40:5 50:6 60:6
+
+**120 minutes**: Blood Moor > Den of Evil > Blood Moor > Cold Plains > Stony Field > Burial Grounds > Stony Field > Dark Wood (10 restarts). clvl by minute: 10:3 20:4 30:5 40:5 50:6 60:6 70:7 80:7 90:8 100:8 110:9 120:9
+
+**240 minutes**: Blood Moor > Den of Evil > Blood Moor > Cold Plains > Stony Field > Burial Grounds > Stony Field > Underground Pass. 2 > Stony Field > Dark Wood > Tamoe Highland > Black Marsh > Tamoe Highland > Catacombs 2 > Catacombs 3 > Catacombs 2 (16 restarts). clvl by minute: 10:3 20:4 30:5 40:5 50:6 60:6 70:7 80:7 90:8 100:8 110:8 120:9 130:10 140:10 150:11 160:12 170:12 180:12 190:13 200:13 210:13 220:14 230:14 240:14
+
+| area | clvl in -> out | minutes | kills | xp | restarts before |
+|---|---|---|---|---|---|
+| Blood Moor | 1 -> 3 | 0-8 | 69 | 1514 | 0 |
+| Den of Evil | 3 -> 4 | 8-16 | 71 | 2626 | 0 |
+| Blood Moor | 4 -> 4 | 16-17 | 4 | 95 | 0 |
+| Cold Plains | 4 -> 7 | 17-65 | 640 | 18452 | 5 |
+| Stony Field | 7 -> 8 | 65-84 | 191 | 10248 | 2 |
+| Burial Grounds | 8 -> 8 | 84-91 | 29 | 1223 | 1 |
+| Stony Field | 8 -> 8 | 91-101 | 115 | 6017 | 1 |
+| Underground Pass. 2 | 8 -> 8 | 101-106 | 24 | 1914 | 0 |
+| Stony Field | 8 -> 9 | 106-110 | 45 | 2342 | 1 |
+| Dark Wood | 9 -> 10 | 110-126 | 238 | 13308 | 1 |
+| Tamoe Highland | 10 -> 10 | 126-139 | 146 | 12243 | 0 |
+| Black Marsh | 10 -> 11 | 139-142 | 37 | 2229 | 1 |
+| Tamoe Highland | 11 -> 13 | 142-181 | 487 | 40607 | 2 |
+| Catacombs 2 | 13 -> 14 | 181-213 | 153 | 28118 | 1 |
+| Catacombs 3 | 14 -> 14 | 213-239 | 128 | 33973 | 1 |
+| Catacombs 2 | 14 -> 14 | 239-240 | 3 | 628 | 0 |
+
+Today's plan under the same model: 10:3 20:4 30:5 40:5 50:6 60:6 70:7 80:7 90:7 100:7 110:8 120:8 130:8 140:9 150:9 160:9 170:10 180:11 190:11 200:11 210:11 220:11 230:12 240:12. Entries below this mode's floors: none.
+
+Ranked alternatives at 240 min (distinct area orders; the beam finds them within a fraction of a percent of each other, so the order inside a band is not sharp):
+
+1. 175537 xp, clvl 14: Blood Moor > Den of Evil > Blood Moor > Cold Plains > Stony Field > Burial Grounds > Stony Field > Underground Pass. 2 > Stony Field > Dark Wood > Tamoe Highland > Black Marsh > Tamoe Highland > Catacombs 2 > Catacombs 3 > Catacombs 2
+2. 175519 xp, clvl 14: Blood Moor > Den of Evil > Blood Moor > Cold Plains > Stony Field > Underground Pass. 2 > Burial Grounds > Stony Field > Dark Wood > Tamoe Highland > Black Marsh > Tamoe Highland > Catacombs 2 > Catacombs 3 > Catacombs 2
+3. 175389 xp, clvl 14: Blood Moor > Den of Evil > Blood Moor > Cold Plains > Stony Field > Burial Grounds > Stony Field > Underground Pass. 2 > Stony Field > Dark Wood > Tamoe Highland > Black Marsh > Tamoe Highland > Catacombs 2 > Catacombs 3 > Catacombs 4
+4. 175384 xp, clvl 14: Blood Moor > Den of Evil > Cold Plains > Cave 1 > Cold Plains > Stony Field > Burial Grounds > Stony Field > Dark Wood > Tamoe Highland > Black Marsh > Tamoe Highland > Catacombs 2 > Catacombs 3 > Catacombs 2
+5. 175380 xp, clvl 14: Blood Moor > Den of Evil > Blood Moor > Cold Plains > Stony Field > Underground Pass. 2 > Burial Grounds > Stony Field > Dark Wood > Tamoe Highland > Black Marsh > Tamoe Highland > Catacombs 2 > Catacombs 3 > Catacombs 4
+
+### Best strategy, mode `strict`
+
+**60 minutes**: Blood Moor > Cave 2 > Underground Pass. 2 > Den of Evil > Black Marsh > Tamoe Highland (1 restarts). clvl by minute: 10:3 20:4 30:5 40:6 50:7 60:8
+
+**120 minutes**: Blood Moor > Cave 2 > Underground Pass. 2 > Den of Evil > Black Marsh > Tamoe Highland > Burial Grounds > Dark Wood > Black Marsh > Tamoe Highland (4 restarts). clvl by minute: 10:3 20:4 30:5 40:6 50:7 60:8 70:8 80:9 90:10 100:10 110:11 120:12
+
+**240 minutes**: Blood Moor > Cave 2 > Underground Pass. 2 > Den of Evil > Black Marsh > Tamoe Highland > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2 > Burial Grounds > Catacombs 3 > Catacombs 2 > Catacombs 3 (11 restarts). clvl by minute: 10:3 20:4 30:5 40:6 50:7 60:8 70:9 80:9 90:10 100:11 110:11 120:12 130:12 140:13 150:13 160:13 170:14 180:14 190:15 200:15 210:15 220:15 230:15 240:16
+
+| area | clvl in -> out | minutes | kills | xp | restarts before |
+|---|---|---|---|---|---|
+| Blood Moor | 1 -> 2 | 0-3 | 24 | 520 | 0 |
+| Cave 2 | 2 -> 3 | 3-9 | 23 | 1552 | 0 |
+| Underground Pass. 2 | 3 -> 4 | 9-19 | 44 | 3678 | 0 |
+| Den of Evil | 4 -> 5 | 19-28 | 71 | 2626 | 0 |
+| Black Marsh | 5 -> 7 | 28-52 | 301 | 20158 | 1 |
+| Tamoe Highland | 7 -> 12 | 52-112 | 733 | 61656 | 4 |
+| Catacombs 3 | 12 -> 12 | 112-130 | 64 | 16993 | 0 |
+| Catacombs 2 | 12 -> 13 | 130-139 | 48 | 8976 | 0 |
+| Catacombs 3 | 13 -> 13 | 139-150 | 52 | 13820 | 1 |
+| Catacombs 2 | 13 -> 14 | 150-160 | 60 | 11051 | 1 |
+| Catacombs 3 | 14 -> 14 | 160-184 | 116 | 30804 | 1 |
+| Catacombs 2 | 14 -> 15 | 184-188 | 24 | 4405 | 0 |
+| Burial Grounds | 15 -> 15 | 188-195 | 29 | 345 | 1 |
+| Catacombs 3 | 15 -> 15 | 195-206 | 52 | 13815 | 0 |
+| Catacombs 2 | 15 -> 15 | 206-214 | 48 | 8802 | 1 |
+| Catacombs 3 | 15 -> 16 | 214-240 | 127 | 33629 | 1 |
+
+Today's plan under the same model: 10:3 20:4 30:5 40:5 50:6 60:6 70:7 80:7 90:7 100:7 110:8 120:8 130:8 140:9 150:9 160:9 170:10 180:11 190:11 200:11 210:11 220:11 230:12 240:12. Entries below this mode's floors: Den of Evil at clvl 3 (floor 4); Cold Plains at clvl 4 (floor 5).
+
+Ranked alternatives at 240 min (distinct area orders; the beam finds them within a fraction of a percent of each other, so the order inside a band is not sharp):
+
+1. 232828 xp, clvl 16: Blood Moor > Cave 2 > Underground Pass. 2 > Den of Evil > Black Marsh > Tamoe Highland > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2 > Burial Grounds > Catacombs 3 > Catacombs 2 > Catacombs 3
+2. 232722 xp, clvl 16: Blood Moor > Cave 2 > Underground Pass. 2 > Den of Evil > Black Marsh > Tamoe Highland > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 4 > Burial Grounds > Catacombs 3 > Catacombs 2 > Catacombs 3
+3. 232635 xp, clvl 16: Blood Moor > Cave 2 > Underground Pass. 2 > Den of Evil > Black Marsh > Tamoe Highland > Black Marsh > Tamoe Highland > Black Marsh > Tamoe Highland > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2 > Catacombs 3 > Burial Grounds > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2 > Catacombs 3
+4. 232421 xp, clvl 16: Blood Moor > Cave 2 > Underground Pass. 2 > Den of Evil > Black Marsh > Tamoe Highland > Black Marsh > Tamoe Highland > Black Marsh > Tamoe Highland > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2 > Catacombs 3 > Burial Grounds > Catacombs 3
+5. 232264 xp, clvl 16: Blood Moor > Cave 2 > Underground Pass. 2 > Den of Evil > Black Marsh > Tamoe Highland > Black Marsh > Tamoe Highland > Black Marsh > Tamoe Highland > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2 > Catacombs 3 > Burial Grounds > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2
+
+### Best strategy, mode `bold`
+
+**60 minutes**: Cold Plains > Stony Field > Den of Evil > Dark Wood > Black Marsh > Tamoe Highland > Dark Wood > Tamoe Highland > Pit 2 (1 restarts). clvl by minute: 10:3 20:4 30:6 40:7 50:8 60:8
+
+**120 minutes**: Cold Plains > Stony Field > Den of Evil > Dark Wood > Black Marsh > Tamoe Highland > Burial Grounds > Tamoe Highland (7 restarts). clvl by minute: 10:3 20:5 30:6 40:7 50:8 60:8 70:9 80:10 90:10 100:11 110:12 120:12
+
+**240 minutes**: Cold Plains > Stony Field > Den of Evil > Dark Wood > Black Marsh > Tamoe Highland > Black Marsh > Tamoe Highland > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2 > Catacombs 3 > Burial Grounds > Catacombs 2 > Catacombs 3 (11 restarts). clvl by minute: 10:3 20:5 30:6 40:7 50:8 60:9 70:9 80:10 90:11 100:11 110:12 120:12 130:13 140:13 150:14 160:14 170:14 180:15 190:15 200:15 210:15 220:16 230:16 240:16
+
+| area | clvl in -> out | minutes | kills | xp | restarts before |
+|---|---|---|---|---|---|
+| Cold Plains | 1 -> 2 | 0-3 | 17 | 506 | 0 |
+| Stony Field | 2 -> 3 | 3-6 | 19 | 1032 | 0 |
+| Den of Evil | 3 -> 4 | 6-15 | 71 | 2626 | 0 |
+| Dark Wood | 4 -> 6 | 15-31 | 234 | 14055 | 1 |
+| Black Marsh | 6 -> 7 | 31-37 | 67 | 4472 | 0 |
+| Tamoe Highland | 7 -> 8 | 37-51 | 178 | 15042 | 0 |
+| Black Marsh | 8 -> 9 | 51-58 | 100 | 6723 | 1 |
+| Tamoe Highland | 9 -> 11 | 58-84 | 330 | 27773 | 1 |
+| Catacombs 3 | 11 -> 11 | 84-102 | 64 | 16201 | 0 |
+| Catacombs 2 | 11 -> 12 | 102-111 | 48 | 8972 | 0 |
+| Catacombs 3 | 12 -> 13 | 111-134 | 110 | 29270 | 2 |
+| Catacombs 2 | 13 -> 14 | 134-147 | 78 | 14338 | 1 |
+| Catacombs 3 | 14 -> 14 | 147-171 | 116 | 30804 | 1 |
+| Catacombs 2 | 14 -> 15 | 171-179 | 48 | 8835 | 0 |
+| Catacombs 3 | 15 -> 15 | 179-190 | 52 | 13815 | 1 |
+| Catacombs 2 | 15 -> 15 | 190-198 | 48 | 8802 | 0 |
+| Catacombs 3 | 15 -> 15 | 198-209 | 52 | 13815 | 1 |
+| Burial Grounds | 15 -> 15 | 209-216 | 29 | 345 | 0 |
+| Catacombs 2 | 15 -> 16 | 216-219 | 15 | 2811 | 1 |
+| Catacombs 3 | 16 -> 16 | 219-240 | 105 | 27981 | 1 |
+
+Today's plan under the same model: 10:3 20:4 30:5 40:5 50:6 60:6 70:7 80:7 90:7 100:7 110:8 120:8 130:8 140:9 150:9 160:9 170:10 180:11 190:11 200:11 210:11 220:11 230:12 240:12. Entries below this mode's floors: none.
+
+Ranked alternatives at 240 min (distinct area orders; the beam finds them within a fraction of a percent of each other, so the order inside a band is not sharp):
+
+1. 248217 xp, clvl 16: Cold Plains > Stony Field > Den of Evil > Dark Wood > Black Marsh > Tamoe Highland > Black Marsh > Tamoe Highland > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2 > Catacombs 3 > Burial Grounds > Catacombs 2 > Catacombs 3
+2. 247580 xp, clvl 16: Cold Plains > Stony Field > Den of Evil > Dark Wood > Black Marsh > Tamoe Highland > Black Marsh > Tamoe Highland > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2 > Catacombs 3 > Burial Grounds
+3. 247515 xp, clvl 16: Cold Plains > Stony Field > Den of Evil > Dark Wood > Black Marsh > Tamoe Highland > Black Marsh > Tamoe Highland > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2 > Catacombs 3 > Burial Grounds
+4. 247475 xp, clvl 16: Cold Plains > Stony Field > Den of Evil > Dark Wood > Black Marsh > Tamoe Highland > Black Marsh > Tamoe Highland > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 4 > Catacombs 3 > Burial Grounds > Catacombs 3
+5. 247410 xp, clvl 16: Cold Plains > Stony Field > Den of Evil > Dark Wood > Black Marsh > Tamoe Highland > Black Marsh > Tamoe Highland > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2 > Catacombs 3 > Catacombs 2 > Burial Grounds > Catacombs 3
+
+## 6. Sensitivity (mode `plan`, beam width 40)
+
+```
+scenario                                           | opt@60   plan@60   gain | opt@120  plan@120  gain
+baseline                                           | 20885    19511       +7% | 53738    39697      +35%
+kill rate -20%                                     | 16743    15847       +6% | 40243    31325      +28%
+kill rate +20%                                     | 25781    23123      +11% | 73454    45620      +61%
+walking and chores -50% (walk, hop, town tax)      | 22069    20693       +7% | 59921    41689      +44%
+walking and chores +100%                           | 18158    17081       +6% | 44380    33317      +33%
+restart 30 s                                       | 20905    19435       +8% | 53128    39432      +35%
+restart 75 s                                       | 20080    19202       +5% | 49187    38615      +27%
+restart 150 s                                      | 19272    18809       +2% | 44844    37186      +21%
+XP per kill -15% (fewer uniques)                   | 17456    17456       +0% | 41633    33425      +25%
+XP per kill +15%                                   | 23547    22279       +6% | 67041    47883      +40%
+supply decays (decay 1.5, floor 0.3, yield 0.85)   | 13020    12133       +7% | 32191    24739      +30%
+Den may be farmed again                            | 20885    19109       +9% | 53738    39374      +36%
+```
+
+
+
+Reading the sensitivity table: the answer is stable in shape (Cold Plains with restarts, then Stony Field, Dark Wood, Tamoe, Catacombs 2-3) under every scenario but the gain over the plan moves from +21 to +61 percent at 120 minutes. The largest moves of the optimum at 120 minutes: supply decay (decay 1.5, floor 0.3, yield 0.85) minus 40 percent, kill rate +20 percent plus 37 percent and minus 20 percent minus 25 percent, XP per kill plus 25 or minus 22 percent, a 150-second restart minus 17 percent, halved walking and chores plus 12 percent. The supply-decay scenario is **rejected by the calibration** (run 1 error minus 35 percent, run 4 minus 16 percent at those parameters), so it is a bound, not a candidate; the plan loses the same share there (+30 percent gain stays). "XP per kill minus 15 percent" at 60 minutes makes the plan equal the beam (the optimiser result is seeded with the plan, so it never reports below it).
 
 ## 7. Using it for the level plan v3
 
