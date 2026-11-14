@@ -140,7 +140,6 @@
 | towntests | proposed | - | `docs/towntests.md`<br>`internal/town/playerstash_test.go`<br>`internal/town/tidy_test.go`<br>`internal/town/invstash_test.go` | - |
 | mercrevive2 | proposed | - | `docs/mercrevive.md`<br>`internal/merc`<br>`cmd/d2bot/mercwire.go`<br>`cmd/d2bot/mercwire_test.go`<br>`docs/contracts/merc-policy.md` | - |
 | emurebuild | proposed | - | `tools/emu`<br>`docs/emu-image.md`<br>`docs/research/emu-reverify-2026-11-14.md` | - |
-| hour4 | proposed | - | `docs/probes/hour4-analysis-2026-11-14.md`<br>`docs/probes/firsthour.md` | - |
 | playsession | proposed | - | `tools/play-session.sh`<br>`docs/play-session.md` | - |
 | upstream-next | proposed | - | `docs/research/upstream-next.md` | - |
 | statusrefresh | proposed | - | `docs/plan/STATUS.md` | - |

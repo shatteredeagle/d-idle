@@ -1,10 +1,11 @@
 ---
 id: TASK-407
 title: 'hour4: first-hour analysis of the fourth fresh Paladin (2026-11-14)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-14T11:09:00Z'
+updated_date: '2026-11-14T11:43:00Z'
 labels:
   - docs
   - research
