@@ -45,7 +45,7 @@ def main():
     n = int(sys.argv[1]) if len(sys.argv) > 1 else 20000
     seed = int(sys.argv[2]) if len(sys.argv) > 2 else 7
     import emu
-    e = emu.Emu("/tmp/casttrace/game.exe")
+    e = emu.Emu(__import__("os").path.join(__import__("os").environ.get("D2_EMU_DIR", __import__("os").path.expanduser("~/d2d-lab/emu")), "casttrace", "game.exe"))
     stats = {}
     flags = {"shield": 1}
     e.hook(0x625480, lambda e_: stats.get(e_.arg(1), 0) & 0xFFFFFFFF, 3)

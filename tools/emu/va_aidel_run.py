@@ -18,7 +18,7 @@ L = [l.split("\t") for l in txt.splitlines() if "\t" in l]
 h = L[0]; ia = [h.index("aidel"), h.index("aidel(N)"), h.index("aidel(H)")]
 rows = [r for r in L[1:] if len(r) == len(h)]
 tri = lambda r: tuple(int(r[k]) if r[k].strip() else 0 for k in ia)
-e = emu.Emu("/tmp/casttrace/game.exe")
+e = emu.Emu(__import__("os").path.join(__import__("os").environ.get("D2_EMU_DIR", __import__("os").path.expanduser("~/d2d-lab/emu")), "casttrace", "game.exe"))
 cur = {}; out = {}
 e.hook(0x5415a0, lambda e_: cur["pending"], 1)
 e.hook(0x639df0, lambda e_: cur["stun"] if e_.arg(1) == 0x15 else 0, 2)

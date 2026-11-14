@@ -8,7 +8,7 @@ OUT=${D2_SCRATCH:?}/vam
 mkdir -p "$OUT"
 SRC=$HOME/d2d-lab/pr/sorcrest-d2d
 B=$HOME/d2d-lab/pr/sorcrest-out/build
-export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-$HOME/Downloads/LODPatch_114d.exe}
+export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe}
 if [ ! -x "$OUT/vam_test" ] || [ "$HERE/vam_test.cpp" -nt "$OUT/vam_test" ]; then
 	IN=""
 	for d in tests components/game components/game/character components/game/gamedata components/game/npc components/log components/mpq components/d2s components/txt components/rules components/drlg components/ds1 components/userdir components/install components/cof components/compcode components/dt1 components/tbl; do IN="$IN -I$SRC/$d"; done
@@ -18,7 +18,7 @@ if [ ! -x "$OUT/vam_test" ] || [ "$HERE/vam_test.cpp" -nt "$OUT/vam_test" ]; the
 fi
 "$OUT/vam_test" --dump > "$OUT/dump.txt" 2>&1 || true
 UP=$HOME/d2d-lab/pr/palskill
-PY=$HOME/d2d-lab/pr/walk2-venv/bin/python
+PY=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/venv/bin/python
 export PYTHONPATH=$HERE:$UP/tools/emu
 cd "$UP/tools/emu"
 nice $PY "$HERE/vam_calc.py" gen "$N" "$SEED" > "$OUT/cases.tsv"

@@ -7,9 +7,9 @@ N=${1:-4000}; SEED=${2:-11}
 S=${D2_SCRATCH:?run through tools/emu/run-on-worker.sh}
 D=$S/run$SEED
 mkdir -p "$D"
-export D2_MPQ_DIR=/tmp/ug-emu D2_PATCH_INSTALLER=$HOME/Downloads/LODPatch_114d.exe
-PY=$HOME/d2d-lab/pr/walk2-venv/bin/python
-UP=$HOME/d2d-lab/src/tools/emu
+export D2_MPQ_DIR=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq D2_PATCH_INSTALLER=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe
+PY=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/venv/bin/python
+UP=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/upstream/tools/emu
 export PYTHONPATH=$here:$UP
 cd "$UP"
 "$PY" "$here/covpal.py" gen "$D" "$N" "$SEED"

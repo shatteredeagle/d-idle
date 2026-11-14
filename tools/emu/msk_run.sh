@@ -8,10 +8,10 @@ here=$(cd "$(dirname "$0")" && pwd)
 SRC=${SRC:-$HOME/d2d-lab/pr/monsterai-src}
 S=${D2_SCRATCH:-/tmp/d2agent-monsterskill}
 N=${1:-1500}; SEED=${2:-1}
-UP=$HOME/d2d-lab/src
-PY=$HOME/d2d-lab/pr/walk2-venv/bin/python
+UP=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/upstream
+PY=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/venv/bin/python
 mkdir -p "$S/run"
-( cd "$UP/tools/emu" && PYTHONPATH=$here:$UP/tools/emu D2_MPQ_DIR=/tmp/ug-emu nice "$PY" "$here/msk_ais.py" CorruptArcher "$N" "$SEED" --dump "$S/run" ) > "$S/run/acts.txt" 2>&1 || { tail -20 "$S/run/acts.txt"; exit 1; }
+( cd "$UP/tools/emu" && PYTHONPATH=$here:$UP/tools/emu D2_MPQ_DIR=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq nice "$PY" "$here/msk_ais.py" CorruptArcher "$N" "$SEED" --dump "$S/run" ) > "$S/run/acts.txt" 2>&1 || { tail -20 "$S/run/acts.txt"; exit 1; }
 cat "$S/run/acts.txt" | tail -12
 python3 "$here/mai2_patch.py" "$SRC" "$S/run"
 IN="-I$S/run"

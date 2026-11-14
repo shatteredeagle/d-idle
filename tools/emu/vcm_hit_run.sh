@@ -8,9 +8,9 @@ HERE=$(cd "$(dirname "$0")" && pwd)
 S=${D2_SCRATCH:-/tmp/d2agent-verifycovmissiles}
 mkdir -p "$S"
 export D2=$HOME/d2d-lab/pr/palskill
-export D2_MPQ_DIR=${D2_MPQ_DIR:-/tmp/ug-emu}
-export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-$HOME/Downloads/LODPatch_114d.exe}
-PY=$HOME/d2d-lab/pr/walk2-venv/bin/python
+export D2_MPQ_DIR=${D2_MPQ_DIR:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq}
+export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe}
+PY=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/venv/bin/python
 if [ "$1" = build ]; then
   build() {  # SRC BUILD_DIR BIN
     local SRC=$1 B=$2 BIN=$3 IN=""

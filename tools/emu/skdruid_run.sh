@@ -14,7 +14,7 @@ if [ ! -x "$OUT/skdruid_test" ]; then
   (cd "$B" && nice c++ -DD2D_TEST_SKIPPED=77 -DSTORMLIB_NO_AUTO_LINK $IN -I$HOME/d2d-lab/src/build/_deps/stormlib-src/src -O1 -std=c++26 -include $SRC/cmake/no_near_far.hpp -Wno-missing-field-initializers -o "$OUT/skdruid_test" "$HERE/skdruid_test.cpp" components/game/libgame.a _deps/stormlib-build/libstorm.a /usr/lib/libz.so /usr/lib/libbz2.so components/install/libinstall_detect.a)
 fi
 D2=$HOME/d2d-lab/src
-PY=$HOME/d2d-lab/pr/walk2-venv/bin/python
+PY=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/venv/bin/python
 export PYTHONPATH=$HERE:$D2/tools/emu
 cd "$D2/tools/emu"
 $PY "$HERE/skdruid_calc.py" gen "$N" "$SEED" > "$OUT/cases.tsv"

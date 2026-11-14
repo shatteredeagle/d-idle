@@ -13,7 +13,7 @@ import capstone
 import pefile
 from capstone import x86
 
-EXE = "/tmp/casttrace/game.exe"
+EXE = __import__("os").path.join(__import__("os").environ.get("D2_EMU_DIR", __import__("os").path.expanduser("~/d2d-lab/emu")), "casttrace", "game.exe")
 SLOT = 0x6e2228
 pe = pefile.PE(EXE)
 base = pe.OPTIONAL_HEADER.ImageBase

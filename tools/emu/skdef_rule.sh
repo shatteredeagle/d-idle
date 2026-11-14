@@ -8,10 +8,10 @@ UP=${UP:-$HOME/d2d-lab/pr/skmiss}
 S=${D2_SCRATCH:-/tmp/d2agent-skdefenders}
 SEED=${1:-1}
 N=${2:-20000}
-export D2_MPQ_DIR=${D2_MPQ_DIR:-/tmp/ug-emu}
-export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-$HOME/Downloads/LODPatch_114d.exe}
+export D2_MPQ_DIR=${D2_MPQ_DIR:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq}
+export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe}
 export PYTHONPATH=$here:$UP/tools/emu:${PYTHONPATH:-}
-PY=${PY:-$HOME/d2d-lab/pr/walk2-venv/bin/python}
+PY=${PY:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/venv/bin/python}
 cd "$UP/tools/emu"
 echo "== rule check (formula vs game.exe), seed $SEED"
 "$PY" "$here/skdef_resist.py" rule "$S/c$SEED.tsv" "$S/g$SEED.tsv"

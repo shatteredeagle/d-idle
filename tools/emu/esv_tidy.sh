@@ -12,7 +12,7 @@ for f in tests/game/test_energy_shield.cpp components/game/fight/states.cpp; do
 	nice clang-tidy -p "$B" --quiet "$f" 2>&1 | grep -E "warning|error" | grep -E "test_energy_shield|combat.hpp|ai.hpp|states.cpp" | head -20
 	echo "exit ${PIPESTATUS[0]}"
 done
-export D2_MPQ_DIR=/tmp/ug-emu D2_PATCH_INSTALLER=$HOME/Downloads/LODPatch_114d.exe
+export D2_MPQ_DIR=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq D2_PATCH_INSTALLER=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe
 for t in test_energy_shield test_combat; do
 	exe=$(find "$B/tests" -name "$t" -type f | head -1)
 	echo "== $t"; nice "$exe" 2>&1 | grep -v WARNING | tail -3; echo "exit ${PIPESTATUS[0]}"

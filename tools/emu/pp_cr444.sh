@@ -1,6 +1,6 @@
 #!/bin/bash
 # prpost (worker host): CodeRabbit's second comment on the Lightning PR: assert the placed monsters are targetable; build, run seeds 1 and 7, commit on the PR branch (normal push after).
-export PATH=$HOME/.local/bin:$PATH D2_MPQ_DIR=/tmp/ug-emu D2_PATCH_INSTALLER=$HOME/Downloads/LODPatch_114d.exe
+export PATH=$HOME/.local/bin:$PATH D2_MPQ_DIR=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq D2_PATCH_INSTALLER=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe
 G="git -c user.name=shatteredeagle -c user.email=26069301+shatteredeagle@users.noreply.github.com"
 HERE=$(cd "$(dirname "$0")" && pwd)
 T=$HOME/d2d-lab/wt-pp-light4; B=$HOME/d2d-lab/build-pp-light4; O=$HOME/d2d-lab/pp-light4

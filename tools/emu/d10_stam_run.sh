@@ -3,12 +3,12 @@
 #   tools/emu/run-on-worker.sh --ttl 1500 d10_stam_run.sh 20000 1 7
 set -e
 here=$(cd "$(dirname "$0")" && pwd)
-UP=${UP:-$HOME/d2d-lab/src}
+UP=${UP:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/upstream}
 S=${D2_SCRATCH:?}
-export D2_MPQ_DIR=${D2_MPQ_DIR:-/tmp/ug-emu}
-export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-$HOME/Downloads/LODPatch_114d.exe}
+export D2_MPQ_DIR=${D2_MPQ_DIR:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq}
+export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe}
 export PYTHONPATH=$here:$UP/tools/emu:${PYTHONPATH:-}
-PY=${PY:-$HOME/d2d-lab/pr/walk2-venv/bin/python}
+PY=${PY:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/venv/bin/python}
 cases=$1; shift
 (cd "$UP/tools/emu" && nice "$PY" "$here/d10_stam.py" classes) | grep '^C ' > "$S/st_cg.txt"
 nice "$S/d10_stam_test" classes 2>/dev/null | grep '^C ' > "$S/st_cd.txt"

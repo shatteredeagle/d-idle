@@ -6,7 +6,7 @@ import sys
 import capstone
 import pefile
 
-exe = os.path.join(os.environ.get("D2_MPQ_DIR", "/tmp/ug-emu"), "bin", "game.exe")
+exe = os.path.join(os.environ.get("D2_MPQ_DIR", __import__("os").path.join(__import__("os").environ.get("D2_EMU_DIR", __import__("os").path.expanduser("~/d2d-lab/emu")), "mpq")), "bin", "game.exe")
 pe = pefile.PE(exe, fast_load=True)
 base = pe.OPTIONAL_HEADER.ImageBase
 img = pe.get_memory_mapped_image()

@@ -4,8 +4,8 @@
 set -e
 here=$(cd "$(dirname "$0")" && pwd)
 S=${D2_SCRATCH:-/tmp/d2agent-pa-verifyb2}
-export D2_MPQ_DIR=${D2_MPQ_DIR:-/tmp/ug-emu}
-export D2_PATCH_INSTALLER=$HOME/Downloads/LODPatch_114d.exe
+export D2_MPQ_DIR=${D2_MPQ_DIR:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq}
+export D2_PATCH_INSTALLER=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe
 SEED=$1; t=$2
 [ -x "$HOME/d2d-lab/vb2/bin/vb2_tele_probe-$t" ] || bash "$here/vb2_probe_build.sh" "$t" vb2_tele_probe
 nice -n 19 "$HOME/d2d-lab/vb2/bin/vb2_tele_probe-$t" "$S/tele-$SEED.cases.tsv" > "$S/tele-$SEED.d2d-$t.tsv"
