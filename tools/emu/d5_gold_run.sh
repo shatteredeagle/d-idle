@@ -1,7 +1,7 @@
 #!/bin/bash
 # decomp5 (worker host): gold clamp oracle: limits of FUN_00622e70/623460 and the load clamp vs d2d. usage: d5_gold_run.sh [limits|load]
 T=$HOME/d2d-lab/wt-decomp5; B=$HOME/d2d-lab/build-decomp5; O=$HOME/d2d-lab/d5/gold
-export PATH=$HOME/.local/bin:$PATH D2_MPQ_DIR=/tmp/ug-emu D2_PATCH_INSTALLER=$HOME/Downloads/LODPatch_114d.exe D2_BUILD=$B
+export PATH=$HOME/.local/bin:$PATH D2_MPQ_DIR=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq D2_PATCH_INSTALLER=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe D2_BUILD=$B
 mkdir -p $O; H=$(cd "$(dirname "$0")" && pwd)
 cd $T/tools/emu
 case ${1:-load} in

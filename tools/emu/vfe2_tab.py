@@ -3,7 +3,7 @@
 Row: +0 start function (called by FUN_005a7c20 at 0x5a7d67), +4 event 0 handler, +8 event 1 handler (FUN_005a7be0).
   tools/emu/run-on-worker.sh vfe2_tab.py > /tmp/d2agent-verifyfreezeend2/tab.txt"""
 import emu
-e = emu.Emu("/tmp/casttrace/game.exe")
+e = emu.Emu(__import__("os").path.join(__import__("os").environ.get("D2_EMU_DIR", __import__("os").path.expanduser("~/d2d-lab/emu")), "casttrace", "game.exe"))
 base = 0x6e2260
 for m in range(16):
     row = [e.r32(base + 16 * m + 4 * k) for k in range(4)]

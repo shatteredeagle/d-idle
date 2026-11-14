@@ -131,7 +131,7 @@ func TestReviveFlow(t *testing.T) {
 	// dies: the transition is counted once
 	clk.t = clk.t.Add(10 * time.Second)
 	rd.set(merc.MercState{Known: true, Owned: true, Alive: false, Level: 10, FreeCells: -1})
-	if got := w.ReviveStep(ctx, townSnap(5000, true)); got != "merc revived" || rev.calls != 1 {
+	if got := w.ReviveStep(ctx, townSnap(5000, false)); got != "merc revived" || rev.calls != 1 { // no kit: gold only (V read)
 		t.Fatalf("got %q calls %d", got, rev.calls)
 	}
 	if st := w.Status(); st["deathsLastHour"] != 1 || st["revivesLastHour"] != 1 {
@@ -145,9 +145,10 @@ func TestReviveFlow(t *testing.T) {
 	if got := w.ReviveStep(ctx, townSnap(700, true)); !strings.Contains(got, "gold") || rev.calls != 1 {
 		t.Errorf("poor: %q", got)
 	}
-	// no kit
-	if got := w.ReviveStep(ctx, townSnap(9000, false)); !strings.Contains(got, "kit") {
-		t.Errorf("kit: %q", got)
+	rd.set(merc.MercState{Known: true, Owned: true, Alive: false, Level: 10, FreeCells: -1})
+	// survival first: before the shop, with no potion carried, the revive waits
+	if got := w.ReviveFirst(ctx, townSnap(9000, false)); got != "" {
+		t.Errorf("revive first without potions: %q", got)
 	}
 	// field: no step outside town
 	s := townSnap(9000, true)
@@ -162,6 +163,12 @@ func TestReviveFlow(t *testing.T) {
 	if got := w.ReviveStep(ctx, townSnap(9000, true)); got != "merc revive failed" {
 		t.Errorf("failed: %q", got)
 	}
+	// backoff: no second attempt within the gap
+	calls := rev.calls
+	if got := w.ReviveStep(ctx, townSnap(9000, true)); !strings.Contains(got, "backoff") || rev.calls != calls {
+		t.Errorf("backoff: %q", got)
+	}
+	clk.t = clk.t.Add(mercSkipGap + time.Second)
 	if st := w.Status(); st["revivesLastHour"] != 1 {
 		t.Errorf("a failed revive was counted: %+v", st)
 	}
@@ -726,16 +733,16 @@ func TestFighterSeamGetsTheMercStateOnlyWithTheKnob(t *testing.T) {
 	}
 }
 
-// g2e F5: the revive runs before the shop, on pack gold, with the kit test waived (the kit reserve is inside the bar).
+// g2e F5: the revive runs before the shop, on pack gold, with a healing potion carried; an empty belt shops first (mercrevive).
 func TestReviveFirstBeforeShop(t *testing.T) {
 	rd := &fakeReader{st: merc.MercState{Known: true, Owned: true, Level: 10}}
 	rev := &fakeReviver{paid: 750}
 	w, buf, clk := testWire(t, rd, rev)
 	ctx := context.Background()
-	if got := w.ReviveFirst(ctx, townSnap(300, false)); got != "" || rev.calls != 0 || buf.Len() != 0 {
+	if got := w.ReviveFirst(ctx, townSnap(300, true)); got != "" || rev.calls != 0 || buf.Len() != 0 {
 		t.Fatalf("poor purse: %q calls %d log %q", got, rev.calls, buf)
 	}
-	if got := w.ReviveFirst(ctx, townSnap(9000, false)); got != "merc revived" || rev.calls != 1 {
+	if got := w.ReviveFirst(ctx, townSnap(9000, true)); got != "merc revived" || rev.calls != 1 {
 		t.Fatalf("funded, no kit yet: %q calls %d", got, rev.calls)
 	}
 	clk.t = clk.t.Add(time.Minute)
@@ -801,7 +808,7 @@ func TestReviveFetchesTheStashPart(t *testing.T) {
 // Without a bank only the pack counts before the shop, as before; with one the stash counts too.
 func TestReviveFirstCountsTheStashOnlyWithABank(t *testing.T) {
 	dead := merc.MercState{Known: true, Owned: true, Level: 16}
-	s := townSnap(1100, false)
+	s := townSnap(1100, true)
 	s.Player.StashGold = 900
 	rev := &fakeReviver{paid: 1900}
 	w, _, _ := testWire(t, &fakeReader{st: dead}, rev)
@@ -950,10 +957,14 @@ func (o *orderTown) Chores(_ context.Context, p bot.ChorePlan) (bot.ChoreReport,
 type orderReviver struct {
 	fakeReviver
 	order *[]string
+	after func()
 }
 
 func (r *orderReviver) Revive(ctx context.Context) (int, error) {
 	*r.order = append(*r.order, "revive")
+	if r.after != nil {
+		defer r.after()
+	}
 	return r.fakeReviver.Revive(ctx)
 }
 
@@ -972,8 +983,10 @@ func TestReviveBeforePotionsSellsJunkFirst(t *testing.T) {
 	var order []string
 	rev := &orderReviver{order: &order}
 	rev.paid = 750
-	w, _, _ := testWire(t, &fakeReader{st: dead}, rev)
-	snap := townSnap(400, false)
+	rdr := &fakeReader{st: dead}
+	rev.after = func() { rdr.set(merc.MercState{Known: true, Owned: true, Alive: true, Level: 10}) }
+	w, _, _ := testWire(t, rdr, rev)
+	snap := townSnap(400, true)
 	snap.Player.Level = 12
 	w.e.Read = &mercSnapReader{s: snap}
 	town := &orderTown{order: &order, sold: func() { snap.Player.Gold = 800 }}
@@ -992,8 +1005,10 @@ func TestReviveBeforePotionsSellsJunkFirst(t *testing.T) {
 	order = nil
 	rev2 := &orderReviver{order: &order}
 	rev2.paid = 750
-	w2, _, _ := testWire(t, &fakeReader{st: dead}, rev2)
-	snap2 := townSnap(900, false)
+	rdr2 := &fakeReader{st: dead}
+	rev2.after = func() { rdr2.set(merc.MercState{Known: true, Owned: true, Alive: true, Level: 10}) }
+	w2, _, _ := testWire(t, rdr2, rev2)
+	snap2 := townSnap(900, true)
 	snap2.Player.Level = 12
 	w2.e.Read = &mercSnapReader{s: snap2}
 	mt2 := &mercTown{Townsman: &orderTown{order: &order}, w: w2}
@@ -1010,7 +1025,7 @@ func TestReviveQuoteUnreadableLogsOncePerVisitAndRetries(t *testing.T) {
 	rev := &probeReviver{err: errors.New("no hireling")}
 	w, buf, clk := testWire(t, &fakeReader{st: dead}, rev)
 	ctx := context.Background()
-	w.ReviveFirst(ctx, townSnap(1500, false))
+	w.ReviveFirst(ctx, townSnap(1500, true))
 	w.ReviveStep(ctx, townSnap(1500, true))
 	if n := strings.Count(buf.String(), "revive quote unreadable"); n != 1 || rev.probes != 2 {
 		t.Fatalf("unreadable lines %d probes %d (one line per visit, probe each time):\n%s", n, rev.probes, buf)
@@ -1199,3 +1214,26 @@ func TestHireStepRefusesWhileMercWearsGear(t *testing.T) {
 }
 
 func withKnown(s merc.MercState) merc.MercState { s.GearKnown = true; return s }
+
+// mercrevive B1: an empty belt shops first (survival), then the revive runs on gold alone, for a caster and a melee class.
+func TestEmptyBeltShopsBeforeTheRevive(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		dead := merc.MercState{Known: true, Owned: true, Level: 10} // 750
+		var order []string
+		rev := &orderReviver{order: &order}
+		rev.paid = 750
+		rdr := &fakeReader{st: dead}
+		rev.after = func() { rdr.set(merc.MercState{Known: true, Owned: true, Alive: true, Level: 10}) }
+		w, _, _ := testWire(t, rdr, rev)
+		snap := townSnap(1500, false) // no potion, no portal
+		snap.Player.Class = class
+		w.e.Read = &mercSnapReader{s: snap}
+		mt := &mercTown{Townsman: &orderTown{order: &order}, w: w}
+		if _, err := mt.Chores(context.Background(), bot.ChorePlan{Potions: true}); err != nil {
+			t.Fatal(err)
+		}
+		if got := strings.Join(order, ","); got != "shop,revive" {
+			t.Errorf("%v: order %s, want shop,revive", class, got)
+		}
+	}
+}

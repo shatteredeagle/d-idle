@@ -4,8 +4,8 @@ UP=$HOME/d2d-lab/pr/skmiss
 H=$(dirname "$0")
 cp $H/sk_rest_calc.py $H/nec_calc.py $UP/tools/emu/
 cd $UP/tools/emu || exit 1
-export D2_MPQ_DIR=/tmp/ug-emu D2_PATCH_INSTALLER=$HOME/Downloads/LODPatch_114d.exe
-PY=${PY:-$HOME/d2d-lab/pr/walk2-venv/bin/python}
+export D2_MPQ_DIR=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq D2_PATCH_INSTALLER=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe
+PY=${PY:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/venv/bin/python}
 O=/tmp/sorcrest; mkdir -p $O
 nice $PY sk_rest_calc.py gen "$1" "$2" > $O/calc_cases.tsv
 wc -l < $O/calc_cases.tsv

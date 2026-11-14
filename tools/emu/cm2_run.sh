@@ -16,8 +16,8 @@ if [ ! -x "$S/cm2_probe" ] || [ "$HERE/cm2_probe.cpp" -nt "$S/cm2_probe" ]; then
   ( cd "$B" && nice c++ -DD2D_TEST_SKIPPED=77 -DSTORMLIB_NO_AUTO_LINK $IN -I$HOME/d2d-lab/src/build/_deps/stormlib-src/src -O1 -std=c++26 -include $SRC/cmake/no_near_far.hpp -Wno-missing-field-initializers -o "$S/cm2_probe" "$HERE/cm2_probe.cpp" components/game/libgame.a _deps/stormlib-build/libstorm.a /usr/lib/libz.so /usr/lib/libbz2.so components/install/libinstall_detect.a )
   echo built "$S/cm2_probe"
 fi
-export D2_MPQ_DIR=${D2_MPQ_DIR:-/tmp/ug-emu}
-export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-$HOME/Downloads/LODPatch_114d.exe}
+export D2_MPQ_DIR=${D2_MPQ_DIR:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq}
+export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe}
 bash "$HERE/run-py.sh" cm2_game.py game "$HOME/mmtab" "$N" "$SEED" "$OUT"
 wc -l "$OUT/cases.txt" "$OUT/game.tsv"
 nice "$S/cm2_probe" --skill-missile "$OUT/cases.txt" > "$OUT/d2d.txt"

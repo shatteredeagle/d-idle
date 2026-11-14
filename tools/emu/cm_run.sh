@@ -9,9 +9,9 @@ MODE=${1:?rows|hit}; N=${2:-3000}; SEED=${3:-1}
 OUT=${D2_SCRATCH:-/tmp/d2agent-covmissiles}/$MODE$SEED
 mkdir -p "$OUT"
 export D2=$HOME/d2d-lab/pr/palskill
-export D2_MPQ_DIR=${D2_MPQ_DIR:-/tmp/ug-emu}
-export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-$HOME/Downloads/LODPatch_114d.exe}
-PY=$HOME/d2d-lab/pr/walk2-venv/bin/python
+export D2_MPQ_DIR=${D2_MPQ_DIR:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq}
+export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe}
+PY=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/venv/bin/python
 export PYTHONPATH=$HERE:$D2/tools/emu
 cd "$D2/tools/emu"
 BIN=${D2_SCRATCH:-/tmp/d2agent-covmissiles}

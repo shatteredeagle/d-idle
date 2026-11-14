@@ -5,5 +5,5 @@ import sys
 import disasm
 
 va, n = sys.argv[1], sys.argv[2]
-sys.argv = ["disasm", "--exe", "/tmp/casttrace/game.exe", va, n]
+sys.argv = ["disasm", "--exe", __import__("os").path.join(__import__("os").environ.get("D2_EMU_DIR", __import__("os").path.expanduser("~/d2d-lab/emu")), "casttrace", "game.exe"), va, n]
 disasm.main()

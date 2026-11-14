@@ -77,7 +77,7 @@ int main(int argc, char** argv) {
     if (argc < 2) return 2;
     const char* mpq_dir = std::getenv("D2_MPQ_DIR");
     const char* patch = std::getenv("D2_PATCH_INSTALLER");
-    auto data = load_game_data(fs::path(mpq_dir ? mpq_dir : "/tmp/ug-emu"), patch ? fs::path(patch) : fs::path{}, 0x51);
+    auto data = load_game_data(fs::path(mpq_dir ? mpq_dir : (std::getenv("D2_EMU_DIR") ? std::string(std::getenv("D2_EMU_DIR")) + "/mpq" : std::string("emu/mpq"))), patch ? fs::path(patch) : fs::path{}, 0x51);
     if (!data || !data->patched) { std::printf("FAIL: no patched data\n"); return 1; }
     std::map<int, std::unique_ptr<Probe>> probes;
     std::ifstream cases(argv[1]);

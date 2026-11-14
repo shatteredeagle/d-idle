@@ -3,7 +3,7 @@
 # usage: d5_belt_run.sh TREE BUILD OUT [N]   (needs uv, D2_MPQ_DIR, D2_PATCH_INSTALLER)
 set -u
 T=$1; B=$2; O=$3; N=${4:-100000}
-export PATH=$HOME/.local/bin:$PATH D2_MPQ_DIR=${D2_MPQ_DIR:-/tmp/ug-emu} D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-$HOME/Downloads/LODPatch_114d.exe} D2_BUILD=$B
+export PATH=$HOME/.local/bin:$PATH D2_MPQ_DIR=${D2_MPQ_DIR:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq} D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe} D2_BUILD=$B
 mkdir -p $O; cd $T/tools/emu
 git -C $T log --oneline -1
 nice -n 19 uv run python belt_pickup.py gen $N 1 > $O/bp_cases.tsv

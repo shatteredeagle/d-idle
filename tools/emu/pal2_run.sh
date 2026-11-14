@@ -7,11 +7,11 @@ set -e
 here=$(cd "$(dirname "$0")" && pwd)
 n=${1:-20000}; seed=${2:-7}
 S=${D2_SCRATCH:-/tmp/d2agent-palskill}
-export D2_MPQ_DIR=${D2_MPQ_DIR:-/tmp/ug-emu}
-export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-$HOME/Downloads/LODPatch_114d.exe}
-UP=${UP:-$HOME/d2d-lab/src}
+export D2_MPQ_DIR=${D2_MPQ_DIR:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq}
+export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe}
+UP=${UP:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/upstream}
 export PYTHONPATH=$here:$UP/tools/emu:${PYTHONPATH:-}
-PY=${PY:-$HOME/d2d-lab/pr/walk2-venv/bin/python}
+PY=${PY:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/venv/bin/python}
 c=$S/pal2-c$seed.tsv; g=$S/pal2-g$seed.tsv; b=$S/pal2-b$seed.tsv; k=$S/pal2-k$seed.tsv
 cd "$UP/tools/emu"
 "$PY" "$here/pal2.py" gen "$n" "$seed" > "$c"

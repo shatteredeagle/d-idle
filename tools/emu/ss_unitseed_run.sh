@@ -4,11 +4,11 @@
 set -u
 here=$(cd "$(dirname "$0")" && pwd)
 S=${D2_SCRATCH:-/tmp/d2agent-seedspawn}
-UP=${UP:-$HOME/d2d-lab/src}
-export D2_MPQ_DIR=${D2_MPQ_DIR:-/tmp/ug-emu}
-export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-$HOME/Downloads/LODPatch_114d.exe}
+UP=${UP:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/upstream}
+export D2_MPQ_DIR=${D2_MPQ_DIR:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq}
+export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe}
 export PYTHONPATH=$here:$UP/tools/emu:${PYTHONPATH:-}
-PY=${PY:-$HOME/d2d-lab/pr/walk2-venv/bin/python}
+PY=${PY:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/venv/bin/python}
 bash $here/ss_cppbuild.sh ss_seed_test > $S/ss_seed_build.log 2>&1 || { tail -20 $S/ss_seed_build.log; exit 1; }
 cd "$UP/tools/emu"
 nice "$PY" $here/ss_unitseed.py $1 $2 > $S/ss_us_game_$2.txt

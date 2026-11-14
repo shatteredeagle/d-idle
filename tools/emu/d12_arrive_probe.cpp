@@ -31,7 +31,7 @@ namespace fs = std::filesystem;
 static auto load(unsigned seed) {
     const char* mpq_dir = std::getenv("D2_MPQ_DIR");
     const char* patch = std::getenv("D2_PATCH_INSTALLER");
-    return load_game_data(fs::path(mpq_dir ? mpq_dir : "/tmp/ug-emu"), patch ? fs::path(patch) : fs::path{}, seed);
+    return load_game_data(fs::path(mpq_dir ? mpq_dir : (std::getenv("D2_EMU_DIR") ? std::string(std::getenv("D2_EMU_DIR")) + "/mpq" : std::string("emu/mpq"))), patch ? fs::path(patch) : fs::path{}, seed);
 }
 
 static int sub(float cells) { return int(std::floor(cells * 5)); }
