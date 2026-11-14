@@ -138,6 +138,7 @@
 | gameexe-retire-soak | deferred | gameexe-retire-soak | `docs/gameexe-retire.md` | - |
 | tpreserve-live | proposed | - | `docs/probes/tpreserve.md` | - |
 | towntests | proposed | - | `docs/towntests.md`<br>`internal/town/playerstash_test.go`<br>`internal/town/tidy_test.go`<br>`internal/town/invstash_test.go` | - |
+| mercrevive2 | proposed | - | `docs/mercrevive.md`<br>`internal/merc`<br>`cmd/d2bot/mercwire.go`<br>`cmd/d2bot/mercwire_test.go`<br>`docs/contracts/merc-policy.md` | - |
 | playsession | proposed | - | `tools/play-session.sh`<br>`docs/play-session.md` | - |
 | upstream-next | proposed | - | `docs/research/upstream-next.md` | - |
 | statusrefresh | proposed | - | `docs/plan/STATUS.md` | - |
@@ -187,6 +188,7 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- ae29419b 11-14 06:08 `Merge agent/mercrevive: mercrevive2: revive on gold alone, empty belt shops first, failure backoff` (mercrevive)
 - c971e292 11-14 05:49 `Merge agent/decomp16: Merge branch 'main' into TASK-400` (decomp16)
 - df8497de 11-14 05:48 `Merge branch 'main' into TASK-400` (-)
 - 2f609b4c 11-14 05:44 `Merge agent/towntests: Merge origin/main into agent/towntests` (towntests)
@@ -196,5 +198,4 @@
 - efcd0568 11-14 05:26 `Merge agent/sellskip: Merge origin/main into agent/sellskip` (sellskip)
 - 89d7741d 11-14 05:21 `Merge origin/main into agent/staletarget` (-)
 - 490d309e 11-14 05:18 `Merge origin/main into agent/sellskip` (-)
-- 48b09a74 11-14 05:08 `Merge agent/hero14: hero14: leakcheck wording` (hero14)
 <!-- statusgen:end -->

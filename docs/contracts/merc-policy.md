@@ -16,7 +16,7 @@ How the bot gets, keeps and gears a mercenary. The user decided on 2026-10-30 to
 ## Requirements
 
 ### Requirement: Free Rogue first
-The bot SHALL claim the free Rogue at Kashya after Blood Raven is dead (quest state 3 to 5, Normal only) and MUST NOT pay for any Act 1 hire before that; hiring any merc first forfeits the reward, and a dead owned merc still forfeits it. Source: plan-v2 section 10 (user decision), 10.6 and 11.3 (V-d2d: no hire window, gold unchanged).
+The bot SHALL claim the free Rogue at Kashya after Blood Raven is dead (quest state 3 to 5; the game takes the first merc list entry, any owned merc refuses, a Normal-only test was not found in the read path (U); the bot still claims in Normal only) and MUST NOT pay for any Act 1 hire before that; hiring any merc first forfeits the reward, and a dead owned merc still forfeits it. Source: plan-v2 section 10 (user decision), 10.6 and 11.3 (V-d2d: no hire window, gold unchanged).
 
 #### Scenario: Reward available
 - **WHEN** Blood Raven is dead, no merc is owned and Kashya's menu is open in Normal
