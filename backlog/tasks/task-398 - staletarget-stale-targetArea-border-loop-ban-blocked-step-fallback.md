@@ -24,6 +24,13 @@ owns:
   - "internal/watch/whyline.json"
   - "internal/env/tuning_bot.go"
   - "docs/staletarget.md"
+  - "internal/bot/areaskip_test.go"
+  - "internal/bot/runner.go"
+  - "internal/bot/observe.go"
+  - "internal/bot/ordersguard.go"
+  - "internal/goals/runner.go"
+  - "internal/watch/whyline_test.go"
+  - "internal/task/executor_unpark_test.go"
 exclusive: []
 contracts: []
 ---
