@@ -263,6 +263,7 @@ docs/t0-variants.md  credit-runner  qdensity
 docs/tester-guide.md  credit-runner  testerpack
 docs/tester-licence.md  credit-runner  testerlicence
 docs/tidy.md  credit-runner  tidy
+docs/towntests.md  credit-runner  towntests
 docs/ui-design-system.md  credit-runner  nopins
 docs/upstream/  credit-runner  prpost
 docs/upstream/  credit-runner  prpost2
@@ -430,12 +431,15 @@ internal/town/beltfix_test.go  credit-runner  beltfix
 internal/town/beltrepair.go  credit-runner  beltfix
 internal/town/chores.go  credit-runner  repairtrip
 internal/town/chores.go  credit-runner  tidy
+internal/town/invstash_test.go  credit-runner  towntests
 internal/town/playerid.go  credit-runner  itemverbs2
 internal/town/playerstash.go  credit-runner  itemverbs2
+internal/town/playerstash_test.go  credit-runner  towntests
 internal/town/repairtrip_test.go  credit-runner  repairtrip
 internal/town/sim  credit-runner  beltfix
 internal/town/tidy.go  credit-runner  tidy
 internal/town/tidy_test.go  credit-runner  tidy
+internal/town/tidy_test.go  credit-runner  towntests
 internal/town/town.go  credit-runner  itemverbs2
 internal/town/town.go  credit-runner  repairtrip
 internal/town/town.go  credit-runner  tidy

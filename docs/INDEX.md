@@ -519,6 +519,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [tomestat.md](tomestat.md): Tome stat 70 lost in the field (tomestat) (status: current. Tags: V = counted in the Gate 2 log or read in code, S = inference from code, U = unverified live.)
 - [town.md](town.md): Town and loot: internal/town, internal/loot (agent TOWN)
 - [townshop.md](townshop.md): Town resupply in Gate 2 (townshop) (status: current. Tags: V = counted in the Gate 2 bot log (read-only), S = code, U = unverified.)
+- [towntests.md](towntests.md): Table-dependent tests that rotted (TASK-401)
 - [townwedge.md](townwedge.md): townwedge: the permanent town-exit wedge (status: fix merged with card townwedge. Tags: VERIFIED = log line or test, INFERRED = reading. Evidence:...)
 - [ui-design-system.md](ui-design-system.md): d.idle watch UI design system (TASK-228, uidesign) (status: accepted design (user decisions 2026-11-09 in section 13), being implemented in small PRs (section 15)....)
 - [ui-regression-plan.md](ui-regression-plan.md): Watch UI regression tests and migration plan (TASK-228, uidesign) (status: proposal (2026-11-09); built so far: see ui-design-system.md section 15 (row 14 `uilayout` is section...)
