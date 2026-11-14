@@ -1,10 +1,13 @@
 ---
 id: TASK-417
-title: 'prswing2: swing start PR candidate r2, the five verifier edits (fid/swing-start-r2)'
-status: Proposed
+title: >-
+  prswing2: swing start PR candidate r2, the five verifier edits
+  (fid/swing-start-r2)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-14T15:00:00Z'
+updated_date: '2026-11-14T15:07:00Z'
 labels:
   - d2d
   - upstream-pr

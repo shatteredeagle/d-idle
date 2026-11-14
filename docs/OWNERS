@@ -285,8 +285,6 @@ docs/upstream/  credit-runner  prpost
 docs/upstream/  credit-runner  prpost2
 docs/upstream/  credit-runner  prpost3
 docs/upstream/  credit-runner  prprep
-docs/upstream/drafts/swing-start.md  credit-runner  prswing2
-docs/upstream/pr-queue.md  credit-runner  prswing2
 docs/wiring.md  credit-runner  wiring2
 internal/art/skillicons.go  credit-runner  skilltrees
 internal/art/skillicons_test.go  credit-runner  skilltrees
