@@ -500,6 +500,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [smoke.md](smoke.md): Smoke: a one-line verdict per bot change (TASK-111) (status: built and unit-tested offline (U live: never run on the game yet). It is the regression floor while Gate 2...)
 - [sorceress-early.md](sorceress-early.md): Sorceress early game (clvl 1 to 12) and friends readiness (TASK-267, sorcready, 2026-11-10) (status: sections 1 to 6 are the sorcready findings (superseded where section 7 says so). Section 7 records the...)
 - [sorcnormal30.md](sorcnormal30.md): Sorceress normal30 table (TASK-144, card sorcnormal30) (status: since TASK-267 (sorcready2) the table is no longer v3-identical: Warmth at clvl 2, a cold line from clvl...)
+- [staletarget.md](staletarget.md): Stale target area, border-loop bans and blocked journey steps (TASK-398) (status: fix landed on branch agent/staletarget (not deployed; no live run). Tags: V verified (how is said), S...)
 - [stance.md](stance.md): Fight stance (cards stancefix, stancelever) (status: built and tested offline; NOT run in a live game. Tags: V = proven by a test in this tree or by a log...)
 - [summon.md](summon.md): Necromancer upkeep (internal/combat/necro.go)
 - [t0-slice.md](t0-slice.md): T0 slice (TASK-21, phase A3: offline) (status: phase A3 is code and tests only (A3 wires the four T0 fight-time points on top of the five T1 points of...)
