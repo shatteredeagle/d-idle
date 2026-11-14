@@ -172,6 +172,8 @@ func botKnobs() []Knob {
 			Desc: "How long a navigation fault (stuck, no exit to the area) keeps the planner out of an area. Short on purpose: it is a bot fault, not danger."},
 		{Key: "bot.areaIdleSec", Label: "Longest wait for area bans", Unit: "s", Default: 60, Min: 15, Max: 600,
 			Desc: "When every candidate area is skipped or banned, the bot waits this long in town at most, then farms the least bad area anyway (a death streak waits at least the starter ban cap)."},
+		{Key: "bot.questBlockedFarmMin", Label: "Blocked quest step: farm after", Unit: "min", Default: 10, Min: 1, Max: 120,
+			Desc: "A quest step the guards refuse is waited out this long; then the hero farms the best leveling area of the level plan and retries the step after this wait, doubling each time (cap x64). Shown as journeyBlocked in the status."},
 		{Key: "bot.stallWarnMin", Label: "Campaign stall: warn and fresh game", Unit: "min", Default: 30, Min: 0, Max: 240,
 			Desc: "Virtual minutes without campaign progress (no kill or xp, no non-town area entered, no purchase, no quest step) before the bot logs 'campaign stalled' and starts a fresh game. 0 turns the stall ladder off. Longest legitimate stretch in the navsoak logs: 19 min."},
 		{Key: "bot.stallExitMin", Label: "Campaign stall: exit window", Unit: "min", Default: 30, Min: 5, Max: 240,
