@@ -12,7 +12,7 @@ mkdir -p $B
  -DFETCHCONTENT_SOURCE_DIR_STORMLIB=$D/stormlib-src -DCMAKE_EXPORT_COMPILE_COMMANDS=ON > $B.cmake.log 2>&1 || { tail -20 $B.cmake.log; exit 1; }
 nice -n 19 ninja -C $B -j1 $SUITES > $B.build.log 2>&1
 echo "build rc=$?"; grep -E "error|FAILED" $B.build.log | head -20; tail -2 $B.build.log
-export D2_MPQ_DIR=/tmp/ug-emu D2_PATCH_INSTALLER=$HOME/Downloads/LODPatch_114d.exe
+export D2_MPQ_DIR=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq D2_PATCH_INSTALLER=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe
 for t in $SUITES; do
   f=$(ls $B/tests/$t $B/tests/*/$t 2>/dev/null | head -1)
   (cd $B && timeout 1500 nice -n 19 $f > $B.run-$t.log 2>&1); echo "$t rc=$? $(tail -1 $B.run-$t.log | cut -c1-100)"

@@ -14,7 +14,7 @@ import sys
 import capstone
 import pefile
 
-EXE = "/tmp/casttrace/game.exe"
+EXE = __import__("os").path.join(__import__("os").environ.get("D2_EMU_DIR", __import__("os").path.expanduser("~/d2d-lab/emu")), "casttrace", "game.exe")
 HITS = [0x421da9, 0x421e77, 0x4b83d5, 0x4b83fb, 0x55b6d4, 0x55b76b, 0x5c8be4, 0x5ce43c, 0x6435b2, 0x646525]
 TARGETS = [0x55b720, 0x55b6c0]
 pe = pefile.PE(EXE)

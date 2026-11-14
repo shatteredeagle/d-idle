@@ -5,11 +5,11 @@ set -e
 here=$(cd "$(dirname "$0")" && pwd)
 n=${1:-8000}; seed=${2:-5}
 S=${D2_SCRATCH:-/tmp/d2agent-pa-verifypalskill2}
-export D2_MPQ_DIR=${D2_MPQ_DIR:-/tmp/ug-emu}
-export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-$HOME/Downloads/LODPatch_114d.exe}
-UP=${UP:-$HOME/d2d-lab/src}
+export D2_MPQ_DIR=${D2_MPQ_DIR:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq}
+export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe}
+UP=${UP:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/upstream}
 export PYTHONPATH=$here:$UP/tools/emu:${PYTHONPATH:-}
-PY=${PY:-$HOME/d2d-lab/pr/walk2-venv/bin/python}
+PY=${PY:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/venv/bin/python}
 [ -x "$S/pal2_test" ] || bash "$here/pal2_build.sh"
 c=$S/vp2-c$seed.tsv; g=$S/vp2-g$seed.tsv; b=$S/vp2-b$seed.tsv; k=$S/vp2-k$seed.tsv
 cd "$UP/tools/emu"

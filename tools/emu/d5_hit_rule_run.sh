@@ -1,7 +1,7 @@
 #!/bin/bash
 # decomp5 (worker host): get-hit decision (FUN_0057cee0) and drawn-frame (FUN_004b1280) differentials against test_combat on current main
 T=$HOME/d2d-lab/wt-decomp5; B=$HOME/d2d-lab/build-decomp5; O=$HOME/d2d-lab/d5/hit
-export PATH=$HOME/.local/bin:$PATH D2_MPQ_DIR=/tmp/ug-emu D2_PATCH_INSTALLER=$HOME/Downloads/LODPatch_114d.exe D2_BUILD=$B
+export PATH=$HOME/.local/bin:$PATH D2_MPQ_DIR=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq D2_PATCH_INSTALLER=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe D2_BUILD=$B
 H=$(cd "$(dirname "$0")" && pwd)
 cp $H/hit_rule.py $H/hit_render.py $T/tools/emu/; cd $T/tools/emu
 nice -n 19 uv run python hit_rule.py gen ${1:-100000} 7 > $O/r_cases.tsv

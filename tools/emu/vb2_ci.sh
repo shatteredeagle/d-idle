@@ -7,7 +7,7 @@ here=$(cd "$(dirname "$0")" && pwd)
 NAME=$1; OWN=$2
 V=$HOME/d2d-lab/vb2; T=$V/wt-$NAME; B=$V/build-$NAME
 S=${D2_SCRATCH:-/tmp/d2agent-pa-verifyb2}; O=$S/ci-$NAME; mkdir -p "$O"
-export D2_MPQ_DIR=/tmp/ug-emu D2_PATCH_INSTALLER=$HOME/Downloads/LODPatch_114d.exe
+export D2_MPQ_DIR=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq D2_PATCH_INSTALLER=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe
 echo "== suites ($NAME)"
 for t in test_rules test_game_rules test_monsters test_monster_thinks test_monster_ai test_combat test_game test_sk_ground test_skills "$OWN"; do
   f=$B/tests/$t; [ -x "$f" ] || f=$(ls "$B"/tests/*/"$t" 2>/dev/null | head -1)

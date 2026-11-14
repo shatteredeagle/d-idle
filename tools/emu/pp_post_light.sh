@@ -1,6 +1,6 @@
 #!/bin/bash
 # prpost (worker host): Lightning r4: every commit builds, the differential on three seeds (parent and claim), neighbours, the verifier's two variants, ctest, presubmit.
-export PATH=$HOME/.local/bin:$PATH D2_MPQ_DIR=/tmp/ug-emu D2_PATCH_INSTALLER=$HOME/Downloads/LODPatch_114d.exe
+export PATH=$HOME/.local/bin:$PATH D2_MPQ_DIR=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq D2_PATCH_INSTALLER=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe
 HERE=$(cd "$(dirname "$0")" && pwd)
 T=$HOME/d2d-lab/wt-pp-light4; B=$HOME/d2d-lab/build-pp-light4; O=$HOME/d2d-lab/pp-light4; mkdir -p $O
 cd $T

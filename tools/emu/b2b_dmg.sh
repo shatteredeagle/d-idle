@@ -24,7 +24,7 @@ for l in base r4; do
 	nice -n 19 c++ $R $V3 -O1 -std=c++26 -Wno-missing-field-initializers -o "$S/v3_d2d_$l" "$here/v3_d2d.cpp"; echo "v3_d2d_$l rc=$?"
 	nice -n 19 c++ $R $M -O1 -std=c++26 -Wno-missing-field-initializers -o "$S/mdmg2_d2d_$l" "$here/mdmg2_d2d.cpp"; echo "mdmg2_d2d_$l rc=$?"
 done
-export D2_MPQ_DIR=/tmp/ug-emu D2_PATCH_INSTALLER=$HOME/Downloads/LODPatch_114d.exe
+export D2_MPQ_DIR=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq D2_PATCH_INSTALLER=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe
 echo "== v4_run.py 6000 20261103 (real Fight::absorb)"
 timeout 2900 bash $here/run-py.sh v4_run.py 6000 20261103 2>&1 | tee $S/v4_run.txt | tail -60
 echo "== mdmg2.py 20000 20261103"

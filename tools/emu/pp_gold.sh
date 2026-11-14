@@ -1,6 +1,6 @@
 #!/bin/bash
 # prprep (worker host): rebase local/fid-load-gold-clamp onto upstream main and re-run its differential, with the claim and with the claim's components reverted.
-export PATH=$HOME/.local/bin:$PATH D2_MPQ_DIR=/tmp/ug-emu D2_PATCH_INSTALLER=$HOME/Downloads/LODPatch_114d.exe
+export PATH=$HOME/.local/bin:$PATH D2_MPQ_DIR=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq D2_PATCH_INSTALLER=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe
 HERE=$(cd "$(dirname "$0")" && pwd)
 F=$HOME/d2d-lab/fork/src; T=$HOME/d2d-lab/wt-pp-gold; B=$HOME/d2d-lab/build-pp-gold; O=$HOME/d2d-lab/pp-gold; mkdir -p $O
 cd $F
