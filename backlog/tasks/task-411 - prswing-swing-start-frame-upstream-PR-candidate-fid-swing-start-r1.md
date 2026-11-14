@@ -1,10 +1,11 @@
 ---
 id: TASK-411
 title: 'prswing: swing start frame upstream PR candidate (fid/swing-start-r1)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-14T11:32:00Z'
+updated_date: '2026-11-14T13:45:00Z'
 labels:
   - d2d
   - upstream-pr
