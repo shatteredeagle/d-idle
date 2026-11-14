@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Merge branch 'main' into TASK-415 <!--sg:agent/prverify5-->
 - Merge branch 'main' into TASK-411 <!--sg:agent/prswing-->
 - Merge branch 'main' into TASK-408 <!--sg:agent/decomp18-->
 - Merge branch 'main' into TASK-404 <!--sg:agent/swingmodel-->

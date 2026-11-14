@@ -144,6 +144,7 @@
 | areamon | proposed | - | `docs/research/areamon-trace.md`<br>`tools/emu/am_env.sh`<br>`tools/emu/am_batch.sh`<br>`tools/emu/am_model.py`<br>`docs/research/areamon-table.csv` | - |
 | levelsim | proposed | - | `tools/levelsim/`<br>`docs/levelsim.md` | - |
 | levelplan3 | in-progress | - | `internal/levelplan`<br>`internal/plandata/levelplan-normal.json`<br>`docs/plan/data/levelplan-normal.json`<br>`docs/levelplan3.md`<br>`internal/plandata/boss_levels.go`<br>`internal/bot/plan.go`<br>`internal/bot/levelplan3_test.go`<br>`internal/bot/goal.go`<br>`internal/bot/resource.go`<br>`internal/plandata/plandata_test.go`<br>`internal/plandata/boss_levels_test.go`<br>`data/campaign/normal.json`<br>`internal/campaign/campaign_test.go`<br>`internal/task/guided_test.go`<br>`internal/boss/types.go`<br>`internal/boss/run.go`<br>`internal/boss/boss_test.go`<br>`internal/boss/fake_test.go`<br>`internal/combat/fighter.go`<br>`cmd/d2bot/boss.go`<br>`cmd/bossrun/adapter.go`<br>`docs/levelplan.md`<br>`internal/watch/testdata/campaign` | - |
+| prverify5 | in-progress | - | `docs/upstream/verification-swing-start-2026-11-14.md` | - |
 | playsession | proposed | - | `tools/play-session.sh`<br>`docs/play-session.md` | - |
 | upstream-next | proposed | - | `docs/research/upstream-next.md` | - |
 | statusrefresh | proposed | - | `docs/plan/STATUS.md` | - |
@@ -193,6 +194,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- a5df8555 11-14 09:20 `Merge agent/prverify5: Merge branch 'main' into TASK-415` (prverify5)
+- 3beeb029 11-14 09:19 `Merge branch 'main' into TASK-415` (-)
 - 8d267964 11-14 08:41 `Merge agent/prswing: Merge branch 'main' into TASK-411` (prswing)
 - e598cb20 11-14 08:41 `Merge branch 'main' into TASK-411` (-)
 - 59be438e 11-14 07:58 `Merge agent/decomp18: Merge branch 'main' into TASK-408` (decomp18)
@@ -201,6 +204,4 @@
 - a1e5653a 11-14 07:49 `Merge branch 'main' into TASK-404` (-)
 - 6b301ec5 11-14 07:43 `Merge agent/warpclick: Merge branch 'main' into TASK-412` (warpclick)
 - bf3e5bbf 11-14 07:42 `decomp18: merge main, re-add AREAMON queue line` (-)
-- d46e059f 11-14 07:42 `Merge branch 'main' into TASK-412` (-)
-- 7bcf98fa 11-14 07:32 `Merge agent/levelsim: Merge branch 'main' into TASK-413` (levelsim)
 <!-- statusgen:end -->
