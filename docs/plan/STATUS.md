@@ -139,6 +139,7 @@
 | tpreserve-live | proposed | - | `docs/probes/tpreserve.md` | - |
 | towntests | proposed | - | `docs/towntests.md`<br>`internal/town/playerstash_test.go`<br>`internal/town/tidy_test.go`<br>`internal/town/invstash_test.go` | - |
 | mercrevive2 | proposed | - | `docs/mercrevive.md`<br>`internal/merc`<br>`cmd/d2bot/mercwire.go`<br>`cmd/d2bot/mercwire_test.go`<br>`docs/contracts/merc-policy.md` | - |
+| emurebuild | proposed | - | `tools/emu`<br>`docs/emu-image.md`<br>`docs/research/emu-reverify-2026-11-14.md` | - |
 | playsession | proposed | - | `tools/play-session.sh`<br>`docs/play-session.md` | - |
 | upstream-next | proposed | - | `docs/research/upstream-next.md` | - |
 | statusrefresh | proposed | - | `docs/plan/STATUS.md` | - |
@@ -188,6 +189,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 726fb64b 11-14 06:33 `Merge agent/emurebuild: Merge branch 'main' into TASK-406` (emurebuild)
+- da2c3574 11-14 06:32 `Merge branch 'main' into TASK-406` (-)
 - 97d14b90 11-14 06:28 `Merge agent/sellskip: sellskip: restore the WearBetter fix lost in a revert, tests pass with game tables` (sellskip)
 - 92e5503d 11-14 06:18 `Merge agent/decomp17: Merge branch 'main' into TASK-402` (decomp17)
 - ab383e8c 11-14 06:18 `Merge branch 'main' into TASK-402` (-)
@@ -196,6 +199,4 @@
 - c971e292 11-14 05:49 `Merge agent/decomp16: Merge branch 'main' into TASK-400` (decomp16)
 - df8497de 11-14 05:48 `Merge branch 'main' into TASK-400` (-)
 - 2f609b4c 11-14 05:44 `Merge agent/towntests: Merge origin/main into agent/towntests` (towntests)
-- 72276621 11-14 05:41 `Merge origin/main into agent/towntests` (-)
-- a8522afa 11-14 05:33 `Merge agent/staletarget: Merge branch 'main' into TASK-398` (staletarget)
 <!-- statusgen:end -->

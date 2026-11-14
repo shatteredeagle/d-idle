@@ -315,6 +315,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [watch-ui.md](digest/watch-ui.md): Digest: watch, viewer and player UI (status: current (TASK-310 digest; the area doc is the authority).)
 - [drillsfix.md](drillsfix.md): drillsfix: stash (DS) and tome (TM) drill repairs
 - [earlygame.md](earlygame.md): Early game: a fresh character, clvl 1 to 12 (agent EARLYGAME, 2026-10-30)
+- [emu-image.md](emu-image.md): The game.exe emulator image (status: current (2026-11-14, TASK-406). Rebuilt after the worker-host cleanup of 2026-11-13 removed the volatile...)
 - [exploredpct.md](exploredpct.md): Explored share: when a zone counts as explored (bot.exploredPct) (status: CURRENT. Tags: V = read from the code in this worktree and covered by a unit test, U = not run in a live game.)
 - [farm.md](farm.md): Farm runs (FARMRUNS, 2026-10-29)
 - [farmfallback.md](farmfallback.md): farmfallback: the gold farm as data, with a fallback
