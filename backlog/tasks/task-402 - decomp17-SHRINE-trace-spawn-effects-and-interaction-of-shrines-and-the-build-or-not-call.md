@@ -1,10 +1,13 @@
 ---
 id: TASK-402
-title: 'decomp17: SHRINE trace, spawn, effects and interaction of shrines and the build-or-not call'
-status: Proposed
+title: >-
+  decomp17: SHRINE trace, spawn, effects and interaction of shrines and the
+  build-or-not call
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-14T10:41:00Z'
+updated_date: '2026-11-14T11:27:00Z'
 labels:
   - docs
   - research
