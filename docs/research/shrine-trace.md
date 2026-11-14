@@ -95,7 +95,7 @@ Command (worker host, 150 seeds, normal, `ORDER=shuffle`, levels 2..37 in turn, 
 | 8 | Cave 1 (Den of Evil) | 1.67 | 0.57 / 0.60 / 0.51 | 0 |
 | 9 to 12 | Cave 2..5 | 2.15 / 2.80 / 2.05 / 2.05 | about 0.7 / 0.7 / 0.7 | 1 of 150 each |
 | 13 to 16 | Cave treasure levels | 0.37 / 0.27 / 0.45 / 0.23 | | 84 to 116 |
-| 18, 19, 21 to 24 | Crypts, Tower | 0.1 to 0.4 | mostly health | 97 to 137 |
+| 18, 19, 21 to 24 | Crypts, Forgotten levels | 0.1 to 0.4 | mostly health | 97 to 137 |
 | 27 to 31 | Courtyard, Barracks, Jails | 0.68 to 1.13 | | 23 to 64 |
 | 33 | Cathedral | 0.24 | | 117 |
 | 34 to 36 | Catacombs 1..3 | 0.93 / 1.08 / 1.24 | | 18 to 43 |
