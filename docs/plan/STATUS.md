@@ -138,6 +138,7 @@
 | gameexe-retire-soak | deferred | gameexe-retire-soak | `docs/gameexe-retire.md` | - |
 | tpreserve-live | proposed | - | `docs/probes/tpreserve.md` | - |
 | towntests | proposed | - | `docs/towntests.md`<br>`internal/town/playerstash_test.go`<br>`internal/town/tidy_test.go`<br>`internal/town/invstash_test.go` | - |
+| swingmodel | proposed | - | `internal/resource/swing.go`<br>`internal/resource/swing_test.go`<br>`internal/resource/sim.go`<br>`internal/bot/killtime.go`<br>`internal/bot/killtime_test.go`<br>`docs/swingmodel.md` | - |
 | mercrevive2 | proposed | - | `docs/mercrevive.md`<br>`internal/merc`<br>`cmd/d2bot/mercwire.go`<br>`cmd/d2bot/mercwire_test.go`<br>`docs/contracts/merc-policy.md` | - |
 | emurebuild | proposed | - | `tools/emu`<br>`docs/emu-image.md`<br>`docs/research/emu-reverify-2026-11-14.md` | - |
 | warpclick | in-progress | - | `internal/d2dctl/parse.go`<br>`internal/d2dctl/parse_test.go`<br>`internal/d2map/static.go`<br>`internal/d2dworld/world.go`<br>`internal/nav/exit.go`<br>`internal/nav/warpclick_test.go`<br>`docs/probes/warpclick-2026-11-14.md`<br>`docs/probes/test-characters.md`<br>`docs/upstream/pr-queue.md` | `fork-branch:didle/rebase-20261114b` |
@@ -192,6 +193,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 1ebfc147 11-14 07:50 `Merge agent/swingmodel: Merge branch 'main' into TASK-404` (swingmodel)
+- a1e5653a 11-14 07:49 `Merge branch 'main' into TASK-404` (-)
 - 6b301ec5 11-14 07:43 `Merge agent/warpclick: Merge branch 'main' into TASK-412` (warpclick)
 - d46e059f 11-14 07:42 `Merge branch 'main' into TASK-412` (-)
 - 7bcf98fa 11-14 07:32 `Merge agent/levelsim: Merge branch 'main' into TASK-413` (levelsim)
@@ -200,6 +203,4 @@
 - 837cc5e2 11-14 06:38 `Merge agent/hour4: Merge branch 'main' into TASK-407` (hour4)
 - 3dc3a06e 11-14 06:37 `Merge branch 'main' into TASK-407` (-)
 - 726fb64b 11-14 06:33 `Merge agent/emurebuild: Merge branch 'main' into TASK-406` (emurebuild)
-- da2c3574 11-14 06:32 `Merge branch 'main' into TASK-406` (-)
-- 97d14b90 11-14 06:28 `Merge agent/sellskip: sellskip: restore the WearBetter fix lost in a revert, tests pass with game tables` (sellskip)
 <!-- statusgen:end -->

@@ -274,6 +274,7 @@ docs/skilltrees.md  credit-runner  skilltrees2
 docs/soaks/recoverypace.md  live-agent  recoverypace
 docs/staletarget.md  credit-runner  staletarget
 docs/stance.md  credit-runner  wiring2
+docs/swingmodel.md  credit-runner  swingmodel
 docs/t0-variants.md  credit-runner  qdensity
 docs/tester-guide.md  credit-runner  testerpack
 docs/tester-licence.md  credit-runner  testerlicence
@@ -315,6 +316,8 @@ internal/bot/goldprio.go  credit-runner  goldprio
 internal/bot/goldprio_test.go  credit-runner  goldprio
 internal/bot/guided.go  credit-runner  campaign1
 internal/bot/guided_test.go  credit-runner  campaign1
+internal/bot/killtime.go  credit-runner  swingmodel
+internal/bot/killtime_test.go  credit-runner  swingmodel
 internal/bot/leveling.go  credit-runner  hourfix
 internal/bot/levelplan3_test.go  pro-runner  levelplan3
 internal/bot/lifelog.go  credit-runner  arrivalsettle
@@ -445,6 +448,9 @@ internal/readiness/areatable_test.go  credit-runner  ready-area-table
 internal/repair  credit-runner  repairtrip
 internal/resource/recovery.go  live-agent  recoverypace
 internal/resource/recovery_test.go  live-agent  recoverypace
+internal/resource/sim.go  credit-runner  swingmodel
+internal/resource/swing.go  credit-runner  swingmodel
+internal/resource/swing_test.go  credit-runner  swingmodel
 internal/resource/tuning.go  credit-runner  freshstart
 internal/resource/tuning.go  live-agent  recoverypace
 internal/senses  credit-runner  maphistory
