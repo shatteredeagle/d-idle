@@ -219,6 +219,7 @@ docs/knobs.md  credit-runner  wiring2
 docs/knobs.md  live-agent  recoverypace
 docs/levelplan.md  pro-runner  levelplan3
 docs/levelplan3.md  pro-runner  levelplan3
+docs/levelsim.md  credit-runner  levelsim
 docs/live-checks.md  credit-runner  repairtrip
 docs/locks.md  credit-runner  lockscan
 docs/mercrevive.md  credit-runner  mercrevive2
@@ -583,6 +584,7 @@ tools/friendpack/checklist.sh  credit-runner  cut010b
 tools/friendpack/checklist.sh  credit-runner  cutfix
 tools/itemverbs/compare_items.py  credit-runner  itemverbs2
 tools/itemverbs/diff_d2d.py  credit-runner  itemverbs2
+tools/levelsim/  credit-runner  levelsim
 tools/play-session.sh  credit-runner  playsession
 tools/tester-pack.sh  credit-runner  testerpack
 tools/uishots  credit-runner  gearsets

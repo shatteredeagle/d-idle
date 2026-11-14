@@ -399,6 +399,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [leveler.md](leveler.md): leveler: points, gear and the leveling loop (agent LEVELER)
 - [levelplan.md](levelplan.md): levelplan: SME-backed leveling changes (2026-11-12) (status: band table superseded by levelplan3.md (level plan v3, TASK-414) for the Paladin; items 1 to 5 stand.)
 - [levelplan3.md](levelplan3.md): Level plan v3: where the hero farms between quests (TASK-414) (status: current (2026-11-14, agent levelplan3). Data `internal/plandata/levelplan-normal.json` (copy in...)
+- [levelsim.md](levelsim.md): levelsim: a simulator for Act 1 Normal leveling strategies (status: current (2026-11-14, TASK-413, agent levelsim). Offline: no game, no d2d slot, nothing posted. Code:...)
 - [lifecycle.md](lifecycle.md): Game lifecycle in Go (agent LIFECYCLE)
 - [lifelog.md](lifelog.md): Life log fields
 - [live-checks.md](live-checks.md): Live checks still open
