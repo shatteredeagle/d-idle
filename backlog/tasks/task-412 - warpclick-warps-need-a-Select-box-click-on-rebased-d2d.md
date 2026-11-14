@@ -1,11 +1,11 @@
 ---
 id: TASK-412
 title: 'warpclick: warps need a Select-box click on rebased d2d'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-14T11:46:00Z'
-updated_date: '2026-11-14T12:34:00Z'
+updated_date: '2026-11-14T12:57:00Z'
 labels:
   - bot
   - bug
