@@ -1,6 +1,9 @@
 {
   "neutral": "Doing what the plan says.",
   "codes": {
+    "journey_blocked": {"params": ["why"], "say": [
+      "The quest path is blocked ({why}); I farm my level plan meanwhile and try again later.",
+      "Quest step refused: {why}. Farming for now, then I retry."]},
     "quest_step": {"params": ["step", "level"], "say": [
       "{step}: I am level {level} and the quest chain says it is next.",
       "On the quest path: {step} (I am level {level})."]},

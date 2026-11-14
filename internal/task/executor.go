@@ -153,6 +153,21 @@ func (e *Executor) Reset() {
 	e.kitBlocks = nil
 }
 
+// Unpark lifts the block, strikes and failure counts of group g so the planner offers it again (the bot's retry after a
+// blocked journey: the hero farmed meanwhile and the world may have changed).
+func (e *Executor) Unpark(g string) {
+	delete(e.blocked, g)
+	delete(e.strikes, g)
+	delete(e.kitBlocks, g)
+	for _, m := range []map[string]int{e.fails, e.timeouts, e.deaths} {
+		for id := range m {
+			if strings.HasPrefix(id, "quest."+g+"/") {
+				delete(m, id)
+			}
+		}
+	}
+}
+
 // ForgetFails drops the failure bookkeeping (fails, timeouts, deaths, skips, blocks, spliced steps) but keeps what was
 // proven or assumed done. The bot calls it on a new game and after a game restart: a poverty spell or a bad area early
 // in a long run must not block a group for the rest of the goal.

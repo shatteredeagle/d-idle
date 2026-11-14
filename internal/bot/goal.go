@@ -706,19 +706,26 @@ func (r *Runner) banned(area int) bool {
 	return ok
 }
 
+func (r *Runner) avoidWhyOf(h int) string {
+	r.obMu.Lock()
+	defer r.obMu.Unlock()
+	return r.avoidWhy[h]
+}
+
 // routeBanned says h blocks a walk to target: banned, and not merely a nav-fault skip of another area. Such a skip
 // (whyUnreachable, whyNavStuck) is no danger, and travelTo may jump over the area by waypoint (codereview3 C1).
 func (r *Runner) routeBanned(h, target int) bool {
 	if !r.banned(h) {
 		return false
 	}
+	why := r.avoidWhyOf(h)
+	if r.questWins(h, why) {
+		return false
+	}
 	if h == target {
 		return true
 	}
-	r.obMu.Lock()
-	why := r.avoidWhy[h]
-	r.obMu.Unlock()
-	return why != whyUnreachable && why != whyNavStuck
+	return why != whyUnreachable && why != whyNavStuck && why != whyBorderLoop
 }
 
 // starterBanMax caps what is left of the ban of a first field (the way out of a town) once the character stands in

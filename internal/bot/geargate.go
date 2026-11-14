@@ -110,7 +110,7 @@ func (r *Runner) areaAllowed(s *d2.Snapshot, area int) string {
 		return ""
 	}
 	if r.banned(area) {
-		return "banned after repeated deaths"
+		return r.banReason(area)
 	}
 	return r.areaRulesWhy(s, area)
 }
@@ -137,7 +137,8 @@ func (r *Runner) routeAllowed(s *d2.Snapshot, cur, target int, hops []int) error
 		return nil
 	}
 	safe := r.gearVerdict(s).Gated && target == r.safeFarmArea(s)
-	for _, h := range hops {
+	jumped := r.jumpedHops(cur, hops)
+	for i, h := range hops {
 		if h == cur || r.d.Plan.IsTown(h) {
 			continue
 		}
@@ -145,8 +146,8 @@ func (r *Runner) routeAllowed(s *d2.Snapshot, cur, target int, hops []int) error
 		if err := r.routeGuardHop(s, h); err != nil {
 			return err
 		}
-		if r.routeBanned(h, target) {
-			why = "banned after repeated deaths"
+		if r.routeBanned(h, target) && !(i < jumped && !dangerBan(r.avoidWhyOf(h))) {
+			why = r.banReason(h) // a hop the waypoint trip jumps over is only a danger when deaths banned it
 		} else if !safe {
 			why = r.areaRulesWhy(s, h)
 		}
