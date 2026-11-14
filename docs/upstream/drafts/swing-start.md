@@ -1,0 +1,78 @@
+# Draft (local, NOT posted): "A player's swing starts at its weapon's start frame and strikes on game.exe's tick"
+
+> status: r1, ready for an independent verifier pass (prswing, TASK-411, 2026-11-14). Branch `fid/swing-start-r1` on the private fork remote, head `ebeb4268`, two commits on upstream main `f9b8cfed`: oracle `5af717cd`, claim `ebeb4268`. Replaces the earlier draft `swing1-first-strike.md` (decomp15, TASK-403; "needs fork patch + independent verifier", on its own branch): its claims are restated here with the numbers of the built fix. Nothing here is posted or pushed upstream. Evidence of the finding: `docs/research/swing1-trace.md` (decomp15's branch). Tags: **V** run (game.exe's functions natively, or d2d's real classes), **S** read, **U** unverified.
+
+PR title: `A player's swing starts at its weapon's start frame and strikes on game.exe's tick`
+
+## What changes
+
+Two rules of one function (`Fight::set_pmode`, an attack mode), both the clock FUN_005539b0 files a swing's events on:
+
+1. **Start frame (Amazon and Sorceress).** FUN_00623b10 is 0 for a monster and for a player mode other than A1 and A2 (S3 and S4 only for a dual wielder). For an A1 or A2 swing it looks up the weapon in hand (FUN_00623990), its class key (FUN_00629fe0: the weapons.txt `wclass` through the map at 0x7446a0) and reads the dword at `0x6e8e60 + 4 (row x 7 + player class)`. Only an Amazon and a Sorceress are not 0: frame 1 barehanded, frame 2 with a 1hs, 1ht, stf, 2hs or 2ht weapon, 0 with a bow, crossbow or claws. d2d played the whole animation, so these two classes' melee swings were 1 to 3 ticks too long (a Sorceress staff swing 18 ticks against 16, about 12 percent of her melee damage per second).
+2. **The strike tick (every class).** FUN_005539b0 walks the animation from the start frame at the unit's rate and files the action event on the tick its AnimData flag frame is reached: `max(1, ceil(256 (flag - start) / rate))`, the end event at `max(1, ceil(256 (frames - start) / rate))`. d2d scaled the action frame by the rounded swing length instead, so its strike was one tick late in 1,123 of 8,890 cells of the five classes without a start frame (the same cause as the one-tick residual left in Zeal's chained strikes after `276f85c0`).
+
+`rules::attack_start_frame` holds the table (rows by weapon class, 7 player classes, as `swing_start.py table` prints it from the image); `rules::frame_tick`, `attack_ticks` and `attack_action_tick` the clock; `ItemBase::wclass` the weapon's class (weapons.txt); `Fighter::attack_start` the start frame of the weapon in hand (worn or not: U that game.exe's held weapon ignores the strength and level requirements; the COF record follows the worn weapon the same way); `Fight::action_at()` the strike time the three strike sites read (an attack mode's `action_ms`, any other mode's old formula).
+
+Scope kept narrow: the start frame applies to a plain swing and to a skill whose `anim` is A1 (`Fight::set_pmode` is also reached for a throw, TH, which plays the A1 record in d2d; the game plays the TH record with start 0); Jab and Fend (the `start_sequence` path, a length from the sequence) are unchanged. Kicks (KK) and the S modes get the strike rule only.
+
+Two commits: the oracle (`tools/emu/swing_start.py`, `tests/game/test_swing_start.cpp --swing-start`, README row; it prints what `set_pmode` does on the parent), then the claim (`rules/combat.hpp`, `rules.hpp`, `gamedata_load.cpp`, `fight.hpp`, `fight/setup.cpp`, `fight/strike.cpp`, the test's rule checks and 32 frozen cells, `docs/research/re/combat.md` "A player's attack swing").
+
+## Evidence from game.exe 1.14d
+
+| Address | What it shows |
+|---|---|
+| `FUN_00623b10` `0x623b10..0x623bfa` | the start frame: not a player 0; a player: the byte table at `0x623c10` (modes 7 to 16) sends A1 and A2 to the weapon path `0x623b88`, S3 and S4 to it only when `FUN_006235a0` (dual wield) is true (`0x623bbc`), every other mode to 0 (`0x623bfa`) |
+| `FUN_00629fe0` and the map at `0x7446a0` | the item record's class key (+0xc0) to a row: bow 1, 1hs 2, 1ht 3, stf 4, 2hs 5, 2ht 6, xbw 7, ht1 12; no weapon 0 |
+| table `0x6e8e60` (dumped from the booted image, `swing_start.py table`) | 7 dwords a row, d2s class order: row 0 `1 1 0 0 0 0 0`; rows 2 to 6 `2 2 0 0 0 0 0`; rows 1, 7 (bow, crossbow) and 12 (claws) all 0 |
+| `FUN_005539b0` `0x5539b0..0x553afc` | `start = FUN_00623b10 << 8`, rate unit `+0x4c`, end `+0x48`; files an event for each flagged AnimData frame the walk passes (flags 1, 2, 4 take one branch of the table at `0x553afc`, 3 another) and the type-1 end event when the position reaches the end |
+
+## Counted differentials (V run, the worker host, tree = upstream `f9b8cfed` plus the branch)
+
+Oracle: `swing_start.py compare` runs `FUN_00623b10`, `FUN_00629fe0` and `FUN_005539b0` natively with the real AnimData flag bytes for each cell `test_swing_start --swing-start` prints: 7 classes x 9 main-hand weapons (none, sword, dagger, great sword, spear, staff, bow, crossbow, claws) x the modes d2d plays (A1, S1, S3, S4, KK) x IAS {0, 10, 20, 30, 40, 60, 80, 100, 150, 200} x weapon speed {-30 .. +30}: 12,460 cells that have an AnimData record and a flag. The rate fed to the game side is d2d's own `attack_speed` (the rate itself: `player_attack_rate.py`). The oracle also checks the closed form against the game's recorded events: 0 of 12,460 differ on the strike and on the end.
+
+| 12,460 cells | differ before (parent) | differ after |
+|---|---|---|
+| Amazon / Sorceress A1 with a start frame (840): swing end | **815** (d2d 1 to 3 ticks longer) | **0** |
+| the same 840: strike tick | **834** (+1 to +4) | **0** |
+| Amazon / Sorceress, bow, crossbow, kicks (the strike rule only) | 144 strike | **0** |
+| Barbarian, Necromancer, Paladin, Druid, Assassin (8,890): swing end | 0 | 0 |
+| the same 8,890: strike tick | **1,123** (always +1 tick) | **0** |
+| all | **2,102** cells (815 ends, 2,101 strikes) | **0** |
+
+Per cell before (one line each): Sorceress, staff, IAS 0: swing 18 and strike 11, game.exe 16 and 9; barehanded 16 and 9 against 15 and 8; sword 20 and 12 against 18 and 10. Amazon sword 16 and 10 against 14 and 8; spear 18 and 11 against 16 and 9; bow 14 and 6 on both.
+
+Unit test (`test_swing_start`, no argument): the table and the clock without data (`attack_start_frame` for every class x weapon class, `frame_tick`), and with the data 32 cells whose answers the oracle printed (Sorceress and Amazon with each weapon class, and the Paladin, Barbarian, Necromancer, Druid and Assassin cells where the strike was a tick late); on the parent the same cells give the "d2d before" numbers in the comments of `kFrozen` (the parent has no `attack_start_frame`, so the test is built against the claim only; the oracle's comparison is the check on the parent).
+
+Zeal side effect (V run, `zg_grid.py`, the przeal harness against game.exe's FUN_00553b10): parent 50 of 150 cells (200 of 600 gaps) one tick late, claim **0 of 150 (0 of 600)**: the residual `docs/upstream/drafts/zeal-gap.md` left is this rule.
+
+## Collateral (what else changes)
+
+- Same function, same clock: Amazon A1 skills with a melee weapon in hand (Power Strike, Charged Strike, Lightning Strike; Fend's sequence keeps its length); with a bow or crossbow only the strike rule applies (Magic Arrow, Fire, Cold, Ice, Exploding, Immolation, Freezing, Guided Arrow, Multiple Shot, Strafe). Sorceress: only the plain attack (her skills are SC).
+- A hit-recovery or a cast does not change (SC, GH, BL take the unchanged branches). Whirlwind's gap reads `attack_ticks` of the Barbarian's A1: start 0, same value.
+- Not changed, U or out of scope: TH and A2 modes (a throw plays the A1 record in d2d), the S3 and S4 start of a dual wielder (table entries are 0), what the client draws for the skipped start frames (d2d still draws the whole animation over the shorter swing; drill S1 of the trace), the idle tick between held swings.
+
+## Limits
+
+- The rate itself is not re-run here (`player_attack_rate.py` covers it); the Amazon and Sorceress cells use the animation record d2d chose (COF name from the worn weapon), the game's record choice for the same weapon is I.
+- A weapon whose class key is not in the 8-entry map is 0 here (U: no vanilla weapon has one; every weapons.txt `wclass` value is in the map).
+- The held weapon ignoring requirements is U (see above); the grid's characters cannot wield the great sword, spear or crossbow.
+
+## How to re-check
+
+```sh
+python3 tools/pr_guard.py --base upstream/main HEAD
+cmake --build build --target test_swing_start
+cd tools/emu && uv sync
+set -o pipefail
+../../build/tests/test_swing_start --swing-start | grep '^D ' > /tmp/swing.tsv
+uv run python swing_start.py compare /tmp/swing.tsv      # last line: 12460 cells  same (parent: 2102 differ)
+uv run python swing_start.py table
+../../build/tests/test_swing_start
+```
+
+## Before posting
+
+1. Independent verifier (d2-reviewer, Opus, singly, own harness).
+2. CodeRabbit limits, at most 3 open PRs, the user's go for any upstream post.
+
+Agent: Claude Code
