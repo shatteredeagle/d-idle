@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- hero14: leakcheck wording <!--sg:agent/hero14-->
 - Merge branch 'main' into TASK-396 <!--sg:agent/botadapt-->
 - Merge branch 'main' into TASK-395 <!--sg:agent/forkrebase-->
 - target: recalibrate first-hour headline target (floor 5 / target 7 / stretch 8-9); SME 13-15 retired <!--sg:agent/target-->
