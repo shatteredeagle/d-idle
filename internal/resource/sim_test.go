@@ -76,10 +76,10 @@ func TestBloodMoorPaladinReplay(t *testing.T) {
 }
 
 // The Sorceress stock replay, pinned. Was 22 kills, 28 swings, 66 casts (SKMELEEBOT/WIRE) with the old monster life
-// 12 / 24 / 24 / 45; botsupply re-pinned it on the traced Blood Moor life (mean 4.2), which dies to about one Fire Bolt.
+// 12 / 24 / 24 / 45; swingmodel re-pinned it for the 0.64 s staff swing (was 1.0 s: 45/15/45); botsupply re-pinned it on the traced Blood Moor life (mean 4.2), which dies to about one Fire Bolt.
 func TestSorceressStockReplayPinned(t *testing.T) {
 	r := Replay(BloodMoorSorc(), ResourcePolicy(), DefaultTuning())
-	if r.Kills != 45 || r.MeleeHits != 15 || r.Casts != 45 {
-		t.Errorf("kills %d melee %d casts %d, want 45/15/45", r.Kills, r.MeleeHits, r.Casts)
+	if r.Kills != 43 || r.MeleeHits != 13 || r.Casts != 46 {
+		t.Errorf("kills %d melee %d casts %d, want 43/13/46", r.Kills, r.MeleeHits, r.Casts)
 	}
 }
