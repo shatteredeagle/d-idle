@@ -6,7 +6,7 @@ set -u
 d=docs/ui/redesign-2026-11-14/mockups
 chrome=$(command -v google-chrome-stable || command -v chromium || command -v chromium-browser) || { echo "no Chrome" >&2; exit 2; }
 tmp=$(mktemp -d); trap 'rm -rf "${tmp:?}"' EXIT
-{ printf '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body>'; cat "$d/watch-orders.html"; printf '</body></html>'; } >"$tmp/m.html"
+{ printf '<!doctype html><html data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body>'; cat "$d/watch-orders.html"; printf '</body></html>'; } >"$tmp/m.html"
 mkdir -p "$d/shots"
 for s in "1440 1100" "900 1500" "390 1700"; do
 	set -- $s

@@ -35,6 +35,7 @@
   --life:#b8362c;--mana:#3564c4;--hatch:#e2d8c2;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 body{background:var(--bg);color:var(--text);font:var(--fs1)/1.45 var(--body);margin:0}
 button{font:inherit;color:inherit;cursor:pointer}
 :focus-visible{outline:2px solid var(--focus);outline-offset:2px}
@@ -155,7 +156,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .stats{display:grid;grid-template-columns:2fr 1fr 1.4fr 1fr;gap:var(--sp3) var(--sp4)}
 .stat label{display:block;font-size:var(--fs0);color:var(--text2)}
 .stat strong{font:600 var(--fs3) var(--num);font-variant-numeric:tabular-nums}
-.stat small{color:var(--text2);font-size:var(--fs0)}
+.stat small{color:var(--text2);font-size:var(--fs0);display:block}
 .prog{height:8px;border-radius:4px;background:var(--s3);overflow:hidden;margin:4px 0}
 .prog i{display:block;height:100%;background:var(--accent)}
 .spark{vertical-align:middle;margin-left:6px}
@@ -241,7 +242,7 @@ svg text{font:10px var(--body);fill:var(--text);pointer-events:none}
   <div class="grid">
     <section class="tile t-video" aria-label="Game"><div class="video"><div>Game picture<br><small>live from your own game, about 20 frames a second</small></div></div></section>
 
-    <section class="tile t-map"><h2>Blood Moor edge <small>explored 64%</small><span><button class="ghost">Layers</button> <button class="ghost" aria-label="Zoom in">+</button> <button class="ghost" aria-label="Zoom out">-</button></span></h2>
+    <section class="tile t-map"><h2>Cold Plains <small>explored 64%</small><span><button class="ghost">Layers</button> <button class="ghost" aria-label="Zoom in">+</button> <button class="ghost" aria-label="Zoom out">-</button></span></h2>
       <svg class="mini" viewBox="0 0 300 150" role="img" aria-label="Local map: the hero, its trail and two monsters">
         <rect class="room" x="10" y="20" width="90" height="50"/><rect class="room" x="100" y="36" width="80" height="18"/><rect class="room" x="180" y="14" width="110" height="70"/><rect class="room" x="210" y="84" width="24" height="30"/><rect class="room" x="150" y="114" width="140" height="28"/>
         <polyline class="trail" points="30,46 80,44 130,45 176,45"/><polyline class="fight" points="176,45 205,48 222,60"/>
@@ -268,7 +269,7 @@ svg text{font:10px var(--body);fill:var(--text);pointer-events:none}
       <div class="stats">
         <div class="stat"><label>Level 7 to 10</label><div class="prog"><i style="width:62%"></i></div><small>62%, level 10 in about 25 min</small></div>
         <div class="stat"><label>xp / h</label><strong>12.4k</strong><svg class="spark" width="64" height="20" viewBox="0 0 64 20" aria-hidden="true"><polyline points="0,15 8,14 16,16 24,11 32,12 40,8 48,9 56,5 62,6"/><circle cx="62" cy="6" r="2.2"/></svg></div>
-        <div class="stat"><label>Journey</label><strong>3 of 9</strong> <small>Blood Raven: too early, floor 9</small></div>
+        <div class="stat"><label>Journey</label><strong>3 of 9</strong><small>next: Blood Raven, too early (floor 9)</small></div>
         <div class="stat"><label>gold / h</label><strong>2.1k</strong></div>
       </div>
     </section>
