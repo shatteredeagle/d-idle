@@ -206,6 +206,7 @@ docs/knobs.md  credit-runner  gearsets
 docs/knobs.md  credit-runner  goldprio
 docs/knobs.md  credit-runner  hourfix
 docs/knobs.md  credit-runner  pursuers
+docs/knobs.md  credit-runner  staletarget
 docs/knobs.md  credit-runner  tidy
 docs/knobs.md  credit-runner  wiring2
 docs/knobs.md  live-agent  recoverypace
@@ -256,6 +257,7 @@ docs/session-record.md  live-agent  sessions
 docs/skilltrees.md  credit-runner  skilltrees
 docs/skilltrees.md  credit-runner  skilltrees2
 docs/soaks/recoverypace.md  live-agent  recoverypace
+docs/staletarget.md  credit-runner  staletarget
 docs/stance.md  credit-runner  wiring2
 docs/t0-variants.md  credit-runner  qdensity
 docs/tester-guide.md  credit-runner  testerpack
@@ -272,17 +274,20 @@ internal/art/skillicons_test.go  credit-runner  skilltrees
 internal/boss  credit-runner  wiring2
 internal/bot  credit-runner  wiring2
 internal/bot/areaskip_test.go  credit-runner  passagebounce
+internal/bot/areaskip_test.go  credit-runner  staletarget
 internal/bot/areaskip_test.go  pro-runner  bounce3
 internal/bot/contracts.go  credit-runner  goldprio
 internal/bot/drought.go  credit-runner  freshstart
 internal/bot/exploredpct.go  credit-runner  exploredpct
 internal/bot/exploredpct_test.go  credit-runner  exploredpct
+internal/bot/geargate.go  credit-runner  staletarget
 internal/bot/goal.go  credit-runner  exploredpct
 internal/bot/goal.go  credit-runner  goldprio
 internal/bot/goal.go  credit-runner  hourfix
 internal/bot/goal.go  credit-runner  hourfix2
 internal/bot/goal.go  credit-runner  maphistoryA
 internal/bot/goal.go  credit-runner  repairtrip
+internal/bot/goal.go  credit-runner  staletarget
 internal/bot/goldfarm.go  credit-runner  repairtrip
 internal/bot/goldprio.go  credit-runner  goldprio
 internal/bot/goldprio_test.go  credit-runner  goldprio
@@ -296,6 +301,7 @@ internal/bot/lockguard_test.go  credit-runner  lockscan
 internal/bot/lockorder_test.go  credit-runner  lockscan
 internal/bot/loop.go  credit-runner  hourfix
 internal/bot/loop.go  credit-runner  passagebounce
+internal/bot/loop.go  credit-runner  staletarget
 internal/bot/loop.go  pro-runner  bounce3
 internal/bot/nokill_test.go  credit-runner  freshstart
 internal/bot/observe.go  credit-runner  arrivalsettle
@@ -303,7 +309,9 @@ internal/bot/observe.go  credit-runner  exploredpct
 internal/bot/observe.go  credit-runner  freshstart
 internal/bot/observe.go  credit-runner  lockscan
 internal/bot/observe.go  credit-runner  passagebounce
+internal/bot/observe.go  credit-runner  staletarget
 internal/bot/observe.go  pro-runner  bounce3
+internal/bot/ordersguard.go  credit-runner  staletarget
 internal/bot/repairtrip.go  credit-runner  repairtrip
 internal/bot/repairtrip_test.go  credit-runner  repairtrip
 internal/bot/runner.go  credit-runner  campaign1
@@ -313,8 +321,13 @@ internal/bot/runner.go  credit-runner  lockscan
 internal/bot/runner.go  credit-runner  maphistoryA
 internal/bot/runner.go  credit-runner  passagebounce
 internal/bot/runner.go  credit-runner  repairtrip
+internal/bot/runner.go  credit-runner  staletarget
+internal/bot/staletarget.go  credit-runner  staletarget
+internal/bot/staletarget_test.go  credit-runner  staletarget
 internal/bot/task.go  credit-runner  hourfix
+internal/bot/task.go  credit-runner  staletarget
 internal/bot/whyline.go  credit-runner  repairtrip
+internal/bot/whyline.go  credit-runner  staletarget
 internal/campaign/  credit-runner  campaign1
 internal/combat  credit-runner  wiring2
 internal/combat/castfirst.go  credit-runner  maphistoryC
@@ -349,6 +362,7 @@ internal/env  credit-runner  wiring2
 internal/env/tuning_bot.go  credit-runner  exploredpct
 internal/env/tuning_bot.go  credit-runner  freshstart
 internal/env/tuning_bot.go  credit-runner  hourfix
+internal/env/tuning_bot.go  credit-runner  staletarget
 internal/env/tuning_invdesk.go  credit-runner  gearsets
 internal/env/tuning_loot.go  credit-runner  goldprio
 internal/env/tuning_loot.go  credit-runner  hourfix
@@ -357,6 +371,7 @@ internal/env/tuning_resource.go  credit-runner  freshstart
 internal/env/tuning_resource.go  live-agent  recoverypace
 internal/env/tuning_town.go  credit-runner  tidy
 internal/fidvendor  live-agent  fidprobe-vendor
+internal/goals/runner.go  credit-runner  staletarget
 internal/goldfarm  credit-runner  repairtrip
 internal/invdesk  credit-runner  gearsets
 internal/invdesk/desk.go  credit-runner  itemverbs2
@@ -403,6 +418,8 @@ internal/senses/trail_test.go  credit-runner  maptrail2
 internal/skilltree  credit-runner  skilltrees
 internal/skilltree  credit-runner  skilltrees2
 internal/task/campaign.go  credit-runner  campaign1
+internal/task/executor.go  credit-runner  staletarget
+internal/task/executor_unpark_test.go  credit-runner  staletarget
 internal/task/guided.go  credit-runner  campaign1
 internal/task/guided_test.go  credit-runner  campaign1
 internal/tidy  credit-runner  tidy
@@ -516,7 +533,9 @@ internal/watch/web/skills.css  credit-runner  skilltrees2
 internal/watch/web/skills.js  credit-runner  skilltrees
 internal/watch/web/skills.js  credit-runner  skilltrees2
 internal/watch/whyline.json  credit-runner  repairtrip
+internal/watch/whyline.json  credit-runner  staletarget
 internal/watch/whyline_test.go  credit-runner  repairtrip
+internal/watch/whyline_test.go  credit-runner  staletarget
 tools/bounce3  pro-runner  bounce3
 tools/emu/pm_*  credit-runner  palskill-matrix
 tools/emu/pp_*  credit-runner  prpost

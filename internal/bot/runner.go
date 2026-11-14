@@ -164,6 +164,8 @@ type Runner struct {
 	farm           farmProgress         // runs goal progress across farmStep restarts (farm.go)
 	why            goals.Why            // reason of the current activity (whyline.go); guarded by mu
 	pendingWhy     goals.Why            // announced by setWhy, taken by the next setLocked; guarded by mu
+	journeyWhy     string               // why the quest journey is blocked now, guarded by mu (staletarget.go)
+	questTravel    atomic.Bool          // a quest step is walking: a border-loop ban does not stop it (staletarget.go)
 	bossRun        atomic.Bool          // a boss script is running (Deps.Task.Boss): routine town trips wait, the guard's re-plan cancels are off
 	bossStart      map[string]time.Time // start of the last unfinished boss run by name (taskActs.KillBoss, loop goroutine only)
 	levelerPaused  bool                 // selfStop came from the leveler (LevelerPause), guarded by mu
@@ -501,7 +503,7 @@ func (r *Runner) Stop() error {
 func (r *Runner) Status() goals.Status {
 	r.mu.Lock()
 	defer r.mu.Unlock()
-	s := goals.Status{Activity: r.activity, Why: r.why, Message: r.message, Character: r.char, Updated: r.updated}
+	s := goals.Status{Activity: r.activity, Why: r.why, Message: r.message, Character: r.char, Updated: r.updated, JourneyBlocked: r.journeyWhy}
 	if r.goal != nil {
 		s.GoalID = r.goal.ID
 	}

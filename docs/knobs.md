@@ -64,7 +64,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | key | default | range | unit | worst (rookie) | readers | what it changes |
 |---|---|---|---|---|---|---|
 | combat.drinkLifePct | 55 | 35..80 | % | 35 | 4 | Life percent that triggers a healing potion. |
-| combat.drinkRejuvPct | 35 | 20..60 | % | 20 | 2 | Life percent that triggers a rejuvenation potion. |
+| combat.drinkRejuvPct | 35 | 20..60 | % | 20 | 5 | Life percent that triggers a rejuvenation potion. |
 | combat.drinkRejuvBossPct | 50 | 0..70 | % | 0 | 0 | Life percent that triggers a rejuvenation potion in a fight against champions, uniques or bosses (danger 1+); 0 = off. SME advice, EXP. |
 | combat.championEarlyPct | 10 | 0..25 | pp | 0 | 0 | Percentage points added to the healing potion line and the rejuvenation (boss) line while champions (not bosses) are in range, in Normal below character level 15. Champions have about 3x life and +50% damage. 0 = off. SME rule of thumb, EXP. |
 | combat.chickenPct | 25 | 15..45 | % | 15 | 2 | Life percent at or below which the bot leaves the game (Normal, Nightmare). |
@@ -101,7 +101,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | combat.novaManaFloor | 25 | 0..60 | mana | 60 | 1 | Frost Nova on a crowd of 3 or more is not cast with less mana than this, so the mana stays for the bolts. |
 | combat.kiteEnabled | 1 | 0..1 | bool | 0 | 2 | 1 backs away from melee monsters that get close. |
 | combat.kiteDistance | 10 | 4..20 | subtiles | 4 | 3 | Back away when a melee monster is closer than this. |
-| combat.kiteLifePct | 60 | 40..100 | % | 40 | 0 | Step back from a single melee monster only below this life percent (and falling). |
+| combat.kiteLifePct | 60 | 40..100 | % | 40 | 2 | Step back from a single melee monster only below this life percent (and falling). |
 | combat.kiteMaxSteps | 6 | 0..12 | count | 0 | 4 | Retreat steps per target before standing to fight. |
 | combat.kiteRetreat | 12 | 6..20 | subtiles | 6 | 10 | Length of one retreat step. |
 | combat.dodgeRadius | 4 | 0..8 | subtiles | 0 | 7 | Step away from hostile missiles closer than this. |
@@ -169,6 +169,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | town.tidyEnabled | 1 | 0..1 | 0/1 | 1 | 2 | 1: the Tidy chore stashes by the tidy policy table and drops pure junk from a full pack; it never touches equipment or marked items (docs/tidy.md). |
 | town.tidyMaxActions | 12 | 1..40 | count | 40 | 1 | Most stash and drop actions of one tidy pass (safety valve). |
 | town.tidyMinPackPct | 60 | 20..100 | % | 100 | 1 | A tidy pass drops junk only when the backpack is at least this full. |
+| town.mercReserve | 1 | 0..1 | 0/1 | 0 | 2 | 1: while the merc is dead the shop keeps its revive price back from the tome, spare town portal scrolls and mana potions (hero14: 950 gold went to a tome and scrolls, then 600 for the revive was missing). Healing potions and the first portal scroll still come first. 0 = off. |
 | town.spareKeep | 4 | 0..30 | count | 0 | 1 | A full pack sells spare potions and identify scrolls beyond this many per kind (they fill the pack but are never belted). |
 | town.sellMaxS | 60 | 15..300 | s | 15 | 2 | Time the sell chore alone may take before it is cut off. |
 | town.potionsFirst | 1 | 0..1 | bool | 0 | 2 | 1 buys the kit potions before the first town portal scroll, which then needs gold for the scroll plus tpScrollPotions potions (d2-sme order, decision D3). 0 = scroll first (old). |
@@ -229,8 +230,8 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | bot.reactionMs | 0 | 0..300 | ms | 300 | 1 | Extra delay before reacting to low life or a chicken condition. |
 | bot.resupplyPotions | 2 | 2..4 | potions | 4 | 2 | Healing potions left in the belt that trigger a town trip. Higher means more trips. |
 | bot.invFullPct | 85 | 40..85 | % | 40 | 2 | Share of occupied inventory cells that triggers a town trip. Lower means more trips. |
-| bot.levelMargin | 0 | 0..8 | levels | 8 | 9 | Levels above a step's enter level the planner requires. Higher is safer but slower. |
-| bot.leaveSlack | 0 | 0..6 | levels | 6 | 7 | Levels past a step's leave level before moving to the next area. Higher wastes time in easy areas. |
+| bot.levelMargin | 0 | 0..8 | levels | 8 | 10 | Levels above a step's enter level the planner requires. Higher is safer but slower. |
+| bot.leaveSlack | 0 | 0..6 | levels | 6 | 8 | Levels past a step's leave level before moving to the next area. Higher wastes time in easy areas. |
 | bot.corpseRetries | 1 | 0..1 | count | 0 | 1 | Max attempts to recover the corpse after a softcore death. 0 abandons the gear. |
 | bot.portalSettleMs | 600 | 600..4500 | ms | 4500 | 1 | Pause in town after chores before going back out. |
 | bot.clearRadius | 30 | 12..45 | subtiles | 12 | 21 | Reach of one clear sweep: how far away a monster is noticed and fought. Smaller means more walking between sweeps; above 30 is the Aggressive stance (UNVERIFIED survival). |
@@ -246,6 +247,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | bot.corpseMinValue | 50 | 0..5000 | gold | 5000 | 3 | Below this estimated gold value the in-field corpse run is skipped entirely (the stricter bot.corpseValueMin still applies above it). |
 | bot.navSkipSec | 150 | 30..900 | s | 900 | 1 | How long a navigation fault (stuck, no exit to the area) keeps the planner out of an area. Short on purpose: it is a bot fault, not danger. |
 | bot.areaIdleSec | 60 | 15..600 | s | 600 | 1 | When every candidate area is skipped or banned, the bot waits this long in town at most, then farms the least bad area anyway (a death streak waits at least the starter ban cap). |
+| bot.questBlockedFarmMin | 10 | 1..120 | min | 120 | 1 | A quest step the guards refuse is waited out this long; then the hero farms the best leveling area of the level plan and retries the step after this wait, doubling each time (cap x64). Shown as journeyBlocked in the status. |
 | bot.stallWarnMin | 30 | 0..240 | min | 240 | 1 | Virtual minutes without campaign progress (no kill or xp, no non-town area entered, no purchase, no quest step) before the bot logs 'campaign stalled' and starts a fresh game. 0 turns the stall ladder off. Longest legitimate stretch in the navsoak logs: 19 min. |
 | bot.stallExitMin | 30 | 5..240 | min | 240 | 1 | Virtual minutes still without campaign progress after the fresh game before the bot exits (status 5) so the supervisor restarts the whole process. |
 | bot.spiralMinutes | 15 | 5..15 | min | 5 | 5 | Window in which the deaths are counted. Shorter forgets sooner. |

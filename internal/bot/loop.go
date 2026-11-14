@@ -1058,8 +1058,7 @@ func (r *Runner) replanCause(snap *d2.Snapshot, st State) string {
 		ta := r.ob.targetArea
 		r.obMu.Unlock()
 		if ta != 0 && snap.Player.Area != ta && !snap.Player.InTown() {
-			r.noteCrossing(ta)
-			return fmt.Sprintf("exploring crossed an area border (target area %d)", ta) // walk back
+			return r.staleOrCrossing(snap.Player.Area, ta)
 		}
 	}
 	if c := r.control(); c.spec.kind == goals.ReachLevel && st == StateClearing {
@@ -1272,6 +1271,7 @@ const (
 	borderLoopSkip      = 3 * time.Minute
 	borderLoopDoublings = 4
 	borderLoopMemory    = 2 * time.Hour
+	borderLoopGap       = 10 * time.Second // two stamps for one target closer than this are one crossing (staletarget)
 )
 
 // crossStamp is one unwanted border crossing toward target.
@@ -1289,6 +1289,15 @@ type loopStamp struct {
 func (r *Runner) noteCrossing(target int) {
 	now := r.e.Clock.Now()
 	r.obMu.Lock()
+	for i := len(r.crossLog) - 1; i >= 0; i-- {
+		if c := r.crossLog[i]; c.target == target {
+			if now.Sub(c.at) < borderLoopGap {
+				r.obMu.Unlock()
+				return
+			}
+			break
+		}
+	}
 	keep := r.crossLog[:0]
 	same := 1
 	for _, c := range r.crossLog {
@@ -1318,7 +1327,7 @@ func (r *Runner) tripLoopLocked(area int, now time.Time) {
 	}
 	d := borderLoopSkip << min(l.n, borderLoopDoublings)
 	r.loopTrips[area] = loopStamp{n: l.n + 1, at: now}
-	r.skipAreaLocked(area, d, "border-loop")
+	r.skipAreaLocked(area, d, whyBorderLoop)
 }
 
 // Arrival bounce (docs/passagebounce.md): d2d fires the return exit of a cave or passage about 0.2 s after the first move
