@@ -514,7 +514,7 @@ func (t *Town) buyScrolls(ctx context.Context, npc d2.Unit, rep *ChoreReport) er
 			return err
 		}
 		have, hasTome := t.scrollCount(cur, j.scroll, j.tome)
-		if !hasTome && j.scroll == "tsc" && cur.Player.Gold >= t.tune().TPTomeMinGold {
+		if !hasTome && j.scroll == "tsc" && cur.Player.Gold >= t.tune().TPTomeMinGold && t.aboveReserve(cur.Player.Gold, t.tomeCost(find)) {
 			tu, ok := find(j.tome)
 			if !ok {
 				t.e.Log.Warn("shop: no tome in stock", "gold", cur.Player.Gold, "stock", len(stock))
@@ -566,7 +566,7 @@ func (t *Town) buyScrolls(ctx context.Context, npc d2.Unit, rep *ChoreReport) er
 				return err
 			}
 			b := t.base(su)
-			if cur.Player.Gold-b.Cost < t.tune().MinGoldReserve && have > 0 {
+			if cur.Player.Gold-b.Cost < t.tune().MinGoldReserve && have > 0 || have > 0 && !t.aboveReserve(cur.Player.Gold, b.Cost) {
 				break
 			}
 			price, err := t.buyUnit(ctx, lay, su)
@@ -1021,3 +1021,17 @@ func (t *Town) TPCount(s *d2.Snapshot) int {
 
 // TakeTPBought returns the town portal scrolls bought since the last call (minute line field tpBuy).
 func (t *Town) TakeTPBought() int { return int(t.tpBought.Swap(0)) }
+
+// aboveReserve says whether spending cost of gold leaves the merc revive money (ChorePlan.ReserveGold) in the purse. Only
+// optional buys ask: the kit potions and the first portal scroll are survival and never wait for the merc.
+func (t *Town) aboveReserve(gold, cost int) bool { return gold-cost >= t.reserveGold }
+
+// tomeCost is the vendor price of the town portal tome, 0 when it is not in stock (the caller then logs it).
+func (t *Town) tomeCost(find func(string) (d2.Unit, bool)) int {
+	if u, ok := find("tbk"); ok {
+		if b := t.base(u); b != nil {
+			return b.Cost
+		}
+	}
+	return 0
+}

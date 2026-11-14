@@ -85,6 +85,7 @@ type taskState struct {
 	refused    map[string]bool // refusals already logged (noteStepRefused)
 	andyLine   string          // last Andariel gate line logged (noteAndariel)
 	andyRowErr string          // last class-row error logged by fillAndariel (once per text)
+	bj         blockedJourney  // blocked quest step: spin guard and farm fallback (staletarget.go)
 }
 
 type taskReport struct {
@@ -178,8 +179,24 @@ func (r *Runner) taskStep(ctx context.Context, snap *d2.Snapshot, c control) boo
 	if err != nil {
 		return false
 	}
+	// A target area left over from the leveling slice must not make the guard cancel the quest step (hero14 log: 1,906
+	// re-plans); a step that clears sets its own target.
+	r.setTargetArea(0)
 	plan := camp.Plan(w, ex)
 	r.noteAndariel(w)
+	if isBlockedPlan(plan) || !l.task.bj.retryAt.IsZero() {
+		why := plan.Why
+		if why == "" || !isBlockedPlan(plan) {
+			why = l.task.bj.why
+		}
+		if r.journeyBlocked(ctx, snap, c, ex, strings.TrimPrefix(why, "blocked: ")) {
+			return true
+		}
+		if w, err = env.World(ctx); err != nil {
+			return false
+		}
+		plan = camp.Plan(w, ex)
+	}
 	step, _, hasStep := ex.Peek(plan, w)
 	st, act := StateTraveling, "Quest: planning"
 	if hasStep {
@@ -221,6 +238,14 @@ func (r *Runner) taskStep(ctx context.Context, snap *d2.Snapshot, c control) boo
 	})
 	if w2, werr := env.World(ctx); werr == nil {
 		r.setTaskReport(c.gen, camp.Report(w2, ex))
+	}
+	switch res.Outcome {
+	case task.OutRan, task.OutDone, task.OutSkipped:
+		r.journeyOK()
+	case task.OutRetry, task.OutBlocked:
+		if res.Err != nil && res.Kind == task.KindDanger {
+			r.noteRefusal(ctx, res)
+		}
 	}
 	switch res.Outcome {
 	case task.OutDone:
@@ -322,6 +347,9 @@ func (e taskEnv) World(ctx context.Context) (task.World, error) {
 		w.Gated, w.GatedWhy, w.SafeArea = true, g.Reason, task.Area(r.safeFarmArea(s))
 	}
 	for a := range r.avoidedNow() {
+		if r.avoidWhyOf(a) == whyBorderLoop {
+			continue // the loop breaker never blocks a quest step (staletarget.go)
+		}
 		if w.Banned == nil {
 			w.Banned = map[task.Area]bool{}
 		}
@@ -478,6 +506,8 @@ func (a taskActs) tag(err error) error {
 }
 
 func (a taskActs) Travel(ctx context.Context, ar task.Area) error {
+	a.r.questTravel.Store(true)
+	defer a.r.questTravel.Store(false)
 	return a.tag(a.r.travelTo(ctx, int(ar)))
 }
 
@@ -520,7 +550,10 @@ func (a taskActs) Clear(ctx context.Context, ar task.Area) error {
 	r := a.r
 	area := int(ar)
 	if cur := r.curArea(); cur != area {
-		if err := r.travelTo(ctx, area); err != nil {
+		r.questTravel.Store(true)
+		err := r.travelTo(ctx, area)
+		r.questTravel.Store(false)
+		if err != nil {
 			return a.tag(err)
 		}
 	}
