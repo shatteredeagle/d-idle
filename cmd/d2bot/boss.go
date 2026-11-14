@@ -124,6 +124,7 @@ func (g *bossGame) viewOf(s *d2.Snapshot) boss.View {
 	if g.e != nil {
 		v.BeltSlots = combat.BeltCapacity(s.Inventory, g.e.Data)
 	}
+	v.Melee = g.f.MeleeClass(p)
 	v.HasTP = combat.PortalSource(s, g.cat, g.stats()) != nil
 	hostile := map[uint32]bool{}
 	for _, t := range combat.Hostiles(s, combat.HostileCtx{Cat: g.cat, Diff: p.Difficulty, ClassLvl: p.Level}) {
