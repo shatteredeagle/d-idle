@@ -241,6 +241,7 @@ docs/research/design-brief-v1.md  credit-runner  designbrief
 docs/research/earlydeath13.md  pro-runner  earlydeath13
 docs/research/fid-poisonres-trace.md  credit-runner  fid-poison-res-diag
 docs/research/fidelity-vendor-probe.md  live-agent  fidprobe-vendor
+docs/research/merc2-trace.md  credit-runner  decomp16
 docs/research/mocks/return.html  credit-runner  returnmock
 docs/research/pal-skill-matrix.md  credit-runner  palskill-matrix
 docs/research/pal-zeal-trace.md  credit-runner  palskill-matrix
@@ -541,6 +542,12 @@ internal/watch/whyline.json  credit-runner  staletarget
 internal/watch/whyline_test.go  credit-runner  repairtrip
 internal/watch/whyline_test.go  credit-runner  staletarget
 tools/bounce3  pro-runner  bounce3
+tools/emu/mc2_dis.sh  credit-runner  decomp16
+tools/emu/mc2_fn.py  credit-runner  decomp16
+tools/emu/mc2_grep.sh  credit-runner  decomp16
+tools/emu/mc2_run.sh  credit-runner  decomp16
+tools/emu/mc2_setup.sh  credit-runner  decomp16
+tools/emu/mc2_tab.sh  credit-runner  decomp16
 tools/emu/pm_*  credit-runner  palskill-matrix
 tools/emu/pp_*  credit-runner  prpost
 tools/emu/pp_*  credit-runner  prpost2

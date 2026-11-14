@@ -137,6 +137,7 @@
 | staletarget | proposed | - | `internal/bot/staletarget.go`<br>`internal/bot/staletarget_test.go`<br>`internal/bot/loop.go`<br>`internal/bot/task.go`<br>`internal/bot/geargate.go`<br>`internal/bot/goal.go`<br>`internal/bot/whyline.go`<br>`internal/task/executor.go`<br>`internal/watch/whyline.json`<br>`internal/env/tuning_bot.go`<br>`docs/staletarget.md`<br>`docs/knobs.md`<br>`internal/bot/areaskip_test.go`<br>`internal/bot/runner.go`<br>`internal/bot/observe.go`<br>`internal/bot/ordersguard.go`<br>`internal/goals/runner.go`<br>`internal/watch/whyline_test.go`<br>`internal/task/executor_unpark_test.go` | - |
 | gameexe-retire-soak | deferred | gameexe-retire-soak | `docs/gameexe-retire.md` | - |
 | tpreserve-live | proposed | - | `docs/probes/tpreserve.md` | - |
+| decomp16 | proposed | - | `docs/research/merc2-trace.md`<br>`tools/emu/mc2_setup.sh`<br>`tools/emu/mc2_dis.sh`<br>`tools/emu/mc2_grep.sh`<br>`tools/emu/mc2_fn.py`<br>`tools/emu/mc2_run.sh`<br>`tools/emu/mc2_tab.sh` | - |
 | towntests | proposed | - | `docs/towntests.md`<br>`internal/town/playerstash_test.go`<br>`internal/town/tidy_test.go`<br>`internal/town/invstash_test.go` | - |
 | playsession | proposed | - | `tools/play-session.sh`<br>`docs/play-session.md` | - |
 | upstream-next | proposed | - | `docs/research/upstream-next.md` | - |
@@ -187,6 +188,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- c971e292 11-14 05:49 `Merge agent/decomp16: Merge branch 'main' into TASK-400` (decomp16)
+- df8497de 11-14 05:48 `Merge branch 'main' into TASK-400` (-)
 - 2f609b4c 11-14 05:44 `Merge agent/towntests: Merge origin/main into agent/towntests` (towntests)
 - 72276621 11-14 05:41 `Merge origin/main into agent/towntests` (-)
 - a8522afa 11-14 05:33 `Merge agent/staletarget: Merge branch 'main' into TASK-398` (staletarget)
@@ -195,6 +198,4 @@
 - 89d7741d 11-14 05:21 `Merge origin/main into agent/staletarget` (-)
 - 490d309e 11-14 05:18 `Merge origin/main into agent/sellskip` (-)
 - 48b09a74 11-14 05:08 `Merge agent/hero14: hero14: leakcheck wording` (hero14)
-- 3ab0a262 11-13 12:03 `Merge agent/botadapt: Merge branch 'main' into TASK-396` (botadapt)
-- 23c14b4f 11-13 12:02 `Merge branch 'main' into TASK-396` (-)
 <!-- statusgen:end -->
