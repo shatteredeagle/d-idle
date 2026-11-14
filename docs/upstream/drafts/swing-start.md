@@ -41,6 +41,8 @@ Oracle: `swing_start.py compare` runs `FUN_00623b10`, `FUN_00629fe0` and `FUN_00
 
 Per cell before (one line each): Sorceress, staff, IAS 0: swing 18 and strike 11, game.exe 16 and 9; barehanded 16 and 9 against 15 and 8; sword 20 and 12 against 18 and 10. Amazon sword 16 and 10 against 14 and 8; spear 18 and 11 against 16 and 9; bow 14 and 6 on both.
 
+Build and tests (V run, the worker host, GCC 16.2.1, Release, `D2D_WERROR=OFF`): `presubmit.py --quick --base upstream/main` 0 FAIL (6 WARN, answered below), `pr_guard.py` 0 FAIL 0 WARN, ctest 296 of 300 pass, the 4 failures the same as on a pure upstream build with this data folder (`test_mpq`, `smoke_d2d`, `quests_act1`, `quests_act4`; data-folder failures, see docs/fork-rebase-2026-11-13.md section 3). Each commit builds alone (the oracle commit on the parent, the claim on top): Linux GCC only, no Windows, macOS or Clang build run (U).
+
 Unit test (`test_swing_start`, no argument): the table and the clock without data (`attack_start_frame` for every class x weapon class, `frame_tick`), and with the data 32 cells whose answers the oracle printed (Sorceress and Amazon with each weapon class, and the Paladin, Barbarian, Necromancer, Druid and Assassin cells where the strike was a tick late); on the parent the same cells give the "d2d before" numbers in the comments of `kFrozen` (the parent has no `attack_start_frame`, so the test is built against the claim only; the oracle's comparison is the check on the parent).
 
 Zeal side effect (V run, `zg_grid.py`, the przeal harness against game.exe's FUN_00553b10): parent 50 of 150 cells (200 of 600 gaps) one tick late, claim **0 of 150 (0 of 600)**: the residual `docs/upstream/drafts/zeal-gap.md` left is this rule.
@@ -53,22 +55,22 @@ Zeal side effect (V run, `zg_grid.py`, the przeal harness against game.exe's FUN
 
 ## Effect on the bot's own scenario (internal, not for the PR body; V run, worker host)
 
-Ten-minute throwaway-hero runs (`rb/botrun.sh` recipe of `docs/fork-rebase-2026-11-13.md`: bot mode, no network, own volume, realtime, seed 7, `campaign:normal_act1`, one run a cell) on the same bot and the same rebased lineage, parent `d2dbot:devp6` (d2d `dd70428d`) against `d2dbot:devsw` (`fork-only/sandbox-swing`, `20a10eda`):
+Ten-minute throwaway-hero runs (`rb/botrun.sh` recipe of `docs/fork-rebase-2026-11-13.md`: bot mode, no network, own volume, realtime, `campaign:normal_act1`, one run a cell, two seeds) on the same bot and the same rebased lineage, parent `d2dbot:devp6` (d2d `dd70428d`) against `d2dbot:devsw` (`fork-only/sandbox-swing`, `20a10eda`). Another agent's containers ran on the host at the same time:
 
-| hero | image | clvl | xp | kills | mean kill time (the bot's `killtime` log) | arrivals, bounces, restarts |
-|---|---|---|---|---|---|---|
-| Sorceress | devp6 | 3 | 1,545 | 71 | 8.4 s | 2, 0, 0 |
-| Sorceress | devsw | 3 | 1,527 | 71 | 7.0 s | 2, 0, 0 |
-| Paladin (control: swing length unchanged, strike up to a tick earlier) | devp6 | 3 | 1,929 | 91 | 6.0 s | 2, 0, 0 |
-| Paladin | devsw | 3 | 1,785 | 87 | 6.1 s | 2, 0, 0 |
+| seed | hero | image | clvl | xp | kills | mean kill time | arrivals, restarts |
+|---|---|---|---|---|---|---|---|
+| 7 | Sorceress | devp6 / devsw | 3 / 3 | 1,545 / 1,527 | 71 / 71 | 8.4 s / 7.0 s | 2, 0 / 2, 0 |
+| 7 | Paladin (control: swing length unchanged, strike up to a tick earlier) | devp6 / devsw | 3 / 3 | 1,929 / 1,785 | 91 / 87 | 6.0 s / 6.1 s | 2, 0 / 2, 0 |
+| 11 | Sorceress | devp6 / devsw | 3 / 3 | 2,013 / 1,740 | 91 / 80 | 6.5 s / 7.2 s | 5, 1 / 2, 0 |
+| 11 | Paladin | devp6 / devsw | 3 / 3 | 1,824 / 1,956 | 79 / 86 | 6.4 s / 6.6 s | 3, 0 / 5, 1 |
 
-Reading (one pair a hero, so run-to-run noise of 4 to 8 percent in kills is not excluded; the Paladin control moved by that much): no kill-rate change is measurable at this size for either class. The Sorceress's mean kill time fell 17 percent while her kills stayed 71 against 71; the bot's Sorceress hero is in its first levels here and spends part of the ten minutes on spells, so the melee share is small (U). The change is not a risk to the bot: no crash, restart, bounce or unreachable target on either image. The user-facing consequence is the opposite of a regression: the Sorceress and Amazon melee swing is shorter in d2d by the same ticks as game.exe's.
+Reading: the differences go both ways (Sorceress seed 7 equal, seed 11 minus 12 percent; Paladin minus 4 and plus 9 percent) and the Paladin control, whose swing length is unchanged, moves as much as the Sorceress, so run-to-run noise (monster placement, a restart, arrivals) is larger than any effect at this sample: **no kill-rate change is measurable**. The Sorceress hero is in its first levels and spends part of the ten minutes on spells, so the melee share is small (U); the expected melee effect is the swing 16 against 18 ticks (about 12 percent of melee damage per second). No crash, bounce or unreachable target on either image (the `restarts 1` rows are the bot's own restart, one on each image).
 
-## Limits
+## Answers to the presubmit WARNs
 
-- The rate itself is not re-run here (`player_attack_rate.py` covers it); the Amazon and Sorceress cells use the animation record d2d chose (COF name from the worn weapon), the game's record choice for the same weapon is I.
-- A weapon whose class key is not in the 8-entry map is 0 here (U: no vanilla weapon has one; every weapons.txt `wclass` value is in the map).
-- The held weapon ignoring requirements is U (see above); the grid's characters cannot wield the great sword, spear or crossbow.
+- Unit kinds (player, not merc, pet, monster, co-op partner): the rule is the player's `Fight::set_pmode`; a co-op partner is another `actor` of the same code and gets it. Monsters, mercenaries and pets time their swings through `npc_timing` (`ai.cpp`, `fight/merc.cpp`, `fight/pets.cpp`); FUN_00623b10 returns 0 for a unit that is not a player, so their start frame is 0 on both sides and their own strike rule is a separate question (not checked here).
+- Hit paths (melee, skill, not missile): an arrow or bolt skill is an A1 swing of the same class: the strike rule applies to it (three strike sites read `action_at()`), the start frame is 0 for a bow or crossbow; the missile's own flight is not touched.
+- error-path: `swing_start.py` checks the AnimData blob's length before each bucket and record (`SystemExit`).
 
 ## How to re-check
 
