@@ -126,11 +126,13 @@ docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-minutes.jsonl.gz  gaterun  gat
 docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-extras.jsonl.gz  gaterun  gate2multi-20261107-1811-g2h
 
 # BEGIN GENERATED OWNERS (tools/sharedgen/sharedgen.py from the owns: keys of open tasks; do not edit between the markers)
+cmd/bossrun/adapter.go  pro-runner  levelplan3
 cmd/d2bot  credit-runner  wiring2
 cmd/d2bot/adapters.go  credit-runner  goldprio
 cmd/d2bot/behaviors.go  credit-runner  campaign1
 cmd/d2bot/behaviors.go  credit-runner  gearsets
 cmd/d2bot/beltfill_adapter.go  credit-runner  beltfix
+cmd/d2bot/boss.go  pro-runner  levelplan3
 cmd/d2bot/d2dbackend.go  credit-runner  campaign1
 cmd/d2bot/d2dbackend.go  credit-runner  exploredpct
 cmd/d2bot/d2dbackend.go  credit-runner  maphistory
@@ -174,6 +176,7 @@ cmd/d2bot/skillswire.go  credit-runner  skilltrees
 cmd/d2bot/tidywire_test.go  credit-runner  tidy
 cmd/d2bot/wiring_test.go  credit-runner  beltfix
 cmd/d2firsthour/  live-agent  firsthour
+data/campaign/normal.json  pro-runner  levelplan3
 data/onboarding  credit-runner  firstminutes
 data/unlocks/ladder.json  credit-runner  gearsets
 deploy/d2d-container/tester-report.sh  credit-runner  testerreport
@@ -214,6 +217,8 @@ docs/knobs.md  credit-runner  staletarget
 docs/knobs.md  credit-runner  tidy
 docs/knobs.md  credit-runner  wiring2
 docs/knobs.md  live-agent  recoverypace
+docs/levelplan.md  pro-runner  levelplan3
+docs/levelplan3.md  pro-runner  levelplan3
 docs/live-checks.md  credit-runner  repairtrip
 docs/locks.md  credit-runner  lockscan
 docs/mercrevive.md  credit-runner  mercrevive2
@@ -224,6 +229,7 @@ docs/palprofile.md  credit-runner  palprofile2
 docs/passagebounce.md  credit-runner  arrivalsettle
 docs/passagebounce.md  credit-runner  passagebounce
 docs/plan/STATUS.md  credit-runner  statusrefresh
+docs/plan/data/levelplan-normal.json  pro-runner  levelplan3
 docs/plan/data/progression-normal.json  credit-runner  hourfix
 docs/play-session.md  credit-runner  playsession
 docs/probes/firsthour.md  live-agent  firsthour
@@ -279,6 +285,10 @@ docs/wiring.md  credit-runner  wiring2
 internal/art/skillicons.go  credit-runner  skilltrees
 internal/art/skillicons_test.go  credit-runner  skilltrees
 internal/boss  credit-runner  wiring2
+internal/boss/boss_test.go  pro-runner  levelplan3
+internal/boss/fake_test.go  pro-runner  levelplan3
+internal/boss/run.go  pro-runner  levelplan3
+internal/boss/types.go  pro-runner  levelplan3
 internal/bot  credit-runner  wiring2
 internal/bot/areaskip_test.go  credit-runner  passagebounce
 internal/bot/areaskip_test.go  credit-runner  staletarget
@@ -295,12 +305,14 @@ internal/bot/goal.go  credit-runner  hourfix2
 internal/bot/goal.go  credit-runner  maphistoryA
 internal/bot/goal.go  credit-runner  repairtrip
 internal/bot/goal.go  credit-runner  staletarget
+internal/bot/goal.go  pro-runner  levelplan3
 internal/bot/goldfarm.go  credit-runner  repairtrip
 internal/bot/goldprio.go  credit-runner  goldprio
 internal/bot/goldprio_test.go  credit-runner  goldprio
 internal/bot/guided.go  credit-runner  campaign1
 internal/bot/guided_test.go  credit-runner  campaign1
 internal/bot/leveling.go  credit-runner  hourfix
+internal/bot/levelplan3_test.go  pro-runner  levelplan3
 internal/bot/lifelog.go  credit-runner  arrivalsettle
 internal/bot/lifelog.go  credit-runner  hourfix
 internal/bot/lifelog.go  credit-runner  passagebounce
@@ -319,8 +331,10 @@ internal/bot/observe.go  credit-runner  passagebounce
 internal/bot/observe.go  credit-runner  staletarget
 internal/bot/observe.go  pro-runner  bounce3
 internal/bot/ordersguard.go  credit-runner  staletarget
+internal/bot/plan.go  pro-runner  levelplan3
 internal/bot/repairtrip.go  credit-runner  repairtrip
 internal/bot/repairtrip_test.go  credit-runner  repairtrip
+internal/bot/resource.go  pro-runner  levelplan3
 internal/bot/runner.go  credit-runner  campaign1
 internal/bot/runner.go  credit-runner  goldprio
 internal/bot/runner.go  credit-runner  hourfix
@@ -336,6 +350,7 @@ internal/bot/task.go  credit-runner  staletarget
 internal/bot/whyline.go  credit-runner  repairtrip
 internal/bot/whyline.go  credit-runner  staletarget
 internal/campaign/  credit-runner  campaign1
+internal/campaign/campaign_test.go  pro-runner  levelplan3
 internal/combat  credit-runner  wiring2
 internal/combat/castfirst.go  credit-runner  maphistoryC
 internal/combat/classdata  credit-runner  palprofile2
@@ -347,6 +362,7 @@ internal/combat/fightend.go  credit-runner  maphistoryC
 internal/combat/fighter.go  credit-runner  beltfix
 internal/combat/fighter.go  credit-runner  maphistory
 internal/combat/fighter.go  credit-runner  maphistoryC
+internal/combat/fighter.go  pro-runner  levelplan3
 internal/combat/interlude_test.go  credit-runner  goldprio
 internal/combat/lifeprice.go  credit-runner  palprofile2
 internal/combat/packdrink.go  credit-runner  beltfix
@@ -389,6 +405,7 @@ internal/invdesk/mover_test.go  credit-runner  itemverbs2
 internal/invdesk/stash.go  credit-runner  itemverbs2
 internal/leveler/playerequip_test.go  credit-runner  gearsets
 internal/leveler/playerunequip.go  credit-runner  gearsets
+internal/levelplan  pro-runner  levelplan3
 internal/loot  credit-runner  goldprio
 internal/loot/fixpickup_test.go  credit-runner  beltfix
 internal/loot/ignore_test.go  credit-runner  tidy
@@ -407,6 +424,10 @@ internal/nav/roam.go  credit-runner  maphistoryC
 internal/nav/roam.go  credit-runner  maptrail
 internal/nav/roam.go  credit-runner  pursuers
 internal/nav/walk.go  credit-runner  pursuers
+internal/plandata/boss_levels.go  pro-runner  levelplan3
+internal/plandata/boss_levels_test.go  pro-runner  levelplan3
+internal/plandata/levelplan-normal.json  pro-runner  levelplan3
+internal/plandata/plandata_test.go  pro-runner  levelplan3
 internal/plandata/progression-normal.json  credit-runner  hourfix
 internal/readiness/  credit-runner  ready-model
 internal/readiness/areatable.go  credit-runner  ready-area-table
@@ -430,6 +451,7 @@ internal/task/executor.go  credit-runner  staletarget
 internal/task/executor_unpark_test.go  credit-runner  staletarget
 internal/task/guided.go  credit-runner  campaign1
 internal/task/guided_test.go  credit-runner  campaign1
+internal/task/guided_test.go  pro-runner  levelplan3
 internal/tidy  credit-runner  tidy
 internal/town/belt  credit-runner  beltfix
 internal/town/beltfill.go  credit-runner  beltfix
@@ -484,6 +506,7 @@ internal/watch/skillsapi.go  credit-runner  skilltrees
 internal/watch/skillsapi_test.go  credit-runner  skilltrees
 internal/watch/skillsapi_test.go  credit-runner  skilltrees2
 internal/watch/skillsui.go  credit-runner  skilltrees
+internal/watch/testdata/campaign  pro-runner  levelplan3
 internal/watch/testdata/compat  credit-runner  repairtrip
 internal/watch/testdata/gear_farm_dom.txt  credit-runner  repairtrip
 internal/watch/testdata/gear_repairtrip_dom.js  credit-runner  repairtrip
