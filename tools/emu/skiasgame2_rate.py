@@ -15,7 +15,7 @@ import sys
 
 import emu
 
-EXE = "/tmp/casttrace/game.exe"
+EXE = __import__("os").path.join(__import__("os").environ.get("D2_EMU_DIR", __import__("os").path.expanduser("~/d2d-lab/emu")), "casttrace", "game.exe")
 STAT_IAS_ROW = 0
 
 

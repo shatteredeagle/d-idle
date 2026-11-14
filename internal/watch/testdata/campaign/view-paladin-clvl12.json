@@ -123,11 +123,11 @@
    "reward": "Charsi imbues one item with magic properties",
    "why": "Bringing the Horadric Malus back to Charsi earns a free imbue.",
    "state": "open",
-   "band": "ready",
-   "floor": 10,
-   "recommended": 13,
+   "band": "too_early",
+   "floor": 14,
+   "recommended": 16,
    "reasons": [
-    "clvl 12 \u003c recommended 13"
+    "clvl 12 \u003c floor 14"
    ],
    "intent": "auto"
   },
@@ -140,10 +140,10 @@
    "why": "Andariel guards the way east; killing her opens Act 2.",
    "state": "open",
    "band": "too_early",
-   "floor": 16,
-   "recommended": 17,
+   "floor": 17,
+   "recommended": 20,
    "reasons": [
-    "clvl 12 \u003c floor 16"
+    "clvl 12 \u003c floor 17"
    ],
    "intent": "ask"
   }

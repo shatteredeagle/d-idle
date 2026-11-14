@@ -2,7 +2,7 @@
 # decomp5 (worker host): auto-belt (shift-click, C->S 0x63) differential + belts.txt dump. usage: TREE BUILD OUT [N]
 set -u
 T=$1; B=$2; O=$3; N=${4:-100000}
-export PATH=$HOME/.local/bin:$PATH D2_MPQ_DIR=${D2_MPQ_DIR:-/tmp/ug-emu} D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-$HOME/Downloads/LODPatch_114d.exe} D2_BUILD=$B
+export PATH=$HOME/.local/bin:$PATH D2_MPQ_DIR=${D2_MPQ_DIR:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq} D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe} D2_BUILD=$B
 mkdir -p $O; cd $T/tools/emu
 nice -n 19 uv run python auto_belt.py gen $N 1 > $O/ab_cases.tsv
 nice -n 19 uv run python auto_belt.py game $O/ab_cases.tsv > $O/ab_g.txt

@@ -3,10 +3,10 @@
 #   tools/emu/run-on-worker.sh sb_run.sh sb_block.py [cases_per_cell] [seed]
 set -e
 here=$(cd "$(dirname "$0")" && pwd)
-UP=${UP:-$HOME/d2d-lab/src}
-export D2_MPQ_DIR=${D2_MPQ_DIR:-/tmp/ug-emu}
+UP=${UP:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/upstream}
+export D2_MPQ_DIR=${D2_MPQ_DIR:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq}
 export PYTHONPATH=$here:$UP/tools/emu:${PYTHONPATH:-}
-PY=${PY:-$HOME/d2d-lab/pr/walk2-venv/bin/python}
+PY=${PY:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/venv/bin/python}
 s=$1; shift
 [ -f "$here/$s" ] && s=$here/$s
 cd "$UP/tools/emu"

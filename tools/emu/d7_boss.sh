@@ -1,6 +1,6 @@
 #!/bin/bash
 # decomp7 (worker host): TASK-86 boss death/level oracles on upstream main + the four bosses' skill columns (tables D).
-export PATH=$HOME/.local/bin:$PATH D2_MPQ_DIR=/tmp/ug-emu D2_PATCH_INSTALLER=$HOME/Downloads/LODPatch_114d.exe
+export PATH=$HOME/.local/bin:$PATH D2_MPQ_DIR=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq D2_PATCH_INSTALLER=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe
 T=$HOME/d2d-lab/wt-decomp6 B=$HOME/d2d-lab/build-decomp6 O=$HOME/d2d-lab/d7/boss; mkdir -p $O
 cd $T/tools/emu; git -C $T log --oneline -1
 echo "== boss_deaths"; uv run python boss_deaths.py 2>&1 | grep -v WARN | tail -4

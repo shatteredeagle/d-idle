@@ -5,7 +5,7 @@
 #   kinds: tiles units seeds monsters objgroups drops collision game npcs layout
 set -e
 here=$(cd "$(dirname "$0")" && pwd)
-UP=${UP:-$HOME/d2d-lab/src}
+UP=${UP:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/upstream}
 S=${D2_SCRATCH:-/tmp/d2agent-seedspawn}
 BIN=$S/ss-drlg-dump
 [ -x "$BIN" ] || { echo "no $BIN: run ss_build.sh first"; exit 1; }
@@ -17,9 +17,9 @@ for t in mpq-cat drop-dump; do   # the game kind reads game data through mpq-cat
   [ -x $UP/build/tools/$t/$t ] && cp -f $UP/build/tools/$t/$t $S/ssbuild/tools/$t/$t
 done
 export D2_BUILD=$S/ssbuild
-export D2_MPQ_DIR=${D2_MPQ_DIR:-/tmp/ug-emu}
-export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-$HOME/Downloads/LODPatch_114d.exe}
+export D2_MPQ_DIR=${D2_MPQ_DIR:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq}
+export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe}
 export PYTHONPATH=$here:$UP/tools/emu:${PYTHONPATH:-}
-PY=${PY:-$HOME/d2d-lab/pr/walk2-venv/bin/python}
+PY=${PY:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/venv/bin/python}
 cd "$UP/tools/emu"
 exec nice "$PY" diff_drlg.py "$@"

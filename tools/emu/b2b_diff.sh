@@ -6,7 +6,7 @@ here=$(cd "$(dirname "$0")" && pwd)
 E=$here
 export D2_SCRATCH=$HOME/d2d-lab/b2bundle-scratch; mkdir -p $D2_SCRATCH
 bin() { ls $HOME/d2d-lab/build-b2bundle$1/tests/$2 $HOME/d2d-lab/build-b2bundle$1/tests/*/$2 2>/dev/null | head -1; }
-export D2_MPQ_DIR=/tmp/ug-emu D2_PATCH_INSTALLER=$HOME/Downloads/LODPatch_114d.exe
+export D2_MPQ_DIR=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq D2_PATCH_INSTALLER=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe
 echo "== mana gen 100000 7"
 timeout 2900 bash $E/pb2_mana.sh 100000 7 $(bin -base test_sk_mana) $(bin "" test_sk_mana) 2>&1 | tail -25
 echo "== tele gen 100000 1"

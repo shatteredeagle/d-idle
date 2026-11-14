@@ -9,7 +9,7 @@ import disasm
 
 for a in ("5a5e50", "584870"):
     print("=====", a)
-    sys.argv = ["disasm.py", "--exe", "/tmp/casttrace/game.exe", a]
+    sys.argv = ["disasm.py", "--exe", __import__("os").path.join(__import__("os").environ.get("D2_EMU_DIR", __import__("os").path.expanduser("~/d2d-lab/emu")), "casttrace", "game.exe"), a]
     try:
         disasm.main()
     except SystemExit:

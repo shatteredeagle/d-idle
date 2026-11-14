@@ -974,7 +974,7 @@ func (r *Runner) target0(s *d2.Snapshot, c control) (int, bool) {
 			ex[areaDenOfEvil] = true // a dungeon quest needs a potion buffer; farm the open field first
 		}
 		pick := func() (Step, bool) {
-			opts := PickOptions{Margin: t.LevelMargin, Slack: t.LeaveSlack, Acts: r.allowedActs(s), Exclude: ex, Cleared: cleared, Floor: worthFloor, FullKit: r.fullKit(s), Melee: MeleeTank(p.Class), XP: r.stepXP(p.Level, p.Difficulty)}
+			opts := PickOptions{Margin: t.LevelMargin, Slack: t.LeaveSlack, Acts: r.allowedActs(s), Exclude: ex, Cleared: cleared, Floor: worthFloor, FullKit: r.fullKit(s), Melee: MeleeTank(p.Class), XP: r.stepXP(p.Level, p.Difficulty), Class: planClass(p.Class), Merc: mercUp()}
 			st, ok := r.d.Plan.Pick(diff, p.Level, opts)
 			if !ok && len(farmed) > 0 {
 				// the farm is a preference: every farm area is banned or excluded, so pick among all areas again

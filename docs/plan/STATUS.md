@@ -139,6 +139,9 @@
 | tpreserve-live | proposed | - | `docs/probes/tpreserve.md` | - |
 | towntests | proposed | - | `docs/towntests.md`<br>`internal/town/playerstash_test.go`<br>`internal/town/tidy_test.go`<br>`internal/town/invstash_test.go` | - |
 | mercrevive2 | proposed | - | `docs/mercrevive.md`<br>`internal/merc`<br>`cmd/d2bot/mercwire.go`<br>`cmd/d2bot/mercwire_test.go`<br>`docs/contracts/merc-policy.md` | - |
+| emurebuild | proposed | - | `tools/emu`<br>`docs/emu-image.md`<br>`docs/research/emu-reverify-2026-11-14.md` | - |
+| levelsim | proposed | - | `tools/levelsim/`<br>`docs/levelsim.md` | - |
+| levelplan3 | in-progress | - | `internal/levelplan`<br>`internal/plandata/levelplan-normal.json`<br>`docs/plan/data/levelplan-normal.json`<br>`docs/levelplan3.md`<br>`internal/plandata/boss_levels.go`<br>`internal/bot/plan.go`<br>`internal/bot/levelplan3_test.go`<br>`internal/bot/goal.go`<br>`internal/bot/resource.go`<br>`internal/plandata/plandata_test.go`<br>`internal/plandata/boss_levels_test.go`<br>`data/campaign/normal.json`<br>`internal/campaign/campaign_test.go`<br>`internal/task/guided_test.go`<br>`internal/boss/types.go`<br>`internal/boss/run.go`<br>`internal/boss/boss_test.go`<br>`internal/boss/fake_test.go`<br>`internal/combat/fighter.go`<br>`cmd/d2bot/boss.go`<br>`cmd/bossrun/adapter.go`<br>`docs/levelplan.md`<br>`internal/watch/testdata/campaign` | - |
 | playsession | proposed | - | `tools/play-session.sh`<br>`docs/play-session.md` | - |
 | upstream-next | proposed | - | `docs/research/upstream-next.md` | - |
 | statusrefresh | proposed | - | `docs/plan/STATUS.md` | - |
@@ -188,14 +191,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 7bcf98fa 11-14 07:32 `Merge agent/levelsim: Merge branch 'main' into TASK-413` (levelsim)
+- 6e4a55df 11-14 07:31 `Merge branch 'main' into TASK-413` (-)
+- 3793d7fc 11-14 07:24 `Merge agent/levelplan3: levelplan3: watch campaign goldens for the new Smith and Andariel rows` (levelplan3)
+- 837cc5e2 11-14 06:38 `Merge agent/hour4: Merge branch 'main' into TASK-407` (hour4)
+- 3dc3a06e 11-14 06:37 `Merge branch 'main' into TASK-407` (-)
+- 726fb64b 11-14 06:33 `Merge agent/emurebuild: Merge branch 'main' into TASK-406` (emurebuild)
+- da2c3574 11-14 06:32 `Merge branch 'main' into TASK-406` (-)
 - 97d14b90 11-14 06:28 `Merge agent/sellskip: sellskip: restore the WearBetter fix lost in a revert, tests pass with game tables` (sellskip)
 - 92e5503d 11-14 06:18 `Merge agent/decomp17: Merge branch 'main' into TASK-402` (decomp17)
 - ab383e8c 11-14 06:18 `Merge branch 'main' into TASK-402` (-)
-- 7738a296 11-14 06:09 `Merge origin/main into agent/decomp17` (-)
-- ae29419b 11-14 06:08 `Merge agent/mercrevive: mercrevive2: revive on gold alone, empty belt shops first, failure backoff` (mercrevive)
-- c971e292 11-14 05:49 `Merge agent/decomp16: Merge branch 'main' into TASK-400` (decomp16)
-- df8497de 11-14 05:48 `Merge branch 'main' into TASK-400` (-)
-- 2f609b4c 11-14 05:44 `Merge agent/towntests: Merge origin/main into agent/towntests` (towntests)
-- 72276621 11-14 05:41 `Merge origin/main into agent/towntests` (-)
-- a8522afa 11-14 05:33 `Merge agent/staletarget: Merge branch 'main' into TASK-398` (staletarget)
 <!-- statusgen:end -->

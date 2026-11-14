@@ -15,11 +15,12 @@ func TestBossLevelsRows(t *testing.T) {
 			t.Errorf("%s: inconsistent row %+v", c, r)
 		}
 	}
-	if r, _ := BossLevels(GateAndariel, "paladin"); r.Recommended != 17 || r.RecommendedMerc != 15 {
-		t.Errorf("paladin starting data %+v, want 17 / 15", r)
+	// Paladin: the boss1-trace model as recommended (20 / 18), the ADR 0011 interim floors (17 / 15, user) as floors.
+	if r, _ := BossLevels(GateAndariel, "paladin"); r != (BossLevel{20, 18, 17, 15}) {
+		t.Errorf("paladin row %+v, want 20 / 18, floors 17 / 15", r)
 	}
-	if r, _ := BossLevels(GateAndariel, "sorceress"); r.Recommended <= 17 {
-		t.Errorf("sorceress is the weaker class at Andariel, got %+v", r)
+	if r, _ := BossLevels(GateAndariel, "sorceress"); r.Recommended < 18 {
+		t.Errorf("sorceress row %+v", r)
 	}
 }
 

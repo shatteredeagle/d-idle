@@ -1,6 +1,6 @@
 #!/bin/bash
 # prprep2 (worker host): Cold Enchanted r4: each commit builds, the differential on the parent (oracle commit) and the claim, seeds 1 and 9.
-export PATH=$HOME/.local/bin:$PATH D2_MPQ_DIR=/tmp/ug-emu D2_PATCH_INSTALLER=$HOME/Downloads/LODPatch_114d.exe
+export PATH=$HOME/.local/bin:$PATH D2_MPQ_DIR=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq D2_PATCH_INSTALLER=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe
 HERE=$(cd "$(dirname "$0")" && pwd)
 T=$HOME/d2d-lab/wt-pp-cold4; B=$HOME/d2d-lab/build-pp-cold4; O=$HOME/d2d-lab/pp-cold4; mkdir -p $O
 cd $T
