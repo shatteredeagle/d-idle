@@ -1,0 +1,475 @@
+<title>d.idle Watch Redesign</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: sticky status sentence on top; picture left, maps in the middle, Needs you + Orders right; progress under the picture. */
+:root{
+  color-scheme:dark;
+  --bg:#0d0b09;--s1:#1c1813;--s2:#241f19;--s3:#2d2720;--line:#3a322a;--line2:#4a4036;
+  --text:#ece2cf;--text2:#b9aa94;--text3:#8c7b67;
+  --accent:#c7a44a;--accent-text:#e6c76f;--on-accent:#1a1408;--focus:#8db8ff;
+  --ok:#7cc47e;--warn:#e3a93a;--danger:#ec7d6c;--info:#7ab0e8;
+  --ok-bg:#1f2a1c;--warn-bg:#33280f;--danger-bg:#351a15;--info-bg:#17232f;
+  --life:#d2453a;--mana:#4f7fe0;--hatch:#17130f;
+  --display:Georgia,"Iowan Old Style","Palatino Linotype",serif;
+  --body:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --num:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --fs0:.74rem;--fs1:.86rem;--fs2:.98rem;--fs3:1.12rem;
+  --sp1:4px;--sp2:8px;--sp3:12px;--sp4:16px;--r1:4px;--r2:8px;
+}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){
+  color-scheme:light;
+  --bg:#efe8da;--s1:#faf5ea;--s2:#f1e9d8;--s3:#e6dcc6;--line:#d3c6aa;--line2:#b9a988;
+  --text:#231c12;--text2:#55493a;--text3:#7a6c58;
+  --accent:#8a6a14;--accent-text:#6f540c;--on-accent:#fff8e6;--focus:#1f5fbf;
+  --ok:#2c7a34;--warn:#8f5f00;--danger:#b23a2a;--info:#1f5f9f;
+  --ok-bg:#dcecd6;--warn-bg:#f3e3bb;--danger-bg:#f5d9d2;--info-bg:#d7e5f3;
+  --life:#b8362c;--mana:#3564c4;--hatch:#e2d8c2;
+}}
+:root[data-theme="light"]{
+  color-scheme:light;
+  --bg:#efe8da;--s1:#faf5ea;--s2:#f1e9d8;--s3:#e6dcc6;--line:#d3c6aa;--line2:#b9a988;
+  --text:#231c12;--text2:#55493a;--text3:#7a6c58;
+  --accent:#8a6a14;--accent-text:#6f540c;--on-accent:#fff8e6;--focus:#1f5fbf;
+  --ok:#2c7a34;--warn:#8f5f00;--danger:#b23a2a;--info:#1f5f9f;
+  --ok-bg:#dcecd6;--warn-bg:#f3e3bb;--danger-bg:#f5d9d2;--info-bg:#d7e5f3;
+  --life:#b8362c;--mana:#3564c4;--hatch:#e2d8c2;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--text);font:var(--fs1)/1.45 var(--body);margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.num{font-family:var(--num);font-variant-numeric:tabular-nums}
+.wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* mockup controls: not part of the design */
+.mock{border-bottom:1px dashed var(--line2);background:var(--s2);padding-block:var(--sp2);display:flex;flex-wrap:wrap;gap:var(--sp2) var(--sp4);align-items:center;font-size:var(--fs0);color:var(--text2)}
+.mock b{color:var(--text);font-weight:600}
+.mock .grp{display:flex;flex-wrap:wrap;gap:var(--sp1);align-items:center}
+.seg{background:transparent;border:1px solid var(--line2);border-radius:var(--r1);padding:3px 8px;color:var(--text2)}
+.seg[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+
+/* status band */
+.band{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding-block:var(--sp2);display:flex;gap:var(--sp3) var(--sp4);align-items:center;flex-wrap:wrap}
+.brand{font:700 var(--fs3) var(--display);color:var(--accent-text);display:flex;align-items:center;gap:6px}
+.brand i{width:10px;height:10px;background:var(--accent);transform:rotate(45deg);display:inline-block}
+.sentence{flex:1 1 320px;min-width:0;display:flex;align-items:center;gap:var(--sp2);background:transparent;border:0;padding:4px 6px;border-radius:var(--r1);text-align:left}
+.sentence:hover{background:var(--s1)}
+.dot{width:10px;height:10px;border-radius:50%;flex:none;background:var(--ok)}
+[data-tone="warn"] .dot,.dot[data-tone="warn"]{background:var(--warn)}
+[data-tone="danger"] .dot,.dot[data-tone="danger"]{background:var(--danger)}
+[data-tone="info"] .dot,.dot[data-tone="info"]{background:var(--info)}
+.sentence .word{font-size:var(--fs0);letter-spacing:.08em;text-transform:uppercase;font-weight:700;flex:none}
+.sentence .txt{font-size:var(--fs3);font-weight:600;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sentence .txt span{color:var(--text2);font-weight:400}
+.meters{display:grid;grid-template-columns:auto 90px auto;gap:2px 6px;align-items:center;font-size:var(--fs0);color:var(--text2)}
+.bar{height:6px;border-radius:3px;background:var(--s3);overflow:hidden}
+.bar i{display:block;height:100%}
+.count{border:0;border-radius:999px;padding:3px 10px;font-weight:700;font-size:var(--fs0);background:var(--danger-bg);color:var(--danger)}
+.count[data-n="0"]{background:var(--s2);color:var(--text3)}
+.links{display:flex;gap:var(--sp1)}
+.link{background:transparent;border:1px solid var(--line);border-radius:var(--r1);padding:4px 10px;color:var(--text2)}
+.why{display:grid;grid-template-columns:max-content 1fr;gap:4px 12px;background:var(--s1);border:1px solid var(--line);border-radius:var(--r2);padding:var(--sp3);margin-block:var(--sp2);font-size:var(--fs1)}
+.why dt{color:var(--text2);font-size:var(--fs0);text-transform:uppercase;letter-spacing:.06em;padding-top:2px}
+.why dd{margin:0}
+
+/* grid */
+.grid{display:grid;gap:var(--sp3);padding-block:var(--sp3) 48px;grid-template-columns:repeat(12,minmax(0,1fr));align-items:start;
+  grid-template-areas:
+  "video video video video video video map map map needs needs needs"
+  "video video video video video video zone zone zone orders orders orders"
+  "prog prog prog prog prog prog zone zone zone health health health"
+  "jour jour jour jour jour jour zone zone zone log log log"}
+.t-video{grid-area:video}.t-map{grid-area:map}.t-zone{grid-area:zone}.t-needs{grid-area:needs}.t-orders{grid-area:orders}
+.t-health{grid-area:health}.t-prog{grid-area:prog}.t-jour{grid-area:jour}.t-log{grid-area:log}
+[data-preset="simple"] .grid{grid-template-areas:
+  "video video video video video video video video needs needs needs needs"
+  "video video video video video video video video orders orders orders orders"
+  "prog prog prog prog prog prog prog prog health health health health"
+  "jour jour jour jour jour jour jour jour jour jour jour jour"}
+[data-preset="simple"] .t-map,[data-preset="simple"] .t-log{display:none}
+[data-preset="stream"] .grid{grid-template-areas:
+  "video video video video video video video video video map map map"
+  "video video video video video video video video video prog prog prog"
+  "video video video video video video video video video orders orders orders"
+  "log log log log log log log log log log log log"}
+[data-preset="stream"] .t-needs,[data-preset="stream"] .t-health,[data-preset="stream"] .t-jour,[data-preset="stream"] .verbs,[data-preset="stream"] .row .x{display:none}
+[data-preset="simple"] .t-zone,[data-preset="stream"] .t-zone{display:none}
+[data-preset="simple"] .t-zone.open{display:block}
+.tile{background:var(--s1);border-radius:var(--r2);padding:var(--sp3);min-width:0;position:relative}
+.tile>h2{margin:0 0 var(--sp2);font:700 var(--fs0) var(--body);letter-spacing:.09em;text-transform:uppercase;color:var(--text2);display:flex;justify-content:space-between;align-items:center;gap:var(--sp2)}
+.tile>h2 small{font-weight:400;letter-spacing:0;text-transform:none;color:var(--text3)}
+.t-needs:empty{display:none}
+.ghost{background:transparent;border:1px solid var(--line);border-radius:var(--r1);padding:2px 8px;font-size:var(--fs0);color:var(--text2);text-transform:none;letter-spacing:0;font-weight:400}
+
+.video{aspect-ratio:4/3;max-width:100%;border-radius:var(--r1);background:repeating-linear-gradient(135deg,var(--hatch) 0 14px,var(--bg) 14px 28px);display:grid;place-items:center;color:var(--text3);text-align:center;border:1px solid var(--line)}
+.t-video{padding:0;background:transparent}
+
+/* needs you */
+.alert{display:grid;grid-template-columns:auto 1fr auto;gap:var(--sp2);align-items:center;padding:var(--sp2);border-radius:var(--r1);background:var(--info-bg)}
+.alert+.alert{margin-top:var(--sp1)}
+.alert[data-sev="danger"]{background:var(--danger-bg)}.alert[data-sev="warn"]{background:var(--warn-bg)}
+.shape{width:12px;height:12px;background:var(--info);border-radius:50%}
+[data-sev="warn"] .shape{background:var(--warn);border-radius:0;clip-path:polygon(50% 0,100% 100%,0 100%)}
+[data-sev="danger"] .shape{background:var(--danger);border-radius:0;clip-path:polygon(30% 0,70% 0,100% 30%,100% 70%,70% 100%,30% 100%,0 70%,0 30%)}
+.alert p{margin:0;min-width:0}.alert p small{display:block;color:var(--text2)}
+.acts{display:flex;gap:var(--sp1);flex-wrap:wrap;justify-content:flex-end}
+
+/* buttons */
+.btn{min-height:32px;padding:4px 12px;border-radius:var(--r1);border:1px solid var(--line2);background:var(--s2);color:var(--text)}
+.btn:hover{background:var(--s3)}
+.btn.primary{background:var(--accent);color:var(--on-accent);border-color:var(--accent);font-weight:600}
+.btn kbd{font:var(--fs0) var(--num);color:inherit;opacity:.65;margin-left:6px}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+@media (pointer:coarse){.btn,.seg,.link{min-height:44px}}
+
+/* orders */
+.verbs{display:flex;flex-wrap:wrap;gap:var(--sp1);margin-bottom:var(--sp2);position:relative}
+.safety{background:var(--danger-bg);color:var(--text);padding:var(--sp2);border-radius:var(--r1);margin-bottom:var(--sp2)}
+.row{display:grid;grid-template-columns:22px 1fr auto auto;gap:2px var(--sp2);align-items:center;padding:var(--sp2) 0;border-top:1px solid var(--line)}
+.row .ix{font:var(--fs0) var(--num);color:var(--text3);text-align:center}
+.row .t{min-width:0;font-weight:600}
+.row .r{grid-column:2/-1;color:var(--text2);font-size:var(--fs0)}
+.row .p{grid-column:2/-1}
+.row[data-state="done"] .t,.row[data-state="cancelled"] .t{color:var(--text3);font-weight:400}
+.row.plan .t{font-weight:400;color:var(--text2)}
+.chip{font-size:var(--fs0);padding:1px 8px;border-radius:999px;background:var(--s3);color:var(--text2);white-space:nowrap}
+.chip[data-s="active"]{background:var(--ok-bg);color:var(--ok)}
+.chip[data-s="waiting"]{background:var(--warn-bg);color:var(--warn)}
+.chip[data-s="failed"]{background:var(--danger-bg);color:var(--danger)}
+.chip[data-s="next"]{background:var(--info-bg);color:var(--info)}
+.x{background:transparent;border:0;color:var(--text3);padding:2px 6px;border-radius:var(--r1);font-size:var(--fs0)}
+.x:hover{color:var(--danger);background:var(--s2)}
+.sug{display:flex;flex-wrap:wrap;gap:var(--sp1);margin-top:var(--sp2)}
+.more{position:absolute;top:100%;right:0;z-index:4;background:var(--s2);border:1px solid var(--line2);border-radius:var(--r2);padding:var(--sp1);display:grid;min-width:200px;box-shadow:0 8px 24px rgb(0 0 0 / .35)}
+.more button{background:transparent;border:0;text-align:left;padding:6px 10px;border-radius:var(--r1)}
+.more button:hover{background:var(--s3)}
+
+/* health, progress */
+.lights{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--sp1)}
+.light{background:transparent;border:0;padding:4px 2px;border-radius:var(--r1);text-align:center;min-width:0}
+.light:hover{background:var(--s2)}
+.light i{display:block;width:10px;height:10px;border-radius:50%;margin:0 auto 4px;background:var(--ok)}
+.light[data-l="warn"] i{background:var(--warn)}.light[data-l="danger"] i{background:var(--danger)}
+.light b{display:block;font-size:var(--fs0);font-weight:600}.light span{display:block;font-size:var(--fs0);color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pop{margin-top:var(--sp2);padding:var(--sp2);background:var(--s2);border-radius:var(--r1);font-size:var(--fs0);color:var(--text2)}
+.stats{display:grid;grid-template-columns:2fr 1fr 1.4fr 1fr;gap:var(--sp3) var(--sp4)}
+.stat label{display:block;font-size:var(--fs0);color:var(--text2)}
+.stat strong{font:600 var(--fs3) var(--num);font-variant-numeric:tabular-nums}
+.stat small{color:var(--text2);font-size:var(--fs0);display:block}
+.prog{height:8px;border-radius:4px;background:var(--s3);overflow:hidden;margin:4px 0}
+.prog i{display:block;height:100%;background:var(--accent)}
+.spark{vertical-align:middle;margin-left:6px}
+.spark polyline{fill:none;stroke:var(--text2);stroke-width:1.5}.spark circle{fill:var(--accent)}
+
+/* maps */
+svg text{font:10px var(--body);fill:var(--text);pointer-events:none}
+.mini rect.room{fill:var(--s3);stroke:var(--line2)}
+.mini .trail{fill:none;stroke:var(--info);stroke-width:2}
+.mini .fight{fill:none;stroke:var(--danger);stroke-width:2}
+.mini .hero{fill:var(--accent)}.mini .mob{fill:var(--danger)}
+.zone svg{width:100%;height:auto;display:block}
+.edge{stroke:var(--line2);stroke-width:1.5;fill:none}.edge.dun{stroke-dasharray:4 4}
+.route{stroke:var(--accent);stroke-width:3;fill:none;stroke-linecap:round}
+.node rect{fill:var(--s2);stroke:var(--line2);rx:6}
+.node{cursor:pointer}.node:hover rect.box{fill:var(--s3)}
+.node rect.band{stroke:none;fill:var(--text3)}
+.node[data-band="in"] rect.band{fill:var(--ok)}.node[data-band="above"] rect.band{fill:var(--warn)}.node[data-band="hard"] rect.band{fill:var(--danger)}
+.node[data-here] rect.box{stroke:var(--info);stroke-width:2}
+.node[data-target] rect.box{stroke:var(--accent);stroke-width:2.5}
+.node[data-locked] rect.box{stroke-dasharray:3 3}.node[data-locked] text{fill:var(--text3)}
+.node[data-failed] rect.box{stroke:var(--danger);stroke-width:2}
+.pin circle{fill:var(--accent)}.pin text{fill:var(--on-accent);font:700 10px var(--num);text-anchor:middle}
+.node text.sub{fill:var(--text2);font-size:8.5px}
+.legend{font-size:var(--fs0);color:var(--text2);margin:var(--sp2) 0 0}
+.menu{position:absolute;left:var(--sp2);right:var(--sp2);bottom:var(--sp2);background:var(--s2);border:1px solid var(--line2);border-radius:var(--r2);padding:var(--sp3);box-shadow:0 8px 24px rgb(0 0 0 / .4);z-index:3}
+.menu h3{margin:0;font:700 var(--fs2) var(--body);display:flex;justify-content:space-between;gap:var(--sp2)}
+.menu p{margin:4px 0;color:var(--text2);font-size:var(--fs0)}
+.menu .durs,.menu .go{display:flex;flex-wrap:wrap;gap:var(--sp1);margin-top:var(--sp2)}
+.menu .warnline{color:var(--warn)}
+
+/* journey, log */
+.steps{display:flex;gap:var(--sp1);flex-wrap:wrap;list-style:none;margin:0;padding:0}
+.steps li{padding:2px 8px;border-radius:999px;background:var(--s2);font-size:var(--fs0);color:var(--text2)}
+.steps li[data-s="done"]{color:var(--text3)}.steps li[data-s="cur"]{background:var(--accent);color:var(--on-accent);font-weight:600}
+.tabs{display:flex;gap:var(--sp1);margin-bottom:var(--sp2)}
+.lines{list-style:none;margin:0;padding:0;font-size:var(--fs0);color:var(--text2)}
+.lines li{padding:3px 0;border-top:1px solid var(--line);display:grid;grid-template-columns:62px 1fr;gap:var(--sp2)}
+.lines time{font-family:var(--num);color:var(--text3)}
+
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));background:var(--s3);border:1px solid var(--line2);border-radius:var(--r2);padding:var(--sp2) var(--sp3);display:flex;gap:var(--sp3);align-items:center;z-index:9;max-width:calc(100% - 32px);box-shadow:0 8px 24px rgb(0 0 0 / .4)}
+.keys{color:var(--text3);font-size:var(--fs0);padding-bottom:var(--sp4)}
+
+@media (max-width:1099px){
+  .grid,[data-preset] .grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:"video video" "needs needs" "orders zone" "health zone" "prog prog" "map log" "jour jour"}
+  [data-preset="simple"] .grid{grid-template-areas:"video video" "needs needs" "orders orders" "health prog" "jour jour"}
+  [data-preset="stream"] .grid{grid-template-areas:"video video" "prog orders" "map log"}
+  .stats{grid-template-columns:1fr 1fr}
+}
+@media (max-width:639px){
+  .grid,[data-preset] .grid,[data-preset="simple"] .grid,[data-preset="stream"] .grid{grid-template-columns:minmax(0,1fr);grid-template-areas:"video" "needs" "orders" "health" "prog" "map" "log" "jour"}
+  .t-zone{display:none}
+  .t-zone.open{display:block;position:fixed;inset:0;z-index:8;overflow:auto;border-radius:0;padding-top:calc(var(--sp3) + env(safe-area-inset-top,0px))}
+  .menu{position:fixed;left:0;right:0;bottom:0;border-radius:var(--r2) var(--r2) 0 0;padding-bottom:calc(var(--sp3) + env(safe-area-inset-bottom,0px))}
+  .links .link.opt{display:none}
+  .sentence .txt{white-space:normal;font-size:var(--fs2)}
+  .verbs .btn{flex:1 1 40%}.btn kbd{display:none}
+}
+@media (min-width:640px){[data-preset="simple"] .t-zone.open{position:fixed;inset:8% 20%;z-index:8;overflow:auto;box-shadow:0 0 0 100vmax rgb(0 0 0 / .55)}}
+@media (prefers-reduced-motion:no-preference){.prog i,.bar i{transition:width .24s cubic-bezier(.2,0,0,1)}}
+</style>
+
+<div class="mock wrap" role="group" aria-label="Mockup controls, not part of the design">
+  <span><b>Mockup controls</b> (fake data, placeholder shapes, not part of the design)</span>
+  <span class="grp">Scenario <span id="mScen"></span></span>
+  <span class="grp">Gold <span id="mGold"></span></span>
+  <span class="grp">Layout <span id="mPreset"></span></span>
+</div>
+
+<header class="band wrap">
+  <div class="brand"><i></i>d.idle</div>
+  <button class="sentence" id="sentence" aria-expanded="false" aria-live="polite"></button>
+  <div class="meters" aria-label="Life and mana">
+    <span>life</span><span class="bar"><i id="lifeBar" style="width:72%;background:var(--life)"></i></span><span class="num" id="lifeNum">86</span>
+    <span>mana</span><span class="bar"><i style="width:75%;background:var(--mana)"></i></span><span class="num">105</span>
+  </div>
+  <button class="count" id="count" data-n="0" title="Things waiting for you"></button>
+  <nav class="links" aria-label="Pages"><button class="link">Inventory</button><button class="link opt">Skills</button><button class="link" title="Layout, theme, help" aria-label="More">...</button></nav>
+</header>
+
+<main class="wrap" id="app" data-preset="standard">
+  <dl class="why" id="why" hidden></dl>
+  <div class="grid">
+    <section class="tile t-video" aria-label="Game"><div class="video"><div>Game picture<br><small>live from your own game, about 20 frames a second</small></div></div></section>
+
+    <section class="tile t-map"><h2>Cold Plains <small>explored 64%</small><span><button class="ghost">Layers</button> <button class="ghost" aria-label="Zoom in">+</button> <button class="ghost" aria-label="Zoom out">-</button></span></h2>
+      <svg class="mini" viewBox="0 0 300 150" role="img" aria-label="Local map: the hero, its trail and two monsters">
+        <rect class="room" x="10" y="20" width="90" height="50"/><rect class="room" x="100" y="36" width="80" height="18"/><rect class="room" x="180" y="14" width="110" height="70"/><rect class="room" x="210" y="84" width="24" height="30"/><rect class="room" x="150" y="114" width="140" height="28"/>
+        <polyline class="trail" points="30,46 80,44 130,45 176,45"/><polyline class="fight" points="176,45 205,48 222,60"/>
+        <circle class="mob" cx="246" cy="52" r="4"/><circle class="mob" cx="258" cy="66" r="4"/><rect class="hero" x="217" y="55" width="10" height="10" transform="rotate(45 222 60)"/>
+      </svg>
+    </section>
+
+    <section class="tile t-needs" id="needs" aria-label="Needs you" aria-live="polite"></section>
+
+    <section class="tile t-orders" id="ordersTile"><h2>Orders <small id="ordCount"></small></h2>
+      <div class="verbs" id="verbs"></div>
+      <div id="rows"></div>
+    </section>
+
+    <section class="tile t-zone zone" id="zoneTile"><h2>Act I <small>click a zone to send the hero</small><span><button class="ghost" id="legendBtn" aria-expanded="false">Legend</button> <button class="ghost" id="zoneClose" hidden>Close</button></span></h2>
+      <div id="zone"></div>
+      <p class="legend" id="legend" hidden>Blue ring: the hero is here. Gold ring and line: current target and route. Numbered pin: queued. Left stripe: green in your level range, amber above it, red too hard now. Dashed: not orderable yet.</p>
+      <div class="menu" id="menu" hidden role="dialog" aria-label="Zone orders"></div>
+    </section>
+
+    <section class="tile t-health"><h2>Health</h2><div class="lights" id="lights"></div><div class="pop" id="lightPop" hidden></div></section>
+
+    <section class="tile t-prog"><h2>Progress</h2>
+      <div class="stats">
+        <div class="stat"><label>Level 7 to 10</label><div class="prog"><i style="width:62%"></i></div><small>62%, level 10 in about 25 min</small></div>
+        <div class="stat"><label>xp / h</label><strong>12.4k</strong><svg class="spark" width="64" height="20" viewBox="0 0 64 20" aria-hidden="true"><polyline points="0,15 8,14 16,16 24,11 32,12 40,8 48,9 56,5 62,6"/><circle cx="62" cy="6" r="2.2"/></svg></div>
+        <div class="stat"><label>Journey</label><strong>3 of 9</strong><small>next: Blood Raven, too early (floor 9)</small></div>
+        <div class="stat"><label>gold / h</label><strong>2.1k</strong></div>
+      </div>
+    </section>
+
+    <section class="tile t-jour"><h2>Journey <small>the strip that exists today, unchanged</small></h2>
+      <ol class="steps"><li data-s="done">A new hero</li><li data-s="done">Cold Plains waypoint</li><li data-s="cur">Blood Raven</li><li>Claim the Rogue</li><li>Find Cain</li><li>Forgotten Tower</li><li>Andariel</li></ol>
+    </section>
+
+    <section class="tile t-log"><h2>Log</h2>
+      <div class="tabs" id="tabs"></div><ul class="lines" id="lines"></ul>
+    </section>
+  </div>
+  <p class="keys">Keys: <b>g</b> go to, <b>t</b> town, <b>r</b> repair, <b>p</b> pause or resume, <b>z</b> undo, <b>Esc</b> close.</p>
+</main>
+<div class="toast" id="toast" hidden role="status"></div>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
+function btn(txt,cls,fn,key){var b=el('button','btn'+(cls?' '+cls:''),txt);b.type='button';if(key){var k=el('kbd','',key);b.appendChild(k)}b.addEventListener('click',fn);return b}
+
+// Act 1 nodes: ids, names and positions as in the real map data; bands relative to a level 7 hero.
+var NODES=[['camp','Rogue Encampment',62,744,'town'],['bm','Blood Moor',62,680,'below','clvl 1-8','safe first xp'],['den','Den of Evil',62,616,'in','clvl 1-8','quest; small cave'],
+['cp','Cold Plains',180,680,'in','clvl 6-12','open ground, waypoint'],['cave','Cave 1 to 2',180,744,'in','clvl 6-10','small, quick'],['bg','Burial Grounds',298,680,'above','clvl 8-14','Blood Raven shoots from range'],
+['crypt','Crypt',298,616,'above','clvl 8-14','small, a chest'],['sf','Stony Field',180,616,'above','clvl 10-16','open ground, easy to path'],['up','Underground Pass',180,552,'above','clvl 10-16','the way to Dark Wood'],
+['dw','Dark Wood',180,488,'above','clvl 10-16','the Inifuss tree is here'],['bmarsh','Black Marsh',180,424,'hard','clvl 12-18','waypoint'],['hole','Hole 1 to 2',62,424,'hard','clvl 12+','dense packs'],
+['ftw','Forgotten Tower',298,424,'hard','clvl 15-22','a long chain, no waypoint'],['cell','Tower Cellars',298,360,'locked'],['tam','Tamoe Highland',180,360,'hard','clvl 14-20','leads to the Monastery'],
+['pit','Pit 1 to 2',62,360,'hard','clvl 16-24','dense, no quest'],['mg','Monastery Gate',180,296,'hard'],['oc','Outer Cloister',180,232,'hard'],['line','Monastery line',180,168,'locked']];
+var EDGES=[['camp','bm'],['bm','den',1],['bm','cp'],['cp','cave',1],['cp','bg'],['bg','crypt',1],['cp','sf'],['sf','up',1],['up','dw',1],['dw','bmarsh'],['bmarsh','hole',1],['bmarsh','ftw',1],['ftw','cell',1],['bmarsh','tam'],['tam','pit',1],['tam','mg'],['mg','oc'],['oc','line',1]];
+var N={};NODES.forEach(function(n){N[n[0]]={id:n[0],name:n[1],x:n[2],y:n[3],band:n[4],range:n[5],why:n[6]}});
+
+var S={scen:'daily',gold:'enough',preset:'standard',paused:false,here:'cp',orders:[],needs:[],seq:20,tab:'Now',menu:null,dur:'30 min',undo:null,timers:[]};
+var SCEN={
+ daily:{label:'Daily',orders:[{intent:'go',zone:'cp',text:'Farm Cold Plains for 30 min',state:'active',why:'12 min left, 41 kills',pct:60}],needs:[]},
+ needs:{label:'Needs you',orders:[{intent:'go',zone:'cp',text:'Farm Cold Plains for 30 min',state:'active',why:'12 min left, 41 kills',pct:60}],
+   needs:[{k:'gear',sev:'danger',t:'Weapon broken',s:'Short Staff 0/18. Repair is about 180 gold.'},{k:'ask',sev:'warn',t:'Go for Blood Raven at level 9?',s:'The plan waits for level 10. Default: wait.'},{k:'cards',sev:'info',t:'3 finds to flip',s:''}]},
+ queue:{label:'3 orders, one failed',orders:[{intent:'go',zone:'cp',text:'Farm Cold Plains for 30 min',state:'active',why:'12 min left, 41 kills',pct:60},
+   {intent:'identify',text:'Identify all (3 items)',state:'waiting',next:true,why:'waiting for a safe moment: 2 monsters near'},
+   {intent:'repair',text:'Repair now',state:'failed',why:'No way home: no scroll, and the walk was refused. Retry in 14 min.'},
+   {intent:'go',zone:'sf',text:'Farm Stony Field for 1 h',state:'queued',why:'after Cold Plains'}],
+   needs:[{k:'failed',sev:'warn',t:'Repair failed: no way home',s:'Buy a scroll in town, or retry in 14 min.'}]},
+ blocked:{label:'Journey blocked',orders:[],needs:[{k:'blocked',sev:'warn',t:'Journey blocked: Den of Evil',s:'Needs 2 healing potions, the hero has 0. Farming Blood Moor meanwhile.'}]},
+ empty:{label:'No orders',orders:[],needs:[]}
+};
+function load(name){S.timers.forEach(clearTimeout);S.timers=[];S.scen=name;S.paused=false;S.menu=null;
+ S.orders=SCEN[name].orders.map(function(o){var c={};for(var k in o)c[k]=o[k];c.id=++S.seq;return c});
+ S.needs=SCEN[name].needs.map(function(n){var c={};for(var k in n)c[k]=n[k];return c});render()}
+
+function open(){return S.orders.filter(function(o){return o.state!=='done'&&o.state!=='cancelled'})}
+function active(){return S.orders.filter(function(o){return o.intent==='go'&&o.state==='active'})[0]}
+function toast(text,undo){var t=$('toast');t.textContent='';t.appendChild(el('span','',text));S.undo=undo||null;
+ if(undo){t.appendChild(btn('Undo','',function(){undo();hideToast()},'z'))}t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(hideToast,5000)}
+function hideToast(){$('toast').hidden=true;S.undo=null}
+function add(o,first){o.id=++S.seq;if(first)S.orders.unshift(o);else S.orders.push(o);render();
+ toast('Order added: '+o.text,function(){cancel(o.id,true)});return o}
+function cancel(id,quiet){S.orders=S.orders.filter(function(o){return o.id!==id});render();if(!quiet)toast('Cancelled')}
+function later(ms,fn){S.timers.push(setTimeout(fn,ms))}
+
+function repair(){
+ if(S.orders.some(function(o){return o.intent==='repair'&&(o.state==='active'||o.state==='waiting')}))return;
+ S.orders=S.orders.filter(function(o){return !(o.intent==='repair'&&o.state==='failed')});
+ S.needs=S.needs.filter(function(n){return n.k!=='gear'&&n.k!=='failed'});
+ if(S.gold==='enough'){var o=add({intent:'repair',text:'Repair now',state:'waiting',next:true,why:'waiting for a safe moment: finishing this pack'},true);
+  later(2600,function(){o.state='active';o.why='going to town through a portal';o.next=false;render()});
+  later(5200,function(){o.why='at the smith';render()});
+  later(7600,function(){o.state='done';o.why='repaired: weapon 18/18, back in Cold Plains';render()});
+ }else{var f=add({intent:'repair',text:'Farm until repair',state:'active',why:'farming for repair: 46 of 300 gold',pct:15},true);
+  later(3000,function(){f.why='farming for repair: 140 of 300 gold';f.pct=47;render()});}
+}
+function town(){S.orders.forEach(function(o){if(o.intent==='go'&&o.state==='active')o.state='cancelled'});S.orders=S.orders.filter(function(o){return o.state!=='cancelled'});
+ add({intent:'town',zone:'camp',text:'Rest in town',state:'active',why:'walking home'},true)}
+function pause(){S.paused=!S.paused;render();toast(S.paused?'Paused. The hero stays in a safe spot.':'Resumed')}
+function goTo(){var z=$('zoneTile');z.classList.add('open');var sheet=getComputedStyle(z).position==='fixed';if(!sheet)z.classList.remove('open');$('zoneClose').hidden=!sheet;var f=z.querySelector('.node[data-here]');if(f)f.focus()}
+function closeZone(){$('zoneTile').classList.remove('open');$('zoneClose').hidden=true;S.menu=null;render()}
+
+function renderBand(){
+ var a=active(),s=$('sentence'),tone='ok',word,txt,why;
+ var rep=S.orders.filter(function(o){return o.intent==='repair'&&(o.state==='active'||o.state==='waiting')})[0];
+ var home=S.orders.filter(function(o){return o.intent==='town'&&o.state==='active'})[0];
+ if(S.paused){tone='info';word='Paused';txt='in Cold Plains';why='you paused it'}
+ else if(rep&&rep.text==='Repair now'){tone='info';word='Repair trip';txt='from Cold Plains';why=rep.why}
+ else if(rep){word='Farming gold';txt='in Blood Moor';why='for the repair you asked for'}
+ else if(home){tone='info';word='Going home';txt='to Rogue Encampment';why='you ordered it'}
+ else if(S.scen==='blocked'){tone='warn';word='Farming';txt='Blood Moor';why='the Den of Evil is blocked: 2 healing potions needed'}
+ else if(a){word='Farming';txt=N[a.zone].name;why='you ordered it, '+a.why.split(',')[0]}
+ else{word='Farming';txt='Cold Plains';why='for level 10, to unlock Blood Raven'}
+ s.dataset.tone=tone;s.textContent='';s.appendChild(el('span','dot'));s.appendChild(el('span','word',word));
+ var t=el('span','txt',txt+' ');t.appendChild(el('span','',why));s.appendChild(t);
+ var w=$('why');w.textContent='';[['Now',word+' '+txt+': '+why+'.'],['Would change it','An order from you. Life under the retreat line sends the hero to town.'],['Next',open().length>1?open()[1].text:'The plan: farm to level 10, then Blood Raven.']].forEach(function(r){w.appendChild(el('dt','',r[0]));w.appendChild(el('dd','',r[1]))});
+ var n=S.needs.length,c=$('count');c.dataset.n=n;c.textContent=n?n+' need'+(n>1?'':'s')+' you':'all quiet';
+}
+function renderNeeds(){
+ var box=$('needs');box.textContent='';if(!S.needs.length)return;
+ var h=el('h2','','Needs you');box.appendChild(h);
+ S.needs.forEach(function(n){var a=el('div','alert');a.dataset.sev=n.sev;a.appendChild(el('span','shape'));
+  var p=el('p','',n.t);if(n.s)p.appendChild(el('small','',n.s));a.appendChild(p);var acts=el('div','acts');
+  function drop(){S.needs=S.needs.filter(function(x){return x!==n});render()}
+  if(n.k==='gear')acts.appendChild(btn(S.gold==='enough'?'Repair now':'Farm until repair','primary',repair));
+  if(n.k==='failed')acts.appendChild(btn('Retry now','',repair));
+  if(n.k==='ask'){acts.appendChild(btn('Go now','primary',function(){drop();add({intent:'journey',zone:'bg',text:'Journey: Blood Raven, go now',state:'queued',why:'after the current order'})}));acts.appendChild(btn('Not yet','',drop))}
+  if(n.k==='blocked'){acts.appendChild(btn('Buy potions','primary',function(){drop();add({intent:'errand',text:'Buy 2 healing potions',state:'waiting',next:true,why:'waiting for a safe moment'},true)}));acts.appendChild(btn('Hold chapter','',drop))}
+  if(n.k==='cards')acts.appendChild(btn('Open','',drop));
+  a.appendChild(acts);box.appendChild(a)});
+}
+function renderOrders(){
+ var v=$('verbs');v.textContent='';
+ v.appendChild(btn('Go to...','primary',goTo,'g'));v.appendChild(btn('Town','',town,'t'));
+ v.appendChild(btn(S.gold==='enough'?'Repair':'Farm until repair','',repair,'r'));
+ v.appendChild(btn(S.paused?'Resume':'Pause','',pause,'p'));
+ var more=btn('More','',function(){var m=$('moreMenu');m.hidden=!m.hidden});v.appendChild(more);
+ var mm=el('div','more');mm.id='moreMenu';mm.hidden=true;
+ [['Identify all','identify','waiting for a safe moment'],['Sell marked items now','sell','goes home at the next safe moment'],['Stash gold','gold','goes home at the next safe moment'],['Revive mercenary','merc','needs 600 gold in town'],['Apply gear set: Fire resist','set','swaps 3 items in town']].forEach(function(r){
+  var b=el('button','',r[0]);b.type='button';b.addEventListener('click',function(){mm.hidden=true;add({intent:r[1],text:r[0],state:'waiting',next:true,why:r[2]},true)});mm.appendChild(b)});
+ v.appendChild(mm);
+ var rows=$('rows');rows.textContent='';var list=S.orders,i=0;
+ if(S.paused)rows.appendChild(el('div','safety','Paused by you. Orders are kept. Safety rules still run.'));
+ list.forEach(function(o){var r=el('div','row');r.dataset.state=o.state;
+  var live=o.state!=='done'&&o.state!=='cancelled'&&o.state!=='failed';
+  r.appendChild(el('span','ix',o.state==='active'?'>':live?String(++i):o.state==='failed'?'!':'ok'));
+  r.appendChild(el('span','t',o.text));
+  var c=el('span','chip',o.next&&o.state==='waiting'?'next':o.state);c.dataset.s=o.next&&o.state==='waiting'?'next':o.state;r.appendChild(c);
+  var x=el('button','x',o.state==='failed'||o.state==='done'?'Dismiss':'Cancel');x.type='button';x.setAttribute('aria-label',x.textContent+': '+o.text);
+  x.addEventListener('click',function(){var keep=o;cancel(o.id,true);if(live)toast('Cancelled: '+o.text,function(){S.orders.push(keep);render()})});r.appendChild(x);
+  if(o.why)r.appendChild(el('span','r',o.why));
+  if(o.pct!=null&&o.state==='active'){var p=el('div','prog p'),f=el('i');f.style.width=o.pct+'%';p.appendChild(f);r.appendChild(p)}
+  rows.appendChild(r)});
+ var plan=el('div','row plan');plan.appendChild(el('span','ix','~'));plan.appendChild(el('span','t',open().length?'Then the plan: farm to level 10, then Blood Raven':'No orders. The hero follows the plan: farming Cold Plains for level 10, to unlock Blood Raven.'));rows.appendChild(plan);
+ if(!open().length){var sg=el('div','sug');sg.appendChild(btn('Go now: Blood Raven','',function(){add({intent:'journey',zone:'bg',text:'Journey: Blood Raven, go now',state:'active',why:'walking to Burial Grounds'})}));
+  sg.appendChild(btn('Identify 3 items','',function(){add({intent:'identify',text:'Identify all (3 items)',state:'waiting',next:true,why:'waiting for a safe moment'})}));rows.appendChild(sg)}
+ $('ordCount').textContent=open().length?open().length+' open':'';
+}
+function svg(tag,attrs){var e=document.createElementNS('http://www.w3.org/2000/svg',tag);for(var k in attrs)e.setAttribute(k,attrs[k]);return e}
+function pathTo(id){var prev={},q=[S.here];prev[S.here]=null;while(q.length){var c=q.shift();if(c===id)break;EDGES.forEach(function(e){var o=e[0]===c?e[1]:e[1]===c?e[0]:null;if(o&&!(o in prev)){prev[o]=c;q.push(o)}})}
+ var out=[],c=id;while(c){out.unshift(c);c=prev[c]}return out}
+function renderZone(){
+ var box=$('zone');box.textContent='';var s=svg('svg',{viewBox:'0 140 360 632',role:'group','aria-label':'Act 1 map'});
+ EDGES.forEach(function(e){var a=N[e[0]],b=N[e[1]];s.appendChild(svg('line',{class:'edge'+(e[2]?' dun':''),x1:a.x,y1:a.y,x2:b.x,y2:b.y}))});
+ var zoneOrders=S.orders.filter(function(o){return o.zone&&o.state!=='done'&&o.state!=='cancelled'});
+ var tgt=zoneOrders.filter(function(o){return o.state==='active'})[0];
+ if(tgt&&tgt.zone!==S.here){var pts=pathTo(tgt.zone).map(function(id){return N[id].x+','+N[id].y}).join(' ');s.appendChild(svg('polyline',{class:'route',points:pts}))}
+ var pin=0;
+ NODES.forEach(function(row){var n=N[row[0]],g=svg('g',{class:'node',tabindex:'0',role:'button','data-band':n.band,'aria-label':n.name+(n.range?', '+n.range:'')});
+  if(n.id===S.here)g.setAttribute('data-here','');if(n.band==='locked')g.setAttribute('data-locked','');
+  if(tgt&&tgt.zone===n.id)g.setAttribute('data-target','');
+  g.appendChild(svg('rect',{class:'box',x:n.x-52,y:n.y-20,width:104,height:40,rx:6}));
+  g.appendChild(svg('rect',{class:'band',x:n.x-52,y:n.y-14,width:4,height:28,rx:2}));
+  var t=svg('text',{x:n.x,y:n.y-(n.range?2:-3),'text-anchor':'middle'});t.textContent=n.name;g.appendChild(t);
+  if(n.range){var u=svg('text',{class:'sub',x:n.x,y:n.y+11,'text-anchor':'middle'});u.textContent=n.id===S.here?'here':n.range;g.appendChild(u)}
+  zoneOrders.forEach(function(o){if(o.zone===n.id&&o.state!=='active'){pin++;var p=svg('g',{class:'pin'});p.appendChild(svg('circle',{cx:n.x+46,cy:n.y-18,r:8}));var pt=svg('text',{x:n.x+46,y:n.y-14.5});pt.textContent=pin;p.appendChild(pt);g.appendChild(p)}});
+  function pick(){S.menu=n.id;renderMenu()}
+  g.addEventListener('click',pick);g.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();pick()}});
+  s.appendChild(g)});
+ box.appendChild(s);renderMenu();
+}
+function renderMenu(){
+ var m=$('menu');m.textContent='';if(!S.menu){m.hidden=true;return}m.hidden=false;var n=N[S.menu];
+ var h=el('h3','',n.name),x=el('button','ghost','Close');x.type='button';x.addEventListener('click',function(){S.menu=null;renderMenu()});h.appendChild(x);m.appendChild(h);
+ function done(o,first){S.menu=null;if(document.querySelector('#zoneTile.open'))closeZone();add(o,first)}
+ if(n.band==='locked'){m.appendChild(el('p','','Not orderable yet. It opens when the hero reaches the Forgotten Tower.'));return}
+ if(n.band==='town'){m.appendChild(el('p','','Town. Errands happen here.'));var g0=el('div','go');
+  g0.appendChild(btn('Rest in town','primary',function(){S.menu=null;town()}));g0.appendChild(btn(S.gold==='enough'?'Repair':'Farm until repair','',function(){S.menu=null;repair()}));
+  g0.appendChild(btn('Identify all','',function(){done({intent:'identify',text:'Identify all (3 items)',state:'waiting',next:true,why:'waiting for a safe moment'},true)}));m.appendChild(g0);return}
+ m.appendChild(el('p','',n.range+'. '+n.why+'. You are level 7: '+({below:'below your range, little xp',in:'in range',above:'above your range','hard':'too hard now'})[n.band]+'.'));
+ if(n.band==='hard')m.appendChild(el('p','warnline','The guard says: level 7 is under the floor for this zone. You can still ask; the guard keeps the last word.'));
+ if(n.id===S.here){var g1=el('div','go');g1.appendChild(btn('Stay and fight here','primary',function(){done({intent:'go',zone:n.id,text:'Fight here until I cancel',state:'active',why:'no time limit'},true)}));m.appendChild(g1);return}
+ var d=el('div','durs');['30 min','1 h','until level 8','until I cancel'].forEach(function(t){var b=el('button','seg',t);b.type='button';b.setAttribute('aria-pressed',String(S.dur===t));b.addEventListener('click',function(){S.dur=t;renderMenu()});d.appendChild(b)});m.appendChild(d);
+ var how=S.dur.indexOf('until')===0?S.dur:'for '+S.dur,text='Farm '+n.name+' '+how;
+ m.appendChild(el('p','','Route: '+pathTo(n.id).map(function(i){return N[i].name}).join(' > ')));
+ var g=el('div','go');
+ g.appendChild(btn(n.band==='hard'?'Ask anyway':'Go now','primary',function(){S.orders=S.orders.filter(function(o){return !(o.intent==='go'&&o.state==='active')});done({intent:'go',zone:n.id,text:text,state:'active',why:'walking there'},true)}));
+ g.appendChild(btn('Add to queue','',function(){done({intent:'go',zone:n.id,text:text,state:'queued',why:'after the current order'})}));m.appendChild(g);
+}
+function renderHealth(){
+ var broken=S.needs.some(function(n){return n.k==='gear'||n.k==='failed'}),L=$('lights');L.textContent='';
+ [['Life','ok','86 / 120','Retreat line 35%. 4 healing potions on the belt.'],['Gear',broken?'danger':'ok',broken?'1 broken':'fine',broken?'Weapon 0/18 broken, torso 5/24, head 8/12, boots 10/12.':'Weapon 18/18, torso 20/24, head 8/12, boots 10/12.'],
+  ['Readiness','warn','risky','Lightning resistance -8% is under the line for Blood Moor. Fire 12, cold 30, poison 5.'],['Mercenary','ok','alive','Rogue, level 6.'],['Supplies','ok','4 potions','4 healing, 2 mana, 6 scrolls of town portal.']].forEach(function(r){
+  var b=el('button','light');b.type='button';b.dataset.l=r[1];b.appendChild(el('i'));b.appendChild(el('b','',r[0]));b.appendChild(el('span','',r[2]));
+  b.addEventListener('click',function(){var p=$('lightPop');var same=!p.hidden&&p.dataset.k===r[0];p.hidden=same;p.dataset.k=r[0];p.textContent=r[0]+': '+r[3]});L.appendChild(b)});
+}
+var LOG={Now:[['9:41 AM','Order started: Farm Cold Plains for 30 min'],['9:38 AM','Sold 4 items for 212 gold'],['9:31 AM','Level 7']],Journal:[['9:12 AM','Chapter done: Cold Plains waypoint'],['8:58 AM','Rule learned: sell white armor']],Story:[['9:31 AM','Sparks climb the staff: level 7.']],Alerts:[['9:05 AM','Died in Blood Moor to a Fallen Shaman']]};
+function renderLog(){var t=$('tabs');t.textContent='';Object.keys(LOG).forEach(function(k){var b=el('button','seg',k);b.type='button';b.setAttribute('aria-pressed',String(S.tab===k));b.addEventListener('click',function(){S.tab=k;renderLog()});t.appendChild(b)});
+ var l=$('lines');l.textContent='';LOG[S.tab].forEach(function(r){var li=el('li');li.appendChild(el('time','',r[0]));li.appendChild(el('span','',r[1]));l.appendChild(li)})}
+function segs(id,opts,cur,fn){var box=$(id);box.textContent='';opts.forEach(function(o){var b=el('button','seg',o[1]);b.type='button';b.setAttribute('aria-pressed',String(cur()===o[0]));b.addEventListener('click',function(){fn(o[0])});box.appendChild(b)})}
+function render(){
+ $('app').dataset.preset=S.preset;renderBand();renderNeeds();renderOrders();renderZone();renderHealth();renderLog();
+ segs('mScen',Object.keys(SCEN).map(function(k){return [k,SCEN[k].label]}),function(){return S.scen},load);
+ segs('mGold',[['enough','1,240 (enough)'],['short','46 (short)']],function(){return S.gold},function(v){S.gold=v;render()});
+ segs('mPreset',[['simple','Simple'],['standard','Standard'],['stream','Stream']],function(){return S.preset},function(v){S.preset=v;closeZone()});
+}
+$('sentence').addEventListener('click',function(){var w=$('why');w.hidden=!w.hidden;this.setAttribute('aria-expanded',String(!w.hidden))});
+$('count').addEventListener('click',function(){$('needs').scrollIntoView({block:'nearest'})});
+$('legendBtn').addEventListener('click',function(){var l=$('legend');l.hidden=!l.hidden;this.setAttribute('aria-expanded',String(!l.hidden))});
+$('zoneClose').addEventListener('click',closeZone);
+document.addEventListener('keydown',function(e){
+ if(e.metaKey||e.ctrlKey||e.altKey||/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))return;
+ if(e.key==='Escape'){if(S.menu){S.menu=null;renderMenu()}else closeZone();$('moreMenu').hidden=true;return}
+ if(e.target.closest&&e.target.closest('.node'))return;
+ ({g:goTo,t:town,r:repair,p:pause,z:function(){if(S.undo){S.undo();hideToast()}}}[e.key]||function(){})();
+});
+load('needs');
+})();
+</script>

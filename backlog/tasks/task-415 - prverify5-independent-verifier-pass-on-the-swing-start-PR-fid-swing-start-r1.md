@@ -1,10 +1,13 @@
 ---
 id: TASK-415
-title: 'prverify5: independent verifier pass on the swing-start PR (fid/swing-start-r1)'
-status: In Progress
+title: >-
+  prverify5: independent verifier pass on the swing-start PR
+  (fid/swing-start-r1)
+status: Done
 assignee:
   - live-agent
 created_date: '2026-11-14T13:51:00Z'
+updated_date: '2026-11-14T14:24:00Z'
 labels:
   - d2d
   - research
