@@ -134,6 +134,7 @@
 | palprofile2 | proposed | - | `internal/combat/classdata`<br>`internal/combat/lifeprice.go`<br>`docs/palprofile.md` | - |
 | beltfix | in-progress | - | `internal/town/belt`<br>`internal/town/beltfill.go`<br>`internal/town/beltrepair.go`<br>`internal/town/sim`<br>`internal/combat/packdrink.go`<br>`internal/combat/packdrink_test.go`<br>`docs/beltfix.md`<br>`internal/town/beltfix6_test.go`<br>`internal/combat/fighter.go`<br>`internal/combat/safety.go`<br>`internal/loot/fixpickup_test.go`<br>`internal/loot/lootskip_test.go`<br>`internal/town/beltfix_test.go`<br>`cmd/d2bot/beltfill_adapter.go`<br>`cmd/d2bot/wiring_test.go` | - |
 | cut011 | proposed | - | `docs/releases/0.1.1.md`<br>`docs/friend-checklist-0.1.1.md` | - |
+| hero14 | proposed | - | `docs/probes/hero14-analysis-2026-11-14.md` | - |
 | gameexe-retire-soak | deferred | gameexe-retire-soak | `docs/gameexe-retire.md` | - |
 | tpreserve-live | proposed | - | `docs/probes/tpreserve.md` | - |
 | playsession | proposed | - | `tools/play-session.sh`<br>`docs/play-session.md` | - |
@@ -185,6 +186,7 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 48b09a74 11-14 05:08 `Merge agent/hero14: hero14: leakcheck wording` (hero14)
 - 3ab0a262 11-13 12:03 `Merge agent/botadapt: Merge branch 'main' into TASK-396` (botadapt)
 - 23c14b4f 11-13 12:02 `Merge branch 'main' into TASK-396` (-)
 - 68a0cd99 11-13 11:37 `Merge agent/forkrebase: Merge branch 'main' into TASK-395` (forkrebase)
@@ -194,5 +196,4 @@
 - a2b32a5b 11-12 22:21 `Merge branch 'main' into TASK-393` (-)
 - 52b63449 11-12 22:17 `Merge agent/decomp13: decomp13: merge main, keep both decomp-queue lines` (decomp13)
 - b4cfdc0d 11-12 21:11 `decomp13: merge main, keep both decomp-queue lines` (-)
-- 0410f449 11-12 19:39 `Merge agent/przeal: Merge branch 'main' into TASK-392` (przeal)
 <!-- statusgen:end -->
