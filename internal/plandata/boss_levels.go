@@ -24,7 +24,7 @@ const GateAndariel = "andariel"
 // floor for the Paladin is 14 with the merc and 16 without; the other classes copy the one-level rule, U). The Andariel
 // kit (8 potions, antidotes) and the unattended hold are separate gates (task.BossGate).
 var andarielLevels = map[string]BossLevel{
-	"paladin":     {17, 15, 16, 14},
+	"paladin":     {20, 18, 17, 15},
 	"sorceress":   {18, 16, 17, 15},
 	"necromancer": {18, 16, 17, 15},
 	"amazon":      {16, 14, 15, 13},

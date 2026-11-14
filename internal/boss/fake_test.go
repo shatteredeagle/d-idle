@@ -36,6 +36,7 @@ type fake struct {
 	lootSeq   []int // per Loot call, then lootN
 	townErr   error
 	presetErr error
+	melee     bool
 }
 
 type fmon struct {
@@ -76,7 +77,7 @@ func (f *fake) View(ctx context.Context) (View, error) {
 	if err := ctx.Err(); err != nil {
 		return View{}, err
 	}
-	v := View{Area: f.area, Difficulty: f.diff, Level: f.level, Pos: f.pos, Life: f.life, Max: f.max, Poisoned: f.poisoned,
+	v := View{Area: f.area, Difficulty: f.diff, Level: f.level, Pos: f.pos, Life: f.life, Max: f.max, Poisoned: f.poisoned, Melee: f.melee,
 		Antidotes: f.antidotes, Potions: f.potions, HasTP: f.hasTP, Dead: f.life <= 0, Dangers: f.dangers}
 	for _, m := range f.mons {
 		if m.area != f.area {

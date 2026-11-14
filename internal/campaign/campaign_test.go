@@ -106,10 +106,11 @@ func TestBands(t *testing.T) {
 		merc  bool
 		want  campaign.Band
 	}{
-		{"paladin", 15, false, campaign.TooEarly}, // floor 16 without a merc
-		{"paladin", 16, false, campaign.Ready},
-		{"paladin", 17, false, campaign.Comfortable},
-		{"paladin", 14, true, campaign.Ready}, // floor 14, recommended 15 with the Rogue
+		{"paladin", 16, false, campaign.TooEarly}, // floor 17 without a merc (ADR 0011)
+		{"paladin", 17, false, campaign.Ready},
+		{"paladin", 20, false, campaign.Comfortable}, // recommended 20 alone, 18 with the Rogue (boss1-trace, I)
+		{"paladin", 15, true, campaign.Ready},
+		{"paladin", 18, true, campaign.Comfortable},
 		{"sorceress", 16, false, campaign.TooEarly},
 		{"sorceress", 17, false, campaign.Ready},
 		{"sorceress", 16, true, campaign.Comfortable},
@@ -121,7 +122,7 @@ func TestBands(t *testing.T) {
 		}
 	}
 	// A failing listed check caps Comfortable at Ready; an unlisted one is ignored.
-	r, _ := campaign.Rate(andy, campaign.Hero{Class: "paladin", Level: 18}, []campaign.Check{{ID: "potions", State: "fail", Reason: "2 < 8"}, {ID: "damage", State: "fail"}})
+	r, _ := campaign.Rate(andy, campaign.Hero{Class: "paladin", Level: 20}, []campaign.Check{{ID: "potions", State: "fail", Reason: "2 < 8"}, {ID: "damage", State: "fail"}})
 	if r.Band != campaign.Ready || len(r.Reasons) != 1 {
 		t.Errorf("capped: %+v", r)
 	}
@@ -137,7 +138,7 @@ func TestLadderPaladinAndSorceress(t *testing.T) {
 		class string
 		want  []string // chapter ids in the order the decision sends the hero
 	}{
-		{"paladin", []string{"start", "cold_plains_wp", "den_of_evil", "blood_raven", "rogue", "find_cain", "tools_of_the_trade", "countess", "andariel"}},
+		{"paladin", []string{"start", "cold_plains_wp", "den_of_evil", "blood_raven", "rogue", "find_cain", "countess", "tools_of_the_trade", "andariel"}},
 		{"sorceress", []string{"start", "cold_plains_wp", "den_of_evil", "blood_raven", "rogue", "find_cain", "countess", "andariel"}},
 	} {
 		st := campaign.NewHeroState()
@@ -200,10 +201,11 @@ func TestPaladinClvl12GoesToCain(t *testing.T) {
 	st := campaign.NewHeroState()
 	_ = st.SetIntent(s, "find_cain", campaign.Skip, t0)
 	d = next(t, s, prog("paladin", 12, false, task.QDen, task.QBurial), st, campaign.Opts{})
-	if d.Action != campaign.ActFarm || d.Chapter != "tools_of_the_trade" || d.Level != 13 || d.Farm.Area != "Tower Cellar Level 1" {
+	// Charsi's hammer waits for 16 now (the Smith, boss1-trace B2): the Countess (14) is the nearer chapter.
+	if d.Action != campaign.ActFarm || d.Chapter != "countess" || d.Level != 14 || d.Farm.Area != "Tower Cellar Level 1" {
 		t.Fatalf("after skip: %+v", d)
 	}
-	if !strings.Contains(d.Why, "Farming Tower Cellar Level 1 for level 13 to unlock Charsi's hammer") {
+	if !strings.Contains(d.Why, "Farming Tower Cellar Level 1 for level 14 to unlock The Countess") {
 		t.Errorf("why %q", d.Why)
 	}
 }
@@ -267,7 +269,7 @@ func TestAskAtTheFloor(t *testing.T) {
 func TestOfferAfterFarmBudget(t *testing.T) {
 	s := shipped(t)
 	st := campaign.NewHeroState()
-	p := prog("paladin", 16, false, task.QDen, task.QBurial, task.QCain, task.QTower, task.QTools) // Andariel: Ready (floor 16, rec 17)
+	p := prog("paladin", 17, false, task.QDen, task.QBurial, task.QCain, task.QTower, task.QTools) // Andariel: Ready (floor 17, rec 20)
 	o := campaign.Opts{FarmBudget: 30 * time.Minute}
 	d := next(t, s, p, st, o)
 	if d.Action != campaign.ActFarm || d.Chapter != "andariel" {
@@ -278,7 +280,7 @@ func TestOfferAfterFarmBudget(t *testing.T) {
 	if d := next(t, s, p, st, o); d.Action != campaign.ActAsk || d.Chapter != "andariel" {
 		t.Fatalf("offer after the budget: %+v", d)
 	}
-	st.SetAnswer("andariel", true, 16)
+	st.SetAnswer("andariel", true, 17)
 	if d := next(t, s, p, st, o); d.Action != campaign.ActGo || d.Warn == "" {
 		t.Fatalf("yes goes at the floor: %+v", d)
 	}

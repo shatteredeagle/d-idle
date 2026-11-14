@@ -87,6 +87,9 @@ type View struct {
 	HasTP      bool
 	Monsters   []Mon
 	Dangers    []Danger
+	// Melee: the hero fights in melee (its combat profile has a melee block): a script's Kite step is skipped, it would
+	// walk the hero out of its own reach (boss1-trace B1).
+	Melee bool
 }
 
 // PotionFloor is the number of healing potions the character must carry for a script that asks for want: a small belt
