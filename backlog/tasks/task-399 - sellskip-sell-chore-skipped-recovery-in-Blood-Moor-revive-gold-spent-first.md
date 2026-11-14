@@ -1,10 +1,11 @@
 ---
 id: TASK-399
 title: 'sellskip: sell chore skipped, recovery in Blood Moor, revive gold spent first'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-14T10:16:00Z'
+updated_date: '2026-11-14T10:41:00Z'
 labels:
   - bot
   - bug
