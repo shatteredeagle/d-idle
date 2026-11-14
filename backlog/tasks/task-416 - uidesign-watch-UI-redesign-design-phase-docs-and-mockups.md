@@ -1,10 +1,11 @@
 ---
 id: TASK-416
-title: "uiredesign: watch UI redesign, design phase (docs and mockups)"
-status: In Progress
+title: 'uiredesign: watch UI redesign, design phase (docs and mockups)'
+status: Done
 assignee:
   - user
 created_date: '2026-11-14T14:26:00Z'
+updated_date: '2026-11-14T14:48:00Z'
 labels:
   - watch
   - research
