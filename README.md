@@ -7,6 +7,14 @@ It is early days. Right now the work is on the part underneath: a bot that plays
 
 _Streams when the bot is running._
 
+## Between runs
+
+No bot is running right now. The last run of each:
+
+- **Freshc**, Sorceress, d2lod (original game): level 8, 36,372 XP, 3,910 kills, 0 deaths, 89 potions drunk, run time 3h 04m. Now: recovering after trouble in Cold Plains, ended. Last update 2026-11-03 00:16 UTC.
+- **Loopy**, Sorceress, d2d: level 4, 7,700 XP, 334 kills, 0 deaths, 13 potions drunk, run time 0h 05m. Now: playing through the early game in Rogue Encampment, ended. Last update 2026-10-31 00:10 UTC.
+- **Soaky**, Sorceress, d2lod (original game): level 15, 195,140 XP, 7,100 kills, 4 deaths, 203 potions drunk, run time 8h 05m. Now: levelling up toward level 22 in Stony Field, ended. Last update 2026-10-30 20:26 UTC.
+
 ## Now building on d2d
 
 - d2d is an open-source reimplementation of the Diablo II engine. It lets the bot run headless (no screen) and far faster than real time. Measured with the bot attached: 22 to 33 times faster.
@@ -80,7 +88,7 @@ Each stage is a gate made of milestones. Open a stage to see its milestones.
 
 ## Right now
 
-No live numbers right now.
+Between runs.
 
 **Being worked on:**
 
@@ -89,10 +97,11 @@ No live numbers right now.
 - Goals, quests and levelling (working)
 - Building this public status page (working)
 - Improving the dashboard (working)
+- Fighting and staying alive (working)
 - Running the bot on the d2d engine (working)
 - Town chores: shopping, stashing and loot (working)
-- Fighting and staying alive (working)
 - Long unattended test runs (working)
+- Finding its way around the map (working)
 
 ## What shipped
 
@@ -101,7 +110,7 @@ Nothing merged in this window.
 
 [Chat and help: the d.idle Discord](https://discord.gg/U2v9q4h5UH)
 
-Last updated: 2026-11-15 03:45 UTC
+Last updated: 2026-11-15 20:55 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  

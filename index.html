@@ -88,9 +88,19 @@ footer{margin-top:2.5rem;padding-top:1rem;border-top:1px solid var(--line)}
 <p class="lede">A hobby project that turns Diablo II: Lord of Destruction into an idle game. A bot plays the real game by itself, offline, and a layer of goals, routines and progression is being built around it, the way an idle game gives you things to unlock and decisions to check in on.
 It is early days. Right now the work is on the part underneath: a bot that plays reliably for hours with nobody watching.</p>
 <p class="mute watch-off">Streams when the bot is running.</p>
-<div class="live"><span class="pill">No live numbers right now</span></div>
 </header>
 <main>
+<section aria-label="Live runs"><h2>Between runs</h2>
+<p class="mute">No bot is running right now. This is the last run of each.</p>
+<div class="runs">
+<div class="run"><div class="rh"><b>Freshc</b> <span class="mute">Sorceress</span><span class="tag">d2lod (original game)</span><span class="tag ">ended</span></div>
+<p>Recovering after trouble in Cold Plains</p><p class="mute">level 8, 36,372 XP, 3,910 kills, 0 deaths, 89 potions drunk, run time 3h 04m</p><p class="mute">Last update 2026-11-03 00:16 UTC</p></div>
+<div class="run"><div class="rh"><b>Loopy</b> <span class="mute">Sorceress</span><span class="tag">d2d</span><span class="tag ">ended</span></div>
+<p>Playing through the early game in Rogue Encampment</p><p class="mute">level 4, 7,700 XP, 334 kills, 0 deaths, 13 potions drunk, run time 0h 05m</p><p class="mute">Last update 2026-10-31 00:10 UTC</p></div>
+<div class="run"><div class="rh"><b>Soaky</b> <span class="mute">Sorceress</span><span class="tag">d2lod (original game)</span><span class="tag ">ended</span></div>
+<p>Levelling up toward level 22 in Stony Field</p><p class="mute">level 15, 195,140 XP, 7,100 kills, 4 deaths, 203 potions drunk, run time 8h 05m</p><p class="mute">Last update 2026-10-30 20:26 UTC</p></div>
+</div>
+</section>
 <section aria-label="d2d"><h2>Now building on d2d</h2>
 <ul class="how">
 <li>d2d is an open-source reimplementation of the Diablo II engine. It lets the bot run headless (no screen) and far faster than real time. Measured with the bot attached: 22 to 33 times faster.</li>
@@ -249,17 +259,18 @@ It is early days. Right now the work is on the part underneath: a bot that plays
 <li>Goals, quests and levelling<span class="tag">working</span></li>
 <li>Building this public status page<span class="tag">working</span></li>
 <li>Improving the dashboard<span class="tag">working</span></li>
+<li>Fighting and staying alive<span class="tag">working</span></li>
 <li>Running the bot on the d2d engine<span class="tag">working</span></li>
 <li>Town chores: shopping, stashing and loot<span class="tag">working</span></li>
-<li>Fighting and staying alive<span class="tag">working</span></li>
 <li>Long unattended test runs<span class="tag">working</span></li>
+<li>Finding its way around the map<span class="tag">working</span></li>
 </ul>
 <h2>What shipped</h2>
 <p class="mute">Nothing merged in this window.</p>
 </main>
 <footer>
 <p class="mute"><a href="https://discord.gg/U2v9q4h5UH" target="_blank" rel="noopener noreferrer">Chat and help: the d.idle Discord</a></p>
-<p class="mute">Last updated: <time id="upd" datetime="2026-11-15T03:45:38Z">2026-11-15 03:45 UTC</time></p>
+<p class="mute">Last updated: <time id="upd" datetime="2026-11-15T20:55:16Z">2026-11-15 20:55 UTC</time></p>
 <p class="mute">Numbers are conservative.<br>
 A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for.<br>
 Half credit for work that is only partly proven.<br>
