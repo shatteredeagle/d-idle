@@ -21,7 +21,7 @@ fi
 cp $inst/prep-ledger.jsonl $L.ledger 2>/dev/null
 t0=$(date +%s)
 nice -n 10 ./bin/d2bot.$FS_BOT --backend d2d --managed --d2d-class -1 --char Fs-$FS_CN-$FS_SEED --seed $FS_SEED \
- --toggle autoloot=off,autoparty=off --d2d-args "--lockstep" --d2d-linkwait 60s \
+ --toggle autoloot=off,autoparty=off --d2d-args "${FS_D2D_ARGS:---lockstep}" --d2d-linkwait 60s \
  --gamedir $D2D_DATA --data $PWD/data/$ID --d2d-sock $D2D_SOCK \
  --addr $D2D_BOT_ADDR --goals campaign --run-for ${FS_WALLMIN}m > $L.log 2>&1
 echo "exit $?" >> $L.log
