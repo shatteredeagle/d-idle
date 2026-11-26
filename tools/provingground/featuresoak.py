@@ -39,8 +39,12 @@ def rows(c, a):
         for arm in (f["on"], f["off"]):
             for cl in f.get("classes", list(c["classes"])):
                 need.setdefault((arm, cl), 0)
+    order = []
+    for f in c["features"]:
+        for arm in (f["on"], f["off"]):
+            if arm not in order: order.append(arm)
     out = []
-    for (arm, cl) in sorted(need):
+    for (arm, cl) in sorted(need, key=lambda k: (order.index(k[0]), k[1])):
         if a.arms and arm not in a.arms: continue
         if a.classes and cl not in a.classes: continue
         for s in (a.seeds or c["seeds"]):
