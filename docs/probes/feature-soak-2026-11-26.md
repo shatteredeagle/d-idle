@@ -15,3 +15,20 @@ How to read the tables. Per row: virtual hours reached (minute lines), wall minu
 
 `no-earn` and `town-deadlock` are not invariant rows on origin/main (they were planned names); the nearest monitor rows are `xp-frozen` and `mode-no-exit` (hard), `economy-stall` and `town-thrash` (soft), and they are in the tables.
 
+## 2. Stage 0: calibration, the highest stable speed
+
+There is no speed knob in the lockstep lab: the bot's pacer steps the game, so a row runs as fast as the bot computes. `SPEED` in `wave.sh` only sizes the wall cap. What was measured (one fixed row: Paladin, seed 201, clvl 12 hero, 200 gold, defaults, 1 virtual hour, lab d2d devp29, Orion with other users' jobs on it, load 8 to 12 of 16; V from the row logs):
+
+| run | mode | virtual min reached | wall s | ratio (virtual over wall) | note |
+|---|---|---|---|---|---|
+| calib-a | lockstep, nav trace on | 58 | 1149 | 3.0 | bot at about 125 percent of a core, d2d 45 percent (V: ps) |
+| calib-b | lockstep, nav trace off | 58 | 1184 | 2.9 | trace off does not speed it up; the rows use trace off |
+| calib-b2 | same as b | 56 at the cut | n/a | about 3 | repeat for determinism |
+| calib-ts8 | d2d `--time-scale 8`, no lockstep, `D2BOT_TIMESCALE=8`, 0.25 h asked | 12 | 788 | 0.9 | slower than lockstep, and stopped short of the asked length: not usable |
+
+Reading: the stable speed is lockstep at roughly 3 virtual minutes per wall minute for a Paladin row in the field with a loaded host (the earlier 18x smoke was town and an empty field). Speeds of 8, 16, 32 or 64 are not reachable: the limit is the bot's own compute, not the game. Caster rows run faster (the first necromancer rows read about 6x). 24 virtual hours per row would be 8 wall hours; with 69 rows and 6 in parallel that is about 90 wall hours, so this pass is 1 virtual hour per row (U whether a longer run changes a verdict: the slow invariants `economy-stall` (7200 s) and `xp-frozen` (1800 s) mostly cannot fire in 1 h).
+
+Determinism (V, minute lines of calib-a, b, b2): the same seed and arm gives identical xp, gold and area at virtual minutes 10, 20 and 30 in all three runs (xp gained 1180, 1672, 2037), a and b stay identical to minute 45 (2989), b2 differs from minute 45 (2068), and a and b differ at minute 58. So a seed is a repeatable start but not a repeatable run; the A/B noise below is the spread between seeds and reruns, and one seed per arm is never a verdict.
+
+Hero names must be 15 characters or fewer (the first attempt with 18 characters failed the prep save: "the written save didn't read back"). Class indexes of the lab d2d (V: prep and bot started each class): Paladin 2, Necromancer 1, Sorceress 4.
+
