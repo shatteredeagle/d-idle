@@ -32,3 +32,61 @@ Determinism (V, minute lines of calib-a, b, b2): the same seed and arm gives ide
 
 Hero names must be 15 characters or fewer (the first attempt with 18 characters failed the prep save: "the written save didn't read back"). Class indexes of the lab d2d (V: prep and bot started each class): Paladin 2, Necromancer 1, Sorceress 4.
 
+<!-- results -->
+## 3. Results (pass 1: 1 virtual hour per row, 19 of 69 rows complete)
+
+### 3.1 Per feature and class
+
+| feature | class | n on/off | xp/h on vs off (median) | gold/h | deaths | hard hits on/off | stalls on/off | short rows on/off | noise (off spread) | verdict |
+|---|---|---|---|---|---|---|---|---|---|---|
+| arbiter-control-families-3 | paladin | 3/3 | 4451 vs 4482 (-31) | 274 vs 3048 (-2773) | 0.0 vs 0.0 | 0/0 | 19/26 | 1/0 | xp 7792 gold 2566 deaths 0.0 | RED (gold/h regress -2773) |
+| arbiter-control-families-3 | necromancer | 3/3 | 1121 vs 1349 (-228) | -97 vs 2310 (-2407) | 0.0 vs 0.0 | 24/0 | 19/26 | 0/0 | xp 819 gold 2069 deaths 0.0 | RED (hard hits 24>0; gold/h regress -2407) |
+| arbiter-control-families-3 | sorceress | 3/3 | 1580 vs 936 (+645) | -119 vs -131 (+12) | 1.0 vs 0.0 | 0/0 | 27/26 | 0/0 | xp 409 gold 1433 deaths 2.0 | GREEN |
+| arbiter-control-families-255 | paladin | 3/3 | 6295 vs 4482 (+1813) | 864 vs 3048 (-2184) | 0.0 vs 0.0 | 0/0 | 5/26 | 3/0 | xp 7792 gold 2566 deaths 0.0 | NEUTRAL |
+| arbiter-control-families-255 | necromancer | 3/3 | 1254 vs 1349 (-95) | -52 vs 2310 (-2362) | 0.0 vs 0.0 | 0/0 | 15/26 | 2/0 | xp 819 gold 2069 deaths 0.0 | RED (gold/h regress -2362) |
+| arbiter-control-families-255 | sorceress | 1/3 | 144 vs 936 (-792) | -360 vs -131 (-229) | 0.0 vs 0.0 | 0/0 | 2/26 | 1/0 | xp 409 gold 1433 deaths 2.0 | RED (xp/h regress -792) |
+| kit-floor-tiers-poverty-farm | paladin | 3/0 | no data | | | | | | | NO-DATA |
+| kit-floor-tiers-poverty-farm | necromancer | 3/0 | no data | | | | | | | NO-DATA |
+| kit-floor-tiers-poverty-farm | sorceress | 3/0 | no data | | | | | | | NO-DATA |
+| admission-early-route-guard | paladin | 3/0 | no data | | | | | | | NO-DATA |
+| admission-early-route-guard | necromancer | 3/0 | no data | | | | | | | NO-DATA |
+| admission-early-route-guard | sorceress | 3/0 | no data | | | | | | | NO-DATA |
+| typed-outcomes | paladin | 3/0 | no data | | | | | | | NO-DATA |
+| typed-outcomes | necromancer | 3/0 | no data | | | | | | | NO-DATA |
+| typed-outcomes | sorceress | 3/0 | no data | | | | | | | NO-DATA |
+| reflex-drink-portal | paladin | 3/0 | no data | | | | | | | NO-DATA |
+| reflex-drink-portal | necromancer | 3/0 | no data | | | | | | | NO-DATA |
+| reflex-drink-portal | sorceress | 3/0 | no data | | | | | | | NO-DATA |
+| paladin-without-sacrifice | paladin | 3/0 | no data | | | | | | | NO-DATA |
+| necromancer-summoner-defaults | necromancer | 3/0 | no data | | | | | | | NO-DATA |
+
+
+### 3.2 Per row
+
+| arm | class | seed | virtual h | wall min | ratio | clvl | deaths | xp/h | gold/h | potions bought | potions used | hard hits | soft hits | stalls | exit | writes after start |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| arbiter255 | necromancer | 201 | 0.98 | 9 | 6.7 | 12>12 | 0 | 1254 | -109 | 18 | 23 | 0 | 26 | 7 | 0 | 0 |
+| arbiter255 | necromancer | 202 | 0.37 | - | - | 12>12 | 0 | 2005 | 158 | 12 | 14 | 0 | 11 | 4 | None | None |
+| arbiter255 | necromancer | 203 | 0.37 | - | - | 12>12 | 0 | 843 | -52 | 7 | 10 | 0 | 10 | 4 | None | None |
+| arbiter255 | paladin | 201 | 0.22 | - | - | 12>12 | 0 | 6295 | -563 | 10 | 12 | 0 | 4 | 3 | None | None |
+| arbiter255 | paladin | 202 | 0.08 | - | - | 12>12 | 0 | 3660 | 22476 | 5 | 3 | 0 | 1 | 1 | None | None |
+| arbiter255 | paladin | 203 | 0.08 | - | - | 12>12 | 0 | 18144 | 864 | 5 | 3 | 0 | 1 | 1 | None | None |
+| arbiter255 | sorceress | 201 | 0.08 | - | - | 12>12 | 0 | 144 | -360 | 3 | 2 | 0 | 2 | 2 | None | None |
+| arbiter3 | necromancer | 201 | 0.98 | 11 | 5.5 | 12>12 | 0 | 650 | -97 | 6 | 9 | mode-no-exit:23 | 8 | 2 | 0 | 0 |
+| arbiter3 | necromancer | 202 | 0.95 | 29 | 2.0 | 12>12 | 0 | 1159 | 1392 | 41 | 38 | 0 | 25 | 9 | 0 | 0 |
+| arbiter3 | necromancer | 203 | 0.98 | 15 | 3.9 | 12>12 | 0 | 1121 | -141 | 22 | 28 | mode-no-exit:1 | 18 | 8 | 0 | 0 |
+| arbiter3 | paladin | 201 | 0.97 | 28 | 2.0 | 12>12 | 0 | 4451 | 274 | 32 | 47 | 0 | 25 | 8 | 0 | 0 |
+| arbiter3 | paladin | 202 | 0.98 | 38 | 1.6 | 12>12 | 0 | 3971 | 3157 | 44 | 48 | 0 | 17 | 8 | 0 | 0 |
+| arbiter3 | paladin | 203 | 0.30 | 8 | 2.2 | 12>12 | 0 | 11617 | -273 | 15 | 24 | 0 | 5 | 3 | 0 | 0 |
+| arbiter3 | sorceress | 201 | 0.97 | 29 | 2.0 | 12>12 | 1 | 689 | -122 | 18 | 26 | 0 | 33 | 10 | 0 | 0 |
+| arbiter3 | sorceress | 202 | 0.98 | 28 | 2.1 | 12>12 | 0 | 1876 | -55 | 28 | 37 | 0 | 41 | 10 | 0 | 0 |
+| arbiter3 | sorceress | 203 | 0.98 | 18 | 3.4 | 12>12 | 1 | 1580 | -119 | 28 | 35 | 0 | 29 | 7 | 0 | 0 |
+| base | necromancer | 201 | 0.97 | 21 | 2.8 | 12>12 | 0 | 1349 | 2310 | 47 | 46 | 0 | 33 | 9 | 0 | 0 |
+| base | necromancer | 202 | 0.98 | 33 | 1.8 | 12>12 | 0 | 530 | 4379 | 21 | 27 | 0 | 33 | 8 | 0 | 0 |
+| base | necromancer | 203 | 0.97 | 17 | 3.4 | 12>12 | 0 | 2077 | 251 | 48 | 50 | 0 | 33 | 9 | 0 | 0 |
+| base | paladin | 201 | 0.97 | 28 | 2.1 | 12>12 | 0 | 4482 | 482 | 28 | 47 | 0 | 22 | 9 | 0 | 0 |
+| base | paladin | 202 | 0.97 | 38 | 1.5 | 12>12 | 0 | 4180 | 3048 | 42 | 47 | 0 | 8 | 8 | 0 | 0 |
+| base | paladin | 203 | 0.98 | 41 | 1.4 | 12>12 | 0 | 12275 | 4119 | 26 | 60 | 0 | 29 | 9 | 0 | 0 |
+| base | sorceress | 201 | 0.97 | 30 | 1.9 | 12>12 | 2 | 1291 | -132 | 30 | 36 | 0 | 34 | 10 | 0 | 0 |
+| base | sorceress | 202 | 0.97 | 27 | 2.2 | 12>12 | 0 | 527 | 1301 | 27 | 32 | 0 | 30 | 10 | 0 | 0 |
+| base | sorceress | 203 | 0.98 | 17 | 3.5 | 12>12 | 0 | 936 | -131 | 18 | 28 | 0 | 17 | 6 | 0 | 0 |
