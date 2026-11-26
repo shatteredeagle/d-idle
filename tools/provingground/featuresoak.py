@@ -177,14 +177,14 @@ def cmd_report(c, a):
             arm, cl, s, r["minutes"] / 60.0, "%.0f" % (r["wall"] / 60.0) if r["wall"] else "-", "%.1f" % r["ratio"] if r["ratio"] else "-",
             r["clvl0"], r["clvl1"], r["deaths"], r.get("xph", 0), r.get("goldh", 0), r["bought"], r["potions_used"], hh, soft, r["stalls"], r["exit"], r["writes"]))
     L.append("")
-    L.append("| feature | class | n on/off | xp/h on vs off (median) | gold/h | deaths | hard hits on/off | stalls on/off | noise (off spread) | verdict |")
-    L.append("|---|---|---|---|---|---|---|---|---|---|")
+    L.append("| feature | class | n on/off | xp/h on vs off (median) | gold/h | deaths | hard hits on/off | stalls on/off | short rows on/off | noise (off spread) | verdict |")
+    L.append("|---|---|---|---|---|---|---|---|---|---|---|")
     for f in c["features"]:
         for cl in f.get("classes", list(c["classes"])):
             on = [r for (arm, k, s), r in R.items() if arm == f["on"] and k == cl and r["minutes"] > 0]
             off = [r for (arm, k, s), r in R.items() if arm == f["off"] and k == cl and r["minutes"] > 0]
             if not on or not off:
-                L.append("| %s | %s | %d/%d | no data | | | | | | NO-DATA |" % (f["name"], cl, len(on), len(off))); continue
+                L.append("| %s | %s | %d/%d | no data | | | | | | | NO-DATA |" % (f["name"], cl, len(on), len(off))); continue
             g = lambda rs, k: [x[k] for x in rs]
             nx, ng, nd = noise(g(off, "xph")), noise(g(off, "goldh")), noise(g(off, "deaths"))
             dx, dg, dd = med(g(on, "xph")) - med(g(off, "xph")), med(g(on, "goldh")) - med(g(off, "goldh")), med(g(on, "deaths")) - med(g(off, "deaths"))
@@ -199,9 +199,9 @@ def cmd_report(c, a):
             if dd > max(nz(nd), 1): red.append("deaths +%.1f" % dd)
             better = dx > nz(nx) or dg > nz(ng) or dd < -max(nz(nd), 1)
             v = "RED (%s)" % "; ".join(red) if red else ("GREEN" if better else "NEUTRAL")
-            L.append("| %s | %s | %d/%d | %.0f vs %.0f (%+.0f) | %.0f vs %.0f (%+.0f) | %.1f vs %.1f | %d/%d | %d/%d | xp %.0f gold %.0f deaths %.1f | %s |" % (
+            L.append("| %s | %s | %d/%d | %.0f vs %.0f (%+.0f) | %.0f vs %.0f (%+.0f) | %.1f vs %.1f | %d/%d | %d/%d | %d/%d | xp %.0f gold %.0f deaths %.1f | %s |" % (
                 f["name"], cl, len(on), len(off), med(g(on, "xph")), med(g(off, "xph")), dx, med(g(on, "goldh")), med(g(off, "goldh")), dg,
-                med(g(on, "deaths")), med(g(off, "deaths")), hon, hoff, sum(g(on, "stalls")), sum(g(off, "stalls")), nz(nx), nz(ng), nz(nd), v))
+                med(g(on, "deaths")), med(g(off, "deaths")), hon, hoff, sum(g(on, "stalls")), sum(g(off, "stalls")), sum(1 for r in on if r["minutes"] < 54), sum(1 for r in off if r["minutes"] < 54), nz(nx), nz(ng), nz(nd), v))
     txt = "\n".join(L)
     print(txt)
     if a.md: open(a.md, "w").write(txt + "\n")
