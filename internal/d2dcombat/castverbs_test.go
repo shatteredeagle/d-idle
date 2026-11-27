@@ -62,8 +62,10 @@ func rowOf(t *testing.T, tab *delivery.Table, class, target string, repeat bool)
 
 func tail(left bool, unit int) string {
 	switch {
+	case left && unit == 0:
+		return " -1 1"
 	case left:
-		return fmt.Sprintf(" %d left", unit)
+		return fmt.Sprintf(" %d 1", unit)
 	case unit != 0:
 		return fmt.Sprintf(" %d", unit)
 	}
@@ -191,7 +193,7 @@ func TestCastAtAndSwingThroughVerbs(t *testing.T) {
 	if err := in.Swing(0, input.Point{X: 65, Y: 147}); err != nil {
 		t.Fatal(err)
 	}
-	want := []string{"monsters", "cmd skill 36 13.1 29.5 5", "monsters", "cmd skill 36 80.1 80.1", "monsters", "cmd skill 0 13.1 29.5 5 left"}
+	want := []string{"monsters", "cmd skill 36 13.1 29.5 5", "monsters", "cmd skill 36 80.1 80.1", "monsters", "cmd skill 0 13.1 29.5 5 1"}
 	if got := srv.Lines(); !reflect.DeepEqual(got, want) {
 		t.Fatalf("lines\n got %q\nwant %q", got, want)
 	}
