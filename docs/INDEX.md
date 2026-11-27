@@ -280,6 +280,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [assassin.md](classes/assassin.md): Assassin plan (D2 LoD 1.14d, offline softcore, unattended)
 - [barbarian.md](classes/barbarian.md): Barbarian plan (D2 LoD 1.14d, offline softcore, unattended)
 - [druid.md](classes/druid.md): Druid plan (D2 LoD 1.14d, offline softcore, unattended)
+- [necromancer-gap-2026-11-27.md](classes/necromancer-gap-2026-11-27.md): Necromancer gap list against TASK-942 (card necroepic, 2026-11-27) (status: current offline audit. Tags V (verified: a test or a code read this run), S (secondary), U (unverified)....)
 - [necromancer.md](classes/necromancer.md): Necromancer plan (D2 LoD 1.14d, offline softcore, unattended)
 - [paladin-probe.md](classes/paladin-probe.md): Paladin probe (second-class probe, offline part) (status: current. Card `palprobe` (user go 2026-11-01). Offline only: nothing here ran on the game or on d2d....)
 - [paladin.md](classes/paladin.md): Paladin plan (D2 LoD 1.14d, offline softcore, unattended)

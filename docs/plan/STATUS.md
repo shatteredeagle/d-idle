@@ -172,7 +172,7 @@
 | fid-quest-andariel | deferred | - | `docs/probes/fid/fid-quest-andariel.md` | - |
 | epic-act5 | proposed | - | `docs/epics/epic-act5.md` | - |
 | epic-class-amazon | proposed | - | `docs/epics/epic-class-amazon.md` | - |
-| epic-class-necromancer | proposed | - | `docs/epics/epic-class-necromancer.md` | - |
+| epic-class-necromancer | proposed | - | `docs/epics/epic-class-necromancer.md`<br>`docs/classes/necromancer-gap-2026-11-27.md`<br>`internal/combat/classdata/profiles.json`<br>`internal/plandata/build-necromancer_leveling_normal30.json`<br>`internal/plandata/build-necromancer_summoner_endgame90.json`<br>`internal/plandata/levelplan-normal.json`<br>`internal/plandata/act2plan.json`<br>`internal/decide/catalogue.json`<br>`internal/decide/policy_chores.json`<br>`internal/decide/proposezone.json`<br>`internal/decide/necro_test.go`<br>`internal/decide/build_test.go`<br>`internal/decide/firsts_test.go`<br>`internal/decide/policy_test.go`<br>`internal/decide/preview_test.go`<br>`internal/decide/proposezone_test.go`<br>`internal/levelplan/necro_test.go`<br>`cmd/d2bot/necroplay_test.go`<br>`cmd/d2bot/hotkeydrift_test.go`<br>`tools/provingground/scenarios/necro-acts.json`<br>`tools/provingground/scenarios/necro-epic.json`<br>`tools/provingground/scenarios/tiers.json`<br>`internal/watch/policypreview_test.go`<br>`internal/watch/policysheet_test.go`<br>`internal/watch/stance_test.go`<br>`internal/watch/unlockrisk_test.go` | - |
 | epic-class-barbarian | proposed | - | `docs/epics/epic-class-barbarian.md` | - |
 | epic-class-sorceress | proposed | - | `docs/epics/epic-class-sorceress.md` | - |
 | epic-class-paladin | proposed | - | `docs/epics/epic-class-paladin.md` | - |
@@ -221,14 +221,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 5ee52c7a2 11-27 15:09 `Merge agent/necroepic: necroepic: Necromancer profiles/tables/policy rows, 24 scenarios, gap doc (TASK-942 AC1)` (necroepic)
 - cfb83895d 11-27 15:09 `Merge agent/agencydrive: agencydrive: fighter reads agency.DriveOf at planner mode 2 (TASK-984 AC2)` (agencydrive)
 - c7c9c5ec3 11-27 15:09 `Merge agent/advisor1: advisor1: runeword and cube advisor lines, items.advisor dark knob (TASK-991)` (advisor1)
 - 66b4f7f50 11-27 15:09 `Merge agent/countessnav: countessnav: Tower Cellar 5 walk regression on two synthetic maps (TASK-766 AC3)` (countessnav)
+- bd2ab0cb7 11-27 15:06 `Merge branch 'main' into necroepic` (-)
 - 47547cb56 11-27 15:06 `Merge branch 'main' into agencydrive` (-)
 - 3681d5c60 11-27 15:06 `Merge branch 'main' into advisor1` (-)
 - 2e2714e36 11-27 15:06 `Merge branch 'main' into countessnav` (-)
 - 555650c52 11-27 14:58 `Merge agent/dlvwave3: dlvwave3: aim-corpse (TASK-728) + stance-pack, press, move-tele, move-melee (TASK-729..732)` (dlvwave3)
 - 2d837813f 11-27 14:57 `Merge agent/agencyp3: agencyp3: shared build file reader, kolbot importer, DriveOf (TASK-985, TASK-984 partial)` (agencyp3)
-- 5e975f969 11-27 14:57 `Merge origin/main into countessnav` (-)
-- c4d3698b0 11-27 14:56 `Merge branch 'main' into dlvwave3` (-)
 <!-- statusgen:end -->
