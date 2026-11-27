@@ -305,6 +305,7 @@ func (f *Fighter) markTick(ctx context.Context, snap *d2.Snapshot) (bool, error)
 	known := KnownSkills(p, f.cat, f.keys)
 	c, ok := f.markChoose(p, rows, known, Hostiles(snap, f.hostileCtx(p)))
 	if mode == 1 {
+		f.upkCmp.note(cmpMark, !ok)
 		f.markShadow(c, ok)
 		return false, nil
 	}

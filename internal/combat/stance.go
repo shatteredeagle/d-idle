@@ -253,6 +253,11 @@ func (f *Fighter) stanceTick(ctx context.Context, snap *d2.Snapshot, st *fightSt
 		return false, nil
 	}
 	act, to, why := f.stancePlan(snap)
+	if p := snap.Player; mode == 1 && p != nil && !p.InTown() {
+		if s := f.profileFor(p).Stance; s != nil && s.Kind == StanceBehindArmy {
+			f.upkCmp.note(cmpStance, act == "")
+		}
+	}
 	if act == "" {
 		f.stance.last = ""
 		return false, nil
