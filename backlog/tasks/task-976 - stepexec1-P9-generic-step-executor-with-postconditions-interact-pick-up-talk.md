@@ -15,7 +15,7 @@ dependencies: []
 priority: medium
 ordinal: 464000
 card: "stepexec1"
-branch: "agent/stepexec2"
+branch: "agent/act2drill"
 owns:
   - "docs/design/stepexec-p9.md"
   - "internal/questspec/"
@@ -30,6 +30,7 @@ owns:
   - "tools/provingground/scenarios/tiers.json"
   - "data/darklaunch.json"
   - "docs/knobs.md"
+  - "docs/probes/act2-stepexec-drill-2026-11-27.md"
 exclusive: []
 contracts: []
 result: "Engine questspec.RunStep plus exec rows as data; Cain scroll take_scroll runs on it behind quests.stepExec (default 0, dark-launch row, scenario cain.scroll.stepexec). Act 2 chunk (2026-11-27): Act 2 quest chains as data, new transmute verb; the Horadric Staff transmute and placing the Staff in the orifice run on the executor with posts read from the pack and the quest reader; the Cain hand-in keeps the old path (no game fact proves it). Unit tests only (Sorceress and Paladin, must-fail cases); NOT verified live or on the lab."
