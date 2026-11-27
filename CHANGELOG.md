@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- whirlscen: combat drill scenarios, pre.skills setup field (TASK-1065) <!--sg:agent/whirlscen-->
 - diffgo: go-difficulty ops verb, persisted go, Return screen button (TASK-1061) <!--sg:agent/diffgo-->
 - smenecro: SME Necromancer review (docs) <!--sg:agent/smenecro-->
 - diet: archive 5 finished research reports, docs diet rule (TASK-117/118) <!--sg:agent/diet-->

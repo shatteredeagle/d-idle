@@ -41,6 +41,7 @@
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | diffbaal | proposed | - | `internal/quest/baaldone.go`<br>`internal/quest/baaldone_test.go` | - |
 | diffgo | proposed | - | `internal/diffready/consent.go`<br>`internal/bot/diffready.go`<br>`internal/bot/diffready_test.go`<br>`internal/bot/explain.go`<br>`internal/ops`<br>`cmd/d2bot/opscmd.go`<br>`cmd/d2bot/opswire.go`<br>`cmd/d2bot/funwire.go`<br>`cmd/d2bot/live.go`<br>`internal/watch/difficultydesk.go`<br>`internal/watch/difficultydesk_test.go`<br>`internal/watch/funwire.go`<br>`internal/watch/returnscreen.go`<br>`docs/diffready.md` | - |
+| whirlscen | proposed | - | `tools/provingground/scenarios/combatdrills.json`<br>`tools/provingground/scenarios/tiers.json`<br>`internal/scenario/`<br>`docs/probes/combat-drills-2026-11-27.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | returnmock | proposed | - | `docs/research/mocks/return.html`<br>`docs/research/return-screen.md` | - |
@@ -196,7 +197,9 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 881df5215 11-27 16:31 `Merge agent/whirlscen: whirlscen: combat drill scenarios, pre.skills setup field (TASK-1065)` (whirlscen)
 - 9c6c61d38 11-27 16:30 `Merge agent/diffgo: diffgo: go-difficulty ops verb, persisted go, Return screen button (TASK-1061)` (diffgo)
+- ab9acccd0 11-27 16:28 `Merge branch 'main' into whirlscen` (-)
 - 9eaa2ed43 11-27 16:28 `Merge branch 'main' into diffgo` (-)
 - e2e724c59 11-27 16:20 `Merge agent/smenecro: smenecro: SME Necromancer review (docs)` (smenecro)
 - be94247fd 11-27 16:20 `Merge agent/diet: diet: archive 5 finished research reports, docs diet rule (TASK-117/118)` (diet)
@@ -204,6 +207,4 @@
 - b197ab183 11-27 16:19 `Merge agent/townrest: townrest: town plan view + /api/townplan (town9), arbiter upkeep source (town10 part), SME brief (town12)` (townrest)
 - 6b720f96a 11-27 16:18 `Merge origin/main into diffgo (funwire.go: difficulty and advice wiring both kept)` (-)
 - 47b6409da 11-27 16:17 `Merge branch 'main' into smenecro` (-)
-- ceee8826a 11-27 16:17 `Merge branch 'main' into diet` (-)
-- 4bdfffc09 11-27 16:17 `Merge branch 'main' into dlvwhirl` (-)
 <!-- statusgen:end -->
