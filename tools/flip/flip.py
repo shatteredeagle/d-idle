@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Flip a dark knob on a sandbox, watch 24 h, revert on a hard invariant breach (docs/process/dark-launch.md, card autorevert1).
+"""Flip a dark knob on a sandbox, watch 2 h (user decision 2026-11-27: no 24 h waits), revert on a hard invariant breach (docs/process/dark-launch.md, card autorevert1).
 
   flip.py <instance> <knob>=<value> [<knob>=<value> ...] --why TEXT [--window 24h] [--dry-run]   flip a bundle, open ONE window
   flip.py bisect <instance> --without KNOB                                  the last bundle of the instance minus one knob (a re-flip line)
@@ -431,7 +431,7 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("args", nargs="+", help="<instance> <knob>=<value> | watch | status")
     ap.add_argument("--why", default="")
-    ap.add_argument("--window", default="24h", help="24h, 45m, 90s")
+    ap.add_argument("--window", default="2h", help="2h (default), 45m, 90s")
     ap.add_argument("--interval", type=int, default=60)
     ap.add_argument("--once", action="store_true")
     ap.add_argument("--without", default="", help="bisect: the knob to leave out")
