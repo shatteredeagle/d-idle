@@ -97,7 +97,9 @@ func (k *Keeper) CarriedList() []Carried {
 	for _, c := range k.cb.by {
 		out = append(out, *c)
 	}
-	sort.Slice(out, func(i, j int) bool { return out[i].At.Before(out[j].At) || out[i].At.Equal(out[j].At) && out[i].Unit < out[j].Unit })
+	sort.Slice(out, func(i, j int) bool {
+		return out[i].At.Before(out[j].At) || out[i].At.Equal(out[j].At) && out[i].Unit < out[j].Unit
+	})
 	return out
 }
 

@@ -204,3 +204,6 @@
   [data-vault] > .vt { flex: 1 1 auto; }
   [data-vault] .vt, [data-vault] .vt-page { min-block-size: 0; }
 }
+
+.vt-carried { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.vt-carried-title { font-weight: 600; }
