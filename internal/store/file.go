@@ -12,6 +12,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"io/fs"
 	"os"
 	"path/filepath"
@@ -244,19 +245,43 @@ func (f *File[T]) perm() os.FileMode {
 	return f.Perm
 }
 
+// minWrite is the sanity floor of a serialised document: the smallest envelope is `{"version":1,"data":{}}`. A
+// smaller write is a bug upstream and is refused (a zero-byte tuning.json once dropped every override).
+const minWrite = 20
+
+// ErrTooSmall: the serialised document is below the sanity floor; the file on disk is left alone.
+var ErrTooSmall = errors.New("store: refusing to write a document below the size floor")
+
+// tempFile is the write side of writeAtomic; tests swap createTemp for one that fails mid-write (ENOSPC).
+type tempFile interface {
+	Write([]byte) (int, error)
+	Sync() error
+	Close() error
+}
+
+var createTemp = func(path string, perm os.FileMode) (tempFile, error) {
+	return os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, perm)
+}
+
 func writeAtomic(path string, b []byte, perm os.FileMode) error {
+	if len(b) < minWrite {
+		return fmt.Errorf("%w: %s, %d bytes", ErrTooSmall, filepath.Base(path), len(b))
+	}
 	dir := filepath.Dir(path)
 	if err := os.MkdirAll(dir, 0o755); err != nil {
 		return err
 	}
 	tmp := path + ".tmp"
-	fh, err := os.OpenFile(tmp, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, perm)
+	fh, err := createTemp(tmp, perm)
 	if err != nil {
 		return err
 	}
-	if _, err := fh.Write(b); err != nil {
+	if n, err := fh.Write(b); err != nil || n != len(b) {
 		fh.Close()
 		os.Remove(tmp)
+		if err == nil {
+			err = io.ErrShortWrite
+		}
 		return err
 	}
 	if err := fh.Sync(); err != nil {
@@ -267,6 +292,10 @@ func writeAtomic(path string, b []byte, perm os.FileMode) error {
 	if err := fh.Close(); err != nil {
 		os.Remove(tmp)
 		return err
+	}
+	if st, err := os.Stat(tmp); err != nil || st.Size() != int64(len(b)) {
+		os.Remove(tmp)
+		return fmt.Errorf("store: temp file for %s has the wrong size, not renamed (%v)", filepath.Base(path), err)
 	}
 	if err := os.Rename(tmp, path); err != nil {
 		os.Remove(tmp)
