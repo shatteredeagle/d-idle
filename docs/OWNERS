@@ -425,11 +425,14 @@ internal/d2dcombat/  credit-runner  dlv-cast-verbs
 internal/d2dcombat/  credit-runner  dlv-press
 internal/d2dctl  credit-runner  countess3
 internal/d2dctl/fake/fake.go  credit-runner  inputl3
+internal/d2dctl/fake/fake.go  credit-runner  placefix
 internal/d2dctl/fake/fake.go  credit-runner  warptrigger
 internal/d2dctl/item_verbs_merc.go  credit-runner  uib9
 internal/d2dctl/item_verbs_merc_test.go  credit-runner  uib9
+internal/d2dctl/parse.go  credit-runner  placefix
 internal/d2dctl/use_verb.go  credit-runner  inputl3
 internal/d2dctl/use_verb_test.go  credit-runner  inputl3
+internal/d2dctl/verbs.go  credit-runner  placefix
 internal/d2dctl/warptriggers.go  credit-runner  warptrigger
 internal/d2dctl/warptriggers_test.go  credit-runner  warptrigger
 internal/d2denv/env.go  credit-runner  pgclock
@@ -437,6 +440,8 @@ internal/d2denv/env.go  credit-runner  warptrigger
 internal/d2denv/reader.go  credit-runner  pgclock
 internal/d2denv/recent_test.go  credit-runner  pgclock
 internal/d2dinput/  credit-runner  dlv-cast-verbs
+internal/d2dinput/controller.go  credit-runner  placefix
+internal/d2dinput/placefix_test.go  credit-runner  placefix
 internal/d2dinput/useitem.go  credit-runner  inputl3
 internal/d2dsoakstat/minute.go  credit-runner  intake
 internal/d2dsrc/items.go  credit-runner  qdmatrix
