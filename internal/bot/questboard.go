@@ -1096,7 +1096,9 @@ func (r *Runner) boardHandIn(ctx context.Context, snap *d2.Snapshot, c control, 
 	}
 	rt.mu.Lock()
 	rt.handed[questboard.ChunkKey(req.q.ID, req.c.ID)] = true
+	rt.snap = nil // the talk changed the quest word: rebuild the cached world before the tapper reads it
 	rt.mu.Unlock()
+	rt.worldLoop() // we hold the loop step here, so this is the loop's own rebuild
 	return nil
 }
 
