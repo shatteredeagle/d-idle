@@ -1,10 +1,11 @@
 ---
 id: TASK-1053
 title: 'tyrael: open Tyrael in Duriel''s Lair, drill record 14 assertion'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T18:50:00Z'
+updated_date: '2026-11-27T19:24:00Z'
 labels:
   - bot
   - bot-fix

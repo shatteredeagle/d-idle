@@ -50,7 +50,6 @@
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | vaultperf | proposed | - | `internal/watch`<br>`internal/watch/web`<br>`internal/vaultkeep`<br>`internal/vault` | - |
 | charmvault | proposed | - | `internal/charms`<br>`internal/vaultkeep`<br>`internal/lootrules`<br>`internal/town/stash.go`<br>`internal/watch`<br>`cmd/d2bot/vaultequip.go`<br>`cmd/d2bot/vaultkeep.go`<br>`docs/charms.md` | - |
-| tyrael | proposed | - | `internal/town/npc.go`<br>`internal/town/fieldnpc_test.go`<br>`internal/town/fieldnpc_int_test.go`<br>`tools/provingground/scenarios/stepexec-act2.json`<br>`docs/probes/act2-stepexec-drill-2026-11-27.md` | - |
 | skillcapretire | proposed | - | `internal/points`<br>`internal/resource`<br>`internal/env/tuning_resource.go`<br>`cmd/d2bot/pointswire.go`<br>`cmd/d2bot/resource_test.go`<br>`data/darklaunch.json`<br>`docs/points.md`<br>`docs/knobs.md`<br>`docs/process/points-verbs-devp14.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |

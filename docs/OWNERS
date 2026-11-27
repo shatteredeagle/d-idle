@@ -236,7 +236,6 @@ docs/plan/data/earlyroutes.json  credit-runner  admit1
 docs/plan/data/povertyfarm.json  credit-runner  admit1
 docs/play-session.md  credit-runner  playsession
 docs/points.md  credit-runner  skillcapretire
-docs/probes/act2-stepexec-drill-2026-11-27.md  credit-runner  tyrael
 docs/probes/bot-cpu-live-2026-11-16.md  credit-runner  botcpulive
 docs/probes/checkpoint-live-drill.md  live-agent  ckptlive
 docs/probes/classorder1.md  user  classorder1
@@ -490,9 +489,6 @@ internal/town  credit-runner  town5
 internal/town  credit-runner  town7
 internal/town  credit-runner  town8
 internal/town/chores.go  credit-runner  townflip
-internal/town/fieldnpc_int_test.go  credit-runner  tyrael
-internal/town/fieldnpc_test.go  credit-runner  tyrael
-internal/town/npc.go  credit-runner  tyrael
 internal/town/portalverb.go  credit-runner  inputl3
 internal/town/portalverb_export_test.go  credit-runner  inputl3
 internal/town/portalverb_test.go  credit-runner  inputl3
@@ -583,7 +579,6 @@ tools/provingground/scenarios/necro.json  credit-runner  stage1fix
 tools/provingground/scenarios/questdrill.json  credit-runner  placefix
 tools/provingground/scenarios/questdrill.json  credit-runner  qdmatrix
 tools/provingground/scenarios/stepexec-act2.json  credit-runner  placefix
-tools/provingground/scenarios/stepexec-act2.json  credit-runner  tyrael
 tools/provingground/scenarios/tiers.json  credit-runner  dlv-cast-verbs
 tools/provingground/scenarios/townplan.json  credit-runner  town5
 tools/provingground/scenarios/vaultsellall.json  credit-runner  sellall
