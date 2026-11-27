@@ -267,6 +267,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [capabilities.md](capabilities.md): What the current build can and cannot do (status: refreshed 2026-11-01 (card capdocs, docs only; first written by card readmedocs; nothing here was run...)
 - [champions.md](champions.md): Champions are elite, not bosses (status: the "G1/G2 check" obligation for shared code is retired (ADR 0013, amended by ADR 0015); verify on d2d...)
 - [chargedbolt.md](chargedbolt.md): Charged Bolt per-bolt damage on d2d (card chargedbolt, 2026-11-04) (status: current. Evidence: docs/probes/sksmoke/2026-11-04-SK-cb.txt, .json, -raw.txt. Tag: compared to table on...)
+- [charms.md](charms.md): Charms in the Vault: record, Carry, Stow (status: built offline 2026-11-27 (card charmvault). Design background:...)
 - [charselect-ui.md](charselect-ui.md): Character Select, Phase B: the Characters page (status: BUILT offline (card charui, 2026-11-15). Backend and routes: docs/charselect.md (card charselect). Tags: V...)
 - [charselect.md](charselect.md): Character Select: list, create, switch, delete (archive first), restore (status: Phase A and B built; LIVE-VERIFIED on a test bed 2026-11-22/23 (image devp20, bot release...)
 - [cheats.md](cheats.md): Cheats: logged test cheats (agent CHEAT)
