@@ -509,3 +509,30 @@ func TestStaleCacheMissingColumn(t *testing.T) {
 		t.Fatal("cache was not rebuilt")
 	}
 }
+
+func TestLinkSkillStates(t *testing.T) {
+	states := map[string]*State{"bonearmor": {Name: "bonearmor", ID: 14}, "holyshield": {Name: "holyshield", ID: 101},
+		"amplifydamage": {Name: "amplifydamage", ID: 9, Curse: true}}
+	skills := []*Skill{{Key: "Bone Armor", AuraState: "bonearmor"}, {Key: "Holy Shield", AuraState: "HolyShield"},
+		{Key: "Amplify Damage", AuraTargetState: "amplifydamage"}, {Key: "Teeth"}, {Key: "Odd", AuraState: "nosuchstate", StateID: 7}}
+	linkSkillStates(skills, states)
+	for i, want := range []struct {
+		id    int
+		curse bool
+	}{{14, false}, {101, false}, {0, true}, {0, false}, {0, false}} {
+		if s := skills[i]; s.StateID != want.id || s.Curse != want.curse {
+			t.Errorf("%s: state %d curse %v, want %d %v", s.Key, s.StateID, s.Curse, want.id, want.curse)
+		}
+	}
+}
+
+// With the real install present, the stock rows resolve to the state ids the bot has read live (Bone Armor 14, V
+// docs/classes/smoke-necromancer.md) or from states.txt (Frozen Armor 10).
+func TestRealSkillStates(t *testing.T) {
+	db := realDB(t)
+	for name, want := range map[string]int{"Bone Armor": 14, "Frozen Armor": 10} {
+		if s := db.SkillByName(name); s == nil || s.StateID != want {
+			t.Errorf("%s: %+v, want state %d", name, s, want)
+		}
+	}
+}
