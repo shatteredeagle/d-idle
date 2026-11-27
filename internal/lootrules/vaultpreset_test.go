@@ -87,8 +87,9 @@ func TestVaultPresetUnidentifiedJewelry(t *testing.T) {
 	}
 }
 
-// Recording a large or grand charm needs no pack cells, so the charmroom need of the Starter does not hold it back.
-func TestVaultPresetBigCharmNeedsNoRoom(t *testing.T) {
+// Charms of every size and quality, identified or not and with no pack room at all, are recorded: the Vault preset needs no
+// charmroom (the user decision of 2026-11-27: charms are handled like any other item).
+func TestVaultPresetCharmsAllRecorded(t *testing.T) {
 	for _, cls := range []string{"Sorceress", "Paladin"} {
 		c, err := Compile(VaultPreset(false), cls, "")
 		if err != nil {
@@ -107,12 +108,6 @@ func TestVaultPresetBigCharmNeedsNoRoom(t *testing.T) {
 			if d := c.Decide(&tc.it, cx); d.Action != Vault {
 				t.Errorf("%s %s: %+v", cls, tc.label, d)
 			}
-		}
-		// the Starter itself still holds a big charm back while the pack has no room
-		plain, _ := Compile(Starter(), cls, "")
-		it := Item{Place: PlaceGround, Code: "cm3", Types: []string{"lcha"}, Quality: "magic", Identified: true, Stats: map[string]int{"life": 30}}
-		if d := plain.Decide(&it, cx); d.Action == Stash {
-			t.Errorf("%s: the Starter must still need charm room: %+v", cls, d)
 		}
 	}
 }
