@@ -22,6 +22,7 @@ owns:
   - "cmd/d2bot/live.go"
 exclusive: []
 contracts: []
+result: "Offline only, not verified live: cmd/d2bot/advisewire.go builds advisor.Stock from hero pack, cube, stash and vault, reads items.advisor, sets FunConfig.Advice, cached by stock fingerprint, text only. Tests: Necromancer, Paladin, knob 0, cache. Vault page strip skipped (no advice plumbing there). Filled sockets not read (U)."
 ---
 
 ## Description
