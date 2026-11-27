@@ -1,10 +1,13 @@
 ---
 id: TASK-1044
-title: 'bossdone: a boss step is done when the boss is dead, plus the Act 2 hand-in rows'
-status: Proposed
+title: >-
+  bossdone: a boss step is done when the boss is dead, plus the Act 2 hand-in
+  rows
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T13:07:00Z'
+updated_date: '2026-11-27T13:34:00Z'
 labels:
   - bot
   - bot-fix

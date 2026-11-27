@@ -194,8 +194,6 @@ data/input/caps_test.go  credit-runner  inputl3
 data/questboard/act1.json  credit-runner  cainfix3
 data/questboard/act2.json  credit-runner  placefix
 data/questboard/act2.json  credit-runner  qdmatrix
-data/questspec/act2.json  credit-runner  bossdone
-data/questspec/caps/  credit-runner  bossdone
 deploy/d2d-container/tester-report.sh  credit-runner  testerreport
 docs/arbiter.md  credit-runner  arbmig
 docs/arbiter.md  credit-runner  ticklog
@@ -220,7 +218,6 @@ docs/design/input-cast-verbs.md  credit-runner  inputl3
 docs/design/input-i3.md  credit-runner  inputl3
 docs/design/input-i4.md  credit-runner  inputl4
 docs/design/input-i5-i7.md  credit-runner  inputl5
-docs/design/stepexec-p9.md  credit-runner  bossdone
 docs/design/ticklog-t4.md  credit-runner  ticklog
 docs/design/townflip-p5.md  credit-runner  town6
 docs/design/townflip-p5.md  credit-runner  townflip
@@ -348,7 +345,6 @@ internal/bot/arbiter_control.go  credit-runner  arbmig
 internal/bot/arbiter_control_test.go  credit-runner  arbmig
 internal/bot/arbloop_test.go  credit-runner  arbloop
 internal/bot/areametrics.go  credit-runner  intake
-internal/bot/bossdone_test.go  credit-runner  bossdone
 internal/bot/broke.go  credit-runner  survrecover
 internal/bot/broke.go  credit-runner  town5
 internal/bot/drought.go  credit-runner  freshstart
@@ -387,9 +383,7 @@ internal/bot/runner.go  credit-runner  repairtrip
 internal/bot/shadow.go  credit-runner  arbmig
 internal/bot/shadow.go  credit-runner  dlv-stance-army
 internal/bot/shadow.go  credit-runner  ticklog
-internal/bot/stepexec.go  credit-runner  bossdone
 internal/bot/task.go  credit-runner  boardmoderace
-internal/bot/task.go  credit-runner  bossdone
 internal/bot/task.go  credit-runner  wpstep
 internal/bot/ticklog.go  credit-runner  ticklog
 internal/bot/ticklog_test.go  credit-runner  ticklog

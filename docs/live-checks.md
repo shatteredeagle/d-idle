@@ -115,3 +115,4 @@ Closing rule: a card closes when merged with offline acceptance proven; every op
 | TASK-1039 upkeepcmp | #4 | live: sandbox Paladin minute line shows aura comparisons | live drill on the sandbox, fresh hero, per the card result | open |
 | TASK-1040 skillhand | #3 | Live: a Paladin Zeal or Smite with cmd skill <id> x y -1 1 swings at the spot on a sandbox | live drill on the sandbox, fresh hero, per the card result | open |
 | TASK-1042 palzeal | #4 | Live: a fresh zealot-lite Paladin logs last_skill=Zeal at kills from clvl 12 | live drill on the sandbox, fresh hero, per the card result | open |
+| TASK-1044 bossdone | #4 | Live: drill.act2.duriel.stepexec passes the kill step and the hand-in on the lab | live drill on the sandbox, fresh hero, per the card result | open |
