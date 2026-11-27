@@ -25,9 +25,6 @@ type Exec struct {
 	// Then is a second verb run on the step's target on every wait poll (pickup after the click: the scroll lies on the
 	// ground, the post says it is in the pack).
 	Then string `json:"then,omitempty"`
-	// First is a verb run once on the step's target before each act; "nothing there" is not a fault (pickup of the drop
-	// before reading it: Radament's Book of Skill).
-	First string `json:"first,omitempty"`
 	// Pick is the dialogue option a talk step picks ("bark", "reward"; the bot's dialog table names the lines). Empty: the
 	// NPC's default line.
 	Pick string `json:"pick,omitempty"`
@@ -48,9 +45,6 @@ func (e *Exec) validate(s Step, bad func(string, ...any)) {
 	}
 	if e.Then != "" && !ExecVerbs[e.Then] {
 		bad("step %s: exec then %q", s.ID, e.Then)
-	}
-	if e.First != "" && !ExecVerbs[e.First] {
-		bad("step %s: exec first %q", s.ID, e.First)
 	}
 	if e.WaitPolls < 1 || e.WaitMS < 0 || e.Tolerance < 0 || e.BackoffMS < 0 || e.BackoffCapMS < 0 {
 		bad("step %s: exec bounds (wait_polls >= 1, the rest >= 0)", s.ID)
@@ -187,11 +181,6 @@ func RunStep(ctx context.Context, s Step, be Backend) Outcome {
 		} else if o.Err != nil {
 			last = o.Err
 			continue
-		}
-		if e.First != "" {
-			if o, stop := classify(be.Act(ctx, e.First, s.Target, ActArgs{}), out.Attempts, e); stop {
-				return o
-			}
 		}
 		out.Attempts++
 		if o, stop := classify(be.Act(ctx, e.Verb, on, e.args()), out.Attempts, e); stop {
