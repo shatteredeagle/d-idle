@@ -23,6 +23,13 @@ const (
 	FactSurviveBelow = "survive_below" // life percent under which a hostile makes the hero flee or drink
 	FactSellable     = "sellable"      // pack items the town sell chore would sell now (Town.SellableCount)
 	FactAreaDry      = "area_dry"      // 1 while an area is skipped as dry (dry-recovery, kill-drought): only a new game refills it
+	// Army facts (combat.Fighter.ArmyFacts, the minion census; card dlv-stance-army). 0 for a hero without an army.
+	FactArmy          = "army"            // minions standing
+	FactArmyWant      = "army_want"       // minions the profile's groups want at the current skill levels
+	FactArmyBelowWant = "army_below_want" // 1 while army < army_want
+	FactUpkeepDue     = "upkeep_due"      // 1 while the minion driver would summon now
+	FactArmyStrength  = "army_strength"   // the army's life in percent of one full minion
+	FactArmyFront     = "army_front"      // subtiles from the hero to the army's front (the minion nearest the hostiles)
 )
 
 // Source names and the hook family each belongs to (the counters of the minute line are per family).

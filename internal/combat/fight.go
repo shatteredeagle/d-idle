@@ -604,6 +604,9 @@ func (f *Fighter) engage(ctx context.Context, snap *d2.Snapshot, tg Target, sp f
 		f.decision(st, "class", "upkeep (summon, raise, trap)")
 		return err
 	}
+	if acted, err := f.stanceTick(ctx, snap, st); acted || err != nil {
+		return err
+	}
 	f.noteGear(snap)
 	f.noteLifePrice(snap)
 	order := f.attackSkills(p)
