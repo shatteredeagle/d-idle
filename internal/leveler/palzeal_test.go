@@ -85,11 +85,16 @@ func TestZealotLiteLegal(t *testing.T) {
 		if len(r.illegal) != 0 {
 			t.Errorf("den %d: illegal picks %v", den, r.illegal)
 		}
-		if r.skills["Zeal"] != 4 || r.skills["Sacrifice"] != 1 || r.skills["Smite"] != 1 || r.skills["Prayer"] != 1 || r.skills["Might"] < 9 || r.skills["Holy Fire"] != 2 || r.skills["Defiance"] != 1 || r.skills["Vigor"] != 0 {
+		// Radament is not simulated, so its tagged Holy Fire on row 16 stays unbought; the Den point is the row 5 Might.
+		if r.skills["Zeal"] != 5 || r.skills["Sacrifice"] != 1 || r.skills["Smite"] != 0 || r.skills["Prayer"] != 1 || r.skills["Might"] != 10+den/5 || r.skills["Holy Fire"] != 1 || r.skills["Defiance"] != 0 || r.skills["Vigor"] != 0 {
 			t.Errorf("den %d: skills %v", den, r.skills)
 		}
-		if z := r.firstAt["Zeal"]; z < 12 || z > 13-den/5 || r.firstAt["Sacrifice"] >= r.firstAt["Zeal"] {
+		// palzeal (live 2026-11-27, Doofer): the rows count level points only, so Zeal comes at clvl 12 with or without the Den.
+		if z := r.firstAt["Zeal"]; z != 12 || r.firstAt["Sacrifice"] >= r.firstAt["Zeal"] {
 			t.Errorf("den %d: Sacrifice %d Zeal %d", den, r.firstAt["Sacrifice"], r.firstAt["Zeal"])
+		}
+		if len(r.stuck) != 0 {
+			t.Errorf("den %d: points left unspent %v", den, r.stuck)
 		}
 		t.Logf("den %d: spent %d points, skills %v, stuck %v", den, r.spent, r.skills, r.stuck)
 	}

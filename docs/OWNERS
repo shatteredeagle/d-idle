@@ -258,6 +258,7 @@ docs/onboarding-tour.md  credit-runner  onboardtour
 docs/onboarding.md  credit-runner  reconnectux
 docs/plan/STATUS.md  credit-runner  statusrefresh
 docs/plan/data/admission.json  credit-runner  admit1
+docs/plan/data/build-paladin-zealot-lite.json  credit-runner  palzeal
 docs/plan/data/earlyroutes.json  credit-runner  admit1
 docs/plan/data/povertyfarm.json  credit-runner  admit1
 docs/play-session.md  credit-runner  playsession
@@ -417,12 +418,15 @@ internal/combat/fightend.go  credit-runner  maphistoryC
 internal/combat/fighter.go  credit-runner  inputl3
 internal/combat/fighter.go  credit-runner  maphistory
 internal/combat/fighter.go  credit-runner  maphistoryC
+internal/combat/fighter.go  credit-runner  palzeal
 internal/combat/necro_test.go  credit-runner  necroteeth
+internal/combat/palzeal_attack_test.go  credit-runner  palzeal
 internal/combat/portalverb.go  credit-runner  inputl3
 internal/combat/portalverb_test.go  credit-runner  inputl3
 internal/combat/reach.go  credit-runner  maphistoryC
 internal/d2dcombat/  credit-runner  dlv-cast-verbs
 internal/d2dcombat/  credit-runner  dlv-press
+internal/d2dcombat/input.go  credit-runner  palzeal
 internal/d2dctl  credit-runner  countess3
 internal/d2dctl/fake/fake.go  credit-runner  inputl3
 internal/d2dctl/fake/fake.go  credit-runner  warptrigger
@@ -473,6 +477,7 @@ internal/input/useitem_test.go  credit-runner  inputl3
 internal/invdesk/mercverbs.go  credit-runner  uib9
 internal/invdesk/mercverbs_test.go  credit-runner  uib9
 internal/invdesk/sets.go  credit-runner  uib9
+internal/leveler/  credit-runner  palzeal
 internal/leveler/mainattack_test.go  credit-runner  necroteeth
 internal/loot/  credit-runner  town6
 internal/nav/  credit-runner  dlv-move-tele
@@ -507,6 +512,7 @@ internal/nav/route.go  credit-runner  exitsread
 internal/nav/walk.go  credit-runner  pursuers
 internal/nav/warpread_test.go  credit-runner  warptrigger
 internal/plandata/admission.json  credit-runner  admit1
+internal/plandata/build-paladin-zealot-lite.json  credit-runner  palzeal
 internal/plandata/earlyroutes.json  credit-runner  admit1
 internal/plandata/povertyfarm.json  credit-runner  admit1
 internal/power/  credit-runner  dlv-cleanup

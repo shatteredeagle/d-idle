@@ -35,10 +35,13 @@ type Row struct {
 	Skills []SkillPts
 }
 
-// SkillPts is "Points" points into the skill named as in skills.txt.
+// SkillPts is "Points" points into the skill named as in skills.txt. Quest names the quest whose bonus point pays for
+// them (data/quest-points.json ids, e.g. den_of_evil): such points are bought only once the character holds more points
+// than its levels grant, so a quest not done yet never shifts the later rows (Plan).
 type SkillPts struct {
 	Skill  string
 	Points int
+	Quest  string
 }
 
 // Build is a per-level allocation table (build-*.json).
@@ -86,6 +89,7 @@ type rawBuild struct {
 		Skills    []struct {
 			Skill  string `json:"skill"`
 			Points int    `json:"points"`
+			Quest  string `json:"quest"`
 		} `json:"skills"`
 	} `json:"rows"`
 	Respec *struct {
@@ -110,7 +114,7 @@ func ParseBuild(b []byte) (*Build, error) {
 	if rb.Respec != nil {
 		out.Respec = rb.Respec.AtClvl
 		for _, s := range rb.Respec.Pool {
-			out.RespecPool = append(out.RespecPool, SkillPts{s.Skill, s.Points})
+			out.RespecPool = append(out.RespecPool, SkillPts{Skill: s.Skill, Points: s.Points})
 		}
 	}
 	last := 0
@@ -122,7 +126,7 @@ func ParseBuild(b []byte) (*Build, error) {
 		row := Row{Clvl: r.Clvl, Attr: [numAttr]int{r.Strength, r.Dexterity, r.Vitality, r.Energy}}
 		for _, s := range r.Skills {
 			if s.Points > 0 {
-				row.Skills = append(row.Skills, SkillPts{s.Skill, s.Points})
+				row.Skills = append(row.Skills, SkillPts{Skill: s.Skill, Points: s.Points, Quest: s.Quest})
 			}
 		}
 		out.Rows = append(out.Rows, row)

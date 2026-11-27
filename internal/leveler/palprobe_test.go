@@ -63,6 +63,7 @@ func simPaladin(t *testing.T, table string, denAt int) palRun {
 		h.Level, h.StatPts, h.SkillPts = L, h.StatPts+5, h.SkillPts+1
 		if L == denAt {
 			h.SkillPts++
+			h.QuestPts++
 		}
 		for _, a := range b.Plan(h, palLegal, nil) {
 			if a.Kind == KindStat {
