@@ -25,7 +25,7 @@ owns:
   - "docs/unlock-orderqueue.md"
 exclusive: []
 contracts: []
-result: "Offline proof 2026-11-08: go test ./internal/watch ./internal/unlock and ./cmd/d2bot (-run OrderQueueWired|PactHalt) pass; slots, run in turn, stop on death, halt, charter and buy flows, post gates (TestOrderQueue* in internal/watch/unlockorderqueue_test.go, TestOrderQueueWiredThroughTheOrdersPath, TestPactHaltWithoutController). Fixtures only; NOT verified live. Stays open: AC #6 (live run) unticked; the queue is in memory only and the live quest reader is U."
+result: "Offline proof 2026-11-08: go test ./internal/watch ./internal/unlock and ./cmd/d2bot (-run OrderQueueWired|PactHalt) pass; slots, run in turn, stop on death, halt, charter and buy flows, post gates (TestOrderQueue* in internal/watch/unlockorderqueue_test.go, TestOrderQueueWiredThroughTheOrdersPath, TestPactHaltWithoutController). Fixtures only; NOT verified live. Stays open: AC #6 (live run) unticked; the queue is in memory only and the live quest reader is U. closecards3 Remaining (live): #6 need the live game, a browser or a worker-host run; not verified here."
 ---
 
 ## Description

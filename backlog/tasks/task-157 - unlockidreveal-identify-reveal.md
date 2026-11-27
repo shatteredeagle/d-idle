@@ -28,7 +28,7 @@ owns:
   - "docs/unlock-idreveal.md"
 exclusive: []
 contracts: []
-result: "Built and tested offline (go test ./internal/watch ./internal/unlock; golden payloads face down and flipped for Sorceress and Paladin); not verified live or in a browser. Face-down cards leak no quality, colour or name. Missing reader: item affixes after identify (Fake in tests, card says not read); no identify event, the flip is by the viewer. See docs/unlock-idreveal.md. Status sync 2026-11-08 (stays open): AC5 open (item affixes need a reader that does not exist)."
+result: "Built and tested offline (go test ./internal/watch ./internal/unlock; golden payloads face down and flipped for Sorceress and Paladin); not verified live or in a browser. Face-down cards leak no quality, colour or name. Missing reader: item affixes after identify (Fake in tests, card says not read); no identify event, the flip is by the viewer. See docs/unlock-idreveal.md. Status sync 2026-11-08 (stays open): AC5 open (item affixes need a reader that does not exist). closecards3 Remaining (not live): #5 open, no reader for item affixes after identify."
 ---
 
 ## Description

@@ -25,7 +25,7 @@ owns:
   - "docs/unlock-risk.md"
 exclusive: []
 contracts: []
-result: "Offline proof 2026-11-08: go test ./internal/watch ./internal/unlock and ./cmd/d2bot (-run RiskMeterWired) pass; verdict against the bot's guards, two classes, unknown class/zone errors (TestRiskVerdictAgainstTheGuards, TestRiskUnlockByNearDeathGoldenTwoClasses, TestRiskUnknownClassAndZoneAreErrors, TestRiskMeterWiredToTheBotFacts). Fixtures only; NOT verified live. No viewer panel is built (route only). Stays open: AC #5 (live run, thresholds in risk.json are U) unticked."
+result: "Offline proof 2026-11-08: go test ./internal/watch ./internal/unlock and ./cmd/d2bot (-run RiskMeterWired) pass; verdict against the bot's guards, two classes, unknown class/zone errors (TestRiskVerdictAgainstTheGuards, TestRiskUnlockByNearDeathGoldenTwoClasses, TestRiskUnknownClassAndZoneAreErrors, TestRiskMeterWiredToTheBotFacts). Fixtures only; NOT verified live. No viewer panel is built (route only). Stays open: AC #5 (live run, thresholds in risk.json are U) unticked. closecards3 Remaining (live): #5 need the live game, a browser or a worker-host run; not verified here."
 ---
 
 ## Description

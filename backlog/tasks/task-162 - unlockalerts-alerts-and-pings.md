@@ -28,7 +28,7 @@ owns:
   - "data/unlocks/ladder.json"
 exclusive: []
 contracts: []
-result: "Offline proof 2026-11-08: go test ./internal/watch ./internal/unlock passes; rules, cooldowns, filters, golden payloads for Sorceress and Paladin, token gates, outbound off by default and never contacts the network (TestAlertRulesFiltersAndCooldowns, TestAlertsGoalEventsTwoClasses, TestAlertsAPIAndTokenGates, TestOutboundDefaultOffNeverContactsTheNetwork, TestShippedLadderHasTheAlertsRow). Senders tested against httptest only; NOT verified live or in a browser. Stays open: AC #6 (browser) and #7 (live) unticked; cmd/d2bot does not read an outbound profile into FunConfig.Alerts, low-life has no emitter; docs/unlock-ladder.md still says no alerts row (stale, not this card's file)."
+result: "Offline proof 2026-11-08: go test ./internal/watch ./internal/unlock passes; rules, cooldowns, filters, golden payloads for Sorceress and Paladin, token gates, outbound off by default and never contacts the network (TestAlertRulesFiltersAndCooldowns, TestAlertsGoalEventsTwoClasses, TestAlertsAPIAndTokenGates, TestOutboundDefaultOffNeverContactsTheNetwork, TestShippedLadderHasTheAlertsRow). Senders tested against httptest only; NOT verified live or in a browser. Stays open: AC #6 (browser) and #7 (live) unticked; cmd/d2bot does not read an outbound profile into FunConfig.Alerts, low-life has no emitter; docs/unlock-ladder.md still says no alerts row (stale, not this card's file). closecards3 Remaining (live): #6, #7 need the live game, a browser or a worker-host run; not verified here."
 ---
 
 ## Description
