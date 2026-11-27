@@ -42,6 +42,7 @@
 | diffbaal | proposed | - | `internal/quest/baaldone.go`<br>`internal/quest/baaldone_test.go` | - |
 | townwire | proposed | - | `docs/knobs.md`<br>`cmd/d2bot/townplanwire.go`<br>`cmd/d2bot/townplanwire_test.go`<br>`cmd/d2bot/ladder.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`internal/bot/shadow.go`<br>`internal/bot/upkeepwire_test.go`<br>`internal/town/planshadow.go`<br>`internal/town/planview_test.go`<br>`internal/town/town.go`<br>`internal/town/route.go`<br>`docs/arbiter.md`<br>`backlog/tasks/task-765 - town12-SME-review-of-the-supply-profile-numbers-advice-only.md` | - |
 | releasenotes-next | proposed | - | `docs/releases/next-draft.md` | - |
+| logsink | proposed | - | `internal/logx`<br>`cmd/d2bot/main.go`<br>`cmd/d2bot/opscmd.go`<br>`cmd/d2bot/logsink_test.go`<br>`docs/ops` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
@@ -195,14 +196,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 82a3e6e0a 11-27 17:16 `Merge agent/logsink: logsink: bot own rotating log file, ops log verb, docker log NUL root cause (TASK-1069)` (logsink)
 - e431b1d75 11-27 17:16 `Merge agent/sandboxlogs: sandboxlogs: sandbox log analysis (docs)` (sandboxlogs)
 - 12aa8855a 11-27 17:16 `Merge agent/palapply: palapply: SME Paladin/Sorceress data changes (zeal table, Aim/Concentration, bands, mana_heavy)` (palapply)
+- cec3358c7 11-27 17:13 `Merge branch 'main' into logsink` (-)
 - f032ba048 11-27 17:13 `Merge branch 'main' into sandboxlogs` (-)
 - 4a10332d4 11-27 17:13 `Merge branch 'main' into palapply` (-)
 - b5f78b89a 11-27 17:11 `Merge origin/main into palapply (mana_heavy list: both builds sets kept, count 9)` (-)
 - 5757b6333 11-27 17:06 `Merge agent/townwire: townwire: /api/townplan wired, arbiter upkeep behind chores bit (TASK-1064)` (townwire)
 - 71576c17c 11-27 16:54 `Merge branch 'main' into townwire` (-)
 - 7e55fcd23 11-27 16:52 `Merge agent/smeothers: smeothers: SME review of Druid, Barbarian, Amazon, Assassin (docs)` (smeothers)
-- 0a5cfcf3f 11-27 16:52 `Merge agent/cainflaky: cainflaky: cain.chain Paladin 11 flake diagnosis (docs)` (cainflaky)
-- 0a4584998 11-27 16:52 `Merge agent/rel012: rel012: unnumbered next-release draft notes (TASK-1066)` (rel012)
 <!-- statusgen:end -->

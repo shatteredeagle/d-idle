@@ -147,7 +147,10 @@ cmd/d2bot/ladder.go  credit-runner  townwire
 cmd/d2bot/live.go  credit-runner  agencyp1b
 cmd/d2bot/live.go  credit-runner  campaign1
 cmd/d2bot/live.go  credit-runner  townwire
+cmd/d2bot/logsink_test.go  credit-runner  logsink
+cmd/d2bot/main.go  credit-runner  logsink
 cmd/d2bot/necroplay_test.go  live-agent  epic-class-necromancer
+cmd/d2bot/opscmd.go  credit-runner  logsink
 cmd/d2bot/task.go  credit-runner  qdmatrix
 cmd/d2bot/task_test.go  credit-runner  qdmatrix
 cmd/d2bot/townplanwire.go  credit-runner  townwire
@@ -223,6 +226,7 @@ docs/knobs.md  credit-runner  dlv-upkeep-state
 docs/knobs.md  credit-runner  townwire
 docs/onboarding-tour.md  credit-runner  onboardtour
 docs/onboarding.md  credit-runner  reconnectux
+docs/ops  credit-runner  logsink
 docs/probes/checkpoint-live-drill.md  live-agent  ckptlive
 docs/probes/classorder1.md  user  classorder1
 docs/probes/exitsread-2026-11-22.md  credit-runner  exitsread
@@ -367,6 +371,7 @@ internal/invdesk/mercverbs.go  credit-runner  uib9
 internal/invdesk/mercverbs_test.go  credit-runner  uib9
 internal/invdesk/sets.go  credit-runner  uib9
 internal/levelplan/necro_test.go  live-agent  epic-class-necromancer
+internal/logx  credit-runner  logsink
 internal/nav/  credit-runner  dlv-move-tele
 internal/nav/act2hints.go  credit-runner  qdmatrix
 internal/nav/act2hints_test.go  credit-runner  qdmatrix
