@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>d.idle return screen - MOCK</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:,">
+<style>
+/* MOCK ONLY (docs/research/return-screen.md). Fake data, not shipped. Tokens copied from orders.html. */
+:root{--bg:#f3efe6;--surface:#fffdf8;--surface2:#ece6d8;--line:#d6ccb8;--text:#231e17;--muted:#685f50;--accent:#b5760f;--on-accent:#fff;--good:#2f7d3a;--warn:#9a6200;--bad:#b3342a;--info:#2a63a8;--focus:#1f5fd6;--radius:10px}
+@media (prefers-color-scheme:dark){:root{--bg:#14110f;--surface:#1e1a17;--surface2:#29231e;--line:#3b332b;--text:#ece4d6;--muted:#a99f8f;--accent:#d9a441;--on-accent:#1a1408;--good:#78c27d;--warn:#e3a93a;--bad:#ec7d6c;--info:#7ab0e8;--focus:#8db8ff}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:760px;margin:0 auto;padding:12px;display:grid;gap:12px}
+h1{font-size:1.2rem;margin:0}h2{font-size:.82rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 8px}h3{font-size:1rem;margin:0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px}
+.muted{color:var(--muted)}.good{color:var(--good)}.warn{color:var(--warn)}.bad{color:var(--bad)}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+button{font:inherit;color:inherit;cursor:pointer}
+.btn{background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:8px 14px;min-height:44px}
+.btn.primary{background:var(--accent);color:var(--on-accent);border-color:var(--accent);font-weight:650}
+.btn[aria-pressed=true]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.btn[aria-pressed=true]::before{content:"\2713\00a0"}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px}
+.tile{border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--surface2)}
+.tile b{display:block}
+.trip{border-top:1px solid var(--line);padding:8px 0;display:grid;gap:2px}
+.trip:first-of-type{border-top:0}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.q{border-top:1px solid var(--line);padding:8px 0}
+.q:first-of-type{border-top:0}
+.rule{display:none;margin-top:6px;padding:6px 8px;border:1px dashed var(--good);border-radius:6px;color:var(--good)}
+.rule.on{display:block}
+.rule::before{content:"\2713\00a0"}
+.debug{background:#2a2a2a;color:#eee;padding:6px 10px;font-size:13px}
+textarea{width:100%;min-height:64px;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:8px;font:inherit}
+</style></head><body>
+<div class="debug">MOCK: fake data from a 4 h 12 min absence. Nothing here ran against the bot.</div>
+<main>
+<section class="card" aria-labelledby="h-head">
+ <h1 id="h-head">Away 4 h 12 min. Sorra is level 11 in the Dark Wood.</h1>
+ <p class="muted" style="margin:.3rem 0 0">3 expeditions, 1 death, 2 questions you missed. <a href="#" onclick="return false">Skip to the questions</a></p>
+</section>
+
+<section class="card" aria-labelledby="h-story">
+ <h2 id="h-story">The day in five moments</h2>
+ <div class="tiles">
+  <div class="tile"><b>Closest call</b>8% life in the Cold Plains, a mana potion in hand, no portal scroll. She drank, then walked back to town.</div>
+  <div class="tile"><b>Named boss</b>Blood Raven: fought, the archers kept her honest. Codex entry added.</div>
+  <div class="tile"><b>Best drop</b>A yellow ring, identified on return: Ring of the Leech. Kept.</div>
+  <div class="tile"><b>Level-up</b>Level 10 and 11. Skill point went to Frozen Armor (plan row 4).</div>
+  <div class="tile"><b>Stats that moved</b>+3,120 gold, 9,400 xp/h, 1 death, 2 zones lit on the small map.</div>
+ </div>
+</section>
+
+<section class="card" aria-labelledby="h-trips">
+ <h2 id="h-trips">Expeditions, newest first</h2>
+ <div class="trip"><div class="row"><h3>Dark Wood, 2 h 05 min</h3><span class="good">+1 level</span></div>
+  <span>612 kills, +5,900 xp, +1,480 gold, 14 potions and 3 scrolls used, 210 gold repair.</span>
+  <span class="muted">Closest call 31% life. "The Wood is dense but she held the choke."</span></div>
+ <div class="trip"><div class="row"><h3>Stony Field, 1 h 20 min</h3><span class="bad">1 death</span></div>
+  <span>340 kills, +2,700 xp, +900 gold. Died to a Cow Boss pack at 14:02, no merc. Revived at town.</span>
+  <span class="muted">Waypoint lit. Closest call 0% life.</span></div>
+ <div class="trip"><div class="row"><h3>Cold Plains, 47 min</h3><span class="good">clean</span></div>
+  <span>205 kills, +800 xp, +740 gold. Closest call 8% life (the moment above).</span></div>
+</section>
+
+<section class="card" aria-labelledby="h-prop">
+ <h2 id="h-prop">Proposal waiting</h2>
+ <p style="margin:0">"Burial Grounds next? You are level 11; veterans go at 9 to 14." I stayed in the Dark Wood meanwhile (default: wait).</p>
+ <div class="row" style="margin-top:8px"><span class="muted">Mock only: not wired.</span><span><button class="btn primary" type="button">Go</button> <button class="btn" type="button">Stay</button> <button class="btn" type="button">Later</button></span></div>
+</section>
+
+<section class="card" aria-labelledby="h-miss">
+ <h2 id="h-miss">Questions you missed, grouped by kind</h2>
+ <p class="muted" style="margin:0 0 6px">I used my default for each. One answer here can become a rule for the kind of case, so I stop asking.</p>
+ <div id="groups"></div>
+</section>
+
+<section class="card" aria-labelledby="h-said">
+ <h2 id="h-said">Three sentences about this session</h2>
+ <textarea aria-labelledby="h-said" placeholder="What happened, what surprised you, what would you change?"></textarea>
+ <p class="muted" style="margin:.3rem 0 0">Goes into the session record. Mock only.</p>
+</section>
+</main>
+<script>
+/* Fake data. kind = the decision-point family (U: the mapping from ladder keys to these four kinds is a table the return screen card owns). */
+var KINDS=[
+ {kind:'Danger and retreat',key:'t1.fight.lowlife',qs:[
+  {t:'14:02',q:'Drink a potion or run to town at 8% life?',did:'drank (default)',ctx:'Cold Plains, life under 10%, merc dead',alt:['Drink','Run to town']},
+  {t:'15:40',q:'Drink a potion or run to town at 20% life?',did:'drank (default)',ctx:'Dark Wood, life 20%, merc alive',alt:['Drink','Run to town']}]},
+ {kind:'Town chores',key:'t0.town.repair',qs:[
+  {t:'13:11',q:'Repair now at 48% durability?',did:'repaired (default)',ctx:'Rogue Encampment, 210 gold',alt:['Repair','Skip']}]}
+];
+var g=document.getElementById('groups');
+KINDS.forEach(function(k,i){
+ var d=document.createElement('div');d.className='q';
+ var h=document.createElement('div');h.className='row';
+ var t=document.createElement('h3');t.textContent=k.kind+' ('+k.qs.length+')';h.appendChild(t);d.appendChild(h);
+ k.qs.forEach(function(x){var p=document.createElement('p');p.style.margin='.3rem 0';p.textContent=x.t+' '+x.q+' I '+x.did+'. '+x.ctx+'.';d.appendChild(p);});
+ var r=document.createElement('div');r.className='row';
+ var lab=document.createElement('span');lab.className='muted';lab.textContent='Answer once for all '+k.qs.length+':';r.appendChild(lab);
+ var bs=document.createElement('span');
+ var rule=document.createElement('div');rule.className='rule';rule.setAttribute('role','status');
+ k.qs[0].alt.forEach(function(a){var b=document.createElement('button');b.type='button';b.className='btn';b.setAttribute('aria-pressed','false');b.textContent=a;
+  b.addEventListener('click',function(){bs.querySelectorAll('button').forEach(function(o){o.setAttribute('aria-pressed',o===b?'true':'false')});
+   rule.textContent='Rule made: "'+a+'" for '+k.kind.toLowerCase()+' ('+k.key+', source: you). Revoke it in the Rules panel.';rule.className='rule on';});
+  bs.appendChild(b);bs.appendChild(document.createTextNode(' '));});
+ r.appendChild(bs);d.appendChild(r);d.appendChild(rule);g.appendChild(d);});
+</script>
+</body></html>

@@ -150,6 +150,15 @@ find(c.body, 'banner-stream').fire('click');
 checks.push([[reconnects], [1]]);
 videoState = 'live';
 inst.update(reply({ showWelcome: false, steps: doneSteps('fight') }));
+
+// 9 chickens in the last 24 h: one info line, singular for one, none when 0
+({ c, inst } = fresh());
+inst.update(reply({ showWelcome: false, steps: doneSteps('fight'), chickens: 3 }));
+out += shot(c, 'three chickens');
+inst.update(reply({ showWelcome: false, steps: doneSteps('fight'), chickens: 1 }));
+out += shot(c, 'one chicken');
+inst.update(reply({ showWelcome: false, steps: doneSteps('fight'), chickens: 0 }));
+out += shot(c, 'no chickens');
 out += shot(c, 'stream back');
 
 // 9 art is being prepared: the note sits in the guide

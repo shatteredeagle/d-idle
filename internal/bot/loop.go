@@ -438,6 +438,13 @@ func (r *Runner) do(ctx context.Context, c control, st State, activity string, t
 		r.setLastTrip(r.e.Clock.Now())
 	case errors.Is(cause, errFightStall):
 		r.blameFightTarget() // not a failure: the next step plans again
+	case errors.Is(cause, errFieldCrowd):
+		// The hero stands in the field with hostiles and the chores are done: the trip ends, the next step fights.
+		if t := l.trip; t != nil {
+			r.repairTripEnd(t, "")
+			l.trip, l.needBuff = nil, true
+		}
+		r.e.Log.Warn("back to field: hostiles near on the way, handing over to the fighter", "activity", r.activity)
 	case errors.Is(cause, errLeftTown):
 		// The chores left the town (a portal, an exit walked by mistake): not a failure. The trip is out of town, so the next
 		// step starts it again from the way home (advanceTrip).
@@ -1175,6 +1182,10 @@ func (r *Runner) guardOnce(ctx context.Context, cancel context.CancelCauseFunc, 
 		}
 		if st == StateResupplying && r.chores.outside(snap, now) {
 			cancel(errLeftTown) // the 02:51 death: the shop chore walked in Cold Plains with 12 hostiles around
+			return true
+		}
+		if st == StateResupplying && r.backField.outside(snap, now) && r.hostileNear(snap, r.e.Tune.Combat.FightRadius) > 0 {
+			cancel(errFieldCrowd) // the return leg fights nothing: hand the hero to the fighter (card fieldstate)
 			return true
 		}
 		if r.droughtStage(snap, now) > 0 {

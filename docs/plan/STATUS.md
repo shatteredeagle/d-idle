@@ -40,9 +40,12 @@
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | diffbaal | proposed | - | `internal/quest/baaldone.go`<br>`internal/quest/baaldone_test.go` | - |
+| releasenotes-next | proposed | - | `docs/releases/next-draft.md` | - |
+| flakearb | proposed | - | `internal/bot/arbiter_control_test.go` | - |
+| logsink | proposed | - | `internal/logx`<br>`cmd/d2bot/main.go`<br>`cmd/d2bot/opscmd.go`<br>`cmd/d2bot/logsink_test.go`<br>`docs/ops` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
+| fieldstate | proposed | - | `internal/bot/loop.go`<br>`internal/bot/goal.go`<br>`internal/bot/state.go`<br>`internal/bot/runner.go`<br>`internal/bot/fieldstate_test.go` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
-| returnmock | proposed | - | `docs/research/mocks/return.html`<br>`docs/research/return-screen.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
@@ -71,7 +74,7 @@
 | ready-calibrate | deferred | - | `docs/probes/ready-calibrate.md` | - |
 | sessions | proposed | - | `docs/session-record.md` | - |
 | awaydrill | proposed | - | `docs/away-drill.md` | - |
-| reconnectux | proposed | - | `docs/onboarding.md`<br>`internal/watch/onboarding.go`<br>`internal/watch/web/panels/onboarding` | - |
+| reconnectux | proposed | - | `docs/onboarding.md`<br>`internal/watch/onboarding.go`<br>`internal/watch/web/panels/onboarding`<br>`internal/watch/onboarding_test.go`<br>`internal/watch/funwire.go`<br>`internal/watch/testdata/onboarding_dom.js`<br>`internal/watch/testdata/onboarding_dom.txt`<br>`data/onboarding/en.json` | - |
 | palprofile | deferred | - | `docs/sme/class-paladin.md`<br>`docs/sme/class-early-game.md`<br>`internal/combat/classdata` | - |
 | testerdocs | deferred | - | `docs/tester-guide.md` | - |
 | testerlicence | in-progress | - | `docs/tester-licence.md` | - |
@@ -94,7 +97,7 @@
 | uis6 | proposed | - | `internal/watch/web/panels/area-map/`<br>`internal/watch/web/panels/log/`<br>`internal/watch/web/panels/map/`<br>`internal/watch/testdata/areamap/`<br>`internal/watch/testdata/logpanel/`<br>`internal/watch/logtab.go`<br>`internal/watch/logtab_test.go`<br>`internal/watch/areamap_test.go`<br>`internal/watch/web/shell.js`<br>`internal/watch/web/shell.css`<br>`internal/watch/web/components.css`<br>`internal/watch/web/layout.js`<br>`internal/watch/web/shell.json`<br>`internal/watch/web/layouts/cockpit.json`<br>`internal/watch/layout.go`<br>`internal/watch/panels.go`<br>`internal/watch/serve.go`<br>`tools/uishots/`<br>`tools/uishots.sh`<br>`tools/uilint/lint.go` | - |
 | ordersux3 | deferred | - | `internal/watch/mapdata.go`<br>`internal/watch/web/**`<br>`docs/orders-slice3.md` | - |
 | uib9 | proposed | - | `internal/d2dctl/item_verbs_merc.go`<br>`internal/d2dctl/item_verbs_merc_test.go`<br>`internal/invdesk/mercverbs.go`<br>`internal/invdesk/mercverbs_test.go`<br>`internal/invdesk/sets.go`<br>`cmd/d2bot/invverbs.go`<br>`cmd/d2bot/invverbs_test.go`<br>`docs/research/merc-gear.md` | - |
-| onboardtour | proposed | - | `internal/watch/web/onboarding.js`<br>`internal/watch/web/onboarding.css`<br>`docs/onboarding-tour.md` | - |
+| onboardtour | proposed | - | `internal/watch/web/onboarding.js`<br>`internal/watch/web/onboarding.css`<br>`internal/watch/web/onboarding.json`<br>`internal/watch/web/watch.html`<br>`internal/watch/onboardingtour_test.go`<br>`internal/watch/testdata/onboarding_tour_test.cjs`<br>`docs/onboarding-tour.md` | - |
 | onboardctl | deferred | - | `internal/watch/control.go`<br>`internal/watch/control_test.go`<br>`docs/onboarding-controls.md` | - |
 | fidprobe-vendor | proposed | - | `internal/fidvendor`<br>`docs/research/fidelity-vendor-probe.md` | - |
 | custom-overlay | deferred | - | `docs/research/custom-overlay-spec.md`<br>`docs/overlay.md`<br>`docs/research/custom-items.md`<br>`internal/overlay/`<br>`internal/data/`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/d2dbackend_test.go` | - |
@@ -121,12 +124,11 @@
 | fid-probe-regen-speed | deferred | - | `docs/probes/fid/fid-probe-regen-speed.md` | - |
 | pgpage | in-progress | - | `docs/process/proving-ground-status.md`<br>`tools/provingground/status_doc.sh`<br>`internal/scenario/pgpage.go`<br>`internal/scenario/pgpage_test.go`<br>`cmd/d2scenario/ledger.go`<br>`cmd/d2scenario/ledger_test.go`<br>`cmd/d2scenario/main.go`<br>`docs/probes/provingground-act1more-2026-11-20.md`<br>`docs/probes/provingground-act1next-2026-11-20.md`<br>`docs/probes/provingground-cain-2026-11-19.md`<br>`docs/probes/provingground-cainchain-2026-11-20.md`<br>`docs/probes/provingground-cainfix3-2026-11-19.md`<br>`docs/probes/provingground-countess-2026-11-20.md`<br>`docs/probes/provingground-pgfix4-2026-11-20.md`<br>`docs/probes/provingground-run-2026-11-19.md` | - |
 | mgonejob | proposed | - | `docs/process/pg-ops-mgonejob.md` | - |
-| pgnightly | proposed | - | `docs/process/pg-ops-pgnightly.md`<br>`tools/provingground/nightly.sh` | - |
-| pgearned | proposed | - | `internal/scenario/earned.go`<br>`tools/provingground/earned` | - |
+| pgearned | proposed | - | `internal/scenario/earned.go`<br>`tools/provingground/earned`<br>`internal/scenario/earned_test.go`<br>`internal/scenario/setup.go`<br>`internal/scenario/scenario.go`<br>`internal/scenario/ledger.go`<br>`internal/scenario/result.go`<br>`internal/scenario/pgpage.go`<br>`cmd/d2scenario/validate.go`<br>`cmd/d2scenario/ledger.go`<br>`cmd/d2scenario/main_test.go`<br>`tools/provingground/scenarios/cain.json`<br>`docs/process/proving-ground.md` | - |
 | town5 | in-progress | - | `internal/town`<br>`internal/resource`<br>`internal/bot/broke.go`<br>`internal/bot/leveling.go`<br>`tools/provingground/scenarios/townplan.json`<br>`docs/probes/town-plan-stage3-2026-11-22.md`<br>`docs/design/fable-review-2026-11-21/town-planner-b-model.md`<br>`town-basics` | - |
 | town9 | proposed | - | `internal/watch`<br>`internal/supply` | - |
 | town10 | proposed | - | `internal/arbiter`<br>`internal/supply` | - |
-| town11 | proposed | - | `internal/town`<br>`docs/town.md`<br>`town-basics` | - |
+| town11 | proposed | - | `internal/town`<br>`docs/town.md`<br>`town-basics`<br>`docs/design/townflip-p5.md`<br>`backlog/tasks/task-765 - town12-SME-review-of-the-supply-profile-numbers-advice-only.md` | - |
 | town12 | proposed | - | `docs/design/fable-review-2026-11-21/town-profiles-sme.md` | - |
 | pgledgeron | proposed | - | `docs/process/pg-ledger-ops.md`<br>`tools/provingground/run.sh`<br>`tools/provingground/pgenv.sh`<br>`tools/provingground/pgenv_test.sh` | - |
 | warptrigger | proposed | - | `docs/probes/warptrigger-2026-11-22.md`<br>`internal/d2dctl/warptriggers.go`<br>`internal/d2dctl/warptriggers_test.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/nav/mouthgate.go`<br>`internal/nav/warpread_test.go`<br>`internal/d2map/static.go`<br>`internal/d2dworld/triggers_test.go`<br>`internal/d2denv/env.go` | `fork-branch:didle/warp-triggers-20261122` |
@@ -195,14 +197,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
-- e2e724c59 11-27 16:20 `Merge agent/smenecro: smenecro: SME Necromancer review (docs)` (smenecro)
-- be94247fd 11-27 16:20 `Merge agent/diet: diet: archive 5 finished research reports, docs diet rule (TASK-117/118)` (diet)
-- 27324ad8f 11-27 16:20 `Merge agent/dlvwhirl: dlvwhirl: Whirlwind move row driver (TASK-734)` (dlvwhirl)
-- b197ab183 11-27 16:19 `Merge agent/townrest: townrest: town plan view + /api/townplan (town9), arbiter upkeep source (town10 part), SME brief (town12)` (townrest)
-- 47b6409da 11-27 16:17 `Merge branch 'main' into smenecro` (-)
-- ceee8826a 11-27 16:17 `Merge branch 'main' into diet` (-)
-- 4bdfffc09 11-27 16:17 `Merge branch 'main' into dlvwhirl` (-)
-- 4ebb94611 11-27 16:17 `Merge branch 'main' into townrest` (-)
-- 6009caac8 11-27 16:13 `Merge agent/necrocorpse2: necrocorpse2: opt-in CE1 Necromancer table + scenario pair, ticks (TASK-1016/803/802)` (necrocorpse2)
-- e7e1d2d5b 11-27 16:12 `Merge agent/fliptool2: fliptool2: flip.py loads local.env itself, ledger commits on close/revert, unique branch names` (fliptool2)
+- d06f55ae6 11-27 17:25 `Merge agent/flakearb: flakearb: fix TestArbiterControlGoldFarmAndRecovery race (test starts in wrong area) (TASK-1068)` (flakearb)
+- 72a4592ae 11-27 17:24 `Merge branch 'main' into flakearb` (-)
+- dc31847b9 11-27 17:16 `Merge agent/fieldstate: fieldstate: return-to-field leg hands over to the fighter when hostiles are near (TASK-1070)` (fieldstate)
+- 82a3e6e0a 11-27 17:16 `Merge agent/logsink: logsink: bot own rotating log file, ops log verb, docker log NUL root cause (TASK-1069)` (logsink)
+- e431b1d75 11-27 17:16 `Merge agent/sandboxlogs: sandboxlogs: sandbox log analysis (docs)` (sandboxlogs)
+- 12aa8855a 11-27 17:16 `Merge agent/palapply: palapply: SME Paladin/Sorceress data changes (zeal table, Aim/Concentration, bands, mana_heavy)` (palapply)
+- 71d7aa25f 11-27 17:13 `Merge branch 'main' into fieldstate` (-)
+- cec3358c7 11-27 17:13 `Merge branch 'main' into logsink` (-)
+- f032ba048 11-27 17:13 `Merge branch 'main' into sandboxlogs` (-)
+- 4a10332d4 11-27 17:13 `Merge branch 'main' into palapply` (-)
 <!-- statusgen:end -->

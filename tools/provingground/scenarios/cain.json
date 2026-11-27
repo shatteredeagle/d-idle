@@ -354,7 +354,7 @@
    "needs": [
     "sandbox-d2d-binary"
    ],
-   "provenance": "As cain.scroll. Setup runs on the lab d2d (the save is portable); the BOT RUN uses the shipped build, whose gated debug verbs are refused and whose debug presets may lack room rows.",
+   "provenance": "CHEATED as cain.scroll (waypoints and level by SETUP verbs). Setup runs on the lab d2d (the save is portable); the BOT RUN uses the shipped build, whose gated debug verbs are refused and whose debug presets may lack room rows.",
    "notes": "BLOCKED until D2D_BIN_SANDBOX names the sandbox build (devp12 and later). Reproduces the sandbox condition with the shipped verbs only.",
    "assert": [
     {
@@ -644,7 +644,7 @@
      3
     ]
    },
-   "provenance": "As cain.stones, but the shipped build refuses the gated verbs, so neither the warp nor the key can be set up.",
+   "provenance": "CHEATED as cain.stones, but the shipped build refuses the gated verbs, so neither the warp nor the key can be set up.",
    "touches": [
     "cmd/d2bot/cain.go",
     "internal/task/",

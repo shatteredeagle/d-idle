@@ -137,6 +137,11 @@ func TestArbiterControlGoldFarmAndRecovery(t *testing.T) {
 			{"order beats recovery", 3 | 16 | 32, true, true, "goldfarm", 1},
 		} {
 			g, gf := farmRig(t, 10, class)
+			// Stand in the farm zone (Stony Field, TestGoldFarmTargetBothClasses). From another area the guard goroutine
+			// raced the fake walk: when it looked first it cancelled the slice as "crossed an area border" (~5% under load).
+			if tc.farm {
+				g.w.set(func(w *world) { w.area = 4 })
+			}
 			g.w.belt(101, 102, 103, 104)
 			g.r.e.Tune.Bot.ArbiterShadow, g.r.e.Tune.Bot.ArbiterControl, g.r.e.Tune.Bot.ArbiterFamilies = 1, 1, tc.mask
 			if tc.farm {
