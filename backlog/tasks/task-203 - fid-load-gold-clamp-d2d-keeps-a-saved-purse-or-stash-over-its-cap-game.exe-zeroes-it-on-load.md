@@ -22,7 +22,7 @@ exclusive:
   - "fork-branch:local/fid-load-gold-clamp"
   - "upstream-pr:load-gold-clamp"
 contracts: []
-result: "Candidate prepared (2026-11-08, agent decomp5): local/fid-load-gold-clamp commit 42d40b09 on the private fork remote, oracle 363 of 539 before, 0 after; waits for the independent verifier and the user's go; docs/research/pr-load-gold-draft.md."
+result: "Candidate prepared (2026-11-08, agent decomp5): local/fid-load-gold-clamp commit 42d40b09 on the private fork remote, oracle 363 of 539 before, 0 after; waits for the independent verifier and the user's go; docs/research/pr-load-gold-draft.md. closecards3: ticked #2 (draft with Claims table exists in docs/research/pr-load-gold-draft.md). closecards3 Remaining (live): #1 need the live game, a browser or a worker-host run; not verified here."
 ---
 
 ## Description
@@ -36,7 +36,7 @@ Found by TASK-79 (docs/probes/fid/fid-inv-limits.md): FUN_0056af80 puts gold and
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
 - [ ] #1 Candidate branch local/fid-load-gold-clamp (fork remote, commit 42d40b09) re-verified by the independent Opus verifier
-- [ ] #2 Draft with Claims table in docs/research/pr-load-gold-draft.md; opened only on the user's go
+- [x] #2 Draft with Claims table in docs/research/pr-load-gold-draft.md; opened only on the user's go
 <!-- AC:END -->
 
 ## Implementation Notes
