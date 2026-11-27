@@ -44,6 +44,7 @@
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | combatscen2 | proposed | - | `tools/provingground/scenarios/combatdrills.json`<br>`tools/provingground/scenarios/tiers.json`<br>`docs/probes/combat-drills-2026-11-27.md` | - |
 | mercaura | proposed | - | `internal/d2/classtraits.go`<br>`internal/d2/classtraits.json`<br>`internal/d2/classtraits_test.go`<br>`docs/design/merc-aura-by-archetype.md`<br>`internal/town/merc.go`<br>`internal/town/merc_test.go`<br>`internal/task/act2.go`<br>`internal/task/act2_test.go`<br>`internal/bot/task.go`<br>`cmd/d2bot/merc_adapter.go` | - |
+| nightcheck | proposed | - | `tools/provingground/nightcheck.sh`<br>`tools/provingground/nightcheck_test.sh`<br>`docs/probes/lab-night-commands-2026-11-27.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
@@ -194,14 +195,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 6692346c5 11-27 17:55 `Merge agent/nightcheck: nightcheck: night plan preflight script and corrected launch commands (TASK-1075)` (nightcheck)
 - 84cb68578 11-27 17:55 `Merge agent/mercaura: mercaura: per-class per-difficulty merc aura data, HirePolicy takes the class (TASK-1074)` (mercaura)
 - 05cc47c95 11-27 17:55 `Merge agent/combatscen2: combatscen2: eight combat drill scenarios (TASK-1072)` (combatscen2)
 - 83a010d59 11-27 17:54 `Merge agent/classapply: classapply: SME changes for Druid/Barbarian/Amazon/Assassin (War Cry kind, Exploding Arrow, Death Sentry key, Hurricane)` (classapply)
 - 02cf8a142 11-27 17:52 `Merge branch 'main' into mercaura` (-)
 - 24b3841bc 11-27 17:52 `Merge branch 'main' into combatscen2` (-)
 - 0b847317a 11-27 17:52 `Merge branch 'main' into classapply` (-)
+- 49e4544c3 11-27 17:50 `Merge origin/main into nightcheck` (-)
 - 6f93a5890 11-27 17:48 `Merge agent/miscfix: miscfix: card updates 604/856/880/330 (no Go change)` (miscfix)
 - 2b0d2f671 11-27 17:48 `Merge agent/smegaps: smegaps: sourced resist floors, merc auras, FCR/FHR/FBR tables (docs/sme)` (smegaps)
-- 1bacc25f7 11-27 17:46 `Merge branch 'main' into miscfix` (-)
-- 9a5cafcba 11-27 17:46 `Merge branch 'main' into smegaps` (-)
 <!-- statusgen:end -->

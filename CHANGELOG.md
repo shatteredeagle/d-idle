@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- nightcheck: night plan preflight script and corrected launch commands (TASK-1075) <!--sg:agent/nightcheck-->
 - mercaura: per-class per-difficulty merc aura data, HirePolicy takes the class (TASK-1074) <!--sg:agent/mercaura-->
 - combatscen2: eight combat drill scenarios (TASK-1072) <!--sg:agent/combatscen2-->
 - classapply: SME changes for Druid/Barbarian/Amazon/Assassin (War Cry kind, Exploding Arrow, Death Sentry key, Hurricane) <!--sg:agent/classapply-->
