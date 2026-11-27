@@ -245,6 +245,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 2a0dbd60d 11-27 13:29 `Merge agent/pgclock2: pgclock2: scripted taps, tick-based soak stop (TASK-738/739)` (pgclock2)
+- 07630a935 11-27 13:27 `Merge branch 'main' into pgclock2` (-)
 - d7861fd60 11-27 13:25 `Merge agent/darkqueue: darkqueue: dark queue plan` (darkqueue)
 - 29f1db6c1 11-27 13:25 `Merge agent/act2drill6: act2drill6: docs` (act2drill6)
 - 3234cd308 11-27 13:24 `Merge branch 'main' into darkqueue` (-)
@@ -253,6 +255,4 @@
 - 66ce4c24a 11-27 13:19 `Merge agent/dlvupkeep: dlvupkeep: TestBuffsStayUp offline uptime test (TASK-722 AC1)` (dlvupkeep)
 - c9dfaba53 11-27 13:18 `Merge branch 'main' into roadmap3` (-)
 - 54e787ce1 11-27 13:18 `Merge branch 'main' into dlvupkeep` (-)
-- 2836d51ab 11-27 13:18 `Merge agent/town6b: town6b: stage 4 scenario live checklist (docs only)` (town6b)
-- d65dd27d6 11-27 10:29 `Merge agent/hostilespin: Merge branch 'main' into hostilespin` (hostilespin)
 <!-- statusgen:end -->
