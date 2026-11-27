@@ -40,6 +40,7 @@
 | fid-poison-res-diag | proposed | - | `docs/research/fid-poisonres-trace.md` | - |
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
+| classkeys | in-progress | - | `internal/combat/classdata`<br>`internal/combat/profileskills_test.go`<br>`internal/plandata`<br>`docs/plan/data`<br>`cmd/d2bot/necroplay_test.go`<br>`cmd/d2bot/hotkeydrift_test.go`<br>`data/capabilities/capabilities.json`<br>`tools/provingground/scenarios/necro-epic.json`<br>`docs/design/merc-aura-by-archetype.md`<br>`internal/agency/testdata/agreement.json` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | returnmock | proposed | - | `docs/research/mocks/return.html`<br>`docs/research/return-screen.md` | - |
@@ -198,14 +199,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 2f9abaad7 11-27 15:34 `Merge agent/classkeys: classkeys: main-attack hotkeys for all classes, profile skill check, merc aura note (TASK-1063)` (classkeys)
 - 2947d96a6 11-27 15:34 `Merge agent/testerreport: testerreport: scrubbed tester report bundle, first-session doc (TASK-27)` (testerreport)
 - bb0a720a8 11-27 15:34 `Merge agent/closecards3: closecards3: third card cleanup pass` (closecards3)
 - 0dd5a9f51 11-27 15:34 `Merge agent/admit2: admit2: admission function shadow wiring, bot.admission knob (TASK-970 step 2)` (admit2)
+- 083e2a95b 11-27 15:32 `Merge branch 'main' into classkeys` (-)
 - 25030e532 11-27 15:32 `Merge branch 'main' into testerreport` (-)
 - 175037f1a 11-27 15:32 `Merge branch 'main' into closecards3` (-)
 - 8e0028717 11-27 15:32 `Merge branch 'main' into admit2` (-)
 - 7a5210b1c 11-27 15:21 `Merge agent/fliptool: fliptool: flip.py transport probe, --reflip, watcher heartbeat/unit, --commit-ledger (TASK-1062)` (fliptool)
 - 05db9a45b 11-27 15:21 `Merge agent/statusrefresh: statusrefresh: STATUS.md hand-written part rewritten (TASK-46)` (statusrefresh)
-- 0be1da55f 11-27 15:21 `Merge agent/playsession: playsession: tools/play-session.sh one-command LAN session (TASK-43)` (playsession)
-- 273435517 11-27 15:21 `Merge origin/main into closecards3 (task-766: take main, live AC2 still open)` (-)
 <!-- statusgen:end -->
