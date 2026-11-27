@@ -89,6 +89,12 @@ type MercHirer interface {
 	HireMerc(ctx context.Context, act int, aura string) error
 }
 
+// MercAuraChooser is an optional Actions capability: the class's configured merc aura for the current difficulty
+// (town.ClassMercAura); ok false means no class preference. Without it the Act 2 hire keeps Defiance.
+type MercAuraChooser interface {
+	MercAura() (aura string, ok bool, err error)
+}
+
 func init() {
 	handlers[QRadament] = radamentNodes
 	handlers[QCube] = cubeNodes
@@ -439,7 +445,17 @@ func mercNodes() []Node {
 			if !ok {
 				return Errorf(KindPrereq, "the bot has no mercenary hire capability")
 			}
-			return h.HireMerc(ctx, 2, "Defiance")
+			aura := "Defiance"
+			if c, ok := x.(MercAuraChooser); ok {
+				a, set, err := c.MercAura()
+				if err != nil {
+					return Wrap(KindPrereq, err)
+				}
+				if set {
+					aura = a
+				}
+			}
+			return h.HireMerc(ctx, 2, aura)
 		}}
 	return []Node{{Step: hire}}
 }

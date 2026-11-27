@@ -3,6 +3,7 @@ package town
 import (
 	"errors"
 	"os"
+	"strings"
 	"testing"
 
 	"d2lod-bot/internal/d2"
@@ -73,7 +74,14 @@ func TestHirePolicy(t *testing.T) {
 		{"nightmare poor", data.Nightmare, d2.Merc{}, 5000, "Might", false},
 		{"hell never might", data.Hell, d2.Merc{}, 20000, "Defiance", true},
 	} {
-		w, ok := HirePolicy(c.diff, c.merc, c.gold)
+		for _, cl := range []d2.Class{d2.Sorceress, d2.Paladin, d2.Necromancer} {
+			// Necromancer's row equals the difficulty defaults (SME review 2026-11-27), so all three behave alike.
+			w, ok, err := HirePolicy(cl, c.diff, c.merc, c.gold)
+			if err != nil || ok != c.hires || (ok && (w.Aura != c.aura || w.Act != 2 || w.Row != -1)) {
+				t.Errorf("%s %v: %+v %v %v", c.name, cl, w, ok, err)
+			}
+		}
+		w, ok, _ := HirePolicy(d2.Sorceress, c.diff, c.merc, c.gold)
 		if ok != c.hires || (ok && (w.Aura != c.aura || w.Act != 2 || w.Row != -1)) {
 			t.Errorf("%s: %+v %v", c.name, w, ok)
 		}
@@ -112,5 +120,38 @@ func TestHasMercByClass(t *testing.T) {
 	s.Monsters[0].Mode = d2.MonModeDead
 	if HasMerc(s) {
 		t.Fatal("dead merc")
+	}
+}
+
+func TestHirePolicyUnknownClass(t *testing.T) {
+	_, _, err := HirePolicy(d2.Class(42), data.Normal, d2.Merc{}, 9999)
+	if err == nil || !strings.Contains(err.Error(), "Class(42)") {
+		t.Fatalf("unknown class must error naming it: %v", err)
+	}
+}
+
+func TestClassMercAura(t *testing.T) {
+	for _, c := range []struct {
+		cl   d2.Class
+		diff data.Difficulty
+		want string
+		ok   bool
+	}{
+		{d2.Necromancer, data.Normal, "Defiance", true},
+		{d2.Necromancer, data.Nightmare, "Might", true},
+		{d2.Necromancer, data.Hell, "Defiance", true},
+		{d2.Sorceress, data.Normal, "", false},
+		{d2.Paladin, data.Nightmare, "", false},
+	} {
+		a, ok, err := ClassMercAura(c.cl, c.diff)
+		if err != nil || a != c.want || ok != c.ok {
+			t.Errorf("%v %v: %q %v %v", c.cl, c.diff, a, ok, err)
+		}
+	}
+	if _, _, err := ClassMercAura(d2.Class(42), data.Normal); err == nil {
+		t.Fatal("unknown class must error")
+	}
+	if _, _, err := ClassMercAura(d2.Sorceress, data.Difficulty(7)); err == nil {
+		t.Fatal("unknown difficulty must error")
 	}
 }
