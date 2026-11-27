@@ -77,3 +77,20 @@ The placement was never reached, so record 10 after the placement is still NOT o
 Next step, for the placefix owner:
 - Option 1: make `requiresCleared` treat the word the d2d keeps (0x0c08) as cleared.
 - Option 2: find which setup word survives the write. 0x0c78 masked to 0x0c08 suggests that bits 0x0070 are not stored by the lab quest model (U).
+
+## Third run after placefix2 (origin/main a7e01c2ff, labrun job 20261127-054933-6df2)
+
+The run used the same command with `-id drill.act2.duriel.stepexec`. The setup writes record 10 = 0x0c08, and it reads back as 0x0c08.
+
+The board lock is fixed: the Duriel tap starts the chunk (`The Seven Tombs started.`), and record 14 becomes 0x0004 in the tomb.
+
+Result: BLOCKED 3/3 (V, the same in all three runs). The placement fails as it did in the first run:
+- The bot sends `cmd hand 25` and then `cmd place 104 25` (unit 104 this time). Both get empty replies, and hst stays in the pack. The error is `post [lacks_item(hst)] not observed after 4 looks`.
+- One try per run also ended with `object class 152 not found (the whole level was walked)`.
+- The board parks the chunk after about 1052 virtual s, and the 60 virtual min stall rule ends the run.
+
+Record 10 after the placement is still NOT observed. The talk row's post is not set (no Duriel pass).
+
+Open, for the placefix owner (U):
+- Record 10 bit 0 is now clear, and place is still a no-op.
+- Next things to check: what d2d's `place` handler needs (item in hand vs. pack), the orifice's mode, and whether unit 104/105 is the orifice. A one-off `place` reply with the lab d2d's error text on would settle it.
