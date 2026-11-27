@@ -1,10 +1,11 @@
 ---
 id: TASK-1045
 title: 'act2handin: the Act 2 task nodes follow the hand-in quest bits'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T13:22:00Z'
+updated_date: '2026-11-27T13:49:00Z'
 labels:
   - bot
   - bug
