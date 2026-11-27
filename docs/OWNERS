@@ -146,6 +146,7 @@ cmd/d2bot/ladder.go  live-agent  pgtaps
 cmd/d2bot/live.go  credit-runner  agencyp1b
 cmd/d2bot/live.go  credit-runner  campaign1
 cmd/d2bot/necroplay_test.go  live-agent  epic-class-necromancer
+cmd/d2bot/survivalwire.go  credit-runner  zonepace
 cmd/d2bot/task.go  credit-runner  qdmatrix
 cmd/d2bot/task_test.go  credit-runner  qdmatrix
 cmd/d2scenario/  live-agent  arbmig
@@ -407,6 +408,7 @@ internal/scenario/taps.go  live-agent  pgtaps
 internal/store/  credit-runner  tuningwrite
 internal/supply  credit-runner  town10
 internal/supply  credit-runner  town9
+internal/survival/  credit-runner  zonepace
 internal/talk/talk.go  credit-runner  qdmatrix
 internal/talk/talk_test.go  credit-runner  qdmatrix
 internal/task  live-agent  bsmdef
