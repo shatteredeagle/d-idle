@@ -231,3 +231,24 @@ func (e *Exec) runOf(t *testing.T, quest, chunk string) Run {
 	}
 	return r
 }
+
+func TestParkLinesForTheReturnScreen(t *testing.T) {
+	for _, class := range smClasses {
+		t.Run(class, func(t *testing.T) {
+			r, ck := diedRig(t, class, true)
+			d := r.desk(nil)
+			lines := d.ParkLines()
+			if len(lines) != 1 || !strings.Contains(lines[0], "paused") || !strings.Contains(lines[0], "Since 2026-11-25 22:00 UTC") || !strings.Contains(lines[0], "Resumes by itself") {
+				t.Fatalf("lines: %q", lines)
+			}
+			ck.add(time.Hour)
+			if _, ok := r.x.ResumeTick(fit()); !ok {
+				t.Fatal("not lifted")
+			}
+			d.invalidate()
+			if l := d.ParkLines(); len(l) != 0 {
+				t.Fatalf("a lifted park still shows: %q", l)
+			}
+		})
+	}
+}

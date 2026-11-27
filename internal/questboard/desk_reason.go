@@ -151,3 +151,25 @@ func (d *Desk) handInWaitReason() *ReasonView {
 	}
 	return nil
 }
+
+// ParkLines are the Return screen's lines for a board that is held by a park: what stopped, since when, and what clears
+// it. Empty while nothing is parked (the section then hides).
+func (d *Desk) ParkLines() []string {
+	v := d.View()
+	b := v.Blocked
+	if !v.Enabled || b == nil {
+		return nil
+	}
+	line := b.QuestTitle + " is stuck: " + b.Why
+	var since string
+	if r := b.Reason; r != nil {
+		line = r.Text
+		if r.Since != nil {
+			since = " Since " + r.Since.UTC().Format("2006-01-02 15:04") + " UTC."
+		}
+		if r.Clears != "" {
+			since += " " + r.Clears
+		}
+	}
+	return []string{line + since}
+}
