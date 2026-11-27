@@ -139,3 +139,32 @@ Result: BLOCKED 3/3 on the stall rule. Every run now gets through the placement,
 Next blocker, for the next card:
 - The `quest.duriel/kill` step does not count a Duriel killed by the fight that ran before the boss run as a kill (`boss not found` instead of done).
 - The scenario's `quest_bits record 14 set 1` assertion also expects the completion bit. The kill alone gives 0x0024, so a pass also needs the Tyrael/Jerhyn hand-in, or the assertion should check bit 0x0020 (U, a decision for the scenario owner).
+
+## Sixth run after bossdone and act2handin (origin/main 388dcc3da, card act2drill6)
+
+The run used the same command with `-id drill.act2.duriel.stepexec -class Paladin -seed 11 -repeat 3 -parallel 1`, the featuresoak lab d2d, `taskset -c 0-7 nice -n 19`, through `tools/agentrun.sh`. Load1 was 3 to 9, and each run took about 115 s of wall time. Writes after the start: none (setup verbs only; provenance CHEATED, so mechanics only).
+
+Result: BLOCKED 3/3 on the stall rule (V, the three runs are identical). The Duriel kill now counts, and the run stops one step later, at the Tyrael hand-in.
+
+| step | outcome (V) |
+|---|---|
+| `seven_tombs/place_staff` | first try fails with `object class 152 not found`, the next try is `done`; record 10 goes 0x0c08 to 0x2c09 |
+| `quest.duriel/door` | one retry (`ran but is still needed (evidence 2)`), then `Entered Duriel's Lair` |
+| `quest.duriel/kill` | Duriel dies in the fight (`combat kill Duriel class=211`, no death, `bossKills 1`). The boss run says `boss not found in the arena`, and the bot logs `boss not found but dead: the kill step is done`. Step outcome `ran`. This is the bossdone fix working |
+| town trip | the hero goes to town for 0 percent durability (repair done), then returns |
+| `quest.duriel/tyrael` | `npc: talk Tyrael class 251 pick reward`, then `step talk_tyrael: 2 tries used: open Tyrael: town: not in a town`, 3 board tries, the chunk is parked (`gave up after 3 tries`), later tap `not startable ... blocked` |
+
+Hand-in outcome: NOT done. The talk step opens Tyrael through the town walker, but the hero is in Duriel's Lair (area 73) when it runs, so `open` refuses with "not in a town". Record 14 stays 0x0024 and never gets bit 0x0001.
+
+Records (V, last `memory quest words` line, same in all three runs):
+
+| record | start | after place | after kill (final) |
+|---|---|---|---|
+| 10 horadric_staff | 0x0c08 | 0x2c09 | 0x2c09 |
+| 14 seven_tombs | 0x0004 (set at tomb entry) | 0x0004 | 0x0024 |
+
+Next blocker, for the next card:
+- `seven_tombs/talk_tyrael` uses the town NPC opener while the hero stands in the lair. Either the executor needs a field-NPC path for Tyrael (he stands in the lair after the kill in the real game, U), or the step must go through the town portal / Lut Gholein first. The hero is also sent to town for repair between the kill and the talk, and returns to the lair (area 73), so the position at the time of the talk is the lair.
+- The scenario's record 14 bit 0x0001 assertion needs the hand-in; until then it cannot pass.
+
+Run output is kept on the worker host under the lab dir `act2drill6-out/results`.
