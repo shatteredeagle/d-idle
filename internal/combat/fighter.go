@@ -863,10 +863,11 @@ type holdClicker interface {
 }
 
 func (f *Fighter) cast(snap *d2.Snapshot, sp SkillSpec, at input.Point) error {
-	var err error
+	delivered, err := f.deliverCast(snap.Player, sp, at) // input.planner on: one cast request (castdeliver.go)
 	left := sp.Hand == HandLeft || sp.ID == meleeSpec().ID
 	sw, swings := f.e.In.(swinger)
 	switch {
+	case delivered:
 	case left && swings:
 		err = sw.Swing(sp.ID, at)
 	case left:
