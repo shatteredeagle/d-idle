@@ -468,7 +468,8 @@ func (r *Runner) kitPlanOf(s *d2.Snapshot) *task.KitPlan {
 		r.planWarn.Do(func() { r.e.Log.Warn("town plan: " + err.Error()) })
 		return nil
 	}
-	return &task.KitPlan{Healing: pl.MinOf(supply.Healing), Mana: pl.MinOf(supply.Mana), Portals: pl.MinOf(supply.Portal), GoldCarry: pl.MinOf(supply.GoldCarry), Short: pl.Why()}
+	hand := pl.Handover(supply.Gold{Sellable: r.sellableCached() > 0, VaultPrompt: r.e.Tune.Loot.Vault != 0 && r.e.Tune.Loot.VaultSellPrompt != 0})
+	return &task.KitPlan{Healing: pl.MinOf(supply.Healing), Mana: pl.MinOf(supply.Mana), Portals: pl.MinOf(supply.Portal), GoldCarry: pl.MinOf(supply.GoldCarry), Short: pl.Why(), Hand: hand.Reason}
 }
 
 // fillKit counts the kit by the one counter and, at stage 2, attaches the plan.

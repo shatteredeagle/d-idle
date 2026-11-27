@@ -1,10 +1,11 @@
 ---
 id: TASK-1055
 title: 'skillcapretire: retire resource.skillCapPerLevel'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T19:07:00Z'
+updated_date: '2026-11-27T19:42:00Z'
 labels:
   - bot
   - chore
