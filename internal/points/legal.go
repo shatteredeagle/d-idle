@@ -13,9 +13,8 @@ import (
 const (
 	CodeUnknownSkill = "unknown_skill"
 	CodeOtherClass   = "other_class"
-	CodeRule         = "rule"      // the game's own rule: points, max level, required level, prerequisites
-	CodeLevelCap     = "level_cap" // resource.skillCapPerLevel
-	CodeConfirm      = "confirm"   // an attack skill the hero cannot use yet: one confirmation
+	CodeRule         = "rule"    // the game's own rule: points, max level, required level, prerequisites
+	CodeConfirm      = "confirm" // an attack skill the hero cannot use yet: one confirmation
 )
 
 // Tier labels of the interim capability test (the generated capability table of the design review replaces it).
@@ -66,8 +65,6 @@ func (t Tables) Class(name string) *data.CharClass {
 // level literal lives here (AGENTS.md build flexibility).
 type Legal struct {
 	T Tables
-	// LevelCap is resource.skillCapPerLevel: a skill takes at most clvl - reqlevel + 1 hard points.
-	LevelCap bool
 	// Playable says whether the fighter has a rule for the skill (combat.Playable); nil counts everything as playable.
 	Playable func(skillName string) bool
 	// Attack says whether the skill is a main-attack candidate (power's skill kinds: melee, missile, spell, summon).
@@ -103,13 +100,6 @@ func (l Legal) CheckSkill(h skilltree.Hero, id int, confirm bool) SkillVerdict {
 		v.Code, v.Reason = CodeRule, why
 		return v
 	}
-	if l.LevelCap {
-		if cap := SkillCap(h.Level, s.ReqLevel); h.Points[id].Base >= cap {
-			v.Code = CodeLevelCap
-			v.Reason = fmt.Sprintf("at character level %d %s takes at most %d points (level cap rule)", h.Level, name, cap)
-			return v
-		}
-	}
 	v.Tier = TierSupported
 	if !s.Passive && l.Playable != nil && !l.Playable(name) {
 		v.Tier = TierUnsupported
@@ -125,7 +115,7 @@ func (l Legal) CheckSkill(h skilltree.Hero, id int, confirm bool) SkillVerdict {
 }
 
 // SkillCap is the most hard points a skill may hold at character level clvl when it needs reqLevel: clvl - reqLevel + 1
-// (kolbot AutoSkill.js:54-62 enforces it; d2d and game.exe do not, so it is off unless resource.skillCapPerLevel is 1).
+// (kolbot AutoSkill.js:54-62 enforces it; d2d and game.exe do not, so only the table checker uses it).
 func SkillCap(clvl, reqLevel int) int { return max(clvl-reqLevel+1, 0) }
 
 // ClassSkillIndex is the index d2d's `cmd skillpt` takes: the position of the skill among its class's skills in

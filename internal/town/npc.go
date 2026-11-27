@@ -161,6 +161,23 @@ func stopShort(px, py, nx, ny int, gap float64) input.Point {
 // dist 2 to 5 opened at once).
 const maxInteractDist = 4
 
+// fieldNPCAreas lists the NPCs that stand outside a town and the areas they stand in: the hand-in talk opens them where
+// they are instead of failing with ErrNotInTown. Tyrael (251) appears in Duriel's Lair (73) after the kill and opens
+// the portal to town (S: internal/quest/act2.go; the lair is not a town and the repair trip returns the hero there, V
+// drill act2drill6). Data, not a per-quest branch: a new field NPC is one more row.
+var fieldNPCAreas = map[int][]int{251: {73}}
+
+func fieldNPC(classes []int, area int) bool {
+	for _, c := range classes {
+		for _, a := range fieldNPCAreas[c] {
+			if a == area {
+				return true
+			}
+		}
+	}
+	return false
+}
+
 // openNPC walks to the first NPC of classes found, clicks it with hover confirmation and waits for the
 // dialog. approx is the fallback point for a unit that is not loaded. On success the dialog is open.
 func (t *Town) openNPC(ctx context.Context, classes []int, approx input.Point) (d2.Unit, error) {
@@ -174,7 +191,7 @@ func (t *Town) openNPC(ctx context.Context, classes []int, approx input.Point) (
 		if err != nil {
 			return d2.Unit{}, err
 		}
-		if !s.Player.InTown() { // a chore outside a town walks toward an NPC that is not there (the 02:51 death)
+		if !s.Player.InTown() && !fieldNPC(classes, s.Player.Area) { // a chore outside a town walks toward an NPC that is not there (the 02:51 death)
 			return d2.Unit{}, ErrNotInTown
 		}
 		if hand.PanelOpen(s.UI) {

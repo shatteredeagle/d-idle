@@ -1,7 +1,7 @@
 ---
 id: TASK-324
 title: 'maphistory: activity-coloured trail, event markers, activity percent legend'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T19:11:00Z'
@@ -31,6 +31,7 @@ owns:
 exclusive: []
 contracts: []
 lane: next
+result: "Merged (agent/maphistory): activity codes on trail points, events ring (internal/senses/events.go), panel colours and filters; tests. Not verified live."
 ---
 
 ## Description
@@ -43,6 +44,6 @@ Why: TODO. Done when: TODO.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Trail points carry an activity code; events ring; additive payload keys; panel colours, glyphs, events filter, 30 min window and activity share line
-- [ ] #2 Tests: Go ring/events/wiring, payload golden, node panel test; whole-repo gate
+- [x] #1 Trail points carry an activity code; events ring; additive payload keys; panel colours, glyphs, events filter, 30 min window and activity share line
+- [x] #2 Tests: Go ring/events/wiring, payload golden, node panel test; whole-repo gate
 <!-- AC:END -->

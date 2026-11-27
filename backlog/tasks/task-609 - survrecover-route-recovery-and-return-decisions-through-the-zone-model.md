@@ -24,6 +24,7 @@ owns:
 exclusive: []
 contracts: []
 lane: next
+result: " Merged (agent/survrecover): zone-model recovery decisions and tests (zonerecover_test.go). Remaining (live): AC 3 holdout and 8-seed Paladin A/B rerun, Sorceress screen and recommendation doc."
 ---
 
 ## Description
@@ -36,7 +37,7 @@ Size: M. Holdout seed 149 chickens came from the recovery state, which never rea
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 recovery farm area and trip return portal ask the zone model after a cost event (knob 0 identical)
-- [ ] #2 tests on two classes, seed-149 sequence, no flapping
+- [x] #1 recovery farm area and trip return portal ask the zone model after a cost event (knob 0 identical)
+- [x] #2 tests on two classes, seed-149 sequence, no flapping
 - [ ] #3 holdout and 8-seed Paladin A/B rerun, Sorceress screen, doc with recommendation
 <!-- AC:END -->

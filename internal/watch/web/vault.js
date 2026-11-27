@@ -148,7 +148,8 @@ export function mountVault(d) {
   const promptLine = el('span', 'vt-keepline'); promptLine.setAttribute('role', 'status');
   const promptYes = btn(T.promptYes, { key: 'prompt-yes' }), promptNo = btn(T.promptNo, { key: 'prompt-no', variant: 'ghost' });
   const gNotes = el('div', 'vt-ab-notes'); gNotes.hidden = true;
-  gNotes.append(costLine, sellWhyLine, keepLine, keepNowB, actLine, buyB, promptLine, promptYes, promptNo);
+  const carriedBox = el('div', 'vt-carried'); carriedBox.dataset.key = 'carried'; carriedBox.hidden = true;
+  gNotes.append(costLine, sellWhyLine, keepLine, carriedBox, keepNowB, actLine, buyB, promptLine, promptYes, promptNo);
   const bar = el('section', 'vt-actionbar'); bar.hidden = true; bar.setAttribute('aria-label', T.select);
   bar.append(gSel, gReveal, gOrder, gNotes);
   // the transient message (what a press did): the shared toast (web/toast.js), one at a time; it goes by itself or on dismiss
@@ -378,7 +379,8 @@ export function mountVault(d) {
     keepNowB.disabled = ro || !k || !k.enabled;
     why(keepNowB, ro ? T.offWhy : k && k.why, gNotes, T.keepNow);
     drawAct(n, ro);
-    gNotes.hidden = [costLine, sellWhyLine, keepLine, keepNowB, actLine, buyB, promptLine, promptYes, promptNo].every((x) => x.hidden);
+    drawCarried(ro);
+    gNotes.hidden = [costLine, sellWhyLine, keepLine, carriedBox, keepNowB, actLine, buyB, promptLine, promptYes, promptNo].every((x) => x.hidden);
     bar.hidden = gSel.hidden && gReveal.hidden && gOrder.hidden && gNotes.hidden; // nothing to do and nothing to say: no bar at all
   }
   // The order chip: an order that runs shows until it ends; one that ended shows for TOAST_MS the first time this browser sees it (or until dismissed).
@@ -756,6 +758,11 @@ export function mountVault(d) {
         row.appendChild(mb);
       }
     }
+    const cv = S.view && S.view.carry; // a charm is carried by the player's choice: it works only in the backpack
+    if (cv && it.charm && it.state === 'recorded') {
+      const cb = mk(T.carry, 'carry', { ok: cv.enabled && it.identified, reason: !cv.enabled ? cv.why : T.carryReveal }, () => carryAct('/api/vault/carry', it.id));
+      row.appendChild(cb);
+    }
     const ra = S.view && S.view.act && S.view.act.reveal, via = revealMethods(ra);
     const gd = ra && ra.gold || {};
     if (via.has('gold') && !via.has('free') && gd.on && !it.identified) row.appendChild(mk(fmt(T.revealGoldOne, { cost: grp(gd.scrollGold || 0) }), 'reveal-gold', { ok: gd.scrollGold > 0 && gd.stash >= gd.scrollGold && !gd.why, reason: gd.why || fmt(T.goldShort, { price: grp(gd.scrollGold || 0), stash: grp(gd.stash || 0) }) }, () => goldOrder([it.id], gd.scrollGold, (gd.confirmAt || 0) > 0 && gd.scrollGold >= gd.confirmAt)));
@@ -982,6 +989,30 @@ export function mountVault(d) {
     return done.length > 0;
   }
   const act1 = (route, ids) => act(route, ids, false);
+  // Carry and Stow: one charm, answered at once. The server's own sentence says why not (backpack full, not identified, dead).
+  async function carryAct(route, id) {
+    const r = await d.post(route, { ids: [id] });
+    const stow = route.endsWith('/stow');
+    if (!r) setMsg('bad', T.noAnswer);
+    else if (r.ok) setMsg('good', stow ? (r.where && r.where !== 'vault' ? fmt(T.okStowElsewhere, { where: r.where }) : T.okStow) : T.okCarry);
+    else setMsg('bad', (r.failed && r.failed[0] && r.failed[0].error) || r.error || T.noAnswer);
+    await reload(true);
+    if (S.detailId && !stow) { S.detailId = ''; }
+    return !!(r && r.ok);
+  }
+  function drawCarried(ro) {
+    const cv = S.view && S.view.carry;
+    const list = cv && cv.carried || [];
+    carriedBox.hidden = !list.length;
+    while (carriedBox.firstChild) carriedBox.removeChild(carriedBox.firstChild);
+    if (!list.length) return;
+    carriedBox.appendChild(el('span', 'vt-carried-title', fmt(T.carriedTitle, { n: list.length, cells: cv.cells })));
+    list.forEach((c) => {
+      const b = btn(fmt(T.stowOne, { name: c.name }), { key: 'stow-' + c.id, variant: 'ghost' });
+      if (ro || !cv.enabled) { b.setAttribute('aria-disabled', 'true'); } else b.addEventListener('click', () => carryAct('/api/vault/stow', c.id));
+      carriedBox.appendChild(b);
+    });
+  }
   const keepAct = (ids, now) => act('/api/vault/keep', ids, false, { now });
   const revealAct = (ids, now) => act('/api/vault/reveal', ids, false, { now });
   const etherAct = (ids) => act('/api/vault/reveal', ids, false, { ether: true });
