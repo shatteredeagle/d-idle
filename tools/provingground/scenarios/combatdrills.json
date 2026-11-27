@@ -437,6 +437,12 @@
     },
     {
      "kind": "log_line",
+     "pattern": "^combat stance summary .*in_place=[1-9]",
+     "why": "casts made in place (V telem.go fight-end line; in_place counts casts on the cell held the tick before)",
+     "min": 1
+    },
+    {
+     "kind": "log_line",
      "pattern": "^character died ",
      "why": "no death (the format has no min 0 with a positive max)",
      "max": 0
@@ -586,6 +592,12 @@
     },
     {
      "kind": "log_line",
+     "pattern": "^combat aim summary .*hits=[1-9]",
+     "why": "the aim rule aimed at least one cast (V telem.go fight-end line; hits = aimed casts of the fight)",
+     "min": 1
+    },
+    {
+     "kind": "log_line",
      "pattern": "^character died ",
      "why": "no death (the format has no min 0 with a positive max)",
      "max": 0
@@ -651,6 +663,12 @@
      "kind": "log_line",
      "pattern": "^combat fight.tick .*attacks=[1-9]",
      "why": "the fight issued attacks (V marker: castfirst.go fightTick)",
+     "min": 1
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^combat aim summary .*hits=[1-9]",
+     "why": "the aim rule aimed at least one cast (V telem.go fight-end line; hits = aimed casts of the fight)",
      "min": 1
     },
     {
@@ -802,6 +820,12 @@
     },
     {
      "kind": "log_line",
+     "pattern": "^combat minion summary .*alive=[1-9].* max_dist=([0-9]|[12][0-9])(\\.[0-9])? ",
+     "why": "an army stood at the end and never strayed 30 subtiles from the hero (V telem.go; the 30 bound is U)",
+     "min": 1
+    },
+    {
+     "kind": "log_line",
      "pattern": "^character died ",
      "why": "no death (the format has no min 0 with a positive max)",
      "max": 0
@@ -937,6 +961,12 @@
      "kind": "log_line",
      "pattern": "^combat minion ",
      "why": "a pet was cast or topped up (V marker: minions.go `combat minion skill= group= have= grew= paid=`)",
+     "min": 1
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^combat minion summary .*seen=[1-9].* max_dist=([0-9]|[12][0-9])(\\.[0-9])? ",
+     "why": "pets were seen and none strayed 30 subtiles from the hero (V telem.go; the 30 bound is U; lost= is read from the log, not asserted)",
      "min": 1
     },
     {
