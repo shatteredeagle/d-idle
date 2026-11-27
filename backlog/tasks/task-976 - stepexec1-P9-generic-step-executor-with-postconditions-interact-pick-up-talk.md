@@ -15,7 +15,7 @@ dependencies: []
 priority: medium
 ordinal: 464000
 card: "stepexec1"
-branch: "agent/act2drill3"
+branch: "agent/act2drill4"
 owns:
   - "docs/design/stepexec-p9.md"
   - "internal/questspec/"
@@ -33,7 +33,7 @@ owns:
   - "docs/probes/act2-stepexec-drill-2026-11-27.md"
 exclusive: []
 contracts: []
-result: "Engine questspec.RunStep plus exec rows as data; Cain scroll take_scroll runs on it behind quests.stepExec (default 0, dark-launch row, scenario cain.scroll.stepexec). Act 2 chunk (2026-11-27): Act 2 quest chains as data, new transmute verb; the Horadric Staff transmute and placing the Staff in the orifice run on the executor with posts read from the pack and the quest reader; the Cain hand-in keeps the old path (no game fact proves it). Unit tests (Sorceress and Paladin, must-fail cases). Lab drill 2026-11-27 (docs/probes/act2-stepexec-drill-2026-11-27.md, Paladin 11, CHEATED setup, mechanics only): assemble GREEN 3/3 on the lab; duriel BLOCKED 3/3 (d2d place verb accepted with an empty reply but the Staff stays in the pack, post lacks_item(hst) never observed); rerun after placefix BLOCKED 3/3 on the board lock (setup word 0x0c78 reads back 0x0c08, seven_tombs locked until the Staff); third run after placefix2 BLOCKED 3/3: the chunk starts but place is still a no-op (Staff stays in the pack). Cain talk moves quest record 10 from 0x0800 to 0x0c78."
+result: "Engine questspec.RunStep plus exec rows as data; Cain scroll take_scroll runs on it behind quests.stepExec (default 0, dark-launch row, scenario cain.scroll.stepexec). Act 2 chunk (2026-11-27): Act 2 quest chains as data, new transmute verb; the Horadric Staff transmute and placing the Staff in the orifice run on the executor with posts read from the pack and the quest reader; the Cain hand-in keeps the old path (no game fact proves it). Unit tests (Sorceress and Paladin, must-fail cases). Lab drill 2026-11-27 (docs/probes/act2-stepexec-drill-2026-11-27.md, Paladin 11, CHEATED setup, mechanics only): assemble GREEN 3/3 on the lab; duriel BLOCKED 3/3 (d2d place verb accepted with an empty reply but the Staff stays in the pack, post lacks_item(hst) never observed); rerun after placefix BLOCKED 3/3 on the board lock (setup word 0x0c78 reads back 0x0c08, seven_tombs locked until the Staff); third run after placefix2 BLOCKED 3/3: the chunk starts but place is still a no-op (Staff stays in the pack); fourth run after placefix3: placement done 3/3 (orifice 104 NU to OP, record 10 0x0c08 to 0x2c09) but the scenario is BLOCKED 3/3 at the next node (Duriel's Lair, object class 100 not found). Cain talk moves quest record 10 from 0x0800 to 0x0c78."
 ---
 
 ## Description
