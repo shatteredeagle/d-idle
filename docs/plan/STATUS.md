@@ -196,7 +196,7 @@
 | inputl5 | proposed | - | `docs/design/input-i5-i7.md`<br>`tools/ci/pointercount.py`<br>`tools/ci/test_pointercount.py`<br>`tools/ci/pointercount-baseline.json`<br>`tools/ci/check.sh` | - |
 | fid-lowvalue | deferred | - | `docs/probes/fid/fid-lowvalue.md` | - |
 | ckptlive | proposed | - | `docs/probes/checkpoint-live-drill.md` | - |
-| advisor1 | proposed | - | `docs/design/advisor-r14.md` | - |
+| advisor1 | proposed | - | `docs/design/advisor-r14.md`<br>`internal/advisor/`<br>`internal/watch/advisorsection.go`<br>`internal/watch/funwire.go`<br>`internal/watch/returnscreen_test.go`<br>`internal/cubejobs/cubejobs.go`<br>`internal/env/tuning_items.go`<br>`docs/knobs.md`<br>`data/darklaunch.json` | - |
 | flipwave2 | proposed | - | `docs/probes/flipwave2.md` | - |
 | classorder1 | proposed | - | `docs/probes/classorder1.md` | - |
 
@@ -221,7 +221,9 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- c7c9c5ec3 11-27 15:09 `Merge agent/advisor1: advisor1: runeword and cube advisor lines, items.advisor dark knob (TASK-991)` (advisor1)
 - 66b4f7f50 11-27 15:09 `Merge agent/countessnav: countessnav: Tower Cellar 5 walk regression on two synthetic maps (TASK-766 AC3)` (countessnav)
+- 3681d5c60 11-27 15:06 `Merge branch 'main' into advisor1` (-)
 - 2e2714e36 11-27 15:06 `Merge branch 'main' into countessnav` (-)
 - 555650c52 11-27 14:58 `Merge agent/dlvwave3: dlvwave3: aim-corpse (TASK-728) + stance-pack, press, move-tele, move-melee (TASK-729..732)` (dlvwave3)
 - 2d837813f 11-27 14:57 `Merge agent/agencyp3: agencyp3: shared build file reader, kolbot importer, DriveOf (TASK-985, TASK-984 partial)` (agencyp3)
@@ -229,6 +231,4 @@
 - c4d3698b0 11-27 14:56 `Merge branch 'main' into dlvwave3` (-)
 - ac877999a 11-27 14:56 `Merge branch 'main' into agencyp3` (-)
 - 1ea6463d4 11-27 14:54 `Merge agent/difftrans: difftrans: difficulty transition design (docs)` (difftrans)
-- 819ef370c 11-27 14:54 `Merge agent/wpstep2: wpstep2: close TASK-716 card (fixed by TASK-770)` (wpstep2)
-- 6d9ce4ddf 11-27 14:53 `Merge branch 'main' into difftrans` (-)
 <!-- statusgen:end -->

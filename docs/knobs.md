@@ -21,6 +21,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 
 
 <!-- knobdump:begin -->
+
 ### nav.*
 
 | key | default | range | unit | worst (rookie) | readers | what it changes |
@@ -609,8 +610,6 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | respec.firstFree | 0 | 0..10 | count | 0 | 0 | How many of a hero's first respecs cost nothing (they do not count for the escalation). 0 = every respec is paid. PLACEHOLDER number: the model matters, the value is not decided (docs/autoalloc.md). |
 | respec.minGold | 1000 | 0..1e+06 | gold | 1000 | 0 | The price before the escalation is at least this. PLACEHOLDER number: the model matters, the value is not decided (docs/autoalloc.md). |
 | respec.maxGold | 1e+05 | 0..1e+07 | gold | 1e+05 | 0 | The price before the escalation is at most this (0 = no cap). PLACEHOLDER number: the model matters, the value is not decided (docs/autoalloc.md). |
-
-Fields without a knob entry:
 <!-- knobdump:end -->
 
 ### Fields without a Knob entry (V)
