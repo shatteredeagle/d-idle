@@ -13,9 +13,9 @@ priority: medium
 ordinal: 347000
 card: "pghero"
 owns:
-  - "internal/scenario/hero"
-  - "tools/ab/prep"
-  - "tools/survival"
+  - "internal/scenario/hero/"
+  - "tools/ab/prep/"
+  - "tools/survival/"
 exclusive: []
 contracts: []
 lane: next
