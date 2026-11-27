@@ -5,7 +5,7 @@
 ## Rules in force (ADR 0027 amended 2026-11-24, private ops rules)
 
 - At most 3 heavy runs tonight, hidden instances only (lab slots of `tools/d2dslot.sh`, never i0, never a desktop window), `nice -n 19`, the sandbox containers untouched (no flip is made by these runs; flips are the coordinator's, after the morning read).
-- Before each run start: `labrun orion -- top -bn2 -d1` must show idle plus nice at least 25 percent; if not, wait or run the next run serially. The capacity check `tools/capacity.sh --add <cores>` is the private-ops form; it hangs here, so use the `top` line above (standing rule).
+- Before each run start: `labrun the worker host -- top -bn2 -d1` must show idle plus nice at least 25 percent; if not, wait or run the next run serially. The capacity check `tools/capacity.sh --add <cores>` is the private-ops form; it hangs here, so use the `top` line above (standing rule).
 - Every result record carries `writes after start: N`. N above 0 is CHEATED and never counts. Proving Ground heroes are SETUP-written throwaways (CHEATED provenance): the results prove mechanics and relative A/B, never live parity (S act2 drill doc).
 - Every process starts through `tools/agentrun.sh <agent> --ttl SECS -- ...`; the TTL below is the hard stop.
 
@@ -37,7 +37,7 @@ Run 1 and Run 2 start together at 23:00 if the capacity line allows (parallel 2 
 Common env for all runs (set once in the job, paths from the previous drill, S act2 drill doc): `PG_DIR=<work dir> PG_D2D_BIN=<featuresoak lab d2d, devp29> PG_DATA=<MPQ dir>`; do not change the lab d2d between runs. Job form (one per run; `--detach --notify --pull` returns at once, `labrun jobs` shows it):
 
 ```
-tools/agentrun.sh nightplan-N --ttl SECS -- labrun orion --lane long --detach --notify --pull provingground-out -- nice -n 19 sh -c '<chain>'
+tools/agentrun.sh nightplan-N --ttl SECS -- labrun the worker host --lane long --detach --notify --pull provingground-out -- nice -n 19 sh -c '<chain>'
 ```
 
 ### Run 1: gates G1 + G2 (flips: `quests.boardSM`, `town.plan` 4; evidence for 5) TTL 15000 s (4 h 10 min)
