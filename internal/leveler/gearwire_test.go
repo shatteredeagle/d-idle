@@ -152,3 +152,27 @@ func TestEndgamePaladinPlanSpendsBank(t *testing.T) {
 		t.Fatalf("clvl 18 spends %d hammer points of 11: %v", n, got)
 	}
 }
+
+// SME review 2026-11-27 (confidence high): the Zeal variant buys Blessed Aim at clvl 19 and Concentration at 20, in
+// that order (Concentration needs Aim), and the plain hammerdin table keeps no Concentration before clvl 20 either.
+func TestPaladinZealAuraEarly(t *testing.T) {
+	for _, name := range []string{"paladin_hammerdin_zeal_endgame90", "paladin_hammerdin_endgame90"} {
+		aim, conc := 0, 0
+		for _, r := range mustBuild(t, name).Rows {
+			for _, s := range r.Skills {
+				if s.Skill == "Blessed Aim" && aim == 0 {
+					aim = r.Clvl
+				}
+				if s.Skill == "Concentration" && conc == 0 {
+					conc = r.Clvl
+				}
+			}
+		}
+		if aim == 0 || conc == 0 || aim >= conc {
+			t.Errorf("%s: Blessed Aim first at %d, Concentration at %d", name, aim, conc)
+		}
+		if name == "paladin_hammerdin_zeal_endgame90" && (aim != 19 || conc != 20) {
+			t.Errorf("%s: Blessed Aim %d, Concentration %d, want 19 and 20", name, aim, conc)
+		}
+	}
+}
