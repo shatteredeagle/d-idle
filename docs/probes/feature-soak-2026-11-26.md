@@ -76,6 +76,16 @@ Noise: the OFF spread is large at 1 virtual hour with 3 seeds (Paladin xp/h spre
 | Necromancer summoner defaults (build variant nonecro) | NEUTRAL, not exercised; a concern | both arms identical; the necromancer kills with plain Attack (311 of 313 kills) and Raise Skeleton twice, never Teeth, although the new default names Teeth the main attack: U whether the clvl 12 prep hero has Teeth learned or bound (prep leaves points unspent for the bot's own leveler). `summon-missing` 0. |
 | step executor (`quests.stepExec`) | see 3.3 | compared on the Cain scenarios, not in the soak |
 
+### 3.3 Step executor on the Cain scenarios (`quests.stepExec` 1 vs 0)
+
+`tools/provingground/run.sh -id cain.scroll,cain.scroll.stepexec,cain.read,cain.read.stepexec -class C -seed S -parallel 4` for Paladin, Necromancer and Sorceress, seeds 11 and 3 (24 runs, CHEATED setup: clvl 17 hero, 5000 gold, the scenarios' own provenance).
+
+| | cain.scroll (old handler) | cain.scroll.stepexec | cain.read | cain.read.stepexec |
+|---|---|---|---|---|
+| GREEN of 6 | 6 | 5 (1 BLOCKED) | 6 | 6 |
+
+Verdict GREEN. The BLOCKED row (Paladin seed 3) is not the executor: its `take_scroll` step logged `done`, then a `crowd-abandon` safety decision in the Black Marsh left the game (Save and Exit ends a lab run) before the 30 virtual minutes. Every stepexec scroll row logs `take_scroll` `done`; the Necromancer seed 11 row needed 5 `interrupted` and 1 `failed` (3 acts) attempts before `done`, against `retry` lines of the old handler. Hard invariants: 0 in all 24 runs (soft `field-entry-no-kit` and `guard-stall` in both arms alike).
+
 
 ### 3.2 Per row
 
