@@ -9,6 +9,7 @@ labels:
   - bot
   - feature
 dependencies: []
+knob_net: owner-ok
 priority: medium
 ordinal: 512000
 card: "diffready"
