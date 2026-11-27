@@ -183,6 +183,7 @@ func runLive(ctx context.Context, o options, log *slog.Logger) error {
 	o.ladder.reset = resetDesk(runner, ip.State())
 	o.ladder.sensesTier = tune.Senses.Tier
 	o.ladder.proposalFacts = runner.ProposalFacts
+	o.ladder.adviceSnap = runner.LastSnapshot
 	o.ladder.riskFacts = runner.RiskFacts
 	o.ladder.readiness = wireReadiness(runner, db)
 	o.ladder.danger = wireDanger(db)
