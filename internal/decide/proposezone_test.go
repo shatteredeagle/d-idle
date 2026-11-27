@@ -68,8 +68,8 @@ func TestProposerRule(t *testing.T) {
 
 func TestProposerUnknownClassIsAnError(t *testing.T) {
 	p, _ := newTestProposer(t, "")
-	_, err := p.Look(ProposeInput{Class: "necromancer", Clvl: 9, Area: "Blood Moor", Kit: "OK", Potions: 4})
-	if !errors.Is(err, ErrProposal) || !strings.Contains(err.Error(), "necromancer") {
+	_, err := p.Look(ProposeInput{Class: "barbarian", Clvl: 9, Area: "Blood Moor", Kit: "OK", Potions: 4})
+	if !errors.Is(err, ErrProposal) || !strings.Contains(err.Error(), "barbarian") {
 		t.Fatalf("err = %v", err)
 	}
 }
