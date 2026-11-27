@@ -1,6 +1,6 @@
 # First play session guide (TASK-134)
 
-> status: written 2026-11-08 from docs on main only. Nothing here was run for this guide. Tags: V verified live (as the source doc says), S fixtures or code tests only, U unverified. Every claim points at its doc; when a doc and this page disagree, the doc wins.
+> status: written 2026-11-08 from docs on main only; sections D, H and I brought up to date 2026-11-27 (TASK-27) from the task cards and `git log`. Nothing here was run for this guide. Tags: V verified live (as the source doc says), S fixtures or code tests only, U unverified. Every claim points at its doc; when a doc and this page disagree, the doc wins.
 
 ## Do this first
 
@@ -75,7 +75,7 @@ Pace first (do not be surprised). Realtime means game time equals your clock.
 
 - Paladin realtime: 62 kills, clvl 2 at 20 minutes, clvl 3 expected at about 22 minutes (V `docs/palpace.md`). It is NOT clvl 5 to 6 in 20 minutes. Lockstep (about 20x) is a test mode, not what you play.
 - The hero stays in Blood Moor and town for the whole half hour. The Blood Moor gold recovery loop is still being fixed (TASK-183 in progress); you may see "Recovery: farming gold" and long idle walking in a dry field (TASK-138, TASK-177).
-- The Might aura is fixed and V (`docs/palready.md`). The equip fix (#427, TASK-182) is NOT landed: a bought bow or armor may not reach its slot; ignore "did not reach slot" warnings.
+- The Might aura is fixed and V (`docs/palready.md`). The equip fix (TASK-182) is landed and was V in a lockstep run (Amazon, Barbarian, Sorceress: bought gear reaches its slot, `docs/soaks/equipfail.md`); a "did not reach slot" warning is now a bug worth reporting, with the time.
 
 Minute by minute:
 
@@ -132,26 +132,29 @@ Why: H4 is watching only (boredom baseline); H1 is "questions feel good". Source
 | Hero never leaves Blood Moor | TASK-138 and TASK-183 (see section H). Wait for the stall rule (ends at 20 to 25 min) or report it. |
 | Video freezes | Reload the tab. The tap source reconnected twice in the V hour. |
 
-## H. Known broken (open cards on main)
+## H. Known broken (cards on main, state as of 2026-11-27)
+
+Source: each card's `result:` line in `backlog/tasks/`; "V live" means a run against a real game, not a browser.
 
 | Card | State | What it means for you |
 |---|---|---|
-| TASK-138 freshstart | AC 1 done, AC 2 NOT met | No uncheated realtime hour has yet reached the next campaign step. Stall rule verified live but XP per hour did not improve. |
-| TASK-148 sensesmap | built, live check not run | The minimap has never been seen on a real level. Part of this session IS that check (checklist in `docs/senses-map.md`). |
-| TASK-164 beltplan | built, AC 5 live drill open | All-mana belt is untested live. |
-| TASK-183 recoverypace | in progress | Hero camps Blood Moor on the gold farm for much of the first 90 minutes; class pace is not measured. |
-| TASK-184 cpnav | open | The Assassin cannot leave Blood Moor for Cold Plains. Do not pick the Assassin. |
-| TASK-182 equipfail | open (#427 not landed) | Equip click leaves the cursor empty; items may not reach slots. The Amazon loops buying and selling a bow. Avoid Amazon and Barbarian for now. |
-| TASK-162 unlockalerts | in-page only | No phone pings; senders off. |
-| TASK-120 ghcrpublish | needs your go | No published image yet. |
+| TASK-138 freshstart | open; AC 2 NOT met | No uncheated realtime hour has yet reached the next campaign step. The stall rule is V live (recovery ends at 20 to 25 minutes) but XP per hour did not improve. |
+| TASK-183 recoverypace | partly done | A tester preset shortens the gold recovery (V live in lockstep, Paladin and Sorceress: recovery 19 to 11 and 23 to 10 minutes). Barbarian was not re-run. Expect less camping than before, not none. |
+| TASK-148 sensesmap | built, never seen live | The minimap has not been seen on a real level or in a browser. Part of this session IS that check (`docs/senses-map.md`). |
+| TASK-164 beltplan, TASK-266 | built offline | The all-mana belt (and the rule that the player's belt plan outranks the class mana rule) is tested offline only; the live drill never ran. |
+| TASK-162 unlockalerts | in-page only | No phone or chat pings; the senders are off and untested live. |
+| TASK-120 ghcrpublish | prep only | No published image yet (section I). |
 | TASK-107 h1baseline | open | This session is its input. |
+| TASK-47 ordersux3, TASK-49 onboardctl | deferred | No Pause, Stop or Reset buttons and no feedback box on the watch page. Stop with `docker compose stop`; send feedback with the bundle (section I). |
+
+Fixed since the first draft of this page (no longer a reason to avoid a class): TASK-184 cpnav (the Assassin reaches Cold Plains, V live, other classes not re-run) and TASK-182 equipfail (V live, three classes). Only Paladin and Sorceress ever ran in a real container, so a first run of any other class is still new ground (U).
 
 ## I. For a friend
 
-1. What to send: nothing yet. The registry image is NOT published (TASK-120 needs your go; the workflow is inert, dispatch only, and the environment `tester-publish` must exist first, `docs/tester-registry.md` section 3).
+1. What to send back: the feedback bundle (section J) plus the three sentences per hypothesis (section F, item 3). The registry image is NOT published (TASK-120 needs your go; the workflow is inert, dispatch only, and the environment `tester-publish` must exist first, `docs/tester-registry.md` section 3).
 2. Until then the friend builds the image from public inputs on a machine with Docker: `deploy/d2d-container/context.sh CTX` then `docker build -t d2dbot:tester CTX` (about 6 to 8 minutes on the worker host, V `docs/tester-imgrepro.md`; a clean machine needs only network). The d2d source is the public fork tag `didle-gate2-lab3` (commit `f75816c616c8`); the vendored archives are sha256-pinned.
 3. The friend needs their own Diablo II 1.14d files. No game data is in the image; it is checked in the publish workflow.
-4. Then they use section A1, with `D2_GAME_DIR` pointing at their folder, and send you the exported session (section F) if they agree.
+4. Then they use section A1, with `D2_GAME_DIR` pointing at their folder, and send you the feedback bundle (section J) and, if they agree, the exported session (section F).
 5. The wizard asks them for a go-ahead, name, class, goals and a passcode/token.
 6. When the image is published (later): `D2_IMAGE=ghcr.io/shatteredeagle/didle-tester:latest docker compose pull && up -d`; the character and token survive updates.
 
@@ -164,3 +167,16 @@ GPL and licence open items before any outside copy (`docs/tester-licence.md` sec
 5. Rewrite history or not (session-URL trailers): `docs/research/fork-publication-scan.md`, D1.
 
 Sending a hand-built image to a friend is a "first outside copy" and needs your go; nothing here does that for you.
+
+## J. The feedback bundle (what the friend sends)
+
+One command makes one file. It writes it to the volume, scrubbed, and sends nothing (TASK-27, `deploy/d2d-container/tester-report.sh`; V by tests with fake secrets, `go test ./deploy/d2d-container -run 'Scrub|Bundle'`; not yet run in a live container, U).
+
+1. Make it (from the folder with `compose.tester.yml`; the container must be running):
+   `docker cp tester-report.sh d2dbot:/tmp/ && docker exec d2dbot sh /tmp/tester-report.sh`
+   The last line printed is the file, for example `/data/reports/report-20261127T120000Z.tar.gz`. Copy it out: `docker cp d2dbot:/data/reports/<that file> .`
+   (the script is in `deploy/d2d-container/`; a later image will carry it, then the first command is not needed).
+2. Look inside before you send: `tar tzf report-*.tar.gz` and open `README.txt`, `minutes.txt` and `wizard.json`. It holds the bot log, the d2d log, one line per minute, deaths, the ladder journal (the questions and your answers), your wizard answers (name, class, goals; no folders) and the game's state line.
+3. What is taken out: the watch token and any token-like or key-shaped text, passcodes, CD-key-like text, home folders, host names and addresses on a private network, e-mail addresses. What is NOT in it: the watch token file, the access file, saves, keys. If you still see something private, delete the line and say which kind it was.
+4. What to send: that one `.tar.gz`, and three or four sentences: class and how long you played, what felt wrong or boring, the clock time of anything that went wrong, and what you saw on screen if the hero died. Add the section F answers (H1, H3, H4) if you ran those sessions.
+5. A tester who cannot use Docker commands sends the `docker compose logs` text instead; it is not scrubbed, so read it and remove the setup URL line (it has the token) first.
