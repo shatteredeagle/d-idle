@@ -530,6 +530,13 @@
     "Corpse Explosion": "f7",
     "Revive": "f8"
    },
+   "stance": {
+    "kind": "behindArmy",
+    "behind": 4,
+    "slack": 3,
+    "bossMin": 2,
+    "source": "U judgment: four subtiles keeps the skeletons' melee line between hero and pack; under two minions a boss reaches the hero (docs/process/necromancer-support.md S8, S11)"
+   },
    "necro": {
     "golems": [
      "FireGolem",
