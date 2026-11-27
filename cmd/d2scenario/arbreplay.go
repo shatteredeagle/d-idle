@@ -67,9 +67,12 @@ func cmdArbiterReplay(args []string, w io.Writer) error {
 	failed := false
 	fmt.Fprintln(w, "verdicts (hard, soft hits chain vs arbiter):")
 	for _, v := range arbiter.Judge(all, hard) {
-		fmt.Fprintf(w, "  %-9s cases=%d hard %d vs %d soft %d vs %d pass=%v (%s)\n", v.Family, v.Cases, v.ChainHard, v.ArbHard, v.ChainSoft, v.ArbSoft, v.Pass, v.Note)
 		// A session family without a hit on either side is no evidence either way; it does not fail -strict.
 		quiet := *session != "" && v.ChainHard+v.ArbHard+v.ChainSoft+v.ArbSoft == 0
+		if quiet {
+			v.Note = "no hit on either side: no evidence"
+		}
+		fmt.Fprintf(w, "  %-9s cases=%d hard %d vs %d soft %d vs %d pass=%v (%s)\n", v.Family, v.Cases, v.ChainHard, v.ArbHard, v.ChainSoft, v.ArbSoft, v.Pass, v.Note)
 		failed = failed || !v.Pass && !quiet
 	}
 	if *strict && failed {
