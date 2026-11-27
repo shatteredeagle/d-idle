@@ -12,6 +12,7 @@ dependencies: []
 priority: medium
 ordinal: 502000
 card: "skillhand"
+result: "cmd skill now sends the hand as 1 or 0 and no unit as -1, the numbers d2d reads on stock and fork builds; before, the word left read as the right hand, which the single-player world ignores, and unit 0 skipped the at-the-spot swing (only the aura probe sent that today). Offline tests, not verified live."
 lane: next
 owns:
   - "internal/d2dctl/verbs.go"
@@ -38,7 +39,7 @@ The d2d devctl reads every cmd skill tail field with atoi, so the word left read
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 CmdSkill sends the hand as 1 or 0 and no unit as -1, as d2d's devctl parser reads it (stock and fork)
-- [ ] #2 Must-fail test: the fake d2d parses cmd skill like the fork and the old word form fails it
+- [x] #1 CmdSkill sends the hand as 1 or 0 and no unit as -1, as d2d's devctl parser reads it (stock and fork)
+- [x] #2 Must-fail test: the fake d2d parses cmd skill like the fork and the old word form fails it
 - [ ] #3 Live: a Paladin Zeal or Smite with cmd skill <id> x y -1 1 swings at the spot on a sandbox
 <!-- AC:END -->
