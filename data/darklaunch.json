@@ -514,6 +514,17 @@
    "review_by": "2026-12-18",
    "status": "dark",
    "criteria_met": "no"
+  },
+  {
+   "name": "items.advisor",
+   "built_by": "advisor1 (TASK-991, branch agent/advisor1)",
+   "dark_since": "2026-11-27",
+   "why_off": "Advice section built (internal/advisor, watch.AdviceSection) but the bot does not yet gather the stock and pass FunConfig.Advice; the lines are unreviewed by the d2-sme agent.",
+   "enable_criteria": "d2-sme reviews the advice lines for each class on a real stock; the bot-side stock gatherer is wired; advice stays lines only (no item moves) without an owner go.",
+   "owner": "coordinator",
+   "review_by": "2026-12-11",
+   "status": "dark",
+   "criteria_met": "U"
   }
  ]
 }

@@ -30,12 +30,18 @@ func (n *Navigator) teleRange() float64 {
 	if n.TeleportRange > 0 {
 		return n.TeleportRange
 	}
+	if h, ok := n.hopRow(); ok && h.Range > 0 {
+		return h.Range
+	}
 	return defaultTeleportRange
 }
 
 func (n *Navigator) teleMana() int {
 	if n.TeleportMana > 0 {
 		return n.TeleportMana
+	}
+	if h, ok := n.hopRow(); ok && h.Cost > 0 {
+		return h.Cost
 	}
 	return defaultTeleportMana
 }
@@ -80,7 +86,7 @@ func (n *Navigator) hopCell(o *obs, target input.Point) (input.Point, bool) {
 	for dy := -ri; dy <= ri; dy++ {
 		for dx := -ri; dx <= ri; dx++ {
 			from := math.Hypot(float64(dx), float64(dy))
-			if from > r || from < teleportMinHop {
+			if from > r || from < n.teleMinHop() {
 				continue
 			}
 			c := input.Point{X: o.pos.X + dx, Y: o.pos.Y + dy}

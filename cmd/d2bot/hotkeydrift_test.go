@@ -20,8 +20,8 @@ import (
 var knownHotkeyDrift = map[string]int{
 	"amazon_bow_normal30": 1, "amazon_javelin_normal30": 2, "amazon_multishot_endgame90": 3,
 	"assassin_fireblast_normal30": 2, "assassin_sentry_endgame90": 6, "barbarian_warcry_endgame90": 4,
-	"druid_tornado_endgame90": 8, "necromancer_leveling_normal30": 5, "necromancer_summoner_endgame90": 7,
-	"paladin-normal30": 5, "paladin-normal30-v2": 4, "paladin-zealot-lite": 3, "paladin_hammerdin_endgame90": 6,
+	"druid_tornado_endgame90": 8,
+	"paladin-normal30":        5, "paladin-normal30-v2": 4, "paladin-zealot-lite": 3, "paladin_hammerdin_endgame90": 6,
 	"paladin_hammerdin_zeal_endgame90": 7, "sorceress_blizzard_endgame90": 6,
 }
 
