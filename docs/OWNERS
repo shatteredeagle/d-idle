@@ -589,9 +589,12 @@ internal/town/shop.go  credit-runner  townflip
 internal/town/town.go  credit-runner  repairtrip
 internal/town/town.go  credit-runner  townflip
 internal/town/trip.go  credit-runner  inputl3
+internal/vault  credit-runner  vaultperf
 internal/vaultkeep  credit-runner  sellall
+internal/vaultkeep  credit-runner  vaultperf
 internal/watch  credit-runner  sellall
 internal/watch  credit-runner  town9
+internal/watch  credit-runner  vaultperf
 internal/watch/areamap_test.go  credit-runner  uis6
 internal/watch/glance.go  credit-runner  intake
 internal/watch/invui.go  credit-runner  nopins
@@ -649,6 +652,7 @@ internal/watch/testdata/senses-failures.json  credit-runner  maphistoryC
 internal/watch/testdata/senses-trail.json  credit-runner  maphistory
 internal/watch/testdata/senses-trail.json  credit-runner  maphistoryA
 internal/watch/testdata/senses-trail.json  credit-runner  maptrail
+internal/watch/web  credit-runner  vaultperf
 internal/watch/web/components.css  credit-runner  uis6
 internal/watch/web/gear.js  credit-runner  repairtrip
 internal/watch/web/inventory-actions.js  credit-runner  nopins

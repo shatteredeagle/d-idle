@@ -52,6 +52,7 @@
 | placefix | proposed | - | `internal/questboard/`<br>`internal/bot/questboard.go`<br>`data/questboard/act2.json`<br>`tools/provingground/scenarios/stepexec-act2.json`<br>`tools/provingground/scenarios/questdrill.json`<br>`internal/scenario/placefix_test.go`<br>`docs/questboard.md`<br>`internal/task/act1.go`<br>`internal/task/act2.go`<br>`internal/task/placefix_test.go`<br>`internal/d2dinput/controller.go`<br>`internal/d2dinput/placefix_test.go`<br>`internal/d2dctl/parse.go`<br>`internal/d2dctl/verbs.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dsrc/items.go`<br>`internal/d2dsrc/source_test.go` | - |
 | deploy94-ledger | in-progress | - | `data/darklaunch.json` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
+| vaultperf | proposed | - | `internal/watch`<br>`internal/watch/web`<br>`internal/vaultkeep`<br>`internal/vault` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | returnmock | proposed | - | `docs/research/mocks/return.html`<br>`docs/research/return-screen.md` | - |
@@ -245,6 +246,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 41a339a10 11-27 13:33 `Merge agent/vaultperf: vaultperf: batch sell-all, counts refresh, shared busy-button feedback (TASK-1050)` (vaultperf)
+- 0ff85e305 11-27 13:32 `Merge branch 'main' into vaultperf` (-)
 - dd43964ff 11-27 13:29 `Merge agent/charms: charms: charm management design (docs)` (charms)
 - 482daed6e 11-27 13:29 `Merge agent/akarahand: akarahand: hand-in click diagnosis (docs)` (akarahand)
 - 1612e4751 11-27 13:29 `Merge agent/fastflip: fastflip: 2 h default flip window` (fastflip)
@@ -253,6 +256,4 @@
 - 9fd3f41bd 11-27 13:27 `Merge branch 'main' into akarahand` (-)
 - 2d6e8fb89 11-27 13:27 `Merge branch 'main' into fastflip` (-)
 - 07630a935 11-27 13:27 `Merge branch 'main' into pgclock2` (-)
-- d7861fd60 11-27 13:25 `Merge agent/darkqueue: darkqueue: dark queue plan` (darkqueue)
-- 29f1db6c1 11-27 13:25 `Merge agent/act2drill6: act2drill6: docs` (act2drill6)
 <!-- statusgen:end -->
