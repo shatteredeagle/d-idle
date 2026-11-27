@@ -459,6 +459,17 @@
    "trial_why": "accelerated soak: all wired families",
    "trial_bundle": "bot.arbiterFamilies",
    "enabled_at": "2026-11-26T23:25:41Z"
+  },
+  {
+   "name": "bot.tickLogSec",
+   "built_by": "ticklog (TASK-981)",
+   "dark_since": "2026-11-26",
+   "why_off": "Log volume: one tick line per second is about 3600 lines an hour. Built and tested offline only; no sandbox night recorded yet.",
+   "enable_criteria": "Set to 1 on both sandboxes for one night; cmd/d2arbiter -follow replays each night log without a panic or a parse error (procedure docs/design/ticklog-t4.md); 24 h watch with automatic revert on a hard breach",
+   "owner": "coordinator",
+   "review_by": "2026-12-09",
+   "status": "dark",
+   "criteria_met": "no"
   }
  ]
 }

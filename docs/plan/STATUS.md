@@ -209,7 +209,7 @@
 | arbmig | proposed | - | `docs/design/arbiter-migration-p6.md`<br>`docs/arbiter.md`<br>`internal/arbiter/`<br>`cmd/d2scenario/`<br>`tools/provingground/arbiter-outcomes/`<br>`internal/bot/arbiter_control.go`<br>`internal/bot/arbiter_control_test.go`<br>`internal/bot/shadow.go`<br>`internal/bot/loop.go`<br>`internal/env/tuning_bot.go`<br>`data/darklaunch.json`<br>`docs/knobs.md` | - |
 | fid-adapter-rows | deferred | - | `docs/probes/fid/fid-adapter-rows.md` | - |
 | proptest1 | proposed | - | `docs/design/proptest-t3.md` | - |
-| ticklog | proposed | - | `docs/design/ticklog-t4.md` | - |
+| ticklog | proposed | - | `docs/design/ticklog-t4.md`<br>`docs/arbiter.md`<br>`internal/bot/ticklog.go`<br>`internal/bot/ticklog_test.go`<br>`internal/bot/shadow.go`<br>`internal/env/tuning_bot.go`<br>`internal/arbiter/replay.go`<br>`internal/arbiter/replay_ticklog_test.go`<br>`data/darklaunch.json` | - |
 | bsmchk | proposed | - | `docs/design/boardsm-checker.md` | - |
 | bsmdef | proposed | - | `docs/design/boardsm-flip.md` | - |
 | agencyp1b | proposed | - | `docs/design/agency-p1b.md` | - |
@@ -244,6 +244,7 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- ee716b023 11-26 23:45 `Merge agent/ticklog: ticklog: tests, ledger row, knob doc, design doc, card` (ticklog)
 - 42d5de6d3 11-26 22:23 `Merge agent/savefix: Merge branch 'main' into savefix` (savefix)
 - e98984c4e 11-26 22:21 `Merge branch 'main' into savefix` (-)
 - f12815dff 11-26 22:14 `Merge agent/loophang: loophang: the d2bot watchdog counts kills, xp and levels as a heartbeat (a long Den clear was restarted after 613 s)` (loophang)
@@ -253,5 +254,4 @@
 - 88745d1a0 11-26 20:39 `Merge agent/ledgerflips: Merge branch 'main' into ledgerflips` (ledgerflips)
 - 8e6c72af5 11-26 20:37 `Merge branch 'main' into ledgerflips` (-)
 - 9fce07038 11-26 20:33 `Merge agent/dedupdata: dedupdata: rule page, card, knobdump write fix` (dedupdata)
-- 6902fa438 11-26 17:56 `Merge agent/toolstrade92: arbiter doc: Questy 2026-11-26 cases` (toolstrade92)
 <!-- statusgen:end -->

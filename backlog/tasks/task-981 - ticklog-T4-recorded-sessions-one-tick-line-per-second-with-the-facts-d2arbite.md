@@ -14,8 +14,17 @@ ordinal: 469000
 card: "ticklog"
 owns:
   - "docs/design/ticklog-t4.md"
+  - "docs/arbiter.md"
+  - "internal/bot/ticklog.go"
+  - "internal/bot/ticklog_test.go"
+  - "internal/bot/shadow.go"
+  - "internal/env/tuning_bot.go"
+  - "internal/arbiter/replay.go"
+  - "internal/arbiter/replay_ticklog_test.go"
+  - "data/darklaunch.json"
 exclusive: []
 contracts: []
+result: "Tick line built behind bot.tickLogSec (default 0, dark-launch row), rate-limited by the bot clock, facts of the arbiter view, independent of the shadow; the replay (d2arbiter, -follow) reads tick lines and skips minute lines then. Offline tests only, NOT verified live: no sandbox night recorded yet (procedure in docs/design/ticklog-t4.md). Not build-specific."
 ---
 
 ## Description
@@ -28,6 +37,6 @@ Cause class killed: A before live; gives the arbiter migration an outcome measur
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Tick line behind a knob with a ledger row
+- [x] #1 Tick line behind a knob with a ledger row
 - [ ] #2 Replay of one real sandbox night with -follow documented
 <!-- AC:END -->

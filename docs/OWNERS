@@ -180,11 +180,13 @@ cmd/d2scenario/tap_test.go  credit-runner  stage1fix
 cmd/d2scenario/validate.go  credit-runner  pgselfcheck
 data/capabilities/  credit-runner  dlv-stance-pack
 data/darklaunch.json  credit-runner  arbmig
+data/darklaunch.json  credit-runner  ticklog
 data/input/caps/  credit-runner  dlv-cast-verbs
 data/questboard/act1.json  credit-runner  cainfix3
 data/questboard/act2.json  credit-runner  qdmatrix
 deploy/d2d-container/tester-report.sh  credit-runner  testerreport
 docs/arbiter.md  credit-runner  arbmig
+docs/arbiter.md  credit-runner  ticklog
 docs/archive  credit-runner  dietarchive
 docs/away-drill.md  live-agent  awaydrill
 docs/backlog-howto.md  credit-runner  dietrule
@@ -312,6 +314,8 @@ internal/admit/  credit-runner  admit1
 internal/arbiter  credit-runner  town10
 internal/arbiter/  credit-runner  arbmig
 internal/arbiter/  credit-runner  dlv-stance-army
+internal/arbiter/replay.go  credit-runner  ticklog
+internal/arbiter/replay_ticklog_test.go  credit-runner  ticklog
 internal/boss  credit-runner  countess3
 internal/bot/  credit-runner  cainfix3
 internal/bot/admit_need_test.go  credit-runner  admit1
@@ -352,8 +356,11 @@ internal/bot/runner.go  credit-runner  campaign1
 internal/bot/runner.go  credit-runner  maphistoryA
 internal/bot/runner.go  credit-runner  repairtrip
 internal/bot/shadow.go  credit-runner  arbmig
+internal/bot/shadow.go  credit-runner  ticklog
 internal/bot/task.go  credit-runner  boardmoderace
 internal/bot/task.go  credit-runner  wpstep
+internal/bot/ticklog.go  credit-runner  ticklog
+internal/bot/ticklog_test.go  credit-runner  ticklog
 internal/bot/waypoints.go  credit-runner  boardmoderace
 internal/bot/whyline.go  credit-runner  repairtrip
 internal/bot/zonemodel.go  credit-runner  survrecover
@@ -413,6 +420,7 @@ internal/decide/variants.go  credit-runner  qdensity
 internal/decide/variants_test.go  credit-runner  qdensity
 internal/env/tuning_bot.go  credit-runner  arbmig
 internal/env/tuning_bot.go  credit-runner  freshstart
+internal/env/tuning_bot.go  credit-runner  ticklog
 internal/env/tuning_combat.go  credit-runner  cainfix3
 internal/env/tuning_nav.go  credit-runner  pursuers
 internal/env/tuning_quests.go  credit-runner  countess3
