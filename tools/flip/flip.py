@@ -337,6 +337,11 @@ class Flipper:
         Returns the hard counters (since, counts) of the new child; FlipError when the value never shows."""
         waited, last = 0, "no answer"
         while True:
+            # A flip always leaves a non-empty file; zero bytes (or none) after the restart is a hard failure, not a
+            # wait: the bot quarantines an empty file and runs on defaults, so the live check below could mislead.
+            txt = sb.read_tuning()
+            if txt is None or not txt.strip():
+                raise FlipError("verify failed: tuning file is " + ("missing" if txt is None else "zero bytes") + " after the restart")
             try:
                 view = sb.status()
                 live = view.get("knobs") or {}
@@ -376,6 +381,8 @@ class Flipper:
             self.out("WARNING: no watcher is alive (no fresh heartbeat): this window will not be watched or reverted. "
                      "Start `flip.py watch --daemon` (see `flip.py watch --install-unit`)")
         before = sb.read_tuning()
+        if before is not None and not before.strip():
+            raise FlipError("tuning file is zero bytes before the flip: restore it from tuning.json.bak first (the bot would run on defaults)")
         new_text, olds = set_overrides(before, knobs)
         # Baseline: the counters of the running child before the flip. A flip during a breach is refused.
         since0, base0 = hard_counts(sb.status())

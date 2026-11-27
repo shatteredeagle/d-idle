@@ -421,6 +421,28 @@ A part that reads `available` because of a readiness refusal (the board word `to
 
 Hand-in tap (akarafix): the log has `quest board: hand-in queued|served|dropped <quest>/<chunk>`. The mailbox holds one request with the tapper's ctx; a request whose ctx ended (5 minute timeout) is removed and never talked out, so a later tap is not refused with "already waiting". Idle goals serve the tap in town (a Runs goal calls the same function before its farm step; U, not driven in a test). Live drill: not run.
 
+## boardSM legacy removal (card bsmdef prep, 2026-11-27; plan only, nothing removed)
+
+Precondition (all three, in this order): the restart drill is green (`board.sm.restart-mid-chain`, `board.park.persist-restart`, `board.sm.stop-cascades`, Paladin 11 and Sorceress 3; docs/probes/lab-night-plan-2026-11-27.md Run 1), the 2 h flip window with `quests.boardSM` 1 on the quest sandbox is clean, and the accelerated soak is green. Then flip the default (`internal/env/tuning_quests.go`, `BoardSM: 1`), keep it for one release, and do the removal below. Every read of the knob goes through one seam per package; removal deletes the branches that read it. V: inventory from `grep -rn "BoardLegacy\|boardLegacy()" internal cmd` (no read of the knob in cmd/d2bot or cmd/d2drill; the scenario runner only sets it as a knob).
+
+| File | Symbol | Replacement |
+|---|---|---|
+| internal/env/tuning_quests.go | `QuestsTuning.BoardSM`, `BoardLegacy()`, the knob row | delete knob, field and method; `data/darklaunch.json` row to `retired`; regenerate docs/knobs.md |
+| internal/bot/questboard.go | `Runner.boardLegacy()`, `Options{SM: ...}` | delete helper; drop `SM` from the options literal |
+| internal/bot/task.go | `w.BoardSM = !r.boardLegacy()` | delete line (World field goes) |
+| internal/bot/routeguard.go | `kitPlanOn()`: `... \|\| !r.boardLegacy()` | `return true` (then fold into `Town.Plan` logic or inline) |
+| internal/task/world.go, gate.go | `World.BoardSM`, `World.boardLegacy()`; `refusal`, `gatedReady`, `needs_potions` branches (4 sites) | keep the coded branch, delete the `else` (uncoded `Fault`); delete the field |
+| internal/questboard/exec.go | `Exec.boardLegacy()` (in exec_sm.go) read at `derive` (smLoad), `open` (the legacy early return), `AcceptRuns`/`acceptLocked`, `CancelRuns`, `Reset`, `UnblockRuns`, `next` | keep the `sm*` arm, delete the legacy arm |
+| internal/questboard/exec.go | `repairLocked`, the old `runState` counters used only without the machine, plan-file dual write of `Accepted` (store.go) | delete after the arms above; `Accepted` stays readable for old plan files (load step) |
+| internal/questboard/exec_sm.go | the `if e.boardLegacy() { return }` guards in `smPark`, `smReleaseRetry` | delete the guard |
+| internal/questboard/desk.go, desk_reason.go | `x.boardLegacy()` in `Desk` (changed refs), `SMRuns`, `SMOn()` | keep SM arm; `SMOn()` returns true then delete callers' checks |
+| internal/questboard/exec_test.go | `testSM`, `skipSM`, `QUESTBOARD_SM` | delete; tests that state a changed old behaviour go with it |
+| internal/questboard/legacy_test.go | `TestBoardLegacySwitchIdle` | delete with the seam |
+| internal/bot/kitplan_test.go | stage 10 case | rename or delete |
+
+The seam test `TestBoardLegacySwitchIdle` (internal/questboard) proves for two builds that offers, state, the next decision and the plan file are byte-identical at knob 0 and 1 on an idle board; the paths the machine changes on purpose (accept, park, Retry, holds) are the SM suite (`exec_sm_test.go`, `QUESTBOARD_SM=1 go test ./internal/questboard`).
+
+Drill scenario state (V `go run ./cmd/d2scenario validate`: 258 scenarios ok): `board.sm.restart-mid-chain` active, has `restart_at_s` 300, asserts the scroll step ran at most once and the chunk is done after the restart (proves a latch survives, not a park). `board.sm.stop-cascades` active. `board.park.persist-restart` was pending with no `restart_at_s` and a setup that cannot park; rewritten (not run) to take its park from the `board.hold.timeout` setup, restart at 1500 wall seconds, assert `blocked/hold_timeout` and no new start of the chunk after the restart. Gaps: (1) the park drill has never run and its timing is U; (2) `board.hold.timeout` itself was RED (kit minima, fixed for restock only by bsm7), so the park may not form on the drill hero; (3) Sorceress never ran restart-mid-chain; (4) no scenario restarts while a run is `held` or `awaiting`.
 ## Parks after deaths and the pause policy (card questresume, 2026-11-27)
 
 Sandbox logs 2026-11-27 (`docs/probes/sandbox-log-analysis-2026-11-27.md`, problem 1): a Questy hero did no quest for about 42 h after "2 deaths in one chunk".
