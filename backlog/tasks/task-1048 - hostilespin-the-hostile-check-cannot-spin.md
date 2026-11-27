@@ -1,10 +1,11 @@
 ---
 id: TASK-1048
 title: 'hostilespin: the hostile check cannot spin'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T15:18:00Z'
+updated_date: '2026-11-27T15:45:00Z'
 labels:
   - bot
   - bug
