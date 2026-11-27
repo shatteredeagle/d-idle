@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- vaultpoll: cached vault poll, windowed query (TASK-1054) <!--sg:agent/vaultpoll-->
 - skillcapretire: retire resource.skillCapPerLevel (TASK-1055) <!--sg:agent/skillcapretire-->
 - bsmchk: questspec rules 12-14 (TASK-982) <!--sg:agent/bsmchk-->
 - closecards2: close/annotate stale cards (16 Done, 35 annotated) <!--sg:agent/closecards2-->

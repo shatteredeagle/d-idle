@@ -1229,6 +1229,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [treefix3-2026-11-19.md](probes/treefix3-2026-11-19.md): treefix3: why the Inifuss tree was not found for 17 hours (2026-11-19)
 - [vault-equip-2026-11-23.md](probes/vault-equip-2026-11-23.md): Vault equip: why it took many taps and left gear in the backpack (2026-11-23, card vaultequip)
 - [vault-perf-2026-11-23.md](probes/vault-perf-2026-11-23.md): Vault page load time, 2026-11-23 (status: findings + fixes (branch agent/vaultperf). Sandbox read-only: file sizes and logs only; no credentials, no...)
+- [vault-perf-2026-11-27.md](probes/vault-perf-2026-11-27.md): Vault poll cost, 2026-11-27 (status: measured and fixed (branch agent/vaultpoll, TASK-1054). Follows vault-perf-2026-11-23.md ("Left" list). V...)
 - [vault-rings-2026-11-24.md](probes/vault-rings-2026-11-24.md): Why the Vault never holds a ring (2026-11-24)
 - [vault-spike-2026-11-16.md](probes/vault-spike-2026-11-16.md): Ethereal Vault V0 spike: capture and create on the d2d fork (result) (status: RESULT, 2026-11-16 (task TASK-578). Design: `docs/design/loot-vault-2026-11-16.md` section 1.7. Tags: V =...)
 - [video-feed-2026-11-15.md](probes/video-feed-2026-11-15.md): Probe: lossless delta feed on real d2d frames (card videofeed, 2026-11-15)

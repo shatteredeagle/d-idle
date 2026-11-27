@@ -263,6 +263,7 @@ docs/probes/survival-ab-recovery-2026-11-17.md  credit-runner  survrecover
 docs/probes/test-characters.md  live-agent  fid-fixtures
 docs/probes/town-plan-stage3-2026-11-22.md  credit-runner  town5
 docs/probes/tpreserve.md  live-agent  tpreserve-live
+docs/probes/vault-perf-2026-11-27.md  credit-runner  vaultpoll
 docs/probes/warptrigger-2026-11-22.md  credit-runner  warptrigger
 docs/process/layout-read.md  credit-runner  countess3
 docs/process/pg-ledger-ops.md  credit-runner  pgledgeron
@@ -500,13 +501,16 @@ internal/town/stash.go  credit-runner  charmvault
 internal/town/town.go  credit-runner  townflip
 internal/town/trip.go  credit-runner  inputl3
 internal/vault  credit-runner  vaultperf
+internal/vault  credit-runner  vaultpoll
 internal/vaultkeep  credit-runner  charmvault
 internal/vaultkeep  credit-runner  sellall
 internal/vaultkeep  credit-runner  vaultperf
+internal/vaultkeep  credit-runner  vaultpoll
 internal/watch  credit-runner  charmvault
 internal/watch  credit-runner  sellall
 internal/watch  credit-runner  town9
 internal/watch  credit-runner  vaultperf
+internal/watch  credit-runner  vaultpoll
 internal/watch/areamap_test.go  credit-runner  uis6
 internal/watch/layout.go  credit-runner  uis1
 internal/watch/layout.go  credit-runner  uis6

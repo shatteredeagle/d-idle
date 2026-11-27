@@ -50,6 +50,7 @@
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | vaultperf | proposed | - | `internal/watch`<br>`internal/watch/web`<br>`internal/vaultkeep`<br>`internal/vault` | - |
 | charmvault | proposed | - | `internal/charms`<br>`internal/vaultkeep`<br>`internal/lootrules`<br>`internal/town/stash.go`<br>`internal/watch`<br>`cmd/d2bot/vaultequip.go`<br>`cmd/d2bot/vaultkeep.go`<br>`docs/charms.md` | - |
+| vaultpoll | proposed | - | `internal/watch`<br>`internal/vault`<br>`internal/vaultkeep`<br>`docs/probes/vault-perf-2026-11-27.md` | - |
 | skillcapretire | proposed | - | `internal/points`<br>`internal/resource`<br>`internal/env/tuning_resource.go`<br>`cmd/d2bot/pointswire.go`<br>`cmd/d2bot/resource_test.go`<br>`data/darklaunch.json`<br>`docs/points.md`<br>`docs/knobs.md`<br>`docs/process/points-verbs-devp14.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
@@ -227,6 +228,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- f723f0cac 11-27 14:26 `Merge agent/vaultpoll: vaultpoll: cached vault poll, windowed query (TASK-1054)` (vaultpoll)
+- c6dde6ea4 11-27 14:25 `Merge branch 'main' into vaultpoll` (-)
 - ea06a941c 11-27 14:19 `Merge agent/skillcapretire: skillcapretire: retire resource.skillCapPerLevel (TASK-1055)` (skillcapretire)
 - 3392b8986 11-27 14:19 `Merge agent/bsmchk: bsmchk: questspec rules 12-14 (TASK-982)` (bsmchk)
 - 66f69ba02 11-27 14:19 `Merge agent/closecards2: closecards2: close/annotate stale cards (16 Done, 35 annotated)` (closecards2)
@@ -235,6 +238,4 @@
 - 49ebc2db4 11-27 14:16 `Merge branch 'main' into bsmchk` (-)
 - d68dcae2e 11-27 14:16 `Merge branch 'main' into closecards2` (-)
 - 1d83469ec 11-27 14:16 `Merge branch 'main' into charmvault` (-)
-- d8ffd5419 11-27 14:12 `Merge agent/tyrael: tyrael: Duriel Tyrael hand-in via field-NPC table (TASK-1053)` (tyrael)
-- cf6abed60 11-27 14:07 `Merge branch 'main' into tyrael` (-)
 <!-- statusgen:end -->
