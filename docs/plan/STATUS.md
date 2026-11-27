@@ -144,7 +144,7 @@
 | dlv-upkeep-minions | proposed | - | `internal/combat/` | - |
 | dlv-mark | proposed | - | `internal/combat/` | - |
 | dlv-stance-army | proposed | - | `internal/combat/`<br>`internal/arbiter/` | - |
-| dlv-cast-verbs | proposed | - | `internal/input/`<br>`internal/d2dcombat/`<br>`internal/d2dinput/`<br>`data/input/caps/` | `fork-branch:didle/cast-verbs` |
+| dlv-cast-verbs | proposed | - | `internal/input/`<br>`internal/d2dcombat/`<br>`internal/d2dinput/`<br>`data/input/caps/`<br>`data/input/caps_test.go`<br>`docs/design/input-cast-verbs.md`<br>`tools/provingground/scenarios/input-scenarios.json`<br>`tools/provingground/scenarios/tiers.json`<br>`tools/provingground/scenarios/behaviours.json` | `fork-branch:didle/cast-verbs` |
 | dlv-aim-point | proposed | - | `internal/combat/` | - |
 | dlv-aim-corpse | proposed | - | `internal/combat/` | - |
 | dlv-stance-pack | proposed | - | `internal/combat/`<br>`data/capabilities/` | - |
@@ -245,7 +245,9 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 1e7ac4599 11-27 02:08 `Merge agent/castverbs: Merge branch 'main' into dlv-cast-verbs` (castverbs)
 - c99e25214 11-27 02:08 `Merge agent/pghero: Merge branch 'main' into pghero` (pghero)
+- c2882fccf 11-27 02:05 `Merge branch 'main' into dlv-cast-verbs` (-)
 - 920dfe59d 11-27 02:05 `Merge branch 'main' into pghero` (-)
 - b7f493e78 11-27 01:57 `Merge agent/mark: Merge branch 'main' into dlv-mark` (mark)
 - d151d522e 11-27 01:54 `Merge branch 'main' into dlv-mark` (-)
@@ -253,6 +255,4 @@
 - 3835f3995 11-27 01:46 `Merge agent/faultstall: Merge branch 'main' into faultstall` (faultstall)
 - 989af6273 11-27 01:46 `Merge agent/pgprov2: Merge branch 'main' into pgprov` (pgprov2)
 - f1789b6ad 11-27 01:46 `Merge agent/featuresoak: Merge branch 'main' into featuresoak` (featuresoak)
-- 317b4e3c0 11-27 01:46 `Merge agent/deploy88: Merge branch 'main' into deploy88-ledger` (deploy88)
-- 710c84564 11-27 01:41 `Merge branch 'main' into faultstall` (-)
 <!-- statusgen:end -->
