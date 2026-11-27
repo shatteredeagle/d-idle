@@ -85,8 +85,12 @@ func (i *Input) Deliver(id int, use *delivery.Use, at input.Point, hold time.Dur
 	legacy := func() error { // the old single command; a hold has no older form than one cast
 		return i.C.CmdSkill(i.ctx, id, x, y, d2dctl.SkillOpts{Unit: int(c.Unit), Left: c.Left})
 	}
-	return i.send(c, legacy, false)
+	return i.send(c, legacy, c.Left)
 }
+
+// Delivers reports whether casts go through Deliver: the knob input.planner is on. Off, the Fighter keeps CastAt,
+// Swing and Click exactly as before (internal/combat castdeliver.go).
+func (i *Input) Delivers() bool { return i.Planner.On() }
 
 func (i *Input) cell(w input.Point) (x, y float64) {
 	return (float64(w.X-i.Origin.X) + 0.5) / 5, (float64(w.Y-i.Origin.Y) + 0.5) / 5

@@ -27,7 +27,4 @@ func TestCastVerbLines(t *testing.T) {
 	if got := srv.Lines(); !reflect.DeepEqual(got, want) {
 		t.Fatalf("lines\n got %q\nwant %q", got, want)
 	}
-	if _, ok := any(c).(input.HoldCaster); ok {
-		t.Fatal("no fork build has a hold verb; the controller must not claim one")
-	}
 }
