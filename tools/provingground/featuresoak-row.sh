@@ -11,7 +11,9 @@ W=${FS_DIR:-$HOME/d2d-lab/featuresoak}; cd "$W" || exit 2
 mkdir -p "$FS_OUT/$FS_ARM"
 # at most FS_MAXROWS (default 4) rows run at once whatever the runner's parallel is: take one of the lock files, wait otherwise
 FS_MAXROWS=${FS_MAXROWS:-4}
+# a limits file in the work dir ("ROWS CPUS", e.g. "4 0-7") overrides both while a campaign runs
 while :; do
+  [ -r "$W/limits" ] && read -r FS_MAXROWS FS_CPUS < "$W/limits"
   for i in $(seq 0 $((FS_MAXROWS - 1))); do
     exec {lockfd}>/tmp/fs-rowlock-$i; if flock -n $lockfd; then break 2; fi; exec {lockfd}>&-
   done

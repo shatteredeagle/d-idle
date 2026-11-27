@@ -65,14 +65,19 @@
    "off": "base"
   },
   {
-   "name": "arbiter-control-families-255",
-   "on": "arbiter255",
-   "off": "base"
-  },
-  {
    "name": "kit-floor-tiers-poverty-farm",
    "on": "base",
    "off": "nokit"
+  },
+  {
+   "name": "reflex-drink-portal",
+   "on": "base",
+   "off": "reflexdrink0"
+  },
+  {
+   "name": "arbiter-control-families-255",
+   "on": "arbiter255",
+   "off": "base"
   },
   {
    "name": "admission-early-route-guard",
@@ -83,11 +88,6 @@
    "name": "typed-outcomes",
    "on": "base",
    "off": "typedoutcome0"
-  },
-  {
-   "name": "reflex-drink-portal",
-   "on": "base",
-   "off": "reflexdrink0"
   },
   {
    "name": "paladin-without-sacrifice",
