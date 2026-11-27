@@ -1,10 +1,13 @@
 ---
 id: TASK-766
-title: 'countess3b: boss presets on d2d from the navigator''s world; Countess found, nav mouth gate blocks the walk'
-status: Proposed
+title: >-
+  countess3b: boss presets on d2d from the navigator's world; Countess found,
+  nav mouth gate blocks the walk
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-21T04:59:00Z'
+updated_date: '2026-11-27T20:31:00Z'
 labels:
   - d2d
   - bug

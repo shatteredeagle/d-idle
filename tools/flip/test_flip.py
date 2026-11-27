@@ -403,5 +403,81 @@ class TransportTest(unittest.TestCase):
             sb.write_tuning("x" * 200000)
 
 
+class _Hardening:  # methods are attached to FlipTest below (same fixtures, no rerun of the old tests)
+    def test_reflip_refused_without_flag_and_allowed_with(self):
+        F.Ledger(self.lp).update("town.plan", status="enabled")
+        with self.assertRaises(F.FlipError) as c:
+            self.flip()
+        self.assertIn("--reflip", str(c.exception))
+        self.f.reflip = True
+        self.flip()
+        self.assertEqual(self.row()["status"], "trial")
+
+    def test_probe_failure_names_d2_flip_run_and_touches_nothing(self):
+        def bad():
+            raise F.FlipError("no such container")
+        self.sb.probe = bad
+        with self.assertRaises(F.FlipError) as c:
+            self.flip()
+        self.assertIn("no such container", str(c.exception))
+        self.assertEqual(self.sb.tuning, ENVELOPE)
+
+    def test_warns_without_watcher_and_not_with_one(self):
+        self.flip()
+        self.assertTrue(any(o.startswith("WARNING: no watcher") for o in self.out))
+        self.f.store.drop("sb1")
+        self.out.clear()
+        self.f.store.beat(self.clock())
+        self.f.flip("sb1", {"town.plan": 2.0}, "again", 600)
+        self.assertFalse(any("no watcher" in o for o in self.out))
+        self.clock.t += timedelta(seconds=F.HEARTBEAT_STALE_S + 1)
+        self.assertFalse(F.heartbeat_alive(self.f.store.d, self.clock()))
+
+    def test_watch_beats_and_daemon_keeps_going(self):
+        calls = []
+        self.f.sleep = lambda s: calls.append(s) or (_ for _ in ()).throw(KeyboardInterrupt) if len(calls) > 1 else calls.append(s)
+        with self.assertRaises(KeyboardInterrupt):
+            self.f.watch(5, daemon=True)  # no window open, still loops
+        self.assertTrue(F.heartbeat_alive(self.f.store.d, self.clock()))
+        self.assertEqual(self.f.watch(5, once=True), [])
+
+    def test_unit_text(self):
+        u = F.unit_text(30)
+        self.assertIn("Restart=always", u)
+        self.assertIn("watch --daemon --interval 30", u)
+
+    def test_commit_ledger_branch(self):
+        import subprocess
+        repo = os.path.join(self.d.name, "d2lod")
+        os.makedirs(os.path.join(repo, "data"))
+        g = lambda *a: subprocess.run(["git", "-c", "user.name=t", "-c", "user.email=t@t", *a], cwd=repo, check=True, capture_output=True)
+        g("init", "-q")
+        rows = json.load(open(self.lp))
+        json.dump(rows, open(os.path.join(repo, "data", "darklaunch.json"), "w"))
+        g("add", "."); g("commit", "-q", "-m", "x")
+        self.flip()  # live ledger (self.lp) now says trial
+        branch, wt, line = F.commit_ledger(self.lp, {"town.plan": 2.0}, root=repo, today="20261127")
+        self.assertEqual(branch, "agent/ledger-town-plan-20261127")
+        self.assertIn("mergeq.sh add " + branch, line)
+        row = F.Ledger(os.path.join(wt, "data", "darklaunch.json")).row("town.plan")
+        self.assertEqual(row["status"], "trial")
+        out = subprocess.run(["git", "log", "-1", "--format=%s"], cwd=wt, capture_output=True, text=True).stdout
+        self.assertIn("darklaunch ledger", out)
+        self.assertEqual(subprocess.run(["git", "status", "--porcelain"], cwd=wt, capture_output=True, text=True).stdout, "")
+
+
+for _n, _f in vars(_Hardening).items():
+    if _n.startswith("test_"):
+        setattr(FlipTest, _n, _f)
+
+
+class ProbeTransportTest(unittest.TestCase):
+    def test_wrong_transport_fails_fast_naming_d2_flip_run(self):
+        sb = F.Sandbox("c1", {"D2_FLIP_RUN": "false"})
+        with self.assertRaises(F.FlipError) as c:
+            sb.probe()
+        self.assertIn("D2_FLIP_RUN", str(c.exception))
+
+
 if __name__ == "__main__":
     unittest.main()

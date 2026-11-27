@@ -81,7 +81,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 `plan/`
 
 - [QUEUE.md](plan/QUEUE.md): Queue (generated: do not edit)
-- [STATUS.md](plan/STATUS.md): Where we are (hand-written part last edited 2026-11-03 by APPLYREVIEW; the generated block at the bottom... (status: the older 2026-10-30 text (Game.exe soak history, container cards, merged-today lists) is in git history....)
+- [STATUS.md](plan/STATUS.md): Where we are (hand-written part rewritten 2026-11-27 by TASK-46; the generated block at the bottom is current) (status: current. Ranking is the tier ladder of ADR 0016, not the goals G-A to G-F of ADR 0015. Source of every...)
 - [act2-level-plan.md](plan/act2-level-plan.md): Act 2 level plan (Normal): where the hero farms between the Lut Gholein quests (status: DATA ONLY (card act2plan, 2026-11-26). Nothing here ran live. Tags: V verified (named file or test), S...)
 - [bot-requirements.md](plan/bot-requirements.md): Bot requirements implied by docs/plan/leveling.md
 - [code-reality.md](plan/code-reality.md): Code reality map for 8 h / 24 h unattended soaks (CODEREALITY, 2026-10-30)
@@ -567,6 +567,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [paperdoll-art-build.md](paperdoll-art-build.md): Paper doll game art: what is built (status: in progress (TASK-244). Plan and licence reasoning: research/paperdoll-art.md. Tags: V verified (command...)
 - [passagebounce.md](passagebounce.md): Arrival bounce: Underground Passage, Crypt and every cave (TASK passagebounce)
 - [pause.md](pause.md): Pause and resume as player commands (status: current (uib1 2026-11-14; frozen Pause added by card pause, 2026-11-15). Not verified live.)
+- [play-session.md](play-session.md): Play session on the LAN (TASK-43) (status: current. Offline parts verified (V: `sh tools/play-session-test.sh`); the live run is NOT verified (U,...)
 - [points.md](points.md): Points: stat and skill points are the player's (roadmap R3, agency P0) (status: current (card agencyp0, 2026-11-19). Decision: ADR 0020 (path D, user decision): the player spends every...)
 - [policy-preview.md](policy-preview.md): Policy preview (card policydryrun, TASK-205) (status: built and tested offline on fixtures; NOT run against a live bot or in a browser. Source:...)
 - [policy-sheet.md](policy-sheet.md): The chores policy sheet (TASK-128) (status: built and tested offline on fixtures; NOT run against a live bot or in a browser. Design:...)
