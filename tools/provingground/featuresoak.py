@@ -67,6 +67,16 @@ def complete(p):
         return False
 
 
+def active(out):
+    """rows of another runner on this out dir: log touched in the last 3 minutes and not finished"""
+    n = 0
+    for p in glob.glob(os.path.join(out, "*", "*.log")):
+        try:
+            if time.time() - os.path.getmtime(p) < 180 and not complete(p): n += 1
+        except OSError: pass
+    return n
+
+
 def cmd_plan(c, a):
     h = a.hours or c["hours"]
     r = rows(c, a)
@@ -89,14 +99,14 @@ def cmd_build(c, a):
 def cmd_run(c, a):
     h = a.hours or c["hours"]; par = a.parallel or c["parallel"]
     out = os.path.abspath(a.out or os.path.join(FSDIR, "out-" + time.strftime("%Y%m%d")))
-    todo = [x for x in rows(c, a) if not complete(logpath(out, *x))]
+    todo = [x for x in rows(c, a) if not complete(logpath(out, *x)) and not (os.path.exists(logpath(out, *x)) and time.time() - os.path.getmtime(logpath(out, *x)) < 180)]
     cap = wallmin(h, a.ratio)
     print("run: %d rows to go, out %s, %d parallel, wall cap %d min each" % (len(todo), out, par, cap), flush=True)
     live = []
     hero = c["hero"]
     while todo or live:
         live = [p for p in live if p[0].poll() is None]
-        while todo and len(live) < par:
+        while todo and max(len(live), active(out)) < par:
             arm, cl, seed = todo.pop(0)
             bot, knobs = arm_parts(c, arm)
             cc = c["classes"][cl]
