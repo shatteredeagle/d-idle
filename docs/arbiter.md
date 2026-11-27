@@ -113,3 +113,8 @@ Order is by risk. Each family moves from the chain to the arbiter behind its own
 Each row also needs the scenario rows of its incident (docs/probes/incident-scenarios.md) green on a lockstep run (U: none run yet) and the owner's go. The cases are data (`tools/provingground/arbiter-outcomes`); a verdict needs at least one case, a family with none has no verdict and does not move.
 
 If a date passes without the rule met, the family stays on the chain and the reason goes into this table; the dates are earliest, not promises.
+
+## Upkeep source wiring (card townwire)
+- With `bot.arbiterShadow` 1, `bot.arbiterControl` 1 and bit 4 (chores) set in `bot.arbiterFamilies`, the shadow runs `arbiter.UpkeepSources()` (the trip and resupply sources collapsed into `upkeep`) and every View carries the supply plan's facts (`arbiter.PlanFacts`, profile `field`, from the town's `SupplyPlan`). With the defaults (control 0, families 3) the sources and the facts are exactly as before (V `TestUpkeepWiredBehindChoresBit`, a Sorceress and a Paladin).
+- Not done: the old trip deciders (`NeedsTrip` reasons, `trip.go`, the resupply knobs) still run in the chain and in `arbChores`; collapsing them is a follow-up after a live run of the controlled chores family. U: not run live.
+- `GET /api/townplan` is mounted in both backends (cmd/d2bot `bindTownPlan`); it answers 503 until the route is bound and the "no plan yet" view until a visit solved one (knob `town.plan` >= 1; the Town keeps the last plan and the route stops, `Town.PlanView`). The Town plan card stays opt-in (manifest `optIn`): a layout names it to show it; it is not in the default layout.
