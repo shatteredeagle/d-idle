@@ -192,7 +192,9 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 6f93a5890 11-27 17:48 `Merge agent/miscfix: miscfix: card updates 604/856/880/330 (no Go change)` (miscfix)
 - 2b0d2f671 11-27 17:48 `Merge agent/smegaps: smegaps: sourced resist floors, merc auras, FCR/FHR/FBR tables (docs/sme)` (smegaps)
+- 1bacc25f7 11-27 17:46 `Merge branch 'main' into miscfix` (-)
 - 9a5cafcba 11-27 17:46 `Merge branch 'main' into smegaps` (-)
 - 6a81a0526 11-27 17:34 `Merge agent/deployplan: deployplan: sandbox deploy runbook (docs)` (deployplan)
 - 8ab80f693 11-27 17:34 `Merge agent/cardfix2: cardfix2: card hygiene redo, live-queue doc` (cardfix2)
@@ -200,6 +202,4 @@
 - 2b18a5d96 11-27 17:34 `Merge agent/gearcopy: gearcopy: gear scoring reads plandata tables, drifted copies deleted (TASK-1067)` (gearcopy)
 - cd217e8ad 11-27 17:32 `Merge branch 'main' into deployplan` (-)
 - 728b2a126 11-27 17:32 `Merge branch 'main' into cardfix2` (-)
-- 0ea8b753c 11-27 17:32 `Merge branch 'main' into questresume` (-)
-- 5b3c8c61e 11-27 17:32 `Merge branch 'main' into gearcopy` (-)
 <!-- statusgen:end -->
