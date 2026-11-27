@@ -1,0 +1,29 @@
+{
+ "_note": "Rune lists V (docs/items.md section 5, read from runes.txt). Base types are item type codes from the item chain (swor, shld, tors ...). ladder: the Runes.txt server flag (docs/items.md 3.1, V list), gated by items.ladderRunewords. classes: empty = every class; rank: higher = better, orders the advice. Which class should prefer which is U (docs/sme/builds-gear.md); the SME review is the enable criterion.",
+ "runewords": [
+  {"name": "Stealth",        "runes": ["Tal","Eth"],                 "types": ["tors"],         "classes": [],                                                 "rank": 1, "why": "FCR, FRW, FHR in armor"},
+  {"name": "Leaf",           "runes": ["Tir","Ral"],                 "types": ["staf"],         "classes": ["sorceress"],                                      "rank": 1, "why": "fire skills staff"},
+  {"name": "Ancient's Pledge","runes": ["Ral","Ort","Tal"],          "types": ["shld"],         "classes": [],                                                 "rank": 2, "why": "all resists on a shield"},
+  {"name": "Rhyme",          "runes": ["Shael","Eth"],               "types": ["shld"],         "classes": [],                                                 "rank": 2, "why": "all resists, block, no freeze"},
+  {"name": "Steel",          "runes": ["Tir","El"],                  "types": ["swor","axe","mace"], "classes": ["paladin","barbarian"],                       "rank": 1, "why": "cheap melee weapon"},
+  {"name": "Strength",       "runes": ["Amn","Tir"],                 "types": ["mele"],         "classes": ["paladin","barbarian"],                            "rank": 2, "why": "melee damage and strength"},
+  {"name": "Zephyr",         "runes": ["Ort","Eth"],                 "types": ["miss"],         "classes": ["amazon"],                                         "rank": 1, "why": "cheap bow"},
+  {"name": "Spirit",         "runes": ["Tal","Thul","Ort","Amn"],    "types": ["swor","shld"],  "classes": ["sorceress","necromancer","druid","paladin"],      "rank": 4, "ladder": true, "why": "skills, cast rate, mana"},
+  {"name": "Insight",        "runes": ["Ral","Tir","Tal","Sol"],     "types": ["pole","staf"],  "classes": [],                                                 "rank": 4, "ladder": true, "merc": true, "why": "Meditation aura, best on the mercenary"},
+  {"name": "Lore",           "runes": ["Ort","Sol"],                 "types": ["helm"],         "classes": ["sorceress","necromancer","druid"],                "rank": 2, "why": "all skills and mana"},
+  {"name": "Smoke",          "runes": ["Nef","Lum"],                 "types": ["tors"],         "classes": [],                                                 "rank": 3, "why": "all resists in armor"},
+  {"name": "Lionheart",      "runes": ["Hel","Lum","Fal"],           "types": ["tors"],         "classes": ["paladin","barbarian"],                            "rank": 3, "why": "stats, life, all resists"},
+  {"name": "King's Grace",   "runes": ["Amn","Ral","Thul"],          "types": ["swor","scep"],  "classes": ["paladin"],                                        "rank": 2, "why": "paladin weapon"},
+  {"name": "Honor",          "runes": ["Amn","El","Ith","Tir","Sol"],"types": ["mele"],         "classes": ["paladin","barbarian"],                            "rank": 3, "why": "melee damage, regeneration"},
+  {"name": "Fortitude",      "runes": ["El","Sol","Dol","Lo"],       "types": ["weap","tors"],  "classes": [],                                                 "rank": 6, "ladder": true, "why": "defence or damage, resists"},
+  {"name": "Heart of the Oak","runes": ["Ko","Vex","Pul","Thul"],    "types": ["staf","mace"],  "classes": ["sorceress","necromancer","druid"],                "rank": 6, "why": "all skills, cast rate, resists"},
+  {"name": "Bone",           "runes": ["Sol","Um","Um"],             "types": ["tors"],         "classes": ["necromancer"],                                    "rank": 5, "why": "necromancer skills, mana"},
+  {"name": "Treachery",      "runes": ["Shael","Thul","Lem"],        "types": ["tors"],         "classes": ["assassin"],                                       "rank": 5, "why": "attack speed, assassin skills"},
+  {"name": "Duress",         "runes": ["Shael","Um","Thul"],         "types": ["tors"],         "classes": ["paladin","barbarian","assassin"],                 "rank": 4, "why": "defence, open wounds"},
+  {"name": "Harmony",        "runes": ["Tir","Ith","Sol","Ko"],      "types": ["miss"],         "classes": ["amazon"],                                         "rank": 4, "ladder": true, "why": "bow aura"},
+  {"name": "Fury",           "runes": ["Jah","Gul","Eth"],           "types": ["mele"],         "classes": ["barbarian"],                                      "rank": 7, "why": "barbarian weapon"},
+  {"name": "Chaos",          "runes": ["Fal","Ohm","Um"],            "types": ["h2h"],          "classes": ["assassin"],                                       "rank": 7, "why": "claw"},
+  {"name": "Enigma",         "runes": ["Jah","Ith","Ber"],           "types": ["tors"],         "classes": [],                                                 "rank": 8, "why": "teleport, all skills"},
+  {"name": "Infinity",       "runes": ["Ber","Mal","Ber","Ist"],     "types": ["pole"],         "classes": [],                                                 "rank": 8, "ladder": true, "merc": true, "why": "Conviction aura, best on the mercenary"}
+ ]
+}
