@@ -341,6 +341,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [bulk-identify-2026-11-18.md](design/bulk-identify-2026-11-18.md): Bulk identify: Cain-free, lazy reveal, filter (design, 2026-11-18) (status: BUILT offline (B1-B5 and the town adapters, scroll path and Ether tap payer of slice B6, task bulkid2),...)
 - [charm-management-2026-11-27.md](design/charm-management-2026-11-27.md): Charm management: carry, pack budget, build wants, Vault and Inventory UI (status: design note, docs only (2026-11-27, agent charms). Nothing here is built. Tags: V = read in this tree at...)
 - [danger-protocol-2026-11-25.md](design/danger-protocol-2026-11-25.md): Danger protocol and checkpoint portals (2026-11-25) (status: design proposal, no code. Part 1 reads the code (tags: V = verified in code or a cited live record, S =...)
+- [difficulty-transition-2026-11-27.md](design/difficulty-transition-2026-11-27.md): Difficulty transition design (roadmap R9): when the bot leaves Normal for Nightmare and Hell (status: DESIGN, docs only, 2026-11-27. Consumers: cards epic-normal (TASK-948), epic-nightmare (TASK-949),...)
 
 `design/fable-review-2026-11-19/`
 

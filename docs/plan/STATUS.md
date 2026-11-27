@@ -224,7 +224,9 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 1ea6463d4 11-27 14:54 `Merge agent/difftrans: difftrans: difficulty transition design (docs)` (difftrans)
 - 819ef370c 11-27 14:54 `Merge agent/wpstep2: wpstep2: close TASK-716 card (fixed by TASK-770)` (wpstep2)
+- 6d9ce4ddf 11-27 14:53 `Merge branch 'main' into difftrans` (-)
 - 3cb07d622 11-27 14:53 `Merge branch 'main' into wpstep2` (-)
 - 149ba7319 11-27 14:45 `Merge agent/nightplan: nightplan: lab night plan 2026-11-27 (docs)` (nightplan)
 - 412dc797c 11-27 14:45 `Merge agent/townguard: townguard: hand-over in the guard refusal, route path cost (TASK-1057)` (townguard)
@@ -232,6 +234,4 @@
 - cedb40af3 11-27 14:43 `Merge branch 'main' into nightplan` (-)
 - 88ddca6c9 11-27 14:43 `Merge branch 'main' into townguard` (-)
 - f992a90b6 11-27 14:43 `Merge branch 'main' into inputl4` (-)
-- a5c1cdc4b 11-27 14:41 `Merge origin/main into agent/wpstep2 (card result: keep branch text)` (-)
-- 9f534dbe4 11-27 14:32 `Merge agent/act2chunks: act2chunks: Radament/cube/shaft/amulet/summoner chunks as step-executor data (TASK-1056)` (act2chunks)
 <!-- statusgen:end -->

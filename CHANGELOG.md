@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- difftrans: difficulty transition design (docs) <!--sg:agent/difftrans-->
 - wpstep2: close TASK-716 card (fixed by TASK-770) <!--sg:agent/wpstep2-->
 - nightplan: lab night plan 2026-11-27 (docs) <!--sg:agent/nightplan-->
 - townguard: hand-over in the guard refusal, route path cost (TASK-1057) <!--sg:agent/townguard-->
