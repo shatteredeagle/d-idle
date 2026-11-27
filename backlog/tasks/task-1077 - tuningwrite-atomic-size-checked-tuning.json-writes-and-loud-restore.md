@@ -1,10 +1,11 @@
 ---
 id: TASK-1077
 title: 'tuningwrite: atomic, size-checked tuning.json writes and loud restore'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T23:22:00Z'
+updated_date: '2026-11-27T23:47:00Z'
 labels:
   - bot
   - bug

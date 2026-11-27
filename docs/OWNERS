@@ -289,8 +289,6 @@ internal/bot/task.go  credit-runner  boardmoderace
 internal/bot/task.go  live-agent  bsmdef
 internal/bot/ticklog.go  live-agent  ticklog
 internal/bot/ticklog_test.go  live-agent  ticklog
-internal/bot/tuner.go  credit-runner  tuningwrite
-internal/bot/tuner_test.go  credit-runner  tuningwrite
 internal/bot/waypoints.go  credit-runner  boardmoderace
 internal/campaign/  credit-runner  campaign1
 internal/combat/  credit-runner  cainfix3
@@ -394,7 +392,6 @@ internal/scenario/setup.go  credit-runner  pgearned
 internal/scenario/setup.go  credit-runner  qdmatrix
 internal/scenario/setup_test.go  credit-runner  qdmatrix
 internal/scenario/taps.go  live-agent  pgtaps
-internal/store/  credit-runner  tuningwrite
 internal/supply  credit-runner  town10
 internal/supply  credit-runner  town9
 internal/survival/  credit-runner  zonepace
@@ -486,7 +483,6 @@ tools/emu/mb_gate.py  credit-runner  decomp43
 tools/emu/mb_mut.py  credit-runner  decomp43
 tools/emu/mb_mut2.py  credit-runner  decomp43
 tools/emu/zd_*  credit-runner  zealdiff
-tools/flip/  credit-runner  tuningwrite
 tools/friendpack/README.txt  credit-runner  cut012
 tools/friendpack/compose.yml  credit-runner  cut012
 tools/friendpack/didle  credit-runner  cut012
