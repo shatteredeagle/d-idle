@@ -46,7 +46,6 @@
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
-| dietarchive | proposed | - | `docs/archive`<br>`docs/research/README.md` | - |
 | dietrule | proposed | - | `docs/backlog-howto.md` | - |
 | ghcrpublish | in-progress | - | `.github/workflows/tester-image.yml`<br>`docs/registry-publish.md`<br>`deploy/d2d-container/compose.friends.yml`<br>`docs/tester-registry.md`<br>`deploy/d2d-container/compose.tester.yml`<br>`deploy/d2d-container/context.sh`<br>`deploy/d2d-container/tester_image_test.go` | - |
 | d2d-container-soak | deferred | d2d-container-soak | `docs/d2d-container-soak.md` | `soak-slot:1` |

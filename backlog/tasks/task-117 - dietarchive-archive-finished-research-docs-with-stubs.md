@@ -1,10 +1,11 @@
 ---
 id: TASK-117
 title: 'dietarchive: archive finished research docs with stubs'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-07T21:57:00Z'
+updated_date: '2026-11-27T21:28:00Z'
 labels:
   - docs
   - chore
