@@ -245,14 +245,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 482daed6e 11-27 13:29 `Merge agent/akarahand: akarahand: hand-in click diagnosis (docs)` (akarahand)
 - 1612e4751 11-27 13:29 `Merge agent/fastflip: fastflip: 2 h default flip window` (fastflip)
 - 2a0dbd60d 11-27 13:29 `Merge agent/pgclock2: pgclock2: scripted taps, tick-based soak stop (TASK-738/739)` (pgclock2)
+- 9fd3f41bd 11-27 13:27 `Merge branch 'main' into akarahand` (-)
 - 2d6e8fb89 11-27 13:27 `Merge branch 'main' into fastflip` (-)
 - 07630a935 11-27 13:27 `Merge branch 'main' into pgclock2` (-)
 - d7861fd60 11-27 13:25 `Merge agent/darkqueue: darkqueue: dark queue plan` (darkqueue)
 - 29f1db6c1 11-27 13:25 `Merge agent/act2drill6: act2drill6: docs` (act2drill6)
 - 3234cd308 11-27 13:24 `Merge branch 'main' into darkqueue` (-)
 - 0de8f9d1a 11-27 13:24 `Merge branch 'main' into act2drill6` (-)
-- 417da1bef 11-27 13:19 `Merge agent/roadmap3: roadmap3: docs` (roadmap3)
-- 66ce4c24a 11-27 13:19 `Merge agent/dlvupkeep: dlvupkeep: TestBuffsStayUp offline uptime test (TASK-722 AC1)` (dlvupkeep)
 <!-- statusgen:end -->

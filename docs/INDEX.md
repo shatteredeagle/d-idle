@@ -1054,6 +1054,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 `probes/`
 
 - [act2-stepexec-drill-2026-11-27.md](probes/act2-stepexec-drill-2026-11-27.md): Act 2 step executor drill (card stepexec1, 2026-11-27) (status: current (lab drill of TASK-976 AC #4; docs/design/stepexec-p9.md is the design).)
+- [akara-handin-click-2026-11-27.md](probes/akara-handin-click-2026-11-27.md): Hand in to Akara (Search for Cain): why a click can be a silent no-op (2026-11-27) (status: read-only code diagnosis, nothing run, sandbox untouched. Tags: V = read in the code at main 388dcc3da...)
 - [andariel-gate-recalibration-2026-11-24.md](probes/andariel-gate-recalibration-2026-11-24.md): Andariel gate recalibration: a proposal, nothing applied (2026-11-24)
 - [autoalloc-necro-summoner-default-2026-11-23.md](probes/autoalloc-necro-summoner-default-2026-11-23.md): Necromancer Summoner auto-alloc: what the table says, which default (2026-11-23) (status: recommendation, no data defaults changed here (the build-choice card owns `defaultVariant`).)
 
