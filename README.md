@@ -98,8 +98,8 @@ Between runs.
 - Building this public status page (working)
 - Finding its way around the map (working)
 - Improving the dashboard (working)
-- Running the bot on the d2d engine (working)
 - Fighting and staying alive (working)
+- Running the bot on the d2d engine (working)
 - Town chores: shopping, stashing and loot (working)
 - Making the bot easy to set up (blocked)
 - Working on the bot (blocked)
@@ -112,7 +112,7 @@ Nothing merged in this window.
 
 [Chat and help: the d.idle Discord](https://discord.gg/U2v9q4h5UH)
 
-Last updated: 2026-11-27 07:50 UTC
+Last updated: 2026-11-27 08:05 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
