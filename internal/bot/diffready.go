@@ -1,6 +1,7 @@
 package bot
 
 import (
+	"errors"
 	"fmt"
 	"time"
 
@@ -16,8 +17,64 @@ import (
 // hops on its own and never goes back down (user decisions 2026-11-27).
 
 // GrantDifficultyGo records the owner's go for target ("nightmare" or "hell"); the next readiness check that finds the
-// hero ready consumes it. U: no operator verb calls this yet (docs/diffready.md, live checklist).
+// hero ready consumes it. The player-facing door is RequestDifficultyGo (operator verb go-difficulty, Return screen button).
 func (r *Runner) GrantDifficultyGo(target string) { r.diffGo.Grant(target) }
+
+// PersistDifficultyGo keeps an unconsumed go in path across a restart of the bot.
+func (r *Runner) PersistDifficultyGo(path string) error { return r.diffGo.Persist(path) }
+
+// DifficultyOffer is the next difficulty with the owner-facing line and the unmet requirements.
+type DifficultyOffer struct {
+	Target  string   `json:"target,omitempty"` // "" when the hero is in Hell or the knob is 0
+	Ready   bool     `json:"ready"`
+	Pending bool     `json:"pending,omitempty"` // the owner already said go and the hop has not happened yet
+	Line    string   `json:"line,omitempty"`
+	Missing []string `json:"missing,omitempty"`
+}
+
+func nextDifficulty(s *d2.Snapshot) string {
+	return [...]string{"nightmare", "hell", ""}[min(max(int(s.Player.Difficulty), 0), 2)]
+}
+
+// DifficultyOffer evaluates the next difficulty now (no side effect but the published line and dropping a stale go).
+func (r *Runner) DifficultyOffer() DifficultyOffer {
+	if r.e.Tune.Bot.DiffReadyV2 == 0 {
+		return DifficultyOffer{}
+	}
+	s := r.latest()
+	if s == nil || s.Player == nil {
+		return DifficultyOffer{Line: "no snapshot yet"}
+	}
+	next := nextDifficulty(s)
+	r.diffGo.Keep(next)
+	if next == "" {
+		return DifficultyOffer{}
+	}
+	v, err := r.diffVerdict(s, next)
+	if err != nil {
+		return DifficultyOffer{Target: next, Line: err.Error()}
+	}
+	return DifficultyOffer{Target: next, Ready: v.Ready, Pending: r.diffGo.Granted(next), Line: v.Why(), Missing: v.Missing}
+}
+
+// RequestDifficultyGo is the owner's go: it is refused with the reason unless bot.diffReadyV2 is on and the hero is
+// ready for target, the next difficulty. The hop itself follows at the next check and consumes the go.
+func (r *Runner) RequestDifficultyGo(target string) (string, error) {
+	if r.e.Tune.Bot.DiffReadyV2 == 0 {
+		return "", errors.New("the difficulty hop is off (bot.diffReadyV2 is 0)")
+	}
+	o := r.DifficultyOffer()
+	switch {
+	case o.Target == "":
+		return "", errors.New("no next difficulty to go to: " + o.Line)
+	case target != o.Target:
+		return "", fmt.Errorf("the next difficulty is %s, not %q", o.Target, target)
+	case !o.Ready:
+		return "", errors.New(o.Line)
+	}
+	r.diffGo.Grant(target)
+	return "go recorded for " + target + "; the hero hops at its next safe check", nil
+}
 
 // DifficultyReadiness is the last readiness line ("" while bot.diffReadyV2 is 0 or nothing was checked).
 func (r *Runner) DifficultyReadiness() string {
@@ -36,6 +93,7 @@ func (r *Runner) DifficultyGate(next string, clvl int) (ok bool, why string, act
 	if s == nil || s.Player == nil {
 		return false, "no snapshot yet", true
 	}
+	r.diffGo.Keep(next)
 	v, err := r.diffVerdict(s, next)
 	if err != nil {
 		return false, err.Error(), true
@@ -94,7 +152,8 @@ func (r *Runner) diffVerdict(s *d2.Snapshot, target string) (diffready.Verdict, 
 // wantedDifficultyV2 is wantedDifficulty under bot.diffReadyV2: the next difficulty only, only when ready, only with
 // the owner's go, honoring the ban of a failed switch. Never goes down, never hops alone.
 func (r *Runner) wantedDifficultyV2(s *d2.Snapshot) string {
-	next := [...]string{"nightmare", "hell", ""}[min(max(int(s.Player.Difficulty), 0), 2)]
+	next := nextDifficulty(s)
+	r.diffGo.Keep(next)
 	if next == "" {
 		return ""
 	}

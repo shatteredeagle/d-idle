@@ -389,7 +389,7 @@ func TestLayoutHiddenEntry(t *testing.T) {
 // Fit content: every panel of the main area and every pre-shell card declares it, so no card keeps a stored span
 // taller than what it shows; the manifest key is additive (a manifest without it loads, with the stored spans).
 // cockpitPanels are the opt-in panels the redesign slices have shipped so far (a slice adds its id here).
-var cockpitPanels = map[string]bool{"orders": true}
+var cockpitPanels = map[string]bool{"orders": true, "town-plan": true}
 
 func TestPanelsFitTheirContent(t *testing.T) {
 	ms, err := Manifests()

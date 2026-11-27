@@ -1,0 +1,19 @@
+{
+  "schema": "watch.panel/1",
+  "version": 1,
+  "id": "town-plan",
+  "title": "Town plan",
+  "band": "side",
+  "size": "m",
+  "priority": 34,
+  "tab": "hero",
+  "defaultOpen": false,
+  "endpoint": "/api/townplan",
+  "poll": 5,
+  "unlock": "",
+  "skeleton": 3,
+  "optIn": true,
+  "fit": true,
+  "owner": "town9",
+  "doc": "docs/design/fable-review-2026-11-21/town-planner.md"
+}

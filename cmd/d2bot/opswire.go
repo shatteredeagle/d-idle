@@ -25,6 +25,12 @@ func startOperator(stateDir string, d *questboard.Desk, r *bot.Runner, logf func
 			return nil
 		}
 		c.Explain = explainNow
+		c.Difficulty = func() ops.DifficultyGo {
+			if r := opsRunner.Load(); r != nil {
+				return r
+			}
+			return nil
+		}
 	})
 	if err != nil {
 		logf("operator control failed to start", "err", err)

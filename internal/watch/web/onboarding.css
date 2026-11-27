@@ -1,0 +1,19 @@
+/* The first-30-minutes tour card, the Now banner and the Help sheet body (docs/onboarding-tour.md). Tokens only. */
+@layer components {
+  .d-tour { position: fixed; inset-inline: var(--d-sp-4); inset-block-end: calc(var(--d-nav-h, 0px) + var(--d-sp-4)); z-index: var(--d-z-banner); display: grid; gap: var(--d-sp-2); box-sizing: border-box; max-inline-size: 28rem; margin-inline: auto; padding: var(--d-sp-3) var(--d-sp-4); border: var(--d-bw) solid var(--d-info); border-radius: var(--d-r-2); background: var(--d-surface-3); color: var(--d-text); box-shadow: var(--d-inset-deep); }
+  .d-tour[hidden] { display: none; }
+  .d-tour h2 { margin: 0; font: 600 var(--d-fs-2)/var(--d-lh-tight) var(--d-font-display); }
+  .d-tour p { margin: 0; font-size: var(--d-fs-1); overflow-wrap: anywhere; }
+  .d-tour .meta { color: var(--d-text-2); font-size: var(--d-fs-0); }
+  .d-tour .row { display: flex; flex-wrap: wrap; gap: var(--d-sp-2); }
+  .d-tour .row .d-btn { min-block-size: var(--d-hit); }
+  .d-now { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--d-sp-1) var(--d-sp-3); min-inline-size: 0; padding: var(--d-sp-1) var(--d-sp-3); font-size: var(--d-fs-1); color: var(--d-text-2); }
+  .d-now[hidden] { display: none; }
+  .d-now b { color: var(--d-text); font-weight: 650; }
+  .d-help-body { display: grid; gap: var(--d-sp-2); }
+  .d-help-body ul { margin: 0; padding-inline-start: var(--d-sp-4); display: grid; gap: var(--d-sp-1); font-size: var(--d-fs-1); }
+  .d-help-body .row { display: flex; flex-wrap: wrap; gap: var(--d-sp-2); }
+}
+@layer components {
+  @media (min-width: 700px) { .d-tour { inset-inline: auto var(--d-sp-4); margin-inline: 0; inline-size: 24rem; } }
+}
