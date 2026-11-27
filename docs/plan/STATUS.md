@@ -197,14 +197,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 6a81a0526 11-27 17:34 `Merge agent/deployplan: deployplan: sandbox deploy runbook (docs)` (deployplan)
 - 8ab80f693 11-27 17:34 `Merge agent/cardfix2: cardfix2: card hygiene redo, live-queue doc` (cardfix2)
 - 594f488a9 11-27 17:34 `Merge agent/questresume: questresume: park resume policy (dark), paused visibility, campaign counter, starved cause (TASK-1071)` (questresume)
 - 2b18a5d96 11-27 17:34 `Merge agent/gearcopy: gearcopy: gear scoring reads plandata tables, drifted copies deleted (TASK-1067)` (gearcopy)
+- cd217e8ad 11-27 17:32 `Merge branch 'main' into deployplan` (-)
 - 728b2a126 11-27 17:32 `Merge branch 'main' into cardfix2` (-)
 - 0ea8b753c 11-27 17:32 `Merge branch 'main' into questresume` (-)
 - 5b3c8c61e 11-27 17:32 `Merge branch 'main' into gearcopy` (-)
 - d06f55ae6 11-27 17:25 `Merge agent/flakearb: flakearb: fix TestArbiterControlGoldFarmAndRecovery race (test starts in wrong area) (TASK-1068)` (flakearb)
 - 72a4592ae 11-27 17:24 `Merge branch 'main' into flakearb` (-)
-- dc31847b9 11-27 17:16 `Merge agent/fieldstate: fieldstate: return-to-field leg hands over to the fighter when hostiles are near (TASK-1070)` (fieldstate)
-- 82a3e6e0a 11-27 17:16 `Merge agent/logsink: logsink: bot own rotating log file, ops log verb, docker log NUL root cause (TASK-1069)` (logsink)
 <!-- statusgen:end -->
