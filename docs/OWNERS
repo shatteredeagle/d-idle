@@ -444,6 +444,7 @@ internal/watch/layout_test.go  credit-runner  uis1
 internal/watch/logtab.go  credit-runner  uis6
 internal/watch/logtab_test.go  credit-runner  uis6
 internal/watch/onboarding.go  credit-runner  reconnectux
+internal/watch/onboardingtour_test.go  credit-runner  onboardtour
 internal/watch/panels.go  credit-runner  uis6
 internal/watch/policypreview_test.go  live-agent  epic-class-necromancer
 internal/watch/policysheet_test.go  live-agent  epic-class-necromancer
@@ -452,6 +453,7 @@ internal/watch/serve.go  credit-runner  uis6
 internal/watch/stance_test.go  live-agent  epic-class-necromancer
 internal/watch/testdata/areamap/  credit-runner  uis6
 internal/watch/testdata/logpanel/  credit-runner  uis6
+internal/watch/testdata/onboarding_tour_test.cjs  credit-runner  onboardtour
 internal/watch/unlockrisk_test.go  live-agent  epic-class-necromancer
 internal/watch/web/components.css  credit-runner  uis6
 internal/watch/web/layout.js  credit-runner  uis1
@@ -461,6 +463,7 @@ internal/watch/web/layouts/  credit-runner  uis1
 internal/watch/web/layouts/cockpit.json  credit-runner  uis6
 internal/watch/web/onboarding.css  credit-runner  onboardtour
 internal/watch/web/onboarding.js  credit-runner  onboardtour
+internal/watch/web/onboarding.json  credit-runner  onboardtour
 internal/watch/web/panels/area-map/  credit-runner  uis6
 internal/watch/web/panels/log/  credit-runner  uis6
 internal/watch/web/panels/map/  credit-runner  uis6
@@ -472,6 +475,7 @@ internal/watch/web/shell.js  credit-runner  uis6
 internal/watch/web/shell.json  credit-runner  uis1
 internal/watch/web/shell.json  credit-runner  uis6
 internal/watch/web/tokens.css  credit-runner  uis1
+internal/watch/web/watch.html  credit-runner  onboardtour
 tools/ci/  credit-runner  dlv-cleanup
 tools/ci/check.sh  credit-runner  inputl5
 tools/ci/pointercount-baseline.json  credit-runner  inputl5

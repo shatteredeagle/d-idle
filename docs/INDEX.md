@@ -552,6 +552,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [npc-skip.md](npc-skip.md): NPC greeting skip (internal/town/skip.go, cmd/npcprobe)
 - [npc.md](npc.md): NPC interaction (town/npc.go, cmd/d2bot/task.go)
 - [onboarding-slice-a.md](onboarding-slice-a.md): Onboarding slice A: setup stepper, go-ahead and access (status: BUILT offline (task TASK-44, card onboardA, 2026-11-06). Design and mock:...)
+- [onboarding-tour.md](onboarding-tour.md): Onboarding tour, Help sheet and Now line (TASK-48) (status: BUILT offline (card onboardtour, 2026-11-27). Node stub-DOM tests only; not looked at in a browser, not...)
 - [onboarding.md](onboarding.md): Onboarding on /watch: welcome card, first 30 minutes, reconnect banners (status: BUILT offline (TASK-247 firstminutes, TASK-249 reconnectux, 2026-11-11). Node DOM goldens and Go tests...)
 - [operator.md](operator.md): Operator quest control (status: current (card opsquest). Code: `internal/ops`, `cmd/d2bot/ops*.go`, `tools/questloop.sh`.)
 - [outcomes.md](outcomes.md): Typed step outcome (knob `bot.typedOutcome`) (status: current, stage 1 (card outcome1, 2026-11-25). Source: P2 of...)

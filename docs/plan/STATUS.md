@@ -96,7 +96,7 @@
 | uis6 | proposed | - | `internal/watch/web/panels/area-map/`<br>`internal/watch/web/panels/log/`<br>`internal/watch/web/panels/map/`<br>`internal/watch/testdata/areamap/`<br>`internal/watch/testdata/logpanel/`<br>`internal/watch/logtab.go`<br>`internal/watch/logtab_test.go`<br>`internal/watch/areamap_test.go`<br>`internal/watch/web/shell.js`<br>`internal/watch/web/shell.css`<br>`internal/watch/web/components.css`<br>`internal/watch/web/layout.js`<br>`internal/watch/web/shell.json`<br>`internal/watch/web/layouts/cockpit.json`<br>`internal/watch/layout.go`<br>`internal/watch/panels.go`<br>`internal/watch/serve.go`<br>`tools/uishots/`<br>`tools/uishots.sh`<br>`tools/uilint/lint.go` | - |
 | ordersux3 | deferred | - | `internal/watch/mapdata.go`<br>`internal/watch/web/**`<br>`docs/orders-slice3.md` | - |
 | uib9 | proposed | - | `internal/d2dctl/item_verbs_merc.go`<br>`internal/d2dctl/item_verbs_merc_test.go`<br>`internal/invdesk/mercverbs.go`<br>`internal/invdesk/mercverbs_test.go`<br>`internal/invdesk/sets.go`<br>`cmd/d2bot/invverbs.go`<br>`cmd/d2bot/invverbs_test.go`<br>`docs/research/merc-gear.md` | - |
-| onboardtour | proposed | - | `internal/watch/web/onboarding.js`<br>`internal/watch/web/onboarding.css`<br>`docs/onboarding-tour.md` | - |
+| onboardtour | proposed | - | `internal/watch/web/onboarding.js`<br>`internal/watch/web/onboarding.css`<br>`internal/watch/web/onboarding.json`<br>`internal/watch/web/watch.html`<br>`internal/watch/onboardingtour_test.go`<br>`internal/watch/testdata/onboarding_tour_test.cjs`<br>`docs/onboarding-tour.md` | - |
 | onboardctl | deferred | - | `internal/watch/control.go`<br>`internal/watch/control_test.go`<br>`docs/onboarding-controls.md` | - |
 | fidprobe-vendor | proposed | - | `internal/fidvendor`<br>`docs/research/fidelity-vendor-probe.md` | - |
 | custom-overlay | deferred | - | `docs/research/custom-overlay-spec.md`<br>`docs/overlay.md`<br>`docs/research/custom-items.md`<br>`internal/overlay/`<br>`internal/data/`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/d2dbackend_test.go` | - |
@@ -197,14 +197,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 719aeae00 11-27 16:31 `Merge agent/onboardtour2: onboardtour2: tour tips, Help sheet, Now line (TASK-48 partial)` (onboardtour2)
 - 881df5215 11-27 16:31 `Merge agent/whirlscen: whirlscen: combat drill scenarios, pre.skills setup field (TASK-1065)` (whirlscen)
 - 9c6c61d38 11-27 16:30 `Merge agent/diffgo: diffgo: go-difficulty ops verb, persisted go, Return screen button (TASK-1061)` (diffgo)
+- e5ae7cd10 11-27 16:28 `Merge branch 'main' into onboardtour2` (-)
 - ab9acccd0 11-27 16:28 `Merge branch 'main' into whirlscen` (-)
 - 9eaa2ed43 11-27 16:28 `Merge branch 'main' into diffgo` (-)
 - e2e724c59 11-27 16:20 `Merge agent/smenecro: smenecro: SME Necromancer review (docs)` (smenecro)
 - be94247fd 11-27 16:20 `Merge agent/diet: diet: archive 5 finished research reports, docs diet rule (TASK-117/118)` (diet)
 - 27324ad8f 11-27 16:20 `Merge agent/dlvwhirl: dlvwhirl: Whirlwind move row driver (TASK-734)` (dlvwhirl)
 - b197ab183 11-27 16:19 `Merge agent/townrest: townrest: town plan view + /api/townplan (town9), arbiter upkeep source (town10 part), SME brief (town12)` (townrest)
-- 6b720f96a 11-27 16:18 `Merge origin/main into diffgo (funwire.go: difficulty and advice wiring both kept)` (-)
-- 47b6409da 11-27 16:17 `Merge branch 'main' into smenecro` (-)
 <!-- statusgen:end -->
