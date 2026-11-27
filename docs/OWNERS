@@ -143,7 +143,6 @@ cmd/d2bot/journeywire.go  credit-runner  campaign1
 cmd/d2bot/ladder.go  live-agent  pgtaps
 cmd/d2bot/live.go  credit-runner  agencyp1b
 cmd/d2bot/live.go  credit-runner  campaign1
-cmd/d2bot/merc_adapter.go  credit-runner  mercaura
 cmd/d2bot/necroplay_test.go  live-agent  epic-class-necromancer
 cmd/d2bot/task.go  credit-runner  qdmatrix
 cmd/d2bot/task_test.go  credit-runner  qdmatrix
@@ -189,7 +188,6 @@ docs/design/input-cast-verbs.md  live-agent  inputl3
 docs/design/input-i3.md  live-agent  inputl3
 docs/design/input-i4.md  credit-runner  inputl4
 docs/design/input-i5-i7.md  credit-runner  inputl5
-docs/design/merc-aura-by-archetype.md  credit-runner  mercaura
 docs/design/ticklog-t4.md  live-agent  ticklog
 docs/design/townflip-p5.md  credit-runner  town11
 docs/design/townflip-p5.md  live-agent  townflip
@@ -288,7 +286,6 @@ internal/bot/runner.go  credit-runner  campaign1
 internal/bot/shadow.go  live-agent  arbmig
 internal/bot/shadow.go  live-agent  ticklog
 internal/bot/task.go  credit-runner  boardmoderace
-internal/bot/task.go  credit-runner  mercaura
 internal/bot/ticklog.go  live-agent  ticklog
 internal/bot/ticklog_test.go  live-agent  ticklog
 internal/bot/waypoints.go  credit-runner  boardmoderace
@@ -312,9 +309,6 @@ internal/combat/fighter.go  credit-runner  agencyp1b
 internal/combat/fighter.go  live-agent  inputl3
 internal/combat/portalverb.go  live-agent  inputl3
 internal/combat/portalverb_test.go  live-agent  inputl3
-internal/d2/classtraits.go  credit-runner  mercaura
-internal/d2/classtraits.json  credit-runner  mercaura
-internal/d2/classtraits_test.go  credit-runner  mercaura
 internal/d2dcombat/  live-agent  dlv-press
 internal/d2dctl/fake/fake.go  credit-runner  inputl4
 internal/d2dctl/fake/fake.go  live-agent  inputl3
@@ -400,9 +394,7 @@ internal/supply  credit-runner  town10
 internal/supply  credit-runner  town9
 internal/talk/talk.go  credit-runner  qdmatrix
 internal/talk/talk_test.go  credit-runner  qdmatrix
-internal/task/act2.go  credit-runner  mercaura
 internal/task/act2.go  credit-runner  qdmatrix
-internal/task/act2_test.go  credit-runner  mercaura
 internal/task/act2_test.go  credit-runner  qdmatrix
 internal/task/act4.go  credit-runner  qdmatrix
 internal/task/banote_test.go  credit-runner  cainfix3
@@ -415,8 +407,6 @@ internal/town  credit-runner  town11
 internal/town  live-agent  town5
 internal/town/chores.go  credit-runner  inputl4
 internal/town/chores.go  live-agent  townflip
-internal/town/merc.go  credit-runner  mercaura
-internal/town/merc_test.go  credit-runner  mercaura
 internal/town/portalverb.go  live-agent  inputl3
 internal/town/portalverb_export_test.go  credit-runner  inputl4
 internal/town/portalverb_export_test.go  live-agent  inputl3
