@@ -2,6 +2,8 @@
 
 > status: current. Tags: V verified (named run), S secondary, U unverified. The scenario setup is CHEATED (level, gold, waypoints, potions by SETUP verbs): mechanics evidence only.
 
+> verdicts: current verdicts per scenario and class are in [proving-ground-status.md](../process/proving-ground-status.md) (generated from the results ledger) and on the board page /pg. The tables below record these runs only; new runs are cited by run id, not added here (design 2026-11-21 Q10).
+
 ## Findings
 
 1. V (builder long lane, K1 lab d2d, jobs 20261120-144848-dd8d, 20261120-160224-c5c8, 20261120-162206-c36f): Paladin/11 reaches Tower Cellar 5 (area 25) with `quests.layoutRead` 1 and `debug levelmap` answered (264 calls). The level lists 32 object presets (classes 269, 37, 240, 7, 11, 105, 106), no monster presets and NO object 580 (the Kolbot "Countess chest"). So the layout read does not show her room through the chest; the chest-preset anchor tried first was wrong and was dropped. Rooms/monsters of levelmap were not logged (U whether a preset room row names her room).
