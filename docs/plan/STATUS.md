@@ -128,7 +128,7 @@
 | town5 | in-progress | - | `internal/town`<br>`internal/resource`<br>`internal/bot/broke.go`<br>`internal/bot/leveling.go`<br>`tools/provingground/scenarios/townplan.json`<br>`docs/probes/town-plan-stage3-2026-11-22.md`<br>`docs/design/fable-review-2026-11-21/town-planner-b-model.md`<br>`town-basics` | - |
 | town9 | proposed | - | `internal/watch`<br>`internal/supply` | - |
 | town10 | proposed | - | `internal/arbiter`<br>`internal/supply` | - |
-| town11 | proposed | - | `internal/town`<br>`docs/town.md`<br>`town-basics` | - |
+| town11 | proposed | - | `internal/town`<br>`docs/town.md`<br>`town-basics`<br>`docs/design/townflip-p5.md`<br>`backlog/tasks/task-765 - town12-SME-review-of-the-supply-profile-numbers-advice-only.md` | - |
 | town12 | proposed | - | `docs/design/fable-review-2026-11-21/town-profiles-sme.md` | - |
 | pgledgeron | proposed | - | `docs/process/pg-ledger-ops.md`<br>`tools/provingground/run.sh`<br>`tools/provingground/pgenv.sh`<br>`tools/provingground/pgenv_test.sh` | - |
 | warptrigger | proposed | - | `docs/probes/warptrigger-2026-11-22.md`<br>`internal/d2dctl/warptriggers.go`<br>`internal/d2dctl/warptriggers_test.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/nav/mouthgate.go`<br>`internal/nav/warpread_test.go`<br>`internal/d2map/static.go`<br>`internal/d2dworld/triggers_test.go`<br>`internal/d2denv/env.go` | `fork-branch:didle/warp-triggers-20261122` |
@@ -197,14 +197,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 0ae6b91df 11-27 16:41 `Merge agent/town11: town11: townLegacy seam for old town counters, deletion plan (TASK-764 partial)` (town11)
 - a65a48c0a 11-27 16:41 `Merge agent/pgcards2: pgcards2: nightly run set, earned-hero tier, release-check (TASK-754/756 repo side)` (pgcards2)
 - 66d7cee98 11-27 16:41 `Merge agent/uifix: uifix: return mock, onboarding chickens line, layout test (TASK-109/249/424)` (uifix)
+- e4986e3c8 11-27 16:38 `Merge branch 'main' into town11` (-)
 - d5e38d0bf 11-27 16:38 `Merge branch 'main' into pgcards2` (-)
 - f0dc78eff 11-27 16:38 `Merge branch 'main' into uifix` (-)
 - 1280a6928 11-27 16:31 `Merge agent/smepal: smepal: SME Paladin and Sorceress review (docs)` (smepal)
 - 719aeae00 11-27 16:31 `Merge agent/onboardtour2: onboardtour2: tour tips, Help sheet, Now line (TASK-48 partial)` (onboardtour2)
 - 881df5215 11-27 16:31 `Merge agent/whirlscen: whirlscen: combat drill scenarios, pre.skills setup field (TASK-1065)` (whirlscen)
 - 9c6c61d38 11-27 16:30 `Merge agent/diffgo: diffgo: go-difficulty ops verb, persisted go, Return screen button (TASK-1061)` (diffgo)
-- c43a986dd 11-27 16:28 `Merge branch 'main' into smepal` (-)
-- e5ae7cd10 11-27 16:28 `Merge branch 'main' into onboardtour2` (-)
 <!-- statusgen:end -->
