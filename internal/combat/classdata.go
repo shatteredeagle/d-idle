@@ -299,6 +299,9 @@ func loadClassData() *classData {
 			for n := range p.Layout {
 				classDB.names[n] = true
 			}
+			for _, r := range p.Marks {
+				classDB.names[r.Name] = true
+			}
 		}
 	})
 	return &classDB
