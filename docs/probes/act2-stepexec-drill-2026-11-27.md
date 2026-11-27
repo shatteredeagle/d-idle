@@ -94,3 +94,30 @@ Record 10 after the placement is still NOT observed. The talk row's post is not 
 Open, for the placefix owner (U):
 - Record 10 bit 0 is now clear, and place is still a no-op.
 - Next things to check: what d2d's `place` handler needs (item in hand vs. pack), the orifice's mode, and whether unit 104/105 is the orifice. A one-off `place` reply with the lab d2d's error text on would settle it.
+
+## Fourth run after placefix3 (origin/main e9c3bea65, labrun job 20261127-064947-f0cf)
+
+The run used the same command with `-id drill.act2.duriel.stepexec`, plus `D2DCTL_JOURNAL_RAW=debug,cmd,dump` (the raw reply side file, deleted after reading).
+
+Result: BLOCKED 3/3 on the stall rule. The placement WORKS now: `seven_tombs/place_staff outcome=done` in all three runs. The run then fails one node later:
+- The next step, `quest.duriel/door` ("Enter Duriel's Lair"), reports `object class 100 not found (the whole level was walked)` three times.
+- The board parks the chunk, and the hero idles in town until the 60 virtual min stall rule ends the run.
+- Each run also had one earlier place try ending with `object class 152 not found (the whole level was walked)` before the try that succeeded.
+
+What the raw journal shows (V, the same in all three runs, tick 17533 to 17536):
+
+| item | reading |
+|---|---|
+| npcs index used | `cmd interact 104`, `cmd place 104 25` (`debug objectlist`: `104 152 67.7 91.7 ... orifice`) |
+| orifice mode | NU before the interact, OP at the next `debug objectlist`, 3 ticks later |
+| Staff (item 25, hst) | in the pack at the last `dump items` before the interact. `cmd hand 25` and `cmd place 104 25` went out in the same tick with no read in between, so cursor vs pack at the moment of `place` is not directly observed (U; `hand` replied empty). Gone from the items after the place. |
+| replies | `cmd interact`, `cmd hand` and `cmd place` all reply empty |
+
+Record 10 (horadric_staff):
+- 0x0c08 by setup, 0x2c09 after the placement. Bit 0x0001 and bit 0x2000 are new.
+- The bot then logs `Quest done: horadric_staff`.
+- Record 14 stays 0x0004 (set on entering the tomb).
+
+The talk row's post is not set: the scenario did not pass, and the coordinator's rule ties the post to a pass. The Cain-talk reading (0x0800 to 0x0c78, bit 0x0400) stays above.
+
+Next blocker, for the next card: Duriel's Lair entrance (object class 100) is not found in tomb 66 after the placement. It may need the lair's portal or room to be built after the placement (U).
