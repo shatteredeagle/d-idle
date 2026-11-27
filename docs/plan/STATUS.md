@@ -198,7 +198,9 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- e7e1d2d5b 11-27 16:12 `Merge agent/fliptool2: fliptool2: flip.py loads local.env itself, ledger commits on close/revert, unique branch names` (fliptool2)
 - b49eb8363 11-27 16:12 `Merge agent/ledgerenabled: ledger: stepExec enabled` (ledgerenabled)
+- 32d78628f 11-27 16:10 `Merge branch 'main' into fliptool2` (-)
 - 2c08cd5c2 11-27 16:10 `Merge branch 'main' into ledgerenabled` (-)
 - 98f9bd0b3 11-27 16:02 `Merge agent/diffready: diffready+diffbaal: readiness predicate, opt-in hop, Baal-dead reader (TASK-1058/1059)` (diffready)
 - 689b57e34 11-27 15:59 `Merge origin/main into diffready (explain.go and darklaunch.json: both sides kept)` (-)
@@ -206,6 +208,4 @@
 - 1235cddd1 11-27 15:42 `Merge branch 'main' into ledgertrial` (-)
 - 2f9abaad7 11-27 15:34 `Merge agent/classkeys: classkeys: main-attack hotkeys for all classes, profile skill check, merc aura note (TASK-1063)` (classkeys)
 - 2947d96a6 11-27 15:34 `Merge agent/testerreport: testerreport: scrubbed tester report bundle, first-session doc (TASK-27)` (testerreport)
-- bb0a720a8 11-27 15:34 `Merge agent/closecards3: closecards3: third card cleanup pass` (closecards3)
-- 0dd5a9f51 11-27 15:34 `Merge agent/admit2: admit2: admission function shadow wiring, bot.admission knob (TASK-970 step 2)` (admit2)
 <!-- statusgen:end -->

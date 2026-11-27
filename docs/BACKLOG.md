@@ -1554,6 +1554,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - agent/ledgertrial: ledger: stepExec trial row (merged 2026-11-27) <!--sg:agent/ledgertrial-->
 - diffready: per-class ready-for-next-difficulty predicate (opt-in hop) (TASK-1058, merged 2026-11-27, acceptance 3 of 3): Built and tested offline, not verified live: per-class Nightmare rows (S) and Hell rows (U, no resist field), pure predicate with missing/unread lists, knob bot.diffReadyV2 (default 0) replaces the clvl rule in wantedDifficulty and the goal chain, hop waits ... <!--sg:agent/diffready-->
 - agent/ledgerenabled: ledger: stepExec enabled (merged 2026-11-27) <!--sg:agent/ledgerenabled-->
+- agent/fliptool2: fliptool2: flip.py loads local.env itself, ledger commits on close/revert, unique branch names (merged 2026-11-27) <!--sg:agent/fliptool2-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

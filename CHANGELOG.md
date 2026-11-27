@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- fliptool2: flip.py loads local.env itself, ledger commits on close/revert, unique branch names <!--sg:agent/fliptool2-->
 - ledger: stepExec enabled <!--sg:agent/ledgerenabled-->
 - diffready+diffbaal: readiness predicate, opt-in hop, Baal-dead reader (TASK-1058/1059) <!--sg:agent/diffready-->
 - ledger: stepExec trial row <!--sg:agent/ledgertrial-->
