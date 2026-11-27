@@ -1,10 +1,11 @@
 ---
 id: TASK-1070
 title: 'fieldstate: hand the return leg to the fighter when hostiles are near'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T21:55:00Z'
+updated_date: '2026-11-27T22:46:00Z'
 labels:
   - bot
   - bot-fix

@@ -8,6 +8,9 @@ type QuestsTuning struct {
 	// StepExec 1: the generic step executor (internal/questspec/exec.go) runs the quest steps that carry an exec row in data/questspec (Cain scroll and reading, Horadric Staff transmute, the orifice); 0 (default): the old handlers.
 	StepExec int
 
+	// ResumeAfterDeaths 1: a chunk parked after the hero died on it too often lifts the park by itself after a quiet stretch (data/questboard/resume.json: minutes without a death, life percent, one resume in a row, caps per day); needs BoardSM 1. 0 (default): only the player's Try again clears it.
+	ResumeAfterDeaths int
+
 	Board int // 1 (default): the quest board drives quests (player taps Start and Hand in); 0: the old floor planner drives them (measured runs)
 
 	// Opt-in auto-start (slice S8); nothing here acts while Board is 0 or while no quest is marked auto.
@@ -37,6 +40,8 @@ func questsKnobs() []Knob {
 			Desc: "1: the quest board stores each accepted chunk as a run with a status and latches completion in the hero's plan file (a park survives a restart, accept implies the earlier parts, Stop implies the parts that wait for it, a chunk seen done stays done), design docs/design/fable-review-2026-11-21/quest-board.md. 0 (default): the board derives its state from the evidence every tick, as before. The plan file keeps its old accepted records either way."},
 		{Key: "quests.stepExec", Label: "Generic step executor", Unit: "bool", Default: 0, Min: 0, Max: 1, NoHandicap: true,
 			Desc: "[dark-launch] 1: quest steps that carry an exec row in data/questspec run on the generic step executor of internal/questspec (approach, act, wait for the declared fact read from the game, bounded retries with backoff, a typed outcome): the Cain scroll (take_scroll), Akara reading it (read_scroll), the Horadric Staff transmute and placing the Staff in the orifice; 0 (default): the old handlers. Card stepexec1, ledger row in data/darklaunch.json."},
+		{Key: "quests.resumeAfterDeaths", Label: "Quest board: resume death parks", Unit: "bool", Default: 0, Min: 0, Max: 1, NoHandicap: true,
+			Desc: "[dark-launch] 1: a quest chunk parked because the hero died on it twice lifts the park by itself once the hero has been quiet (no death) for the minutes in data/questboard/resume.json and is back at its life percent and out of purse recovery; once in a row (a park that follows an automatic resume waits for Try again) and at most the day cap a day; the page shows the park as paused_after_deaths with since and what clears it. Needs quests.boardSM 1. 0 (default): only the player's Try again clears a park. Card questresume, ledger row in data/darklaunch.json."},
 		{Key: "quests.autoDelaySec", Label: "Auto-start countdown", Unit: "s", Default: 20, Min: 0, Max: 300, NoHandicap: true,
 			Desc: "Seconds an opted-in quest counts down (shown on the page, with Cancel) before it starts by itself; 0 starts at once. Only a SAFE offer ever auto-starts."},
 		{Key: "quests.awayMin", Label: "Away after", Unit: "min", Default: 10, Min: 1, Max: 240, NoHandicap: true,
@@ -53,3 +58,6 @@ func questsKnobs() []Knob {
 			Desc: "1: ask the private d2d fork for the current level's room layout and quest-object positions (read-only verb `debug levelmap`, ADR 0022: a read never makes a run CHEATED) and walk straight to the Tree of Inifuss, the cairn stones or Cain's cage instead of exploring for them; a second read (`debug levelmonsters`) gives a superunique's spawn point (the Countess in Tower Cellar 5) from the level's build; stock d2d or an error falls back to exploring. 0 (default): explore as before."},
 	}
 }
+
+// BoardLegacy reports the old derive-every-tick quest board (quests.boardSM 0): the single read of the knob.
+func (q QuestsTuning) BoardLegacy() bool { return q.BoardSM == 0 }

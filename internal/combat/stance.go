@@ -298,6 +298,7 @@ func (f *Fighter) stanceTick(ctx context.Context, snap *d2.Snapshot, st *fightSt
 		return false, nil
 	}
 	f.decision(st, "stance", act+": "+why)
+	st.tel.steps++
 	f.info("stance", "act", act, "to", to, "why", why)
 	p := snap.Player
 	return true, f.evade(ctx, input.Point{X: p.X, Y: p.Y}, to)

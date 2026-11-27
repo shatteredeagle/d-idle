@@ -234,7 +234,7 @@ func (e *Exec) smCancel(q Quest, c Chunk) error {
 
 // smPark stores a park the executor just decided (the counters stay with it, Q5). No-op without the machine.
 func (e *Exec) smPark(quest, chunk, code string, rs *runState) {
-	if !e.o.SM {
+	if e.boardLegacy() {
 		return
 	}
 	d := Difficulties[e.env.Diff()]
@@ -245,6 +245,7 @@ func (e *Exec) smPark(quest, chunk, code string, rs *runState) {
 		if r := m.find(quest, chunk, d); r != nil {
 			r.Failures, r.Deaths = rs.failures, rs.deaths
 			r.Release = e.o.Release
+			r.ParkedAt = e.o.Now().UTC()
 			if code == "hold_timeout" {
 				r.Hold, r.HoldWhy, r.HoldMin = rs.hold, rs.holdWhy, holdBudget(rs.hold)
 			}
@@ -261,7 +262,7 @@ func (e *Exec) smPark(quest, chunk, code string, rs *runState) {
 // step fails again, comes back stored with this release, so it cannot loop. Parks of other codes stay as the player
 // decided (Q5).
 func (e *Exec) smReleaseRetry() {
-	if e.relDone || !e.o.SM || e.o.Release == "" {
+	if e.relDone || e.boardLegacy() || e.o.Release == "" {
 		return
 	}
 	e.relDone = true
@@ -402,3 +403,7 @@ func (e *Exec) smAutoFinish(vs []QuestView, diff int) bool {
 	})
 	return err == nil
 }
+
+// boardLegacy is the one switch between the old derive-every-tick board and the run machine (knob quests.boardSM 0).
+// Removal of the old path deletes every branch that reads it (docs/questboard.md, "boardSM legacy removal").
+func (e *Exec) boardLegacy() bool { return !e.o.SM }

@@ -18,12 +18,6 @@
    "skill": "Shout",
    "hand": "right",
    "from_clvl": 8
-  },
-  {
-   "key": "F3",
-   "skill": "Iron Skin",
-   "hand": "right",
-   "from_clvl": 18
   }
  ],
  "main_attack": [

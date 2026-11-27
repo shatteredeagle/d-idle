@@ -43,7 +43,11 @@ type boardRT struct {
 	exec  *questboard.Exec
 	st    *questboard.Store
 	hero  string // the hero the store belongs to ("" when built by NewQuestBoard)
-	reqs  chan boardHandInReq
+	// resumeAt is the last pause-policy check; the loop thread only, so no lock (the check reads the plan file).
+	resumeAt time.Time
+	// reportAt is the last campaign progress report (boardprogress.go); the loop thread only.
+	reportAt time.Time
+	reqs     chan boardHandInReq
 	// handWhy is what holds a queued hand-in tap, in words ("" when none is queued or the loop serves it); guarded by mu.
 	handWhy string
 
@@ -89,11 +93,12 @@ func (r *Runner) newQuestBoard(b *questboard.Board, st *questboard.Store, hero s
 		lastFail: map[string]time.Time{}, noted: map[string]string{}, unpark: map[string]bool{}}
 	rt.exec = questboard.NewExec(b, st, boardEnv{rt}, boardActions{rt}, questboard.Options{
 		Enabled: r.questBoardOn(),
-		SM:      r.e.Tune.Quests.BoardSM != 0,
+		SM:      !r.boardLegacy(),
 		Release: botReleaseID(),
 		Log:     func(msg string, kv ...any) { r.e.Log.Info(msg, kv...) },
 		Now:     r.e.Clock.Now,
 		Auto:    r.questAutoOptions(),
+		Resume:  r.questResumeOptions(),
 		Ledger: func() questboard.Ledger {
 			r.qbMu.Lock()
 			f := r.qbLedger
@@ -157,6 +162,7 @@ func (r *Runner) boardRTFor() *boardRT {
 	if rt != nil {
 		rt.exec.SetEnabled(r.questBoardOn())
 		rt.exec.SetAutoOptions(r.questAutoOptions())
+		rt.exec.SetResume(r.questResumeOptions())
 	}
 	return rt
 }
@@ -776,6 +782,12 @@ func (r *Runner) boardStep(ctx context.Context, snap *d2.Snapshot, c control) bo
 	rt.worldLoop()
 	rt.exec.SetEnabled(true)
 	rt.exec.SetAutoOptions(r.questAutoOptions())
+	if now := r.e.Clock.Now(); r.e.Tune.Quests.ResumeAfterDeaths != 0 && now.Sub(rt.resumeAt) >= 10*time.Second {
+		rt.resumeAt = now
+		if ref, ok := rt.exec.ResumeTick(r.questResumeInput(snap)); ok {
+			r.boardNote("resume "+questboard.ChunkKey(ref.Quest, ref.Chunk), "quest board: "+questboard.ChunkKey(ref.Quest, ref.Chunk)+" resumed by the pause policy")
+		}
+	}
 	r.parkedBoard.Store(false)
 	if r.boardServeHandIn(ctx, snap, c) {
 		return true
@@ -1300,3 +1312,7 @@ func botReleaseID() string {
 	}
 	return buildinfo.Current()
 }
+
+// boardLegacy is true while quests.boardSM is 0; every bot-side branch between the old board and the run machine reads
+// it here (docs/questboard.md, "boardSM legacy removal").
+func (r *Runner) boardLegacy() bool { return r.e.Tune.Quests.BoardLegacy() }

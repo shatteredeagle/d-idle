@@ -1,10 +1,11 @@
 ---
 id: TASK-1069
 title: 'logsink: bot operational log to stdout and a rotating file, d2bot ops log'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T21:54:00Z'
+updated_date: '2026-11-27T22:46:00Z'
 labels:
   - bot
   - bug

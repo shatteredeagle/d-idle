@@ -29,6 +29,7 @@ const (
 // noteCast records an attack cast of the fight.
 func (st *fightState) noteCast(now time.Time) {
 	st.casts++
+	st.tel.cast()
 	st.lastCastAt = now
 	if st.casts == 1 && !st.t0.IsZero() {
 		st.firstCast = now.Sub(st.t0)

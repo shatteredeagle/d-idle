@@ -58,7 +58,8 @@ type fightState struct {
 	seen         map[uint32]seenUnit
 	blacklist    map[uint32]bool
 	avoided      map[uint32]bool
-	stalled      bool // the no-progress watchdog already logged in this fight
+	tel          fightTel // fight-end summaries (telem.go)
+	stalled      bool     // the no-progress watchdog already logged in this fight
 	ignored      []Ignored
 	lastExp      uint32
 	haveExp      bool
@@ -200,6 +201,7 @@ func (f *Fighter) fight(ctx context.Context, sp fightSpec, snap *d2.Snapshot) (r
 			ft.Starved = st.starved
 			f.fightTick(&ft, st, start, res)
 			f.info(ft.Finish(res))
+			f.telemSummaries(st, endSnap)
 			f.addFight(&ft, st, res)
 			f.noteFightEnd(&ft, res, err)
 			f.noteSummary(&ft, res, err)
@@ -207,6 +209,7 @@ func (f *Fighter) fight(ctx context.Context, sp fightSpec, snap *d2.Snapshot) (r
 	}()
 	defer func() { res.Elapsed = f.now().Sub(start) }()
 	st = newFightState()
+	st.tel.begin(f)
 	st.t0, st.lastCastAt = start, start
 	st.book.Model = f.manaBooking()
 	t := f.tune()
@@ -253,6 +256,7 @@ func (f *Fighter) fight(ctx context.Context, sp fightSpec, snap *d2.Snapshot) (r
 		f.sampleLife(p)
 		ft.Sample(p)
 		hs := Hostiles(snap, f.hostileCtx(p))
+		st.tel.sample(f, snap, hs)
 		ft.Area, ft.Diff = p.Area, int(p.Difficulty)
 		ft.Danger = max(ft.Danger, f.packDanger(p, hs))
 		f.castLogTick(p)

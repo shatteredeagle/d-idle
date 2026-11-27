@@ -15,6 +15,7 @@ import (
 	"d2lod-bot/internal/goals"
 	"d2lod-bot/internal/input"
 	"d2lod-bot/internal/task"
+	"d2lod-bot/internal/town"
 )
 
 // The campaign goal: internal/task decides WHICH step, this file lets it read the world (Env) and use the bot's
@@ -368,7 +369,7 @@ func (e taskEnv) World(ctx context.Context) (task.World, error) {
 	w.BRHigh = p.Class == d2.Sorceress || p.Class == d2.Druid || p.Class == d2.Amazon
 	w.BR = task.BRKnobs{CasterLevel: bt.BRCasterLevel, MeleeLevel: bt.BRMeleeLevel, Potions: bt.BRPotions, ManaPotions: bt.BRManaPotions, TPCharges: bt.BRTPCharges, Gold: bt.BRGold}
 	w.BRWaitLevel = l.br.waitLvl
-	w.BoardSM = r.e.Tune.Quests.BoardSM != 0
+	w.BoardSM = !r.boardLegacy()
 	if g := r.gearVerdict(s); g.Gated {
 		w.Gated, w.GatedWhy, w.SafeArea = true, g.Reason, task.Area(r.safeFarmArea(s))
 		if !g.Naked && w.Potions == 0 && w.Gold > 0 {
@@ -964,6 +965,15 @@ func (a taskActs) HireMerc(ctx context.Context, act int, aura string) error {
 	return a.tag(td.HireMerc(ctx, act, aura))
 }
 
+// MercAura implements task.MercAuraChooser: the class row for the snapshot's difficulty.
+func (a taskActs) MercAura() (string, bool, error) {
+	s, err := a.r.e.Snapshot()
+	if err != nil {
+		return "", false, err
+	}
+	return town.ClassMercAura(s.Player.Class, data.Difficulty(s.Player.Difficulty))
+}
+
 // ClaimFreeMerc implements task.MercClaimer over TaskDeps.ClaimMerc. Without a backend it is a logged no-op, never an error.
 func (a taskActs) ClaimFreeMerc(ctx context.Context) error {
 	td := a.r.d.Task
@@ -1288,6 +1298,7 @@ var _ task.StallRecoverer = taskActs{}
 var _ task.WeaponUser = taskActs{}
 var _ task.Transmuter = taskActs{}
 var _ task.MercHirer = taskActs{}
+var _ task.MercAuraChooser = taskActs{}
 var _ task.OrbSmasher = taskActs{}
 var _ task.Env = taskEnv{}
 
