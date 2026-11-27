@@ -31,7 +31,13 @@ var mutating = map[string]bool{"start": true, "retry": true, "cancel": true, "ha
 // or park a quest; they never touch the hero directly. why is the read verb of the decision ring.
 var orderVerbs = map[string]bool{"hold": true, "home": true, "go": true, "park": true}
 
-func allowed(v string) bool { return mutating[v] || orderVerbs[v] || v == "status" || v == "why" }
+// DifficultyVerb is the owner's go for the next difficulty (user decision 2026-11-27: the hop is opt-in). The bot
+// refuses it with a reason unless the hero is ready; it never hops alone.
+const DifficultyVerb = "go-difficulty"
+
+func allowed(v string) bool {
+	return mutating[v] || orderVerbs[v] || v == "status" || v == "why" || v == DifficultyVerb
+}
 
 // Park limits: a quest is set aside for 1 to MaxParkHours hours (the operator's own wake time, kept in process memory).
 const (
@@ -44,6 +50,11 @@ const (
 // when the walk starts. Kind is "go", "fight" or "home"; replace cancels every open order first.
 type Orders interface {
 	Give(kind, area string, minutes int, replace bool) (text string, err error)
+}
+
+// DifficultyGo records the owner's go for a difficulty hop ("nightmare" or "hell") or refuses with the reason.
+type DifficultyGo interface {
+	RequestDifficultyGo(target string) (text string, err error)
 }
 
 // Desk is what the operator verbs need from the board (questboard.Desk; the same calls the HTTP handlers make).
@@ -68,7 +79,9 @@ type Request struct {
 	Area    string `json:"area,omitempty"`
 	Minutes int    `json:"minutes,omitempty"`
 	Hours   int    `json:"hours,omitempty"`
-	Why     string `json:"why,omitempty"`
+	// Target belongs to go-difficulty: "nightmare" or "hell".
+	Target string `json:"target,omitempty"`
+	Why    string `json:"why,omitempty"`
 	// TryAnyway turns start into the owner's try-anyway start: one attempt past a readiness refusal (docs/operator.md).
 	TryAnyway bool `json:"try_anyway,omitempty"`
 }
@@ -154,12 +167,13 @@ func Enabled(getenv func(string) string) (bool, string) {
 
 // Config wires a Server. Getenv and Now default to the process; Logf may be nil.
 type Config struct {
-	Desk    func() Desk
-	Orders  func() Orders // nil: the order verbs answer "off"
-	Explain func() any    // nil: why answers "off"
-	Getenv  func(string) string
-	Now     func() time.Time
-	Logf    func(msg string, kv ...any)
+	Desk       func() Desk
+	Orders     func() Orders       // nil: the order verbs answer "off"
+	Explain    func() any          // nil: why answers "off"
+	Difficulty func() DifficultyGo // nil: go-difficulty answers "off"
+	Getenv     func(string) string
+	Now        func() time.Time
+	Logf       func(msg string, kv ...any)
 }
 
 // Server dispatches requests. Safe for concurrent use.
@@ -259,7 +273,7 @@ func (s *Server) Handle(rq Request) Response {
 
 func (s *Server) handle(rq Request) Response {
 	if !allowed(rq.Verb) {
-		return no("verb", "only start, retry, cancel, handin, auto, hold, home, go, park, status and why are served here")
+		return no("verb", "only start, retry, cancel, handin, auto, hold, home, go, park, go-difficulty, status and why are served here")
 	}
 	if rq.Verb == "why" {
 		if s.cfg.Explain == nil {
@@ -285,6 +299,9 @@ func (s *Server) handle(rq Request) Response {
 	}
 	if orderVerbs[rq.Verb] {
 		return s.order(d, rq)
+	}
+	if rq.Verb == DifficultyVerb {
+		return s.goDifficulty(d, rq)
 	}
 	if !safeID(rq.Quest) {
 		return no("quest", "send a quest id (a-z, 0-9, _ and -, at most 64)")
@@ -486,5 +503,37 @@ func (s *Server) order(d Desk, rq Request) Response {
 	d.Record(questboard.AuditEvent{Action: rq.Verb, Quest: rq.Quest, Path: "operator/" + rq.Verb, Remote: "operator",
 		Agent: "ops-cli", Why: auditWhy, OK: rep.OK, Status: st, Code: rep.Code, Reason: rep.Reason})
 	s.cfg.Logf("operator verb", "verb", rq.Verb, "quest", rq.Quest, "area", rq.Area, "ok", rep.OK, "code", rep.Code)
+	return Response{OK: rep.OK, Code: rep.Code, Reason: rep.Reason, Reply: &rep}
+}
+
+// goDifficulty serves go-difficulty: needs a reason, is rate limited with the board's budget and audited with remote
+// "operator". The bot refuses it (order_refused) with the missing requirements unless the hero is ready.
+func (s *Server) goDifficulty(d Desk, rq Request) Response {
+	why, ok := cleanWhy(rq.Why)
+	if !ok {
+		return no("why", "every mutating verb needs a reason: one line, 1 to 200 characters")
+	}
+	if rq.Target != "nightmare" && rq.Target != "hell" {
+		return no("target", "go-difficulty takes nightmare or hell")
+	}
+	var g DifficultyGo
+	if s.cfg.Difficulty != nil {
+		g = s.cfg.Difficulty()
+	}
+	if g == nil {
+		return no("off", "the difficulty hop is not available yet")
+	}
+	if r := s.admit(rq.Verb, "_difficulty"); r != nil {
+		return *r
+	}
+	text, err := g.RequestDifficultyGo(rq.Target)
+	rep := questboard.Reply{OK: err == nil, Reason: text}
+	st := 200
+	if err != nil {
+		rep.Code, rep.Reason, st = "order_refused", err.Error(), 409
+	}
+	d.Record(questboard.AuditEvent{Action: rq.Verb, Quest: rq.Target, Path: "operator/" + rq.Verb, Remote: "operator",
+		Agent: "ops-cli", Why: rq.Verb + " " + rq.Target + ": " + why, OK: rep.OK, Status: st, Code: rep.Code, Reason: rep.Reason})
+	s.cfg.Logf("operator verb", "verb", rq.Verb, "target", rq.Target, "ok", rep.OK, "code", rep.Code)
 	return Response{OK: rep.OK, Code: rep.Code, Reason: rep.Reason, Reply: &rep}
 }

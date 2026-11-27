@@ -1,10 +1,13 @@
 ---
 id: TASK-109
-title: 'returnmock: return-screen mock (day-away story, missed questions grouped by kind)'
-status: Proposed
+title: >-
+  returnmock: return-screen mock (day-away story, missed questions grouped by
+  kind)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-07T21:56:00Z'
+updated_date: '2026-11-27T21:49:00Z'
 labels:
   - watch
   - research
@@ -19,6 +22,7 @@ owns:
   - "docs/research/return-screen.md"
 exclusive: []
 contracts: []
+result: "Mock docs/research/mocks/return.html and doc docs/research/return-screen.md written: day story, five moments, expedition cards, proposal, missed questions grouped by kind with answer-once-for-all showing the rule it would make, journal fields listed (JournalLine, V by code read). Mock only; not rendered in a browser (script syntax checked with node), nothing verified live."
 lane: next
 ---
 
@@ -34,6 +38,6 @@ Amended 2026-11-07 (ADR 0018): this mock is the design input of returnscreen (TA
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 HTML mock like the orders one: day-away story on one page, missed questions grouped by kind, one answer may teach a rule
-- [ ] #2 Journal export fields listed; doc says mock only, nothing verified live
+- [x] #1 HTML mock like the orders one: day-away story on one page, missed questions grouped by kind, one answer may teach a rule
+- [x] #2 Journal export fields listed; doc says mock only, nothing verified live
 <!-- AC:END -->

@@ -612,6 +612,9 @@ func (f *Fighter) engage(ctx context.Context, snap *d2.Snapshot, tg Target, sp f
 	if acted, err := f.moveTick(snap, st); acted || err != nil {
 		return err
 	}
+	if acted, err := f.whirlTick(snap, st); acted || err != nil {
+		return err
+	}
 	f.noteGear(snap)
 	f.noteLifePrice(snap)
 	order := f.attackSkills(p)

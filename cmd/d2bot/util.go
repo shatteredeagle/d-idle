@@ -163,8 +163,14 @@ func moveIfAbsent(from, to string) error {
 
 // taskChain hands the difficulty rules of internal/task to the goal manager (which cannot import it).
 // snap gives the newest snapshot (the runner's LastSnapshot, may be nil); its resists feed the resist gate.
-func taskChain(snap func() *d2.Snapshot) *goals.Chain {
+// gate is the runner's per-class readiness (bot.diffReadyV2, opt-in hop); nil or inactive keeps the clvl rule.
+func taskChain(snap func() *d2.Snapshot, gate func(next string, clvl int) (ok bool, why string, active bool)) *goals.Chain {
 	ready := func(next string, clvl int) (bool, string) {
+		if gate != nil {
+			if ok, why, active := gate(next, clvl); active {
+				return ok, why
+			}
+		}
 		var raw *d2.Resists
 		if s := snap(); s != nil && s.Player != nil {
 			r := leveler.RawResists(s.Player)
