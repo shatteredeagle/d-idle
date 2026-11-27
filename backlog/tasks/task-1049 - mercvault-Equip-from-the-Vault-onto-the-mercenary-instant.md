@@ -1,10 +1,11 @@
 ---
 id: TASK-1049
 title: 'mercvault: Equip from the Vault onto the mercenary (instant)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T18:24:00Z'
+updated_date: '2026-11-27T19:03:00Z'
 labels:
   - watch
   - feature
