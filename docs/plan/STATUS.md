@@ -195,6 +195,9 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 12aa8855a 11-27 17:16 `Merge agent/palapply: palapply: SME Paladin/Sorceress data changes (zeal table, Aim/Concentration, bands, mana_heavy)` (palapply)
+- 4a10332d4 11-27 17:13 `Merge branch 'main' into palapply` (-)
+- b5f78b89a 11-27 17:11 `Merge origin/main into palapply (mana_heavy list: both builds sets kept, count 9)` (-)
 - 5757b6333 11-27 17:06 `Merge agent/townwire: townwire: /api/townplan wired, arbiter upkeep behind chores bit (TASK-1064)` (townwire)
 - 71576c17c 11-27 16:54 `Merge branch 'main' into townwire` (-)
 - 7e55fcd23 11-27 16:52 `Merge agent/smeothers: smeothers: SME review of Druid, Barbarian, Amazon, Assassin (docs)` (smeothers)
@@ -202,7 +205,4 @@
 - 0a4584998 11-27 16:52 `Merge agent/rel012: rel012: unnumbered next-release draft notes (TASK-1066)` (rel012)
 - a60dbfaff 11-27 16:50 `Merge branch 'main' into smeothers` (-)
 - be459dded 11-27 16:50 `Merge branch 'main' into cainflaky` (-)
-- f4523d37b 11-27 16:50 `Merge branch 'main' into rel012` (-)
-- 38845a378 11-27 16:41 `Merge agent/necroapply: necroapply: SME Necromancer data changes (bonespear Teeth/Bone Spear points, mana_heavy, merc doc)` (necroapply)
-- 0ae6b91df 11-27 16:41 `Merge agent/town11: town11: townLegacy seam for old town counters, deletion plan (TASK-764 partial)` (town11)
 <!-- statusgen:end -->
