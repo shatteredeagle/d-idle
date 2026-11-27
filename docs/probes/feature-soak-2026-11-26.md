@@ -1,6 +1,7 @@
 # Feature soak campaign, accelerated lab (2026-11-26, card featuresoak)
 
 > status: current. Everything here is a CHEATED/lab result: lockstep d2d lab slots, a prepared hero (declared SETUP verbs before the start, none after: `writes after start: 0` in every row), the lab Andariel has 1024 life. Use it for mechanics and relative A/B between arms only, never as live parity or balance evidence. Tags: V verified in this run (how named), S secondary, U unverified.
+> status: PASS 1 (section 3) ran without class skills: the row script did not set `resource.pointsDecisions` 1 or `D2BOT_RUN`, so every hero banked its points and fought with plain Attack. Its verdicts are mechanics-only and superseded by pass 2 (section 5).
 
 ## 1. How to run the accelerated soak (for every new dark feature)
 

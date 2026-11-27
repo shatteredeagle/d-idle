@@ -27,7 +27,8 @@ def hard_names():
 
 
 def arm_parts(c, arm):
-    a = dict(c["arms"][arm])
+    a = dict(c.get("base_knobs", {}))
+    a.update(c["arms"][arm])
     bot = a.pop("_bot", "base")
     return bot, a
 
