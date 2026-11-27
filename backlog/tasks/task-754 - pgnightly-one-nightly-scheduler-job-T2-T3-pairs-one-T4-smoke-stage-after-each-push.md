@@ -1,10 +1,13 @@
 ---
 id: TASK-754
-title: 'pgnightly: one nightly scheduler job: T2, T3, pairs, one T4; smoke stage after each push'
-status: Proposed
+title: >-
+  pgnightly: one nightly scheduler job: T2, T3, pairs, one T4; smoke stage after
+  each push
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-21T04:51:00Z'
+updated_date: '2026-11-27T21:50:00Z'
 labels:
   - ops
   - feature
