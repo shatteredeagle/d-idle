@@ -1,10 +1,13 @@
 ---
 id: TASK-985
-title: 'agencyp3: Agency P3 and importer: share and import build files, kolbot list and'
-status: Proposed
+title: >-
+  agencyp3: Agency P3 and importer: share and import build files, kolbot list
+  and
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-26T03:57:00Z'
+updated_date: '2026-11-27T20:06:00Z'
 labels:
   - bot
   - feature
