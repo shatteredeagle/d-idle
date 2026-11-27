@@ -23,7 +23,7 @@ func TestCastVerbLines(t *testing.T) {
 	if err := c.CastUnit(9, true, at, 5); err != nil {
 		t.Fatal(err)
 	}
-	want := []string{"cmd skill 9 13.1 29.5", "cmd skill 9 13.1 29.5 0 left", "cmd skill 9 13.1 29.5 5", "cmd skill 9 13.1 29.5 5 left"}
+	want := []string{"cmd skill 9 13.1 29.5", "cmd skill 9 13.1 29.5 -1 1", "cmd skill 9 13.1 29.5 5", "cmd skill 9 13.1 29.5 5 1"}
 	if got := srv.Lines(); !reflect.DeepEqual(got, want) {
 		t.Fatalf("lines\n got %q\nwant %q", got, want)
 	}
