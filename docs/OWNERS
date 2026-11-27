@@ -447,7 +447,9 @@ internal/d2dinput/controller.go  credit-runner  placefix
 internal/d2dinput/placefix_test.go  credit-runner  placefix
 internal/d2dinput/useitem.go  credit-runner  inputl3
 internal/d2dsoakstat/minute.go  credit-runner  intake
+internal/d2dsrc/items.go  credit-runner  placefix
 internal/d2dsrc/items.go  credit-runner  qdmatrix
+internal/d2dsrc/source_test.go  credit-runner  placefix
 internal/d2dsrc/srv_test.go  credit-runner  qdmatrix
 internal/d2dworld  credit-runner  countess3
 internal/d2dworld/  credit-runner  wpstep
