@@ -8,6 +8,14 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- fliptool: flip.py transport probe, --reflip, watcher heartbeat/unit, --commit-ledger (TASK-1062) <!--sg:agent/fliptool-->
+- statusrefresh: STATUS.md hand-written part rewritten (TASK-46) <!--sg:agent/statusrefresh-->
+- playsession: tools/play-session.sh one-command LAN session (TASK-43) <!--sg:agent/playsession-->
+- advisorwire: advisor lines on the Return screen (TASK-1060) <!--sg:agent/advisorwire-->
+- necroepic: Necromancer profiles/tables/policy rows, 24 scenarios, gap doc (TASK-942 AC1) <!--sg:agent/necroepic-->
+- agencydrive: fighter reads agency.DriveOf at planner mode 2 (TASK-984 AC2) <!--sg:agent/agencydrive-->
+- advisor1: runeword and cube advisor lines, items.advisor dark knob (TASK-991) <!--sg:agent/advisor1-->
+- countessnav: Tower Cellar 5 walk regression on two synthetic maps (TASK-766 AC3) <!--sg:agent/countessnav-->
 - dlvwave3: aim-corpse (TASK-728) + stance-pack, press, move-tele, move-melee (TASK-729..732) <!--sg:agent/dlvwave3-->
 - agencyp3: shared build file reader, kolbot importer, DriveOf (TASK-985, TASK-984 partial) <!--sg:agent/agencyp3-->
 - difftrans: difficulty transition design (docs) <!--sg:agent/difftrans-->
