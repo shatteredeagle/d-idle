@@ -306,8 +306,8 @@ func (r *Runner) noteStepRefused(res task.Result) {
 	if res.Err == nil || res.StepID == "" || (res.Outcome != task.OutRetry && res.Outcome != task.OutBlocked && res.Outcome != task.OutSkipped) {
 		return
 	}
-	r.inv.noteRefusal()
 	key := res.StepID + ": " + res.Err.Error()
+	r.inv.noteRefusal(key)
 	l := &r.loop.task
 	if l.refused == nil {
 		l.refused = map[string]bool{}

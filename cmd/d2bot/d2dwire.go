@@ -58,7 +58,7 @@ func buildD2DStack(ctx context.Context, o options, be *d2denv.Backend, nv *nav.N
 	rig := d2dcombat.Attach(ctx, e, nv, be.Ctl)
 	nv.SetMouthGuard(cfg.MouthGuard) // config key mouthGuard, off by default: -27 % border crossings but no kill gain (docs/killfix.md)
 	cb := rig.Fighter
-	cb.Leave = be.Cycler.LeaveGame
+	cb.Leave = func(ctx context.Context) error { ref.noteLeave(); return be.Cycler.LeaveGame(ctx) }
 	cb.Portal = d2dPortal(e, be, combat.NewCatalog(db))
 	// The skill popup rows: the Paladin's aura is picked through the right popup (cmd select leaves rskill unchanged, V
 	// live palready). Without the install tables the popup cannot be used and the aura check backs off.
