@@ -245,6 +245,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 0191a0523 11-27 10:15 `Merge agent/featuresoak2: Merge remote-tracking branch 'origin/main' into agent/featuresoak2` (featuresoak2)
+- e4a4180d6 11-27 10:12 `Merge remote-tracking branch 'origin/main' into agent/featuresoak2` (-)
 - 947a4a255 11-27 09:40 `Merge agent/prereq: Merge branch 'main' into prereq` (prereq)
 - 9836f0994 11-27 09:38 `Merge branch 'main' into prereq` (-)
 - c2af036e3 11-27 09:32 `Merge agent/deploy94: Merge branch 'main' into deploy94-ledger` (deploy94)
@@ -253,6 +255,4 @@
 - 5307199f6 11-27 08:33 `Merge remote-tracking branch 'origin/main' into agent/act2handin` (-)
 - a3b66f2e0 11-27 08:20 `Merge agent/bossdone: Merge branch 'main' into bossdone` (bossdone)
 - 608f022e0 11-27 08:19 `Merge branch 'main' into bossdone` (-)
-- e53929dfb 11-27 08:06 `Merge agent/act2drill5: act2drill5: fifth Duriel run, lair entered and Duriel killed 3/3, blocked on the kill step` (act2drill5)
-- c5a59100e 11-27 07:37 `Merge agent/lairentry: Merge branch 'main' into placefix` (lairentry)
 <!-- statusgen:end -->
