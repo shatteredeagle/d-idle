@@ -244,6 +244,7 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- e53929dfb 11-27 08:06 `Merge agent/act2drill5: act2drill5: fifth Duriel run, lair entered and Duriel killed 3/3, blocked on the kill step` (act2drill5)
 - c5a59100e 11-27 07:37 `Merge agent/lairentry: Merge branch 'main' into placefix` (lairentry)
 - 1b1555425 11-27 07:35 `Merge branch 'main' into placefix` (-)
 - 0b82c29ec 11-27 07:32 `Merge agent/pgselfcheck: Merge branch 'main' into pgselfcheck` (pgselfcheck)
@@ -253,5 +254,4 @@
 - 808277b83 11-27 07:06 `Merge agent/questpts: questpts: card owns as directories` (questpts)
 - 7288badbe 11-27 06:37 `Merge agent/placefix3: Merge branch 'main' into placefix` (placefix3)
 - 44412dbb8 11-27 06:35 `Merge branch 'main' into placefix` (-)
-- c01bdcf8f 11-27 06:29 `Merge agent/act2drill3: Merge branch 'main' into stepexec1` (act2drill3)
 <!-- statusgen:end -->
