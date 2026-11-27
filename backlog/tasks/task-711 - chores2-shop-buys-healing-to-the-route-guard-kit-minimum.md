@@ -24,7 +24,7 @@ owns:
   - "cmd/d2bot/adapters.go"
   - "docs/probes/chores2-2026-11-21.md"
 exclusive: []
-result: "Restock and stash withdraw now satisfy the route guard kit (belt+pack, KitHealing), kit-only guard block inserts chores; unit tests Paladin+Sorceress green on the builder; live on the builder the guard restocks, but act1.tools.malus Paladin 11 stays BLOCKED (cheated hero drains potions on the road); not verified GREEN"
+result: "Restock and stash withdraw now satisfy the route guard kit (belt+pack, KitHealing), kit-only guard block inserts chores; unit tests Paladin+Sorceress green on the builder; live on the builder the guard restocks, but act1.tools.malus Paladin 11 stays BLOCKED (cheated hero drains potions on the road); not verified GREEN closecards3 Remaining (live): #2 need the live game, a browser or a worker-host run; not verified here."
 contracts: []
 lane: next
 ---

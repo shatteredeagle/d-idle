@@ -20,7 +20,7 @@ owns:
   - "internal/resource/"
 exclusive: []
 contracts: []
-result: "offline only, not verified live: priority table is data (internal/supply/priority.json, per-profile override supported, validated by a test), Solve reads it; supply.Plan.Handover names the gold sources (sell, stash, vault prompt, recovery) (the guard already holds with needs_gold_farm, never attention; wiring the sources into internal/task and internal/bot is outside this card owns); the stage 3 plan line gains sell=, dropped= and hand-over fields for the scenarios gold-short-priorities and short-gold-handover (already in townplan.json, d2scenario validate ok, not run live). Build-specific: none in Go; lines come from profiles.json and the belt plan. Two builds in tests."
+result: "offline only, not verified live: priority table is data (internal/supply/priority.json, per-profile override supported, validated by a test), Solve reads it; supply.Plan.Handover names the gold sources (sell, stash, vault prompt, recovery) (the guard already holds with needs_gold_farm, never attention; wiring the sources into internal/task and internal/bot is outside this card owns); the stage 3 plan line gains sell=, dropped= and hand-over fields for the scenarios gold-short-priorities and short-gold-handover (already in townplan.json, d2scenario validate ok, not run live). Build-specific: none in Go; lines come from profiles.json and the belt plan. Two builds in tests. closecards3: status set to Done, merged on main and every acceptance box ticked."
 lane: next
 ---
 

@@ -21,7 +21,7 @@ owns:
   - "cmd/d2bot/autoallocwire.go"
 exclusive: []
 contracts: []
-result: "Not verified live (offline tests only). The planner buys the missing prerequisites of a planned skill first, from the skills.txt reqskill columns, and marks every prerequisite point; the auto allocator spends a marked point even when the capability table calls the skill an unsupported attack (Sacrifice before Zeal), logs a held skill once, and logs a blocked planned skill once with its blocker. Tested on Paladin (Sacrifice then Zeal) and Necromancer (Teeth, Corpse Explosion, Bone Spear). Nothing build-specific: prerequisites come from skills.txt."
+result: "Not verified live (offline tests only). The planner buys the missing prerequisites of a planned skill first, from the skills.txt reqskill columns, and marks every prerequisite point; the auto allocator spends a marked point even when the capability table calls the skill an unsupported attack (Sacrifice before Zeal), logs a held skill once, and logs a blocked planned skill once with its blocker. Tested on Paladin (Sacrifice then Zeal) and Necromancer (Teeth, Corpse Explosion, Bone Spear). Nothing build-specific: prerequisites come from skills.txt. closecards3 Remaining (live): #4 need the live game, a browser or a worker-host run; not verified here."
 ---
 
 ## Description

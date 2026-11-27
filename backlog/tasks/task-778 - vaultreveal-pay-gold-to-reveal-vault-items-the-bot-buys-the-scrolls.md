@@ -35,7 +35,7 @@ owns:
   - "tools/provingground/scenarios/vaultreveal.json"
 exclusive: []
 contracts: []
-result: "Gold reveal built OFFLINE, not run live: a gold reveal is an order the bot fills at the next town visit by BUYING Scrolls of Identify at the vendor (real gold above the repair and potion-kit reserve, capped by the order) and reading them through the ordinary Reveal flow in the same visit; no virtual gold. POST /api/vault/revealgold (answer listener, idempotent, one active order, cancel, confirm over loot.vaultRevealGoldConfirm), one Reveal bar replaces the notice paragraph, knob loot.vaultRevealGold default 0. Tests: vaultkeep (two classes), bulkid, watch, node bar tests. Scenarios vault.reveal-gold and vault.reveal-gold-short are DECLARED but pending (framework lacks vault record seeding and vault assertions): no RED or green verdict."
+result: "Gold reveal built OFFLINE, not run live: a gold reveal is an order the bot fills at the next town visit by BUYING Scrolls of Identify at the vendor (real gold above the repair and potion-kit reserve, capped by the order) and reading them through the ordinary Reveal flow in the same visit; no virtual gold. POST /api/vault/revealgold (answer listener, idempotent, one active order, cancel, confirm over loot.vaultRevealGoldConfirm), one Reveal bar replaces the notice paragraph, knob loot.vaultRevealGold default 0. Tests: vaultkeep (two classes), bulkid, watch, node bar tests. Scenarios vault.reveal-gold and vault.reveal-gold-short are DECLARED but pending (framework lacks vault record seeding and vault assertions): no RED or green verdict. closecards3 Remaining (live): #6 need the live game, a browser or a worker-host run; not verified here."
 lane: next
 ---
 

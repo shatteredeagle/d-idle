@@ -26,7 +26,7 @@ exclusive:
   - "upstream-pr:lightning-last-unit"
   - "upstream-pr:cold-enchanted-length"
 contracts: []
-result: "Posted 2026-11-11 after the verifier second pass and the user go: https://github.com/psi29a/d2decomped/pull/444 (Lightning, fid/missile-last-unit-r4 60623b02) and https://github.com/psi29a/d2decomped/pull/445 (Cold Enchanted, fid/cold-enchanted-length-r5 efc5270a). CodeRabbit read once (see docs/upstream/pr-queue.md); no other posts."
+result: "Posted 2026-11-11 after the verifier second pass and the user go: https://github.com/psi29a/d2decomped/pull/444 (Lightning, fid/missile-last-unit-r4 60623b02) and https://github.com/psi29a/d2decomped/pull/445 (Cold Enchanted, fid/cold-enchanted-length-r5 efc5270a). CodeRabbit read once (see docs/upstream/pr-queue.md); no other posts. closecards3: ticked #1, #2 (posted, PR numbers in result)."
 lane: next
 ---
 
@@ -40,6 +40,6 @@ Posting step of the upstream PR prep (TASK-332): bodies in docs/upstream/bodies,
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 PRs posted with the verified bodies
-- [ ] #2 CodeRabbit inline comments answered once
+- [x] #1 PRs posted with the verified bodies
+- [x] #2 CodeRabbit inline comments answered once
 <!-- AC:END -->

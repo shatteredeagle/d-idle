@@ -24,7 +24,7 @@ owns:
 exclusive: []
 contracts: []
 branch: "agent/sharedgen"
-result: "Generator, merge.sh hook, dry run, rehearsal on a scratch bare repo and docs done offline (ops repo commits carry merge.sh, mergeq.py, auto_done.py, docs/merging-generated.md). Not verified on the real origin until this branch merges."
+result: "Generator, merge.sh hook, dry run, rehearsal on a scratch bare repo and docs done offline (ops repo commits carry merge.sh, mergeq.py, auto_done.py, docs/merging-generated.md). Not verified on the real origin until this branch merges. closecards3: ticked #5 (generated shared-files commit ea7332e8d on main after the merge of agent/sharedgen)."
 ---
 
 ## Description
@@ -41,5 +41,5 @@ Why: five shared files were rewritten per branch (conflicts, lines to get wrong,
 - [x] #2 merge.sh calls it at merge (MERGE_SHAREDGEN=0 off); legacy merge-lines files still accepted; test_merge_sh.sh case 19 passes
 - [x] #3 dry run of the last 30 merges reported against the committed files
 - [x] #4 AGENTS.md, brief template, backlog-howto one-pager, START-HERE tell agents not to write the shared files
-- [ ] #5 live check: the first real merge through the generator (the merge of this branch) shows its generated lines on main
+- [x] #5 live check: the first real merge through the generator (the merge of this branch) shows its generated lines on main
 <!-- AC:END -->

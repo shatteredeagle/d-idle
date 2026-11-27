@@ -48,7 +48,7 @@ owns:
   - "internal/watch/testdata/policysheet"
 exclusive: []
 contracts: []
-result: "Built and tested offline, NOT run live and the browser pieces (gear.js, policy buy button) not opened in a browser. Controller, API gates, policy locks, alerts and the two-class tests pass (go test ./internal/repair ./internal/watch ./internal/decide ./cmd/d2bot). The town gate tests (internal/town/repairgate_test.go) compile and vet but skip without the game tables, so AC 1 and 2 stay open until they run on a host with /tmp/d2mpq or live. Open choices in docs/repair.md (prices 30/50/70/90 are U, gear alerts free, named runs keep the legacy rule)."
+result: "Built and tested offline, NOT run live and the browser pieces (gear.js, policy buy button) not opened in a browser. Controller, API gates, policy locks, alerts and the two-class tests pass (go test ./internal/repair ./internal/watch ./internal/decide ./cmd/d2bot). The town gate tests (internal/town/repairgate_test.go) compile and vet but skip without the game tables, so AC 1 and 2 stay open until they run on a host with /tmp/d2mpq or live. Open choices in docs/repair.md (prices 30/50/70/90 are U, gear alerts free, named runs keep the legacy rule). closecards3 Remaining (live): #1, #2 need the live game, a browser or a worker-host run; not verified here."
 ---
 
 ## Description

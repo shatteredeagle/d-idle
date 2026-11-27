@@ -13,7 +13,7 @@ dependencies: []
 priority: medium
 ordinal: 502000
 card: "upkeepcmp"
-result: "With combat.deliveryUpkeep at 1 every shadow comparison of the buff, aura, minion, mark and stance drivers is counted with its agreements, and the minute line carries upkeep=kind:agree/cmp while the knob is on. Offline tests only; not verified live."
+result: "With combat.deliveryUpkeep at 1 every shadow comparison of the buff, aura, minion, mark and stance drivers is counted with its agreements, and the minute line carries upkeep=kind:agree/cmp while the knob is on. Offline tests only; not verified live. closecards3 Remaining (live): #4 need the live game, a browser or a worker-host run; not verified here."
 lane: next
 owns:
   - "internal/combat/upkeepcmp.go"

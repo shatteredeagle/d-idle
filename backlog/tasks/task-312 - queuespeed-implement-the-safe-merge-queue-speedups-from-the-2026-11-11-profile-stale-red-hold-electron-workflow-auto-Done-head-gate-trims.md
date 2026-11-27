@@ -19,7 +19,7 @@ owns:
   - "docs/process/queuespeed.md"
 exclusive: []
 contracts: []
-result: "Steps 1 to 3 implemented in the ops repo (tools/mergeq.py, branch queuespeed of the ops repo; tests in tools/tests/test_mergeq.py against a scratch bare repo with fake runs), MERGE_TIMINGS=1 set in the worker env file; NOT deployed or verified live until the worker restarts on an empty queue. Step 4 (timings read after 24 h) and gate trims stay open."
+result: "Steps 1 to 3 implemented in the ops repo (tools/mergeq.py, branch queuespeed of the ops repo; tests in tools/tests/test_mergeq.py against a scratch bare repo with fake runs), MERGE_TIMINGS=1 set in the worker env file; NOT deployed or verified live until the worker restarts on an empty queue. Step 4 (timings read after 24 h) and gate trims stay open. closecards3 Remaining (not live): #4 open, needs a day of MERGE_TIMINGS data."
 lane: next
 ---
 

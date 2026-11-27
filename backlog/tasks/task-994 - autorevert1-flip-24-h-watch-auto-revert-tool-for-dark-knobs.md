@@ -27,7 +27,7 @@ owns:
   - "internal/bot/explain.go"
 exclusive: []
 contracts: []
-result: "Built (v2 fixes the envelope: data.overrides, live knob verify, dry-run, restart mode), not verified live: bot counters (hard flag, since) on /api/explain and ops status --why; tools/flip/flip.py flip and watch with fake-sandbox tests. The AC 2 drill on a real sandbox is still open (see docs/process/dark-launch.md How to flip)."
+result: "Built (v2 fixes the envelope: data.overrides, live knob verify, dry-run, restart mode), not verified live: bot counters (hard flag, since) on /api/explain and ops status --why; tools/flip/flip.py flip and watch with fake-sandbox tests. The AC 2 drill on a real sandbox is still open (see docs/process/dark-launch.md How to flip). closecards3 Remaining (live): #2 need the live game, a browser or a worker-host run; not verified here."
 ---
 
 ## Description

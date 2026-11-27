@@ -30,7 +30,7 @@ owns:
   - "cmd/d2bot/vaultpage.go"
 exclusive: []
 contracts: []
-result: "B1-B5 built offline: identify.* knobs and filter table, planner, chunked stash-pack moves with journal, Cain trip orchestrator on fakes, mass reveal preview and Cain-not-rescued note in the vault view and page. NOT wired to the town click path and NOT run live (design section 9 drill)."
+result: "B1-B5 built offline: identify.* knobs and filter table, planner, chunked stash-pack moves with journal, Cain trip orchestrator on fakes, mass reveal preview and Cain-not-rescued note in the vault view and page. NOT wired to the town click path and NOT run live (design section 9 drill). closecards3 Remaining (live): #5 need the live game, a browser or a worker-host run; not verified here."
 lane: next
 ---
 

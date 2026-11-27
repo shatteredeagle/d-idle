@@ -1,7 +1,7 @@
 ---
 id: TASK-582
 title: 'botcpulive: live bot CPU profile of the sandbox (repair-trip bursts)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-17T03:22:00Z'
@@ -16,7 +16,7 @@ owns:
   - "docs/probes/bot-cpu-live-2026-11-16.md"
 exclusive: []
 contracts: []
-result: "Verified live on the sandbox (no bot code change): calm-window profile only (ledger load 30 percent, IsA 14.5 percent of 8 percent of a core); burst NOT profiled (one-shot profiler); quota kept at 3 (27 percent throttled at 2, 2.4 at 3); profiling off. Remaining (live): AC 2 burst-window profile."
+result: "Verified live on the sandbox (no bot code change): calm-window profile only (ledger load 30 percent, IsA 14.5 percent of 8 percent of a core); burst NOT profiled (one-shot profiler); quota kept at 3 (27 percent throttled at 2, 2.4 at 3); profiling off. Remaining (live): AC 2 burst-window profile. closecards3: status set to Done, merged on main; only the live or lab boxes above remain open (listed in Remaining)."
 lane: next
 ---
 

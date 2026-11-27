@@ -19,7 +19,7 @@ owns:
   - "internal/watch/watchlayout_test.go"
 exclusive: []
 contracts: []
-result: "string tests pass; preview deployed, not verified by eye"
+result: "string tests pass; preview deployed, not verified by eye closecards3 Remaining (live): #1 need the live game, a browser or a worker-host run; not verified here."
 ---
 
 ## Description

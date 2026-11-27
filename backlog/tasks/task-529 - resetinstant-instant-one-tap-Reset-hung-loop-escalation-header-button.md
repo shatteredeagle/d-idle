@@ -36,7 +36,7 @@ owns:
   - "tools/uishots/fit.go"
 exclusive: []
 contracts: []
-result: "Soft Reset is instant (cancels the running action, 150 ms on the fake clock), escalates to the hard path after 3 s without a loop tick, POST answers 202 with a wait opt-in; one-tap header button with cooldown, no soft confirm; startFreshGame guarded (in flight, 5 s debounce). Offline only, not verified live; fit renders not viewed (the worker host was busy)."
+result: "Soft Reset is instant (cancels the running action, 150 ms on the fake clock), escalates to the hard path after 3 s without a loop tick, POST answers 202 with a wait opt-in; one-tap header button with cooldown, no soft confirm; startFreshGame guarded (in flight, 5 s debounce). Offline only, not verified live; fit renders not viewed (the worker host was busy). closecards3 Remaining (live): #5 need the live game, a browser or a worker-host run; not verified here."
 lane: next
 ---
 
