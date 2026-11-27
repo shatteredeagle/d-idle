@@ -21,7 +21,7 @@ owns:
   - "internal/scenario/result.go"
 exclusive: []
 contracts: []
-result: "STEP 1 of 2 done (group 1): the board tapper polls on a grid of the bot VIRTUAL clock (GET /api/thoughts now; 30 virtual s grid, 250 ms wall poll, wall fallback after 90 s without a reading, logged) instead of 20 wall s plus 5 wall s; Result.taps_at records each tap virtual second. Default behaviour of every board-taps scenario changes: the Start tap now lands on the first grid point after the offer. API calls (trigger.api After) stay wall-clock (H2 open). Scripted taps inside the bot (steps 2) NOT done. Offline: fake board tests, -race -count=20. U live: that /api/thoughts now advances under the lab d2d; the journal pair card (pgjournal) measures it."
+result: "Steps 1 and 2 done. Step 1: board tapper polls the bot virtual clock grid (30 virtual s), taps_at recorded. Step 2: d2bot --scripted-taps FILE (scenario.TapScript JSON: quest, chunks, every_s): scenario.TapEngine decides the Start and Hand in taps on a virtual-second grid and presses desk.Start/HandIn from d2denv.LateClock.OnSleep, i.e. on the stepping goroutine, lockstep d2d only; writes FILE.taps.json; d2scenario uses it with D2SCEN_SCRIPTED_TAPS=1 (default stays the HTTP tapper, which stays for sandbox e2e). API calls (trigger.api) stay wall clock. Offline only (fake clock and desk, -race): tap seconds equal across runs of different wall speed. AC 3 (two-run pair equal D1 and Start tick) is NOT ticked: needs the live lab pair. U: that Desk.Start and HandIn are safe called inside a bot Sleep (desk lock vs a Sleep under it)."
 lane: now
 ---
 
@@ -35,8 +35,8 @@ Design section 2.8 step 3, 7 card 4. Medium risk: touches the bot answer path. D
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 --scripted-taps file with rules evaluated on the stepping goroutine
-- [ ] #2 HTTP tapper stays for sandbox e2e, those runs are never stable
+- [x] #1 --scripted-taps file with rules evaluated on the stepping goroutine
+- [x] #2 HTTP tapper stays for sandbox e2e, those runs are never stable
 - [ ] #3 two-run pair of one board scenario has equal D1 and equal Start tick
 - [x] #4 STEP 1: board tapper polls on virtual time (grid), taps_at recorded, wall fallback, tests
 <!-- AC:END -->

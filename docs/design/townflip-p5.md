@@ -46,6 +46,18 @@ For each stage N (2 on the farm sandbox, then 3, then 4 once town6 lands, then 5
 | 2 | farm | not run | | |
 | 3, 4, 5 | | not run | | |
 
+## 4b. Stage 4 scenarios: ready-to-run checklist (not run; needs a lab slot, CHEATED setups, mechanics only)
+
+Definitions: `tools/provingground/scenarios/townplan.json` (ids `town.plan.*`, Paladin and Sorceress, seeds 11 and 3, `no_writes`); offline numbers for each are in `internal/town/sellplan_test.go` and `pickupplan_test.go` (V, `go test -p 1 ./internal/town`). Run each with `town.plan=4` set by the scenario, once with `town.plan=0` as the control.
+
+| Scenario | Tier | Green means | Control (plan 0) |
+|---|---|---|---|
+| `town.plan.belt-refill-from-pack` | T2, T3 | belt full for healing and mana after the visit; `item_in_pack hp2` at least capacity plus buffer; one `town plan: ... sell=` line | U, expected RED on the keep count |
+| `town.plan.sell-keeps-need` | T3 | after the first visit `item_in_pack hp2` at least the plan target; no `tower guard (healing` line | RED (the sell chore dumps the need) |
+| `town.plan.scroll-hoard` | T5 | `item_in_pack tsc` at most 2, tome kept, no `town portal did not appear`; the ground half (full tome refuses scrolls) is U | green in town, ground half U |
+
+A scenario that cannot reach its setup state is a scenario fault, not a finding. The stage 4 flip waits for these three green (section 3).
+
 ## 5. Dead ends and notes
 
 - The card owns the flip, not the stage code; stage 4's pickup side and stage 5 stay with town6 and town8 so two agents do not edit `internal/loot` and the route at once.
