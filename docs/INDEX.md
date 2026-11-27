@@ -567,6 +567,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [paperdoll-art-build.md](paperdoll-art-build.md): Paper doll game art: what is built (status: in progress (TASK-244). Plan and licence reasoning: research/paperdoll-art.md. Tags: V verified (command...)
 - [passagebounce.md](passagebounce.md): Arrival bounce: Underground Passage, Crypt and every cave (TASK passagebounce)
 - [pause.md](pause.md): Pause and resume as player commands (status: current (uib1 2026-11-14; frozen Pause added by card pause, 2026-11-15). Not verified live.)
+- [play-session.md](play-session.md): Play session on the LAN (TASK-43) (status: current. Offline parts verified (V: `sh tools/play-session-test.sh`); the live run is NOT verified (U,...)
 - [points.md](points.md): Points: stat and skill points are the player's (roadmap R3, agency P0) (status: current (card agencyp0, 2026-11-19). Decision: ADR 0020 (path D, user decision): the player spends every...)
 - [policy-preview.md](policy-preview.md): Policy preview (card policydryrun, TASK-205) (status: built and tested offline on fixtures; NOT run against a live bot or in a browser. Source:...)
 - [policy-sheet.md](policy-sheet.md): The chores policy sheet (TASK-128) (status: built and tested offline on fixtures; NOT run against a live bot or in a browser. Design:...)

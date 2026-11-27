@@ -105,7 +105,7 @@
 | stashany | proposed | - | `docs/ui/redesign-2026-11-14/stash-anywhere.md` | - |
 | uis1 | proposed | - | `internal/watch/web/shell.js`<br>`internal/watch/web/layout.js`<br>`internal/watch/web/shell.json`<br>`internal/watch/web/layout.json`<br>`internal/watch/web/layouts/`<br>`internal/watch/web/tokens.css`<br>`internal/watch/web/shell.css`<br>`internal/watch/layout.go`<br>`internal/watch/layout_test.go`<br>`tools/uilint/`<br>`tools/uishots/layout-rows.json`<br>`tools/uishots/genlayouts.js` | - |
 | cut012 | proposed | - | `docs/releases/0.1.2.md`<br>`docs/friend-checklist-0.1.2.md`<br>`tools/friendpack/install.sh`<br>`tools/friendpack/didle`<br>`tools/friendpack/compose.yml`<br>`tools/friendpack/README.txt`<br>`tools/friendpack/pack_test.go`<br>`docs/friend-guide.md` | - |
-| playsession | proposed | - | `tools/play-session.sh`<br>`docs/play-session.md` | - |
+| playsession | proposed | - | `tools/play-session.sh`<br>`tools/play-session-test.sh`<br>`docs/play-session.md` | - |
 | upstream-next | proposed | - | `docs/research/upstream-next.md` | - |
 | uis6 | proposed | - | `internal/watch/web/panels/area-map/`<br>`internal/watch/web/panels/log/`<br>`internal/watch/web/panels/map/`<br>`internal/watch/testdata/areamap/`<br>`internal/watch/testdata/logpanel/`<br>`internal/watch/logtab.go`<br>`internal/watch/logtab_test.go`<br>`internal/watch/areamap_test.go`<br>`internal/watch/web/shell.js`<br>`internal/watch/web/shell.css`<br>`internal/watch/web/components.css`<br>`internal/watch/web/layout.js`<br>`internal/watch/web/shell.json`<br>`internal/watch/web/layouts/cockpit.json`<br>`internal/watch/layout.go`<br>`internal/watch/panels.go`<br>`internal/watch/serve.go`<br>`tools/uishots/`<br>`tools/uishots.sh`<br>`tools/uilint/lint.go` | - |
 | statusrefresh | proposed | - | `docs/plan/STATUS.md` | - |
@@ -222,6 +222,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 0be1da55f 11-27 15:21 `Merge agent/playsession: playsession: tools/play-session.sh one-command LAN session (TASK-43)` (playsession)
+- e2876514c 11-27 15:19 `Merge branch 'main' into playsession` (-)
 - 68fd626b6 11-27 15:16 `Merge agent/advisorwire: advisorwire: advisor lines on the Return screen (TASK-1060)` (advisorwire)
 - ea036def4 11-27 15:15 `Merge branch 'main' into advisorwire` (-)
 - 5ee52c7a2 11-27 15:09 `Merge agent/necroepic: necroepic: Necromancer profiles/tables/policy rows, 24 scenarios, gap doc (TASK-942 AC1)` (necroepic)
@@ -230,6 +232,4 @@
 - 66b4f7f50 11-27 15:09 `Merge agent/countessnav: countessnav: Tower Cellar 5 walk regression on two synthetic maps (TASK-766 AC3)` (countessnav)
 - bd2ab0cb7 11-27 15:06 `Merge branch 'main' into necroepic` (-)
 - 47547cb56 11-27 15:06 `Merge branch 'main' into agencydrive` (-)
-- 3681d5c60 11-27 15:06 `Merge branch 'main' into advisor1` (-)
-- 2e2714e36 11-27 15:06 `Merge branch 'main' into countessnav` (-)
 <!-- statusgen:end -->
