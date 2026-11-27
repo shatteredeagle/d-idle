@@ -158,6 +158,7 @@ func corpseReach(pr *Profile) (reach, search float64) {
 
 // planMinion picks the next summon: groups in profile order, the first usable skill of a group that stands below
 // its want and below a cap seen. inFight skips AfterFight groups and applies LifePct. Pure given the Fighter's memory.
+// No skill-kind check: the group names its skills, and Shadow Warrior is a buff row of skills.json.
 func (f *Fighter) planMinion(snap *d2.Snapshot, pr *Profile, inFight, allowWalk bool) (minionPlan, bool) {
 	p := snap.Player
 	mp := pr.minionParams()
@@ -186,7 +187,7 @@ func (f *Fighter) planMinion(snap *d2.Snapshot, pr *Profile, inFight, allowWalk 
 		found := false
 		for _, name := range g.Skills {
 			s, ok := known[name]
-			if ok && s.Kind == KindSummon && (s.Key != "" || p.RightSkill == s.ID) && s.Cost <= p.Mana-p.MaxMana/10 {
+			if ok && (s.Key != "" || p.RightSkill == s.ID) && s.Cost <= p.Mana-p.MaxMana/10 {
 				sp, found = s, true
 				break
 			}
