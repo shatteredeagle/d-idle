@@ -101,6 +101,8 @@ type Pre struct {
 	Start string `json:"start,omitempty"` // town (default) or field
 	Area  int    `json:"area,omitempty"`  // levels.txt id, only for start=field
 	Level int    `json:"level,omitempty"`
+	// FromSave starts the hero from an earned save of this milestone instead of setup verbs (earned.go; the run is EARNED).
+	FromSave string `json:"from_save,omitempty"`
 	// HeroProfile is the hero library profile of the prepared hero (internal/scenario/hero): "played" (default: the points
 	// are spent as the build table spends them and the main attack is bound, so the hero fights with its class skills) or
 	// "banked" (every point left unspent, for scenarios about spending points). See Scenario.HeroProfile for the default.
@@ -445,6 +447,9 @@ func (s Scenario) Validate() error {
 	}
 	if s.Pre.HeroProfile == HeroPlayed && s.rawPoints() {
 		return fmt.Errorf("%s: pre.hero_profile played with raw pre.stats of the level or the points (the stats declare the points; use banked or drop them)", at)
+	}
+	if err := s.validateFromSave(); err != nil {
+		return err
 	}
 	if s.Pre.Level < 0 || s.Pre.Level > 99 {
 		return fmt.Errorf("%s: pre.level %d", at, s.Pre.Level)

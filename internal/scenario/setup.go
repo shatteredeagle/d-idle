@@ -48,6 +48,8 @@ type Setup struct {
 	VaultVerbs bool `json:"vault_verbs,omitempty"`
 	// Unsupported lists declared preconditions the builder cannot construct yet (no verb known). A run with any is BLOCKED.
 	Unsupported []string `json:"unsupported,omitempty"`
+	// FromSave is the earned milestone the hero starts from (pre.from_save); empty for a fresh or verb-built hero.
+	FromSave string `json:"from_save,omitempty"`
 }
 
 // BuildSetup turns a scenario's Pre into the setup for one class and seed. The seed is only used to name the hero so
@@ -257,9 +259,17 @@ func BuildSetup(s Scenario, class string, seed int64) (Setup, error) {
 		}
 		su.Tuning[k] = v
 	}
+	if p.FromSave != "" {
+		su.FromSave = p.FromSave
+		// no verb can load a save yet: the run is BLOCKED naming it, never run from a made-up hero (card pgearned live part, U)
+		su.Unsupported = append(su.Unsupported, fmt.Sprintf("pre.from_save %s: the runner does not copy an earned save into the instance yet", p.FromSave))
+	}
 	cheated := tags["worn"] || tags["vault-records"] || tags["ether"] || tags["position"] || tags["waypoint"] || tags["given-item"] || tags["quest-word"] || tags["stat-write"] || tags["merc"] || tags["difficulty"]
 	if cheated {
 		su.Tags = append(su.Tags, "CHEATED")
+	} else if p.FromSave != "" || (len(su.Verbs) == 0 && len(su.Seeds) == 0 && su.Ether == 0 && !su.VaultVerbs && p.Start == StartTown && len(tags) == 0) {
+		// a fresh hero with no setup write at all, or an earned save with none: the hero is the bot's own work
+		su.Tags = append(su.Tags, SetupEarned)
 	} else {
 		su.Tags = append(su.Tags, "SETUP-only")
 	}
