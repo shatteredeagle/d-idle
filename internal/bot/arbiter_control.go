@@ -110,7 +110,7 @@ func (r *Runner) arbCompare(sh *arbiter.Shadow, d arbiter.Decision, now float64,
 		r.e.Log.Info("arbiter shadow", "diverge", line)
 	}
 	for _, in := range d.Starved {
-		r.inv.noteStarved(in.Key() + ": " + in.Reason)
+		r.inv.noteStarved(r.starvedCause(d, in))
 	}
 }
 

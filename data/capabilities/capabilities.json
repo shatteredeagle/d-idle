@@ -1741,7 +1741,7 @@
    "class": "barbarian",
    "kind": "damage",
    "shape": "nova",
-   "reason": "stun nova, skills.json buff kind, no loop and no positioning rule; d2d deals it 8 times too strong (review 03)",
+   "reason": "stun nova cast on the target in the melee band, range 6; was typed buff, so the cast loop skipped it (SME review 2026-11-27, confidence medium-high, U live: cast War Cry count above 0 in a clvl 31+ run); d2d deals it 8 times too strong (review 03)",
    "element": "phys",
    "reqLevel": 30,
    "reqSkills": [
@@ -1757,19 +1757,17 @@
     "source": "skilldamage.json:mana"
    },
    "delivery": {
-    "purpose": "upkeep",
+    "purpose": "damage",
     "use": {
-     "target": "self",
+     "target": "unit",
      "press": "tap"
     },
     "reach": {
-     "range": 0
+     "range": 6,
+     "stance": "contact"
     },
-    "observe": {
-     "by": "state"
-    },
-    "power": "spell",
-    "driver": "none"
+    "power": "melee",
+    "driver": "attack"
    }
   },
   "Battle Orders": {

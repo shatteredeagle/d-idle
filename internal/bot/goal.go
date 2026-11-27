@@ -99,6 +99,7 @@ func (r *Runner) runGoal(ctx context.Context, snap *d2.Snapshot, c control) bool
 		}
 		return r.farmStep(ctx, snap, c)
 	}
+	r.reportBoardProgress(c)
 	if r.boardPreempts(snap, c) {
 		return r.boardStep(ctx, snap, c) // the player's Start tap beats a farm or level goal (docs/questboard.md, "Which goals"), not a Farm gold order
 	}

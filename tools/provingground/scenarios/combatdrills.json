@@ -375,6 +375,621 @@
      "kind": "no_writes"
     }
    ]
+  },
+  {
+   "id": "combat.hammer-in-pack",
+   "title": "Hammerdin insidePack stance: stands off the pack centroid, leaves on surround or low life (mode 2)",
+   "kind": "behaviour",
+   "tier": "full",
+   "covers": [
+    "combat.fight"
+   ],
+   "touches": [
+    "internal/combat/"
+   ],
+   "pre": {
+    "level": 24,
+    "gold": 3000,
+    "start": "field",
+    "area": 2,
+    "spawn": [
+     {
+      "monster": "fallen1",
+      "n": 12
+     }
+    ],
+    "skills": [
+     {
+      "skill": 112,
+      "points": 1
+     }
+    ]
+   },
+   "trigger": {
+    "goals": "farm:Blood Moor",
+    "knobs": {
+     "combat.deliveryUpkeep": 2
+    },
+    "build": "paladin_hammerdin_guide"
+   },
+   "budget": {
+    "virtual_min": 8
+   },
+   "matrix": {
+    "classes": [
+     "Paladin"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "needs": [
+    "lab-verbs-attach"
+   ],
+   "provenance": "SETUP: level 24, purse 3000, class skill points by `debug points` (Blessed Hammer id 112, V docs/research/pal-skill-trace.md), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position and encounter, skill: mechanics only, never evidence about balance or play).",
+   "notes": "Twelve Fallen around a clvl 24 Paladin on the Hammerdin guide table (profile paladin/hammerdin carries stance insidePack standOff 2, leaveSurround 5, leaveLifePct 50, U numbers in profiles.json). Blessed Hammer 112 x1 is a SETUP point (reqlevel 18, V docs/research/pal-skill-trace.md). Pair: combat.hammer-in-pack.control (knob 0, no stance line); shadow arm: D2SCEN_KNOBS combat.deliveryUpkeep=1, expect `combat stance shadow`. U: that the hero starts outside standOff so a step appears at all; widen after the first run. GAP: no counter for casts in place or distance from the centroid; the stance line is the only evidence of the position rule.",
+   "assert": [
+    {
+     "kind": "log_line",
+     "pattern": "^combat stance act=",
+     "why": "a stance step was taken (V marker: stance.go stanceTick logs `combat stance act=<inside|leave> to= why=`)",
+     "min": 1
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^combat stance summary .*in_place=[1-9]",
+     "why": "casts made in place (V telem.go fight-end line; in_place counts casts on the cell held the tick before)",
+     "min": 1
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "why": "no death (the format has no min 0 with a positive max)",
+     "max": 0
+    },
+    {
+     "kind": "life_pct_at_least",
+     "min": 20
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "id": "combat.hammer-in-pack.control",
+   "title": "Hammerdin stance control arm: combat.deliveryUpkeep 0, no stance line",
+   "kind": "behaviour",
+   "tier": "full",
+   "covers": [
+    "combat.fight"
+   ],
+   "touches": [
+    "internal/combat/"
+   ],
+   "pre": {
+    "level": 24,
+    "gold": 3000,
+    "start": "field",
+    "area": 2,
+    "spawn": [
+     {
+      "monster": "fallen1",
+      "n": 12
+     }
+    ],
+    "skills": [
+     {
+      "skill": 112,
+      "points": 1
+     }
+    ]
+   },
+   "trigger": {
+    "goals": "farm:Blood Moor",
+    "knobs": {
+     "combat.deliveryUpkeep": 0
+    },
+    "build": "paladin_hammerdin_guide"
+   },
+   "budget": {
+    "virtual_min": 8
+   },
+   "matrix": {
+    "classes": [
+     "Paladin"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "needs": [
+    "lab-verbs-attach"
+   ],
+   "provenance": "SETUP: level 24, purse 3000, class skill points by `debug points` (Blessed Hammer id 112, V docs/research/pal-skill-trace.md), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position and encounter, skill: mechanics only, never evidence about balance or play).",
+   "notes": "Control arm of combat.hammer-in-pack: same hero and pack, knob 0 (rollback). Green means the knob really switches the stance off.",
+   "assert": [
+    {
+     "kind": "log_line",
+     "pattern": "^combat stance ",
+     "why": "knob 0: stanceTick returns at once (V stance.go)",
+     "min": 0,
+     "max": 0
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "why": "no death (the format has no min 0 with a positive max)",
+     "max": 0
+    },
+    {
+     "kind": "life_pct_at_least",
+     "min": 20
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "id": "combat.point-spell-hits",
+   "title": "Sorceress Blizzard aim row: the point spell is cast at the pack (mode 2)",
+   "kind": "behaviour",
+   "tier": "full",
+   "covers": [
+    "combat.fight"
+   ],
+   "touches": [
+    "internal/combat/"
+   ],
+   "pre": {
+    "level": 30,
+    "gold": 3000,
+    "start": "field",
+    "area": 2,
+    "spawn": [
+     {
+      "monster": "fallen1",
+      "n": 14
+     }
+    ],
+    "skills": [
+     {
+      "skill": 59,
+      "points": 1
+     }
+    ]
+   },
+   "trigger": {
+    "goals": "farm:Blood Moor",
+    "knobs": {
+     "combat.deliveryUpkeep": 2
+    },
+    "build": "sorceress_blizzard_endgame90"
+   },
+   "budget": {
+    "virtual_min": 8
+   },
+   "matrix": {
+    "classes": [
+     "Sorceress"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "needs": [
+    "lab-verbs-attach"
+   ],
+   "provenance": "SETUP: level 30, purse 3000, class skill points by `debug points` (Blizzard id 59, V internal/combat tests), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position and encounter, skill: mechanics only, never evidence about balance or play).",
+   "notes": "Fourteen Fallen at a clvl 30 Sorceress on the Blizzard table (profile sorceress/blizzard has aim row Blizzard rule cluster radius 4, U). Blizzard 59 x1 is a SETUP point (reqlevel 24). The Druid Eruption row (profile druid/fire, cluster radius 3) is combat.point-spell-hits.druid. GAP: the aim driver counts aimed, refused and fallback casts (AimCounts in aim.go) but nothing logs them, and `aim shadow` / `aim refused` are Debug lines, so hits on the pack cannot be asserted. Needed: an Info summary from AimCounts at fight end. Only the attack count is asserted.",
+   "assert": [
+    {
+     "kind": "log_line",
+     "pattern": "^combat fight.tick .*attacks=[1-9]",
+     "why": "the fight issued attacks (V marker: castfirst.go fightTick)",
+     "min": 1
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^combat aim summary .*hits=[1-9]",
+     "why": "the aim rule aimed at least one cast (V telem.go fight-end line; hits = aimed casts of the fight)",
+     "min": 1
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "why": "no death (the format has no min 0 with a positive max)",
+     "max": 0
+    },
+    {
+     "kind": "life_pct_at_least",
+     "min": 20
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "id": "combat.point-spell-hits.druid",
+   "title": "Druid Eruption aim row: the point spell is cast at the pack (mode 2)",
+   "kind": "behaviour",
+   "tier": "full",
+   "covers": [
+    "combat.fight"
+   ],
+   "touches": [
+    "internal/combat/"
+   ],
+   "pre": {
+    "level": 24,
+    "gold": 3000,
+    "start": "field",
+    "area": 2,
+    "spawn": [
+     {
+      "monster": "fallen1",
+      "n": 14
+     }
+    ],
+    "skills": []
+   },
+   "trigger": {
+    "goals": "farm:Blood Moor",
+    "knobs": {
+     "combat.deliveryUpkeep": 2
+    },
+    "build": "druid_fire_normal30"
+   },
+   "budget": {
+    "virtual_min": 8
+   },
+   "matrix": {
+    "classes": [
+     "Druid"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "needs": [
+    "lab-verbs-attach"
+   ],
+   "provenance": "SETUP: level 24, purse 3000, no extra skill points (the build table learns its skills), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position and encounter: mechanics only, never evidence about balance or play).",
+   "notes": "Fourteen Fallen at a clvl 24 Fire Druid (the table leads with Eruption from clvl 12, V internal/combat tests; profile druid/fire aim row Eruption cluster radius 3, U). Same GAP as combat.point-spell-hits: no logged aim counter.",
+   "assert": [
+    {
+     "kind": "log_line",
+     "pattern": "^combat fight.tick .*attacks=[1-9]",
+     "why": "the fight issued attacks (V marker: castfirst.go fightTick)",
+     "min": 1
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^combat aim summary .*hits=[1-9]",
+     "why": "the aim rule aimed at least one cast (V telem.go fight-end line; hits = aimed casts of the fight)",
+     "min": 1
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "why": "no death (the format has no min 0 with a positive max)",
+     "max": 0
+    },
+    {
+     "kind": "life_pct_at_least",
+     "min": 20
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "id": "combat.traps-stand",
+   "title": "Assassin traps: sentries are laid at the pack, no death (mode 2)",
+   "kind": "behaviour",
+   "tier": "full",
+   "covers": [
+    "combat.fight"
+   ],
+   "touches": [
+    "internal/combat/"
+   ],
+   "pre": {
+    "level": 30,
+    "gold": 3000,
+    "start": "field",
+    "area": 2,
+    "spawn": [
+     {
+      "monster": "fallen1",
+      "n": 12
+     }
+    ],
+    "skills": [
+     {
+      "skill": 261,
+      "points": 4
+     },
+     {
+      "skill": 276,
+      "points": 1
+     }
+    ]
+   },
+   "trigger": {
+    "goals": "farm:Blood Moor",
+    "knobs": {
+     "combat.deliveryUpkeep": 2
+    },
+    "build": "assassin_sentry_endgame90"
+   },
+   "budget": {
+    "virtual_min": 8
+   },
+   "matrix": {
+    "classes": [
+     "Assassin"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "needs": [
+    "lab-verbs-attach"
+   ],
+   "provenance": "SETUP: level 30, purse 3000, class skill points by `debug points` (Charged Bolt Sentry 261, Death Sentry 276, S skills.txt), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position and encounter, skill: mechanics only, never evidence about balance or play).",
+   "notes": "Twelve Fallen at a clvl 30 Assassin on the sentry table. Charged Bolt Sentry 261 x4 and Death Sentry 276 x1 are SETUP points (ids S, skills.txt from memory; 276 also in trap_test.go; Death Sentry prerequisites may refuse the point: U). No control arm: the trap planner is not behind the knob (only its aim-row path is), so there is nothing to switch off. GAP: no counter for traps standing or the 5-per-skill cap other than the `standing=` field; U whether sentries show in the snapshot (trap.go header).",
+   "assert": [
+    {
+     "kind": "log_line",
+     "pattern": "^combat trap skill=",
+     "why": "a sentry was laid (V marker: assassin.go logs `combat trap skill= target= dist= standing=`)",
+     "min": 1
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "why": "no death (the format has no min 0 with a positive max)",
+     "max": 0
+    },
+    {
+     "kind": "life_pct_at_least",
+     "min": 20
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "id": "combat.army-holds",
+   "title": "Necromancer behindArmy stance: the hero keeps behind its skeletons (mode 2)",
+   "kind": "behaviour",
+   "tier": "full",
+   "covers": [
+    "combat.fight"
+   ],
+   "touches": [
+    "internal/combat/"
+   ],
+   "pre": {
+    "level": 24,
+    "gold": 3000,
+    "start": "field",
+    "area": 2,
+    "spawn": [
+     {
+      "monster": "fallen1",
+      "n": 12
+     }
+    ],
+    "skills": []
+   },
+   "trigger": {
+    "goals": "farm:Blood Moor",
+    "knobs": {
+     "combat.deliveryUpkeep": 2
+    },
+    "build": "necromancer_summoner_normal30"
+   },
+   "budget": {
+    "virtual_min": 8
+   },
+   "matrix": {
+    "classes": [
+     "Necromancer"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "needs": [
+    "lab-verbs-attach"
+   ],
+   "provenance": "SETUP: level 24, purse 3000, no extra skill points (the build table learns its skills), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position and encounter: mechanics only, never evidence about balance or play).",
+   "notes": "Twelve Fallen against a clvl 24 summoner (profile necromancer/summoner has stance behindArmy behind 4 slack 3 bossMin 2, U numbers). No extra skill points: the build table learns the summons, so this one is not skill-CHEATED. Pair: combat.army-holds.control (knob 0, no stance line). `combat stance act=behind|retreat` is not asserted at min 1 because the hero may already stand in the line (U); retreat needs a boss. GAP: no counter for the hero-to-army distance, so `holds position` is asserted only as no death with the army raised.",
+   "assert": [
+    {
+     "kind": "log_line",
+     "pattern": "^combat minion ",
+     "why": "the army was raised or topped up (V marker: minions.go)",
+     "min": 1
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^combat minion summary .*alive=[1-9].* max_dist=([0-9]|[12][0-9])(\\.[0-9])? ",
+     "why": "an army stood at the end and never strayed 30 subtiles from the hero (V telem.go; the 30 bound is U)",
+     "min": 1
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "why": "no death (the format has no min 0 with a positive max)",
+     "max": 0
+    },
+    {
+     "kind": "life_pct_at_least",
+     "min": 20
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "id": "combat.army-holds.control",
+   "title": "Army stance control arm: combat.deliveryUpkeep 0, no stance line",
+   "kind": "behaviour",
+   "tier": "full",
+   "covers": [
+    "combat.fight"
+   ],
+   "touches": [
+    "internal/combat/"
+   ],
+   "pre": {
+    "level": 24,
+    "gold": 3000,
+    "start": "field",
+    "area": 2,
+    "spawn": [
+     {
+      "monster": "fallen1",
+      "n": 12
+     }
+    ],
+    "skills": []
+   },
+   "trigger": {
+    "goals": "farm:Blood Moor",
+    "knobs": {
+     "combat.deliveryUpkeep": 0
+    },
+    "build": "necromancer_summoner_normal30"
+   },
+   "budget": {
+    "virtual_min": 8
+   },
+   "matrix": {
+    "classes": [
+     "Necromancer"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "needs": [
+    "lab-verbs-attach"
+   ],
+   "provenance": "SETUP: level 24, purse 3000, no extra skill points (the build table learns its skills), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position and encounter: mechanics only, never evidence about balance or play).",
+   "notes": "Control arm of combat.army-holds: knob 0, the stance is off.",
+   "assert": [
+    {
+     "kind": "log_line",
+     "pattern": "^combat stance ",
+     "why": "knob 0: no stance step (V stance.go)",
+     "min": 0,
+     "max": 0
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "why": "no death (the format has no min 0 with a positive max)",
+     "max": 0
+    },
+    {
+     "kind": "life_pct_at_least",
+     "min": 20
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "id": "combat.pets-hold",
+   "title": "Druid pets are kept up while the hero takes no stance step (mode 2)",
+   "kind": "behaviour",
+   "tier": "full",
+   "covers": [
+    "combat.fight"
+   ],
+   "touches": [
+    "internal/combat/"
+   ],
+   "pre": {
+    "level": 24,
+    "gold": 3000,
+    "start": "field",
+    "area": 2,
+    "spawn": [
+     {
+      "monster": "fallen1",
+      "n": 12
+     }
+    ],
+    "skills": []
+   },
+   "trigger": {
+    "goals": "farm:Blood Moor",
+    "knobs": {
+     "combat.deliveryUpkeep": 2
+    },
+    "build": "druid_fire_normal30"
+   },
+   "budget": {
+    "virtual_min": 8
+   },
+   "matrix": {
+    "classes": [
+     "Druid"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "needs": [
+    "lab-verbs-attach"
+   ],
+   "provenance": "SETUP: level 24, purse 3000, no extra skill points (the build table learns its skills), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position and encounter: mechanics only, never evidence about balance or play).",
+   "notes": "Twelve Fallen against a clvl 24 Fire Druid (Oak Sage from clvl 16 in the build table, S plandata). The Necromancer army is combat.army-holds. GAP: no counter for pet distance or pet deaths; asserted only that the pet driver acts and the hero takes no stance step.",
+   "assert": [
+    {
+     "kind": "log_line",
+     "pattern": "^combat minion ",
+     "why": "a pet was cast or topped up (V marker: minions.go `combat minion skill= group= have= grew= paid=`)",
+     "min": 1
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^combat minion summary .*seen=[1-9].* max_dist=([0-9]|[12][0-9])(\\.[0-9])? ",
+     "why": "pets were seen and none strayed 30 subtiles from the hero (V telem.go; the 30 bound is U; lost= is read from the log, not asserted)",
+     "min": 1
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^combat stance ",
+     "why": "a druid has no stance block (V profiles.json): the hero takes no stance step",
+     "min": 0,
+     "max": 0
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "why": "no death (the format has no min 0 with a positive max)",
+     "max": 0
+    },
+    {
+     "kind": "life_pct_at_least",
+     "min": 20
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
   }
  ]
 }

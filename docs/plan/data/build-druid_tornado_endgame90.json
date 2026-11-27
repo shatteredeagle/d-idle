@@ -45,6 +45,12 @@
    "skill": "Summon Spirit Wolf",
    "hand": "right",
    "from_clvl": 6
+  },
+  {
+   "key": "F6",
+   "skill": "Hurricane",
+   "hand": "right",
+   "from_clvl": 30
   }
  ],
  "main_attack": [
