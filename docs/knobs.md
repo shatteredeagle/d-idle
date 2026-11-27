@@ -592,13 +592,14 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | key | default | range | unit | worst (rookie) | readers | what it changes |
 |---|---|---|---|---|---|---|
 | agency.autoAlloc | 0 | 0..1 | 0/1 | 0 | 1 | 0 (default): off, points are banked for the player. 1: a hero whose build is locked (chosen on the Points page) puts every new stat and skill point where that build's table says, at a calm moment, by verb. A skill the hero cannot use yet is skipped with a visible reason and the point stays banked (docs/autoalloc.md). |
-| agency.planner | 0 | 0..1 | mode | 0 | 0 | 0 (default): off. 1: shadow. Once a minute the hero logs a `planner shadow:` line with the attack and aura the planner would pick from the skills the player actually bought, next to what the combat profile picks, and GET /api/hero/plan and the Points page show the derived rotation, the warnings and the viability line. Shadow only: it never changes what the hero does (docs/agency.md). |
+| agency.planner | 0 | 0..2 | mode | 0 | 0 | 0 (default): off. 1: shadow. Once a minute the hero logs a `planner shadow:` line with the attack and aura the planner would pick from the skills the player actually bought, next to what the combat profile picks, and GET /api/hero/plan and the Points page show the derived rotation, the warnings and the viability line. Modes 0 and 1 never change what the hero does (docs/agency.md). 2: drive, gated by the owner go: the fighter plays the planner's attack (and aura) instead of the combat profile's first pick, only when the plan is supported, differs from the profile's pick and the archetype resolved (agency.DriveOf); a `planner drive:` line says why when it changes. [dark-launch] |
 
 ### items.*
 
 | key | default | range | unit | worst (rookie) | readers | what it changes |
 |---|---|---|---|---|---|---|
 | items.ladderRunewords | 0 | 0..1 | bool | 0 | 3 | 1: the planner may socket the ladder-only runewords (Spirit, Insight and the rest of the Runes.txt server rows) and the Return screen shows 'ladder runewords: on'. Set it only together with the fork flag --ladder-runewords (ADR 0024, d.idle mode); read at start. 0 (default, vanilla): they stay unavailable, as in every gate and fidelity run. |
+| items.advisor | 0 | 0..1 | bool | 0 | 0 | [dark-launch] 1: the Return screen shows up to 3 advice lines from what you own (pack, stash, vault): 'you have the runes for Lore; socket base ...', a cube upgrade path, or the one rune you lack. Lines only: it never moves, sockets or cubes an item. Ladder-only runewords follow items.ladderRunewords. 0 (default): no advice section. |
 
 ### respec.*
 

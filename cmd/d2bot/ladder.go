@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"crypto/rand"
+	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/paths"
 	"d2lod-bot/internal/points"
 	"d2lod-bot/internal/questboard"
@@ -88,6 +89,9 @@ type ladderOptions struct {
 	// proposals: the zone proposer's inputs (docs/proposezone.md), set by the backend from the runner and the tuning
 	// before startLadder. facts nil: no proposals. A scripted player (--ladder-profile) never gets them.
 	proposalFacts func() watch.ProposalFacts
+	// adviceSnap and adviceSockets feed the Return screen's advice section (advisewire.go, knob items.advisor); nil snap: no advice.
+	adviceSnap    func() *d2.Snapshot
+	adviceSockets func(id uint32) int
 	inv           *watch.InvAPI        // the inventory page routes (invwire.go); nil: none
 	skills        *watch.SkillsAPI     // the skill tree page routes (skillswire.go); nil: none
 	art           watch.ArtSource      // the game art of the install (artwire.go); nil: /api/art says available:false

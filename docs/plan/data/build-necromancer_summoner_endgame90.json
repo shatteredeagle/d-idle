@@ -1,6 +1,7 @@
 {
  "build": "necromancer_summoner_endgame90",
  "class": "necromancer",
+ "combat": "summoner",
  "mana_heavy": true,
  "schema": "per-clvl allocation, same shape as internal/gear/builds/*.json (leveler.ParseBuild) plus main_attack; rows clvl 2..90, NO respec. A row with no skills means the point is saved (no unlocked plan skill); the planner spends it in the row where the skill unlocks. Quest points (Den, Radament, Izual in each difficulty) are skill entries with a quest key (rows 8 Den, 15 Radament, 26 Izual, 38 Den, 44 Radament, 56 Izual, 68 Den, 72 Radament, 82 Izual; U timing): rows count level points only, and a tagged point is bought as soon as its quest point is granted.",
  "ladder_only": ["Spirit"],
@@ -13,49 +14,49 @@
    "key": "F1",
    "skill": "Teeth",
    "hand": "right",
-   "from_clvl": 2
+   "from_clvl": 13
   },
   {
    "key": "F2",
    "skill": "Raise Skeleton",
    "hand": "right",
-   "from_clvl": 1
+   "from_clvl": 2
   },
   {
    "key": "F3",
-   "skill": "Amplify Damage",
+   "skill": "Raise Skeletal Mage",
    "hand": "right",
-   "from_clvl": 2
+   "from_clvl": 50
   },
   {
    "key": "F4",
    "skill": "Clay Golem",
    "hand": "right",
-   "from_clvl": 6
+   "from_clvl": 15
   },
   {
    "key": "F5",
    "skill": "Bone Armor",
    "hand": "right",
-   "from_clvl": 6
+   "from_clvl": 15
   },
   {
    "key": "F6",
-   "skill": "Corpse Explosion",
+   "skill": "Amplify Damage",
    "hand": "right",
-   "from_clvl": 6
+   "from_clvl": 14
   },
   {
    "key": "F7",
-   "skill": "Revive",
+   "skill": "Corpse Explosion",
    "hand": "right",
-   "from_clvl": 30
+   "from_clvl": 16
   },
   {
    "key": "F8",
-   "skill": "IronGolem",
+   "skill": "Revive",
    "hand": "right",
-   "from_clvl": 24
+   "from_clvl": 55
   }
  ],
  "main_attack": [
