@@ -544,6 +544,33 @@ func (t *Town) Chores(ctx context.Context, plan ChorePlan) (rep ChoreReport, _ e
 			steps[si+1] = rs
 		}
 	}
+	// town.plan >= 5: the fixed list is retired; the enabled chores run in the order of the cheapest walk under the
+	// precedence rules (route.go). Chores that are not enabled keep their place at the end (they only log "not planned").
+	if t.PlanStage() >= 5 {
+		boss := t.needBossPurse(s, plan)
+		var names []string
+		for _, st := range steps {
+			if st.enabled && (st.name != "bosspurse" || boss) { // a boss purse nobody needs would force a stash stop
+				names = append(names, st.name)
+			}
+		}
+		settleFirst := boss || s.Player.Gold < t.purseSpend
+		order := t.reorderChores(s, a, names, settleFirst)
+		at := func(name string) int {
+			if i := slices.Index(order, name); i >= 0 {
+				return i
+			}
+			return len(order)
+		}
+		slices.SortStableFunc(steps, func(x, y struct {
+			name    string
+			enabled bool
+			need    func(*d2.Snapshot) bool
+			run     func() error
+		}) int {
+			return at(x.name) - at(y.name)
+		})
+	}
 	for _, st := range steps {
 		if err := step(st.name, st.enabled, st.need, st.run); err != nil {
 			return rep, err
