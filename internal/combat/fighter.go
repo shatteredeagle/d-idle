@@ -602,6 +602,9 @@ func (f *Fighter) portalAttempt(ctx context.Context) (bool, error) {
 	if it == nil {
 		return false, ErrNoPortal
 	}
+	if done, handled, err := f.portalByVerb(ctx, it); handled {
+		return done, err
+	}
 	grid, err := f.inventoryGrid(snap)
 	if err != nil {
 		return false, err
