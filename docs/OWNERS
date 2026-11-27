@@ -384,6 +384,7 @@ internal/combat/  credit-runner  dlv-upkeep-minions
 internal/combat/  credit-runner  dlv-upkeep-state
 internal/combat/  credit-runner  dlv-whirl
 internal/combat/castfirst.go  credit-runner  maphistoryC
+internal/combat/classdata/profiles.json  credit-runner  necroteeth
 internal/combat/fight.go  credit-runner  maphistory
 internal/combat/fight.go  credit-runner  maphistoryC
 internal/combat/fightend.go  credit-runner  maphistory
@@ -391,6 +392,7 @@ internal/combat/fightend.go  credit-runner  maphistoryC
 internal/combat/fighter.go  credit-runner  inputl3
 internal/combat/fighter.go  credit-runner  maphistory
 internal/combat/fighter.go  credit-runner  maphistoryC
+internal/combat/necro_test.go  credit-runner  necroteeth
 internal/combat/portalverb.go  credit-runner  inputl3
 internal/combat/portalverb_test.go  credit-runner  inputl3
 internal/combat/reach.go  credit-runner  maphistoryC
@@ -446,6 +448,7 @@ internal/input/useitem_test.go  credit-runner  inputl3
 internal/invdesk/mercverbs.go  credit-runner  uib9
 internal/invdesk/mercverbs_test.go  credit-runner  uib9
 internal/invdesk/sets.go  credit-runner  uib9
+internal/leveler/mainattack_test.go  credit-runner  necroteeth
 internal/loot/  credit-runner  town6
 internal/nav/  credit-runner  dlv-move-tele
 internal/nav/act2hints.go  credit-runner  qdmatrix
