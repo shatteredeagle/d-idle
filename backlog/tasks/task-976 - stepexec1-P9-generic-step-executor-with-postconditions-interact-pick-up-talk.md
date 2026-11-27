@@ -15,20 +15,24 @@ dependencies: []
 priority: medium
 ordinal: 464000
 card: "stepexec1"
+branch: "agent/stepexec2"
 owns:
   - "docs/design/stepexec-p9.md"
   - "internal/questspec/"
   - "data/questspec/"
   - "internal/bot/stepexec.go"
   - "internal/bot/stepexec_test.go"
+  - "internal/bot/stepexec_act2_test.go"
   - "internal/bot/task.go"
   - "internal/env/tuning_quests.go"
   - "tools/provingground/scenarios/cain.json"
+  - "tools/provingground/scenarios/stepexec-act2.json"
+  - "tools/provingground/scenarios/tiers.json"
   - "data/darklaunch.json"
   - "docs/knobs.md"
 exclusive: []
 contracts: []
-result: "Engine questspec.RunStep plus exec rows as data; Cain scroll take_scroll runs on it behind quests.stepExec (default 0, dark-launch row, scenario cain.scroll.stepexec). Unit tests only (two hero classes, fakes); NOT verified live or on the lab."
+result: "Engine questspec.RunStep plus exec rows as data; Cain scroll take_scroll runs on it behind quests.stepExec (default 0, dark-launch row, scenario cain.scroll.stepexec). Act 2 chunk (2026-11-27): Act 2 quest chains as data, new transmute verb; the Horadric Staff transmute and placing the Staff in the orifice run on the executor with posts read from the pack and the quest reader; the Cain hand-in keeps the old path (no game fact proves it). Unit tests only (Sorceress and Paladin, must-fail cases); NOT verified live or on the lab."
 ---
 
 ## Description
@@ -43,4 +47,6 @@ Cause classes killed: H (per-quest special case, 45) and F (a fact the backend d
 <!-- AC:BEGIN -->
 - [x] #1 Executor skeleton plus the Cain scroll chunk ported behind a knob with a ledger row
 - [x] #2 Rule in the card doc: no new chunk without the executor
+- [x] #3 Act 2 chunk: Horadric Staff transmute and orifice placement as data rows behind quests.stepExec, tests on two classes with must-fail cases
+- [ ] #4 Scenarios drill.act2.assemble.stepexec and drill.act2.duriel.stepexec green 2 of 3 runs each on the lab
 <!-- AC:END -->

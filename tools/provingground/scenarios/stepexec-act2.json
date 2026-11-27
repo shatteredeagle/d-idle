@@ -1,0 +1,395 @@
+{
+ "version": "didle.scenario/1",
+ "scenarios": [
+  {
+   "id": "drill.act2.assemble.stepexec",
+   "title": "Act 2: assemble the Horadric Staff on the generic step executor (quests.stepExec=1)",
+   "kind": "step",
+   "tier": "full",
+   "quest": {
+    "quest": "horadric_staff",
+    "chunk": "assemble"
+   },
+   "step": {
+    "action": "interact",
+    "target": "Horadric Cube",
+    "nodes": [
+     "open_cube",
+     "transmute",
+     "talk_cain"
+    ]
+   },
+   "touches": [
+    "internal/task/",
+    "internal/bot/questboard.go",
+    "internal/questboard/",
+    "data/questboard/",
+    "internal/boss/"
+   ],
+   "covers": [
+    "quest.horadric_staff.assemble"
+   ],
+   "pre": {
+    "start": "field",
+    "area": 40,
+    "level": 22,
+    "gold": 6000,
+    "waypoints": [
+     1,
+     -1
+    ],
+    "quests": [
+     {
+      "record": 6,
+      "word": 1
+     },
+     {
+      "record": 7,
+      "word": 1
+     },
+     {
+      "record": 11,
+      "word": 1
+     },
+     {
+      "record": 9,
+      "word": 1
+     },
+     {
+      "record": 4,
+      "word": 8209
+     },
+     {
+      "record": 9,
+      "word": 1
+     }
+    ],
+    "items": [
+     {
+      "code": "hp5",
+      "count": 10
+     },
+     {
+      "code": "mp1",
+      "count": 6
+     },
+     {
+      "code": "box",
+      "count": 1
+     },
+     {
+      "code": "msf",
+      "count": 1
+     },
+     {
+      "code": "vip",
+      "count": 1
+     }
+    ],
+    "belt": [
+     "hp5",
+     "hp5",
+     "hp5",
+     "hp5"
+    ],
+    "merc": 12,
+    "worn": [
+     {
+      "code": "cap",
+      "slot": "head",
+      "quality": 4
+     },
+     {
+      "code": "qui",
+      "slot": "torso",
+      "quality": 4
+     },
+     {
+      "code": "bsd",
+      "slot": "rhand",
+      "quality": 6
+     },
+     {
+      "code": "buc",
+      "slot": "lhand",
+      "quality": 4
+     }
+    ],
+    "stats": [
+     {
+      "stat": 0,
+      "value": 90
+     },
+     {
+      "stat": 2,
+      "value": 60
+     },
+     {
+      "stat": 7,
+      "value": 307200
+     },
+     {
+      "stat": 6,
+      "value": 307200
+     }
+    ],
+    "merc_level": 20
+   },
+   "trigger": {
+    "goals": "reach:30",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1,
+     "town.bankFirst": 0,
+     "nav.warpRead": 1,
+     "nav.fullGrid": 1,
+     "quests.boardSM": 1,
+     "town.plan": 1,
+     "quests.layoutRead": 1,
+     "quests.stepExec": 1
+    },
+    "driver": "board-taps",
+    "tap_chunks": [
+     "assemble"
+    ]
+   },
+   "budget": {
+    "virtual_min": 30
+   },
+   "matrix": {
+    "classes": [
+     "Paladin",
+     "Sorceress"
+    ],
+    "seeds": [
+     3,
+     7,
+     11
+    ]
+   },
+   "provenance": "CHEATED: Act 2 start in Lut Gholein by the goto verb, level 24, gold, waypoints, Andariel and act-complete words, a Rogue merc and basic gear by SETUP verbs. Mechanics only. Raw stats: strength 90, dexterity 60, max life 1200, a rare broad sword (stands for a geared hero). The cube, the shaft and the amulet are given by SETUP verbs (the drill covers the assembly, not the finds).",
+   "notes": "Card stepexec1 (Act 2 chunk): drill.act2.assemble with the executor on. The transmute runs the data row horadric_staff/transmute and waits for hst in the pack; the Cain talk has no exec row (lab word 0x0c78 after the talk, completion U) and keeps the old path. Green 2 of 3 runs is the enable criterion (data/darklaunch.json). NOT run yet.",
+   "assert": [
+    {
+     "kind": "item_in_pack",
+     "code": "hst",
+     "min": 1,
+     "why": "U items.txt: the Horadric Staff is code hst; the Cube transmute made it"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^npc: menu open",
+     "min": 1,
+     "why": "the hand-in reached Cain's menu in Lut Gholein (before the Cain class fix: npc not found)"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^Entered Lut Gholein",
+     "min": 1,
+     "why": "the hero stands in the Act 2 town"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 0,
+     "why": "no death"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "id": "drill.act2.duriel.stepexec",
+   "title": "Act 2: place the Staff in the orifice on the generic step executor (quests.stepExec=1)",
+   "kind": "step",
+   "tier": "full",
+   "quest": {
+    "quest": "seven_tombs",
+    "chunk": "duriel"
+   },
+   "step": {
+    "action": "kill",
+    "target": "Duriel",
+    "nodes": [
+     "travel_canyon",
+     "find_tomb",
+     "place_staff",
+     "kill_duriel"
+    ]
+   },
+   "touches": [
+    "internal/task/",
+    "internal/bot/questboard.go",
+    "internal/questboard/",
+    "data/questboard/",
+    "internal/boss/"
+   ],
+   "covers": [
+    "quest.seven_tombs.duriel"
+   ],
+   "pre": {
+    "start": "field",
+    "area": 40,
+    "level": 30,
+    "gold": 6000,
+    "waypoints": [
+     1,
+     -1
+    ],
+    "quests": [
+     {
+      "record": 6,
+      "word": 1
+     },
+     {
+      "record": 7,
+      "word": 1
+     },
+     {
+      "record": 10,
+      "word": 1
+     },
+     {
+      "record": 11,
+      "word": 1
+     },
+     {
+      "record": 13,
+      "word": 1
+     },
+     {
+      "record": 9,
+      "word": 1
+     },
+     {
+      "record": 4,
+      "word": 8209
+     }
+    ],
+    "items": [
+     {
+      "code": "hp5",
+      "count": 10
+     },
+     {
+      "code": "mp1",
+      "count": 6
+     },
+     {
+      "code": "hst",
+      "count": 1
+     }
+    ],
+    "belt": [
+     "hp5",
+     "hp5",
+     "hp5",
+     "hp5"
+    ],
+    "merc": 0,
+    "worn": [
+     {
+      "code": "cap",
+      "slot": "head",
+      "quality": 4
+     },
+     {
+      "code": "qui",
+      "slot": "torso",
+      "quality": 4
+     },
+     {
+      "code": "bsd",
+      "slot": "rhand",
+      "quality": 6
+     },
+     {
+      "code": "buc",
+      "slot": "lhand",
+      "quality": 4
+     }
+    ],
+    "stats": [
+     {
+      "stat": 0,
+      "value": 120
+     },
+     {
+      "stat": 2,
+      "value": 80
+     },
+     {
+      "stat": 7,
+      "value": 1536000
+     },
+     {
+      "stat": 6,
+      "value": 1536000
+     },
+     {
+      "stat": 4,
+      "value": 0
+     }
+    ]
+   },
+   "trigger": {
+    "goals": "reach:45",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1,
+     "town.bankFirst": 0,
+     "nav.warpRead": 1,
+     "nav.fullGrid": 1,
+     "quests.boardSM": 1,
+     "town.plan": 1,
+     "quests.layoutRead": 1,
+     "quests.stepExec": 1
+    },
+    "driver": "board-taps",
+    "tap_chunks": [
+     "duriel"
+    ]
+   },
+   "budget": {
+    "virtual_min": 120
+   },
+   "matrix": {
+    "classes": [
+     "Paladin",
+     "Sorceress"
+    ],
+    "seeds": [
+     3,
+     7,
+     11
+    ]
+   },
+   "provenance": "CHEATED: Act 2 start in Lut Gholein by the goto verb, level 24, gold, waypoints, Andariel and act-complete words, a Rogue merc and basic gear by SETUP verbs. Mechanics only. Raw stats: strength 90, dexterity 60, max life 1200, a rare broad sword (stands for a geared hero). Unused stat points are set to 0 (the raw stats stand for a spent hero; unspent points made the bot cancel its boss run for the point spender). The assembled Horadric Staff is given by a SETUP verb (the assemble row covers the Cube). qd25: max life 6000 and no merc again (the 2000 life hero dies to the Burning Dead of tomb 66, V run 20261125-192625).",
+   "notes": "Card stepexec1 (Act 2 chunk): drill.act2.duriel with the executor on. The orifice click runs the data row seven_tombs/place_staff and waits until hst has left the pack. Green 2 of 3 runs is the enable criterion (data/darklaunch.json). NOT run yet.",
+   "assert": [
+    {
+     "kind": "quest_bits",
+     "record": 14,
+     "set": 1,
+     "why": "U docs/progression/quests.md: the Seven Tombs quest word"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^Entered Lut Gholein",
+     "min": 1,
+     "why": "the hero stands in the Act 2 town"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 0,
+     "why": "no death"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  }
+ ]
+}
