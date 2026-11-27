@@ -425,6 +425,12 @@ func (c *Client) Objects(ctx context.Context) (List[Object], error) {
 	return parseList(r, err, ParseObject)
 }
 
+// ObjectList lists every object of the level with its mode ("debug objectlist", a read-only fork verb).
+func (c *Client) ObjectList(ctx context.Context) (List[ObjectRow], error) {
+	r, err := c.Debug(ctx, "objectlist")
+	return parseList(r, err, ParseObjectRow)
+}
+
 // Difficulty restarts the game on difficulty d (0 normal, 1 nightmare, 2 hell); takes 5 to 6 s (V), so
 // give the context room. A level-1 character dies at once past Normal (upstream note).
 func (c *Client) Difficulty(ctx context.Context, d int) error {

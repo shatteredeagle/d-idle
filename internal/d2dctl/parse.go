@@ -510,6 +510,33 @@ func ParseObject(line string) (Object, error) {
 	return o, firstErr(e[:]...)
 }
 
+// ObjectRow is one object line of "debug objectlist" (fork, read-only): every object of the level with its mode now.
+type ObjectRow struct {
+	Raw       string
+	Index     int // for "cmd interact" and "cmd place"
+	Class     int // objects.txt
+	X, Y      float64
+	OperateFn int
+	Mode      string // NU, OP, ON, S1..
+}
+
+// ParseObjectRow parses <index> <class> <x> <y> <operate_fn> <mode> <hidden> <locked> <name>; the "room" lines fail.
+func ParseObjectRow(line string) (ObjectRow, error) {
+	o := ObjectRow{Raw: line}
+	f := fields(line)
+	if len(f) < 6 {
+		return o, fmt.Errorf("objectlist: want 6 fields")
+	}
+	var e [5]error
+	o.Index, e[0] = atoi(f[0])
+	o.Class, e[1] = atoi(f[1])
+	o.X, e[2] = atof(f[2])
+	o.Y, e[3] = atof(f[3])
+	o.OperateFn, e[4] = atoi(f[4])
+	o.Mode = strings.TrimSpace(f[5])
+	return o, firstErr(e[:]...)
+}
+
 // Portal is one line of "debug portals".
 type Portal struct {
 	Raw   string
