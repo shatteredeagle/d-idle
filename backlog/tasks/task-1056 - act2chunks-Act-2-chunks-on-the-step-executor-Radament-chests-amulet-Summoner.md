@@ -22,6 +22,7 @@ owns:
   - "internal/bot/task.go"
   - "internal/questspec/"
   - "tools/provingground/scenarios/stepexec-act2chunks.json"
+  - "tools/provingground/scenarios/tiers.json"
   - "docs/design/stepexec-p9.md"
 exclusive: []
 result: "Rows for Radament, Cube/Staff chests, Viper altar and Summoner in data/questspec/act2.json, adapter names and no-op pickup, 6 *.stepexec scenarios (validate ok). Unit tests only, NOT verified live; the Book pick-up, Cain scroll talk and Arcane movement are not ported."
