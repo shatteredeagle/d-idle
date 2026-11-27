@@ -143,7 +143,7 @@
 | dlv-upkeep-state | proposed | - | `internal/combat/`<br>`internal/data/`<br>`internal/env/tuning_combat.go`<br>`docs/knobs.md`<br>`data/darklaunch.json` | - |
 | dlv-upkeep-minions | proposed | - | `internal/combat/` | - |
 | dlv-mark | proposed | - | `internal/combat/` | - |
-| dlv-stance-army | proposed | - | `internal/combat/`<br>`internal/arbiter/` | - |
+| dlv-stance-army | proposed | - | `internal/combat/`<br>`internal/arbiter/`<br>`internal/bot/shadow.go`<br>`cmd/d2bot/adapters.go` | - |
 | dlv-cast-verbs | proposed | - | `internal/input/`<br>`internal/d2dcombat/`<br>`internal/d2dinput/`<br>`data/input/caps/`<br>`data/input/caps_test.go`<br>`docs/design/input-cast-verbs.md`<br>`tools/provingground/scenarios/input-scenarios.json`<br>`tools/provingground/scenarios/tiers.json`<br>`tools/provingground/scenarios/behaviours.json` | `fork-branch:didle/cast-verbs` |
 | dlv-aim-point | proposed | - | `internal/combat/` | - |
 | dlv-aim-corpse | proposed | - | `internal/combat/` | - |
@@ -244,6 +244,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 685f85220 11-27 02:38 `Merge agent/stancearmy: Merge branch 'main' into dlv-stance-army` (stancearmy)
+- a5ab785fe 11-27 02:36 `Merge branch 'main' into dlv-stance-army` (-)
 - 670290dff 11-27 02:35 `Merge agent/pgpage: Merge branch 'main' into pgpage` (pgpage)
 - c4464d60b 11-27 02:33 `Merge branch 'main' into pgpage` (-)
 - 7db510622 11-27 02:15 `Merge agent/auraupkeep: Merge branch 'main' into auraupkeep` (auraupkeep)
@@ -252,6 +254,4 @@
 - 0aa47d75a 11-27 02:13 `Merge branch 'main' into stepexec1` (-)
 - 1e7ac4599 11-27 02:08 `Merge agent/castverbs: Merge branch 'main' into dlv-cast-verbs` (castverbs)
 - c99e25214 11-27 02:08 `Merge agent/pghero: Merge branch 'main' into pghero` (pghero)
-- c2882fccf 11-27 02:05 `Merge branch 'main' into dlv-cast-verbs` (-)
-- 920dfe59d 11-27 02:05 `Merge branch 'main' into pghero` (-)
 <!-- statusgen:end -->

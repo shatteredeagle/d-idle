@@ -128,6 +128,7 @@ docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-extras.jsonl.gz  gaterun  gate
 # BEGIN GENERATED OWNERS (tools/sharedgen/sharedgen.py from the owns: keys of open tasks; do not edit between the markers)
 cmd/d2bot/acts_test.go  credit-runner  qdmatrix
 cmd/d2bot/adapters.go  credit-runner  cainfix3
+cmd/d2bot/adapters.go  credit-runner  dlv-stance-army
 cmd/d2bot/behaviors.go  credit-runner  campaign1
 cmd/d2bot/boss.go  credit-runner  countess3
 cmd/d2bot/boss.go  credit-runner  countess3b
@@ -374,6 +375,7 @@ internal/bot/runner.go  credit-runner  campaign1
 internal/bot/runner.go  credit-runner  maphistoryA
 internal/bot/runner.go  credit-runner  repairtrip
 internal/bot/shadow.go  credit-runner  arbmig
+internal/bot/shadow.go  credit-runner  dlv-stance-army
 internal/bot/shadow.go  credit-runner  ticklog
 internal/bot/task.go  credit-runner  boardmoderace
 internal/bot/task.go  credit-runner  wpstep
