@@ -124,9 +124,9 @@ func Corpses(snap *d2.Snapshot, cat Catalog, me input.Point, maxDist float64, sk
 
 // necroState is the Fighter's memory for the upkeep (zero value is usable after init).
 type necroState struct {
-	capSeen map[string]int  // kind -> minion count at which a paid cast raised nothing (the cap); cleared when the count drops
-	tried   map[uint32]bool // corpses a cast was aimed at (a used corpse vanishes; V a second cast spent no mana)
-	learned map[int]bool    // state numbers seen present after our own cast: proven readable
+	capSeen map[string]int // kind -> minion count at which a paid cast raised nothing (the cap); cleared when the count drops
+	tried   corpseRes      // corpses a cast was aimed at (a used corpse vanishes; V a second cast spent no mana)
+	learned map[int]bool   // state numbers seen present after our own cast: proven readable
 	curseAt map[curseKey]curseRec
 }
 
@@ -220,9 +220,13 @@ func (f *Fighter) planSummon(snap *d2.Snapshot, nd *NecroParams, allowWalk bool)
 			}
 		}
 		// Revive takes the strongest corpse in reach, the others the nearest.
-		u := cs[0]
+		row := corpseRowNearest
 		if r.Kind == "revive" {
-			u = bestRevivable(cs, f.cat)
+			row = corpseRowBest
+		}
+		u, ok := f.corpseFor(p, r.Name, row, cs, nil)
+		if !ok {
+			continue
 		}
 		return s, &u, dist(me.X, me.Y, u.X, u.Y) > nd.summonReach(), true
 	}
@@ -259,7 +263,7 @@ func (f *Fighter) KeepSummons(ctx context.Context) (int, error) {
 		}
 		if walk {
 			if err := f.mv.GoTo(ctx, input.Point{X: corpse.X, Y: corpse.Y}); err != nil {
-				f.necro.tried[corpse.ID] = true
+				f.takeCorpse(corpse.ID)
 				continue
 			}
 			if snap, err = f.read(ctx); err != nil {
@@ -290,7 +294,7 @@ func (f *Fighter) castSummon(ctx context.Context, snap *d2.Snapshot, nd *NecroPa
 		return false, err
 	}
 	if corpse != nil {
-		f.necro.tried[corpse.ID] = true
+		f.takeCorpse(corpse.ID)
 	}
 	if err := f.sleep(ctx, ms(f.tune().CastGapMs)+ms(500)); err != nil {
 		return false, err

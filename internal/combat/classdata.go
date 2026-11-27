@@ -107,6 +107,8 @@ type Profile struct {
 	Stance *ArmyStance `json:"stance,omitempty"`
 	// Aims are the point aim rows (aim.go); a point skill without a row is cast at its target's cell.
 	Aims []AimRule `json:"aims,omitempty"`
+	// CorpseAims are the corpse aim rows (aimcorpse.go); a corpse skill without a row takes the corpse its caller always did.
+	CorpseAims []CorpseAim `json:"corpseAims,omitempty"`
 }
 
 // NecroParams is the upkeep data of a Necromancer profile; combat/necro.go holds no skill name.
@@ -290,6 +292,9 @@ func loadClassData() *classData {
 			panic("combat: classdata/profiles.json: " + err.Error())
 		}
 		if err := validateAims(pr.Profiles, classDB.skills); err != nil {
+			panic("combat: classdata/profiles.json: " + err.Error())
+		}
+		if err := validateCorpseAims(pr.Profiles, classDB.skills); err != nil {
 			panic("combat: classdata/profiles.json: " + err.Error())
 		}
 		classDB.profiles = pr.Profiles
