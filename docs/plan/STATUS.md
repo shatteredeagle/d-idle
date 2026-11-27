@@ -154,7 +154,7 @@
 | pgtaps | in-progress | - | `cmd/d2bot/ladder.go`<br>`cmd/d2scenario/tap.go`<br>`internal/scenario/taps.go`<br>`cmd/d2scenario/run.go`<br>`cmd/d2scenario/tap_test.go`<br>`internal/scenario/result.go` | - |
 | pgclock | proposed | - | `cmd/d2bot/d2dbackend.go`<br>`internal/bot/farm.go`<br>`internal/goals/clock_test.go`<br>`internal/bot/farmclock_test.go`<br>`internal/d2denv/reader.go`<br>`internal/d2denv/recent_test.go`<br>`internal/d2denv/env.go`<br>`cmd/d2bot/goalsclock_test.go`<br>`docs/d2d-determinism.md` | - |
 | fid-probe-regen-speed | deferred | - | `docs/probes/fid/fid-probe-regen-speed.md` | - |
-| pgstability | proposed | - | `internal/scenario/stability.go`<br>`tools/provingground/scenarios/tiers.json` | - |
+| pgstability | in-progress | - | `internal/scenario/stability.go`<br>`internal/scenario/stability_test.go`<br>`internal/scenario/scenario.go`<br>`tools/provingground/scenarios/tiers.json` | - |
 | pghero | proposed | - | `internal/scenario/hero`<br>`tools/ab/prep`<br>`tools/survival` | - |
 | pgselfcheck | proposed | - | `internal/scenario/hero/selfcheck.go`<br>`cmd/d2scenario/validate.go` | - |
 | pgpage | proposed | - | `docs/process/proving-ground-status.md`<br>`tools/provingground/status_doc.sh` | - |
@@ -243,6 +243,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 4ef40348b 11-27 01:02 `Merge agent/pgstability: Merge branch 'main' into pgstability` (pgstability)
+- e867caffa 11-27 01:00 `Merge branch 'main' into pgstability` (-)
 - 4626dd212 11-27 00:46 `Merge agent/town6: Merge branch 'main' into town6` (town6)
 - 7217351dc 11-27 00:44 `Merge branch 'main' into town6` (-)
 - d3a579824 11-27 00:39 `Merge agent/upkeep: Merge branch 'main' into dlv-upkeep-state` (upkeep)
@@ -251,6 +253,4 @@
 - a69afe04b 11-27 00:37 `Merge branch 'main' into proptest1` (-)
 - 17863496b 11-27 00:33 `Merge remote-tracking branch 'origin/main' into agent/town6` (-)
 - 732d38dd9 11-27 00:33 `Merge agent/arbmig2: Merge branch 'main' into arbmig` (arbmig2)
-- ad09964ce 11-27 00:31 `Merge branch 'main' into arbmig` (-)
-- 7f0a43fb1 11-27 00:14 `Merge agent/sellsnap: Merge branch 'main' into sellsnap` (sellsnap)
 <!-- statusgen:end -->

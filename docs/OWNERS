@@ -493,10 +493,12 @@ internal/scenario/earned.go  credit-runner  pgearned
 internal/scenario/hero  credit-runner  pghero
 internal/scenario/hero/selfcheck.go  credit-runner  pgselfcheck
 internal/scenario/result.go  credit-runner  pgtaps
+internal/scenario/scenario.go  credit-runner  pgstability
 internal/scenario/scenario.go  credit-runner  qdmatrix
 internal/scenario/setup.go  credit-runner  qdmatrix
 internal/scenario/setup_test.go  credit-runner  qdmatrix
 internal/scenario/stability.go  credit-runner  pgstability
+internal/scenario/stability_test.go  credit-runner  pgstability
 internal/scenario/taps.go  credit-runner  pgtaps
 internal/senses  credit-runner  maphistory
 internal/senses  credit-runner  maphistoryA
