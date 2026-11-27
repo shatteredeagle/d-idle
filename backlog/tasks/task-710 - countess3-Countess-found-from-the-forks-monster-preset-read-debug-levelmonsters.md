@@ -26,6 +26,7 @@ exclusive:
   - "fork-branch:didle/level-monsters-20261121"
 contracts: []
 lane: next
+result: " Remaining (live): ACs 2 and 3 fork verb differential and the Paladin 11 run."
 ---
 
 ## Description

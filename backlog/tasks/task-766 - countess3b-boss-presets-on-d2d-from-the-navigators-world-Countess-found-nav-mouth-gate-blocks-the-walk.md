@@ -20,6 +20,7 @@ owns:
 exclusive: []
 contracts: []
 lane: next
+result: " Remaining (live): AC 2 Paladin 11 with the new fork binary."
 ---
 
 ## Description

@@ -27,7 +27,7 @@ owns:
   - "data/darklaunch.json"
 exclusive: []
 contracts: []
-result: "Tick line built behind bot.tickLogSec (default 0, dark-launch row), rate-limited by the bot clock, facts of the arbiter view, independent of the shadow; the replay (d2arbiter, -follow) reads tick lines and skips minute lines then. Offline tests only, NOT verified live: no sandbox night recorded yet (procedure in docs/design/ticklog-t4.md). Not build-specific. Remaining (live): the sandbox night recording and replay (AC 2)."
+result: "Tick line built behind bot.tickLogSec (default 0, dark-launch row), rate-limited by the bot clock, facts of the arbiter view, independent of the shadow; the replay (d2arbiter, -follow) reads tick lines and skips minute lines then. Offline tests only, NOT verified live: no sandbox night recorded yet (procedure in docs/design/ticklog-t4.md). Not build-specific. Remaining (live): the sandbox night recording and replay (AC 2). Remaining (live): AC 2 replay of one real sandbox night."
 ---
 
 ## Description
