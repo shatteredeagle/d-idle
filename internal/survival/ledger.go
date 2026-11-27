@@ -334,9 +334,15 @@ func (l *Ledger) MarkLeft(k ZoneKey, now time.Time, power float64) {
 }
 
 // Locked reports whether a left-for-cost lock on k still holds at this power.
-func (l *Ledger) Locked(k ZoneKey, power float64) bool {
+func (l *Ledger) Locked(k ZoneKey, power float64) bool { return l.LockedAt(k, power, time.Time{}) }
+
+// LockedAt is Locked with the time rule: the lock also lapses LockHoldMinutes after the hero left (zero now = no time rule).
+func (l *Ledger) LockedAt(k ZoneKey, power float64, now time.Time) bool {
 	s := l.peek(k)
 	if s == nil || s.LeftAt.IsZero() {
+		return false
+	}
+	if h := l.P.LockHoldMinutes; h > 0 && !now.IsZero() && now.Sub(s.LeftAt) > time.Duration(h*float64(time.Minute)) {
 		return false
 	}
 	if s.LeftPower > 0 && power > 0 && math.Abs(power/s.LeftPower-1) > l.P.PowerChange {

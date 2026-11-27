@@ -18,6 +18,7 @@ type Candidate struct {
 	Eco       Eco
 	TravelMin float64
 	Depleted  bool // the zone is cleared (the levelsim supply term)
+	MLvl      int  // the zone's monster level (0 = unknown: never dropped by the band rule)
 }
 
 // Purse is the gold side of lambda: what the kit and the next purchase need against what the hero holds.
@@ -42,6 +43,7 @@ type Input struct {
 	Active    bool
 	Archetype string // power profile id: selects the archetype row of params (data)
 	MercDead  bool   // the hired merc is dead
+	Level     int    // the hero's character level (0 = unknown: the band rule is off)
 }
 
 // Alt is one zone that was not chosen, with the reason in words (API) and with numbers (log only).
@@ -137,7 +139,7 @@ func (l *Ledger) judge(in Input, c Candidate, lam float64, disc float64) verdict
 	cur := c.Key == in.Current
 	v.word = word(v.best, v.low, enter, stay)
 	switch {
-	case l.Locked(c.Key, in.Power) && !cur:
+	case l.LockedAt(c.Key, in.Power, in.Now) && !cur:
 		v.why = Why{WhyLeftForCost, "left because it cost too much; closed until the hero is stronger"}
 	default:
 		if out, kind := l.ForcedOut(c.Key, in.Dial.ID, in.Now); out {
@@ -230,6 +232,7 @@ func (l *Ledger) Choose(in Input) (Decision, error) {
 	if len(in.Cands) == 0 {
 		return Decision{}, fmt.Errorf("survival: no candidate zones")
 	}
+	in.Cands = l.inBand(in)
 	lam := lambda(l.P, in.Purse)
 	vs := make([]verdict, 0, len(in.Cands))
 	disc := l.unvisitedDiscount(in)
@@ -380,4 +383,23 @@ func (l *Ledger) unvisitedDiscount(in Input) float64 {
 		return 1
 	}
 	return math.Max(floor, r)
+}
+
+// inBand drops the zones whose monster level is more than BandDrop[diff] below the hero's level, as long as one zone is
+// left: farming monsters that far down pays next to nothing (Questy 2026-11-27: 5k against 22k to 39k XP/h).
+func (l *Ledger) inBand(in Input) []Candidate {
+	if in.Level <= 0 {
+		return in.Cands
+	}
+	var out []Candidate
+	for _, c := range in.Cands {
+		if k := l.P.BandDrop[c.Key.Diff]; k > 0 && c.MLvl > 0 && in.Level-c.MLvl > k {
+			continue
+		}
+		out = append(out, c)
+	}
+	if len(out) == 0 {
+		return in.Cands
+	}
+	return out
 }
