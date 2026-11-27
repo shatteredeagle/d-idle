@@ -1,10 +1,11 @@
 ---
 id: TASK-1047
 title: 'prereq: the leveler buys missing prerequisites before a planned skill'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T14:33:00Z'
+updated_date: '2026-11-27T14:52:00Z'
 labels:
   - bot
   - bot-fix

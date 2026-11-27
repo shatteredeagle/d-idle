@@ -117,3 +117,4 @@ Closing rule: a card closes when merged with offline acceptance proven; every op
 | TASK-1042 palzeal | #4 | Live: a fresh zealot-lite Paladin logs last_skill=Zeal at kills from clvl 12 | live drill on the sandbox, fresh hero, per the card result | open |
 | TASK-1044 bossdone | #4 | Live: drill.act2.duriel.stepexec passes the kill step and the hand-in on the lab | live drill on the sandbox, fresh hero, per the card result | open |
 | TASK-1045 act2handin | #4 | Live: a drill hands in kill, Tyrael, Jerhyn, Meshif and ends with bit 0x0001 | live drill on the sandbox, fresh hero, per the card result | open |
+| TASK-1047 prereq | #4 | Live: Doofer learns Sacrifice and Zeal after deploy and logs last_skill=Zeal at kills | live drill on the sandbox, fresh hero, per the card result | open |

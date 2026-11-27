@@ -51,7 +51,6 @@
 | deploy88-ledger | proposed | - | `data/darklaunch.json` | - |
 | placefix | proposed | - | `internal/questboard/`<br>`internal/bot/questboard.go`<br>`data/questboard/act2.json`<br>`tools/provingground/scenarios/stepexec-act2.json`<br>`tools/provingground/scenarios/questdrill.json`<br>`internal/scenario/placefix_test.go`<br>`docs/questboard.md`<br>`internal/task/act1.go`<br>`internal/task/act2.go`<br>`internal/task/placefix_test.go`<br>`internal/d2dinput/controller.go`<br>`internal/d2dinput/placefix_test.go`<br>`internal/d2dctl/parse.go`<br>`internal/d2dctl/verbs.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dsrc/items.go`<br>`internal/d2dsrc/source_test.go` | - |
 | deploy94-ledger | in-progress | - | `data/darklaunch.json` | - |
-| prereq | in-progress | - | `internal/leveler/`<br>`internal/points/autoalloc.go`<br>`internal/points/autoalloc_test.go`<br>`cmd/d2bot/autoallocwire.go` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
