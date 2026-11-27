@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Merge branch 'main' into prereq <!--sg:agent/prereq-->
 - Merge branch 'main' into deploy94-ledger <!--sg:agent/deploy94-->
 - Merge remote-tracking branch 'origin/main' into agent/act2handin <!--sg:agent/act2handin-->
 - Merge branch 'main' into bossdone <!--sg:agent/bossdone-->

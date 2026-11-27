@@ -51,6 +51,7 @@
 | deploy88-ledger | proposed | - | `data/darklaunch.json` | - |
 | placefix | proposed | - | `internal/questboard/`<br>`internal/bot/questboard.go`<br>`data/questboard/act2.json`<br>`tools/provingground/scenarios/stepexec-act2.json`<br>`tools/provingground/scenarios/questdrill.json`<br>`internal/scenario/placefix_test.go`<br>`docs/questboard.md`<br>`internal/task/act1.go`<br>`internal/task/act2.go`<br>`internal/task/placefix_test.go`<br>`internal/d2dinput/controller.go`<br>`internal/d2dinput/placefix_test.go`<br>`internal/d2dctl/parse.go`<br>`internal/d2dctl/verbs.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dsrc/items.go`<br>`internal/d2dsrc/source_test.go` | - |
 | deploy94-ledger | in-progress | - | `data/darklaunch.json` | - |
+| prereq | in-progress | - | `internal/leveler/`<br>`internal/points/autoalloc.go`<br>`internal/points/autoalloc_test.go`<br>`cmd/d2bot/autoallocwire.go` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
@@ -245,6 +246,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 947a4a255 11-27 09:40 `Merge agent/prereq: Merge branch 'main' into prereq` (prereq)
+- 9836f0994 11-27 09:38 `Merge branch 'main' into prereq` (-)
 - c2af036e3 11-27 09:32 `Merge agent/deploy94: Merge branch 'main' into deploy94-ledger` (deploy94)
 - 4ab536c5f 11-27 09:30 `Merge branch 'main' into deploy94-ledger` (-)
 - e1bf805a5 11-27 08:36 `Merge agent/act2handin: Merge remote-tracking branch 'origin/main' into agent/act2handin` (act2handin)
@@ -253,6 +256,4 @@
 - 608f022e0 11-27 08:19 `Merge branch 'main' into bossdone` (-)
 - e53929dfb 11-27 08:06 `Merge agent/act2drill5: act2drill5: fifth Duriel run, lair entered and Duriel killed 3/3, blocked on the kill step` (act2drill5)
 - c5a59100e 11-27 07:37 `Merge agent/lairentry: Merge branch 'main' into placefix` (lairentry)
-- 1b1555425 11-27 07:35 `Merge branch 'main' into placefix` (-)
-- 0b82c29ec 11-27 07:32 `Merge agent/pgselfcheck: Merge branch 'main' into pgselfcheck` (pgselfcheck)
 <!-- statusgen:end -->

@@ -130,6 +130,7 @@ backlog/tasks/task-726 - dlv-cast-verbs-input-caps-cast-unit-cast-point-cast-hol
 cmd/d2bot/acts_test.go  credit-runner  qdmatrix
 cmd/d2bot/adapters.go  credit-runner  cainfix3
 cmd/d2bot/adapters.go  credit-runner  dlv-stance-army
+cmd/d2bot/autoallocwire.go  credit-runner  prereq
 cmd/d2bot/behaviors.go  credit-runner  campaign1
 cmd/d2bot/boss.go  credit-runner  countess3
 cmd/d2bot/boss.go  credit-runner  countess3b
@@ -480,6 +481,7 @@ internal/input/useitem_test.go  credit-runner  inputl3
 internal/invdesk/mercverbs.go  credit-runner  uib9
 internal/invdesk/mercverbs_test.go  credit-runner  uib9
 internal/invdesk/sets.go  credit-runner  uib9
+internal/leveler/  credit-runner  prereq
 internal/leveler/mainattack_test.go  credit-runner  necroteeth
 internal/loot/  credit-runner  town6
 internal/nav/  credit-runner  dlv-move-tele
@@ -516,6 +518,8 @@ internal/nav/warpread_test.go  credit-runner  warptrigger
 internal/plandata/admission.json  credit-runner  admit1
 internal/plandata/earlyroutes.json  credit-runner  admit1
 internal/plandata/povertyfarm.json  credit-runner  admit1
+internal/points/autoalloc.go  credit-runner  prereq
+internal/points/autoalloc_test.go  credit-runner  prereq
 internal/power/  credit-runner  dlv-cleanup
 internal/power/archetype.go  credit-runner  qdmatrix
 internal/power/skilldamage_test.go  credit-runner  qdmatrix
