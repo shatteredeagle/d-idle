@@ -194,7 +194,9 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 0a5cfcf3f 11-27 16:52 `Merge agent/cainflaky: cainflaky: cain.chain Paladin 11 flake diagnosis (docs)` (cainflaky)
 - 0a4584998 11-27 16:52 `Merge agent/rel012: rel012: unnumbered next-release draft notes (TASK-1066)` (rel012)
+- be459dded 11-27 16:50 `Merge branch 'main' into cainflaky` (-)
 - f4523d37b 11-27 16:50 `Merge branch 'main' into rel012` (-)
 - 38845a378 11-27 16:41 `Merge agent/necroapply: necroapply: SME Necromancer data changes (bonespear Teeth/Bone Spear points, mana_heavy, merc doc)` (necroapply)
 - 0ae6b91df 11-27 16:41 `Merge agent/town11: town11: townLegacy seam for old town counters, deletion plan (TASK-764 partial)` (town11)
@@ -202,6 +204,4 @@
 - 66d7cee98 11-27 16:41 `Merge agent/uifix: uifix: return mock, onboarding chickens line, layout test (TASK-109/249/424)` (uifix)
 - 3e5d70768 11-27 16:38 `Merge branch 'main' into necroapply` (-)
 - e4986e3c8 11-27 16:38 `Merge branch 'main' into town11` (-)
-- d5e38d0bf 11-27 16:38 `Merge branch 'main' into pgcards2` (-)
-- f0dc78eff 11-27 16:38 `Merge branch 'main' into uifix` (-)
 <!-- statusgen:end -->

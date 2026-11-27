@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- cainflaky: cain.chain Paladin 11 flake diagnosis (docs) <!--sg:agent/cainflaky-->
 - rel012: unnumbered next-release draft notes (TASK-1066) <!--sg:agent/rel012-->
 - necroapply: SME Necromancer data changes (bonespear Teeth/Bone Spear points, mana_heavy, merc doc) <!--sg:agent/necroapply-->
 - town11: townLegacy seam for old town counters, deletion plan (TASK-764 partial) <!--sg:agent/town11-->
