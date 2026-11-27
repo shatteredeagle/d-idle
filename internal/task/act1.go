@@ -62,6 +62,11 @@ func proxyStage(w World, q string) QuestState {
 		if w.Items[ItemCainSc] > 0 {
 			return st(StageStarted)
 		}
+	case QStaff:
+		// The Staff made is its objective (the board's requiresCleared of the Seven Tombs reads it here).
+		if w.Items[ItemStaff] > 0 || w.QuestWord(QStaff)&StaffMadeBit != 0 {
+			return st(StageCleared)
+		}
 	}
 	return QuestState{}
 }

@@ -21,9 +21,12 @@ owns:
   - "tools/provingground/scenarios/questdrill.json"
   - "internal/scenario/placefix_test.go"
   - "docs/questboard.md"
+  - "internal/task/act1.go"
+  - "internal/task/act2.go"
+  - "internal/task/placefix_test.go"
 exclusive: []
 contracts: []
-result: "Duriel drills set record 10 to 0x0c78 (bit 0 meant 'Staff already placed' to d2d, which silently dropped the placement); seven_tombs opens on the Staff made (new quest key requiresCleared) instead of the Staff quest done. Not build-specific. Offline tests only; NOT verified live (rerun pending)."
+result: "Duriel drills set record 10 to 0x0c08 (bit 11 = Staff made, kept by the d2d at join; bit 0 clear, which d2d reads as already placed and then drops the placement); horadric_staff reads cleared from bit 11 or hst in the pack, so seven_tombs opens through requiresCleared (placefix2: the board fact had no Act 2 proxy and 0x0c78 came back as 0x0c08). Not build-specific. Offline tests only; NOT verified live."
 ---
 
 ## Description
