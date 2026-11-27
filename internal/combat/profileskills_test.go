@@ -3,6 +3,7 @@ package combat
 import (
 	"encoding/json"
 	"os"
+	"slices"
 	"testing"
 )
 
@@ -109,5 +110,32 @@ func TestClassKeysProfilesLeadWithTheTablesAttack(t *testing.T) {
 		if n := got.AttackNames(c.clvl, all); len(n) == 0 || n[0] != c.wantLead {
 			t.Errorf("%s/%s at clvl %d leads with %v, want %s", c.class, c.build, c.clvl, n, c.wantLead)
 		}
+	}
+}
+
+// SME review 2026-11-27, confidence high: Smite adds no damage, so a low-mana fallback of a Zeal build is Zeal, not
+// Smite. Checked for the zeal hammerdin and, as the second build, the plain hammerdin's own lists stay as they were.
+func TestHammerdinZealFallbackDealsDamage(t *testing.T) {
+	all := func(string) bool { return true }
+	find := func(build string) *Profile {
+		for i, p := range Profiles() {
+			if p.Class == "paladin" && p.Build == build {
+				return &Profiles()[i]
+			}
+		}
+		t.Fatalf("no profile paladin/%s", build)
+		return nil
+	}
+	z := find("hammerdin_zeal")
+	for _, c := range []struct {
+		clvl int
+		want []string
+	}{{18, []string{"Blessed Hammer", "Zeal", "Attack"}}, {12, []string{"Zeal", "Attack"}}} {
+		if got := z.AttackNames(c.clvl, all); !slices.Equal(got, c.want) {
+			t.Errorf("hammerdin_zeal clvl %d attacks %v, want %v", c.clvl, got, c.want)
+		}
+	}
+	if got := find("hammerdin").AttackNames(18, all); len(got) == 0 || got[0] != "Blessed Hammer" {
+		t.Errorf("hammerdin clvl 18 attacks %v", got)
 	}
 }

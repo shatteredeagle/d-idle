@@ -1503,7 +1503,7 @@
      "requires": "Blessed Hammer",
      "attack": [
       "Blessed Hammer",
-      "Smite",
+      "Zeal",
       "Attack"
      ],
      "aura": [
@@ -1526,7 +1526,6 @@
      "requires": "Zeal",
      "attack": [
       "Zeal",
-      "Smite",
       "Attack"
      ]
     },
