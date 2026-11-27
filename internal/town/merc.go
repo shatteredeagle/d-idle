@@ -164,9 +164,15 @@ func isMercClass(c int) bool { return d2.IsMercClass(c) }
 // refused or destroys the old gear, S/U), and by difficulty Normal Defiance, Nightmare Might (the only difficulty
 // with Might, V hireling.tsv: Hell rows are Prayer/Defiance/Blessed Aim again), Hell Defiance. The cost is the factor
 // of the table row times merc level, so only a floor is checked here; Hire verifies by the gold falling (V).
-func HirePolicy(diff data.Difficulty, merc d2.Merc, gold int) (MercWant, bool) {
+//
+// The class can override the aura per difficulty (d2.ClassTraits.MercAura, data); an unknown class is an error naming it,
+// never a fallback to another class.
+func HirePolicy(class d2.Class, diff data.Difficulty, merc d2.Merc, gold int) (MercWant, bool, error) {
+	if _, err := d2.TraitsOf(class); err != nil {
+		return MercWant{}, false, err
+	}
 	if merc.Alive {
-		return MercWant{}, false
+		return MercWant{}, false, nil
 	}
 	w := MercWant{Act: 2, Diff: diff, Aura: "Defiance", Row: -1}
 	floor := 400 // Normal: factor 350 read 360 at merc level 9 (V docs/town.md)
@@ -176,7 +182,22 @@ func HirePolicy(diff data.Difficulty, merc d2.Merc, gold int) (MercWant, bool) {
 	case data.Hell:
 		floor = 15000 // U: scaled from factor 15000
 	}
-	return w, gold >= floor
+	if a, ok, err := ClassMercAura(class, diff); err != nil {
+		return MercWant{}, false, err
+	} else if ok {
+		w.Aura = a
+	}
+	return w, gold >= floor, nil
+}
+
+// ClassMercAura is the class's configured Act 2 aura for a difficulty (classtraits.json mercAura); ok is false when the
+// class has no row, and the caller keeps its default.
+func ClassMercAura(class d2.Class, diff data.Difficulty) (string, bool, error) {
+	names := [...]string{"normal", "nightmare", "hell"}
+	if diff < 0 || int(diff) >= len(names) {
+		return "", false, fmt.Errorf("town: unknown difficulty %d", int(diff))
+	}
+	return d2.MercAuraFor(class, names[diff])
 }
 
 // Hire talks to the act's mercenary NPC and clicks one row of the hire window. The click needs the row: w.Row or w.Pick
