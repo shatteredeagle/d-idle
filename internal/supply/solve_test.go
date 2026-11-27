@@ -120,3 +120,29 @@ func TestAndarielProfileIsTheBossKit(t *testing.T) {
 		}
 	}
 }
+
+func TestViewTwoBuilds(t *testing.T) {
+	prices := Prices{Healing: 30, Mana: 30, Portal: 100}
+	for name, in := range builds {
+		n, err := NeedFor("quest", "monastery_road", in)
+		if err != nil {
+			t.Fatal(err)
+		}
+		rich := Count{Purse: 5000, StashKnown: true, Stash: 700}
+		v := ViewOf(Solve(n, rich, prices, Policy{}, 0), rich, []string{"akara", "stash"}, 1)
+		if v.Schema != ViewSchema || v.Budget.Purse != 5000 || v.Budget.Stash != 700 || v.Done != 1 || len(v.Lines) != len(n.Lines) {
+			t.Errorf("%s: view %+v", name, v)
+		}
+		if !strings.HasPrefix(v.Waiting, "Waiting: ") || !strings.Contains(v.Waiting, "Buying") {
+			t.Errorf("%s: waiting %q", name, v.Waiting)
+		}
+		poor := Count{Purse: 10, StashKnown: true}
+		pv := ViewOf(Solve(n, poor, prices, Policy{}, 0), poor, nil, 9)
+		if pv.Chip != "Short of gold" || !strings.HasPrefix(pv.Waiting, "Short of gold: needs ") || pv.Done != 0 {
+			t.Errorf("%s: poor view %q %q", name, pv.Chip, pv.Waiting)
+		}
+		if !strings.Contains(pv.Minute, "verdict=short-gold") || !strings.Contains(pv.Minute, "dropped=") {
+			t.Errorf("%s: minute %q", name, pv.Minute)
+		}
+	}
+}

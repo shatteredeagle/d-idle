@@ -1247,5 +1247,10 @@
    ]
   }
  ],
- "uncovered": []
+ "uncovered": [
+  {
+   "table": "necromancer_summoner_ce1",
+   "reason": "experimental opt-in pair table for the Corpse Explosion points test (card necrocorpse); not a player build"
+  }
+ ]
 }
