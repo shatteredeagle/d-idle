@@ -12,6 +12,8 @@ const (
 	idTeleport = 54
 	idCharge   = 107
 	idLeap     = 150
+	idWhirl    = 151
+	idZeal     = 123
 )
 
 // moveWorld is a character of class with the move skills the test names, bound to f2, standing at (100,100).
@@ -20,7 +22,7 @@ func moveWorld(t *testing.T, class d2.Class, build string, mode int, ids ...int)
 	for _, s := range []struct {
 		id   int
 		name string
-	}{{idTeleport, "Teleport"}, {idCharge, "Charge"}, {idLeap, "Leap Attack"}} {
+	}{{idTeleport, "Teleport"}, {idCharge, "Charge"}, {idLeap, "Leap Attack"}, {idWhirl, "Whirlwind"}, {idZeal, "Zeal"}} {
 		cat.Skills[s.id] = &data.Skill{ID: s.id, Key: s.name, Name: s.name, Mana: 24, ManaShift: 8, MinMana: 24}
 	}
 	skills, keys := map[int]int{}, map[int]string{}

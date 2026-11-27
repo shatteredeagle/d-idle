@@ -145,6 +145,15 @@ type Pre struct {
 	Stats []StatSet `json:"stats,omitempty"`
 	// Ether is the Ether balance of the account wallet at the start (a credit line in its ledger).
 	Ether int `json:"ether,omitempty"`
+	// Skills are hard skill points put into a class skill after the level (`debug points <id> <n>`, V docs/d2-spike.md: only a
+	// class skill of the character is accepted). SETUP for a drill whose skill no build table learns yet (Whirlwind); the run is CHEATED.
+	Skills []SkillSet `json:"skills,omitempty"`
+}
+
+// SkillSet is one Pre.Skills row: a skills.txt id and the points.
+type SkillSet struct {
+	Skill  int `json:"skill"`
+	Points int `json:"points"`
 }
 
 // Spawn is one `debug spawn` of Pre.Spawn: a monsters.txt id, how many, and "" (normal), "champion" or "unique".
