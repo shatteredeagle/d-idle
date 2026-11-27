@@ -71,7 +71,24 @@
      "tries": 3,
      "verbs": [
       "dump items"
-     ]
+     ],
+     "exec": {
+      "verb": "interact",
+      "on": {
+       "kind": "object",
+       "name": "cube_chest",
+       "class": 354
+      },
+      "then": "pickup",
+      "tolerance": 4,
+      "wake": [
+       "pack changes"
+      ],
+      "wait_polls": 6,
+      "wait_ms": 1000,
+      "backoff_ms": 500,
+      "backoff_cap_ms": 4000
+     }
     },
     {
      "id": "travel_far_oasis",
@@ -140,7 +157,24 @@
      "tries": 3,
      "verbs": [
       "dump items"
-     ]
+     ],
+     "exec": {
+      "verb": "interact",
+      "on": {
+       "kind": "object",
+       "name": "staff_chest",
+       "class": 356
+      },
+      "then": "pickup",
+      "tolerance": 4,
+      "wake": [
+       "pack changes"
+      ],
+      "wait_polls": 6,
+      "wait_ms": 1000,
+      "backoff_ms": 500,
+      "backoff_cap_ms": 4000
+     }
     },
     {
      "id": "transmute",
@@ -218,6 +252,438 @@
      "nodes": [
       "assemble"
      ]
+    }
+   ]
+  },
+  {
+   "id": "radament",
+   "quest": "radament",
+   "initial": [
+    "quest_available(radament)"
+   ],
+   "areas": {
+    "lut_gholein": {
+     "size": "small"
+    },
+    "sewers_3": {
+     "size": "medium"
+    }
+   },
+   "steps": [
+    {
+     "id": "talk_atma",
+     "act": "talk",
+     "target": {
+      "kind": "npc",
+      "name": "atma",
+      "class": 176
+     },
+     "chunk": "radament",
+     "board": [
+      "talk_atma"
+     ],
+     "pre": [
+      "quest_available(radament)"
+     ],
+     "post": [
+      "quest_bits(radament,0x0004)|quest_state(radament,started)"
+     ],
+     "discover": "preset_always",
+     "budget_s": 120,
+     "on_fail": "retry",
+     "tries": 2,
+     "exec": {
+      "verb": "talk",
+      "pick": "quest",
+      "wait_polls": 4,
+      "wait_ms": 500,
+      "backoff_ms": 500,
+      "backoff_cap_ms": 4000
+     }
+    },
+    {
+     "id": "travel_sewers",
+     "act": "travel",
+     "target": {
+      "kind": "area",
+      "name": "sewers_3"
+     },
+     "chunk": "radament",
+     "board": [
+      "travel_sewers"
+     ],
+     "pre": [
+      "quest_bits(radament,0x0004)|quest_state(radament,started)"
+     ],
+     "post": [
+      "in_area(sewers_3)"
+     ],
+     "discover": "preset_always",
+     "budget_s": 900,
+     "on_fail": "retry",
+     "tries": 3,
+     "idempotent": true
+    },
+    {
+     "id": "kill_radament",
+     "act": "kill",
+     "target": {
+      "kind": "monster",
+      "name": "radament"
+     },
+     "chunk": "radament",
+     "board": [
+      "kill_radament"
+     ],
+     "pre": [
+      "quest_bits(radament,0x0004)|quest_state(radament,started)"
+     ],
+     "post": [
+      "killed(radament)|quest_state(radament,cleared)"
+     ],
+     "discover": "preset_always",
+     "budget_s": 900,
+     "on_fail": "park"
+    },
+    {
+     "id": "use_book",
+     "act": "use_item",
+     "target": {
+      "kind": "item",
+      "code": "ass"
+     },
+     "chunk": "radament",
+     "board": [
+      "use_book"
+     ],
+     "pre": [
+      "killed(radament)|quest_state(radament,cleared)"
+     ],
+     "post": [
+      "lacks_item(ass)|quest_state(radament,done)"
+     ],
+     "discover": "preset_always",
+     "budget_s": 120,
+     "on_fail": "retry",
+     "tries": 2,
+     "consumes": [
+      "has_item(ass)"
+     ],
+     "verbs": [
+      "dump items"
+     ],
+     "exec": {
+      "verb": "use",
+      "first": "pickup",
+      "wake": [
+       "pack changes"
+      ],
+      "wait_polls": 4,
+      "wait_ms": 1000,
+      "backoff_ms": 500,
+      "backoff_cap_ms": 4000
+     }
+    },
+    {
+     "id": "take_scroll",
+     "act": "pickup",
+     "target": {
+      "kind": "item",
+      "code": "tr1"
+     },
+     "chunk": "radament",
+     "board": [],
+     "pre": [
+      "lacks_item(ass)"
+     ],
+     "post": [
+      "has_item(tr1)|quest_state(radament,done)|quest_state(horadric_staff,started)"
+     ],
+     "discover": "preset_always",
+     "budget_s": 300,
+     "on_fail": "retry",
+     "tries": 3,
+     "verbs": [
+      "dump items"
+     ],
+     "exec": {
+      "verb": "interact",
+      "on": {
+       "kind": "object",
+       "name": "scroll_chest",
+       "class": 355
+      },
+      "then": "pickup",
+      "tolerance": 4,
+      "wake": [
+       "pack changes"
+      ],
+      "wait_polls": 6,
+      "wait_ms": 1000,
+      "backoff_ms": 500,
+      "backoff_cap_ms": 4000
+     }
+    },
+    {
+     "id": "return_atma",
+     "act": "talk",
+     "target": {
+      "kind": "npc",
+      "name": "atma",
+      "class": 176
+     },
+     "chunk": "radament",
+     "board": [
+      "return_atma"
+     ],
+     "pre": [
+      "lacks_item(ass)"
+     ],
+     "post": [
+      "quest_state(radament,done)"
+     ],
+     "discover": "preset_always",
+     "budget_s": 120,
+     "on_fail": "retry",
+     "tries": 2,
+     "exec": {
+      "verb": "talk",
+      "pick": "reward",
+      "wait_polls": 4,
+      "wait_ms": 500,
+      "backoff_ms": 500,
+      "backoff_cap_ms": 4000
+     }
+    }
+   ]
+  },
+  {
+   "id": "tainted_sun",
+   "quest": "tainted_sun",
+   "initial": [
+    "quest_available(tainted_sun)"
+   ],
+   "areas": {
+    "lost_city": {
+     "size": "large"
+    },
+    "claw_viper_temple": {
+     "size": "medium"
+    }
+   },
+   "steps": [
+    {
+     "id": "travel_lost_city",
+     "act": "travel",
+     "target": {
+      "kind": "area",
+      "name": "lost_city"
+     },
+     "chunk": "amulet",
+     "board": [
+      "travel_lost_city"
+     ],
+     "pre": [],
+     "post": [
+      "in_area(lost_city)"
+     ],
+     "discover": "preset_always",
+     "budget_s": 900,
+     "on_fail": "retry",
+     "tries": 3,
+     "idempotent": true
+    },
+    {
+     "id": "travel_claw_viper",
+     "act": "travel",
+     "target": {
+      "kind": "area",
+      "name": "claw_viper_temple"
+     },
+     "chunk": "amulet",
+     "board": [
+      "travel_claw_viper"
+     ],
+     "pre": [],
+     "post": [
+      "in_area(claw_viper_temple)"
+     ],
+     "discover": "preset_always",
+     "budget_s": 900,
+     "on_fail": "retry",
+     "tries": 3,
+     "idempotent": true
+    },
+    {
+     "id": "kill_fangskin",
+     "act": "kill",
+     "target": {
+      "kind": "monster",
+      "name": "fangskin"
+     },
+     "chunk": "amulet",
+     "board": [
+      "kill_fangskin"
+     ],
+     "pre": [],
+     "post": [
+      "killed(fangskin)|has_item(vip)"
+     ],
+     "discover": "preset_always",
+     "budget_s": 900,
+     "on_fail": "park"
+    },
+    {
+     "id": "take_amulet",
+     "act": "pickup",
+     "target": {
+      "kind": "item",
+      "code": "vip"
+     },
+     "chunk": "amulet",
+     "board": [
+      "take_amulet"
+     ],
+     "pre": [
+      "killed(fangskin)|has_item(vip)"
+     ],
+     "post": [
+      "has_item(vip)|has_item(hst)|quest_state(horadric_staff,done)"
+     ],
+     "discover": "preset_always",
+     "budget_s": 300,
+     "on_fail": "retry",
+     "tries": 3,
+     "verbs": [
+      "dump items"
+     ],
+     "exec": {
+      "verb": "interact",
+      "on": {
+       "kind": "object",
+       "name": "tainted_sun_altar",
+       "class": 149
+      },
+      "then": "pickup",
+      "tolerance": 4,
+      "wake": [
+       "pack changes"
+      ],
+      "wait_polls": 6,
+      "wait_ms": 1000,
+      "backoff_ms": 500,
+      "backoff_cap_ms": 4000
+     }
+    }
+   ]
+  },
+  {
+   "id": "summoner",
+   "quest": "summoner",
+   "initial": [
+    "quest_available(summoner)"
+   ],
+   "areas": {
+    "arcane_sanctuary": {
+     "size": "medium"
+    }
+   },
+   "steps": [
+    {
+     "id": "travel_arcane",
+     "act": "travel",
+     "target": {
+      "kind": "area",
+      "name": "arcane_sanctuary"
+     },
+     "chunk": "kill_summoner",
+     "board": [
+      "travel_arcane"
+     ],
+     "pre": [],
+     "post": [
+      "in_area(arcane_sanctuary)"
+     ],
+     "discover": "preset_always",
+     "budget_s": 900,
+     "on_fail": "retry",
+     "tries": 3,
+     "idempotent": true
+    },
+    {
+     "id": "find_summoner",
+     "act": "find_object",
+     "target": {
+      "kind": "object",
+      "name": "summoner_journal",
+      "class": 357
+     },
+     "chunk": "kill_summoner",
+     "board": [
+      "find_summoner"
+     ],
+     "pre": [],
+     "post": [
+      "object_known(summoner_journal)|quest_state(summoner,cleared)"
+     ],
+     "discover": "preset_always",
+     "budget_s": 600,
+     "on_fail": "retry",
+     "tries": 3,
+     "verbs": [
+      "debug presets"
+     ]
+    },
+    {
+     "id": "kill_summoner",
+     "act": "kill",
+     "target": {
+      "kind": "monster",
+      "name": "summoner"
+     },
+     "chunk": "kill_summoner",
+     "board": [
+      "kill_summoner"
+     ],
+     "pre": [],
+     "post": [
+      "killed(summoner)|quest_state(summoner,cleared)"
+     ],
+     "discover": "preset_always",
+     "budget_s": 720,
+     "on_fail": "park"
+    },
+    {
+     "id": "touch_journal",
+     "act": "interact",
+     "target": {
+      "kind": "object",
+      "name": "summoner_journal",
+      "class": 357
+     },
+     "chunk": "kill_summoner",
+     "board": [],
+     "pre": [
+      "killed(summoner)|quest_state(summoner,cleared)"
+     ],
+     "post": [
+      "quest_state(summoner,done)"
+     ],
+     "discover": "preset_always",
+     "budget_s": 300,
+     "on_fail": "retry",
+     "tries": 2,
+     "exec": {
+      "verb": "interact",
+      "tolerance": 4,
+      "wake": [
+       "quest word changes"
+      ],
+      "wait_polls": 4,
+      "wait_ms": 1000,
+      "backoff_ms": 500,
+      "backoff_cap_ms": 4000
+     }
     }
    ]
   },
