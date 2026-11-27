@@ -158,7 +158,6 @@ cmd/d2scenario/tap_test.go  credit-runner  pgtaps
 cmd/d2scenario/tap_test.go  credit-runner  stage1fix
 data/capabilities/  credit-runner  dlv-stance-pack
 data/capabilities/capabilities.json  credit-runner  classkeys
-data/darklaunch.json  credit-runner  admit1
 data/darklaunch.json  credit-runner  arbmig
 data/darklaunch.json  credit-runner  dlv-upkeep-state
 data/darklaunch.json  credit-runner  ticklog
@@ -181,7 +180,6 @@ docs/campaign.md  credit-runner  campaign1
 docs/classes/necromancer-gap-2026-11-27.md  live-agent  epic-class-necromancer
 docs/combat.md  credit-runner  cainfix3
 docs/contracts/decision-queue.md  credit-runner  qqueue
-docs/design/admission-p4.md  credit-runner  admit1
 docs/design/agency-p1b.md  credit-runner  agencyp1b
 docs/design/arbiter-migration-p6.md  credit-runner  arbmig
 docs/design/boardsm-flip.md  credit-runner  bsmdef
@@ -220,9 +218,6 @@ docs/knobs.md  credit-runner  dlv-upkeep-state
 docs/onboarding-tour.md  credit-runner  onboardtour
 docs/onboarding.md  credit-runner  reconnectux
 docs/plan/data  credit-runner  classkeys
-docs/plan/data/admission.json  credit-runner  admit1
-docs/plan/data/earlyroutes.json  credit-runner  admit1
-docs/plan/data/povertyfarm.json  credit-runner  admit1
 docs/probes/checkpoint-live-drill.md  live-agent  ckptlive
 docs/probes/classorder1.md  user  classorder1
 docs/probes/exitsread-2026-11-22.md  credit-runner  exitsread
@@ -271,7 +266,6 @@ docs/tester-registry.md  credit-runner  ghcrpublish
 docs/town.md  credit-runner  town11
 docs/ui/redesign-2026-11-14/stash-anywhere.md  credit-runner  stashany
 docs/upstream/bodies/monster-block-body.md  credit-runner  decomp43
-internal/admit/  credit-runner  admit1
 internal/agency/drive.go  credit-runner  agencyp1b
 internal/agency/drive_test.go  credit-runner  agencyp1b
 internal/agency/testdata/agreement.json  credit-runner  classkeys
@@ -280,15 +274,10 @@ internal/arbiter/  credit-runner  arbmig
 internal/arbiter/replay.go  credit-runner  ticklog
 internal/arbiter/replay_ticklog_test.go  credit-runner  ticklog
 internal/bot/  credit-runner  cainfix3
-internal/bot/admission.go  credit-runner  admit1
-internal/bot/admission_test.go  credit-runner  admit1
-internal/bot/admit_need_test.go  credit-runner  admit1
 internal/bot/arbiter_control.go  credit-runner  arbmig
 internal/bot/arbiter_control_test.go  credit-runner  arbmig
 internal/bot/arbloop_test.go  credit-runner  arbloop
 internal/bot/broke.go  credit-runner  town5
-internal/bot/earlyroute.go  credit-runner  admit1
-internal/bot/explain.go  credit-runner  admit1
 internal/bot/goal.go  credit-runner  arbloop
 internal/bot/goal.go  credit-runner  qdmatrix
 internal/bot/goal.go  credit-runner  stage1fix
@@ -297,13 +286,10 @@ internal/bot/guided.go  credit-runner  campaign1
 internal/bot/guided_test.go  credit-runner  campaign1
 internal/bot/leveling.go  credit-runner  town5
 internal/bot/loop.go  credit-runner  arbmig
-internal/bot/povertyfarm.go  credit-runner  admit1
 internal/bot/questboard.go  credit-runner  qdmatrix
 internal/bot/questboard.go  credit-runner  stage1fix
 internal/bot/questboard_s7b_test.go  credit-runner  qdmatrix
 internal/bot/questboard_test.go  credit-runner  stage1fix
-internal/bot/routeguard.go  credit-runner  admit1
-internal/bot/runner.go  credit-runner  admit1
 internal/bot/runner.go  credit-runner  campaign1
 internal/bot/shadow.go  credit-runner  arbmig
 internal/bot/shadow.go  credit-runner  ticklog
@@ -367,7 +353,6 @@ internal/decide/queue_test.go  credit-runner  qqueue
 internal/decide/variants.go  credit-runner  qdensity
 internal/decide/variants_test.go  credit-runner  qdensity
 internal/env/tuning_agency.go  credit-runner  agencyp1b
-internal/env/tuning_bot.go  credit-runner  admit1
 internal/env/tuning_bot.go  credit-runner  arbmig
 internal/env/tuning_bot.go  credit-runner  ticklog
 internal/env/tuning_combat.go  credit-runner  cainfix3
@@ -400,12 +385,9 @@ internal/nav/route.go  credit-runner  exitsread
 internal/nav/warpread_test.go  credit-runner  warptrigger
 internal/plandata  credit-runner  classkeys
 internal/plandata/act2plan.json  live-agent  epic-class-necromancer
-internal/plandata/admission.json  credit-runner  admit1
 internal/plandata/build-necromancer_leveling_normal30.json  live-agent  epic-class-necromancer
 internal/plandata/build-necromancer_summoner_endgame90.json  live-agent  epic-class-necromancer
-internal/plandata/earlyroutes.json  credit-runner  admit1
 internal/plandata/levelplan-normal.json  live-agent  epic-class-necromancer
-internal/plandata/povertyfarm.json  credit-runner  admit1
 internal/power/  credit-runner  dlv-cleanup
 internal/power/archetype.go  credit-runner  qdmatrix
 internal/power/skilldamage_test.go  credit-runner  qdmatrix

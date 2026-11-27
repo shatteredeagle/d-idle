@@ -1,10 +1,13 @@
 ---
 id: TASK-970
-title: 'admit1: P4 admission function MayEnter(area, purpose) and MayLeaveTown(purpose)'
-status: Proposed
+title: >-
+  admit1: P4 admission function MayEnter(area, purpose) and
+  MayLeaveTown(purpose)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-26T03:53:00Z'
+updated_date: '2026-11-27T20:57:00Z'
 labels:
   - bot
   - feature
