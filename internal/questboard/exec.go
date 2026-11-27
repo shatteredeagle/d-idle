@@ -172,7 +172,7 @@ func (e *Exec) derive() ([]QuestView, Plan, int, error) {
 	}
 	diff := e.env.Diff()
 	var sm *smOverlay
-	if e.o.SM {
+	if !e.boardLegacy() {
 		if sm, err = e.smLoad(diff); err != nil {
 			return nil, Plan{}, 0, err
 		}
@@ -272,7 +272,7 @@ func open(vs []QuestView, plan Plan, diff int) []Ref {
 // finished run (kept in Accepted as the proof that the board ran it) never reopens when its evidence goes back.
 func (e *Exec) open(vs []QuestView, plan Plan, diff int) []Ref {
 	out := open(vs, plan, diff)
-	if !e.o.SM {
+	if e.boardLegacy() {
 		return out
 	}
 	d := Difficulties[diff]
@@ -365,7 +365,7 @@ func (e *Exec) AcceptRuns(quest, chunk string) ([]Ref, error) {
 	if err := e.acceptLocked(vs, plan, diff, quest, chunk, nil); err != nil {
 		return nil, err
 	}
-	if !e.o.SM {
+	if e.boardLegacy() {
 		return []Ref{{quest, chunk}}, nil
 	}
 	return e.lastChanged, nil
@@ -374,7 +374,7 @@ func (e *Exec) AcceptRuns(quest, chunk string) ([]Ref, error) {
 // acceptLocked records an accept; ev (the auto-start controller) makes it an auto record with its log line. Callers
 // hold e.mu and pass the views they just derived.
 func (e *Exec) acceptLocked(vs []QuestView, plan Plan, diff int, quest, chunk string, ev *AutoEvent) error {
-	if e.o.SM {
+	if !e.boardLegacy() {
 		return e.smAccept(vs, diff, quest, chunk, ev)
 	}
 	if _, cur, ok := chunkView(vs, quest, chunk); ok && (cur.State == Accepted || cur.State == InProgress || cur.State == Awaiting) {
@@ -568,7 +568,7 @@ func (e *Exec) CancelRuns(quest, chunk string) ([]Ref, error) {
 	if !e.o.Enabled {
 		return nil, ErrOff
 	}
-	if e.o.SM {
+	if !e.boardLegacy() {
 		e.lastChanged = nil
 		err := e.smCancel(q, c)
 		return e.lastChanged, err
@@ -601,7 +601,7 @@ func (e *Exec) Reset() {
 		act = e.open(vs, plan, diff)
 	}
 	e.rs = map[string]*runState{}
-	if e.o.SM && err == nil {
+	if !e.boardLegacy() && err == nil {
 		e.smRetryAll() // the player's Reset is the one explicit way a stored park is cleared
 	}
 	e.mu.Unlock()
@@ -627,7 +627,7 @@ func (e *Exec) UnblockRuns(quest, chunk string) []Ref {
 	defer e.mu.Unlock()
 	delete(e.rs, ChunkKey(quest, chunk))
 	e.lastChanged = nil
-	if e.o.SM {
+	if !e.boardLegacy() {
 		e.smRetry(quest, chunk)
 		return e.lastChanged
 	}
@@ -728,7 +728,7 @@ func (e *Exec) next() (Decision, error) {
 	if len(o) == 0 {
 		return Decision{Kind: DecIdle}, nil
 	}
-	if !e.o.SM && e.repairLocked(vs, plan, diff, o[0]) { // with the machine the repair is the load step (store_sm.go)
+	if e.boardLegacy() && e.repairLocked(vs, plan, diff, o[0]) { // with the machine the repair is the load step (store_sm.go)
 		if vs, plan, diff, err = e.derive(); err != nil {
 			return Decision{}, err
 		}

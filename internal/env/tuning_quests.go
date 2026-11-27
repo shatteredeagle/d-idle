@@ -53,3 +53,6 @@ func questsKnobs() []Knob {
 			Desc: "1: ask the private d2d fork for the current level's room layout and quest-object positions (read-only verb `debug levelmap`, ADR 0022: a read never makes a run CHEATED) and walk straight to the Tree of Inifuss, the cairn stones or Cain's cage instead of exploring for them; a second read (`debug levelmonsters`) gives a superunique's spawn point (the Countess in Tower Cellar 5) from the level's build; stock d2d or an error falls back to exploring. 0 (default): explore as before."},
 	}
 }
+
+// BoardLegacy reports the old derive-every-tick quest board (quests.boardSM 0): the single read of the knob.
+func (q QuestsTuning) BoardLegacy() bool { return q.BoardSM == 0 }

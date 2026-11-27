@@ -98,7 +98,7 @@ func (d *Desk) chunkReason(quest string, cv ChunkView, run *Run, a *Active, hand
 func (e *Exec) SMRuns() map[string]Run {
 	e.mu.Lock()
 	defer e.mu.Unlock()
-	if !e.o.SM || !e.o.Enabled {
+	if e.boardLegacy() || !e.o.Enabled {
 		return nil
 	}
 	m, err := e.st.LoadSM(e.smDone())
@@ -118,7 +118,7 @@ func handInReady() *ReasonView {
 }
 
 // SMOn reports the knob quests.boardSM.
-func (e *Exec) SMOn() bool { e.mu.Lock(); defer e.mu.Unlock(); return e.o.SM }
+func (e *Exec) SMOn() bool { e.mu.Lock(); defer e.mu.Unlock(); return !e.boardLegacy() }
 
 // handInWaitReason is the reason of a hand-in tap the bot loop has not served yet: the holder in words, from the
 // bot side. nil when the loop is serving it (or no holder is known).
