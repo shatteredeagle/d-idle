@@ -46,7 +46,6 @@
 | smeaura | proposed | - | `docs/sme/paladin-auras-2026-11-26.md` | - |
 | necrocorpse | proposed | - | `docs/probes/necrocaps-2026-11-26.md` | - |
 | fid-poison-res-diag | proposed | - | `docs/research/fid-poisonres-trace.md` | - |
-| sellsnap | proposed | - | `internal/town/shop.go`<br>`internal/town/evalsnap.go`<br>`internal/town/sellsnap_test.go`<br>`internal/bot/sellable.go`<br>`internal/bot/resource.go`<br>`internal/bot/routeguard.go`<br>`internal/bot/runner.go`<br>`internal/bot/sellsnap_test.go` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |

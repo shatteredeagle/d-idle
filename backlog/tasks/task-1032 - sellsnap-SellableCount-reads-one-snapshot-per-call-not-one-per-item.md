@@ -1,10 +1,11 @@
 ---
 id: TASK-1032
 title: 'sellsnap: SellableCount reads one snapshot per call, not one per item'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T04:34:00Z'
+updated_date: '2026-11-27T05:29:00Z'
 labels:
   - bot
   - bug
