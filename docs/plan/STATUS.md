@@ -39,7 +39,6 @@
 | fid-poison-res-diag | proposed | - | `docs/research/fid-poisonres-trace.md` | - |
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
-| diffready | proposed | - | `internal/diffready`<br>`internal/env/tuning_bot.go`<br>`internal/bot/leveling.go`<br>`internal/bot/explain.go`<br>`cmd/d2bot/util.go`<br>`data/darklaunch.json`<br>`internal/bot/diffready.go`<br>`internal/bot/diffready_test.go`<br>`internal/bot/runner.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`docs/diffready.md`<br>`docs/knobs.md` | - |
 | diffbaal | proposed | - | `internal/quest/baaldone.go`<br>`internal/quest/baaldone_test.go` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
