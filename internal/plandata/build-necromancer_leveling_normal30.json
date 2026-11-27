@@ -3,7 +3,7 @@
  "class": "necromancer",
  "combat": "bonespear",
  "schema": "per-clvl allocation, same shape as build-paladin-normal30.json (leveler.ParseBuild). main_attack: extra, for combat: skill to use as main attack per clvl range, weapon says which equipped weapon type it needs ('any' = none). Quest points (Den, Radament, Izual) are skill entries with a quest key on the row where the guide spends them: rows count level points only, and a tagged point is bought as soon as its quest point is granted.",
- "tags": "Skills 2-26: V (Maxroll Necromancer leveling https://maxroll.gg/d2/guides/necromancer-leveling, fetched 2026-10-29; guide says Amplify Damage/Iron Maiden points go into Teeth if you hold a Wand, kept as the guide's default). Quest points tagged (quest key) on rows 5 Den, 15 Radament, 21 Izual. Skills 27-30: U (own choice: Corpse Explosion, the guide's main damage after its clvl 27 respec; the respec itself is NOT used). Stats 2-26: V Maxroll (2-3 Energy, 4-11 Vit, 12-13 Str, 14-16 Vit, 17-21 22 Str + 3 Vit, 22-26 Vit); 27-30: U (all Vit, Maxroll says Str only for gear). Prerequisites and reqlevels checked by gen_builds.py against skills.txt (V Patch_D2.mpq). Start values 15 str 25 dex 15 vit 25 ene.",
+ "tags": "Skills 2-26: V (Maxroll Necromancer leveling https://maxroll.gg/d2/guides/necromancer-leveling, fetched 2026-10-29; guide says Amplify Damage/Iron Maiden points go into Teeth if you hold a Wand, kept as the guide's default). Quest points tagged (quest key) on rows 5 Den, 15 Radament, 21 Izual. Skills 27-30: U (own choice: Corpse Explosion, the guide's main damage after its clvl 27 respec; the respec itself is NOT used). Stats 2-26: V Maxroll (2-3 Energy, 4-11 Vit, 12-13 Str, 14-16 Vit, 17-21 22 Str + 3 Vit, 22-26 Vit); 27-30: U (all Vit, Maxroll says Str only for gear). Prerequisites and reqlevels checked by gen_builds.py against skills.txt (V Patch_D2.mpq). Start values 15 str 25 dex 15 vit 25 ene. SME review 2026-11-27, confidence high: rows 12, 15 (both points) and 16 are Teeth instead of Iron Maiden and Bone Wall (nothing in the bonespear profile casts them and the table has no respec), so Teeth ends at 14 points.",
  "respec": {
   "at_clvl": 27,
   "enabled": false,
@@ -221,7 +221,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Iron Maiden",
+     "skill": "Teeth",
      "points": 1
     }
    ]
@@ -260,11 +260,11 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Bone Wall",
+     "skill": "Teeth",
      "points": 1
     },
     {
-     "skill": "Bone Wall",
+     "skill": "Teeth",
      "points": 1,
      "quest": "radament"
     }
@@ -278,7 +278,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Bone Wall",
+     "skill": "Teeth",
      "points": 1
     }
    ]
