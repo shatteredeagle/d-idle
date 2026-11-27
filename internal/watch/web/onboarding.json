@@ -1,0 +1,39 @@
+{
+  "tourButton": "Tour",
+  "step": "Step {n} of {total}",
+  "next": "Got it",
+  "back": "Back",
+  "skip": "Skip tour",
+  "steps": [
+    {"id": "launch", "title": "Your hero plays by itself", "body": "d.idle runs the hero for you. Watch the picture, read what it is doing in the line under the header, and step in only when you want to. Questions can take a while to come; a quiet screen does not mean something is broken."},
+    {"id": "town", "title": "First time in town", "body": "Your hero is in town. This is where it heals, repairs and sells. The bot does this on its own; Inventory and Policy are where you change how."},
+    {"id": "vault", "title": "Your first Vault item", "body": "A worthwhile drop was kept in the Ethereal Vault, so nothing is lost when the pack is full. Open the Vault to look at it, equip it or discard it."},
+    {"id": "quest", "title": "First quest handed in", "body": "A quest was handed in and its reward paid out. The Quests tile shows what is next and lets you order the next one."},
+    {"id": "death", "title": "Your hero died", "body": "Deaths happen. The bot recovers its body and carries on; the header counts them. If they repeat, open Policy and make the rules safer, or ask for help from Help."}
+  ],
+  "townAreas": ["rogue encampment", "lut gholein", "kurast docks", "the pandemonium fortress", "harrogath"],
+  "doing": {
+    "_default": "Playing on",
+    "idle": "Waiting for something to do",
+    "town": "Taking care of business in town",
+    "fight": "Fighting",
+    "travel": "Walking to its next stop",
+    "heal": "Recovering life",
+    "recover": "Recovering after a death"
+  },
+  "nowLabel": "Now",
+  "waitLabel": "Waiting",
+  "nowNone": "The bot has not said yet.",
+  "help": {
+    "title": "Help: the first 30 minutes",
+    "lines": [
+      "The bot plays for you; you can leave it running.",
+      "Tour tips appear when something happens for the first time. Each one can be closed.",
+      "The Now line is what the bot is doing, taken from its own decision log."
+    ],
+    "replay": "Replay the tour",
+    "guide": "Open the welcome card and first-30-minutes list",
+    "replayDone": "The tour will show each tip again.",
+    "storeOff": "This browser does not keep notes, so tips may appear again on a reload."
+  }
+}

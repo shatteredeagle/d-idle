@@ -1,0 +1,21 @@
+{
+ "version": "didle.pg-nightly/1",
+ "window": {"start": "23:00", "end": "07:00", "zone": "EST"},
+ "max_jobs": 3,
+ "nice": 19,
+ "hidden_only": true,
+ "sandbox_untouched": true,
+ "smoke": {"tier": "T2", "report_only": true, "clean_days_before_decision": 7, "max_wall_min": 3, "lane": "long"},
+ "jobs": [
+  {"name": "tiers", "max_wall_min": 420, "parallel": 2, "stages": [
+   {"kind": "tier", "tier": "T2", "classes": "first", "cap_runs": 20},
+   {"kind": "tier", "tier": "T3", "classes": "all", "extra_seed_day": "Sunday", "cap_runs": 120}
+  ]},
+  {"name": "pairs", "max_wall_min": 120, "parallel": 2, "stages": [
+   {"kind": "pairs", "tier": "T2", "count": 3, "cap_runs": 6}
+  ]},
+  {"name": "e2e", "max_wall_min": 240, "parallel": 1, "stages": [
+   {"kind": "e2e", "tier": "T4", "count": 1, "prefer_earned": true, "cap_runs": 1}
+  ]}
+ ]
+}
