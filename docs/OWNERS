@@ -273,6 +273,7 @@ internal/arbiter/replay_ticklog_test.go  credit-runner  ticklog
 internal/bot/  credit-runner  cainfix3
 internal/bot/arbiter_control.go  credit-runner  arbmig
 internal/bot/arbiter_control_test.go  credit-runner  arbmig
+internal/bot/arbiter_control_test.go  credit-runner  flakearb
 internal/bot/arbloop_test.go  credit-runner  arbloop
 internal/bot/broke.go  credit-runner  town5
 internal/bot/fieldstate_test.go  credit-runner  fieldstate
