@@ -1,0 +1,111 @@
+{
+ "_note": "Per-class readiness rows for the opt-in hop (docs/diffready.md, design docs/design/difficulty-transition-2026-11-27.md section 4). Nightmare rows: S, copied from docs/sme/class-*.md 'Enter Nightmare'; the combination is U. Hell rows: U placeholders (NM life x1.4, clvl 75), to be replaced by measured Nightmare drills; Hell has NO resist field by user decision 2026-11-27. key_skill_min 0 means no skill term.",
+ "targets": {
+  "nightmare": {
+   "tag": "S",
+   "all": {
+    "baal_dead": true,
+    "merc_alive": true,
+    "deaths_last_hour_max": 1,
+    "res_post_min": {
+     "fire": 20,
+     "cold": 20,
+     "lightning": 20,
+     "poison": 0
+    },
+    "kit": {
+     "healing": 4,
+     "mana_or_rejuv": 4,
+     "portal": 1
+    }
+   },
+   "classes": {
+    "sorceress": {
+     "clvl_min": 38,
+     "max_life_min": 370,
+     "key_skill_min": 15
+    },
+    "amazon": {
+     "clvl_min": 38,
+     "max_life_min": 640,
+     "key_skill_min": 0
+    },
+    "assassin": {
+     "clvl_min": 38,
+     "max_life_min": 620,
+     "key_skill_min": 20
+    },
+    "barbarian": {
+     "clvl_min": 38,
+     "max_life_min": 690,
+     "key_skill_min": 18
+    },
+    "druid": {
+     "clvl_min": 38,
+     "max_life_min": 440,
+     "key_skill_min": 17
+    },
+    "necromancer": {
+     "clvl_min": 38,
+     "max_life_min": 330,
+     "key_skill_min": 14
+    },
+    "paladin": {
+     "clvl_min": 38,
+     "max_life_min": 560,
+     "key_skill_min": 15
+    }
+   }
+  },
+  "hell": {
+   "tag": "U",
+   "all": {
+    "baal_dead": true,
+    "merc_alive": true,
+    "deaths_last_hour_max": 1,
+    "kit": {
+     "healing": 4,
+     "mana_or_rejuv": 4,
+     "portal": 1
+    }
+   },
+   "classes": {
+    "sorceress": {
+     "clvl_min": 75,
+     "max_life_min": 518,
+     "key_skill_min": 15
+    },
+    "amazon": {
+     "clvl_min": 75,
+     "max_life_min": 896,
+     "key_skill_min": 0
+    },
+    "assassin": {
+     "clvl_min": 75,
+     "max_life_min": 868,
+     "key_skill_min": 20
+    },
+    "barbarian": {
+     "clvl_min": 75,
+     "max_life_min": 966,
+     "key_skill_min": 18
+    },
+    "druid": {
+     "clvl_min": 75,
+     "max_life_min": 616,
+     "key_skill_min": 17
+    },
+    "necromancer": {
+     "clvl_min": 75,
+     "max_life_min": 462,
+     "key_skill_min": 14
+    },
+    "paladin": {
+     "clvl_min": 75,
+     "max_life_min": 784,
+     "key_skill_min": 15
+    }
+   }
+  }
+ }
+}

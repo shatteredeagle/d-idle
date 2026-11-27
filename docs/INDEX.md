@@ -402,6 +402,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [dev-reset.md](dev-reset.md): Reset the play sandbox to a fresh hero (status: CURRENT. Task: TASK-263 (devreset). Dev tooling for a DEV container such as `d2play-20261108`...)
 - [dev-update.md](dev-update.md): Dev-loop update: new bot builds in a running container, no image rebuild (status: CURRENT. Task: TASK-192 (devupdate). Builds on the merged updater (docs/self-update-release.md,...)
 - [difficulty.md](difficulty.md): Difficulty: Normal -> Nightmare -> Hell (levels, resists, immunities, affixes, detection work list)
+- [diffready.md](diffready.md): Difficulty readiness and the opt-in hop (diffready, diffbaal) (status: current 2026-11-27, offline only. Design: design/difficulty-transition-2026-11-27.md section 4. Cards...)
 
 `digest/`
 
