@@ -21,3 +21,11 @@ func TestLegalQuality(t *testing.T) {
 		}
 	}
 }
+
+func TestLegalQualityNum(t *testing.T) {
+	for q, want := range map[int]bool{4: true, 7: true, 5: false, 6: false, 8: false, 2: false} {
+		if LegalQualityNum(q) != want {
+			t.Errorf("%d: want %v", q, want)
+		}
+	}
+}

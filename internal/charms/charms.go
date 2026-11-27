@@ -24,8 +24,9 @@ type Base struct {
 func (b Base) Cells() int { return b.W * b.H }
 
 type table struct {
-	Legal []string `json:"legalQuality"`
-	Bases []Base   `json:"bases"`
+	Legal  []string `json:"legalQuality"`
+	LegalN []int    `json:"legalQualityNum"` // the d2 quality numbers of the same words (4 magic, 7 unique)
+	Bases  []Base   `json:"bases"`
 }
 
 var tab = func() table {
@@ -54,6 +55,16 @@ func Is(code string) bool { _, ok := Lookup(code); return ok }
 func LegalQuality(q string) bool {
 	for _, l := range tab.Legal {
 		if l == strings.ToLower(q) {
+			return true
+		}
+	}
+	return false
+}
+
+// LegalQualityNum is LegalQuality for the game's quality number.
+func LegalQualityNum(q int) bool {
+	for _, l := range tab.LegalN {
+		if l == q {
 			return true
 		}
 	}
