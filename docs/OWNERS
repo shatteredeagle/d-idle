@@ -362,12 +362,14 @@ internal/bot/goal_acts_test.go  credit-runner  qdmatrix
 internal/bot/goldfarm.go  credit-runner  repairtrip
 internal/bot/guided.go  credit-runner  campaign1
 internal/bot/guided_test.go  credit-runner  campaign1
+internal/bot/hostilespin_test.go  credit-runner  hostilespin
 internal/bot/hpfields.go  credit-runner  intake
 internal/bot/leveling.go  credit-runner  town5
 internal/bot/loop.go  credit-runner  arbmig
 internal/bot/loop.go  credit-runner  survrecover
 internal/bot/nokill_test.go  credit-runner  freshstart
 internal/bot/observe.go  credit-runner  freshstart
+internal/bot/observe.go  credit-runner  hostilespin
 internal/bot/observe.go  credit-runner  intake
 internal/bot/observe.go  credit-runner  survrecover
 internal/bot/povertyfarm.go  credit-runner  admit1
@@ -376,6 +378,7 @@ internal/bot/questboard.go  credit-runner  qdmatrix
 internal/bot/questboard.go  credit-runner  stage1fix
 internal/bot/questboard_s7b_test.go  credit-runner  qdmatrix
 internal/bot/questboard_test.go  credit-runner  stage1fix
+internal/bot/repairtrip.go  credit-runner  hostilespin
 internal/bot/repairtrip.go  credit-runner  repairtrip
 internal/bot/repairtrip_test.go  credit-runner  repairtrip
 internal/bot/runner.go  credit-runner  campaign1
@@ -385,6 +388,7 @@ internal/bot/shadow.go  credit-runner  arbmig
 internal/bot/shadow.go  credit-runner  dlv-stance-army
 internal/bot/shadow.go  credit-runner  ticklog
 internal/bot/task.go  credit-runner  boardmoderace
+internal/bot/task.go  credit-runner  hostilespin
 internal/bot/task.go  credit-runner  wpstep
 internal/bot/ticklog.go  credit-runner  ticklog
 internal/bot/ticklog_test.go  credit-runner  ticklog
@@ -417,6 +421,7 @@ internal/combat/fightend.go  credit-runner  maphistoryC
 internal/combat/fighter.go  credit-runner  inputl3
 internal/combat/fighter.go  credit-runner  maphistory
 internal/combat/fighter.go  credit-runner  maphistoryC
+internal/combat/friendly_test.go  credit-runner  hostilespin
 internal/combat/necro_test.go  credit-runner  necroteeth
 internal/combat/portalverb.go  credit-runner  inputl3
 internal/combat/portalverb_test.go  credit-runner  inputl3

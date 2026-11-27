@@ -51,6 +51,7 @@
 | deploy88-ledger | proposed | - | `data/darklaunch.json` | - |
 | placefix | proposed | - | `internal/questboard/`<br>`internal/bot/questboard.go`<br>`data/questboard/act2.json`<br>`tools/provingground/scenarios/stepexec-act2.json`<br>`tools/provingground/scenarios/questdrill.json`<br>`internal/scenario/placefix_test.go`<br>`docs/questboard.md`<br>`internal/task/act1.go`<br>`internal/task/act2.go`<br>`internal/task/placefix_test.go`<br>`internal/d2dinput/controller.go`<br>`internal/d2dinput/placefix_test.go`<br>`internal/d2dctl/parse.go`<br>`internal/d2dctl/verbs.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dsrc/items.go`<br>`internal/d2dsrc/source_test.go` | - |
 | deploy94-ledger | in-progress | - | `data/darklaunch.json` | - |
+| hostilespin | proposed | - | `internal/bot/observe.go`<br>`internal/bot/repairtrip.go`<br>`internal/bot/task.go`<br>`internal/bot/hostilespin_test.go`<br>`internal/combat/friendly_test.go` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
@@ -245,6 +246,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- d65dd27d6 11-27 10:29 `Merge agent/hostilespin: Merge branch 'main' into hostilespin` (hostilespin)
+- 6062a47fd 11-27 10:28 `Merge branch 'main' into hostilespin` (-)
 - 0191a0523 11-27 10:15 `Merge agent/featuresoak2: Merge remote-tracking branch 'origin/main' into agent/featuresoak2` (featuresoak2)
 - e4a4180d6 11-27 10:12 `Merge remote-tracking branch 'origin/main' into agent/featuresoak2` (-)
 - 947a4a255 11-27 09:40 `Merge agent/prereq: Merge branch 'main' into prereq` (prereq)
@@ -253,6 +256,4 @@
 - 4ab536c5f 11-27 09:30 `Merge branch 'main' into deploy94-ledger` (-)
 - e1bf805a5 11-27 08:36 `Merge agent/act2handin: Merge remote-tracking branch 'origin/main' into agent/act2handin` (act2handin)
 - 5307199f6 11-27 08:33 `Merge remote-tracking branch 'origin/main' into agent/act2handin` (-)
-- a3b66f2e0 11-27 08:20 `Merge agent/bossdone: Merge branch 'main' into bossdone` (bossdone)
-- 608f022e0 11-27 08:19 `Merge branch 'main' into bossdone` (-)
 <!-- statusgen:end -->
