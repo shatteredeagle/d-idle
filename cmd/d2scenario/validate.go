@@ -1,0 +1,213 @@
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+	"io"
+	"os"
+	"path/filepath"
+	"strconv"
+	"strings"
+	"time"
+
+	"d2lod-bot/internal/d2dctl"
+	"d2lod-bot/internal/data"
+	"d2lod-bot/internal/scenario"
+	"d2lod-bot/internal/scenario/hero"
+)
+
+func cmdValidate(args []string, w io.Writer) error {
+	fs := newFlags("validate")
+	dir := fs.String("dir", defaultDir, "scenario directory")
+	board := fs.String("board", "data/questboard", "quest board data directory")
+	gamedata := fs.String("gamedata", "", "game data directory: the hero check then uses the game's learn rules (default: the plan tables alone)")
+	if _, err := parseArgs(fs, args); err != nil {
+		return err
+	}
+	tabs := hero.NameTables()
+	if *gamedata != "" {
+		db, err := data.Open(*gamedata, filepath.Join(os.TempDir(), "d2scenario-tables"))
+		if err != nil {
+			return fmt.Errorf("game tables: %w", err)
+		}
+		tabs = hero.DBTables(db)
+	}
+	scs, err := loadAll(*dir)
+	if err != nil {
+		return err
+	}
+	bs, err := loadBehaviours(*dir, *board)
+	if err != nil {
+		return err
+	}
+	_, problems := scenario.Coverage(bs, scs)
+	if len(problems) > 0 {
+		return fmt.Errorf("%s", strings.Join(problems, "; "))
+	}
+	for _, s := range scs {
+		if s.Faults != "" {
+			if _, err := faultSet(s.Faults); err != nil {
+				return fmt.Errorf("scenario %s: faults: %w", s.ID, err)
+			}
+		}
+		if s.Quest != nil {
+			if !hasBehaviour(bs, "quest."+s.Quest.Quest+"."+s.Quest.Chunk) {
+				return fmt.Errorf("scenario %s: quest chunk %s/%s is not in %s", s.ID, s.Quest.Quest, s.Quest.Chunk, *board)
+			}
+		}
+		for _, c := range s.Matrix.Classes {
+			su, err := scenario.BuildSetup(s, c, s.Matrix.Seeds[0])
+			if err != nil {
+				return err
+			}
+			if err := staticCheck(s, c, su, tabs); err != nil {
+				return err
+			}
+		}
+	}
+	fmt.Fprintf(w, "ok: %d scenarios, %d behaviours\n", len(scs), len(bs))
+	return nil
+}
+
+// scenarioHero is the hero a scenario's setup declares for one class (design 6.2): the level BuildSetup writes, its
+// points unspent (the scenario format has no profile yet, so every Proving Ground hero is banked and the bot spends),
+// the purse and the potions it gives. A raw pre.stats write of the level or the points replaces the expectation.
+func scenarioHero(s scenario.Scenario, class string) (hero.Hero, hero.Floors) {
+	lvl := max(s.Pre.Level, 1)
+	h := hero.Hero{Decl: hero.Decl{Profile: hero.Banked, Class: strings.ToLower(class), Build: s.Trigger.Build, Level: lvl},
+		StatPts: 5 * (lvl - 1), SkillPts: lvl - 1, AttackID: -1, AttackIndex: -1}
+	for _, st := range s.Pre.Stats {
+		switch st.Stat { // S itemstatcost.txt: 4 statpts, 5 newskills, 12 level
+		case 4:
+			h.StatPts = st.Value
+		case 5:
+			h.SkillPts = st.Value
+		case 12:
+			h.Level = st.Value
+		}
+	}
+	f := hero.Floors{Purse: s.Pre.Gold}
+	for _, it := range append(append([]scenario.Item(nil), s.Pre.Items...), s.Pre.Pack...) {
+		if isPotion(it.Code) && (it.Where == "" || it.Where == "pack") {
+			f.Potions += max(it.Count, 1)
+		}
+	}
+	for _, code := range s.Pre.Belt {
+		if isPotion(code) {
+			f.Potions++
+		}
+	}
+	return h, f
+}
+
+func isPotion(code string) bool {
+	return len(code) == 3 && (strings.HasPrefix(code, "hp") || strings.HasPrefix(code, "mp") || code == "rvs" || code == "rvl")
+}
+
+// staticCheck is the T0 half of the self-check for one scenario and class: the goal is not met at the start, no ground
+// item is given before the position verb, and a hero above level 1 resolves with the build it plays and (unless the
+// scenario is about points) gets its main attack at that level with quest points 0 (a quest record written by setup
+// does not grant its points).
+func staticCheck(s scenario.Scenario, class string, su scenario.Setup, t hero.Tables) error {
+	at := fmt.Sprintf("scenario %s (%s): selfcheck", s.ID, class)
+	if why := goalMet(s); why != "" {
+		return fmt.Errorf("%s: goal: %s", at, why)
+	}
+	lastPos, firstGround := -1, -1
+	for i, v := range su.Verbs {
+		f := strings.Fields(v.Line)
+		switch {
+		case len(f) >= 2 && f[0] == "debug" && (f[1] == "goto" || f[1] == "warp"):
+			lastPos = i
+		case len(f) >= 4 && f[0] == "debug" && f[1] == "give" && isNumber(f[3]) && firstGround < 0:
+			firstGround = i // `debug give <code> <quality>` drops at the hero's feet
+		}
+	}
+	if firstGround >= 0 && firstGround < lastPos {
+		return fmt.Errorf("%s: order: ground item %q given before the position verb", at, su.Verbs[firstGround].Line)
+	}
+	if s.Pre.Level < 2 {
+		return nil
+	}
+	profile := hero.Played
+	if pointsScenario(s) {
+		profile = hero.Banked // design 6.2: the banked profile is for the points scenarios; no attack to learn up front
+	}
+	cs := hero.Static(hero.Decl{Profile: profile, Class: class, Build: s.Trigger.Build, Level: s.Pre.Level}, t)
+	if bad := hero.Failed(cs); bad != "" {
+		for _, c := range cs {
+			if !c.OK {
+				return fmt.Errorf("%s: %s: %s", at, c.Name, c.Got)
+			}
+		}
+	}
+	return nil
+}
+
+// goalMet names why the run would have nothing to do: every --goals entry is a reach goal the start level already
+// meets and nothing else drives the bot (no board taps, no API calls, no accepted chunk in the plan store).
+func goalMet(s scenario.Scenario) string {
+	if s.Trigger.Driver != "" || len(s.Trigger.API) > 0 || s.Pre.Board != nil || strings.TrimSpace(s.Trigger.Goals) == "" {
+		return ""
+	}
+	for _, g := range strings.Split(s.Trigger.Goals, ";") {
+		n, ok := strings.CutPrefix(strings.TrimSpace(g), "reach:")
+		lvl, err := strconv.Atoi(n)
+		if !ok || err != nil || max(s.Pre.Level, 1) < lvl {
+			return ""
+		}
+	}
+	return fmt.Sprintf("%s is met at the start (pre.level %d) and nothing else drives the bot", s.Trigger.Goals, s.Pre.Level)
+}
+
+// pointsScenario is true when every behaviour the scenario covers is about spending points.
+func pointsScenario(s scenario.Scenario) bool {
+	for _, c := range s.Covers {
+		if !strings.HasPrefix(c, "points.") && !strings.HasPrefix(c, "hook.points") {
+			return false
+		}
+	}
+	return len(s.Covers) > 0
+}
+
+func isNumber(s string) bool { _, err := strconv.Atoi(s); return err == nil }
+
+// prepSelfCheck reads the prepared hero from the prep d2d and compares it with the scenario's declaration; the failed
+// row names ("" when all pass) end the run as BLOCKED `selfcheck: <names>`. The rows go to the setup ledger as a
+// READ-ONLY line.
+func prepSelfCheck(ctx context.Context, c *d2dctl.Client, s scenario.Scenario, class, ledger string) string {
+	h, f := scenarioHero(s, class)
+	var o hero.Observed
+	if rep, err := c.Do(ctx, "dump player,stats,skills"); err == nil {
+		line := strings.TrimSpace(rep.Rest)
+		for _, l := range rep.Lines {
+			if strings.TrimSpace(l) != "" {
+				line = l
+				break
+			}
+		}
+		_ = hero.ReadPointDump(&o, line) // an unreadable dump leaves the rows "not read", which fail
+	}
+	if sv, _, err := c.State(ctx); err == nil {
+		l, g := sv.Level, sv.Gold
+		o.Level, o.Gold = &l, &g
+	}
+	if items, _, err := c.Items(ctx); err == nil {
+		n := 0
+		for _, it := range items {
+			if isPotion(it.Code) && it.Loc() != 1 && !strings.Contains(it.Attrs["panel"], "stash") {
+				n++
+			}
+		}
+		o.Potions = &n
+	}
+	cs := h.SelfCheckFloors(o, f)
+	failed := hero.Failed(cs)
+	if lf, err := os.OpenFile(ledger, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0o644); err == nil {
+		b, _ := json.Marshal(cs)
+		_ = json.NewEncoder(lf).Encode(ledgerLine{Time: time.Now().Format(time.RFC3339), Verb: "selfcheck", Reason: "READ-ONLY hero self-check", Reply: "failed: " + failed + " " + string(b)})
+		lf.Close()
+	}
+	return failed
+}

@@ -43,44 +43,6 @@ func loadBehaviours(dir, board string) ([]scenario.Behaviour, error) {
 	return append(bs, cs...), nil
 }
 
-func cmdValidate(args []string, w io.Writer) error {
-	fs := newFlags("validate")
-	dir := fs.String("dir", defaultDir, "scenario directory")
-	board := fs.String("board", "data/questboard", "quest board data directory")
-	if _, err := parseArgs(fs, args); err != nil {
-		return err
-	}
-	scs, err := loadAll(*dir)
-	if err != nil {
-		return err
-	}
-	bs, err := loadBehaviours(*dir, *board)
-	if err != nil {
-		return err
-	}
-	_, problems := scenario.Coverage(bs, scs)
-	if len(problems) > 0 {
-		return fmt.Errorf("%s", strings.Join(problems, "; "))
-	}
-	for _, s := range scs {
-		if s.Faults != "" {
-			if _, err := faultSet(s.Faults); err != nil {
-				return fmt.Errorf("scenario %s: faults: %w", s.ID, err)
-			}
-		}
-		if s.Quest != nil {
-			if !hasBehaviour(bs, "quest."+s.Quest.Quest+"."+s.Quest.Chunk) {
-				return fmt.Errorf("scenario %s: quest chunk %s/%s is not in %s", s.ID, s.Quest.Quest, s.Quest.Chunk, *board)
-			}
-		}
-		if _, err := scenario.BuildSetup(s, s.Matrix.Classes[0], s.Matrix.Seeds[0]); err != nil {
-			return err
-		}
-	}
-	fmt.Fprintf(w, "ok: %d scenarios, %d behaviours\n", len(scs), len(bs))
-	return nil
-}
-
 func hasBehaviour(bs []scenario.Behaviour, id string) bool {
 	for _, b := range bs {
 		if b.ID == id {
