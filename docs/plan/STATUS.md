@@ -224,7 +224,9 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 555650c52 11-27 14:58 `Merge agent/dlvwave3: dlvwave3: aim-corpse (TASK-728) + stance-pack, press, move-tele, move-melee (TASK-729..732)` (dlvwave3)
 - 2d837813f 11-27 14:57 `Merge agent/agencyp3: agencyp3: shared build file reader, kolbot importer, DriveOf (TASK-985, TASK-984 partial)` (agencyp3)
+- c4d3698b0 11-27 14:56 `Merge branch 'main' into dlvwave3` (-)
 - ac877999a 11-27 14:56 `Merge branch 'main' into agencyp3` (-)
 - 1ea6463d4 11-27 14:54 `Merge agent/difftrans: difftrans: difficulty transition design (docs)` (difftrans)
 - 819ef370c 11-27 14:54 `Merge agent/wpstep2: wpstep2: close TASK-716 card (fixed by TASK-770)` (wpstep2)
@@ -232,6 +234,4 @@
 - 3cb07d622 11-27 14:53 `Merge branch 'main' into wpstep2` (-)
 - 149ba7319 11-27 14:45 `Merge agent/nightplan: nightplan: lab night plan 2026-11-27 (docs)` (nightplan)
 - 412dc797c 11-27 14:45 `Merge agent/townguard: townguard: hand-over in the guard refusal, route path cost (TASK-1057)` (townguard)
-- 51d1cdd1a 11-27 14:45 `Merge agent/inputl4: inputl4: repair and menu-choose client verbs, pointer-call count CI check (TASK-988/989)` (inputl4)
-- cedb40af3 11-27 14:43 `Merge branch 'main' into nightplan` (-)
 <!-- statusgen:end -->
