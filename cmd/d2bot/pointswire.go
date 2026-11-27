@@ -146,8 +146,7 @@ func wirePoints(stateDir, hero string, ref *runnerRef, r *bot.Runner, e *env.Env
 	}
 	cfg := points.Config{
 		Hero: hero, T: points.Tables{Skills: db.Skills, Classes: db.Classes}, Dir: dir,
-		Enabled:  func() bool { return res().PointsApi != 0 },
-		LevelCap: func() bool { return res().SkillCapPerLevel != 0 },
+		Enabled: func() bool { return res().PointsApi != 0 },
 		Player: func() *d2.Player {
 			if s := r.LastSnapshot(); s != nil {
 				return s.Player
