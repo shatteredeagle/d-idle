@@ -1570,6 +1570,11 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - releasenotes-next: player-language notes after 0.1.3 (TASK-1066, merged 2026-11-27, acceptance 1 of 1) <!--sg:agent/rel012-->
 - agent/cainflaky: cainflaky: cain.chain Paladin 11 flake diagnosis (docs) (merged 2026-11-27) <!--sg:agent/cainflaky-->
 - agent/smeothers: smeothers: SME review of Druid, Barbarian, Amazon, Assassin (docs) (merged 2026-11-27) <!--sg:agent/smeothers-->
+- townwire: bind /api/townplan in d2bot, upkeep sources behind the chores bit (TASK-1064, merged 2026-11-27, acceptance 4 of 4): route mounted in both backends (503 until bound, NoView until a visit solved a plan), PlanFacts and UpkeepSources behind bot.arbiterControl plus the chores bit (defaults byte-identical; a town without a planner keeps the old sources ... <!--sg:agent/townwire-->
+- agent/palapply: palapply: SME Paladin/Sorceress data changes (zeal table, Aim/Concentration, bands, mana_heavy) (merged 2026-11-27) <!--sg:agent/palapply-->
+- agent/sandboxlogs: sandboxlogs: sandbox log analysis (docs) (merged 2026-11-27) <!--sg:agent/sandboxlogs-->
+- logsink: bot operational log to stdout and a rotating file, d2bot ops log (TASK-1069, merged 2026-11-27, acceptance 3 of 4): root cause V: docker json-file log of both sandboxes is NUL-damaged (dockerd: Error decoding log file, invalid character x00), so docker logs stops at an old line while the bot still writes to the shared stdout pipe. ... <!--sg:agent/logsink-->
+- fieldstate: hand the return leg to the fighter when hostiles are near (TASK-1070, merged 2026-11-27, acceptance 2 of 2): Not verified live (offline). Cause (V code read, incident files not in tree): the return leg (Returning to the field, StateResupplying) runs travel/walk fallbacks with no fighter and without the walking flag ... <!--sg:agent/fieldstate-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
