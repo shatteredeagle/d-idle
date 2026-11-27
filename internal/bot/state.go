@@ -34,6 +34,7 @@ var (
 	errReplan      = errors.New("bot: level changed, re-plan")
 	errFightStall  = errors.New("bot: a fight made no progress for too long")
 	errLeftTown    = errors.New("bot: town chores outside town")
+	errFieldCrowd  = errors.New("bot: hostiles on the way back to the field")
 	errStepTimeout = errors.New("bot: action timed out")
 	errGuardPanic  = errors.New("bot: guard panicked, action cancelled")
 	errPoints      = errors.New("bot: unspent points, calm moment")

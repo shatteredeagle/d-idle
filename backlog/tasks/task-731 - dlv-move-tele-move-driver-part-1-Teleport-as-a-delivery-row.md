@@ -1,9 +1,9 @@
 ---
 id: TASK-731
 title: 'dlv-move-tele: move driver part 1: Teleport as a delivery row'
-status: Proposed
+status: In Progress
 assignee:
-  - credit-runner
+  - live-agent
 created_date: '2026-11-21T04:44:00Z'
 labels:
   - bot
@@ -17,7 +17,7 @@ owns:
   - "internal/nav/"
 exclusive: []
 contracts: []
-result: "Offline only, NOT verified live. Move driver (internal/combat/move.go): profile move rows (Teleport on the four Sorceress builds: travel + escape; range 18 V from docs/act2.md, trigger numbers U); HopInfo/NavHop give nav the key, range, min hop, cost and a refusal reason (no row, unknown, demoted, mana); escape hop out of a surround in the fight loop (moveTick). nav: Navigator.TeleportHopFn replaces the key, range, min hop and mana constants when wired (a fixed TeleportKey still wins). Knob combat.deliveryUpkeep 0/1/2. NOT done: telekey.go is not removed and the bot is not rewired to TeleportHopFn (internal/bot, internal/drill and cmd/d2drill are outside this card's owns; D22 still uses Fighter.TeleportKey). Queue row 16 and A5 verdicts not consulted offline. Live: scenario combat.teleport-reposition and D22 pending."
+result: "Offline only, NOT verified live. Move driver (internal/combat/move.go): profile move rows (Teleport on the four Sorceress builds: travel + escape; range 18 V from docs/act2.md, trigger numbers U); HopInfo/NavHop give nav the key, range, min hop, cost and a refusal reason (no row, unknown, demoted, mana); escape hop out of a surround in the fight loop (moveTick). nav: Navigator.TeleportHopFn replaces the key, range, min hop and mana constants when wired (a fixed TeleportKey still wins). Knob combat.deliveryUpkeep 0/1/2. NOT done: telekey.go is not removed and the bot is not rewired to TeleportHopFn (internal/bot, internal/drill and cmd/d2drill are outside this card's owns; D22 still uses Fighter.TeleportKey). Queue row 16 and A5 verdicts not consulted offline. Live: scenario combat.teleport-reposition and D22 pending. Remaining (live): AC 2 teleport drill D22 green, AC 3 queue row 16 and A5 verdicts, AC 6 race gate x20 on the worker host."
 lane: next
 ---
 

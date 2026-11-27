@@ -129,6 +129,9 @@ func newFun(l ladderOptions, stateDir string, hub *watch.Hub, wallet *currency.W
 	if l.adviceSnap != nil && l.knobValue != nil {
 		cfg.Advice = newAdviceSource(l, hub).Lines
 	}
+	if l.quests != nil {
+		cfg.Quests = l.quests.ParkLines
+	}
 	cfg.OrderQueue = &watch.OrderQueueConfig{Halt: halt}
 	if cfg.Strip != nil {
 		cfg.OrderQueue.Quote = cfg.Strip.Quote

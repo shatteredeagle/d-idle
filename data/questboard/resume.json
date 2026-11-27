@@ -1,0 +1,7 @@
+{
+  "schema": "quests.resume/1",
+  "note": "Pause policy of the quest board (card questresume, knob quests.resumeAfterDeaths, default 0). One row per park code that may lift itself: the hero must have been quiet for afterMin minutes (no death since the park), be at minLifePct life and not in purse recovery. A chunk resumes at most maxAutoResumes times in a row (a park that follows an automatic resume stays until the player taps Try again) and the whole board at most dayCap times in 24 hours.",
+  "rows": [
+    {"code": "died_too_often", "afterMin": 45, "minLifePct": 95, "maxAutoResumes": 1, "dayCap": 3}
+  ]
+}

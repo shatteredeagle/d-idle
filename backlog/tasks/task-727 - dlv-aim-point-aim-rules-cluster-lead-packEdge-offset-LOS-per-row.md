@@ -1,9 +1,9 @@
 ---
 id: TASK-727
 title: 'dlv-aim-point: aim rules cluster, lead, packEdge, offset; LOS per row'
-status: Proposed
+status: In Progress
 assignee:
-  - credit-runner
+  - live-agent
 created_date: '2026-11-21T04:43:00Z'
 labels:
   - bot
@@ -17,7 +17,7 @@ owns:
 exclusive: []
 contracts: []
 lane: next
-result: "Point aim rows as profile data (cluster, lead, packEdge, offset, crowd gate, line of sight missile, walk or none) in internal/combat/aim.go; rows shipped for the Sorceress Blizzard and Druid Eruption (Fissure) profiles, all radii tagged U; wired into the main cast, the watchdog (never crowd-gated) and the Assassin trap lay behind the existing knob combat.deliveryUpkeep 0/1/2 (0 unchanged, 1 shadow counts, 2 aims); counters via Fighter.AimCounts. Offline tests on Sorceress, Druid and Paladin (melee, never re-aimed; aim rows on melee skills fail validation). Build-specific data lives only in profiles.json; Go skill and class literal count in internal/combat unchanged at 108. No trap rows yet, so combat.traps-stand is open. Not verified live."
+result: "Point aim rows as profile data (cluster, lead, packEdge, offset, crowd gate, line of sight missile, walk or none) in internal/combat/aim.go; rows shipped for the Sorceress Blizzard and Druid Eruption (Fissure) profiles, all radii tagged U; wired into the main cast, the watchdog (never crowd-gated) and the Assassin trap lay behind the existing knob combat.deliveryUpkeep 0/1/2 (0 unchanged, 1 shadow counts, 2 aims); counters via Fighter.AimCounts. Offline tests on Sorceress, Druid and Paladin (melee, never re-aimed; aim rows on melee skills fail validation). Build-specific data lives only in profiles.json; Go skill and class literal count in internal/combat unchanged at 108. No trap rows yet, so combat.traps-stand is open. Not verified live. Remaining (live): AC 1 scenarios combat.point-spell-hits and combat.traps-stand run on a hidden slot; AC 2 refused_at_most assertion once the scenarios exist."
 ---
 
 ## Description

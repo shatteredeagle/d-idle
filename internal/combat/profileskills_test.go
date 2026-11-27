@@ -3,6 +3,7 @@ package combat
 import (
 	"encoding/json"
 	"os"
+	"slices"
 	"testing"
 )
 
@@ -109,5 +110,82 @@ func TestClassKeysProfilesLeadWithTheTablesAttack(t *testing.T) {
 		if n := got.AttackNames(c.clvl, all); len(n) == 0 || n[0] != c.wantLead {
 			t.Errorf("%s/%s at clvl %d leads with %v, want %s", c.class, c.build, c.clvl, n, c.wantLead)
 		}
+	}
+}
+
+// SME review 2026-11-27, confidence high: Smite adds no damage, so a low-mana fallback of a Zeal build is Zeal, not
+// Smite. Checked for the zeal hammerdin and, as the second build, the plain hammerdin's own lists stay as they were.
+func TestHammerdinZealFallbackDealsDamage(t *testing.T) {
+	all := func(string) bool { return true }
+	find := func(build string) *Profile {
+		for i, p := range Profiles() {
+			if p.Class == "paladin" && p.Build == build {
+				return &Profiles()[i]
+			}
+		}
+		t.Fatalf("no profile paladin/%s", build)
+		return nil
+	}
+	z := find("hammerdin_zeal")
+	for _, c := range []struct {
+		clvl int
+		want []string
+	}{{18, []string{"Blessed Hammer", "Zeal", "Attack"}}, {12, []string{"Zeal", "Attack"}}} {
+		if got := z.AttackNames(c.clvl, all); !slices.Equal(got, c.want) {
+			t.Errorf("hammerdin_zeal clvl %d attacks %v, want %v", c.clvl, got, c.want)
+		}
+	}
+	if got := find("hammerdin").AttackNames(18, all); len(got) == 0 || got[0] != "Blessed Hammer" {
+		t.Errorf("hammerdin clvl 18 attacks %v", got)
+	}
+}
+
+// SME review 2026-11-27, confidence medium: a low-life caster hops before the fourth attacker closes. Every Sorceress
+// profile's Teleport escape row asks for three in contact or 75 percent life; the other classes' escape rows are untouched.
+func TestSorceressTeleportEscapeEarly(t *testing.T) {
+	seen := 0
+	for _, p := range Profiles() {
+		for _, m := range p.Moves {
+			if m.Name != "Teleport" {
+				continue
+			}
+			if p.Class != "sorceress" {
+				t.Errorf("%s/%s: unexpected Teleport row", p.Class, p.Build)
+				continue
+			}
+			seen++
+			if m.EscapeSurround != 3 || m.EscapeLifePct != 75 {
+				t.Errorf("%s/%s: escape at %d in contact / %d%% life, want 3 / 75", p.Class, p.Build, m.EscapeSurround, m.EscapeLifePct)
+			}
+		}
+	}
+	if seen != 4 {
+		t.Errorf("%d Sorceress Teleport rows, want 4", seen)
+	}
+	for _, p := range Profiles() {
+		for _, m := range p.Moves {
+			if p.Class != "sorceress" && m.EscapeSurround == 3 && m.EscapeLifePct == 75 {
+				t.Errorf("%s/%s escape row changed", p.Class, p.Build)
+			}
+		}
+	}
+}
+
+// SME review 2026-11-27, confidence medium-low: the zeal hammerdin stands like the plain hammerdin (same insidePack numbers).
+func TestHammerdinZealHasTheHammerdinStance(t *testing.T) {
+	var zeal, plain *ArmyStance
+	for _, p := range Profiles() {
+		if p.Class == "paladin" && p.Build == "hammerdin_zeal" {
+			zeal = p.Stance
+		}
+		if p.Class == "paladin" && p.Build == "hammerdin" {
+			plain = p.Stance
+		}
+	}
+	if zeal == nil || plain == nil {
+		t.Fatalf("stance zeal %v plain %v", zeal, plain)
+	}
+	if zeal.Kind != StanceInsidePack || zeal.StandOff != plain.StandOff || zeal.LeaveSurround != plain.LeaveSurround || zeal.LeaveLifePct != plain.LeaveLifePct {
+		t.Errorf("zeal stance %+v, plain %+v", *zeal, *plain)
 	}
 }

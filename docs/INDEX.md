@@ -175,6 +175,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [sme/README.md](sme/README.md): docs/sme: Diablo II knowledge base (subject-matter notes)
 - [audit-bot-vs-human.md](sme/audit-bot-vs-human.md): Audit: our bot's design against what a veteran Diablo II player does
 - [blood-raven-caster.md](sme/blood-raven-caster.md): Blood Raven for casters (Sorceress, Necromancer, Druid), classic 1.14d Normal
+- [breakpoints-per-class.md](sme/breakpoints-per-class.md): FCR / FHR / FBR / IAS breakpoints per class: cross-check against LoD sources
 - [builds-endgame-amazon-farming.md](sme/builds-endgame-amazon-farming.md): SME: endgame Amazon builds and farming runs/drop knowledge, classic 1.14d softcore single player
 - [builds-endgame-casters.md](sme/builds-endgame-casters.md): SME: endgame builds, caster classes (Sorceress, Necromancer, Druid), classic 1.14d softcore single player
 - [builds-endgame-melee.md](sme/builds-endgame-melee.md): SME: endgame builds, melee classes (Paladin, Barbarian, Assassin), classic 1.14d softcore single player
@@ -197,6 +198,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [mechanics-combat.md](sme/mechanics-combat.md): D2 SME KB: core combat mechanics (classic LoD 1.14d)
 - [mechanics-items-drops.md](sme/mechanics-items-drops.md): D2 SME KB: items, treasure classes, magic find, gold and shops (classic LoD 1.14d)
 - [mechanics-progression.md](sme/mechanics-progression.md): D2 SME KB: progression (XP, levels, areas, difficulty, resists), classic LoD 1.14d
+- [merc-auras.md](sme/merc-auras.md): Mercenary skills and aura levels per act and difficulty (classic LoD 1.14d)
 - [mercenary.md](sme/mercenary.md): Mercenaries in classic LoD 1.14d: SME reference for the hire/keep-alive bot (MERCRESEARCH, 2026-10-30)
 - [pace-and-formulas.md](sme/pace-and-formulas.md): D2 LoD 1.14d pace and formula lookup (Normal Act 1 to Act 2 gate; Paladin and Sorceress)
 - [pace-tables.md](sme/pace-tables.md): Pace tables: human and speedrun reference for soak milestones (classic LoD 1.14d, offline single player)
@@ -206,6 +208,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [play-economy.md](sme/play-economy.md): Play patterns 2: gold, shopping, inventory and town chores
 - [play-safety.md](sme/play-safety.md): Play patterns 3: what kills characters, and what humans do about it
 - [potion-policy.md](sme/potion-policy.md): Potion and belt policy (d2-sme review, 2026-10-29)
+- [resist-floors.md](sme/resist-floors.md): Resist floors per difficulty (classic LoD 1.14d)
 - [snaplib.md](snaplib.md): Snapshot library (d2restore)
 - [spec-skip-audit.md](spec-skip-audit.md): Audit of earlier behavioural skip_specs cards (status: audit of card spec-skip-audit (2026-10-31). Nothing here is a spec; the needs-spec rows are a backlog for...)
 
@@ -390,7 +393,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [item-colour-2026-11-18.md](design/item-colour-2026-11-18.md): Item colour in the inventory art: chain and slice plan (2026-11-18) (status: design, task-634 (card itemcolour). Follow-up to jewelcolor (task-632), which removed the invented wash....)
 - [item-verbs.md](design/item-verbs.md): Item verbs: inventory, stash and equipment actions through d2d's own item handlers (TASK-367) (status: DESIGN plus the built verbs (equip, unequip, move, identify, drop, gold, `caps`), 2026-11-12; stage 2 and...)
 - [loot-vault-2026-11-16.md](design/loot-vault-2026-11-16.md): Ethereal Vault: a database of every drop, created in the game only on Keep (design and feasibility) (status: DESIGN, 2026-11-16. Nothing here was built or run; the fork was read, not changed. "Ethereal Vault" is the...)
-- [merc-aura-by-archetype.md](design/merc-aura-by-archetype.md): Merc aura by class archetype (design note, no code) (status: proposal (card classkeys). Nothing here is built. Tags: V verified in the repo by reading code, S...)
+- [merc-aura-by-archetype.md](design/merc-aura-by-archetype.md): Merc aura by class archetype (design note, no code) (status: built (card mercaura): classtraits.json mercAura, town.HirePolicy(class, ...), task.MercAuraChooser....)
 - [necromancer-sme-answers-2026-11-22.md](design/necromancer-sme-answers-2026-11-22.md): Necromancer build answers for the unattended bot (SME, 2026-11-22) (status: current. Answers the five questions of `docs/probes/necromancer-readiness-2026-11-22.md` section 4 (card...)
 - [proptest-t3.md](design/proptest-t3.md): Property tests on the pure deciders (T3) (status: current (TASK-980, card proptest1). Roadmap row T3, docs/research/fable-logic-review-2026-11-25.md section...)
 - [quest-board-2026-11-16.md](design/quest-board-2026-11-16.md): Quest board: quests as events the player takes part in (status: design proposal (2026-11-16, card questdesign, TASK-575), not built; waits for the user's answers (section...)
@@ -555,6 +558,10 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [onboarding-tour.md](onboarding-tour.md): Onboarding tour, Help sheet and Now line (TASK-48) (status: BUILT offline (card onboardtour, 2026-11-27). Node stub-DOM tests only; not looked at in a browser, not...)
 - [onboarding.md](onboarding.md): Onboarding on /watch: welcome card, first 30 minutes, reconnect banners (status: BUILT offline (TASK-247 firstminutes, TASK-249 reconnectux, 2026-11-11). Node DOM goldens and Go tests...)
 - [operator.md](operator.md): Operator quest control (status: current (card opsquest). Code: `internal/ops`, `cmd/d2bot/ops*.go`, `tools/questloop.sh`.)
+
+`ops/`
+
+- [logs.md](ops/logs.md): Where the logs are (sandbox container and dev) (status: current (card logsink). Code: `internal/logx/sink.go`, `cmd/d2bot/main.go` (newLogger),...)
 - [outcomes.md](outcomes.md): Typed step outcome (knob `bot.typedOutcome`) (status: current, stage 1 (card outcome1, 2026-11-25). Source: P2 of...)
 - [overlay.md](overlay.md): Table overlay (d.idle mode): file format and rules (status: implemented, 2026-11-06, TASK-59. Fork side `--overlay-dir` on branch `d2d.lab4-overlay` of the private...)
 - [pact-away.md](pact-away.md): Pact away safety (TASK-169) (status: built and tested offline with fakes and httptest; NOT run against a live bot or a browser. Design:...)
@@ -1163,7 +1170,9 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [incident-scenarios.md](probes/incident-scenarios.md): Incident to scenario (report-only tier) (status: current (card incident1, Fable logic review 2026-11-25 T2 and P8; ADR 0020 amended 2026-11-25). TOOLS...)
 - [itemverbs-live-2026-11-12.md](probes/itemverbs-live-2026-11-12.md): Item verbs: live click-vs-verb comparison (TASK-383, 2026-11-12) (status: result record. Tags: V = run and seen on the worker host. Driver: `tools/itemverbs/live_compare.py`;...)
 - [killdrop-2026-11-13.md](probes/killdrop-2026-11-13.md): Kill drop on the rebased fork: `debug players` gained a column (TASK-396, 2026-11-13) (status: result record. Tags: V = run and seen on the worker host; S = read in source. Follows...)
+- [lab-night-commands-2026-11-27.md](probes/lab-night-commands-2026-11-27.md): Lab night commands, 2026-11-27 (23:00 to 07:00 EST): corrected, paste-ready (status: current (docs only; card nightcheck, no game, no lab run). Corrects and extends...)
 - [lab-night-plan-2026-11-27.md](probes/lab-night-plan-2026-11-27.md): Lab night plan, 2026-11-27 (23:00 to 07:00 EST) (status: current (docs only; no game, no lab run made by this card). Tags: V = read in the repo at origin/main...)
+- [live-queue-2026-11-27.md](probes/live-queue-2026-11-27.md): Live queue, 2026-11-27: cards waiting only on a live run (status: current (docs only; made by card cardfix2 on current main, no game, no lab run). Supersedes the unmerged...)
 - [mercbr-2026-11-21.md](probes/mercbr-2026-11-21.md): mercbr: Blood Raven hand-in at Kashya and the free Act 1 merc (2026-11-21) (status: current. Tags: V verified (run named), S secondary, U unverified. Setups are CHEATED (quest word, level,...)
 - [navsoak-compare.md](probes/navsoak-compare.md): navsoak vs navsoak2: paired soak comparison (2026-10-31) (status: analysis of two hidden d2d soaks, read-only. Handoffs: branches agent/navsoak, agent/navsoak2...)
 
@@ -1215,7 +1224,9 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [quest-drill-matrix-2026-11-23.md](probes/quest-drill-matrix-2026-11-23.md): Quest drill matrix, 2026-11-23 (card qdmatrix) (status: current, kept up to date through the night of 2026-11-22. Tags: V verified (named run), S secondary...)
 - [quest-step-catalogue.md](probes/quest-step-catalogue.md): Quest step catalogue (generated) (status: current. GENERATED by `go run ./cmd/stepcat catalogue` from `data/questboard/act1..5.json`,...)
 - [readiness-floors-2026-11-24.md](probes/readiness-floors-2026-11-24.md): Readiness floors from game data, not from the SME ballpark (2026-11-24)
+- [sandbox-deploy-plan-2026-11-27.md](probes/sandbox-deploy-plan-2026-11-27.md): Sandbox deploy plan, 2026-11-27 (runbook, nothing run) (status: PLAN, docs only. Nothing was deployed, restarted or pruned in writing this. Tags: V = read in code or...)
 - [sandbox-fresh-20261115.md](probes/sandbox-fresh-20261115.md): Sandbox reset to a fresh hero, 2026-11-15 (status: record. Task sandboxfresh. Tags: V = verified in this run, U = not verified.)
+- [sandbox-log-analysis-2026-11-27.md](probes/sandbox-log-analysis-2026-11-27.md): Sandbox log analysis, 2026-11-27 (sandbox Doofer, Paladin; sandbox Questy, Paladin) (status: research, read-only (card sandboxlogs). Window: the last 12 h before 2026-11-27 16:45 EST, i.e. from 04:45...)
 - [search-for-cain-2026-11-17.md](probes/search-for-cain-2026-11-17.md): The Search for Cain on the sandbox: diagnosis and fix plan (2026-11-17) (status: diagnosis, read-only and offline. No game was started and nothing was sent to the sandbox; the only live...)
 - [search-for-cain-45-2026-11-18.md](probes/search-for-cain-45-2026-11-18.md): Search for Cain, CAIN-4 and CAIN-5a: cairn stones and the way to Tristram (2026-11-18) (status: current, offline work (agent cain45). Tags: V verified (live lab drill L1 or a test), S source or doc...)
 - [search-for-cain-5b-2026-11-18.md](probes/search-for-cain-5b-2026-11-18.md): Search for Cain, CAIN-5b: free Cain and report to Akara (2026-11-18) (status: current, offline work (agent cain5b), NOT run live. Tags: V verified (a test, or the L2 lab drill...)

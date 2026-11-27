@@ -1,6 +1,6 @@
 # Merc aura by class archetype (design note, no code)
 
-> status: proposal (card classkeys). Nothing here is built. Tags: V verified in the repo by reading code, S secondary, U unverified.
+> status: built (card mercaura): classtraits.json mercAura, town.HirePolicy(class, ...), task.MercAuraChooser. Original proposal text follows; act2plan.json merc.aura is still unread and kept. Tags: V verified in the repo by reading code, S secondary, U unverified.
 
 ## Today (V, read in this worktree)
 - `town.HirePolicy` (internal/town/merc.go) picks the aura from the difficulty alone: Normal and Hell `Defiance`, Nightmare `Might`. It takes no class (V).

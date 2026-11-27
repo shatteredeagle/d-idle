@@ -102,8 +102,23 @@ func TestPaladinEarlyPoints(t *testing.T) {
 		t.Errorf("plain table Smite points by 17 = %d, want 1", got)
 	}
 	v := "paladin_hammerdin_zeal_endgame90"
-	if count(v, "Smite") < 8 || count(v, "Zeal") != 5 || count(v, "Sacrifice") != 1 {
-		t.Errorf("variant smite %d zeal %d sacrifice %d", count(v, "Smite"), count(v, "Zeal"), count(v, "Sacrifice"))
+	// SME review 2026-11-27 (confidence medium-high): Smite adds no damage, so the variant keeps 1 point (the Charge
+	// prerequisite) and puts the rest into Might; Zeal is bought from clvl 12.
+	if count(v, "Smite") != 1 || count(v, "Might") < 7 || count(v, "Zeal") != 5 || count(v, "Sacrifice") != 1 {
+		t.Errorf("variant smite %d might %d zeal %d sacrifice %d", count(v, "Smite"), count(v, "Might"), count(v, "Zeal"), count(v, "Sacrifice"))
+	}
+	first := func(skill string) int {
+		for _, r := range mustBuild(t, v).Rows {
+			for _, s := range r.Skills {
+				if s.Skill == skill {
+					return r.Clvl
+				}
+			}
+		}
+		return 0
+	}
+	if first("Sacrifice") != 11 || first("Zeal") != 12 || first("Charge") < 18 {
+		t.Errorf("sacrifice %d zeal %d charge %d", first("Sacrifice"), first("Zeal"), first("Charge"))
 	}
 }
 
@@ -135,5 +150,51 @@ func TestEndgamePaladinPlanSpendsBank(t *testing.T) {
 	}
 	if n != 11 {
 		t.Fatalf("clvl 18 spends %d hammer points of 11: %v", n, got)
+	}
+}
+
+// SME review 2026-11-27 (confidence high): the Zeal variant buys Blessed Aim at clvl 19 and Concentration at 20, in
+// that order (Concentration needs Aim), and the plain hammerdin table keeps no Concentration before clvl 20 either.
+func TestPaladinZealAuraEarly(t *testing.T) {
+	for _, name := range []string{"paladin_hammerdin_zeal_endgame90", "paladin_hammerdin_endgame90"} {
+		aim, conc := 0, 0
+		for _, r := range mustBuild(t, name).Rows {
+			for _, s := range r.Skills {
+				if s.Skill == "Blessed Aim" && aim == 0 {
+					aim = r.Clvl
+				}
+				if s.Skill == "Concentration" && conc == 0 {
+					conc = r.Clvl
+				}
+			}
+		}
+		if aim == 0 || conc == 0 || aim >= conc {
+			t.Errorf("%s: Blessed Aim first at %d, Concentration at %d", name, aim, conc)
+		}
+		if name == "paladin_hammerdin_zeal_endgame90" && (aim != 19 || conc != 20) {
+			t.Errorf("%s: Blessed Aim %d, Concentration %d, want 19 and 20", name, aim, conc)
+		}
+	}
+}
+
+// SME review 2026-11-27, confidence medium: Holy Shield comes with the clvl 26 quest point, after Charge and with
+// Blessed Hammer owned (its prerequisites), in the Zeal variant; the plain hammerdin table is not changed by it.
+func TestPaladinZealHolyShieldAt26(t *testing.T) {
+	b := mustBuild(t, "paladin_hammerdin_zeal_endgame90")
+	have := map[string]int{}
+	hs := 0
+	for _, r := range b.Rows {
+		for _, s := range r.Skills {
+			if s.Skill == "Holy Shield" && hs == 0 {
+				hs = r.Clvl
+				if have["Charge"] == 0 || have["Blessed Hammer"] == 0 {
+					t.Errorf("Holy Shield at %d without Charge %d / Blessed Hammer %d", r.Clvl, have["Charge"], have["Blessed Hammer"])
+				}
+			}
+			have[s.Skill] += s.Points
+		}
+	}
+	if hs != 26 {
+		t.Errorf("Holy Shield first at clvl %d, want 26", hs)
 	}
 }

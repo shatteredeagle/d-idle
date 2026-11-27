@@ -155,7 +155,7 @@
 {"name":"Vines","kind":"summon","range":0},
 {"name":"Volcano","kind":"ground","range":25},
 {"name":"Wake of Fire Sentry","kind":"ground","range":12},
-{"name":"War Cry","kind":"buff","range":0},
+{"name":"War Cry","kind":"melee","range":6},
 {"name":"Weaken","kind":"buff","range":0},
 {"name":"Whirlwind","kind":"melee","range":10,"hold":true},
 {"name":"Zeal","kind":"melee","range":7,"hand":"left","hold":true}
