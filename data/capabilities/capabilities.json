@@ -4347,7 +4347,7 @@
    }
   },
   "Fire Trauma": {
-   "class": "druid",
+   "class": "assassin",
    "kind": "damage",
    "shape": "projectile",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",

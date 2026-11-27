@@ -1,6 +1,7 @@
 {
  "build": "druid_tornado_endgame90",
  "class": "druid",
+ "combat": "tornado",
  "mana_heavy": true,
  "schema": "per-clvl allocation, same shape as internal/gear/builds/*.json (leveler.ParseBuild) plus main_attack; rows clvl 2..90, NO respec. A row with no skills means the point is saved (no unlocked plan skill); the planner spends it in the row where the skill unlocks. Quest points (Den, Radament, Izual in each difficulty) are skill entries with a quest key (rows 8 Den, 15 Radament, 26 Izual, 38 Den, 44 Radament, 56 Izual, 68 Den, 72 Radament, 82 Izual; U timing): rows count level points only, and a tagged point is bought as soon as its quest point is granted.",
  "ladder_only": ["Spirit"],
@@ -16,43 +17,31 @@
    "from_clvl": 6
   },
   {
-   "key": "F2",
+   "key": "F4",
    "skill": "Cyclone Armor",
    "hand": "right",
    "from_clvl": 12
   },
   {
-   "key": "F3",
+   "key": "F2",
    "skill": "Twister",
    "hand": "right",
    "from_clvl": 18
   },
   {
-   "key": "F4",
+   "key": "F3",
    "skill": "Tornado",
    "hand": "right",
    "from_clvl": 24
   },
   {
    "key": "F5",
-   "skill": "Hurricane",
-   "hand": "right",
-   "from_clvl": 30
-  },
-  {
-   "key": "F6",
    "skill": "Oak Sage",
    "hand": "right",
    "from_clvl": 6
   },
   {
    "key": "F7",
-   "skill": "Summon Grizzly",
-   "hand": "right",
-   "from_clvl": 30
-  },
-  {
-   "key": "F8",
    "skill": "Summon Spirit Wolf",
    "hand": "right",
    "from_clvl": 6

@@ -406,7 +406,9 @@
     "Multiple Shot": "f3",
     "Valkyrie": "f4",
     "Inner Sight": "f5",
-    "Exploding Arrow": "f6"
+    "Exploding Arrow": "f6",
+    "Guided Arrow": "f7",
+    "Dopplezon": "f8"
    }
   },
   {
@@ -1156,6 +1158,279 @@
       "source": "V summonReach 4 (docs/classes/smoke-necromancer.md finding 2, exact limit U); curseRange 20 is a U middle of V 11 landed and 28 missed (finding 4); curseLifeSec 30 U (Amplify Damage lasts 24 s at level 1); curseCover 5 U (V live 2026-10-29: one cast per unit burned mana); corpseSearch 14 U"
     },
     "explosion": ""
+   }
+  },
+  {
+   "class": "amazon",
+   "build": "javelin",
+   "bands": [
+    {
+     "minLevel": 14,
+     "requires": "Lightning Bolt",
+     "attack": [
+      "Lightning Bolt",
+      "Poison Javelin",
+      "Attack"
+     ]
+    },
+    {
+     "minLevel": 6,
+     "requires": "Poison Javelin",
+     "attack": [
+      "Poison Javelin",
+      "Attack"
+     ]
+    },
+    {
+     "attack": [
+      "Attack"
+     ]
+    }
+   ],
+   "buffs": [
+    [
+     "Valkyrie"
+    ]
+   ],
+   "layout": {
+    "Poison Javelin": "f1",
+    "Lightning Bolt": "f2",
+    "Valkyrie": "f3",
+    "Inner Sight": "f4"
+   }
+  },
+  {
+   "class": "barbarian",
+   "build": "warcry",
+   "bands": [
+    {
+     "minLevel": 30,
+     "requires": "War Cry",
+     "attack": [
+      "War Cry",
+      "Bash",
+      "Double Swing",
+      "Attack"
+     ]
+    },
+    {
+     "attack": [
+      "Bash",
+      "Double Swing",
+      "Attack"
+     ]
+    }
+   ],
+   "buffs": [
+    [
+     "Battle Orders"
+    ],
+    [
+     "Shout"
+    ]
+   ],
+   "layout": {
+    "Bash": "f1",
+    "War Cry": "f2",
+    "Shout": "f3",
+    "Battle Orders": "f4",
+    "Battle Command": "f5",
+    "Double Swing": "f6"
+   },
+   "melee": {
+    "reach": 4,
+    "holdMs": 500,
+    "retreatLifePct": 40,
+    "surround": 4,
+    "surroundLifePct": 65,
+    "manaReserve": 4
+   }
+  },
+  {
+   "class": "druid",
+   "build": "tornado",
+   "minions": {
+    "lifePct": 40,
+    "groups": [
+     {
+      "name": "spirit",
+      "skills": [
+       "Oak Sage",
+       "Heart of Wolverine",
+       "Spirit of Barbs"
+      ],
+      "exclusive": true
+     },
+     {
+      "name": "bear",
+      "skills": [
+       "Summon Grizzly"
+      ],
+      "max": 1,
+      "source": "U guess: one per skill level up to the docs/classes/druid.md cap (S); capSeen finds the real cap live"
+     },
+     {
+      "name": "dire",
+      "skills": [
+       "Summon Fenris"
+      ],
+      "max": 3,
+      "source": "U guess: one per skill level up to the docs/classes/druid.md cap (S); capSeen finds the real cap live"
+     },
+     {
+      "name": "wolf",
+      "skills": [
+       "Summon Spirit Wolf"
+      ],
+      "max": 5,
+      "source": "U guess: one per skill level up to the docs/classes/druid.md cap (S); capSeen finds the real cap live"
+     },
+     {
+      "name": "raven",
+      "skills": [
+       "Raven"
+      ],
+      "max": 5,
+      "source": "U guess: one per skill level up to the docs/classes/druid.md cap (S); capSeen finds the real cap live"
+     }
+    ]
+   },
+   "bands": [
+    {
+     "minLevel": 24,
+     "requires": "Tornado",
+     "attack": [
+      "Tornado",
+      "Twister",
+      "Arctic Blast",
+      "Attack"
+     ]
+    },
+    {
+     "minLevel": 18,
+     "requires": "Twister",
+     "attack": [
+      "Twister",
+      "Arctic Blast",
+      "Attack"
+     ]
+    },
+    {
+     "minLevel": 6,
+     "requires": "Arctic Blast",
+     "attack": [
+      "Arctic Blast",
+      "Attack"
+     ]
+    },
+    {
+     "attack": [
+      "Attack"
+     ]
+    }
+   ],
+   "buffs": [
+    [
+     "Cyclone Armor"
+    ]
+   ],
+   "layout": {
+    "Arctic Blast": "f1",
+    "Twister": "f2",
+    "Tornado": "f3",
+    "Cyclone Armor": "f4",
+    "Oak Sage": "f5",
+    "Raven": "f6",
+    "Summon Spirit Wolf": "f7",
+    "Summon Fenris": "f8"
+   }
+  },
+  {
+   "class": "paladin",
+   "build": "hammerdin_zeal",
+   "bands": [
+    {
+     "minLevel": 18,
+     "requires": "Blessed Hammer",
+     "attack": [
+      "Blessed Hammer",
+      "Smite",
+      "Attack"
+     ],
+     "aura": [
+      {
+       "name": "Prayer",
+       "restLifePct": 70,
+       "fightLifePct": 50,
+       "maxPotions": 2
+      },
+      {
+       "name": "Concentration"
+      },
+      {
+       "name": "Might"
+      }
+     ]
+    },
+    {
+     "minLevel": 12,
+     "requires": "Zeal",
+     "attack": [
+      "Zeal",
+      "Smite",
+      "Attack"
+     ]
+    },
+    {
+     "minLevel": 2,
+     "requires": "Smite",
+     "attack": [
+      "Smite",
+      "Attack"
+     ]
+    },
+    {
+     "attack": [
+      "Attack"
+     ]
+    }
+   ],
+   "avoid": [
+    "Sacrifice"
+   ],
+   "aura": [
+    {
+     "name": "Prayer",
+     "restLifePct": 70,
+     "fightLifePct": 50,
+     "maxPotions": 2
+    },
+    {
+     "name": "Might"
+    }
+   ],
+   "buffs": [
+    [
+     "Holy Shield"
+    ]
+   ],
+   "layout": {
+    "Smite": "f1",
+    "Blessed Hammer": "f2",
+    "Holy Shield": "f3",
+    "Concentration": "f4",
+    "Vigor": "f5",
+    "Might": "f6",
+    "Prayer": "f7",
+    "Zeal": "f8"
+   },
+   "melee": {
+    "reach": 4,
+    "holdMs": 600,
+    "retreatLifePct": 40,
+    "surround": 4,
+    "surroundLifePct": 65,
+    "manaReserve": 4
    }
   }
  ]
