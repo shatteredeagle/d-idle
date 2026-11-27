@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- darkqueue: dark queue plan <!--sg:agent/darkqueue-->
 - act2drill6: docs <!--sg:agent/act2drill6-->
 - roadmap3: docs <!--sg:agent/roadmap3-->
 - dlvupkeep: TestBuffsStayUp offline uptime test (TASK-722 AC1) <!--sg:agent/dlvupkeep-->
