@@ -14,11 +14,12 @@ priority: medium
 ordinal: 347000
 card: "town7"
 owns:
-  - "internal/supply"
-  - "internal/town"
-  - "internal/resource"
+  - "internal/supply/"
+  - "internal/town/"
+  - "internal/resource/"
 exclusive: []
 contracts: []
+result: "offline only, not verified live: priority table is data (internal/supply/priority.json, per-profile override supported, validated by a test), Solve reads it; supply.Plan.Handover names the gold sources (sell, stash, vault prompt, recovery) (the guard already holds with needs_gold_farm, never attention; wiring the sources into internal/task and internal/bot is outside this card owns); the stage 3 plan line gains sell=, dropped= and hand-over fields for the scenarios gold-short-priorities and short-gold-handover (already in townplan.json, d2scenario validate ok, not run live). Build-specific: none in Go; lines come from profiles.json and the belt plan. Two builds in tests."
 lane: next
 ---
 
@@ -32,6 +33,6 @@ Why: TODO. Done when: TODO.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 priority table in data; short-gold hands over to sell, stash, vault prompt, recovery; no needs_attention for gold
-- [ ] #2 scenarios gold-short-priorities, short-gold-handover
+- [x] #1 priority table in data; short-gold hands over to sell, stash, vault prompt, recovery; no needs_attention for gold
+- [x] #2 scenarios gold-short-priorities, short-gold-handover
 <!-- AC:END -->

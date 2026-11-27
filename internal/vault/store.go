@@ -61,6 +61,7 @@ type Store struct {
 	size     int64
 	lastLine [32]byte // sha256 of the last complete line (index check)
 	seq      int64
+	ver      uint64 // bumped by every state change (apply, snapshot load): read caches key on it
 	recs     []*Rec
 	byID     map[string]*Rec
 	liveHash map[string]*Rec
@@ -264,6 +265,7 @@ func (s *Store) load() error {
 
 // apply is the pure state machine: replay and live commits both go through it.
 func (s *Store) apply(ev *event) error {
+	s.ver++
 	need := func(states ...State) (*Rec, error) {
 		r := s.byID[ev.ID]
 		if r == nil {
@@ -1197,6 +1199,25 @@ func (s *Store) Status() Status {
 	c := s.capacity()
 	return Status{Count: s.live, Capacity: c, Pins: s.pins, PinLimit: s.pinLimit(),
 		Over: s.live > c, Full: s.live == c, Anomalies: s.anomaly, Repaired: s.repaired}
+}
+
+// Version changes whenever the records, the index or the missed-drop list change; equal versions mean equal read results.
+func (s *Store) Version() uint64 {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	return s.ver
+}
+
+// Scan calls fn for every record in insertion order until fn returns false, without the copy Dump makes. fn runs under the
+// store lock: it must not call the Store and must not keep or change the record.
+func (s *Store) Scan(fn func(r *Rec) bool) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	for _, r := range s.recs {
+		if !fn(r) {
+			return
+		}
+	}
 }
 
 // Dump is every record in insertion order (tests, export of history).

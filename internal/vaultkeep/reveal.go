@@ -659,16 +659,22 @@ func (k *Keeper) BackfillProps(ctx context.Context, max int) int {
 	if st == nil || !ok || max <= 0 {
 		return 0
 	}
-	n := 0
-	for _, r := range st.Dump() {
-		if n >= max || ctx.Err() != nil {
-			break
-		}
+	// Pick the candidates under the store lock (the common answer is none, and no copy of the vault is made), then decode.
+	var todo []vault.Rec
+	st.Scan(func(r *vault.Rec) bool {
 		if !r.Identified || r.Props != "" || r.Raw == "" || r.State != vault.Recorded && r.State != vault.KeepQ && r.State != vault.SellQ {
-			continue
+			return true
 		}
 		if _, done := k.nop.Load(r.ID); done {
-			continue
+			return true
+		}
+		todo = append(todo, *r)
+		return len(todo) < max
+	})
+	n := 0
+	for _, r := range todo {
+		if ctx.Err() != nil {
+			break
 		}
 		got, err := dec.ItemDecode(ctx, r.Raw)
 		if err != nil {

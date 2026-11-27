@@ -1,7 +1,7 @@
 ---
 id: TASK-326
 title: 'maphistoryA: map timeline scrubber and replay, chicken and loot feeds'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T19:21:00Z'
@@ -31,6 +31,7 @@ owns:
 exclusive: []
 contracts: []
 lane: next
+result: "Merged (agent/maphistoryA): history samples ring and map timeline (scrubber, replay, readout), feed markers; tests. Not verified live."
 ---
 
 ## Description
@@ -43,6 +44,6 @@ Why: TODO. Done when: TODO.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 GET /api/history samples ring (2 s, 60 min), panel timeline: ribbon, scrubber, replay 1x/4x/16x, readout
-- [ ] #2 Feeds: chicken, portal, waypoint markers; loot walk-back activity
+- [x] #1 GET /api/history samples ring (2 s, 60 min), panel timeline: ribbon, scrubber, replay 1x/4x/16x, readout
+- [x] #2 Feeds: chicken, portal, waypoint markers; loot walk-back activity
 <!-- AC:END -->
