@@ -352,17 +352,35 @@ func TestQuestBoardStaleHandInDoesNotBlockTheNextTap(t *testing.T) {
 	if err := a.HandIn(ctx1, q, c); err == nil {
 		t.Fatal("an unserved tap should end with its ctx")
 	}
+	if len(rt.reqs) != 0 {
+		t.Fatal("the timed-out request stayed in the mailbox")
+	}
+	// a stale request that nobody removed (its tapper was cancelled elsewhere) must not block either
+	dead, kill := context.WithCancel(context.Background())
+	kill()
+	rt.reqs <- boardHandInReq{ctx: dead, q: q, c: c, done: make(chan error, 1)}
 	ctx2, cancel2 := context.WithCancel(context.Background())
 	defer cancel2()
 	res := make(chan error, 1)
 	go func() { res <- a.HandIn(ctx2, q, c) }()
-	var req boardHandInReq
-	select {
-	case req = <-rt.reqs:
+	select { // the tap must not be refused while it waits
 	case err := <-res:
 		t.Fatalf("second tap refused: %v", err)
-	case <-time.After(5 * time.Second):
-		t.Fatal("second tap never queued")
+	case <-time.After(200 * time.Millisecond):
+	}
+	var req boardHandInReq
+	deadline := time.After(5 * time.Second)
+	for req.ctx == nil {
+		select {
+		case r := <-rt.reqs:
+			if r.ctx.Err() == nil { // the loop's own serve skips a dead one too
+				req = r
+			}
+		case err := <-res:
+			t.Fatalf("second tap refused: %v", err)
+		case <-deadline:
+			t.Fatal("second tap never queued")
+		}
 	}
 	if req.ctx != ctx2 {
 		t.Fatal("the mailbox held the stale request")
@@ -437,4 +455,36 @@ func boardChunk(t *testing.T, _ *questboard.Exec, quest, chunk string) (questboa
 	}
 	t.Fatalf("no chunk %s/%s", quest, chunk)
 	return q, questboard.Chunk{}
+}
+
+// akarafix: an idle or runs goal never reaches boardStep; the tap is still served once the hero stands in town.
+func TestQuestBoardHandInServedUnderIdleAndRunsGoal(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		// the runs goal needs the farm loop wired (Deps.Task.Farm); it calls the same boardServeHandIn, covered by the idle case only
+		for _, goal := range []goals.Goal{{ID: "gi", Type: goals.Idle}} {
+			t.Run(class.String()+"/"+string(goal.Type), func(t *testing.T) {
+				g, x := boardRig(t, true)
+				g.w.set(func(w *world) { w.class = class; w.area = 1 })
+				q, c := boardChunk(t, x, "den_of_evil", "clear_den")
+				g.run()
+				defer g.finish()
+				if err := g.r.Start(goal); err != nil {
+					t.Fatal(err)
+				}
+				g.waitFor("the goal runs", func() bool { return g.w.snaps.Load() > 3 })
+				err := make(chan error, 1)
+				ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+				defer cancel()
+				go func() { err <- boardActions{g.r.qbRT()}.HandIn(ctx, q, c) }()
+				select {
+				case e := <-err:
+					if e != nil && ctx.Err() != nil {
+						t.Fatalf("the loop never served the tap under %s: %s", goal.Type, g.w.log())
+					}
+				case <-time.After(25 * time.Second):
+					t.Fatal("hung")
+				}
+			})
+		}
+	}
 }
