@@ -40,6 +40,8 @@
 | fid-poison-res-diag | proposed | - | `docs/research/fid-poisonres-trace.md` | - |
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
+| diffready | proposed | - | `internal/diffready`<br>`internal/env/tuning_bot.go`<br>`internal/bot/leveling.go`<br>`internal/bot/explain.go`<br>`cmd/d2bot/util.go`<br>`data/darklaunch.json`<br>`internal/bot/diffready.go`<br>`internal/bot/diffready_test.go`<br>`internal/bot/runner.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`docs/diffready.md`<br>`docs/knobs.md` | - |
+| diffbaal | proposed | - | `internal/quest/baaldone.go`<br>`internal/quest/baaldone_test.go` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | returnmock | proposed | - | `docs/research/mocks/return.html`<br>`docs/research/return-screen.md` | - |
@@ -196,6 +198,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 98f9bd0b3 11-27 16:02 `Merge agent/diffready: diffready+diffbaal: readiness predicate, opt-in hop, Baal-dead reader (TASK-1058/1059)` (diffready)
+- 689b57e34 11-27 15:59 `Merge origin/main into diffready (explain.go and darklaunch.json: both sides kept)` (-)
 - 69abed554 11-27 15:43 `Merge agent/ledgertrial: ledger: stepExec trial row` (ledgertrial)
 - 1235cddd1 11-27 15:42 `Merge branch 'main' into ledgertrial` (-)
 - 2f9abaad7 11-27 15:34 `Merge agent/classkeys: classkeys: main-attack hotkeys for all classes, profile skill check, merc aura note (TASK-1063)` (classkeys)
@@ -204,6 +208,4 @@
 - 0dd5a9f51 11-27 15:34 `Merge agent/admit2: admit2: admission function shadow wiring, bot.admission knob (TASK-970 step 2)` (admit2)
 - 083e2a95b 11-27 15:32 `Merge branch 'main' into classkeys` (-)
 - 25030e532 11-27 15:32 `Merge branch 'main' into testerreport` (-)
-- 175037f1a 11-27 15:32 `Merge branch 'main' into closecards3` (-)
-- 8e0028717 11-27 15:32 `Merge branch 'main' into admit2` (-)
 <!-- statusgen:end -->

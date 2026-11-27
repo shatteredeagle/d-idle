@@ -134,6 +134,7 @@ cmd/d2bot/agencydrive_test.go  credit-runner  agencyp1b
 cmd/d2bot/agencywire.go  credit-runner  agencyp1b
 cmd/d2bot/behaviors.go  credit-runner  campaign1
 cmd/d2bot/d2dbackend.go  credit-runner  campaign1
+cmd/d2bot/d2dbackend.go  credit-runner  diffready
 cmd/d2bot/d2dwire.go  credit-runner  agencyp1b
 cmd/d2bot/hotkeydrift_test.go  live-agent  epic-class-necromancer
 cmd/d2bot/invverbs.go  credit-runner  uib9
@@ -142,9 +143,11 @@ cmd/d2bot/journeywire.go  credit-runner  campaign1
 cmd/d2bot/ladder.go  credit-runner  pgtaps
 cmd/d2bot/live.go  credit-runner  agencyp1b
 cmd/d2bot/live.go  credit-runner  campaign1
+cmd/d2bot/live.go  credit-runner  diffready
 cmd/d2bot/necroplay_test.go  live-agent  epic-class-necromancer
 cmd/d2bot/task.go  credit-runner  qdmatrix
 cmd/d2bot/task_test.go  credit-runner  qdmatrix
+cmd/d2bot/util.go  credit-runner  diffready
 cmd/d2scenario/  credit-runner  arbmig
 cmd/d2scenario/ledger.go  credit-runner  pgpage
 cmd/d2scenario/ledger_test.go  credit-runner  pgpage
@@ -156,6 +159,7 @@ cmd/d2scenario/tap_test.go  credit-runner  pgtaps
 cmd/d2scenario/tap_test.go  credit-runner  stage1fix
 data/capabilities/  credit-runner  dlv-stance-pack
 data/darklaunch.json  credit-runner  arbmig
+data/darklaunch.json  credit-runner  diffready
 data/darklaunch.json  credit-runner  dlv-upkeep-state
 data/darklaunch.json  credit-runner  ticklog
 data/input/caps/  credit-runner  inputl3
@@ -186,6 +190,7 @@ docs/design/input-i4.md  credit-runner  inputl4
 docs/design/input-i5-i7.md  credit-runner  inputl5
 docs/design/ticklog-t4.md  credit-runner  ticklog
 docs/design/townflip-p5.md  credit-runner  townflip
+docs/diffready.md  credit-runner  diffready
 docs/epics/epic-act1.md  live-agent  epic-act1
 docs/epics/epic-act2.md  live-agent  epic-act2
 docs/epics/epic-act3.md  live-agent  epic-act3
@@ -207,6 +212,7 @@ docs/friend-guide.md  credit-runner  cut012
 docs/inventory-actions.md  credit-runner  campaign1
 docs/knobs.md  credit-runner  arbmig
 docs/knobs.md  credit-runner  cainfix3
+docs/knobs.md  credit-runner  diffready
 docs/knobs.md  credit-runner  dlv-upkeep-state
 docs/onboarding-tour.md  credit-runner  onboardtour
 docs/onboarding.md  credit-runner  reconnectux
@@ -269,12 +275,16 @@ internal/bot/arbiter_control.go  credit-runner  arbmig
 internal/bot/arbiter_control_test.go  credit-runner  arbmig
 internal/bot/arbloop_test.go  credit-runner  arbloop
 internal/bot/broke.go  credit-runner  town5
+internal/bot/diffready.go  credit-runner  diffready
+internal/bot/diffready_test.go  credit-runner  diffready
+internal/bot/explain.go  credit-runner  diffready
 internal/bot/goal.go  credit-runner  arbloop
 internal/bot/goal.go  credit-runner  qdmatrix
 internal/bot/goal.go  credit-runner  stage1fix
 internal/bot/goal_acts_test.go  credit-runner  qdmatrix
 internal/bot/guided.go  credit-runner  campaign1
 internal/bot/guided_test.go  credit-runner  campaign1
+internal/bot/leveling.go  credit-runner  diffready
 internal/bot/leveling.go  credit-runner  town5
 internal/bot/loop.go  credit-runner  arbmig
 internal/bot/questboard.go  credit-runner  qdmatrix
@@ -282,6 +292,7 @@ internal/bot/questboard.go  credit-runner  stage1fix
 internal/bot/questboard_s7b_test.go  credit-runner  qdmatrix
 internal/bot/questboard_test.go  credit-runner  stage1fix
 internal/bot/runner.go  credit-runner  campaign1
+internal/bot/runner.go  credit-runner  diffready
 internal/bot/shadow.go  credit-runner  arbmig
 internal/bot/shadow.go  credit-runner  ticklog
 internal/bot/task.go  credit-runner  boardmoderace
@@ -341,8 +352,10 @@ internal/decide/queue.go  credit-runner  qqueue
 internal/decide/queue_test.go  credit-runner  qqueue
 internal/decide/variants.go  credit-runner  qdensity
 internal/decide/variants_test.go  credit-runner  qdensity
+internal/diffready  credit-runner  diffready
 internal/env/tuning_agency.go  credit-runner  agencyp1b
 internal/env/tuning_bot.go  credit-runner  arbmig
+internal/env/tuning_bot.go  credit-runner  diffready
 internal/env/tuning_bot.go  credit-runner  ticklog
 internal/env/tuning_combat.go  credit-runner  cainfix3
 internal/env/tuning_combat.go  credit-runner  dlv-upkeep-state
@@ -379,6 +392,8 @@ internal/plandata/levelplan-normal.json  live-agent  epic-class-necromancer
 internal/power/  credit-runner  dlv-cleanup
 internal/power/archetype.go  credit-runner  qdmatrix
 internal/power/skilldamage_test.go  credit-runner  qdmatrix
+internal/quest/baaldone.go  credit-runner  diffbaal
+internal/quest/baaldone_test.go  credit-runner  diffbaal
 internal/questboard/def.go  credit-runner  cainfix3
 internal/questboard/state.go  credit-runner  qdmatrix
 internal/questboard/state_test.go  credit-runner  qdmatrix
