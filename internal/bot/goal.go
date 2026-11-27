@@ -48,7 +48,12 @@ func (r *Runner) runGoal(ctx context.Context, snap *d2.Snapshot, c control) bool
 	if r.recallStep(ctx, snap, c) || r.playerActionStep(ctx, snap, c) || r.errandTripStep(ctx, snap, c) || r.vaultKeepStep(ctx, snap, c) {
 		return true
 	}
+	r.noteHandInHold(snap, c)
 	if c.spec.kind == goals.Idle {
+		// An idle hero still serves the player's hand-in tap in town (it never reaches boardStep).
+		if r.boardServeHandIn(ctx, snap, c) {
+			return true
+		}
 		return r.rest(ctx, snap, c)
 	}
 	if recoveryGoal(c) {
@@ -89,6 +94,9 @@ func (r *Runner) runGoal(ctx context.Context, snap *d2.Snapshot, c control) bool
 		return false
 	}
 	if c.spec.kind == goals.Runs {
+		if r.boardServeHandIn(ctx, snap, c) { // a runs goal never reaches boardStep; the tap is served in town
+			return true
+		}
 		return r.farmStep(ctx, snap, c)
 	}
 	if r.boardPreempts(snap, c) {

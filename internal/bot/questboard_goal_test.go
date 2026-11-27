@@ -8,6 +8,7 @@ import (
 
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/goals"
+	"d2lod-bot/internal/questboard"
 )
 
 // The live bug of 2026-11-17: the hero farmed Dark Wood under a farm_area goal, the player tapped Start, the accept was
@@ -117,7 +118,7 @@ func TestQuestBoardQueuedReasonWhileFighting(t *testing.T) {
 func TestQuestBoardHandInWaitsForTown(t *testing.T) {
 	g, _ := boardRig(t, true)
 	rt := g.r.qbRT()
-	req := boardHandInReq{done: make(chan error, 1)}
+	req := boardHandInReq{ctx: context.Background(), done: make(chan error, 1)}
 	rt.reqs <- req
 	field := &d2.Snapshot{Player: &d2.Player{Area: 2}} // Blood Moor
 	if g.r.boardServeHandIn(context.Background(), field, control{}) {
@@ -336,5 +337,154 @@ func TestQuestBoardHoldsTheAreaWhileQueuedBehindAFight(t *testing.T) {
 				t.Fatal("after the grace the chunk starts and the hold is gone")
 			}
 		})
+	}
+}
+
+// TASK akarafix: a tap that timed out must not block the next one (the stale request used to stay in the one-slot mailbox
+// and refuse every later tap with "already waiting", parking the chunk).
+func TestQuestBoardStaleHandInDoesNotBlockTheNextTap(t *testing.T) {
+	g, x := boardRig(t, true)
+	rt := g.r.qbRT()
+	q, c := boardChunk(t, x, "den_of_evil", "clear_den")
+	a := boardActions{rt}
+	ctx1, cancel1 := context.WithTimeout(context.Background(), 20*time.Millisecond)
+	defer cancel1()
+	if err := a.HandIn(ctx1, q, c); err == nil {
+		t.Fatal("an unserved tap should end with its ctx")
+	}
+	if len(rt.reqs) != 0 {
+		t.Fatal("the timed-out request stayed in the mailbox")
+	}
+	// a stale request that nobody removed (its tapper was cancelled elsewhere) must not block either
+	dead, kill := context.WithCancel(context.Background())
+	kill()
+	rt.reqs <- boardHandInReq{ctx: dead, q: q, c: c, done: make(chan error, 1)}
+	ctx2, cancel2 := context.WithCancel(context.Background())
+	defer cancel2()
+	res := make(chan error, 1)
+	go func() { res <- a.HandIn(ctx2, q, c) }()
+	select { // the tap must not be refused while it waits
+	case err := <-res:
+		t.Fatalf("second tap refused: %v", err)
+	case <-time.After(200 * time.Millisecond):
+	}
+	var req boardHandInReq
+	deadline := time.After(5 * time.Second)
+	for req.ctx == nil {
+		select {
+		case r := <-rt.reqs:
+			if r.ctx.Err() == nil { // the loop's own serve skips a dead one too
+				req = r
+			}
+		case err := <-res:
+			t.Fatalf("second tap refused: %v", err)
+		case <-deadline:
+			t.Fatal("second tap never queued")
+		}
+	}
+	if req.ctx != ctx2 {
+		t.Fatal("the mailbox held the stale request")
+	}
+	req.done <- nil
+	if err := <-res; err != nil {
+		t.Fatal(err)
+	}
+}
+
+// A request whose tapper is gone is dropped at serve time, not talked out.
+func TestQuestBoardServeDropsCancelledHandIn(t *testing.T) {
+	g, x := boardRig(t, true)
+	rt := g.r.qbRT()
+	q, c := boardChunk(t, x, "den_of_evil", "clear_den")
+	ctx, cancel := context.WithCancel(context.Background())
+	cancel()
+	rt.reqs <- boardHandInReq{ctx: ctx, q: q, c: c, done: make(chan error, 1)}
+	town := &d2.Snapshot{Player: &d2.Player{Area: 1}}
+	if g.r.boardServeHandIn(context.Background(), town, control{}) {
+		t.Fatal("served a cancelled request")
+	}
+	if len(rt.reqs) != 0 || strings.Contains(g.w.log(), "talk Akara") {
+		t.Fatalf("stale request survived or talked: %d %s", len(rt.reqs), g.w.log())
+	}
+}
+
+// The "why waiting" reason per holder (two classes: the reason is class-free).
+func TestQuestBoardHandInWhyPerHolder(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		t.Run(class.String(), func(t *testing.T) {
+			g, x := boardRig(t, true)
+			rt := g.r.qbRT()
+			q, c := boardChunk(t, x, "den_of_evil", "clear_den")
+			if g.r.QuestHandInWhy() != "" {
+				t.Fatal("a reason without a queued tap")
+			}
+			rt.reqs <- boardHandInReq{ctx: context.Background(), q: q, c: c, done: make(chan error, 1)}
+			field := &d2.Snapshot{Player: &d2.Player{Area: 2}}
+			town := &d2.Snapshot{Player: &d2.Player{Area: 1}}
+			g.r.noteHandInHold(field, control{})
+			if w := g.r.QuestHandInWhy(); !strings.Contains(w, "field") {
+				t.Fatalf("field: %q", w)
+			}
+			g.r.noteHandInHold(town, control{})
+			if w := g.r.QuestHandInWhy(); !strings.Contains(w, "another step") {
+				t.Fatalf("town: %q", w)
+			}
+			g.r.loop.broke.on = true
+			g.r.noteHandInHold(town, control{})
+			if w := g.r.QuestHandInWhy(); !strings.Contains(w, "purse") {
+				t.Fatalf("recovery: %q", w)
+			}
+		})
+	}
+}
+
+func boardChunk(t *testing.T, _ *questboard.Exec, quest, chunk string) (questboard.Quest, questboard.Chunk) {
+	t.Helper()
+	b, err := questboard.Load()
+	if err != nil {
+		t.Fatal(err)
+	}
+	q, err := b.Quest(quest)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, c := range q.Chunks {
+		if c.ID == chunk {
+			return q, c
+		}
+	}
+	t.Fatalf("no chunk %s/%s", quest, chunk)
+	return q, questboard.Chunk{}
+}
+
+// akarafix: an idle or runs goal never reaches boardStep; the tap is still served once the hero stands in town.
+func TestQuestBoardHandInServedUnderIdleAndRunsGoal(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		// the runs goal needs the farm loop wired (Deps.Task.Farm); it calls the same boardServeHandIn, covered by the idle case only
+		for _, goal := range []goals.Goal{{ID: "gi", Type: goals.Idle}} {
+			t.Run(class.String()+"/"+string(goal.Type), func(t *testing.T) {
+				g, x := boardRig(t, true)
+				g.w.set(func(w *world) { w.class = class; w.area = 1 })
+				q, c := boardChunk(t, x, "den_of_evil", "clear_den")
+				g.run()
+				defer g.finish()
+				if err := g.r.Start(goal); err != nil {
+					t.Fatal(err)
+				}
+				g.waitFor("the goal runs", func() bool { return g.w.snaps.Load() > 3 })
+				err := make(chan error, 1)
+				ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+				defer cancel()
+				go func() { err <- boardActions{g.r.qbRT()}.HandIn(ctx, q, c) }()
+				select {
+				case e := <-err:
+					if e != nil && ctx.Err() != nil {
+						t.Fatalf("the loop never served the tap under %s: %s", goal.Type, g.w.log())
+					}
+				case <-time.After(25 * time.Second):
+					t.Fatal("hung")
+				}
+			})
+		}
 	}
 }
