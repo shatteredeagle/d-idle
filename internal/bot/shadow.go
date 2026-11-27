@@ -247,8 +247,12 @@ func chainFamily(code string) string {
 
 // upkeepOn: the arbiter controls the chores family, so the one upkeep source (supply plan, town10) replaces the trip and
 // resupply sources. Off by default: bot.arbiterControl 0, or bit 4 of bot.arbiterFamilies unset (the default 3).
+// A town without a planner keeps the old sources: the upkeep source sees the potion deficit only through the plan.
 func (r *Runner) upkeepOn() bool {
 	t := r.e.Tune.Bot
+	if _, ok := r.d.Town.(supplyPlanner); !ok {
+		return false
+	}
 	return t.ArbiterShadow != 0 && t.ArbiterControl != 0 && arbiter.Controlled(t.ArbiterFamilies, "chores")
 }
 

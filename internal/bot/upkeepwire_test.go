@@ -71,3 +71,15 @@ func TestUpkeepWiredBehindChoresBit(t *testing.T) {
 		}
 	}
 }
+
+// A town without a planner keeps trip and resupply even with the chores bit set (the upkeep source needs the plan facts).
+func TestUpkeepNeedsAPlanner(t *testing.T) {
+	g := newRig(t)
+	g.r.e.Tune.Bot.ArbiterShadow, g.r.e.Tune.Bot.ArbiterControl, g.r.e.Tune.Bot.ArbiterFamilies = 1, 1, 7
+	if _, ok := g.r.d.Town.(supplyPlanner); ok {
+		t.Skip("the fake town has a planner")
+	}
+	if !reflect.DeepEqual(sourceNames(g.r.arbSources()), sourceNames(arbiter.StdSources())) {
+		t.Fatal("no planner: StdSources expected")
+	}
+}

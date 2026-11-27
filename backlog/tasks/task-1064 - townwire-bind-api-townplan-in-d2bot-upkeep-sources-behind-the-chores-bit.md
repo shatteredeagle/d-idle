@@ -30,7 +30,7 @@ owns:
   - "backlog/tasks/task-765 - town12-SME-review-of-the-supply-profile-numbers-advice-only.md"
 exclusive: []
 contracts: []
-result: "route mounted in both backends (503 until bound, NoView until a visit solved a plan), PlanFacts and UpkeepSources behind bot.arbiterControl plus the chores bit (defaults byte-identical, V tests for a Sorceress and a Paladin); old trip deciders NOT collapsed (follow-up); Town plan card stays opt-in; not verified live"
+result: "route mounted in both backends (503 until bound, NoView until a visit solved a plan), PlanFacts and UpkeepSources behind bot.arbiterControl plus the chores bit (defaults byte-identical; a town without a planner keeps the old sources; V tests for a Sorceress and a Paladin); old trip deciders NOT collapsed (follow-up); Town plan card stays opt-in; not verified live"
 ---
 
 ## Description
