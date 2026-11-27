@@ -46,7 +46,7 @@
 | smeaura | proposed | - | `docs/sme/paladin-auras-2026-11-26.md` | - |
 | necrocorpse | proposed | - | `docs/probes/necrocaps-2026-11-26.md` | - |
 | fid-poison-res-diag | proposed | - | `docs/research/fid-poisonres-trace.md` | - |
-| necroteeth | proposed | - | `internal/combat/classdata/profiles.json`<br>`internal/combat/necro_test.go`<br>`internal/leveler/mainattack_test.go` | - |
+| necroteeth | proposed | - | `internal/combat/classdata/profiles.json`<br>`internal/combat/necro_test.go`<br>`internal/leveler/mainattack_test.go`<br>`internal/scenario/scenario.go`<br>`internal/scenario/scenario_test.go`<br>`internal/scenario/setup.go`<br>`cmd/d2scenario/run.go`<br>`cmd/d2scenario/validate.go`<br>`cmd/d2scenario/validate_test.go`<br>`cmd/d2scenario/herospend_test.go`<br>`docs/process/proving-ground.md` | - |
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
 | placefix | proposed | - | `internal/questboard/`<br>`internal/bot/questboard.go`<br>`data/questboard/act2.json`<br>`tools/provingground/scenarios/stepexec-act2.json`<br>`tools/provingground/scenarios/questdrill.json`<br>`internal/scenario/placefix_test.go`<br>`docs/questboard.md`<br>`internal/task/act1.go`<br>`internal/task/act2.go`<br>`internal/task/placefix_test.go`<br>`internal/d2dinput/controller.go`<br>`internal/d2dinput/placefix_test.go`<br>`internal/d2dctl/parse.go`<br>`internal/d2dctl/verbs.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dsrc/items.go`<br>`internal/d2dsrc/source_test.go` | - |
 | mercvault | proposed | - | `internal/d2dctl/direct_merc.go`<br>`internal/d2dctl/direct_merc_test.go`<br>`internal/vaultkeep/equipmerc.go`<br>`internal/vaultkeep/equipmerc_test.go`<br>`internal/vaultkeep/equipdirect.go`<br>`internal/watch/vaultapi.go`<br>`internal/watch/vaultmerc_test.go`<br>`internal/watch/web/vault.js`<br>`internal/watch/web/vault.json`<br>`internal/watch/web/vault-logic.js`<br>`cmd/d2bot/vaultequip.go`<br>`cmd/d2bot/vaultkeep.go`<br>`docs/vault.md` | - |
@@ -243,14 +243,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 9058de0a1 11-27 13:59 `Merge agent/necroteeth: necroteeth: scenario hero profile field (played default), spend points` (necroteeth)
 - 43bdb0282 11-27 13:59 `Merge agent/darkflip: darkflip: final dark queue flip list (docs)` (darkflip)
 - 8ef7cc46d 11-27 13:59 `Merge agent/closecards: closecards: close verified merged cards, stale dependency fix` (closecards)
+- f689ff4f1 11-27 13:57 `Merge branch 'main' into necroteeth` (-)
 - 27de5d572 11-27 13:57 `Merge branch 'main' into darkflip` (-)
 - d9999a7d9 11-27 13:57 `Merge branch 'main' into closecards` (-)
 - fc04b3bed 11-27 13:49 `Merge agent/akarafix: akarafix: hand-in queued/served logs, stale request drop, why-waiting reason (TASK-1051)` (akarafix)
 - 27c304655 11-27 13:49 `Merge agent/mercvault: mercvault: Equip on merc from the Vault (TASK-1049)` (mercvault)
 - cb260b911 11-27 13:48 `Merge branch 'main' into akarafix` (-)
 - ad23377bc 11-27 13:48 `Merge branch 'main' into mercvault` (-)
-- 41a339a10 11-27 13:33 `Merge agent/vaultperf: vaultperf: batch sell-all, counts refresh, shared busy-button feedback (TASK-1050)` (vaultperf)
-- 0ff85e305 11-27 13:32 `Merge branch 'main' into vaultperf` (-)
 <!-- statusgen:end -->

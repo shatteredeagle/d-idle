@@ -172,9 +172,11 @@ cmd/d2bot/vaultkeep.go  credit-runner  mercvault
 cmd/d2bot/vaultkeep.go  credit-runner  sellall
 cmd/d2firsthour/  live-agent  firsthour
 cmd/d2scenario/  credit-runner  arbmig
+cmd/d2scenario/herospend_test.go  credit-runner  necroteeth
 cmd/d2scenario/ledger.go  credit-runner  pgpage
 cmd/d2scenario/ledger_test.go  credit-runner  pgpage
 cmd/d2scenario/main.go  credit-runner  pgpage
+cmd/d2scenario/run.go  credit-runner  necroteeth
 cmd/d2scenario/run.go  credit-runner  pgtaps
 cmd/d2scenario/tap.go  credit-runner  handinbtn
 cmd/d2scenario/tap.go  credit-runner  pgtaps
@@ -182,6 +184,8 @@ cmd/d2scenario/tap.go  credit-runner  stage1fix
 cmd/d2scenario/tap_test.go  credit-runner  handinbtn
 cmd/d2scenario/tap_test.go  credit-runner  pgtaps
 cmd/d2scenario/tap_test.go  credit-runner  stage1fix
+cmd/d2scenario/validate.go  credit-runner  necroteeth
+cmd/d2scenario/validate_test.go  credit-runner  necroteeth
 data/capabilities/  credit-runner  dlv-stance-pack
 data/darklaunch.json  credit-runner  arbmig
 data/darklaunch.json  credit-runner  dlv-upkeep-state
@@ -290,6 +294,7 @@ docs/process/pg-ledger-ops.md  credit-runner  pgledgeron
 docs/process/pg-ops-mgonejob.md  credit-runner  mgonejob
 docs/process/pg-ops-pgnightly.md  credit-runner  pgnightly
 docs/process/proving-ground-status.md  credit-runner  pgpage
+docs/process/proving-ground.md  credit-runner  necroteeth
 docs/pursuers.md  credit-runner  pursuers
 docs/quest-givers.md  credit-runner  campaign1
 docs/quest-hints.md  live-agent  questdrill
@@ -536,7 +541,10 @@ internal/scenario/pgpage.go  credit-runner  pgpage
 internal/scenario/pgpage_test.go  credit-runner  pgpage
 internal/scenario/placefix_test.go  credit-runner  placefix
 internal/scenario/result.go  credit-runner  pgtaps
+internal/scenario/scenario.go  credit-runner  necroteeth
 internal/scenario/scenario.go  credit-runner  qdmatrix
+internal/scenario/scenario_test.go  credit-runner  necroteeth
+internal/scenario/setup.go  credit-runner  necroteeth
 internal/scenario/setup.go  credit-runner  qdmatrix
 internal/scenario/setup_test.go  credit-runner  qdmatrix
 internal/scenario/taps.go  credit-runner  pgtaps
