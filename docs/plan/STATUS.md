@@ -245,6 +245,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 29f1db6c1 11-27 13:25 `Merge agent/act2drill6: act2drill6: docs` (act2drill6)
+- 0de8f9d1a 11-27 13:24 `Merge branch 'main' into act2drill6` (-)
 - 417da1bef 11-27 13:19 `Merge agent/roadmap3: roadmap3: docs` (roadmap3)
 - 66ce4c24a 11-27 13:19 `Merge agent/dlvupkeep: dlvupkeep: TestBuffsStayUp offline uptime test (TASK-722 AC1)` (dlvupkeep)
 - c9dfaba53 11-27 13:18 `Merge branch 'main' into roadmap3` (-)
@@ -253,6 +255,4 @@
 - d65dd27d6 11-27 10:29 `Merge agent/hostilespin: Merge branch 'main' into hostilespin` (hostilespin)
 - 6062a47fd 11-27 10:28 `Merge branch 'main' into hostilespin` (-)
 - 0191a0523 11-27 10:15 `Merge agent/featuresoak2: Merge remote-tracking branch 'origin/main' into agent/featuresoak2` (featuresoak2)
-- e4a4180d6 11-27 10:12 `Merge remote-tracking branch 'origin/main' into agent/featuresoak2` (-)
-- 947a4a255 11-27 09:40 `Merge agent/prereq: Merge branch 'main' into prereq` (prereq)
 <!-- statusgen:end -->

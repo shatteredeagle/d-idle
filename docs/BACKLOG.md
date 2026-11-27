@@ -1514,6 +1514,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - agent/town6b: town6b: stage 4 scenario live checklist (docs only) (merged 2026-11-27) <!--sg:agent/town6b-->
 - dlv-upkeep-state: upkeep driver, state-observed (TASK-722, merged 2026-11-27, acceptance 5 of 6): First slice built offline, NOT verified live and not in a Proving Ground run. internal/data reads the Skills.txt columns aurastate and auratargetstate and resolves each skill state to its states.txt id and a curse flag (cache schema 7). ... <!--sg:agent/dlvupkeep-->
 - agent/roadmap3: roadmap3: docs (merged 2026-11-27) <!--sg:agent/roadmap3-->
+- agent/act2drill6: act2drill6: docs (merged 2026-11-27) <!--sg:agent/act2drill6-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
