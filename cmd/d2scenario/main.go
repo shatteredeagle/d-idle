@@ -94,7 +94,7 @@ func usage(w io.Writer) {
   coverage    [-dir D] [-board B] [-json]       behaviour to scenario map, UNCOVERED list
   provenance  [-dir D]                          rows for docs/probes/test-characters.md (every scenario's CHEATED/SETUP tags)
   report      results.json                      one-screen report
-  arbiter-replay [-strict] FILE.json..       score the arbiter against the recorded chain choice by outcome (tools/provingground/arbiter-outcomes, report-only)
+  arbiter-replay [-strict] [-follow] [-session LOG] FILE.json..  score the arbiter against the chain by outcome: the recorded cases, or every tick of a session log (tools/provingground/arbiter-outcomes, report-only)
   incident    [-class C] [-seed N] [-out DIR] FILE.json..   build replay rows from incident files the bot wrote at a death (report-only tier)
   determinism-run -n N -out DIR [run flags]      run the selection N times (journals on) and compare every run with the first
   ledger status-doc|check -in L.jsonl           the results ledger: generated status page, line check (lines are written by exec-one)
