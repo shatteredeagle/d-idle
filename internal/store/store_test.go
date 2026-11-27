@@ -236,3 +236,64 @@ func TestLogConcurrent(t *testing.T) {
 		t.Fatalf("lines %d", n)
 	}
 }
+
+type enospcFile struct{ n int }
+
+func (f *enospcFile) Write(b []byte) (int, error) {
+	f.n = len(b) / 2
+	return f.n, errors.New("write: no space left on device")
+}
+func (f *enospcFile) Sync() error  { return nil }
+func (f *enospcFile) Close() error { return nil }
+
+func TestSaveENOSPCMidWriteKeepsOldFile(t *testing.T) {
+	p := filepath.Join(t.TempDir(), "d.json")
+	f := &File[docV3]{Path: p, Version: 3, Migrations: chain()}
+	if err := f.Save(docV3{Name: "good"}); err != nil {
+		t.Fatal(err)
+	}
+	old := createTemp
+	createTemp = func(path string, perm os.FileMode) (tempFile, error) {
+		if _, err := os.Create(path); err != nil { // the half-written temp file exists on disk
+			return nil, err
+		}
+		return &enospcFile{}, nil
+	}
+	defer func() { createTemp = old }()
+	if err := f.Save(docV3{Name: "new"}); err == nil || !strings.Contains(err.Error(), "no space") {
+		t.Fatalf("err %v", err)
+	}
+	createTemp = old
+	v, info, err := f.Load()
+	if err != nil || v.Name != "good" || info.Warning != "" {
+		t.Fatalf("%v %+v %+v", err, v, info)
+	}
+	if _, err := os.Stat(p + ".tmp"); err == nil {
+		t.Fatal("temp file left behind")
+	}
+}
+
+func TestWriteAtomicRefusesTinyAndEmpty(t *testing.T) {
+	p := filepath.Join(t.TempDir(), "d.json")
+	write(t, p, `{"version":1,"data":{"a":1}}`)
+	for _, b := range [][]byte{nil, []byte("{}")} {
+		if err := writeAtomic(p, b, 0o644); !errors.Is(err, ErrTooSmall) {
+			t.Fatalf("%q: %v", b, err)
+		}
+	}
+	if raw, _ := os.ReadFile(p); !strings.Contains(string(raw), `"a":1`) {
+		t.Fatalf("file changed: %q", raw)
+	}
+}
+
+func TestZeroByteFileRestoresFromBak(t *testing.T) {
+	p := filepath.Join(t.TempDir(), "d.json")
+	f := &File[docV3]{Path: p, Version: 3, Migrations: chain()}
+	f.Save(docV3{Name: "a"})
+	f.Save(docV3{Name: "b"})
+	write(t, p, "")
+	v, info, err := f.Load()
+	if err != nil || v.Name != "a" || !info.FromBackup || info.Quarantined == "" {
+		t.Fatalf("%v %+v %+v", err, v, info)
+	}
+}

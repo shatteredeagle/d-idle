@@ -253,6 +253,26 @@ class FlipTest(unittest.TestCase):
         text, old = F.set_override(None, "town.plan", 2.0)
         self.assertEqual((json.loads(text), old), ({"version": 1, "data": {"overrides": {"town.plan": 2.0}}}, None))
 
+    def test_zero_byte_tuning_after_restart_is_a_hard_failure(self):
+        orig, first = self.sb.restart, [True]
+
+        def restart_and_truncate():
+            orig()
+            if first.pop() if first else False:
+                self.sb.tuning = ""  # the Doofer failure: the file is zero bytes after the restart
+        self.sb.restart = restart_and_truncate
+        with self.assertRaises(F.FlipError) as c:
+            self.flip()
+        self.assertIn("zero bytes", str(c.exception))
+        self.assertEqual(self.sb.tuning, ENVELOPE)  # the backup was restored
+
+    def test_zero_byte_tuning_before_the_flip_is_refused(self):
+        self.sb.tuning = ""
+        with self.assertRaises(F.FlipError) as c:
+            self.flip()
+        self.assertIn("zero bytes", str(c.exception))
+        self.assertEqual(self.sb.restarts, 0)
+
     def test_verify_failure_reverts_the_flip(self):
         self.sb.knobs_live = False  # the child comes up but does not show the knob
         with self.assertRaises(F.FlipError) as c:
