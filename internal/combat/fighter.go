@@ -87,6 +87,7 @@ type Fighter struct {
 	mark          markState   // the mark driver (mark.go)
 	aim           aimState    // the point aim driver (aim.go)
 	stance        stanceState // the army stance (stance.go)
+	press         pressState  // press rows: shadow and gate counters (press.go)
 	lastDodge     time.Time
 	diagMu        sync.Mutex // guards portalCast and casts (read from the bot's autopsy)
 	portalCast    PortalCast
@@ -888,7 +889,7 @@ func (f *Fighter) cast(snap *d2.Snapshot, sp SkillSpec, at input.Point) error {
 	case left:
 		s := screenOf(snap, at)
 		if hc, ok := f.e.In.(holdClicker); ok && sp.Hold {
-			err = hc.HoldClick(input.Left, s.X, s.Y, f.holdFor(snap.Player))
+			err = hc.HoldClick(input.Left, s.X, s.Y, f.pressSlice(snap.Player, sp))
 		} else {
 			err = f.e.In.Click(input.Left, s.X, s.Y)
 		}

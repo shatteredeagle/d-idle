@@ -276,7 +276,14 @@
     "surround": 4,
     "surroundLifePct": 65,
     "manaReserve": 4
-   }
+   },
+   "presses": [
+    {
+     "name": "Zeal",
+     "sliceMs": 600,
+     "source": "S today's melee holdMs, one slice per fight tick; the real attack-sequence rate waits for fidelity A1"
+    }
+   ]
   },
   {
    "class": "paladin",

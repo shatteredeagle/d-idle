@@ -105,6 +105,8 @@ type Profile struct {
 	Minions *MinionParams `json:"minions,omitempty"`
 	// Stance is the army stance (stance.go); nil keeps the hero where the fight puts it.
 	Stance *ArmyStance `json:"stance,omitempty"`
+	// Presses are the press rows of held skills (press.go); a held skill without a row uses Melee.HoldMs.
+	Presses []PressRule `json:"presses,omitempty"`
 	// Aims are the point aim rows (aim.go); a point skill without a row is cast at its target's cell.
 	Aims []AimRule `json:"aims,omitempty"`
 	// CorpseAims are the corpse aim rows (aimcorpse.go); a corpse skill without a row takes the corpse its caller always did.
@@ -289,6 +291,9 @@ func loadClassData() *classData {
 			panic("combat: classdata/profiles.json: " + err.Error())
 		}
 		if err := validateStance(pr.Profiles); err != nil {
+			panic("combat: classdata/profiles.json: " + err.Error())
+		}
+		if err := validatePresses(pr.Profiles, classDB.skills); err != nil {
 			panic("combat: classdata/profiles.json: " + err.Error())
 		}
 		if err := validateAims(pr.Profiles, classDB.skills); err != nil {

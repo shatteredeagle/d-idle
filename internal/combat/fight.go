@@ -616,7 +616,7 @@ func (f *Fighter) engage(ctx context.Context, snap *d2.Snapshot, tg Target, sp f
 	if hard {
 		pick = PickByResist
 	}
-	spec, why := pick(order, &tg, p.Mana, f.skillReady)
+	spec, why := pick(order, &tg, p.Mana, func(sp SkillSpec) bool { return f.skillReady(sp) && f.pressMayStart(p, sp) })
 	if why != PickOK {
 		if fb, ok := f.fallbackSkill(p, &tg); ok && (why == PickImmune || why == PickNoSkill) {
 			spec, why = fb, PickOK
