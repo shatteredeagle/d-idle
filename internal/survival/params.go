@@ -61,45 +61,50 @@ type ArchTune struct {
 
 // Params are the controller constants; every one is tagged in Tags (all U today).
 type Params struct {
-	Schema              string              `json:"schema"`
-	HalfLifeMinutes     float64             `json:"halfLifeMinutes"`
-	HeroHalfLifeMinutes float64             `json:"heroHalfLifeMinutes"`
-	HardHalfLifeMinutes float64             `json:"hardHalfLifeMinutes"`
-	ShrinkKills         float64             `json:"shrinkKills"`
-	ChickenMul          float64             `json:"chickenMul"`
-	MercDeathMul        float64             `json:"mercDeathMul"`
-	DeathMul            float64             `json:"deathMul"`
-	KMin                float64             `json:"kMin"`
-	KMax                float64             `json:"kMax"`
-	KHeroUnreadMax      float64             `json:"kHeroUnreadMax"`
-	PredTakenFloor      float64             `json:"predTakenFloorPerKill"`
-	PowerChange         float64             `json:"powerChange"`
-	WindowMinutes       float64             `json:"windowMinutes"`
-	MercWindowMinutes   float64             `json:"mercWindowMinutes"`
-	NoReviveMinutes     float64             `json:"noReviveMinutes"`
-	SwitchMargin        float64             `json:"switchMargin"`
-	StayMinutes         float64             `json:"stayMinutes"`
-	LambdaMax           float64             `json:"lambdaMax"`
-	MoveSecondsPerKill  float64             `json:"moveSecondsPerKill"`
-	PotionPrice         float64             `json:"potionPrice"`
-	ValuePerGold        float64             `json:"valuePerGold"`
-	MercPriorMinutes    float64             `json:"mercPriorMinutes"`
-	FreshRatio          float64             `json:"freshRatio"`
-	FreshMinutes        float64             `json:"freshMinutes"`
-	YieldMinMinutes     float64             `json:"yieldMinMinutes"`
-	YieldShrinkMinutes  float64             `json:"yieldShrinkMinutes"`
-	YieldMaxWeight      float64             `json:"yieldMaxWeight"`
-	StarveCasts         float64             `json:"starveCasts"`
-	StarveValueMul      float64             `json:"starveValueMul"`
-	YieldStarveRatio    float64             `json:"yieldStarveRatio"`
-	YieldStarveMinutes  float64             `json:"yieldStarveMinutes"`
-	YieldStarveMul      float64             `json:"yieldStarveMul"`
-	UnvisitedFloor      float64             `json:"unvisitedFloor"`
-	UnvisitedBelow      float64             `json:"unvisitedBelow"`
-	FreshNeedsMerc      bool                `json:"freshNeedsMerc"`
-	Archetypes          map[string]ArchTune `json:"archetypes"`
-	Dials               map[string]StepDown `json:"dials"`
-	Tags                map[string]string   `json:"tags"`
+	Schema              string  `json:"schema"`
+	HalfLifeMinutes     float64 `json:"halfLifeMinutes"`
+	HeroHalfLifeMinutes float64 `json:"heroHalfLifeMinutes"`
+	HardHalfLifeMinutes float64 `json:"hardHalfLifeMinutes"`
+	ShrinkKills         float64 `json:"shrinkKills"`
+	ChickenMul          float64 `json:"chickenMul"`
+	MercDeathMul        float64 `json:"mercDeathMul"`
+	DeathMul            float64 `json:"deathMul"`
+	KMin                float64 `json:"kMin"`
+	KMax                float64 `json:"kMax"`
+	KHeroUnreadMax      float64 `json:"kHeroUnreadMax"`
+	PredTakenFloor      float64 `json:"predTakenFloorPerKill"`
+	PowerChange         float64 `json:"powerChange"`
+	WindowMinutes       float64 `json:"windowMinutes"`
+	MercWindowMinutes   float64 `json:"mercWindowMinutes"`
+	NoReviveMinutes     float64 `json:"noReviveMinutes"`
+	SwitchMargin        float64 `json:"switchMargin"`
+	StayMinutes         float64 `json:"stayMinutes"`
+	LambdaMax           float64 `json:"lambdaMax"`
+	MoveSecondsPerKill  float64 `json:"moveSecondsPerKill"`
+	PotionPrice         float64 `json:"potionPrice"`
+	ValuePerGold        float64 `json:"valuePerGold"`
+	MercPriorMinutes    float64 `json:"mercPriorMinutes"`
+	FreshRatio          float64 `json:"freshRatio"`
+	FreshMinutes        float64 `json:"freshMinutes"`
+	YieldMinMinutes     float64 `json:"yieldMinMinutes"`
+	YieldShrinkMinutes  float64 `json:"yieldShrinkMinutes"`
+	YieldMaxWeight      float64 `json:"yieldMaxWeight"`
+	StarveCasts         float64 `json:"starveCasts"`
+	StarveValueMul      float64 `json:"starveValueMul"`
+	YieldStarveRatio    float64 `json:"yieldStarveRatio"`
+	YieldStarveMinutes  float64 `json:"yieldStarveMinutes"`
+	YieldStarveMul      float64 `json:"yieldStarveMul"`
+	UnvisitedFloor      float64 `json:"unvisitedFloor"`
+	UnvisitedBelow      float64 `json:"unvisitedBelow"`
+	FreshNeedsMerc      bool    `json:"freshNeedsMerc"`
+	// LockHoldMinutes: a left-for-cost lock lapses this long after the hero left (0 = only a power change lifts it).
+	// BandDrop: per difficulty, a zone whose monster level is more than this many levels below the hero is not a
+	// candidate while another one remains (0 or absent = off). Card zonepace, class G (a threshold moved by one incident).
+	LockHoldMinutes float64             `json:"lockHoldMinutes"`
+	BandDrop        map[string]int      `json:"bandDrop"`
+	Archetypes      map[string]ArchTune `json:"archetypes"`
+	Dials           map[string]StepDown `json:"dials"`
+	Tags            map[string]string   `json:"tags"`
 }
 
 // LoadParams parses the embedded constants; a missing dial row or a constant that must be positive is an error.
@@ -113,6 +118,14 @@ func LoadParams() (*Params, error) {
 		"stayMinutes": p.StayMinutes, "kMax": p.KMax, "kHeroUnreadMax": p.KHeroUnreadMax, "mercWindowMinutes": p.MercWindowMinutes, "kMin": p.KMin} {
 		if v <= 0 {
 			return nil, fmt.Errorf("survival: params: %s must be positive", name)
+		}
+	}
+	if p.LockHoldMinutes < 0 {
+		return nil, fmt.Errorf("survival: params: lockHoldMinutes must not be negative")
+	}
+	for d, n := range p.BandDrop {
+		if n < 0 {
+			return nil, fmt.Errorf("survival: params: bandDrop %q must not be negative", d)
 		}
 	}
 	if p.PredTakenFloor < 0 {
