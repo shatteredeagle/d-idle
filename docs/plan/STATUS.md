@@ -190,7 +190,6 @@
 | inputl5 | proposed | - | `docs/design/input-i5-i7.md`<br>`tools/ci/pointercount.py`<br>`tools/ci/test_pointercount.py`<br>`tools/ci/pointercount-baseline.json`<br>`tools/ci/check.sh` | - |
 | fid-lowvalue | deferred | - | `docs/probes/fid/fid-lowvalue.md` | - |
 | ckptlive | proposed | - | `docs/probes/checkpoint-live-drill.md` | - |
-| advisor1 | proposed | - | `docs/design/advisor-r14.md`<br>`internal/advisor/`<br>`internal/watch/advisorsection.go`<br>`internal/watch/funwire.go`<br>`internal/watch/returnscreen_test.go`<br>`internal/cubejobs/cubejobs.go`<br>`internal/env/tuning_items.go`<br>`docs/knobs.md`<br>`data/darklaunch.json` | - |
 | flipwave2 | proposed | - | `docs/probes/flipwave2.md` | - |
 | classorder1 | proposed | - | `docs/probes/classorder1.md` | - |
 
