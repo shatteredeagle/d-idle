@@ -146,8 +146,6 @@ cmd/d2bot/resource_test.go  credit-runner  freshstart
 cmd/d2bot/resource_test.go  credit-runner  skillcapretire
 cmd/d2bot/task.go  credit-runner  qdmatrix
 cmd/d2bot/task_test.go  credit-runner  qdmatrix
-cmd/d2bot/vaultequip.go  credit-runner  charmvault
-cmd/d2bot/vaultkeep.go  credit-runner  charmvault
 cmd/d2bot/vaultkeep.go  credit-runner  sellall
 cmd/d2firsthour/  live-agent  firsthour
 cmd/d2scenario/  credit-runner  arbmig
@@ -181,7 +179,6 @@ docs/archive  credit-runner  dietarchive
 docs/away-drill.md  live-agent  awaydrill
 docs/backlog-howto.md  credit-runner  dietrule
 docs/campaign.md  credit-runner  campaign1
-docs/charms.md  credit-runner  charmvault
 docs/combat.md  credit-runner  cainfix3
 docs/contracts/decision-queue.md  credit-runner  qqueue
 docs/design/admission-p4.md  credit-runner  admit1
@@ -349,7 +346,6 @@ internal/bot/zonemodel.go  credit-runner  survrecover
 internal/bot/zonerecover_test.go  credit-runner  survrecover
 internal/bot/zoneshadow.go  credit-runner  survrecover
 internal/campaign/  credit-runner  campaign1
-internal/charms  credit-runner  charmvault
 internal/combat/  credit-runner  cainfix3
 internal/combat/  credit-runner  dlv-aim-corpse
 internal/combat/  credit-runner  dlv-aim-point
@@ -418,7 +414,6 @@ internal/input/useitem_test.go  credit-runner  inputl3
 internal/invdesk/mercverbs.go  credit-runner  uib9
 internal/invdesk/mercverbs_test.go  credit-runner  uib9
 internal/invdesk/sets.go  credit-runner  uib9
-internal/lootrules  credit-runner  charmvault
 internal/nav/  credit-runner  dlv-move-tele
 internal/nav/act2hints.go  credit-runner  qdmatrix
 internal/nav/act2hints_test.go  credit-runner  qdmatrix
@@ -503,14 +498,11 @@ internal/town/portalverb_unit_test.go  credit-runner  inputl3
 internal/town/sellplan.go  credit-runner  townflip
 internal/town/sellplan_test.go  credit-runner  townflip
 internal/town/shop.go  credit-runner  townflip
-internal/town/stash.go  credit-runner  charmvault
 internal/town/town.go  credit-runner  townflip
 internal/town/trip.go  credit-runner  inputl3
 internal/vault  credit-runner  vaultperf
-internal/vaultkeep  credit-runner  charmvault
 internal/vaultkeep  credit-runner  sellall
 internal/vaultkeep  credit-runner  vaultperf
-internal/watch  credit-runner  charmvault
 internal/watch  credit-runner  sellall
 internal/watch  credit-runner  town9
 internal/watch  credit-runner  vaultperf
