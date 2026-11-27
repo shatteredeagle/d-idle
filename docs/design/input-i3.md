@@ -1,6 +1,6 @@
 # Input layer I3: town portal by verb; stat and skill points by verb
 
-> status: bot side built offline (TASK-986, card inputl3, 2026-11-27), dark behind `input.planner` (0) and the backend capability `input.use-item`, which no fork build lists yet. Nothing here ran against a game. Tags: V verified (how is said), S secondary, U unverified.
+> status: bot side built offline (TASK-986, card inputl3, 2026-11-27), dark behind `input.planner` (0). Town portal differential run in the fork 2026-11-27 (section 3: 6 steps, 0 differences, V); fork branch `didle/forkcaps-20261127` lists `input.use-item` in `caps` (caps set `data/input/caps/d2d-fork-forkcaps.json`, no image loaded). Points differential not run. Tags: V verified (how is said), S secondary, U unverified.
 
 Roadmap R17, row I3 of [07-input-layer](fable-review-2026-11-19/07-input-layer.md) section 6; rule of [ADR 0021](../adr/0021-input-rule-verb-key-click.md): verb, then key, then verified click; each verb promoted from lab to input needs its own differential against the game's message.
 
@@ -26,7 +26,24 @@ Rules, both sites: the verb is used only with `input.planner` on AND the connect
 
 Already on verbs on d2d before this card (V code read): `cmd stat` and `cmd skillpt` send `cmd::StatPoint` and `cmd::SkillPoint`, the messages the + button and the skill icon send; the leveler spends through them with read-back and falls back to clicks at the first failure (`internal/leveler/leveler.go` `runVerbs`, `cmd/d2bot/pointswire.go`, docs/points.md section 3). No bot change was needed. What is missing is the differential (section 3) and caps tokens (docs/process/points-verbs-devp14.md item 1).
 
-## 3. Differentials (to run in the fork; not run here)
+## 3. Differentials
+
+### Result, town portal (2026-11-27, V)
+
+Fork test `tests/input_cast_tp_diff_d2d.py tp` (fork branch `didle/forkcaps-20261127`, private remote only), run on the builder's long lane against the devp30 binary and again against the branch build: two headless d2d in lockstep (seed 3, Paladin, `--lab-verbs` for the setup only), `cmd use <id>` on one, a right-click on the pack cell with the inventory open on the other, both runs idle the same world ticks, then 60 ticks and a digest (items with quantity, the held item, the player's portals by level and count). A non-refusal step must change the verb run; a refusal must move nothing.
+
+| step | after (both runs) | differences |
+|---|---|---|
+| scroll, Blood Moor | scroll gone, one pair (Blood Moor and town) | 0 |
+| tome (2 charges from `debug give tbk`), first cast | tome 1, one pair | 0 |
+| tome, second cast | tome 0, one pair | 0 |
+| refusal: empty tome | nothing moved | 0 |
+| refusal: an item on the cursor (verb only; the pointer twin waits) | nothing moved | 0 |
+| refusal: in town | nothing moved | 0 |
+
+Not covered: the portal's cell (the digest keeps level and count, as the checklist says), a joined game. Points (items 5 and 6 below) were not run.
+
+### Checklist (as written before the run)
 
 The pattern of `tests/input_items_diff_d2d.py` (two headless d2d, same seed and setup, the verb on one, the pointer path on the other, a digest compared after each step; a non-refusal step must change the verb run, a refusal must move nothing). That file already has a `use` step for a healing potion (19 steps, 0 differences, V per docs/process/sandbox-input-items.md) but no town portal and no points step. Ready-to-run checklist for the fork owner:
 
@@ -36,7 +53,7 @@ The pattern of `tests/input_items_diff_d2d.py` (two headless d2d, same seed and 
 4. Refusals that must move nothing: in town; with an item on the cursor; an empty tome (charges 0).
 5. Stat point: `cmd stat 0 1` against a click on the Strength + button with the character panel open (setup `debug statpts 5`). Digest: `stats.base`, `statpts`.
 6. Skill point: `cmd skillpt <index>` against a click on the skill icon (setup `debug skillpts 2`, a level-1 skill). Digest: `skills.base_levels`, `skillpts`. Refusal: a skill whose required level is not met moves nothing.
-7. When 1 to 4 pass: add `input.use-item` to the fork's `caps` list (`apps/d2d/devctl/verbs.hpp`, the `list` string) and to a `data/input/caps/<build>.json` here with the differential's result in its note.
+7. When 1 to 4 pass: add `input.use-item` to the fork's `caps` list (`apps/d2d/devctl/verbs.hpp`, the `list` string) and to a `data/input/caps/<build>.json` here with the differential's result in its note. Done 2026-11-27: `data/input/caps/d2d-fork-forkcaps.json`.
 
 ## 4. Enable criteria
 
