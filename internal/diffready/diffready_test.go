@@ -18,7 +18,7 @@ func must(t *testing.T) *Table {
 
 func good(c d2.Class) Hero {
 	return Hero{Class: c, Level: 45, MaxLife: 800, Res: d2.Resists{Fire: 60, Cold: 60, Lightning: 60, Poison: 40},
-		BaalDead: true, BaalKnown: true, KeySkillLevel: 25, Healing: 5, ManaOrRejuv: 5, Portals: 2, MercAlive: true}
+		Baal: Yes, KeySkillLevel: 25, Healing: 5, ManaOrRejuv: 5, Portals: 2, Merc: Yes}
 }
 
 func TestNightmareTwoClasses(t *testing.T) {
@@ -49,8 +49,8 @@ func TestNightmareMissingList(t *testing.T) {
 	tb := must(t)
 	h := good(d2.Sorceress)
 	h.Res.Fire = 40 // 40-40 = 0 post penalty, need 20
-	h.BaalDead = false
-	h.MercAlive = false
+	h.Baal = No
+	h.Merc = No
 	h.Level = 30
 	v, _ := tb.Check("nightmare", h)
 	if v.Ready || len(v.Missing) != 4 {
@@ -81,7 +81,7 @@ func TestHellHasNoResistGate(t *testing.T) {
 func TestUnreadTermsAreListedNotBlocking(t *testing.T) {
 	tb := must(t)
 	h := good(d2.Sorceress)
-	h.BaalKnown, h.KeySkillLevel = false, -1
+	h.Baal, h.KeySkillLevel = Unread, -1
 	v, _ := tb.Check("nightmare", h)
 	if !v.Ready || len(v.Unknown) != 2 || !strings.Contains(v.Why(), "unread") {
 		t.Errorf("%+v", v)

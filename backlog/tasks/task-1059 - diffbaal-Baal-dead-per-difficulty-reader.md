@@ -17,6 +17,7 @@ owns:
   - "internal/quest/baaldone.go"
   - "internal/quest/baaldone_test.go"
 exclusive: []
+result: "Built offline, not verified live: quest.BaalDead reads the eve_of_destruction word per difficulty (flag position U), table test and bad-difficulty must-fail."
 contracts: []
 ---
 
@@ -30,5 +31,5 @@ Design section 6 card 3; feeds diffready baal_dead_in_current.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Reader of the Eve of Destruction quest word per difficulty (flag position U) with table test and must-fail
+- [x] #1 Reader of the Eve of Destruction quest word per difficulty (flag position U) with table test and must-fail
 <!-- AC:END -->

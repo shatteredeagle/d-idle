@@ -503,6 +503,17 @@
    "trial_why": "deploy 94: owner approved 2026-11-27 08:35 EST: upkeep mode 2 + town plan stage 3 (ADR 0028)",
    "trial_bundle": "combat.deliveryUpkeep,town.plan",
    "note": "owner approved 2026-11-27, live on sandbox Doofer (mode 2); 45 min flip window closed clean 2026-11-27T14:25:40Z (no hard breach), kept on trial"
+  },
+  {
+   "name": "bot.diffReadyV2",
+   "built_by": "diffready (TASK-1058)",
+   "dark_since": "2026-11-27",
+   "why_off": "Built and tested offline only. Nightmare rows are SME advice (S), Hell rows are U placeholders, the Baal quest word position is U, no operator verb grants the owner's go yet, and the resist basis (TASK-216) is unsettled.",
+   "enable_criteria": "Live check docs/diffready.md passes on a throwaway Nightmare-eligible hero (Baal word reads Done after the kill, ready line shows in ops why); an owner-go verb exists; then one sandbox for a week with the owner granting the hop by hand",
+   "owner": "coordinator",
+   "review_by": "2026-12-18",
+   "status": "dark",
+   "criteria_met": "no"
   }
  ]
 }

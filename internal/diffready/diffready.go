@@ -79,15 +79,23 @@ type Hero struct {
 	Level          int
 	MaxLife        int
 	Res, MaxRes    d2.Resists
-	BaalDead       bool
-	BaalKnown      bool // false: no quest source knew the word
-	KeySkillLevel  int  // -1 when not read
-	Healing        int  // healing potions in belt and pack
-	ManaOrRejuv    int
-	Portals        int
-	MercAlive      bool
+	Baal           Tri // Baal dead in the current difficulty (quest word, U flag position: quest.BaalDead)
+	KeySkillLevel  int // -1 when not read
+	Healing        int // healing potions in belt and pack; -1 when not read
+	ManaOrRejuv    int // -1 when not read
+	Portals        int // -1 when not read
+	Merc           Tri
 	DeathsLastHour int
 }
+
+// Tri is a fact that may be unread; the zero value is Unread, so a half-filled Hero never passes by accident.
+type Tri int8
+
+const (
+	Unread Tri = iota
+	No
+	Yes
+)
 
 // Verdict is the answer. Missing lists what blocks (each with the numbers); Unknown lists terms that could not be
 // read and therefore did not block (shown to the owner, never a silent pass).
@@ -127,9 +135,9 @@ func (t *Table) Check(targetName string, h Hero) (Verdict, error) {
 	a := tg.All
 	switch {
 	case !a.BaalDead:
-	case !h.BaalKnown:
+	case h.Baal == Unread:
 		unk("baal state")
-	case !h.BaalDead:
+	case h.Baal == No:
 		miss("Baal not dead in the current difficulty")
 	}
 	if h.Level < row.ClvlMin {
@@ -164,18 +172,26 @@ func (t *Table) Check(targetName string, h Hero) (Verdict, error) {
 			}
 		}
 	}
-	if a.MercAlive && !h.MercAlive {
-		miss("no living mercenary")
+	if a.MercAlive {
+		switch h.Merc {
+		case Unread:
+			unk("merc")
+		case No:
+			miss("no living mercenary")
+		}
 	}
-	if h.Healing < a.Kit.Healing {
-		miss("healing potions %d, need %d", h.Healing, a.Kit.Healing)
+	count := func(name string, have, need int) {
+		switch {
+		case need == 0:
+		case have < 0:
+			unk(name)
+		case have < need:
+			miss("%s %d, need %d", name, have, need)
+		}
 	}
-	if h.ManaOrRejuv < a.Kit.ManaOrRejuv {
-		miss("mana or rejuvenation potions %d, need %d", h.ManaOrRejuv, a.Kit.ManaOrRejuv)
-	}
-	if h.Portals < a.Kit.Portal {
-		miss("town portals %d, need %d", h.Portals, a.Kit.Portal)
-	}
+	count("healing potions", h.Healing, a.Kit.Healing)
+	count("mana or rejuvenation potions", h.ManaOrRejuv, a.Kit.ManaOrRejuv)
+	count("town portals", h.Portals, a.Kit.Portal)
 	if h.DeathsLastHour > a.DeathsLastHourMax {
 		miss("%d deaths in the last hour, at most %d", h.DeathsLastHour, a.DeathsLastHourMax)
 	}

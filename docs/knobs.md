@@ -314,6 +314,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | bot.gearBudgetPct | 70 | 20..70 | % | 20 | 2 | Share of the gold above the potion reserve one shopping pass may spend on gear. |
 | bot.gearReserve | 100 | 0..100 | gold | 0 | 3 | Gold kept for potions when shopping for gear. Lower risks starving after a shopping spree. |
 | bot.sellMinItems | 4 | 4..12 | items | 12 | 3 | Sellable pack items that justify a town trip for a character without gold. Higher carries loot longer. |
+| bot.diffReadyV2 | 0 | 0..1 | bool | 0 | 2 | [dark-launch] 1 replaces the clvl-only ready-for-next-difficulty check by the per-class predicate (internal/diffready: Baal dead, clvl, life, Nightmare resists, kit, merc, deaths per hour) and makes the hop opt-in: the bot shows readiness in ops why and waits for the owner's go, never hops alone. 0 is off: nothing changes (docs/diffready.md, data/darklaunch.json). |
 | bot.difficultyBanMin | 60 | 60..600 | min | 600 | 3 | Minutes the bot stays in its difficulty after a switch to the next one did not happen. |
 | bot.savePointMin | 20 | 0..120 | min | 20 | 1 | Minutes in one game before the bot, in town and idle, saves and re-enters it (a crash loses what came after the last save); 0 is off. |
 | bot.heapLimitMB | 4096 | 0..8192 | MB | 4096 | 1 | Go heap in use above which d2bot writes a heap profile and exits for a supervisor restart (a runaway allocation would otherwise end in the OOM killer); the GC gets a soft limit 25 percent above it. 0 is off. Normal runs use under 100 MB. |

@@ -365,7 +365,7 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 		return err
 	}
 	disp.run = runner
-	m, err := goals.New(d2dGoalsOptions(runner, ip.Goals(), taskChain(runner.LastSnapshot), be.Clock,
+	m, err := goals.New(d2dGoalsOptions(runner, ip.Goals(), taskChain(runner.LastSnapshot, runner.DifficultyGate), be.Clock,
 		func(f string, a ...any) { log.Info("goals", "msg", sprintf(f, a...)) }))
 	if err != nil {
 		return err

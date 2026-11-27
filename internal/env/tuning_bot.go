@@ -66,6 +66,9 @@ type BotTuning struct {
 	GearReserve      int // gold kept for potions when shopping for gear
 	SellMinItems     int // sellable pack items that justify a town trip for a starving character
 	DifficultyBanMin int // minutes the bot stays in its difficulty after a switch to a higher one failed
+	// DiffReadyV2 [dark-launch]: 1 replaces the clvl-only "ready for the next difficulty" check by the per-class
+	// predicate (internal/diffready) and makes the hop opt-in: the bot shows readiness and waits for the owner's go.
+	DiffReadyV2 int
 
 	// SavePointMin: the game writes the .d2s only on Save and Exit (V: docs/soak-analysis.md 6c), so a crash loses all
 	// progress since. In town, idle, the bot leaves and re-enters the game after this many minutes. 0 = off.
@@ -301,6 +304,8 @@ func botKnobs() []Knob {
 			Desc: "Sellable pack items that justify a town trip for a character without gold. Higher carries loot longer."},
 		{Key: "bot.difficultyBanMin", Label: "Difficulty retry ban", Unit: "min", Default: 60, Min: 60, Max: 600,
 			Desc: "Minutes the bot stays in its difficulty after a switch to the next one did not happen."},
+		{Key: "bot.diffReadyV2", Label: "Difficulty readiness v2", Unit: "bool", Default: 0, Min: 0, Max: 1, NoHandicap: true,
+			Desc: "[dark-launch] 1 replaces the clvl-only ready-for-next-difficulty check by the per-class predicate (internal/diffready: Baal dead, clvl, life, Nightmare resists, kit, merc, deaths per hour) and makes the hop opt-in: the bot shows readiness in ops why and waits for the owner's go, never hops alone. 0 is off: nothing changes (docs/diffready.md, data/darklaunch.json)."},
 		{Key: "bot.savePointMin", Label: "Save point interval", Unit: "min", Default: 20, Min: 0, Max: 120, NoHandicap: true,
 			Desc: "Minutes in one game before the bot, in town and idle, saves and re-enters it (a crash loses what came after the last save); 0 is off."},
 		{Key: "bot.heapLimitMB", Label: "Heap guard limit", Unit: "MB", Default: 4096, Min: 0, Max: 8192, NoHandicap: true,
