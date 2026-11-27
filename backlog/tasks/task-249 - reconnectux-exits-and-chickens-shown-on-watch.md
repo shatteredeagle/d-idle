@@ -17,9 +17,14 @@ owns:
   - "docs/onboarding.md"
   - "internal/watch/onboarding.go"
   - "internal/watch/web/panels/onboarding"
+  - "internal/watch/onboarding_test.go"
+  - "internal/watch/funwire.go"
+  - "internal/watch/testdata/onboarding_dom.js"
+  - "internal/watch/testdata/onboarding_dom.txt"
+  - "data/onboarding/en.json"
 exclusive: []
 contracts: []
-result: "Reconnect/restart/away/stream banners BUILT offline 2026-11-11 in the onboarding panel (docs/onboarding.md). Exit and chicken counts not built: no counter exists on the watch side. Not verified live. Remaining: AC 3 exit and chicken counts need a bot-side exit counter."
+result: "Banners built 2026-11-11. Chicken count built offline 2026-11-27: GET /api/onboarding gains chickens (AwayClose events with left=chicken and a wall time, last 24 h; chickenCount, TestChickenCountWindow) and the panel shows one info line (singular and plural texts in data/onboarding/en.json; node DOM golden cases three, one and no chickens). Exits that are not chickens still have no counter. Not looked at in a browser, not verified live; whether the fight feed stamps Wall on real close events is U."
 lane: next
 ---
 
@@ -35,5 +40,5 @@ Why: a returning friend must see at once whether the page lost the bot or the he
 <!-- AC:BEGIN -->
 - [x] #1 banner when the page loses the bot ("Reconnecting to your hero..."), when the bot restarted, when the player was away ("Your hero was away for 2h 14m: see the Return screen" with a link to /watch/return) and when the video stream is down (d2video hook, Retry)
 - [x] #2 node DOM golden for the banner states; no blank panel from the banner itself
-- [ ] #3 game exits and chickens (about 67 exits a day) as a /watch count: not in this card's change, needs an exit counter from the bot (see result)
+- [x] #3 chickens (fights that ended with the hero leaving the game) shown on /watch as a count of the last 24 h; exits that are not chickens (restarts, fresh games) have no watch-side source and are not counted (see result)
 <!-- AC:END -->

@@ -1,10 +1,13 @@
 ---
 id: TASK-1065
-title: 'whirlscen: combat drill scenarios (whirlwind-clears, hold-interruptible, teleport-reposition, corpse-explodes)'
-status: Proposed
+title: >-
+  whirlscen: combat drill scenarios (whirlwind-clears, hold-interruptible,
+  teleport-reposition, corpse-explodes)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T21:12:00Z'
+updated_date: '2026-11-27T21:46:00Z'
 labels:
   - bot
   - drill

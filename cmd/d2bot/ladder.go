@@ -37,6 +37,7 @@ import (
 	"d2lod-bot/internal/repair"
 	"d2lod-bot/internal/senses"
 	"d2lod-bot/internal/status"
+	"d2lod-bot/internal/supply"
 	"d2lod-bot/internal/unlock"
 	"d2lod-bot/internal/watch"
 )
@@ -105,6 +106,7 @@ type ladderOptions struct {
 	quests        *questboard.Desk     // the quest board desk (questwire.go); nil: no routes
 	points        *points.Desk         // the points desk (pointswire.go); nil: no routes
 	plan          *agencyWire          // the shadow planner (agencywire.go); nil: no route
+	townPlan      func() supply.View   // the Town plan card's source (townplanwire.go); nil: the route stays 503
 	// riskFacts is the hero risk meter's reader (bot.Runner.RiskFacts); nil: no meter. monsters is the monster table
 	// for the bestiary; nil (no game tables): flavour-only cards.
 	riskFacts                              func(zone string) watch.RiskFacts
@@ -354,6 +356,7 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 		bindQuests(rig.Fun, l.quests)
 		bindPoints(rig.Fun, l.points)
 		bindPlan(rig.Fun, l.plan)
+		bindTownPlan(rig.Fun, l.townPlan)
 		if src == nil {
 			src = hub // a person answers: the Hub never answers by itself
 		}
