@@ -219,7 +219,6 @@ docs/knobs.md  credit-runner  cainfix3
 docs/knobs.md  credit-runner  countess3
 docs/knobs.md  credit-runner  dlv-upkeep-state
 docs/knobs.md  credit-runner  freshstart
-docs/knobs.md  credit-runner  townguard
 docs/knobs.md  live-agent  recoverypace
 docs/onboarding-tour.md  credit-runner  onboardtour
 docs/onboarding.md  credit-runner  reconnectux
@@ -296,7 +295,6 @@ internal/arbiter/replay.go  credit-runner  ticklog
 internal/arbiter/replay_ticklog_test.go  credit-runner  ticklog
 internal/boss  credit-runner  countess3
 internal/bot/  credit-runner  cainfix3
-internal/bot/  credit-runner  townguard
 internal/bot/admit_need_test.go  credit-runner  admit1
 internal/bot/arbiter_control.go  credit-runner  arbmig
 internal/bot/arbiter_control_test.go  credit-runner  arbmig
@@ -397,7 +395,6 @@ internal/env/tuning_quests.go  credit-runner  countess3
 internal/env/tuning_resource.go  credit-runner  freshstart
 internal/env/tuning_resource.go  live-agent  recoverypace
 internal/env/tuning_town.go  credit-runner  townflip
-internal/env/tuning_town.go  credit-runner  townguard
 internal/fidvendor  live-agent  fidprobe-vendor
 internal/input/  credit-runner  dlv-cast-verbs
 internal/input/repairverbs.go  credit-runner  inputl4
@@ -422,7 +419,6 @@ internal/nav/mouthgate.go  credit-runner  qdmatrix
 internal/nav/mouthgate.go  credit-runner  warptrigger
 internal/nav/nav.go  credit-runner  countess3b
 internal/nav/nav.go  credit-runner  qdmatrix
-internal/nav/pathcost.go  credit-runner  townguard
 internal/nav/route.go  credit-runner  exitsread
 internal/nav/warpread_test.go  credit-runner  warptrigger
 internal/plandata/admission.json  credit-runner  admit1
@@ -458,7 +454,6 @@ internal/supply  credit-runner  town9
 internal/supply/  credit-runner  town8
 internal/talk/talk.go  credit-runner  qdmatrix
 internal/talk/talk_test.go  credit-runner  qdmatrix
-internal/task/  credit-runner  townguard
 internal/task/act1.go  credit-runner  placefix
 internal/task/act2.go  credit-runner  placefix
 internal/task/act2.go  credit-runner  qdmatrix
@@ -484,8 +479,6 @@ internal/town/portalverb_unit_test.go  credit-runner  inputl3
 internal/town/portalverb_unit_test.go  credit-runner  inputl4
 internal/town/repairverb.go  credit-runner  inputl4
 internal/town/repairverb_test.go  credit-runner  inputl4
-internal/town/route.go  credit-runner  townguard
-internal/town/route_test.go  credit-runner  townguard
 internal/town/sellplan.go  credit-runner  townflip
 internal/town/sellplan_test.go  credit-runner  townflip
 internal/town/shop.go  credit-runner  townflip
