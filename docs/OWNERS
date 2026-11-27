@@ -129,16 +129,20 @@ docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-extras.jsonl.gz  gaterun  gate
 backlog/tasks/task-726 - dlv-cast-verbs-input-caps-cast-unit-cast-point-cast-hold.md  credit-runner  inputl3
 cmd/d2bot/acts_test.go  credit-runner  qdmatrix
 cmd/d2bot/adapters.go  credit-runner  cainfix3
+cmd/d2bot/agencydrive_test.go  credit-runner  agencyp1b
+cmd/d2bot/agencywire.go  credit-runner  agencyp1b
 cmd/d2bot/behaviors.go  credit-runner  campaign1
 cmd/d2bot/boss.go  credit-runner  countess3
 cmd/d2bot/boss.go  credit-runner  countess3b
 cmd/d2bot/boss_levelmonsters_test.go  credit-runner  countess3b
 cmd/d2bot/d2dbackend.go  credit-runner  campaign1
+cmd/d2bot/d2dwire.go  credit-runner  agencyp1b
 cmd/d2bot/invverbs.go  credit-runner  uib9
 cmd/d2bot/invverbs_test.go  credit-runner  uib9
 cmd/d2bot/journeywire.go  credit-runner  campaign1
 cmd/d2bot/ladder.go  credit-runner  pgtaps
 cmd/d2bot/ladder.go  live-agent  recoverypace
+cmd/d2bot/live.go  credit-runner  agencyp1b
 cmd/d2bot/live.go  credit-runner  campaign1
 cmd/d2bot/playertuning_test.go  live-agent  recoverypace
 cmd/d2bot/resource_test.go  credit-runner  freshstart
@@ -348,6 +352,9 @@ internal/combat/  credit-runner  dlv-stance-pack
 internal/combat/  credit-runner  dlv-upkeep-minions
 internal/combat/  credit-runner  dlv-upkeep-state
 internal/combat/  credit-runner  dlv-whirl
+internal/combat/aura.go  credit-runner  agencyp1b
+internal/combat/drive_test.go  credit-runner  agencyp1b
+internal/combat/fighter.go  credit-runner  agencyp1b
 internal/combat/fighter.go  credit-runner  inputl3
 internal/combat/portalverb.go  credit-runner  inputl3
 internal/combat/portalverb_test.go  credit-runner  inputl3
@@ -388,6 +395,7 @@ internal/decide/queue.go  credit-runner  qqueue
 internal/decide/queue_test.go  credit-runner  qqueue
 internal/decide/variants.go  credit-runner  qdensity
 internal/decide/variants_test.go  credit-runner  qdensity
+internal/env/tuning_agency.go  credit-runner  agencyp1b
 internal/env/tuning_bot.go  credit-runner  arbmig
 internal/env/tuning_bot.go  credit-runner  freshstart
 internal/env/tuning_bot.go  credit-runner  ticklog
