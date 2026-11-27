@@ -46,6 +46,7 @@
 | smeaura | proposed | - | `docs/sme/paladin-auras-2026-11-26.md` | - |
 | necrocorpse | proposed | - | `docs/probes/necrocaps-2026-11-26.md` | - |
 | fid-poison-res-diag | proposed | - | `docs/research/fid-poisonres-trace.md` | - |
+| sellsnap | proposed | - | `internal/town/shop.go`<br>`internal/town/evalsnap.go`<br>`internal/town/sellsnap_test.go`<br>`internal/bot/sellable.go`<br>`internal/bot/resource.go`<br>`internal/bot/routeguard.go`<br>`internal/bot/runner.go`<br>`internal/bot/sellsnap_test.go` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
@@ -244,14 +245,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 7f0a43fb1 11-27 00:14 `Merge agent/sellsnap: Merge branch 'main' into sellsnap` (sellsnap)
+- b9ea4cd04 11-27 00:12 `Merge branch 'main' into sellsnap` (-)
 - add24a8d9 11-27 00:07 `Merge agent/townflip: Merge branch 'main' into townflip` (townflip)
 - 2a75046de 11-27 00:05 `Merge branch 'main' into townflip` (-)
+- 75e4c2f4e 11-26 23:54 `Merge branch 'main' into sellsnap` (-)
 - ee716b023 11-26 23:45 `Merge agent/ticklog: ticklog: tests, ledger row, knob doc, design doc, card` (ticklog)
 - 42d5de6d3 11-26 22:23 `Merge agent/savefix: Merge branch 'main' into savefix` (savefix)
 - e98984c4e 11-26 22:21 `Merge branch 'main' into savefix` (-)
 - f12815dff 11-26 22:14 `Merge agent/loophang: loophang: the d2bot watchdog counts kills, xp and levels as a heartbeat (a long Den clear was restarted after 613 s)` (loophang)
 - 90e9e46c0 11-26 21:08 `Merge agent/cardsync: cardsync: task card and stale In Progress cards back to Proposed` (cardsync)
-- e51210959 11-26 20:56 `Merge agent/actpanel: Merge branch 'main' into actpanel` (actpanel)
-- 7992c3d13 11-26 20:55 `Merge branch 'main' into actpanel` (-)
-- 88745d1a0 11-26 20:39 `Merge agent/ledgerflips: Merge branch 'main' into ledgerflips` (ledgerflips)
 <!-- statusgen:end -->

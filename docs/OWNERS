@@ -352,9 +352,14 @@ internal/bot/questboard_s7b_test.go  credit-runner  qdmatrix
 internal/bot/questboard_test.go  credit-runner  stage1fix
 internal/bot/repairtrip.go  credit-runner  repairtrip
 internal/bot/repairtrip_test.go  credit-runner  repairtrip
+internal/bot/resource.go  credit-runner  sellsnap
+internal/bot/routeguard.go  credit-runner  sellsnap
 internal/bot/runner.go  credit-runner  campaign1
 internal/bot/runner.go  credit-runner  maphistoryA
 internal/bot/runner.go  credit-runner  repairtrip
+internal/bot/runner.go  credit-runner  sellsnap
+internal/bot/sellable.go  credit-runner  sellsnap
+internal/bot/sellsnap_test.go  credit-runner  sellsnap
 internal/bot/shadow.go  credit-runner  arbmig
 internal/bot/shadow.go  credit-runner  ticklog
 internal/bot/task.go  credit-runner  boardmoderace
@@ -527,9 +532,12 @@ internal/town  credit-runner  town7
 internal/town  credit-runner  town8
 internal/town/chores.go  credit-runner  repairtrip
 internal/town/chores.go  credit-runner  townflip
+internal/town/evalsnap.go  credit-runner  sellsnap
 internal/town/repairtrip_test.go  credit-runner  repairtrip
 internal/town/sellplan.go  credit-runner  townflip
 internal/town/sellplan_test.go  credit-runner  townflip
+internal/town/sellsnap_test.go  credit-runner  sellsnap
+internal/town/shop.go  credit-runner  sellsnap
 internal/town/shop.go  credit-runner  townflip
 internal/town/town.go  credit-runner  repairtrip
 internal/town/town.go  credit-runner  townflip
