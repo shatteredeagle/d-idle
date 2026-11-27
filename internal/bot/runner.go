@@ -124,6 +124,7 @@ type Runner struct {
 	e *env.Env
 	d Deps
 
+	sellMemo sellMemo  // the last sell count and its snapshot (sellable.go)
 	planWarn sync.Once // a failing town planner is logged once (routeguard.go kitPlanOf)
 	cfg      Config
 	ch       chan goals.Event
