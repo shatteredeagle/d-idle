@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/fs"
 	"sort"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -34,13 +35,14 @@ var (
 	execTalks     map[string]string // "<npc class>/<pick>" -> "<chain>/<step>" of the talk steps that carry an exec row
 	execInteracts map[string]string // object adapter name -> "<chain>/<step>" of the interact steps
 	execCubes     map[string]string // sorted input names joined by "+" -> "<chain>/<step>" of the transmute steps
+	execKills     map[string]string // normalized monster name -> "<chain>/<step>" of the kill steps (no exec row needed)
 	execErr       error
 )
 
 // execStep returns the step row "<chain>/<step>" of the embedded act files.
 func execStep(chain, step string) (questspec.Step, error) {
 	execOnce.Do(func() {
-		execSteps, execTalks, execInteracts, execCubes = map[string]questspec.Step{}, map[string]string{}, map[string]string{}, map[string]string{}
+		execSteps, execTalks, execInteracts, execCubes, execKills = map[string]questspec.Step{}, map[string]string{}, map[string]string{}, map[string]string{}, map[string]string{}
 		names, err := fs.Glob(questspecdata.FS, "act*.json")
 		if err == nil && len(names) == 0 {
 			err = errors.New("no act files embedded")
@@ -79,6 +81,9 @@ func execStep(chain, step string) (questspec.Step, error) {
 // execIndex files a step under the keys the task layer's calls carry (NPC and line, object name, Cube inputs).
 func execIndex(id string, s questspec.Step) {
 	execSteps[id] = s
+	if s.Act == "kill" && s.Target.Kind == "monster" {
+		execKills[normName(s.Target.Name)] = id
+	}
 	e := s.Exec
 	if e == nil {
 		return
@@ -215,7 +220,8 @@ func (b *execBackend) Act(ctx context.Context, verb string, t questspec.Target, 
 
 // Holds reads the post from a fresh snapshot: has_item(code) and lacks_item(code) are the pack, quest_state(q,stage) the
 // quest reader's word for the hero's difficulty (the reader only, never the task layer's proxies, so the executor's own
-// acts cannot satisfy it). Any other fact is not known here and reads false.
+// acts cannot satisfy it), quest_bits(q,mask) every bit of mask set in that word, killed(monster) a death of it seen
+// in this game (the observer's kill or the dead unit in the snapshot). Any other fact is not known here and reads false.
 func (b *execBackend) Holds(c questspec.Clause) bool {
 	r := b.a.r
 	s, err := r.d.Snapshot()
@@ -241,6 +247,14 @@ func (b *execBackend) Holds(c questspec.Clause) bool {
 			if b.questAt(s, p.Args[0], p.Args[1]) {
 				return true
 			}
+		case p.Name == "quest_bits" && len(p.Args) == 2:
+			if b.questBits(s, p.Args[0], p.Args[1]) {
+				return true
+			}
+		case p.Name == "killed" && len(p.Args) == 1:
+			if r.killedBoss(p.Args[0]) || deadMonster(r, s, p.Args[0]) {
+				return true
+			}
 		}
 	}
 	return false
@@ -257,6 +271,60 @@ func (b *execBackend) questAt(s *d2.Snapshot, q, want string) bool {
 	}
 	v, ok := td.Quests.Read(int(s.Player.Difficulty))
 	return ok && v.Quests[q].Stage >= st
+}
+
+// questBits: the reader's raw word of q has every bit of mask (hex, "0x0020") set. A malformed mask reads false.
+func (b *execBackend) questBits(s *d2.Snapshot, q, mask string) bool {
+	m, err := strconv.ParseUint(strings.TrimPrefix(mask, "0x"), 16, 16)
+	td := b.a.r.d.Task
+	if err != nil || m == 0 || td == nil || td.Quests == nil || s.Player == nil {
+		return false
+	}
+	v, ok := td.Quests.Read(int(s.Player.Difficulty))
+	st, known := v.Quests[q]
+	return ok && known && st.Raw&uint16(m) == uint16(m)
+}
+
+// deadMonster: the snapshot holds a dead unit of that monster (by catalog or unit name, normalized).
+func deadMonster(r *Runner, s *d2.Snapshot, name string) bool {
+	want := normName(strings.TrimPrefix(name, "The "))
+	for i := range s.Monsters {
+		u := &s.Monsters[i]
+		if u.Alive() {
+			continue
+		}
+		n := ""
+		if u.Monster != nil {
+			n = u.Monster.Name
+		}
+		if n == "" && r.d.Catalog != nil {
+			if m, ok := r.d.Catalog.Monster(u.Class); ok {
+				n = m.Name
+			}
+		}
+		if n = normName(n); n != "" && (n == want || n == "the"+want) {
+			return true
+		}
+	}
+	return false
+}
+
+// bossDead reads a boss kill step's post from game state: the data row's post (killed, the quest word bit of the kill,
+// the reader's stage), or killed(name) alone when no row names the boss. A boss the general fight killed before the
+// boss run is then done instead of "not found in the arena".
+func (a taskActs) bossDead(name string) bool {
+	b := &execBackend{a: a}
+	if chain, step, ok := execRow(&execKills, normName(name)); ok {
+		if s, err := execStep(chain, step); err == nil {
+			for _, c := range s.PostClauses() {
+				if !b.Holds(c) {
+					return false
+				}
+			}
+			return len(s.Post) > 0
+		}
+	}
+	return b.Holds(questspec.Clause{{Name: "killed", Args: []string{name}}})
 }
 
 func (b *execBackend) Sleep(d time.Duration) { b.a.r.e.Clock.Sleep(d) }
