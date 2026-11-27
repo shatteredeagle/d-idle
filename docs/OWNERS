@@ -270,6 +270,7 @@ internal/bot/arbiter_control.go  live-agent  arbmig
 internal/bot/arbiter_control_test.go  live-agent  arbmig
 internal/bot/arbloop_test.go  live-agent  arbloop
 internal/bot/broke.go  live-agent  town5
+internal/bot/denreward_test.go  credit-runner  stage1fix
 internal/bot/goal.go  credit-runner  qdmatrix
 internal/bot/goal.go  credit-runner  stage1fix
 internal/bot/goal.go  live-agent  arbloop
