@@ -56,9 +56,9 @@
      "uses": ["travel", "escape"],
      "range": 18,
      "minHop": 4,
-     "escapeSurround": 4,
-     "escapeLifePct": 65,
-     "source": "V range: a cast moves about 18 subtiles (docs/act2.md live results, nav teleport.go). U escape triggers: four in contact under 65 percent life, the melee profiles' surround numbers"
+     "escapeSurround": 3,
+     "escapeLifePct": 75,
+     "source": "V range: a cast moves about 18 subtiles (docs/act2.md live results, nav teleport.go). U escape triggers: three in contact or under 75 percent life (SME review 2026-11-27, confidence medium; was four and 65)"
     }
    ]
   },
@@ -112,9 +112,9 @@
      "uses": ["travel", "escape"],
      "range": 18,
      "minHop": 4,
-     "escapeSurround": 4,
-     "escapeLifePct": 65,
-     "source": "V range: a cast moves about 18 subtiles (docs/act2.md live results, nav teleport.go). U escape triggers: four in contact under 65 percent life, the melee profiles' surround numbers"
+     "escapeSurround": 3,
+     "escapeLifePct": 75,
+     "source": "V range: a cast moves about 18 subtiles (docs/act2.md live results, nav teleport.go). U escape triggers: three in contact or under 75 percent life (SME review 2026-11-27, confidence medium; was four and 65)"
     }
    ]
   },
@@ -179,9 +179,9 @@
      "uses": ["travel", "escape"],
      "range": 18,
      "minHop": 4,
-     "escapeSurround": 4,
-     "escapeLifePct": 65,
-     "source": "V range: a cast moves about 18 subtiles (docs/act2.md live results, nav teleport.go). U escape triggers: four in contact under 65 percent life, the melee profiles' surround numbers"
+     "escapeSurround": 3,
+     "escapeLifePct": 75,
+     "source": "V range: a cast moves about 18 subtiles (docs/act2.md live results, nav teleport.go). U escape triggers: three in contact or under 75 percent life (SME review 2026-11-27, confidence medium; was four and 65)"
     }
    ]
   },
@@ -225,9 +225,9 @@
      "uses": ["travel", "escape"],
      "range": 18,
      "minHop": 4,
-     "escapeSurround": 4,
-     "escapeLifePct": 65,
-     "source": "V range: a cast moves about 18 subtiles (docs/act2.md live results, nav teleport.go). U escape triggers: four in contact under 65 percent life, the melee profiles' surround numbers"
+     "escapeSurround": 3,
+     "escapeLifePct": 75,
+     "source": "V range: a cast moves about 18 subtiles (docs/act2.md live results, nav teleport.go). U escape triggers: three in contact or under 75 percent life (SME review 2026-11-27, confidence medium; was four and 65)"
     }
    ]
   },
@@ -443,8 +443,8 @@
      "minLevel": 18,
      "requires": "Multiple Shot",
      "attack": [
-      "Multiple Shot",
       "Exploding Arrow",
+      "Multiple Shot",
       "Fire Arrow",
       "Magic Arrow",
       "Jab",
@@ -486,6 +486,46 @@
     "Guided Arrow": "f7",
     "Dopplezon": "f8"
    }
+  },
+  {
+   "class": "amazon",
+   "bands": [
+    {
+     "minLevel": 6,
+     "requires": "Multiple Shot",
+     "attack": [
+      "Multiple Shot",
+      "Magic Arrow",
+      "Jab",
+      "Attack"
+     ]
+    },
+    {
+     "attack": [
+      "Magic Arrow",
+      "Fire Arrow",
+      "Jab",
+      "Attack"
+     ]
+    }
+   ],
+   "buffs": [
+    [
+     "Valkyrie"
+    ]
+   ],
+   "layout": {
+    "Magic Arrow": "f1",
+    "Fire Arrow": "f2",
+    "Multiple Shot": "f3",
+    "Valkyrie": "f4",
+    "Inner Sight": "f5",
+    "Exploding Arrow": "f6",
+    "Guided Arrow": "f7",
+    "Dopplezon": "f8"
+   },
+   "build": "multishot",
+   "source": "SME review 2026-11-27, confidence medium-high: Multiple Shot is the main attack of the multishot table from clvl 6, so its band starts there (the default band starts at clvl 18); Exploding Arrow does not lead because the table never buys it"
   },
   {
    "class": "necromancer",
@@ -851,15 +891,11 @@
     ],
     [
      "Shout"
-    ],
-    [
-     "Iron Skin"
     ]
    ],
    "layout": {
     "Battle Orders": "f1",
     "Shout": "f2",
-    "Iron Skin": "f3",
     "Battle Command": "f4"
    },
    "moves": [
@@ -964,8 +1000,8 @@
      "requires": "Eruption",
      "attack": [
       "Eruption",
-      "Molten Boulder",
       "Firestorm",
+      "Molten Boulder",
       "Attack"
      ]
     },
@@ -1029,7 +1065,8 @@
     "Fade": "f4",
     "Shadow Warrior": "f5",
     "Lightning Sentry": "f6",
-    "Charged Bolt Sentry": "f7"
+    "Charged Bolt Sentry": "f7",
+    "Death Sentry": "f8"
    }
   },
   {
@@ -1499,6 +1536,9 @@
    "buffs": [
     [
      "Cyclone Armor"
+    ],
+    [
+     "Hurricane"
     ]
    ],
    "layout": {
@@ -1507,9 +1547,9 @@
     "Tornado": "f3",
     "Cyclone Armor": "f4",
     "Oak Sage": "f5",
-    "Raven": "f6",
+    "Hurricane": "f6",
     "Summon Spirit Wolf": "f7",
-    "Summon Fenris": "f8"
+    "Raven": "f8"
    }
   },
   {
@@ -1521,7 +1561,7 @@
      "requires": "Blessed Hammer",
      "attack": [
       "Blessed Hammer",
-      "Smite",
+      "Zeal",
       "Attack"
      ],
      "aura": [
@@ -1544,7 +1584,6 @@
      "requires": "Zeal",
      "attack": [
       "Zeal",
-      "Smite",
       "Attack"
      ]
     },
@@ -1598,6 +1637,13 @@
     "surround": 4,
     "surroundLifePct": 65,
     "manaReserve": 4
+   },
+   "stance": {
+    "kind": "insidePack",
+    "standOff": 2,
+    "leaveSurround": 5,
+    "leaveLifePct": 50,
+    "source": "U judgment, SME review 2026-11-27, confidence medium-low: the hammerdin profile's insidePack numbers (U judgment); knob 2 still waits for the survival model"
    }
   }
  ]

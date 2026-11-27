@@ -8,6 +8,33 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- combattelem: fight-end aim/stance/minion summaries, skill-id test (TASK-1073) <!--sg:agent/combattelem-->
+- nightcheck: night plan preflight script and corrected launch commands (TASK-1075) <!--sg:agent/nightcheck-->
+- mercaura: per-class per-difficulty merc aura data, HirePolicy takes the class (TASK-1074) <!--sg:agent/mercaura-->
+- combatscen2: eight combat drill scenarios (TASK-1072) <!--sg:agent/combatscen2-->
+- classapply: SME changes for Druid/Barbarian/Amazon/Assassin (War Cry kind, Exploding Arrow, Death Sentry key, Hurricane) <!--sg:agent/classapply-->
+- miscfix: card updates 604/856/880/330 (no Go change) <!--sg:agent/miscfix-->
+- smegaps: sourced resist floors, merc auras, FCR/FHR/FBR tables (docs/sme) <!--sg:agent/smegaps-->
+- deployplan: sandbox deploy runbook (docs) <!--sg:agent/deployplan-->
+- cardfix2: card hygiene redo, live-queue doc <!--sg:agent/cardfix2-->
+- questresume: park resume policy (dark), paused visibility, campaign counter, starved cause (TASK-1071) <!--sg:agent/questresume-->
+- gearcopy: gear scoring reads plandata tables, drifted copies deleted (TASK-1067) <!--sg:agent/gearcopy-->
+- flakearb: fix TestArbiterControlGoldFarmAndRecovery race (test starts in wrong area) (TASK-1068) <!--sg:agent/flakearb-->
+- fieldstate: return-to-field leg hands over to the fighter when hostiles are near (TASK-1070) <!--sg:agent/fieldstate-->
+- logsink: bot own rotating log file, ops log verb, docker log NUL root cause (TASK-1069) <!--sg:agent/logsink-->
+- sandboxlogs: sandbox log analysis (docs) <!--sg:agent/sandboxlogs-->
+- palapply: SME Paladin/Sorceress data changes (zeal table, Aim/Concentration, bands, mana_heavy) <!--sg:agent/palapply-->
+- townwire: /api/townplan wired, arbiter upkeep behind chores bit (TASK-1064) <!--sg:agent/townwire-->
+- smeothers: SME review of Druid, Barbarian, Amazon, Assassin (docs) <!--sg:agent/smeothers-->
+- cainflaky: cain.chain Paladin 11 flake diagnosis (docs) <!--sg:agent/cainflaky-->
+- rel012: unnumbered next-release draft notes (TASK-1066) <!--sg:agent/rel012-->
+- necroapply: SME Necromancer data changes (bonespear Teeth/Bone Spear points, mana_heavy, merc doc) <!--sg:agent/necroapply-->
+- town11: townLegacy seam for old town counters, deletion plan (TASK-764 partial) <!--sg:agent/town11-->
+- pgcards2: nightly run set, earned-hero tier, release-check (TASK-754/756 repo side) <!--sg:agent/pgcards2-->
+- smepal: SME Paladin and Sorceress review (docs) <!--sg:agent/smepal-->
+- onboardtour2: tour tips, Help sheet, Now line (TASK-48 partial) <!--sg:agent/onboardtour2-->
+- whirlscen: combat drill scenarios, pre.skills setup field (TASK-1065) <!--sg:agent/whirlscen-->
+- diffgo: go-difficulty ops verb, persisted go, Return screen button (TASK-1061) <!--sg:agent/diffgo-->
 - smenecro: SME Necromancer review (docs) <!--sg:agent/smenecro-->
 - diet: archive 5 finished research reports, docs diet rule (TASK-117/118) <!--sg:agent/diet-->
 - dlvwhirl: Whirlwind move row driver (TASK-734) <!--sg:agent/dlvwhirl-->

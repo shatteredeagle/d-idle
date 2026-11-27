@@ -20,7 +20,7 @@ export function fill(tpl, vars) {
 }
 
 // banners(): the banners to show, most urgent first. Pure: the DOM is built from this list.
-//   texts = the reply's texts.reconnect; st = { down, restarted, awaySec (null: none), stream ('' | 'down' | 'reconnecting') }
+//   texts = the reply's texts.reconnect; st = { down, restarted, awaySec (null: none), stream ('' | 'down' | 'reconnecting'), chickens (count in the last 24 h) }
 export function banners(texts, st) {
   const t = texts || {};
   const out = [];
@@ -30,6 +30,7 @@ export function banners(texts, st) {
     out.push({ key: 'away', sev: 'info', text: fill(t.away, { duration: fmtDuration(st.awaySec) }), link: { label: t.awayLink || 'Return screen', href: '/watch/return' }, dismiss: true });
   }
   if (st.stream && !st.down) out.push({ key: 'stream', sev: 'warn', text: fill(t.stream, { state: st.stream }), action: { label: t.streamLink || 'Retry now', id: 'retry' } });
+  if (st.chickens > 0 && !st.down) out.push({ key: 'chickens', sev: 'info', text: st.chickens === 1 && t.chickensOne ? t.chickensOne : fill(t.chickens, { n: st.chickens }) });
   return out;
 }
 
@@ -105,6 +106,7 @@ export function mount(root, ctx) {
       restarted: Date.now() < restartedUntil,
       awaySec: awayLatched && !awayDismissed ? awaySec : null,
       stream,
+      chickens: view && view.chickens || 0,
     });
     set(bannerBox, 'banner', JSON.stringify(list), () => list.map((b) => {
       const n = el('div', 'd-note');

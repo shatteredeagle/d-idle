@@ -245,6 +245,7 @@ func (e *Exec) smPark(quest, chunk, code string, rs *runState) {
 		if r := m.find(quest, chunk, d); r != nil {
 			r.Failures, r.Deaths = rs.failures, rs.deaths
 			r.Release = e.o.Release
+			r.ParkedAt = e.o.Now().UTC()
 			if code == "hold_timeout" {
 				r.Hold, r.HoldWhy, r.HoldMin = rs.hold, rs.holdWhy, holdBudget(rs.hold)
 			}

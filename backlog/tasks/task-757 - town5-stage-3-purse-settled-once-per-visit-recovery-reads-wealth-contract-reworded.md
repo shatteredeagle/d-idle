@@ -3,7 +3,7 @@ id: TASK-757
 title: 'town5: stage 3 purse settled once per visit, recovery reads wealth, contract reworded'
 status: In Progress
 assignee:
-  - credit-runner
+  - live-agent
 created_date: '2026-11-21T04:51:00Z'
 labels:
   - bot
@@ -25,7 +25,7 @@ owns:
 exclusive: []
 contracts:
   - "town-basics"
-result: "Knob town.plan 3 (default stays 0): purse target per visit = carry line + plan spend, bank and shop-withdraw settle to it, recovery and poverty read purse plus stash. Contract sentence: 'At town.plan 3 or more the purse is settled once per visit: to the plan's spend of the visit plus the keep line, depositing the surplus and withdrawing the gap'. Offline: purse-target unit test passes, -race -count=20 on town, supply and bot recovery/poverty passes; the two-class rig tests (purserig_test.go) need the game tables: PASS on the builder host (first gate run caught my own wrong assertions, fixed), skip elsewhere. Scenarios NOT verified live: broke-after-bank Paladin GREEN already at stage 2 code, malus-errand-gold BLOCKED twice by the bot save point (purse settle seen in the bot log), Sorceress not run; setups CHEATED. Remaining (live): scenarios broke-after-bank and malus-errand-gold (AC 3). Status stays In Progress."
+result: "Knob town.plan 3 (default stays 0): purse target per visit = carry line + plan spend, bank and shop-withdraw settle to it, recovery and poverty read purse plus stash. Contract sentence: 'At town.plan 3 or more the purse is settled once per visit: to the plan's spend of the visit plus the keep line, depositing the surplus and withdrawing the gap'. Offline: purse-target unit test passes, -race -count=20 on town, supply and bot recovery/poverty passes; the two-class rig tests (purserig_test.go) need the game tables: PASS on the builder host (first gate run caught my own wrong assertions, fixed), skip elsewhere. Scenarios NOT verified live: broke-after-bank Paladin GREEN already at stage 2 code, malus-errand-gold BLOCKED twice by the bot save point (purse settle seen in the bot log), Sorceress not run; setups CHEATED. Remaining (live): scenarios broke-after-bank and malus-errand-gold (AC 3). Status stays In Progress. Remaining (live): AC 3 scenarios broke-after-bank and malus-errand-gold (not in the night chain; add to the tail of Run 1)."
 lane: now
 ---
 

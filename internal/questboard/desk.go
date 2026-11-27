@@ -462,6 +462,13 @@ func (d *Desk) build() View {
 			var off *OfferView
 			if cv.State == Ready {
 				o := d.offer(q, c, cv, plan.AutoStart(status.Diff, qv.ID), !busy, class, level, v.Paused, status.Diff, l)
+				if busy && status.Active.State == Blocked && !v.Paused {
+					// a parked head holds every other chunk: say so, not "another chunk is running"
+					o.Why = d.title(status.Active.Quest) + " is paused and holds the board."
+					if r, ok := smRuns[ChunkKey(status.Active.Quest, status.Active.Chunk)]; ok {
+						o.Why += " " + x.ResumeNote(r)
+					}
+				}
 				off = &o
 				v.Offers = append(v.Offers, o)
 			}
@@ -654,9 +661,12 @@ func (d *Desk) needs(v View) []NeedRow {
 				acts = []Verb{}
 			}
 		}
+		text, sub := fmt.Sprintf("%s is stuck: %s", b.QuestTitle, why), ""
+		if b.Reason != nil && b.Reason.Code == "paused_after_deaths" {
+			text, sub = b.Reason.Text, b.Reason.Clears
+		}
 		out = append(out, NeedRow{ID: "quest:blocked:" + b.Quest + "/" + b.Chunk, Kind: "quest_blocked", Sev: "warn",
-			Text:    fmt.Sprintf("%s is stuck: %s", b.QuestTitle, why),
-			Actions: acts})
+			Text: text, Sub: sub, Actions: acts})
 	}
 	if w := v.WhileAway; w != nil && len(w.Events) > 0 {
 		text := "While you were away: " + strings.ToLower(w.Events[0].Text[:1]) + w.Events[0].Text[1:]
@@ -710,6 +720,8 @@ func (d *Desk) awayCard(x *Exec) *AwayCard {
 		switch ev.Kind {
 		case EvAutoStart:
 			a.Kind, a.Text = "started", "Started "+t+" by itself"
+		case EvAutoResume:
+			a.Kind, a.Text = "resumed", t+" went on by itself after a pause ("+ev.Note+")"
 		case EvAutoHandIn:
 			a.Kind, a.Text, a.Awarded = "handedIn", "Handed in "+t, ev.Awarded
 			if ev.Note != "" {

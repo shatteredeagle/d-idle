@@ -152,6 +152,9 @@ func runLive(ctx context.Context, o options, log *slog.Logger) error {
 		return err
 	}
 	disp.run = runner
+	if err := runner.PersistDifficultyGo(filepath.Join(ip.State(), "diffgo.json")); err != nil {
+		log.Warn("difficulty go state unreadable, starting without it", "err", err)
+	}
 	ref.p.Store(runner)
 	wireGoldFarm(ref, runner)
 	wireQuestBoard(ip.State(), ref, runner, log.Info)
@@ -181,6 +184,7 @@ func runLive(ctx context.Context, o options, log *slog.Logger) error {
 	o.ladder.quests = ref.qd
 	o.ladder.points = ref.pd
 	o.ladder.plan = ref.aw
+	o.ladder.townPlan = townPlanSource(ref)
 	o.ladder.pause = pauseDesk(runner, ip.State())
 	o.ladder.recall = recallDesk(runner)
 	o.ladder.reset = resetDesk(runner, ip.State())
