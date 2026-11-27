@@ -1,0 +1,1004 @@
+{
+ "version": "didle.scenario/1",
+ "scenarios": [
+  {
+   "id": "drill.act2.radament.stepexec",
+   "title": "Quest drill: Radament's Lair from Lut Gholein (Atma, sewers, Book of Skill, report) on the generic step executor (quests.stepExec=1)",
+   "kind": "step",
+   "tier": "full",
+   "quest": {
+    "quest": "radament",
+    "chunk": "radament"
+   },
+   "step": {
+    "action": "kill",
+    "target": "Radament",
+    "nodes": [
+     "talk_atma",
+     "travel_sewers",
+     "kill_radament",
+     "use_book",
+     "return_atma"
+    ]
+   },
+   "touches": [
+    "internal/task/",
+    "internal/bot/questboard.go",
+    "internal/questboard/",
+    "data/questboard/",
+    "internal/boss/"
+   ],
+   "covers": [
+    "quest.radament.radament"
+   ],
+   "pre": {
+    "start": "field",
+    "area": 40,
+    "level": 24,
+    "gold": 6000,
+    "waypoints": [
+     1,
+     -1
+    ],
+    "quests": [
+     {
+      "record": 6,
+      "word": 1
+     },
+     {
+      "record": 7,
+      "word": 1
+     },
+     {
+      "record": 4,
+      "word": 8209
+     }
+    ],
+    "items": [
+     {
+      "code": "hp5",
+      "count": 10
+     },
+     {
+      "code": "mp1",
+      "count": 6
+     }
+    ],
+    "belt": [
+     "hp5",
+     "hp5",
+     "hp5",
+     "hp5"
+    ],
+    "merc": 0,
+    "worn": [
+     {
+      "code": "cap",
+      "slot": "head",
+      "quality": 4
+     },
+     {
+      "code": "qui",
+      "slot": "torso",
+      "quality": 4
+     },
+     {
+      "code": "bsd",
+      "slot": "rhand",
+      "quality": 6
+     },
+     {
+      "code": "buc",
+      "slot": "lhand",
+      "quality": 4
+     }
+    ],
+    "stats": [
+     {
+      "stat": 0,
+      "value": 90
+     },
+     {
+      "stat": 2,
+      "value": 60
+     },
+     {
+      "stat": 7,
+      "value": 307200
+     },
+     {
+      "stat": 6,
+      "value": 307200
+     }
+    ]
+   },
+   "trigger": {
+    "goals": "reach:30",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1,
+     "town.bankFirst": 0,
+     "nav.warpRead": 1,
+     "nav.fullGrid": 1,
+     "quests.boardSM": 1,
+     "town.plan": 1,
+     "quests.stepExec": 1
+    },
+    "driver": "board-taps",
+    "tap_chunks": [
+     "radament"
+    ]
+   },
+   "budget": {
+    "virtual_min": 60
+   },
+   "matrix": {
+    "classes": [
+     "Paladin",
+     "Sorceress"
+    ],
+    "seeds": [
+     11,
+     3
+    ]
+   },
+   "provenance": "CHEATED: Act 2 start in Lut Gholein by the goto verb, level 24, gold, waypoints, Andariel and act-complete words, a Rogue merc and basic gear by SETUP verbs. Mechanics only. Raw stats: strength 90, dexterity 60, max life 1200, a rare broad sword (stands for a geared hero).",
+   "notes": "Quest drill matrix (docs/probes/quest-drill-matrix-2026-11-23.md). Card act2chunks: the same drill with the data rows of data/questspec/act2.json on the executor. NOT run yet; green 2 of 3 runs is the enable criterion.",
+   "assert": [
+    {
+     "kind": "quest_bits",
+     "record": 9,
+     "set": 1,
+     "why": "U docs/progression/quests.md: the quest word's done bit"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^Entered Lut Gholein",
+     "min": 1,
+     "why": "the hero stands in the Act 2 town"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 0,
+     "why": "no death"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "id": "drill.act2.cube.stepexec",
+   "title": "Quest drill: Horadric Cube from the Halls of the Dead on the generic step executor (quests.stepExec=1)",
+   "kind": "step",
+   "tier": "full",
+   "quest": {
+    "quest": "horadric_staff",
+    "chunk": "cube"
+   },
+   "step": {
+    "action": "interact",
+    "target": "Horadric Cube chest",
+    "nodes": [
+     "wp",
+     "to",
+     "object",
+     "home"
+    ]
+   },
+   "touches": [
+    "internal/task/",
+    "internal/bot/questboard.go",
+    "internal/questboard/",
+    "data/questboard/",
+    "internal/boss/"
+   ],
+   "covers": [
+    "quest.horadric_staff.cube"
+   ],
+   "pre": {
+    "start": "field",
+    "area": 40,
+    "level": 22,
+    "gold": 6000,
+    "waypoints": [
+     1,
+     -1
+    ],
+    "quests": [
+     {
+      "record": 6,
+      "word": 1
+     },
+     {
+      "record": 7,
+      "word": 1
+     },
+     {
+      "record": 9,
+      "word": 1
+     },
+     {
+      "record": 4,
+      "word": 8209
+     }
+    ],
+    "items": [
+     {
+      "code": "hp5",
+      "count": 10
+     },
+     {
+      "code": "mp1",
+      "count": 6
+     }
+    ],
+    "belt": [
+     "hp5",
+     "hp5",
+     "hp5",
+     "hp5"
+    ],
+    "merc": 12,
+    "worn": [
+     {
+      "code": "cap",
+      "slot": "head",
+      "quality": 4
+     },
+     {
+      "code": "qui",
+      "slot": "torso",
+      "quality": 4
+     },
+     {
+      "code": "bsd",
+      "slot": "rhand",
+      "quality": 6
+     },
+     {
+      "code": "buc",
+      "slot": "lhand",
+      "quality": 4
+     }
+    ],
+    "stats": [
+     {
+      "stat": 0,
+      "value": 90
+     },
+     {
+      "stat": 2,
+      "value": 60
+     },
+     {
+      "stat": 7,
+      "value": 307200
+     },
+     {
+      "stat": 6,
+      "value": 307200
+     }
+    ],
+    "merc_level": 20
+   },
+   "trigger": {
+    "goals": "reach:30",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1,
+     "town.bankFirst": 0,
+     "nav.warpRead": 1,
+     "nav.fullGrid": 1,
+     "quests.boardSM": 1,
+     "town.plan": 1,
+     "quests.layoutRead": 1,
+     "quests.stepExec": 1
+    },
+    "driver": "board-taps",
+    "tap_chunks": [
+     "cube"
+    ]
+   },
+   "budget": {
+    "virtual_min": 45
+   },
+   "matrix": {
+    "classes": [
+     "Paladin",
+     "Sorceress"
+    ],
+    "seeds": [
+     3,
+     7,
+     11
+    ]
+   },
+   "provenance": "CHEATED: Act 2 start in Lut Gholein by the goto verb, level 24, gold, waypoints, Andariel and act-complete words, a Rogue merc and basic gear by SETUP verbs. Mechanics only. Raw stats: strength 90, dexterity 60, max life 1200, a rare broad sword (stands for a geared hero).",
+   "notes": "Quest drill matrix (docs/probes/quest-drill-matrix-2026-11-23.md). Card act2chunks: the same drill with the data rows of data/questspec/act2.json on the executor. NOT run yet; green 2 of 3 runs is the enable criterion.",
+   "assert": [
+    {
+     "kind": "item_in_pack",
+     "code": "box",
+     "min": 1,
+     "why": "U items.txt: the Horadric Cube is code box"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^Entered Lut Gholein",
+     "min": 1,
+     "why": "the hero stands in the Act 2 town"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 0,
+     "why": "no death"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "id": "drill.act2.shaft.stepexec",
+   "title": "Quest drill: Staff of Kings from the Maggot Lair on the generic step executor (quests.stepExec=1)",
+   "kind": "step",
+   "tier": "full",
+   "quest": {
+    "quest": "horadric_staff",
+    "chunk": "shaft"
+   },
+   "step": {
+    "action": "interact",
+    "target": "Staff of Kings chest",
+    "nodes": [
+     "wp",
+     "to",
+     "object",
+     "home"
+    ]
+   },
+   "touches": [
+    "internal/task/",
+    "internal/bot/questboard.go",
+    "internal/questboard/",
+    "data/questboard/",
+    "internal/boss/"
+   ],
+   "covers": [
+    "quest.horadric_staff.shaft"
+   ],
+   "pre": {
+    "start": "field",
+    "area": 40,
+    "level": 30,
+    "gold": 6000,
+    "waypoints": [
+     1,
+     -1
+    ],
+    "quests": [
+     {
+      "record": 6,
+      "word": 1
+     },
+     {
+      "record": 7,
+      "word": 1
+     },
+     {
+      "record": 9,
+      "word": 1
+     },
+     {
+      "record": 4,
+      "word": 8209
+     }
+    ],
+    "items": [
+     {
+      "code": "hp5",
+      "count": 10
+     },
+     {
+      "code": "mp1",
+      "count": 6
+     }
+    ],
+    "belt": [
+     "hp5",
+     "hp5",
+     "hp5",
+     "hp5"
+    ],
+    "merc": 12,
+    "worn": [
+     {
+      "code": "cap",
+      "slot": "head",
+      "quality": 4
+     },
+     {
+      "code": "qui",
+      "slot": "torso",
+      "quality": 4
+     },
+     {
+      "code": "bsd",
+      "slot": "rhand",
+      "quality": 6
+     },
+     {
+      "code": "buc",
+      "slot": "lhand",
+      "quality": 4
+     }
+    ],
+    "stats": [
+     {
+      "stat": 0,
+      "value": 90
+     },
+     {
+      "stat": 2,
+      "value": 60
+     },
+     {
+      "stat": 7,
+      "value": 307200
+     },
+     {
+      "stat": 6,
+      "value": 307200
+     }
+    ],
+    "merc_level": 20
+   },
+   "trigger": {
+    "goals": "reach:45",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1,
+     "town.bankFirst": 0,
+     "nav.warpRead": 1,
+     "nav.fullGrid": 1,
+     "quests.boardSM": 1,
+     "town.plan": 1,
+     "quests.layoutRead": 1,
+     "quests.stepExec": 1
+    },
+    "driver": "board-taps",
+    "tap_chunks": [
+     "shaft"
+    ]
+   },
+   "budget": {
+    "virtual_min": 60
+   },
+   "matrix": {
+    "classes": [
+     "Paladin",
+     "Sorceress"
+    ],
+    "seeds": [
+     3,
+     7,
+     11
+    ]
+   },
+   "provenance": "CHEATED: Act 2 start in Lut Gholein by the goto verb, level 24, gold, waypoints, Andariel and act-complete words, a Rogue merc and basic gear by SETUP verbs. Mechanics only. Raw stats: strength 90, dexterity 60, max life 1200, a rare broad sword (stands for a geared hero).",
+   "notes": "Quest drill matrix (docs/probes/quest-drill-matrix-2026-11-23.md). Card act2chunks: the same drill with the data rows of data/questspec/act2.json on the executor. NOT run yet; green 2 of 3 runs is the enable criterion.",
+   "assert": [
+    {
+     "kind": "item_in_pack",
+     "code": "msf",
+     "min": 1,
+     "why": "U items.txt: the shaft of the Horadric Staff is code msf"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^Entered Lut Gholein",
+     "min": 1,
+     "why": "the hero stands in the Act 2 town"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 0,
+     "why": "no death"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "id": "drill.act2.amulet.stepexec",
+   "title": "Quest drill: Amulet of the Viper from the Claw Viper Temple (Fangskin) on the generic step executor (quests.stepExec=1)",
+   "kind": "step",
+   "tier": "full",
+   "quest": {
+    "quest": "tainted_sun",
+    "chunk": "amulet"
+   },
+   "step": {
+    "action": "interact",
+    "target": "taintedsunaltar",
+    "nodes": [
+     "wp",
+     "to",
+     "guard",
+     "object",
+     "home"
+    ]
+   },
+   "touches": [
+    "internal/task/",
+    "internal/bot/questboard.go",
+    "internal/questboard/",
+    "data/questboard/",
+    "internal/boss/"
+   ],
+   "covers": [
+    "quest.tainted_sun.amulet"
+   ],
+   "pre": {
+    "start": "field",
+    "area": 40,
+    "level": 24,
+    "gold": 6000,
+    "waypoints": [
+     1,
+     -1
+    ],
+    "quests": [
+     {
+      "record": 6,
+      "word": 1
+     },
+     {
+      "record": 7,
+      "word": 1
+     },
+     {
+      "record": 4,
+      "word": 8209
+     }
+    ],
+    "items": [
+     {
+      "code": "hp5",
+      "count": 10
+     },
+     {
+      "code": "mp1",
+      "count": 6
+     }
+    ],
+    "belt": [
+     "hp5",
+     "hp5",
+     "hp5",
+     "hp5"
+    ],
+    "merc": 12,
+    "worn": [
+     {
+      "code": "cap",
+      "slot": "head",
+      "quality": 4
+     },
+     {
+      "code": "qui",
+      "slot": "torso",
+      "quality": 4
+     },
+     {
+      "code": "bsd",
+      "slot": "rhand",
+      "quality": 6
+     },
+     {
+      "code": "buc",
+      "slot": "lhand",
+      "quality": 4
+     }
+    ],
+    "stats": [
+     {
+      "stat": 0,
+      "value": 90
+     },
+     {
+      "stat": 2,
+      "value": 60
+     },
+     {
+      "stat": 7,
+      "value": 307200
+     },
+     {
+      "stat": 6,
+      "value": 307200
+     }
+    ],
+    "merc_level": 20
+   },
+   "trigger": {
+    "goals": "reach:30",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1,
+     "town.bankFirst": 0,
+     "nav.warpRead": 1,
+     "nav.fullGrid": 1,
+     "quests.boardSM": 1,
+     "town.plan": 1,
+     "quests.layoutRead": 1,
+     "quests.stepExec": 1
+    },
+    "driver": "board-taps",
+    "tap_chunks": [
+     "amulet"
+    ]
+   },
+   "budget": {
+    "virtual_min": 60
+   },
+   "matrix": {
+    "classes": [
+     "Paladin",
+     "Sorceress"
+    ],
+    "seeds": [
+     3,
+     7,
+     11
+    ]
+   },
+   "provenance": "CHEATED: Act 2 start in Lut Gholein by the goto verb, level 24, gold, waypoints, Andariel and act-complete words, a Rogue merc and basic gear by SETUP verbs. Mechanics only. Raw stats: strength 90, dexterity 60, max life 1200, a rare broad sword (stands for a geared hero).",
+   "notes": "Quest drill matrix (docs/probes/quest-drill-matrix-2026-11-23.md). Card act2chunks: the same drill with the data rows of data/questspec/act2.json on the executor. NOT run yet; green 2 of 3 runs is the enable criterion.",
+   "assert": [
+    {
+     "kind": "item_in_pack",
+     "code": "vip",
+     "min": 1,
+     "why": "U items.txt: the Amulet of the Viper is code vip"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^Entered Lut Gholein",
+     "min": 1,
+     "why": "the hero stands in the Act 2 town"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 0,
+     "why": "no death"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "id": "drill.act2.summoner.stepexec",
+   "title": "Quest drill: the Summoner (Arcane Sanctuary open) on the generic step executor (quests.stepExec=1)",
+   "kind": "step",
+   "tier": "full",
+   "quest": {
+    "quest": "summoner",
+    "chunk": "kill_summoner"
+   },
+   "step": {
+    "action": "kill",
+    "target": "The Summoner",
+    "nodes": [
+     "travel_arcane",
+     "find_summoner",
+     "kill_summoner"
+    ]
+   },
+   "touches": [
+    "internal/task/",
+    "internal/bot/questboard.go",
+    "internal/questboard/",
+    "data/questboard/",
+    "internal/boss/"
+   ],
+   "covers": [
+    "quest.summoner.kill_summoner"
+   ],
+   "pre": {
+    "start": "field",
+    "area": 40,
+    "level": 30,
+    "gold": 6000,
+    "waypoints": [
+     1,
+     -1
+    ],
+    "quests": [
+     {
+      "record": 6,
+      "word": 1
+     },
+     {
+      "record": 7,
+      "word": 1
+     },
+     {
+      "record": 11,
+      "word": 1
+     },
+     {
+      "record": 12,
+      "word": 1
+     },
+     {
+      "record": 9,
+      "word": 1
+     },
+     {
+      "record": 4,
+      "word": 8209
+     }
+    ],
+    "items": [
+     {
+      "code": "hp5",
+      "count": 10
+     },
+     {
+      "code": "mp1",
+      "count": 6
+     }
+    ],
+    "belt": [
+     "hp5",
+     "hp5",
+     "hp5",
+     "hp5"
+    ],
+    "merc": 12,
+    "worn": [
+     {
+      "code": "cap",
+      "slot": "head",
+      "quality": 4
+     },
+     {
+      "code": "qui",
+      "slot": "torso",
+      "quality": 4
+     },
+     {
+      "code": "bsd",
+      "slot": "rhand",
+      "quality": 6
+     },
+     {
+      "code": "buc",
+      "slot": "lhand",
+      "quality": 4
+     }
+    ],
+    "stats": [
+     {
+      "stat": 0,
+      "value": 120
+     },
+     {
+      "stat": 2,
+      "value": 80
+     },
+     {
+      "stat": 7,
+      "value": 512000
+     },
+     {
+      "stat": 6,
+      "value": 512000
+     },
+     {
+      "stat": 4,
+      "value": 0
+     }
+    ],
+    "merc_level": 20
+   },
+   "trigger": {
+    "goals": "reach:45",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1,
+     "town.bankFirst": 0,
+     "nav.warpRead": 1,
+     "nav.fullGrid": 1,
+     "quests.boardSM": 1,
+     "town.plan": 1,
+     "quests.layoutRead": 1,
+     "quests.stepExec": 1
+    },
+    "driver": "board-taps",
+    "tap_chunks": [
+     "kill_summoner"
+    ]
+   },
+   "budget": {
+    "virtual_min": 90
+   },
+   "matrix": {
+    "classes": [
+     "Paladin",
+     "Sorceress"
+    ],
+    "seeds": [
+     3,
+     7,
+     11
+    ]
+   },
+   "provenance": "CHEATED: Act 2 start in Lut Gholein by the goto verb, level 24, gold, waypoints, Andariel and act-complete words, a Rogue merc and basic gear by SETUP verbs. Mechanics only. Raw stats: strength 90, dexterity 60, max life 1200, a rare broad sword (stands for a geared hero). Unused stat points are set to 0 (the raw stats stand for a spent hero; unspent points made the bot cancel its boss run for the point spender).",
+   "notes": "Quest drill matrix (docs/probes/quest-drill-matrix-2026-11-23.md). Card act2chunks: the same drill with the data rows of data/questspec/act2.json on the executor. NOT run yet; green 2 of 3 runs is the enable criterion.",
+   "assert": [
+    {
+     "kind": "quest_bits",
+     "record": 13,
+     "set": 1,
+     "why": "U docs/progression/quests.md: the Summoner quest word"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^Entered Lut Gholein",
+     "min": 1,
+     "why": "the hero stands in the Act 2 town"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 0,
+     "why": "no death"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "id": "drill.act2.radament.handin.stepexec",
+   "title": "Quest drill: Radament killed (word 0x001e), the board offers the hand-in to Atma in Lut Gholein on the generic step executor (quests.stepExec=1)",
+   "kind": "step",
+   "tier": "full",
+   "quest": {
+    "quest": "radament",
+    "chunk": "radament"
+   },
+   "step": {
+    "action": "kill",
+    "target": "Radament",
+    "nodes": [
+     "talk_atma",
+     "travel_sewers",
+     "kill_radament",
+     "use_book",
+     "return_atma"
+    ]
+   },
+   "touches": [
+    "internal/task/",
+    "internal/bot/questboard.go",
+    "internal/questboard/",
+    "data/questboard/",
+    "internal/boss/"
+   ],
+   "covers": [
+    "quest.radament.radament"
+   ],
+   "pre": {
+    "start": "field",
+    "area": 40,
+    "level": 24,
+    "gold": 6000,
+    "waypoints": [
+     1,
+     9,
+     10
+    ],
+    "quests": [
+     {
+      "record": 6,
+      "word": 1
+     },
+     {
+      "record": 7,
+      "word": 1
+     },
+     {
+      "record": 9,
+      "word": 30
+     },
+     {
+      "record": 4,
+      "word": 8209
+     }
+    ],
+    "items": [
+     {
+      "code": "hp1",
+      "count": 8
+     },
+     {
+      "code": "mp1",
+      "count": 6
+     }
+    ],
+    "belt": [
+     "hp1",
+     "hp1",
+     "hp1",
+     "hp1"
+    ],
+    "merc": 0
+   },
+   "trigger": {
+    "goals": "reach:30",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1,
+     "town.bankFirst": 0,
+     "nav.warpRead": 1,
+     "nav.fullGrid": 1,
+     "quests.boardSM": 1,
+     "town.plan": 1,
+     "quests.stepExec": 1
+    },
+    "driver": "board-taps",
+    "tap_chunks": [
+     "radament"
+    ]
+   },
+   "budget": {
+    "virtual_min": 30
+   },
+   "matrix": {
+    "classes": [
+     "Paladin",
+     "Sorceress"
+    ],
+    "seeds": [
+     11,
+     3
+    ]
+   },
+   "provenance": "CHEATED: Act 2 start, Radament record 9 set to 0x001e (killed, reward pending) by a SETUP verb, level and gold. Mechanics of the board hand-in only.",
+   "notes": "Quest drill matrix (docs/probes/quest-drill-matrix-2026-11-23.md). Card act2chunks: the same drill with the data rows of data/questspec/act2.json on the executor. NOT run yet; green 2 of 3 runs is the enable criterion.",
+   "assert": [
+    {
+     "kind": "quest_bits",
+     "record": 9,
+     "set": 1,
+     "why": "the Atma hand-in sets the done bit"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^Entered Lut Gholein",
+     "min": 1,
+     "why": "the hero stands in the Act 2 town"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 0,
+     "why": "no death"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  }
+ ]
+}

@@ -597,3 +597,33 @@ func TestPoorHeroKeepsScrollReserve(t *testing.T) {
 		})
 	}
 }
+
+// Card town8: the same visit at town.plan 5 still does every chore (the route reorders, never drops one), and the second
+// visit has nothing to do. The sim world may have no NPC presets; then the route keeps the list and logs it.
+func TestChoresAct1AtRouteStage(t *testing.T) {
+	geartest.Need(t)
+	r := newRig(t)
+	r.Env.Tune.Town.Plan = 5
+	w := r.W
+	dressed(w)
+	w.Player.Life = 12
+	w.Player.Level = 10
+	w.Add("r07", d2.ContInventory, 0, 0)
+	sword := w.Add("ssd", d2.ContInventory, 1, 0)
+	sword.Item.Quality = 4
+	w.Items[len(w.Items)-1] = sword
+	w.Add("tsc", d2.ContInventory, 9, 3)
+	rep, err := r.T.Chores(context.Background(), town.FullPlan())
+	if err != nil || rep.Errors != 0 {
+		t.Fatalf("err %v steps %+v", err, rep.Steps)
+	}
+	if !rep.Healed || count(w, d2.ContBelt) != 4 || rep.Stashed != 1 || rep.Sold != 1 {
+		t.Errorf("healed %v belt %d stashed %d sold %d (%+v)", rep.Healed, count(w, d2.ContBelt), rep.Stashed, rep.Sold, rep.Steps)
+	}
+	rep2, _ := r.T.Chores(context.Background(), town.FullPlan())
+	for _, s := range rep2.Steps {
+		if s.Ran && s.Name != "close" {
+			t.Errorf("second run executed %s", s.Name)
+		}
+	}
+}

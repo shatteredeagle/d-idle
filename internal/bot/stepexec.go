@@ -24,7 +24,12 @@ import (
 // the typed outcome back onto the task layer's errors. First chunk on it: the Cain scroll (take_scroll).
 
 // execObjectNames gives the object adapter's name for a class id (the Objects capability still clicks by name).
-var execObjectNames = map[int]string{quest.ObjTreeInifuss: TreeObject, quest.ObjOrifice: OrificeObject}
+var execObjectNames = map[int]string{
+	quest.ObjTreeInifuss: TreeObject, quest.ObjOrifice: OrificeObject,
+	// the Act 2 quest chests, the altar and the journal: the names task/act2.go's nodes click
+	quest.ObjCubeChest: "Horadric Cube chest", quest.ObjScrollChest: "Horadric Scroll chest",
+	quest.ObjStaffChest: "Staff of Kings chest", quest.ObjTaintedSun: "taintedsunaltar", quest.ObjTomeJournal: "Summoner's journal",
+}
 
 // OrificeObject is the object adapter's name of the Horadric orifice; the adapter finds the true tomb and places the Staff.
 const OrificeObject = "tal-orifice"
@@ -98,6 +103,10 @@ func execIndex(id string, s questspec.Step) {
 	case "interact":
 		if name, ok := execObjectNames[on.Class]; ok {
 			execInteracts[name] = id
+		}
+	case "use": // a pack item is "clicked" through the object adapter as "item:<name>"
+		if name, ok := questItemCodes[on.Code]; ok {
+			execInteracts["item:"+name] = id
 		}
 	case "transmute":
 		names := make([]string, len(e.Inputs))
@@ -202,7 +211,11 @@ func (b *execBackend) Act(ctx context.Context, verb string, t questspec.Target, 
 		if !ok {
 			return &questspec.FatalError{Err: fmt.Errorf("no item name for code %q", t.Code)}
 		}
-		return a.UseItem(ctx, name)
+		// the adapter directly: UseItem goes through Interact, which routes back to this row
+		if td == nil || td.Objects == nil {
+			return &questspec.FatalError{Err: errors.New("no object interaction capability")}
+		}
+		return a.tag(td.Objects.Interact(ctx, "item:"+name))
 	case "transmute":
 		if td == nil || td.Cube == nil {
 			return &questspec.FatalError{Err: errors.New("no Horadric Cube capability")}
@@ -314,7 +327,7 @@ func deadMonster(r *Runner, s *d2.Snapshot, name string) bool {
 // boss run is then done instead of "not found in the arena".
 func (a taskActs) bossDead(name string) bool {
 	b := &execBackend{a: a}
-	if chain, step, ok := execRow(&execKills, normName(name)); ok {
+	if chain, step, ok := execRow(&execKills, normName(strings.TrimPrefix(name, "The "))); ok {
 		if s, err := execStep(chain, step); err == nil {
 			for _, c := range s.PostClauses() {
 				if !b.Holds(c) {

@@ -8,6 +8,8 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- act2chunks: Radament/cube/shaft/amulet/summoner chunks as step-executor data (TASK-1056) <!--sg:agent/act2chunks-->
+- town7: short-gold priority table as data + town8 stage 5 route stops (TASK-759/761) <!--sg:agent/town7-->
 - vaultpoll: cached vault poll, windowed query (TASK-1054) <!--sg:agent/vaultpoll-->
 - skillcapretire: retire resource.skillCapPerLevel (TASK-1055) <!--sg:agent/skillcapretire-->
 - bsmchk: questspec rules 12-14 (TASK-982) <!--sg:agent/bsmchk-->
