@@ -53,6 +53,7 @@ var (
 // VaultDesk is what the routes need from the bot side (cmd/d2bot/vaultwire.go). Every field is a func read per request, so a
 // hero switch or a knob change shows at once.
 type VaultDesk struct {
+	cache *vaultCache         // set by Bind: the poll-time preview and facets, keyed by the store version
 	On    func() bool         // the knob loot.vault; nil counts as on
 	Store func() *vault.Store // the active hero's vault, nil while there is none
 	Tiers *vault.Tiers        // the capacity table, for the tier line
@@ -298,7 +299,12 @@ type VaultAPI struct {
 
 func NewVaultAPI() *VaultAPI { return &VaultAPI{} }
 
-func (a *VaultAPI) Bind(d VaultDesk) { a.mu.Lock(); a.d = &d; a.mu.Unlock() }
+func (a *VaultAPI) Bind(d VaultDesk) {
+	d.cache = &vaultCache{}
+	a.mu.Lock()
+	a.d = &d
+	a.mu.Unlock()
+}
 
 func (a *VaultAPI) desk() *VaultDesk { a.mu.Lock(); defer a.mu.Unlock(); return a.d }
 
@@ -832,17 +838,7 @@ func (d *VaultDesk) view(ctx context.Context, q vaultQuery, kinds vaultTexts) Va
 	}
 	v.Exists, v.Hero = true, st.Hero()
 	if v.Act != nil && d.MassFilter != nil && d.Quality != nil && d.on() {
-		no := false
-		recs, _ := st.Query(vault.Filter{Identified: &no})
-		r := v.Act.Reveal
-		m := bulkid.MassReveal(d.MassFilter, recs, d.Quality, bulkid.Price{Free: r.Free, Charges: r.Charges, ScrollGold: d.ScrollGold, EtherPer: r.EtherPer, EtherBal: r.Balance})
-		v.Act.Reveal.Mass = &m
-		v.Act.Reveal.Bar = d.bar(ctx, recs, r)
-		if ga, ok := d.Act.(VaultGoldActor); ok {
-			gi := ga.GoldInfo(ctx)
-			gi.Unrevealed = len(bulkid.UnrevealedIDs(recs, gi.Decode))
-			v.Act.Reveal.Gold = &gi
-		}
+		d.massPreview(ctx, st, v.Act)
 	}
 	recs, total := st.Query(q.f)
 	v.Total = total
@@ -872,7 +868,7 @@ func (d *VaultDesk) view(ctx context.Context, q vaultQuery, kinds vaultTexts) Va
 		}
 	}
 	if q.facets {
-		for id, n := range st.Facets().Types {
+		for id, n := range d.cache.facets(st) {
 			label := kinds.Types[id]
 			if label == "" {
 				label = id

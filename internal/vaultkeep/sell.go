@@ -366,11 +366,12 @@ func (k *Keeper) Offer() *SellOffer {
 		return nil
 	}
 	var c []vault.Rec
-	for _, r := range st.Dump() {
+	st.Scan(func(r *vault.Rec) bool {
 		if r.State == vault.Recorded && !r.Pin && r.Quality <= maxPromptQuality && !r.InFlight && r.Stage == "" {
-			c = append(c, r)
+			c = append(c, *r)
 		}
-	}
+		return true
+	})
 	if len(c) == 0 {
 		return nil
 	}
