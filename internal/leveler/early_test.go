@@ -98,6 +98,9 @@ func replayBuild(t *testing.T, class, build string, to, denAt int) (map[int]snap
 			unspentSkill++
 		}
 		h := Have{Attr: cur.attr, Start: start, Skills: cur.skills, Level: lv, StatPts: 5, SkillPts: unspentSkill, Floor: floor}
+		if denAt > 0 && lv >= denAt {
+			h.QuestPts = 1
+		}
 		for _, a := range b.Plan(h, rule, nil) {
 			if a.Kind == KindStat {
 				cur.attr[a.Attr]++

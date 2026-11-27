@@ -165,7 +165,7 @@ func Resolve(d Decl, t Tables) (Hero, error) {
 const WeaponSlot = 4
 
 func (h *Hero) spend(b *leveler.Build, t Tables, statPts, skillPts int, reason func(string) string) error {
-	plan := b.Plan(leveler.Have{Level: h.Level, StatPts: statPts, SkillPts: skillPts, Skills: map[string]int{}}, t.Rule(h.Class), nil)
+	plan := b.Plan(leveler.Have{Level: h.Level, StatPts: statPts, SkillPts: skillPts, QuestPts: skillPts - (h.Level - 1), Skills: map[string]int{}}, t.Rule(h.Class), nil)
 	cmd := func(what, line string) { h.Verbs = append(h.Verbs, Verb{Line: line, Reason: reason(what)}) }
 	var attr [4]int
 	h.Skills = map[string]int{}
