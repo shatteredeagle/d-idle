@@ -23,9 +23,10 @@ owns:
   - "data/capabilities/capabilities.json"
   - "tools/provingground/scenarios/necro-epic.json"
   - "docs/design/merc-aura-by-archetype.md"
+  - "internal/agency/testdata/agreement.json"
 exclusive: []
 contracts: []
-result: "Not verified live (offline tests only). New combat profiles druid/tornado, barbarian/warcry, amazon/javelin, paladin/hammerdin_zeal (table combat key set on those plan tables, hammerdin tables named hammerdin); Amazon default layout gains Guided Arrow f7 and Dopplezon f8. Table hotkeys now equal the profile layout for Amazon, Barbarian, Druid and hammerdin (ratchet entries removed; rows with no key dropped: Iron Skin, Grim Ward, Hurricane, Summon Grizzly, Fanaticism). TestMainAttackSkillsHaveAKey covers every class. New TestProfileSkillsExistForTheirClass (names in capabilities.json for the profile class; fixed Fire Trauma class druid to assassin there). Skill ids 73/84 in necro-epic.json are tagged S/V from docs/research; skill_points takes ids only, no name mechanism. Merc aura note: docs/design/merc-aura-by-archetype.md. Build-specific data: internal/combat/classdata/profiles.json and the plan tables."
+result: "Not verified live (offline tests only). New combat profiles druid/tornado, barbarian/warcry, amazon/javelin, paladin/hammerdin_zeal (table combat key set on those plan tables, hammerdin tables named hammerdin); Amazon default layout gains Guided Arrow f7 and Dopplezon f8. Table hotkeys now equal the profile layout for Amazon, Barbarian, Druid and hammerdin (ratchet entries removed; rows with no key dropped: Iron Skin, Grim Ward, Hurricane, Summon Grizzly, Fanaticism). TestMainAttackSkillsHaveAKey covers every class. New TestProfileSkillsExistForTheirClass (names in capabilities.json for the profile class; fixed Fire Trauma class druid to assassin there). Skill ids 73/84 in necro-epic.json are tagged S/V from docs/research; skill_points takes ids only, no name mechanism. Agency agreement fixture regenerated: the hammerdin table now resolves to its own profile (Smite) and the planner estimate gives Smite 0 dps at clvl 6 and 12, so check whether the table buys Smite points. Merc aura note: docs/design/merc-aura-by-archetype.md. Build-specific data: internal/combat/classdata/profiles.json and the plan tables."
 ---
 
 ## Description
