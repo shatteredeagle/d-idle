@@ -281,7 +281,8 @@ func LoadFile(path string) (File, error) {
 	return f, nil
 }
 
-// LoadDir loads every *.json scenario file of dir (sorted) except behaviours.json, and rejects duplicate ids.
+// LoadDir loads every *.json scenario file of dir (sorted) except behaviours.json and tiers.json, and rejects duplicate
+// ids.
 func LoadDir(dir string) ([]Scenario, error) {
 	names, err := filepath.Glob(filepath.Join(dir, "*.json"))
 	if err != nil {
@@ -291,7 +292,7 @@ func LoadDir(dir string) ([]Scenario, error) {
 	var all []Scenario
 	seen := map[string]string{}
 	for _, n := range names {
-		if filepath.Base(n) == "behaviours.json" {
+		if b := filepath.Base(n); b == "behaviours.json" || b == "tiers.json" {
 			continue
 		}
 		f, err := LoadFile(n)
