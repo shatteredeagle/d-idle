@@ -1,0 +1,1055 @@
+{
+ "version": "didle.pg-tiers/1",
+ "tiers": {
+  "act1.andariel.slaughter": {
+   "tier": "T4",
+   "source": "catalogue"
+  },
+  "act1.burial.blood_raven": {
+   "tier": "T3",
+   "source": "catalogue"
+  },
+  "act1.den.clear": {
+   "tier": "T3",
+   "source": "catalogue"
+  },
+  "act1.forgotten.countess": {
+   "tier": "T3",
+   "source": "catalogue"
+  },
+  "act1.forgotten.countess.sorc": {
+   "tier": "T3",
+   "source": "catalogue",
+   "note": "blocked on the hero library"
+  },
+  "act1.tools.barracks": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "act1.tools.malus": {
+   "tier": "T3",
+   "source": "catalogue"
+  },
+  "act1.tools.malus.basic": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "act1.wp.dark-wood": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "act1.wp.dark-wood.layout": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "agency.plan-matches-profile": {
+   "tier": "T3",
+   "source": "catalogue",
+   "note": "(asserts on log lines only)"
+  },
+  "belt.refill-after-fight": {
+   "tier": "T2",
+   "source": "catalogue"
+  },
+  "board.auto.chain-safe-only": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "board.handin.field-tap": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "board.handin.without-run": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "board.hold.broke": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "board.hold.restock": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "board.hold.restock-stash-gold": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "board.hold.timeout": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "board.hold.too-weak": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "board.park-retry-after-release": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "board.park.persist-restart": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "board.prereq-not-accepted": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier fast mapped"
+  },
+  "board.prereq-start-tap": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier fast mapped"
+  },
+  "board.retry.runs-a-step": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "board.sm.busy-second-quest": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "board.sm.one-head": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "board.sm.regress-proxy": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "board.sm.restart-mid-chain": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "board.sm.start-idempotent": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "board.sm.stop-cascades": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "board.sm.stop-idempotent": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "board.stale-accept-unblocks": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "board.stop-parked-chunk": {
+   "tier": "T3",
+   "source": "catalogue",
+   "note": "until card 4"
+  },
+  "board.two-accepted-chunks": {
+   "tier": "T3",
+   "source": "catalogue"
+  },
+  "board.view.reason-always": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "cain.cage": {
+   "tier": "T3",
+   "source": "catalogue"
+  },
+  "cain.chain": {
+   "tier": "T4",
+   "source": "catalogue"
+  },
+  "cain.read": {
+   "tier": "T3",
+   "source": "catalogue",
+   "note": "T2 once its taps run on the virtual clock (pgtaps)"
+  },
+  "cain.read.stepexec": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier fast mapped"
+  },
+  "cain.report": {
+   "tier": "T3",
+   "source": "catalogue",
+   "note": "T2 once its taps run on the virtual clock (pgtaps)"
+  },
+  "cain.scroll": {
+   "tier": "T3",
+   "source": "catalogue"
+  },
+  "cain.scroll-already-taken": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier fast mapped"
+  },
+  "cain.scroll-already-taken.key": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier fast mapped"
+  },
+  "cain.scroll.field": {
+   "tier": "T3",
+   "source": "catalogue"
+  },
+  "cain.scroll.sandbox": {
+   "tier": "T3",
+   "source": "catalogue",
+   "note": "needs the shipped build"
+  },
+  "cain.scroll.stepexec": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier fast mapped"
+  },
+  "cain.stones": {
+   "tier": "T3",
+   "source": "catalogue"
+  },
+  "cain.stones.shipped": {
+   "tier": "none",
+   "source": "catalogue",
+   "note": "BLOCKED by design, keep as a marker"
+  },
+  "chicken.recovery": {
+   "tier": "T3",
+   "source": "catalogue"
+  },
+  "difficulty.nightmare-start": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.act1.sail": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.act2.amulet": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.act2.amulet.strong": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.act2.assemble": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.act2.cube": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.act2.duriel": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.act2.radament": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.act2.radament.handin": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.act2.radament.l30": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.act2.radament.l30.strong": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.act2.shaft": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.act2.summoner": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.act3.blade": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.act3.council": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.act3.golden_bird": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.act3.lam_esen": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.act3s.blade": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.act3s.golden_bird": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.act3s.lam_esen": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.act3s.lam_esen.bazaar": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.act4.hellforge": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.act4.izual": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.act5.ancients": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.act5.baal": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.act5.betrayal": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.act5.prison": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.act5.siege": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.andariel.clvl19": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.andariel.kit19": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.andariel.live21": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.andariel.live21.bold": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.andariel.live21.kit": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.andariel.live21.kit.bold": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.andariel.live21.life": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.andariel.stand": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.tools.merc17": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "flail.areachanges": {
+   "tier": "T3",
+   "source": "catalogue"
+  },
+  "heal.town": {
+   "tier": "T2",
+   "source": "catalogue"
+  },
+  "input.skill-select-verb": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "loot.rare-ring-classified": {
+   "tier": "T3",
+   "source": "catalogue"
+  },
+  "manage.equip-immediate": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier fast mapped"
+  },
+  "manage.identify-immediate": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier fast mapped"
+  },
+  "manage.recall-now": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier fast mapped"
+  },
+  "merc.hire-act1": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "merc.kashya-handin": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "nav.barracks-return": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "nav.bloodmoor-coldplains": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "nav.catacombs-hop-33-34": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "nav.catacombs-hop-34-35": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "nav.catacombs-hop-35-36": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "nav.catacombs-hop-36-37": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "nav.inner-cloister-cathedral": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.act1-andariel": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.act1-earned": {
+   "tier": "T4",
+   "source": "map",
+   "note": "not in the catalogue; tier nightly mapped"
+  },
+  "necro.act1-stage1": {
+   "tier": "T4",
+   "source": "map",
+   "note": "not in the catalogue; tier nightly mapped"
+  },
+  "necro.act1-stage1-nomp": {
+   "tier": "T4",
+   "source": "map",
+   "note": "not in the catalogue; tier nightly mapped"
+  },
+  "necro.act1-tools": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.curse-unique": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.den-l14": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.den-l16": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.mana-budget-10min": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.nova-immune": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.nova-pack": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.paladin-pack": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.revive-after-death": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.tools-paladin-control": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.upkeep-pack": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "points.api-skill-legal-and-illegal": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "points.autoalloc-follows-build": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier fast mapped"
+  },
+  "points.autoalloc-follows-build-sorc-fire": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier fast mapped"
+  },
+  "points.autoalloc-handoff": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier fast mapped"
+  },
+  "points.autoalloc-necro-clvl4": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier fast mapped"
+  },
+  "points.autoalloc-refuses-locked-switch": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier fast mapped"
+  },
+  "points.autopilot-spends-by-verb": {
+   "tier": "T2",
+   "source": "catalogue"
+  },
+  "points.bank-by-default": {
+   "tier": "T2",
+   "source": "catalogue"
+  },
+  "points.barbarian-frenzy-lands-at-30": {
+   "tier": "T3",
+   "source": "catalogue"
+  },
+  "points.druid-fire-lands-at-30": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "points.necro-summoner-lands-at-30": {
+   "tier": "T3",
+   "source": "catalogue"
+  },
+  "points.paladin-hammerdin-lands-at-30": {
+   "tier": "T3",
+   "source": "catalogue"
+  },
+  "points.sheet-matches-dump": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "points.sorc-fire-lands-at-30": {
+   "tier": "T3",
+   "source": "catalogue"
+  },
+  "soak.fault.cancel-storm": {
+   "tier": "T4",
+   "source": "map",
+   "note": "not in the catalogue; tier nightly mapped"
+  },
+  "soak.fault.mixed": {
+   "tier": "T4",
+   "source": "map",
+   "note": "not in the catalogue; tier nightly mapped"
+  },
+  "soak.fault.slow-input": {
+   "tier": "T4",
+   "source": "map",
+   "note": "not in the catalogue; tier nightly mapped"
+  },
+  "soak.fault.socket-drops": {
+   "tier": "T4",
+   "source": "map",
+   "note": "not in the catalogue; tier nightly mapped"
+  },
+  "soak.fault.socket-timeouts": {
+   "tier": "T4",
+   "source": "map",
+   "note": "not in the catalogue; tier nightly mapped"
+  },
+  "step.act1.caster_belt.restock.necro": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act1.caster_loop.barracks.necro": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act1.den_of_evil.clear_den.clear_den": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act1.den_of_evil.clear_den.walk_blood_moor": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act1.forgotten_tower.countess.descend_to_cellar": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act1.forgotten_tower.countess.kill_countess": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act1.forgotten_tower.countess.travel_black_marsh": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act1.plan_overlap.necro": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act1.search_for_cain.scroll.take_scroll": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act1.search_for_cain.scroll.travel_dark_wood": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act1.search_for_cain.stones.travel_stony_field": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act1.sisters_burial_grounds.blood_raven.enter_burial_grounds": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act1.sisters_burial_grounds.blood_raven.kill_blood_raven": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act1.sisters_burial_grounds.blood_raven.travel_cold_plains": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act1.sisters_to_the_slaughter.andariel.travel_catacombs": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act1.smith.malus_pickup": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act1.smith.malus_pickup.sorc": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act1.smith.room_stand.necro": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act1.smith.stand_click_afar.necro": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act1.smith.stand_click_pickup": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act1.smith.stand_click_pickup.control": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act1.smith.stand_click_pickup.control.sorc": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act1.smith.stand_click_pickup.necro": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act1.tools_of_the_trade.malus.travel_barracks": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act2.arcane_sanctuary.portal.travel_palace_cellar": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act2.horadric_staff.shaft.travel_far_oasis": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act2.horadric_staff.shaft.travel_maggot_lair": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act2.radament.radament.kill_radament": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act2.radament.radament.travel_sewers": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act2.seven_tombs.duriel.kill_duriel": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act2.summoner.kill_summoner.kill_summoner": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act2.tainted_sun.amulet.kill_fangskin": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act3.guardian.mephisto.kill_mephisto": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act3.guardian.mephisto.travel_durance2": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act3.guardian.mephisto.travel_durance3": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act4.hellforge.smash.place_soulstone": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act4.terrors_end.diablo.kill_diablo": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act4.terrors_end.diablo.travel_chaos_sanctuary": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act4.terrors_end.diablo.travel_river_of_flame": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act4.terrors_end.seals.kill_de_seis": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act4.terrors_end.seals.kill_infector": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act4.terrors_end.seals.kill_vizier": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act4.terrors_end.seals.open_seals": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act5.prison_of_ice.thaw.thaw_anya": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act5.prison_of_ice.thaw.travel_frozen_river": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "step.act5.rescue_arreat.doors.travel_frigid_highlands": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "town.plan.belt-refill-from-pack": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "town.plan.broke-after-bank": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "town.plan.determinism": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "town.plan.gold-short-priorities": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "town.plan.guard-blocked-restock": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "town.plan.malus-errand-gold": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "town.plan.mana-kit-satisfiable": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "town.plan.no-cast-in-town": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "town.plan.one-visit": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "town.plan.scroll-hoard": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "town.plan.sell-keeps-need": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "town.plan.short-gold-handover": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "town.repair-trip": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "town.resupply": {
+   "tier": "T2",
+   "source": "catalogue"
+  },
+  "town.stash-gold-withdraw": {
+   "tier": "T2",
+   "source": "catalogue"
+  },
+  "town.tp-scroll-hoard": {
+   "tier": "T2",
+   "source": "catalogue"
+  },
+  "vault.equip-one-tap": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier fast mapped"
+  },
+  "vault.equip-revealed": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier fast mapped"
+  },
+  "vault.equip-ring-left": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier fast mapped"
+  },
+  "vault.equip-ring-right": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier fast mapped"
+  },
+  "vault.equip-set10": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier fast mapped"
+  },
+  "vault.equip-swap": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier fast mapped"
+  },
+  "vault.equip-unid-one": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier fast mapped"
+  },
+  "vault.equip-v2-set10": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier fast mapped"
+  },
+  "vault.equip-v2-swap": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier fast mapped"
+  },
+  "vault.full-no-trim": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "vault.full-notice": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "vault.reveal-all": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "vault.reveal-gold": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "vault.reveal-gold-short": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "vault.sell-all": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "vault.sell-instant": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  }
+ }
+}
