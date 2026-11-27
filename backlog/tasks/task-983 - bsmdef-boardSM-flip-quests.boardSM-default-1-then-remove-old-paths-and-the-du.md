@@ -15,8 +15,18 @@ ordinal: 471000
 card: "bsmdef"
 owns:
   - "docs/design/boardsm-flip.md"
+  - "docs/questboard.md"
+  - "internal/questboard"
+  - "internal/task"
+  - "internal/env/tuning_quests.go"
+  - "internal/env/tuning_quests_legacy_test.go"
+  - "internal/bot/questboard.go"
+  - "internal/bot/task.go"
+  - "internal/bot/routeguard.go"
+  - "tools/provingground/scenarios/board.json"
 exclusive: []
 contracts: []
+result: "Prep only, no flip, default 0 unchanged. Every read of quests.boardSM goes through boardLegacy() (env, bot, task, questboard); TestBoardLegacySwitchIdle proves idle identity at knob 0 and 1 for Paladin and Sorceress; docs/questboard.md has the removal plan; board.park.persist-restart rewritten (not run). Restart drill and flip still need the live night. Not verified live."
 ---
 
 ## Description
