@@ -45,3 +45,7 @@ Lab run (one at a time; shadow arm for the stance rows: `D2SCEN_KNOBS="combat.de
 `tools/live.sh <agent> provingground -id combat.army-holds,combat.army-holds.control -class Necromancer -seed 11 -parallel 1`
 
 U: skill ids 59 and 112 are used in repo docs and tests; 261 and 276 are from skills.txt memory (S); the build tables fix the profile (hammerdin, blizzard, fire, summoner) only if the plan id resolves to it (U until the first run). Pet and trap rows may need a first-run look at the exact log lines.
+
+## Telemetry (card combattelem)
+
+Fight-end Info lines, only with `combat.deliveryUpkeep` above 0 (V `internal/combat/telem.go`, tests `TestAimSummary`, `TestStanceMinionSummary`): `combat aim summary hits= refused= shadow_diff= by_row=skill:aimed/refused/shadow` (only a profile with aim rows), `combat stance summary kind= casts= in_place= pack_dist_avg= pack_dist_max= steps=` (only a profile with a stance), `combat minion summary alive= peak= seen= lost= max_dist= avg_dist=` (only when a friendly was seen). Assertions added: hammer-in-pack `in_place`, both point-spell-hits `hits`, army-holds and pets-hold `max_dist` under 30 (the bound is U). Not asserted: `lost=` (U: a unit leaving snapshot range looks dead), traps standing. Skill ids 112, 59, 261, 276, 151, 106, 74 are V against `internal/power/skilldamage.json` (id and class); Teleport 54 is V from `docs/coverage/ledger.tsv` (not in that table); test `TestPreSkillIDsExistForTheClass`. Not run live.
