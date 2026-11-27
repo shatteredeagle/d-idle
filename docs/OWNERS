@@ -277,8 +277,6 @@ internal/bot/arbloop_test.go  live-agent  arbloop
 internal/bot/boardprogress.go  credit-runner  questresume
 internal/bot/boardprogress_test.go  credit-runner  questresume
 internal/bot/broke.go  live-agent  town5
-internal/bot/fieldstate_test.go  credit-runner  fieldstate
-internal/bot/goal.go  credit-runner  fieldstate
 internal/bot/goal.go  credit-runner  qdmatrix
 internal/bot/goal.go  credit-runner  questresume
 internal/bot/goal.go  credit-runner  stage1fix
@@ -287,7 +285,6 @@ internal/bot/goal_acts_test.go  credit-runner  qdmatrix
 internal/bot/guided.go  credit-runner  campaign1
 internal/bot/guided_test.go  credit-runner  campaign1
 internal/bot/leveling.go  live-agent  town5
-internal/bot/loop.go  credit-runner  fieldstate
 internal/bot/loop.go  live-agent  arbmig
 internal/bot/questauto.go  credit-runner  questresume
 internal/bot/questboard.go  credit-runner  qdmatrix
@@ -296,13 +293,11 @@ internal/bot/questboard.go  credit-runner  stage1fix
 internal/bot/questboard_s7b_test.go  credit-runner  qdmatrix
 internal/bot/questboard_test.go  credit-runner  stage1fix
 internal/bot/runner.go  credit-runner  campaign1
-internal/bot/runner.go  credit-runner  fieldstate
 internal/bot/shadow.go  credit-runner  questresume
 internal/bot/shadow.go  live-agent  arbmig
 internal/bot/shadow.go  live-agent  ticklog
 internal/bot/starvedcause.go  credit-runner  questresume
 internal/bot/starvedcause_test.go  credit-runner  questresume
-internal/bot/state.go  credit-runner  fieldstate
 internal/bot/task.go  credit-runner  boardmoderace
 internal/bot/ticklog.go  live-agent  ticklog
 internal/bot/ticklog_test.go  live-agent  ticklog
