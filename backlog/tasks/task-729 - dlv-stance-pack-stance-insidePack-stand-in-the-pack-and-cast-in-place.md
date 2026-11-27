@@ -1,9 +1,9 @@
 ---
 id: TASK-729
 title: 'dlv-stance-pack: stance insidePack: stand in the pack and cast in place'
-status: Proposed
+status: In Progress
 assignee:
-  - credit-runner
+  - live-agent
 created_date: '2026-11-21T04:43:00Z'
 labels:
   - bot
@@ -17,7 +17,7 @@ owns:
   - "data/capabilities/"
 exclusive: []
 contracts: []
-result: "Offline only, NOT verified live. Stance kind insidePack (stance.go packPlan): stand StandOff subtiles from the pack centroid, cast in place, leave on LeaveSurround in contact or low life; rows on the hammerdin and poisonnova profiles (data, source U). Knob combat.deliveryUpkeep 0/1/2 (existing dark-launch row); knob 2 waits for the survival model contact archetype (R6). Tests: Paladin hammerdin + Necromancer poisonnova. No literal added. Blessed Hammer capability row NOT corrected and War Cry not made main: H1 live look and A6 verdict pending (checklist in report). Scenario combat.hammer-in-pack: stepping part offline, hits/mana/aura uptime need live."
+result: "Offline only, NOT verified live. Stance kind insidePack (stance.go packPlan): stand StandOff subtiles from the pack centroid, cast in place, leave on LeaveSurround in contact or low life; rows on the hammerdin and poisonnova profiles (data, source U). Knob combat.deliveryUpkeep 0/1/2 (existing dark-launch row); knob 2 waits for the survival model contact archetype (R6). Tests: Paladin hammerdin + Necromancer poisonnova. No literal added. Blessed Hammer capability row NOT corrected and War Cry not made main: H1 live look and A6 verdict pending (checklist in report). Scenario combat.hammer-in-pack: stepping part offline, hits/mana/aura uptime need live. Remaining (live): AC 2 live look H1, AC 3 A6 verdict, AC 6 race gate x20 on the worker host."
 lane: next
 ---
 
