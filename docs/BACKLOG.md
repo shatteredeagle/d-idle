@@ -1526,6 +1526,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - agent/darkflip: darkflip: final dark queue flip list (docs) (merged 2026-11-27) <!--sg:agent/darkflip-->
 - tyrael: open Tyrael in Duriel''s Lair, drill record 14 assertion (TASK-1053, merged 2026-11-27, acceptance 2 of 3): Offline: town opener allows Tyrael (251) in area 73 via fieldNPCAreas; scenario record 14 asserts 0x20 + 0x2000 (S). Not verified live; rerun listed in the probe doc. <!--sg:agent/tyrael-->
 - charmvault: charms flow into the Vault, player Carry and Stow (TASK-1052, merged 2026-11-27, acceptance 4 of 4): Offline only, not verified live. Charms already reach the Vault under loot.vault (test added). Player Carry and Stow (keeper, routes, vault page), keep-marked charms skip the stash chore, charm sizes and legality are data (internal/charms). ... <!--sg:agent/charmvault-->
+- agent/closecards2: closecards2: close/annotate stale cards (16 Done, 35 annotated) (merged 2026-11-27) <!--sg:agent/closecards2-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
