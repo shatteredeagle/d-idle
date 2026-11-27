@@ -1,10 +1,11 @@
 ---
 id: TASK-1067
 title: 'gearcopy: gear builds read internal/plandata, no second copy'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T21:30:00Z'
+updated_date: '2026-11-27T22:46:00Z'
 labels:
   - bot
   - chore
