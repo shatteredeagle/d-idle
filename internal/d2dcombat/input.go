@@ -59,29 +59,17 @@ func (i *Input) Key(name string) error {
 	return i.Controller.Key(name)
 }
 
-// CastAt casts the hotkey's skill at w, at the living monster within one cell of w when there is one.
+// CastAt casts the hotkey's skill at w, at the living monster within one cell of w when there is one. With the knob
+// input.planner on and the build listing input.cast-unit or input.cast-point it goes out as that cast verb
+// (castverbs.go); otherwise as before.
 func (i *Input) CastAt(hotkey string, w input.Point) error {
 	id, ok := i.Skills[hotkey]
 	if !ok {
 		return i.Controller.CastAt(hotkey, w)
 	}
-	var unit uint32
-	x, y := (float64(w.X)+0.5)/5, (float64(w.Y)+0.5)/5
-	if ml, err := i.C.Monsters(i.ctx); err == nil {
-		if m, ok := d2dctl.NearestAlive(ml.Items, x, y, 1); ok {
-			unit = uint32(m.Unit)
-		}
-	}
-	err := i.Controller.Cast(id, w, unit)
-	if err == nil {
-		i.mu.Lock()
-		if i.stats.Casts == nil {
-			i.stats.Casts = map[int]int{}
-		}
-		i.stats.Casts[id]++
-		i.mu.Unlock()
-	}
-	return err
+	unit, _ := i.unitNear(w, 1, false)
+	c := input.Cast{Skill: id, At: w, Unit: unit}
+	return i.send(c, func() error { return i.Controller.Cast(id, w, unit) }, false)
 }
 
 // Click counts clicks and passes them on.
@@ -106,15 +94,8 @@ func (i *Input) Swing(skill int, w input.Point) error {
 	if !ok {
 		return i.Controller.ClickWorld(w)
 	}
-	err = i.C.CmdSkill(i.ctx, skill, m.CellX, m.CellY, d2dctl.SkillOpts{Unit: m.Unit, Left: true})
-	if err == nil {
-		i.mu.Lock()
-		i.stats.Clicks++
-		if i.stats.Casts == nil {
-			i.stats.Casts = map[int]int{}
-		}
-		i.stats.Casts[skill]++
-		i.mu.Unlock()
-	}
-	return err
+	c := input.Cast{Skill: skill, Left: true, At: w, Unit: uint32(m.Unit)}
+	return i.send(c, func() error {
+		return i.C.CmdSkill(i.ctx, skill, m.CellX, m.CellY, d2dctl.SkillOpts{Unit: m.Unit, Left: true})
+	}, true)
 }

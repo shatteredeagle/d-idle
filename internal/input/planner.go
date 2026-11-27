@@ -18,7 +18,9 @@ const (
 
 // Action is one intent with its way of doing it per path. A nil Do is a path the caller does not have. Verify is the
 // postcondition read from game state: a path counts only when it returns true. Cap names the capability a verb needs
-// (a name from the backend's caps); the verb path is skipped unless the planner's capability set lists it.
+// (a name from the backend's caps); the verb path is skipped unless the planner's capability set lists it. A nil
+// Verify accepts every path that was sent without error. Once ends the run at the first path that was sent without
+// error, verified or not: an action whose repeat by another path would act twice (a cast) sets it.
 type Action struct {
 	Name   string
 	Cap    string
@@ -26,6 +28,7 @@ type Action struct {
 	Key    func() error
 	Click  func() error
 	Verify func() (bool, error)
+	Once   bool
 }
 
 // ErrNoPath is returned when no path was available or none reached the postcondition.
@@ -102,8 +105,8 @@ func (p *Planner) Run(a Action) (Path, error) {
 			continue
 		}
 		err := s.do()
-		ok := false
-		if err == nil {
+		sent, ok := err == nil, err == nil
+		if sent && a.Verify != nil {
 			ok, err = a.Verify()
 		}
 		if err == nil && ok {
@@ -121,6 +124,9 @@ func (p *Planner) Run(a Action) (Path, error) {
 		last = err
 		if p.Logf != nil {
 			p.Logf("input path failed", "action", a.Name, "path", string(s.path), "err", err.Error())
+		}
+		if sent && a.Once {
+			break
 		}
 	}
 	p.mu.Lock()
