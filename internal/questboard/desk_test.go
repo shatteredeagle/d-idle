@@ -331,3 +331,16 @@ func TestDeskTooHardRowSaysWhy(t *testing.T) {
 		})
 	}
 }
+
+// akarafix: a running hand-in the loop has not served says why (reason.code handin_waiting); served: the generic code.
+func TestDeskHandInWaitReason(t *testing.T) {
+	d := &Desk{cfg: DeskConfig{HandInWhy: func() string { return "the hero is out in the field." }}}
+	r := d.handInWaitReason()
+	if r == nil || r.Code != CodeHandInWaiting || !strings.Contains(r.Text, "out in the field") {
+		t.Fatalf("reason: %+v", r)
+	}
+	d.cfg.HandInWhy = func() string { return "" }
+	if d.handInWaitReason() != nil {
+		t.Fatal("a reason for a tap that is being served")
+	}
+}

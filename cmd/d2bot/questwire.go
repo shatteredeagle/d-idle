@@ -62,14 +62,15 @@ func wireQuestBoard(stateDir string, ref *runnerRef, r *bot.Runner, logf func(ms
 	r.SetQuestMargin(questMargin)
 	r.SetQuestLedger(questLedger(currencyDirFor(stateDir)))
 	d := questboard.NewDesk(b, questboard.DeskConfig{
-		Exec:    r.QuestBoard,
-		Paused:  func() bool { return r.PlayerPauseView().State != bot.PauseRunning },
-		Explain: r.QuestReadiness,
-		Class:   r.QuestClass,
-		Level:   r.QuestLevel,
-		Meter:   r.QuestMeter,
-		Queued:  r.QuestQueued,
-		Refusal: r.QuestRefusal,
+		Exec:      r.QuestBoard,
+		Paused:    func() bool { return r.PlayerPauseView().State != bot.PauseRunning },
+		Explain:   r.QuestReadiness,
+		Class:     r.QuestClass,
+		Level:     r.QuestLevel,
+		Meter:     r.QuestMeter,
+		Queued:    r.QuestQueued,
+		HandInWhy: r.QuestHandInWhy,
+		Refusal:   r.QuestRefusal,
 	})
 	ref.qd = d
 	startOperator(stateDir, d, r, logf)

@@ -1,15 +1,17 @@
 ---
 id: TASK-973
-title: 'arbmig: P6 arbiter migration: outcome exit rule, TEMPORARY intents, lost-control'
-status: Proposed
+title: >-
+  arbmig: P6 arbiter migration: outcome exit rule, TEMPORARY intents,
+  lost-control
+status: In Progress
 assignee:
   - credit-runner
 created_date: '2026-11-26T03:54:00Z'
+updated_date: '2026-11-27T18:49:00Z'
 labels:
   - bot
   - feature
-dependencies:
-  - TASK-981
+dependencies: []
 priority: high
 ordinal: 461000
 card: "arbmig"
@@ -28,7 +30,7 @@ owns:
   - "docs/knobs.md"
 exclusive: []
 contracts: []
-result: "Stages 1 to 4 built, NOT verified live. Stage 4: the outcome verdict over a whole recorded session (d2scenario arbiter-replay -session on the bot tick lines), a hit counted once per episode, two builds and a must-fail case tested offline. Stages 1 to 3: outcome harness on the Questy cases, temporary intents, lost-control hook, control path behind bot.arbiterControl with all eight families wired and a ledger row. Criterion 2 waits for a confirmed sandbox night; no real night scored yet."
+result: "Stages 1 to 4 built, NOT verified live. Stage 4: the outcome verdict over a whole recorded session (d2scenario arbiter-replay -session on the bot tick lines), a hit counted once per episode, two builds and a must-fail case tested offline. Stages 1 to 3: outcome harness on the Questy cases, temporary intents, lost-control hook, control path behind bot.arbiterControl with all eight families wired and a ledger row. Criterion 2 waits for a confirmed sandbox night; no real night scored yet. Remaining (live): AC 2, first family acting on one sandbox behind its knob. Stale dependency on TASK-981 removed (ticklog is merged)."
 ---
 
 ## Description

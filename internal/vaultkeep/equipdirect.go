@@ -290,6 +290,11 @@ func (k *Keeper) recordRemoved(ctx context.Context, st *vault.Store, hexRaw, nam
 		k.note("equip-"+hexRaw[:min(8, len(hexRaw))], "An item you replaced could not be read for the vault ("+err.Error()+"); it is in your "+w+".")
 		return "an item", w
 	}
+	return k.recordItem(ctx, st, r, name)
+}
+
+// recordItem files a decoded item as a "previously worn" vault record (the vault full: the stash, else the backpack).
+func (k *Keeper) recordItem(ctx context.Context, st *vault.Store, r d2dctl.VaultRecord, name string) (string, string) {
 	if name == "" && k.Namer != nil {
 		name = k.Namer(r, vault.Rec{})
 	}

@@ -1,10 +1,11 @@
 ---
 id: TASK-723
 title: 'dlv-upkeep-minions: minion-observed upkeep: summons, golems, pets'
-status: Proposed
+status: In Progress
 assignee:
   - credit-runner
 created_date: '2026-11-21T04:42:00Z'
+updated_date: '2026-11-27T18:49:00Z'
 labels:
   - bot
   - feature
@@ -16,7 +17,7 @@ owns:
   - "internal/combat/"
 exclusive: []
 contracts: []
-result: "Offline only, not verified live. A census-driven minion driver (minions.go) keeps summon groups from profile data (necro block derived, druid and assassin minions blocks), behind combat.deliveryUpkeep (1 shadow, 2 acts). Offline scenarios army-holds and pets-hold pass; the shadow plays the old Necromancer loop with zero disagreements. Literal count in the summon files 35 to 33. The old class loops stay until knob 2 is proven; differential A11 and the live shadow run are open."
+result: "Offline only, not verified live. A census-driven minion driver (minions.go) keeps summon groups from profile data (necro block derived, druid and assassin minions blocks), behind combat.deliveryUpkeep (1 shadow, 2 acts). Offline scenarios army-holds and pets-hold pass; the shadow plays the old Necromancer loop with zero disagreements. Literal count in the summon files 35 to 33. The old class loops stay until knob 2 is proven; differential A11 and the live shadow run are open. Remaining (live): shadow run versus the old loop and differential A11 (ACs 2 and 3)."
 lane: next
 ---
 

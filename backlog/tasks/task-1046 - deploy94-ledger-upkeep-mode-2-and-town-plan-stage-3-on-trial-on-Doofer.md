@@ -1,11 +1,11 @@
 ---
 id: TASK-1046
 title: 'deploy94-ledger: upkeep mode 2 and town plan stage 3 on trial on Doofer'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T13:40:00Z'
-updated_date: '2026-11-27T14:26:00Z'
+updated_date: '2026-11-27T18:49:00Z'
 labels:
   - ops
   - chore

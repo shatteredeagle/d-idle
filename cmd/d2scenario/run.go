@@ -323,6 +323,15 @@ func execOne(s scenario.Scenario, r scenario.Run, out, bot string) scenario.Resu
 		_ = prep.Stop()
 		return blocked("setup: %v", err)
 	}
+	tabs, err := heroTables(gamedata, data)
+	if err != nil {
+		_ = prep.Stop()
+		return blocked("%v", err)
+	}
+	if err := spendPoints(ctx, c, s, r.Class, su, tabs, ledger); err != nil {
+		_ = prep.Stop()
+		return blocked("hero points: %v", err)
+	}
 	seeded, err := applySeeds(ctx, c, su, ledger, data, gameChain(data, gamedata), hero)
 	if err != nil {
 		_ = prep.Stop()
@@ -336,7 +345,7 @@ func execOne(s scenario.Scenario, r scenario.Run, out, bot string) scenario.Resu
 		_ = prep.Stop()
 		return blocked("settle: %v", err)
 	}
-	if failed := prepSelfCheck(ctx, c, s, r.Class, ledger); failed != "" { // design 6.2: refuse a hero that is not the declared one
+	if failed := prepSelfCheck(ctx, c, s, r.Class, ledger, tabs); failed != "" { // design 6.2: refuse a hero that is not the declared one
 		_ = prep.Stop()
 		return blocked("selfcheck: %s (rows in %s)", failed, ledger)
 	}

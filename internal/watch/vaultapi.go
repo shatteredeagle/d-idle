@@ -259,6 +259,14 @@ type VaultEquipFlag struct {
 	Enabled bool   `json:"enabled"`
 	Why     string `json:"why,omitempty"`
 	Direct  bool   `json:"direct,omitempty"` // Equip v2: one tap wears at once (no order, no town trip)
+	Merc    bool   `json:"merc,omitempty"`   // Equip on merc is on offer (the fork has item merc-equip)
+}
+
+// VaultMercEquipper is the optional part of a VaultEquipper that gives a vault item to the mercenary at once
+// (POST /api/vault/equip with target "merc"; card mercvault).
+type VaultMercEquipper interface {
+	MercDirect(ctx context.Context) bool
+	EquipMerc(ctx context.Context, id string) VaultKeepResult
 }
 
 // VaultDirectEquipper is the optional part of a VaultEquipper that knows the direct path is on (probed verbs, knob).
@@ -819,6 +827,9 @@ func (d *VaultDesk) view(ctx context.Context, q vaultQuery, kinds vaultTexts) Va
 		if de, is := d.Equip.(VaultDirectEquipper); is {
 			v.Equip.Direct = de.Direct(ctx)
 		}
+		if me, is := d.Equip.(VaultMercEquipper); is {
+			v.Equip.Merc = me.MercDirect(ctx)
+		}
 	}
 	if d.Act != nil {
 		av := d.Act.Act(ctx)
@@ -1022,7 +1033,7 @@ type vaultBody struct {
 	Scope   string   `json:"scope,omitempty"`   // revealgold: all_unrevealed names every unrevealed record of the whole vault instead of ids; sell and sellquote: all_sellable
 	OrderID string   `json:"orderId,omitempty"` // sell, all_sellable: the page's idempotent id of the order (a resend never sells twice)
 	Confirm bool     `json:"confirm"`
-	Target  string   `json:"target,omitempty"`  // keep: stash (default) or inv
+	Target  string   `json:"target,omitempty"`  // keep: stash (default) or inv; equip: "merc" gives the item to the mercenary
 	MaxGold int      `json:"maxGold,omitempty"` // revealgold: the most gold the order may spend (0: the quote)
 	Ether   bool     `json:"ether,omitempty"`   // reveal: pay with Ether (an explicit tap; identify.etherPerReveal)
 	Now     bool     `json:"now,omitempty"`     // keep, reveal, sell: also ask the bot to walk home for it
@@ -1405,6 +1416,17 @@ func (a *VaultAPI) equip(w http.ResponseWriter, r *http.Request, d *VaultDesk, r
 	var res VaultKeepResult
 	if route == VaultEquipCancel {
 		res = d.Equip.Cancel(b.IDs[0])
+	} else if b.Target == "merc" {
+		me, ok := d.Equip.(VaultMercEquipper)
+		if !ok || !me.MercDirect(r.Context()) {
+			writeJSON(w, http.StatusConflict, policyReply{Code: "off", Error: "equipping the mercenary from the Vault needs the instant equip and the fork's mercenary verbs"})
+			return
+		}
+		if ok, code, why := d.Equip.Gate(r.Context()); !ok {
+			writeJSON(w, http.StatusConflict, policyReply{Code: code, Error: why})
+			return
+		}
+		res = me.EquipMerc(r.Context(), b.IDs[0])
 	} else {
 		if b.Slot != "" && b.Slot != "auto" && b.Slot != "left" && b.Slot != "right" {
 			writeJSON(w, http.StatusBadRequest, policyReply{Code: "slot", Error: "slot is auto, left or right"})
