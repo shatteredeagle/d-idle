@@ -570,6 +570,16 @@
    "source": "map",
    "note": "not in the catalogue; tier full mapped"
   },
+  "necro.corpse-ce1": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.corpse-ce5": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
   "necro.curse-unique": {
    "tier": "T3",
    "source": "map",
