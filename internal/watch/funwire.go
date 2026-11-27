@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"strings"
 	"sync"
+	"time"
 
 	"d2lod-bot/internal/currency"
 	"d2lod-bot/internal/decide"
@@ -227,7 +228,8 @@ func NewFun(c FunConfig) (*Fun, error) {
 		c.Visit = NewVisit("", nil)
 	}
 	ob, err := NewOnboarding(OnboardingConfig{Path: c.OnboardingPath, Hero: func() string { return c.Hub.heroNow().Name },
-		Signals: func() map[string]bool { return onboardingSignals(f.Away) }, Away: c.Visit.awayOK, Art: func() (string, int, int) { return artProgress(f.Art) }})
+		Signals: func() map[string]bool { return onboardingSignals(f.Away) }, Away: c.Visit.awayOK, Art: func() (string, int, int) { return artProgress(f.Art) },
+		Chickens: func() int { return chickenCount(f.Away, time.Now()) }})
 	if err != nil {
 		return nil, err
 	}

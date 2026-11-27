@@ -8,6 +8,12 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- smeothers: SME review of Druid, Barbarian, Amazon, Assassin (docs) <!--sg:agent/smeothers-->
+- cainflaky: cain.chain Paladin 11 flake diagnosis (docs) <!--sg:agent/cainflaky-->
+- rel012: unnumbered next-release draft notes (TASK-1066) <!--sg:agent/rel012-->
+- necroapply: SME Necromancer data changes (bonespear Teeth/Bone Spear points, mana_heavy, merc doc) <!--sg:agent/necroapply-->
+- town11: townLegacy seam for old town counters, deletion plan (TASK-764 partial) <!--sg:agent/town11-->
+- pgcards2: nightly run set, earned-hero tier, release-check (TASK-754/756 repo side) <!--sg:agent/pgcards2-->
 - smepal: SME Paladin and Sorceress review (docs) <!--sg:agent/smepal-->
 - onboardtour2: tour tips, Help sheet, Now line (TASK-48 partial) <!--sg:agent/onboardtour2-->
 - whirlscen: combat drill scenarios, pre.skills setup field (TASK-1065) <!--sg:agent/whirlscen-->

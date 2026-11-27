@@ -27,18 +27,23 @@ const (
 
 // LedgerRecord is one run in the results ledger.
 type LedgerRecord struct {
-	V          int      `json:"v"`
-	Run        string   `json:"run"` // <job>/<scenario>/<class>/<seed>
-	Scenario   string   `json:"scenario"`
-	Class      string   `json:"class"`
-	Seed       int64    `json:"seed"`
-	Tier       string   `json:"tier,omitempty"`
-	Stability  string   `json:"stability"` // candidate until the stability card (nothing is "stable" yet)
-	Verdict    string   `json:"verdict"`
-	Reason     string   `json:"reason,omitempty"`
-	D1         string   `json:"d1,omitempty"` // assertion digest: gates
-	D2         string   `json:"d2,omitempty"` // whole-state digest: drift only
-	Journal    string   `json:"journal,omitempty"`
+	V         int    `json:"v"`
+	Run       string `json:"run"` // <job>/<scenario>/<class>/<seed>
+	Scenario  string `json:"scenario"`
+	Class     string `json:"class"`
+	Seed      int64  `json:"seed"`
+	Tier      string `json:"tier,omitempty"`
+	Stability string `json:"stability"` // candidate until the stability card (nothing is "stable" yet)
+	Verdict   string `json:"verdict"`
+	Reason    string `json:"reason,omitempty"`
+	D1        string `json:"d1,omitempty"` // assertion digest: gates
+	D2        string `json:"d2,omitempty"` // whole-state digest: drift only
+	Journal   string `json:"journal,omitempty"`
+	// FromSave, SaveRun and SavePort say which earned save the hero started from (milestone, the ledger run that exported
+	// it, and its portability on this d2d build: same-build, verified); empty for a fresh or verb-built hero.
+	FromSave   string   `json:"from_save,omitempty"`
+	SaveRun    string   `json:"save_run,omitempty"`
+	SavePort   string   `json:"save_portability,omitempty"`
 	Setup      string   `json:"setup"`
 	SetupTags  []string `json:"setup_tags,omitempty"`
 	BotCommit  string   `json:"bot_commit"`
@@ -107,6 +112,7 @@ func NewLedgerRecord(r Result, c LedgerCtx) (LedgerRecord, error) {
 		n := r.State.WritesAfterStart
 		rec.WritesN = &n
 	}
+	rec.FromSave, rec.SaveRun, rec.SavePort = r.FromSave, r.SaveRun, r.SavePort
 	rec.Cut = strings.Contains(r.Reason, "cut before its virtual budget")
 	rec.Run = fmt.Sprintf("%s/%s", c.Job, r.Key())
 	return rec, rec.Validate()
@@ -124,6 +130,19 @@ func (l LedgerRecord) Validate() error {
 	}
 	if len(miss) > 0 {
 		return fmt.Errorf("ledger line refused, missing %s", strings.Join(miss, ", "))
+	}
+	if l.Setup == SetupEarned && l.WritesN != nil && *l.WritesN > 0 {
+		return fmt.Errorf("ledger line refused: EARNED with %d writes after the start (a written hero is CHEATED)", *l.WritesN)
+	}
+	if l.FromSave != "" {
+		switch {
+		case l.Setup != SetupEarned:
+			return fmt.Errorf("ledger line refused: from_save %s with setup %s (an earned-save run is EARNED)", l.FromSave, l.Setup)
+		case l.SaveRun == "":
+			return fmt.Errorf("ledger line refused: from_save %s without save_run", l.FromSave)
+		case l.SavePort != PortSame && l.SavePort != PortVerified:
+			return fmt.Errorf("ledger line refused: from_save %s with portability %q", l.FromSave, l.SavePort)
+		}
 	}
 	if l.Host == "unknown" {
 		return fmt.Errorf("ledger line refused: host role unknown (set D2D_HOST_ROLE)")

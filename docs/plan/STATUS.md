@@ -40,11 +40,9 @@
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | diffbaal | proposed | - | `internal/quest/baaldone.go`<br>`internal/quest/baaldone_test.go` | - |
-| diffgo | proposed | - | `internal/diffready/consent.go`<br>`internal/bot/diffready.go`<br>`internal/bot/diffready_test.go`<br>`internal/bot/explain.go`<br>`internal/ops`<br>`cmd/d2bot/opscmd.go`<br>`cmd/d2bot/opswire.go`<br>`cmd/d2bot/funwire.go`<br>`cmd/d2bot/live.go`<br>`internal/watch/difficultydesk.go`<br>`internal/watch/difficultydesk_test.go`<br>`internal/watch/funwire.go`<br>`internal/watch/returnscreen.go`<br>`docs/diffready.md` | - |
-| whirlscen | proposed | - | `tools/provingground/scenarios/combatdrills.json`<br>`tools/provingground/scenarios/tiers.json`<br>`internal/scenario/`<br>`docs/probes/combat-drills-2026-11-27.md` | - |
+| releasenotes-next | proposed | - | `docs/releases/next-draft.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
-| returnmock | proposed | - | `docs/research/mocks/return.html`<br>`docs/research/return-screen.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
@@ -73,7 +71,7 @@
 | ready-calibrate | deferred | - | `docs/probes/ready-calibrate.md` | - |
 | sessions | proposed | - | `docs/session-record.md` | - |
 | awaydrill | proposed | - | `docs/away-drill.md` | - |
-| reconnectux | proposed | - | `docs/onboarding.md`<br>`internal/watch/onboarding.go`<br>`internal/watch/web/panels/onboarding` | - |
+| reconnectux | proposed | - | `docs/onboarding.md`<br>`internal/watch/onboarding.go`<br>`internal/watch/web/panels/onboarding`<br>`internal/watch/onboarding_test.go`<br>`internal/watch/funwire.go`<br>`internal/watch/testdata/onboarding_dom.js`<br>`internal/watch/testdata/onboarding_dom.txt`<br>`data/onboarding/en.json` | - |
 | palprofile | deferred | - | `docs/sme/class-paladin.md`<br>`docs/sme/class-early-game.md`<br>`internal/combat/classdata` | - |
 | testerdocs | deferred | - | `docs/tester-guide.md` | - |
 | testerlicence | in-progress | - | `docs/tester-licence.md` | - |
@@ -123,12 +121,11 @@
 | fid-probe-regen-speed | deferred | - | `docs/probes/fid/fid-probe-regen-speed.md` | - |
 | pgpage | in-progress | - | `docs/process/proving-ground-status.md`<br>`tools/provingground/status_doc.sh`<br>`internal/scenario/pgpage.go`<br>`internal/scenario/pgpage_test.go`<br>`cmd/d2scenario/ledger.go`<br>`cmd/d2scenario/ledger_test.go`<br>`cmd/d2scenario/main.go`<br>`docs/probes/provingground-act1more-2026-11-20.md`<br>`docs/probes/provingground-act1next-2026-11-20.md`<br>`docs/probes/provingground-cain-2026-11-19.md`<br>`docs/probes/provingground-cainchain-2026-11-20.md`<br>`docs/probes/provingground-cainfix3-2026-11-19.md`<br>`docs/probes/provingground-countess-2026-11-20.md`<br>`docs/probes/provingground-pgfix4-2026-11-20.md`<br>`docs/probes/provingground-run-2026-11-19.md` | - |
 | mgonejob | proposed | - | `docs/process/pg-ops-mgonejob.md` | - |
-| pgnightly | proposed | - | `docs/process/pg-ops-pgnightly.md`<br>`tools/provingground/nightly.sh` | - |
-| pgearned | proposed | - | `internal/scenario/earned.go`<br>`tools/provingground/earned` | - |
+| pgearned | proposed | - | `internal/scenario/earned.go`<br>`tools/provingground/earned`<br>`internal/scenario/earned_test.go`<br>`internal/scenario/setup.go`<br>`internal/scenario/scenario.go`<br>`internal/scenario/ledger.go`<br>`internal/scenario/result.go`<br>`internal/scenario/pgpage.go`<br>`cmd/d2scenario/validate.go`<br>`cmd/d2scenario/ledger.go`<br>`cmd/d2scenario/main_test.go`<br>`tools/provingground/scenarios/cain.json`<br>`docs/process/proving-ground.md` | - |
 | town5 | in-progress | - | `internal/town`<br>`internal/resource`<br>`internal/bot/broke.go`<br>`internal/bot/leveling.go`<br>`tools/provingground/scenarios/townplan.json`<br>`docs/probes/town-plan-stage3-2026-11-22.md`<br>`docs/design/fable-review-2026-11-21/town-planner-b-model.md`<br>`town-basics` | - |
 | town9 | proposed | - | `internal/watch`<br>`internal/supply` | - |
 | town10 | proposed | - | `internal/arbiter`<br>`internal/supply` | - |
-| town11 | proposed | - | `internal/town`<br>`docs/town.md`<br>`town-basics` | - |
+| town11 | proposed | - | `internal/town`<br>`docs/town.md`<br>`town-basics`<br>`docs/design/townflip-p5.md`<br>`backlog/tasks/task-765 - town12-SME-review-of-the-supply-profile-numbers-advice-only.md` | - |
 | town12 | proposed | - | `docs/design/fable-review-2026-11-21/town-profiles-sme.md` | - |
 | pgledgeron | proposed | - | `docs/process/pg-ledger-ops.md`<br>`tools/provingground/run.sh`<br>`tools/provingground/pgenv.sh`<br>`tools/provingground/pgenv_test.sh` | - |
 | warptrigger | proposed | - | `docs/probes/warptrigger-2026-11-22.md`<br>`internal/d2dctl/warptriggers.go`<br>`internal/d2dctl/warptriggers_test.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/nav/mouthgate.go`<br>`internal/nav/warpread_test.go`<br>`internal/d2map/static.go`<br>`internal/d2dworld/triggers_test.go`<br>`internal/d2denv/env.go` | `fork-branch:didle/warp-triggers-20261122` |
@@ -197,14 +194,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
-- 1280a6928 11-27 16:31 `Merge agent/smepal: smepal: SME Paladin and Sorceress review (docs)` (smepal)
-- 719aeae00 11-27 16:31 `Merge agent/onboardtour2: onboardtour2: tour tips, Help sheet, Now line (TASK-48 partial)` (onboardtour2)
-- 881df5215 11-27 16:31 `Merge agent/whirlscen: whirlscen: combat drill scenarios, pre.skills setup field (TASK-1065)` (whirlscen)
-- 9c6c61d38 11-27 16:30 `Merge agent/diffgo: diffgo: go-difficulty ops verb, persisted go, Return screen button (TASK-1061)` (diffgo)
-- c43a986dd 11-27 16:28 `Merge branch 'main' into smepal` (-)
-- e5ae7cd10 11-27 16:28 `Merge branch 'main' into onboardtour2` (-)
-- ab9acccd0 11-27 16:28 `Merge branch 'main' into whirlscen` (-)
-- 9eaa2ed43 11-27 16:28 `Merge branch 'main' into diffgo` (-)
-- e2e724c59 11-27 16:20 `Merge agent/smenecro: smenecro: SME Necromancer review (docs)` (smenecro)
-- be94247fd 11-27 16:20 `Merge agent/diet: diet: archive 5 finished research reports, docs diet rule (TASK-117/118)` (diet)
+- 7e55fcd23 11-27 16:52 `Merge agent/smeothers: smeothers: SME review of Druid, Barbarian, Amazon, Assassin (docs)` (smeothers)
+- 0a5cfcf3f 11-27 16:52 `Merge agent/cainflaky: cainflaky: cain.chain Paladin 11 flake diagnosis (docs)` (cainflaky)
+- 0a4584998 11-27 16:52 `Merge agent/rel012: rel012: unnumbered next-release draft notes (TASK-1066)` (rel012)
+- a60dbfaff 11-27 16:50 `Merge branch 'main' into smeothers` (-)
+- be459dded 11-27 16:50 `Merge branch 'main' into cainflaky` (-)
+- f4523d37b 11-27 16:50 `Merge branch 'main' into rel012` (-)
+- 38845a378 11-27 16:41 `Merge agent/necroapply: necroapply: SME Necromancer data changes (bonespear Teeth/Bone Spear points, mana_heavy, merc doc)` (necroapply)
+- 0ae6b91df 11-27 16:41 `Merge agent/town11: town11: townLegacy seam for old town counters, deletion plan (TASK-764 partial)` (town11)
+- a65a48c0a 11-27 16:41 `Merge agent/pgcards2: pgcards2: nightly run set, earned-hero tier, release-check (TASK-754/756 repo side)` (pgcards2)
+- 66d7cee98 11-27 16:41 `Merge agent/uifix: uifix: return mock, onboarding chickens line, layout test (TASK-109/249/424)` (uifix)
 <!-- statusgen:end -->

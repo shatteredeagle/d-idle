@@ -14,6 +14,20 @@ import (
 // beside every chores visit and logged, and nothing acts on it. PlanStage is the knob's value.
 func (t *Town) PlanStage() int { return t.tune().Plan }
 
+// legacyUntilStage is the town.plan stage from which the old gold knobs (bankFirst, withdrawShop) no longer decide:
+// the purse stage replaces them. townflip-p5 section 6 lists the deletion that follows once that stage is the default.
+const legacyUntilStage = 3
+
+// townLegacy is true while the old gold counters are the path (town.plan below legacyUntilStage). Every read of
+// bankFirst and withdrawShop goes through bankFirst and withdrawShop below, so deleting the knobs is a one-line change.
+func (t *Town) townLegacy() bool { return t.PlanStage() < legacyUntilStage }
+
+// bankFirst: deposit the surplus above the keep line before the shop (knob until the purse stage, then always).
+func (t *Town) bankFirst() bool { return !t.townLegacy() || t.tune().BankFirst != 0 }
+
+// withdrawShop: withdraw the shopping list when the pack cannot pay it (knob until the purse stage, then always).
+func (t *Town) withdrawShop() bool { return !t.townLegacy() || t.tune().WithdrawShop != 0 }
+
 // PlanShadow solves the supply plan of the current snapshot for the excursion profile of the chore plan (the `field`
 // profile when the caller names none). It reads and changes nothing.
 func (t *Town) PlanShadow(plan ChorePlan) (supply.Plan, error) {
