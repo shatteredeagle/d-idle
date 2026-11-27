@@ -15,8 +15,15 @@ ordinal: 460000
 card: "townflip"
 owns:
   - "docs/design/townflip-p5.md"
+  - "internal/town/sellplan.go"
+  - "internal/town/sellplan_test.go"
+  - "internal/town/shop.go"
+  - "internal/town/town.go"
+  - "internal/town/chores.go"
+  - "internal/env/tuning_town.go"
 exclusive: []
 contracts: []
+result: "Not verified live. Stage 4 sell side built behind town.plan 4 (default stays 0): the sell chore keeps the plan line's max(target, min) potions belt plus pack, best tier first, the rest is surplus; tested offline on Sorceress and Paladin. Runbook with the flip sequence, live check list and counts table in the design doc. Stage 2 is on in the dev sandbox after a 45 minute bundle window only; the farm sandbox and the 24 hour window are not recorded, so no criterion is ticked. Stage 3 waits on the owner look and the malus-errand-gold scenario, the pickup side of stage 4 on town6, stage 5 on town8. Build-specific data lives in the supply profiles and the class belt plan, none in Go."
 ---
 
 ## Description
