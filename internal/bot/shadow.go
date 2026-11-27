@@ -2,6 +2,7 @@ package bot
 
 import (
 	"context"
+	"maps"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -136,6 +137,11 @@ func (r *Runner) arbView(snap *d2.Snapshot, c control) (v arbiter.View, ok bool)
 		arbiter.FactSurviveBelow: r.e.Tune.Combat.DrinkLifePct,
 		arbiter.FactSellable:     r.resInput(snap).Sellable,
 		arbiter.FactAreaDry:      b(len(r.dryAreas()) > 0),
+	}
+	if af, ok := r.d.Fighter.(interface {
+		ArmyFacts(*d2.Snapshot) map[string]int
+	}); ok {
+		maps.Copy(f, af.ArmyFacts(snap)) // army facts (card dlv-stance-army); none for a hero without an army
 	}
 	obj := ""
 	if l.stepArea > 0 && c.spec.camp != nil {

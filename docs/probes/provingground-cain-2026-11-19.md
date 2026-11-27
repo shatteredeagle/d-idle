@@ -2,6 +2,8 @@
 
 > status: current (card pgcain). Tags: V verified (run named), S secondary, U unverified. All runs on the builder (main lane, one at a time), lab slot, CHEATED setup (level 17, waypoints, quest board record): mechanics evidence only, never behaviour or balance evidence.
 
+> verdicts: current verdicts per scenario and class are in [proving-ground-status.md](../process/proving-ground-status.md) (generated from the results ledger) and on the board page /pg. The tables below record these runs only; new runs are cited by run id, not added here (design 2026-11-21 Q10).
+
 ## Question and answer in one paragraph
 
 The first Proving Ground run (RED `cain.scroll.field`) was on a bot built from the provingground branch; whether it contained cainfix2 is U. Rerun on origin/main d024dcb23 (contains cainfix2, merge c72b2eb05): the tree step now WORKS. The scenario was RED for a scenario reason: the assertion wanted `bks` but the bot had by then had Akara read it, so the pack held `bkd` (the log line `inventory contents ... pack: bkd x1` at the town visit after the tree). With the assertion widened to `bks` or `bkd` (this branch) `cain.scroll.field` Paladin seed 11 is GREEN. The from-camp scenarios are still RED with a different cause (below). The live sandbox tree stall was not reproduced by any run, because the shipped-verbs variant that exists starts from the camp, not at the tree.

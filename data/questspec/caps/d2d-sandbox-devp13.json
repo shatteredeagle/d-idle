@@ -32,6 +32,11 @@
    "via": "dump items",
    "note": "V: dump items lists the pack by base code (d2dsrc)"
   },
+  "lacks_item": {
+   "tier": "proxy",
+   "via": "dump items",
+   "note": "S: the negation of has_item on the same pack listing; as a post it means the step consumed the item (the orifice takes the Staff), pre has_item gives the context"
+  },
   "visited": {
    "tier": "proxy",
    "volatile": true

@@ -84,6 +84,7 @@ type Fighter struct {
 	buffTries     map[int]int // consecutive casts cut by a hit, per skill (card armorcut)
 	upk           upkeepState // the state-observed upkeep driver (upkeep.go)
 	mark          markState   // the mark driver (mark.go)
+	stance        stanceState // the army stance (stance.go)
 	lastDodge     time.Time
 	diagMu        sync.Mutex // guards portalCast and casts (read from the bot's autopsy)
 	portalCast    PortalCast
