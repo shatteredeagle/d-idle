@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- townrest: town plan view + /api/townplan (town9), arbiter upkeep source (town10 part), SME brief (town12) <!--sg:agent/townrest-->
 - necrocorpse2: opt-in CE1 Necromancer table + scenario pair, ticks (TASK-1016/803/802) <!--sg:agent/necrocorpse2-->
 - fliptool2: flip.py loads local.env itself, ledger commits on close/revert, unique branch names <!--sg:agent/fliptool2-->
 - ledger: stepExec enabled <!--sg:agent/ledgerenabled-->

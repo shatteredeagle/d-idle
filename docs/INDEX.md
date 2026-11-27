@@ -373,6 +373,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [town-planner-a-current.md](design/fable-review-2026-11-21/town-planner-a-current.md): Town planner, appendix A: the chores today and where their rules disagree (status: current (design review 2026-11-21, docs only). Main doc: town-planner.md. Tree read: `origin/main` at...)
 - [town-planner-b-model.md](design/fable-review-2026-11-21/town-planner-b-model.md): Town planner, appendix B: data model, scenarios, migration (status: current (design review 2026-11-21, docs only; proposals, nothing built). Main doc: town-planner.md;...)
 - [town-planner.md](design/fable-review-2026-11-21/town-planner.md): Town and chores planner: one supply need, one town plan (status: current (Fable design review 2026-11-21, docs only; nothing here is built or decided). Tree read:...)
+- [town-profiles-sme.md](design/fable-review-2026-11-21/town-profiles-sme.md): Town supply profiles: SME review (card town12) (status: brief ready, review not run (2026-11-27). The d2-sme agent fills section 3; advice only, no number in...)
 
 `design/fable-review-2026-11-22/`
 
