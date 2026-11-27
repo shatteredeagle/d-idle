@@ -462,10 +462,6 @@
     ],
     "curses": [
      {
-      "name": "Lower Resist",
-      "when": "magicResist"
-     },
-     {
       "name": "Amplify Damage",
       "state": 9,
       "when": "any"
@@ -558,10 +554,6 @@
      }
     ],
     "curses": [
-     {
-      "name": "Lower Resist",
-      "when": "magicResist"
-     },
      {
       "name": "Amplify Damage",
       "state": 9,

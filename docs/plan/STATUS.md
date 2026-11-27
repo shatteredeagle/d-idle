@@ -46,6 +46,8 @@
 | smeaura | proposed | - | `docs/sme/paladin-auras-2026-11-26.md` | - |
 | necrocorpse | proposed | - | `docs/probes/necrocaps-2026-11-26.md` | - |
 | fid-poison-res-diag | proposed | - | `docs/research/fid-poisonres-trace.md` | - |
+| necroteeth | proposed | - | `internal/combat/classdata/profiles.json`<br>`internal/combat/necro_test.go`<br>`internal/leveler/mainattack_test.go` | - |
+| arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
@@ -242,14 +244,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- fce2a0b5d 11-27 01:33 `Merge agent/arbloop: Merge branch 'main' into arbloop` (arbloop)
+- 0abcad620 11-27 01:33 `Merge agent/necroteeth: Merge branch 'main' into necroteeth` (necroteeth)
+- 722fe51c8 11-27 01:30 `Merge branch 'main' into arbloop` (-)
+- 110f0e328 11-27 01:30 `Merge branch 'main' into necroteeth` (-)
 - acf7e202c 11-27 01:21 `Merge agent/minions: Merge branch 'main' into dlv-upkeep-minions` (minions)
 - 47d55ac65 11-27 01:19 `Merge branch 'main' into dlv-upkeep-minions` (-)
 - a49fdac79 11-27 01:15 `Merge agent/inputl3: Merge branch 'main' into inputl3` (inputl3)
 - 61bca5cdb 11-27 01:13 `Merge branch 'main' into inputl3` (-)
 - b4f120b15 11-27 01:06 `Merge branch 'main' into dlv-upkeep-minions` (-)
 - 46a2302b0 11-27 01:06 `Merge branch 'main' into inputl3` (-)
-- 4ef40348b 11-27 01:02 `Merge agent/pgstability: Merge branch 'main' into pgstability` (pgstability)
-- e867caffa 11-27 01:00 `Merge branch 'main' into pgstability` (-)
-- 4626dd212 11-27 00:46 `Merge agent/town6: Merge branch 'main' into town6` (town6)
-- 7217351dc 11-27 00:44 `Merge branch 'main' into town6` (-)
 <!-- statusgen:end -->
