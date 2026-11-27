@@ -217,18 +217,7 @@
      "tries": 2,
      "nodes": [
       "assemble"
-     ],
-     "exec": {
-      "verb": "talk",
-      "pick": "horadric staff",
-      "wait_polls": 4,
-      "wait_ms": 1000,
-      "backoff_ms": 500,
-      "backoff_cap_ms": 2000,
-      "wake": [
-       "quest word changes"
-      ]
-     }
+     ]
     }
    ]
   },
