@@ -15,9 +15,30 @@ ordinal: 443000
 card: "epic-class-necromancer"
 owns:
   - "docs/epics/epic-class-necromancer.md"
+  - "docs/classes/necromancer-gap-2026-11-27.md"
+  - "internal/combat/classdata/profiles.json"
+  - "internal/plandata/build-necromancer_leveling_normal30.json"
+  - "internal/plandata/build-necromancer_summoner_endgame90.json"
+  - "internal/plandata/levelplan-normal.json"
+  - "internal/plandata/act2plan.json"
+  - "internal/decide/catalogue.json"
+  - "internal/decide/policy_chores.json"
+  - "internal/decide/proposezone.json"
+  - "internal/decide/necro_test.go"
+  - "internal/decide/build_test.go"
+  - "internal/decide/firsts_test.go"
+  - "internal/decide/policy_test.go"
+  - "internal/decide/preview_test.go"
+  - "internal/decide/proposezone_test.go"
+  - "internal/levelplan/necro_test.go"
+  - "cmd/d2bot/necroplay_test.go"
+  - "cmd/d2bot/hotkeydrift_test.go"
+  - "tools/provingground/scenarios/necro-acts.json"
+  - "tools/provingground/scenarios/necro-epic.json"
 exclusive: []
 contracts: []
 lane: later
+result: "2026-11-27 card necroepic, offline only (not verified live): AC 1 done (bonespear profile, endgame90 combat key, decide/levelplan/act2plan rows, tests on Necromancer plus Sorceress). AC 2 to 6 need the new Proving Ground rows (necro.level-1-30, necro.earned-act2, necro.drill.act2..5, necro.soak-3h-kit, points.necro-*), AC 7 needs the fork (Tools of the Trade word 0x204e). docs/classes/necromancer-gap-2026-11-27.md."
 ---
 
 ## Description
@@ -30,7 +51,7 @@ Class epic for the Necromancer. Builds in internal/plandata: build-necromancer_s
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Necromancer: class traits, plan table (internal/plandata) and combat profile (internal/combat/classdata) complete and data-only, no class literals in Go; a second-build test passes (build flexibility rule).
+- [x] #1 Necromancer: class traits, plan table (internal/plandata) and combat profile (internal/combat/classdata) complete and data-only, no class literals in Go; a second-build test passes (build flexibility rule).
 - [ ] #2 Necromancer: leveling plan clvl 1 to 30+ per the XP table with survival gates (plandata build-*normal30.json), drilled to clvl 30 in the lab.
 - [ ] #3 Necromancer: stat and skill allocation plan locked and tested (autoalloc, capability table), spends every point.
 - [ ] #4 Necromancer: kit and economy profile (belt, potions, merc) for the class, no death spiral in a 3 h run.
