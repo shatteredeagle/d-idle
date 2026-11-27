@@ -8,15 +8,25 @@
 package gear
 
 import (
-	"embed"
 	"encoding/json"
 	"fmt"
 	"sort"
 	"strings"
+
+	"d2lod-bot/internal/plandata"
 )
 
-//go:embed builds/*.json
-var buildFS embed.FS
+// buildNames are the plan tables gear scoring knows (main_attack ranges). The rows come from internal/plandata, the
+// single source: there is no second copy to drift (TestBuildNamesMatchPlandata keeps this list complete).
+var buildNames = []string{
+	"amazon_bow_normal30", "amazon_javelin_normal30", "amazon_multishot_endgame90",
+	"assassin_fireblast_normal30", "assassin_sentry_endgame90",
+	"barbarian_melee_normal30", "barbarian_warcry_endgame90",
+	"druid_fire_normal30", "druid_tornado_endgame90",
+	"necromancer_leveling_normal30", "necromancer_summoner_endgame90", "necromancer_summoner_normal30",
+	"paladin_hammerdin_endgame90", "paladin_hammerdin_zeal_endgame90",
+	"sorceress_blizzard_endgame90",
+}
 
 type typeRow struct {
 	Equiv     []string `json:"equiv"`
@@ -341,25 +351,24 @@ const (
 	SlotLeftHand  = 5
 )
 
-// Builds lists the embedded build names.
+// Builds lists the build names gear scoring covers.
 func Builds() []string {
-	ents, _ := buildFS.ReadDir("builds")
-	var out []string
-	for _, e := range ents {
-		out = append(out, strings.TrimSuffix(e.Name(), ".json"))
-	}
+	out := append([]string(nil), buildNames...)
 	sort.Strings(out)
 	return out
 }
 
-// BuildJSON returns one build file (same schema as internal/plandata/build-paladin-normal30.json, extra field
-// main_attack). leveler.ParseBuild reads it unchanged.
+// BuildJSON returns the plan table of one build (internal/plandata/build-<name>.json, with main_attack).
+// leveler.ParseBuild reads it unchanged.
 func BuildJSON(name string) ([]byte, error) {
-	b, err := buildFS.ReadFile("builds/" + name + ".json")
-	if err != nil {
+	known := false
+	for _, n := range buildNames {
+		known = known || n == name
+	}
+	if !known {
 		return nil, fmt.Errorf("gear: unknown build %q (have %v)", name, Builds())
 	}
-	return b, nil
+	return plandata.FS.ReadFile("build-" + name + ".json")
 }
 
 // DefaultBuild is the build name for a class (Normal to clvl 30), "" when none.
