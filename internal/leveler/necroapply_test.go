@@ -1,6 +1,10 @@
 package leveler
 
-import "testing"
+import (
+	"os"
+	"strings"
+	"testing"
+)
 
 // walkTable replays a table row by row against the prerequisite and level rule of prereq_test.go (S: skills.txt) and
 // returns the points per skill at clvl 30. A row spends one level point plus any quest-tagged points.
@@ -55,5 +59,17 @@ func TestBonespearTableNoDeadPoints(t *testing.T) {
 	}
 	if sum != 32 {
 		t.Errorf("summoner total points %d, want 32", sum)
+	}
+}
+
+// SME review 2026-11-27, confidence high: the class doc must not promise a Might desert merc in Normal or Hell.
+func TestNecromancerDocMercAura(t *testing.T) {
+	raw, err := os.ReadFile("../../docs/classes/necromancer.md")
+	if err != nil {
+		t.Skip(err)
+	}
+	s := string(raw)
+	if strings.Contains(s, "Desert Mercenary: Might for") || !strings.Contains(s, "Defiance in Normal and Hell, Might only in Nightmare") {
+		t.Error("docs/classes/necromancer.md merc aura claim is not the SME-corrected one")
 	}
 }
