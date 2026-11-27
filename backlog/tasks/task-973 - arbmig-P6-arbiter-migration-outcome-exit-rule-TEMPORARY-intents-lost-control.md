@@ -28,7 +28,7 @@ owns:
   - "docs/knobs.md"
 exclusive: []
 contracts: []
-result: "Stages 1 to 3 built, NOT verified live. Outcome harness (d2scenario arbiter-replay) scores the three Questy cases: survive chain 1 hard hit vs arbiter 0, chores chain 2 soft hits vs arbiter 0. Temporary intents, lost-control hook, arbiter-starved row. Control path behind bot.arbiterControl (0), families survive and player only, ledger row in data/darklaunch.json; criterion 2 (one sandbox) waits for the flip."
+result: "Stages 1 to 4 built, NOT verified live. Stage 4: the outcome verdict over a whole recorded session (d2scenario arbiter-replay -session on the bot tick lines), a hit counted once per episode, two builds and a must-fail case tested offline. Stages 1 to 3: outcome harness on the Questy cases, temporary intents, lost-control hook, control path behind bot.arbiterControl with all eight families wired and a ledger row. Criterion 2 waits for a confirmed sandbox night; no real night scored yet."
 ---
 
 ## Description

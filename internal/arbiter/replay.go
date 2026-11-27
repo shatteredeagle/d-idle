@@ -34,6 +34,7 @@ type ReplayResult struct {
 	Divergences  []string // the shadow's divergence lines (rate-limited)
 	Trace        []string // one Decision.String per tick, the golden trace
 	FamilyCounts string
+	Points       []SessionPoint // one per tick: the facts, the chain's family and the arbiter's (ScoreSession)
 }
 
 type logLine struct {
@@ -119,6 +120,11 @@ func Replay(in io.Reader, cfg Config, sc ShadowConfig, follow bool) (ReplayResul
 			res.Divergences = append(res.Divergences, fmt.Sprintf("t=%05.0f %s", v.Now, line))
 		}
 		d, _ := sh.Last()
+		mine := ""
+		if d.Chosen != nil {
+			mine = Family(d.Chosen.Source)
+		}
+		res.Points = append(res.Points, SessionPoint{Now: v.Now, Facts: cp, Chain: l.Chain, Arbiter: mine})
 		res.Ticks++
 		res.Trace = append(res.Trace, d.String())
 		if follow && d.Chosen != nil {
