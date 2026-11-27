@@ -18,7 +18,7 @@ owns:
   - "internal/bot/task.go"
   - "internal/bot/bossdone_test.go"
   - "data/questspec/act2.json"
-  - "data/questspec/caps"
+  - "data/questspec/caps/"
   - "docs/design/stepexec-p9.md"
 exclusive: []
 contracts: []
