@@ -1557,6 +1557,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - agent/fliptool2: fliptool2: flip.py loads local.env itself, ledger commits on close/revert, unique branch names (merged 2026-11-27) <!--sg:agent/fliptool2-->
 - necrocorpse: Necromancer table: Corpse Explosion points 5 to 1, scenario pair first (TASK-1016, merged 2026-11-27, acceptance 1 of 2): Offline part done: opt-in table necromancer_summoner_ce1 (Corpse Explosion 1 point; freed points to Raise Skeletal Mage x3 and Clay Golem ... <!--sg:agent/necrocorpse2-->
 - agent/townrest: townrest: town plan view + /api/townplan (town9), arbiter upkeep source (town10 part), SME brief (town12) (merged 2026-11-27) <!--sg:agent/townrest-->
+- dlv-whirl: Whirlwind: channel + through + commit (PARKED) (TASK-734, merged 2026-11-27, acceptance 2 of 5): Offline only, NOT verified live. Whirlwind driver: move use whirl (move.go rows, whirl.go leg planner and whirlTick after moveTick): one leg per fight tick aimed through the densest pack within range, prefers another pack than the last leg, no leg under ... <!--sg:agent/dlvwhirl-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

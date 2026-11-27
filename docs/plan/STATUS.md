@@ -198,7 +198,9 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 27324ad8f 11-27 16:20 `Merge agent/dlvwhirl: dlvwhirl: Whirlwind move row driver (TASK-734)` (dlvwhirl)
 - b197ab183 11-27 16:19 `Merge agent/townrest: townrest: town plan view + /api/townplan (town9), arbiter upkeep source (town10 part), SME brief (town12)` (townrest)
+- 4bdfffc09 11-27 16:17 `Merge branch 'main' into dlvwhirl` (-)
 - 4ebb94611 11-27 16:17 `Merge branch 'main' into townrest` (-)
 - 6009caac8 11-27 16:13 `Merge agent/necrocorpse2: necrocorpse2: opt-in CE1 Necromancer table + scenario pair, ticks (TASK-1016/803/802)` (necrocorpse2)
 - e7e1d2d5b 11-27 16:12 `Merge agent/fliptool2: fliptool2: flip.py loads local.env itself, ledger commits on close/revert, unique branch names` (fliptool2)
@@ -206,6 +208,4 @@
 - f31bd05e3 11-27 16:10 `Merge branch 'main' into necrocorpse2` (-)
 - 32d78628f 11-27 16:10 `Merge branch 'main' into fliptool2` (-)
 - 2c08cd5c2 11-27 16:10 `Merge branch 'main' into ledgerenabled` (-)
-- 98f9bd0b3 11-27 16:02 `Merge agent/diffready: diffready+diffbaal: readiness predicate, opt-in hop, Baal-dead reader (TASK-1058/1059)` (diffready)
-- 689b57e34 11-27 15:59 `Merge origin/main into diffready (explain.go and darklaunch.json: both sides kept)` (-)
 <!-- statusgen:end -->
