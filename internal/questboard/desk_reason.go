@@ -26,6 +26,9 @@ type ChangedRow struct {
 // CodeHandInReady is the offer code of a chunk whose field work the game already counts done (appendix B.1, C5).
 const CodeHandInReady = "handin_ready"
 
+// CodeHandInWaiting is the hold code of a hand-in tap queued for the bot loop that has not picked it up.
+const CodeHandInWaiting = "handin_waiting"
+
 // reasonView builds the view of a code; a placeholder the arguments leave open is replaced by the producer's own
 // words (why), or, without them, the sentence stays as the table has it so the gap is visible.
 func reasonView(code string, args map[string]string, why string) *ReasonView {
@@ -64,7 +67,10 @@ func (d *Desk) chunkReason(quest string, cv ChunkView, run *Run, a *Active, hand
 	case Awaiting:
 		args := map[string]string{"quest": titles["quest"], "npc": titles["npc"]}
 		if handing {
-			return reasonView("handin_in_town", args, "")
+			if r := d.handInWaitReason(); r != nil {
+				return r
+			}
+			return reasonView("handin_in_town", map[string]string{"quest": titles["quest"], "npc": titles["npc"]}, "")
 		}
 		if run != nil && run.Status == RunHandingIn {
 			return reasonView("confirming", args, "")
@@ -113,3 +119,15 @@ func handInReady() *ReasonView {
 
 // SMOn reports the knob quests.boardSM.
 func (e *Exec) SMOn() bool { e.mu.Lock(); defer e.mu.Unlock(); return e.o.SM }
+
+// handInWaitReason is the reason of a hand-in tap the bot loop has not served yet: the holder in words, from the
+// bot side. nil when the loop is serving it (or no holder is known).
+func (d *Desk) handInWaitReason() *ReasonView {
+	if d.cfg.HandInWhy == nil {
+		return nil
+	}
+	if why := d.cfg.HandInWhy(); why != "" {
+		return reasonView(CodeHandInWaiting, nil, why)
+	}
+	return nil
+}

@@ -52,6 +52,7 @@ var reasonTable = []ReasonInfo{
 	{"route_closed", KindHold, RemedyTrain, 60, "The road to {area} is closed for now: {why}."},
 	{"area_banned", KindHold, RemedyWait, 0, "{area} is closed after {n} deaths; trying again later."},
 	{"handin_in_town", KindHold, RemedyWait, 5, "Hand-in is on its way: the hero is going to town."},
+	{"handin_waiting", KindHold, RemedyWait, 5, "Hand-in is queued: {why}"},
 	{"confirming", KindHold, RemedyWait, 0, "Handed in. Checking that the game agrees."},
 	{"loading", KindHold, RemedyWait, 2, "Waiting for the game."},
 

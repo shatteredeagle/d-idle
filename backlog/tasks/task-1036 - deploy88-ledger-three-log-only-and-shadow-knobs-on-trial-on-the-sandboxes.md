@@ -1,10 +1,11 @@
 ---
 id: TASK-1036
 title: 'deploy88-ledger: three log-only and shadow knobs on trial on the sandboxes'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T06:22:00Z'
+updated_date: '2026-11-27T18:49:00Z'
 labels:
   - ops
   - chore

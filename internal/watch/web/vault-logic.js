@@ -497,7 +497,7 @@ export function equipWornWords(rep, names, T) {
   if (worn.length) {
     const off = worn.reduce((a, x) => a.concat(x.removed || []), []);
     const where = (worn.find((x) => x.where && x.where !== 'vault') || {}).where;
-    parts.push((worn.length === 1 ? T.okWornOne.replace('{slot}', worn[0].slot) : T.okWornSet.replace('{n}', String(worn.length)))
+    parts.push((worn.length === 1 ? T.okWornOne.replace('{slot}', (T.mercSlots && T.mercSlots[worn[0].slot]) || worn[0].slot) : T.okWornSet.replace('{n}', String(worn.length)))
       + (off.length ? ' ' + T.okWornOff.replace('{old}', off.join(', ')).replace('{where}', where || 'Vault') : ''));
   }
   failed.slice(0, 3).forEach((x) => parts.push(nm(x.id) + ': ' + (x.error || x.code)));

@@ -1,10 +1,11 @@
 ---
 id: TASK-758
 title: 'town6: stage 4 sell keep and pickup read the line target'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-21T04:52:00Z'
+updated_date: '2026-11-27T18:49:00Z'
 labels:
   - bot
   - feature

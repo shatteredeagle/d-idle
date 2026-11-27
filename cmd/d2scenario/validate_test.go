@@ -65,7 +65,8 @@ func TestStaticCheckRows(t *testing.T) {
 func TestScenarioHeroSelfCheck(t *testing.T) {
 	for _, class := range []string{"Sorceress", "Paladin"} {
 		s := fightScenario(12)
-		h, f := scenarioHero(s, class)
+		s.Pre.HeroProfile = scenario.HeroBanked // the state below is a banked hero's; the played one is in herospend_test.go
+		h, f := scenarioHero(s, class, hero.NameTables())
 		if f.Purse != 2000 || f.Potions != 6 {
 			t.Fatalf("floors %+v", f)
 		}
@@ -81,8 +82,9 @@ func TestScenarioHeroSelfCheck(t *testing.T) {
 		}
 	}
 	s := fightScenario(12)
+	s.Pre.HeroProfile = scenario.HeroBanked
 	s.Pre.Stats = []scenario.StatSet{{Stat: 4, Value: 0}}
-	if h, _ := scenarioHero(s, "Paladin"); h.StatPts != 0 {
+	if h, _ := scenarioHero(s, "Paladin", hero.NameTables()); h.StatPts != 0 {
 		t.Errorf("a raw statpts write sets the expectation: %d", h.StatPts)
 	}
 }
