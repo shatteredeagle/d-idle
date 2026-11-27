@@ -148,8 +148,8 @@
 | pgnightly | proposed | - | `docs/process/pg-ops-pgnightly.md`<br>`tools/provingground/nightly.sh` | - |
 | pgearned | proposed | - | `internal/scenario/earned.go`<br>`tools/provingground/earned` | - |
 | town5 | in-progress | - | `internal/town`<br>`internal/resource`<br>`internal/bot/broke.go`<br>`internal/bot/leveling.go`<br>`tools/provingground/scenarios/townplan.json`<br>`docs/probes/town-plan-stage3-2026-11-22.md`<br>`docs/design/fable-review-2026-11-21/town-planner-b-model.md`<br>`town-basics` | - |
-| town7 | proposed | - | `internal/supply`<br>`internal/town`<br>`internal/resource` | - |
-| town8 | proposed | - | `internal/supply`<br>`internal/town` | - |
+| town7 | proposed | - | `internal/supply/`<br>`internal/town/`<br>`internal/resource/` | - |
+| town8 | proposed | - | `internal/supply/`<br>`internal/town/` | - |
 | town9 | proposed | - | `internal/watch`<br>`internal/supply` | - |
 | town10 | proposed | - | `internal/arbiter`<br>`internal/supply` | - |
 | town11 | proposed | - | `internal/town`<br>`docs/town.md`<br>`town-basics` | - |
@@ -228,6 +228,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- d60306160 11-27 14:32 `Merge agent/town7: town7: short-gold priority table as data + town8 stage 5 route stops (TASK-759/761)` (town7)
+- 8cee71e86 11-27 14:30 `Merge branch 'main' into town7` (-)
 - f723f0cac 11-27 14:26 `Merge agent/vaultpoll: vaultpoll: cached vault poll, windowed query (TASK-1054)` (vaultpoll)
 - c6dde6ea4 11-27 14:25 `Merge branch 'main' into vaultpoll` (-)
 - ea06a941c 11-27 14:19 `Merge agent/skillcapretire: skillcapretire: retire resource.skillCapPerLevel (TASK-1055)` (skillcapretire)
@@ -236,6 +238,4 @@
 - d788bfd1c 11-27 14:18 `Merge agent/charmvault: charmvault: charms recorded in the Vault, player Carry/Stow (TASK-1052)` (charmvault)
 - ea804bb3b 11-27 14:16 `Merge branch 'main' into skillcapretire` (-)
 - 49ebc2db4 11-27 14:16 `Merge branch 'main' into bsmchk` (-)
-- d68dcae2e 11-27 14:16 `Merge branch 'main' into closecards2` (-)
-- 1d83469ec 11-27 14:16 `Merge branch 'main' into charmvault` (-)
 <!-- statusgen:end -->
