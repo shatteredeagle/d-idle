@@ -46,6 +46,7 @@
 | logsink | proposed | - | `internal/logx`<br>`cmd/d2bot/main.go`<br>`cmd/d2bot/opscmd.go`<br>`cmd/d2bot/logsink_test.go`<br>`docs/ops` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | fieldstate | proposed | - | `internal/bot/loop.go`<br>`internal/bot/goal.go`<br>`internal/bot/state.go`<br>`internal/bot/runner.go`<br>`internal/bot/fieldstate_test.go` | - |
+| questresume | proposed | - | `internal/questboard/`<br>`data/questboard/`<br>`internal/bot/questboard.go`<br>`internal/bot/questauto.go`<br>`internal/bot/boardprogress.go`<br>`internal/bot/boardprogress_test.go`<br>`internal/bot/starvedcause.go`<br>`internal/bot/starvedcause_test.go`<br>`internal/bot/goal.go`<br>`internal/bot/arbiter_control.go`<br>`internal/bot/shadow.go`<br>`internal/env/tuning_quests.go`<br>`internal/watch/questsection.go`<br>`internal/watch/questsection_test.go`<br>`internal/watch/funwire.go`<br>`cmd/d2bot/funwire.go`<br>`data/darklaunch.json`<br>`docs/knobs.md`<br>`docs/questboard.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
@@ -198,7 +199,9 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 594f488a9 11-27 17:34 `Merge agent/questresume: questresume: park resume policy (dark), paused visibility, campaign counter, starved cause (TASK-1071)` (questresume)
 - 2b18a5d96 11-27 17:34 `Merge agent/gearcopy: gearcopy: gear scoring reads plandata tables, drifted copies deleted (TASK-1067)` (gearcopy)
+- 0ea8b753c 11-27 17:32 `Merge branch 'main' into questresume` (-)
 - 5b3c8c61e 11-27 17:32 `Merge branch 'main' into gearcopy` (-)
 - d06f55ae6 11-27 17:25 `Merge agent/flakearb: flakearb: fix TestArbiterControlGoldFarmAndRecovery race (test starts in wrong area) (TASK-1068)` (flakearb)
 - 72a4592ae 11-27 17:24 `Merge branch 'main' into flakearb` (-)
@@ -206,6 +209,4 @@
 - 82a3e6e0a 11-27 17:16 `Merge agent/logsink: logsink: bot own rotating log file, ops log verb, docker log NUL root cause (TASK-1069)` (logsink)
 - e431b1d75 11-27 17:16 `Merge agent/sandboxlogs: sandboxlogs: sandbox log analysis (docs)` (sandboxlogs)
 - 12aa8855a 11-27 17:16 `Merge agent/palapply: palapply: SME Paladin/Sorceress data changes (zeal table, Aim/Concentration, bands, mana_heavy)` (palapply)
-- 71d7aa25f 11-27 17:13 `Merge branch 'main' into fieldstate` (-)
-- cec3358c7 11-27 17:13 `Merge branch 'main' into logsink` (-)
 <!-- statusgen:end -->
