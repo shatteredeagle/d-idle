@@ -507,6 +507,18 @@ class _Hardening:  # methods are attached to FlipTest below (same fixtures, no r
         msg = subprocess.run(["git", "log", "-1", "--format=%s"], cwd=wt2, capture_output=True, text=True).stdout
         self.assertIn("after revert", msg)
 
+    def test_two_ledger_commits_same_day_get_distinct_branches(self):
+        repo = self._scratch_repo()
+        real = F.now_utc
+        try:
+            F.now_utc = lambda: datetime(2026, 11, 27, 10, 0, 0, tzinfo=timezone.utc)
+            b1 = F.commit_ledger(self.lp, {"town.plan": 2.0}, root=repo, event="close")[0]
+            F.now_utc = lambda: datetime(2026, 11, 27, 11, 30, 5, tzinfo=timezone.utc)
+            b2 = F.commit_ledger(self.lp, {"town.plan": 2.0}, root=repo, event="revert")[0]
+        finally:
+            F.now_utc = real
+        self.assertEqual((b1, b2), ("agent/ledger-town-plan-20261127-100000", "agent/ledger-town-plan-20261127-113005"))
+
     def test_ledger_commit_failure_is_logged_not_raised(self):
         def boom(event, knobs):
             raise F.FlipError("no git")

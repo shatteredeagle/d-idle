@@ -273,7 +273,7 @@ def commit_ledger(ledger_path, knobs, root=ROOT, today=None, run=None, event="fl
     """The ledger rows of `knobs` as they are in `ledger_path` go onto a fresh branch agent/ledger-<knob>-<date> in a sibling
     worktree of `root`, committed there (no push, no queue). Returns (branch, worktree, mergeq line)."""
     run = run or (lambda *a, cwd=root: subprocess.run(a, cwd=cwd, capture_output=True, text=True))
-    today = today or now_utc().strftime("%Y%m%d")
+    today = today or now_utc().strftime("%Y%m%d-%H%M%S")  # the time keeps a second commit the same day apart
     slug = "-".join(k.replace(".", "-") for k in list(knobs)[:3]) + ("-etc" if len(knobs) > 3 else "")
     branch = f"agent/ledger-{slug}-{today}"
     wt = os.path.join(os.path.dirname(root), "d2lod-wt", f"ledger-{slug}-{today}")
