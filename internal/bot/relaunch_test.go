@@ -49,7 +49,7 @@ func TestRefusalStormNamesTheRepeatedRefusals(t *testing.T) {
 		f := h.facts(t0)
 		runInv(m, f, 2, nil)
 		for i := 0; i < 5; i++ {
-			m.noteRefusal("countess: not ready: tower key")
+			m.noteRefusal("countess: not ready: early road")
 		}
 		for i := 0; i < 3; i++ {
 			m.noteRefusal("countess: area gated")
@@ -63,7 +63,7 @@ func TestRefusalStormNamesTheRepeatedRefusals(t *testing.T) {
 				detail = x.Detail
 			}
 		}
-		if !strings.Contains(detail, `top=["countess: not ready: tower key" x5; "countess: area gated" x3; "a" x1]`) {
+		if !strings.Contains(detail, `top=["countess: not ready: early road" x5; "countess: area gated" x3; "a" x1]`) {
 			t.Errorf("%s: detail %q", h.name, detail)
 		}
 		if len(m.refWhy) != 0 {
