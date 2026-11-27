@@ -41,11 +41,7 @@
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | diffbaal | proposed | - | `internal/quest/baaldone.go`<br>`internal/quest/baaldone_test.go` | - |
 | releasenotes-next | proposed | - | `docs/releases/next-draft.md` | - |
-| gearcopy | proposed | - | `internal/gear`<br>`docs/gear.md` | - |
-| logsink | proposed | - | `internal/logx`<br>`cmd/d2bot/main.go`<br>`cmd/d2bot/opscmd.go`<br>`cmd/d2bot/logsink_test.go`<br>`docs/ops` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
-| fieldstate | proposed | - | `internal/bot/loop.go`<br>`internal/bot/goal.go`<br>`internal/bot/state.go`<br>`internal/bot/runner.go`<br>`internal/bot/fieldstate_test.go` | - |
-| questresume | proposed | - | `internal/questboard/`<br>`data/questboard/`<br>`internal/bot/questboard.go`<br>`internal/bot/questauto.go`<br>`internal/bot/boardprogress.go`<br>`internal/bot/boardprogress_test.go`<br>`internal/bot/starvedcause.go`<br>`internal/bot/starvedcause_test.go`<br>`internal/bot/goal.go`<br>`internal/bot/arbiter_control.go`<br>`internal/bot/shadow.go`<br>`internal/env/tuning_quests.go`<br>`internal/watch/questsection.go`<br>`internal/watch/questsection_test.go`<br>`internal/watch/funwire.go`<br>`cmd/d2bot/funwire.go`<br>`data/darklaunch.json`<br>`docs/knobs.md`<br>`docs/questboard.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
@@ -196,14 +192,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 6f93a5890 11-27 17:48 `Merge agent/miscfix: miscfix: card updates 604/856/880/330 (no Go change)` (miscfix)
+- 2b0d2f671 11-27 17:48 `Merge agent/smegaps: smegaps: sourced resist floors, merc auras, FCR/FHR/FBR tables (docs/sme)` (smegaps)
+- 1bacc25f7 11-27 17:46 `Merge branch 'main' into miscfix` (-)
+- 9a5cafcba 11-27 17:46 `Merge branch 'main' into smegaps` (-)
 - 6a81a0526 11-27 17:34 `Merge agent/deployplan: deployplan: sandbox deploy runbook (docs)` (deployplan)
 - 8ab80f693 11-27 17:34 `Merge agent/cardfix2: cardfix2: card hygiene redo, live-queue doc` (cardfix2)
 - 594f488a9 11-27 17:34 `Merge agent/questresume: questresume: park resume policy (dark), paused visibility, campaign counter, starved cause (TASK-1071)` (questresume)
 - 2b18a5d96 11-27 17:34 `Merge agent/gearcopy: gearcopy: gear scoring reads plandata tables, drifted copies deleted (TASK-1067)` (gearcopy)
 - cd217e8ad 11-27 17:32 `Merge branch 'main' into deployplan` (-)
 - 728b2a126 11-27 17:32 `Merge branch 'main' into cardfix2` (-)
-- 0ea8b753c 11-27 17:32 `Merge branch 'main' into questresume` (-)
-- 5b3c8c61e 11-27 17:32 `Merge branch 'main' into gearcopy` (-)
-- d06f55ae6 11-27 17:25 `Merge agent/flakearb: flakearb: fix TestArbiterControlGoldFarmAndRecovery race (test starts in wrong area) (TASK-1068)` (flakearb)
-- 72a4592ae 11-27 17:24 `Merge branch 'main' into flakearb` (-)
 <!-- statusgen:end -->

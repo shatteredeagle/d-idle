@@ -1,17 +1,20 @@
 ---
 id: TASK-1071
-title: 'questresume: pause policy for death parks, campaign counter under the board, arbiter-starved cause'
-status: Proposed
+title: >-
+  questresume: pause policy for death parks, campaign counter under the board,
+  arbiter-starved cause
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T22:00:00Z'
+updated_date: '2026-11-27T22:46:00Z'
 labels:
   - bot
   - bug
 dependencies: []
-knob_net: owner-ok
 priority: medium
 ordinal: 515000
+knob_net: owner-ok
 card: "questresume"
 lane: next
 owns:
