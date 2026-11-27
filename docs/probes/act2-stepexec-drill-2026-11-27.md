@@ -4,9 +4,9 @@
 
 ## Setup
 
-- Worker host lab slot through `tools/d2dslot.sh`. Lab d2d is the featuresoak build of 2026-11-26 (`~/d2d-lab/featuresoak/bin/d2d.lab`). The bot is origin/main at 93b68e23f, after the stepexec2 merge.
+- Worker host lab slot through `tools/d2dslot.sh`. Lab d2d is the featuresoak build of 2026-11-26 (the featuresoak campaign's lab binary). The bot is origin/main at 93b68e23f, after the stepexec2 merge.
 - Command (labrun job 20261127-025021-2ffa, run from the synced worktree):
-  `env D2BOT_RUN=act2drill PG_DIR=.../featuresoak/pg-act2drill PG_D2D_BIN=.../featuresoak/bin/d2d.lab PG_DATA=.../d2d-lab/data tools/agentrun.sh act2drill --ttl 7200 -- taskset -c 0-7 nice -n 19 tools/provingground/run.sh -id drill.act2.assemble.stepexec,drill.act2.duriel.stepexec -class Paladin -seed 11 -repeat 3 -parallel 1`
+  `env D2BOT_RUN=act2drill PG_DIR=<dir> PG_D2D_BIN=<featuresoak lab d2d> PG_DATA=<MPQ dir> tools/agentrun.sh act2drill --ttl 7200 -- taskset -c 0-7 nice -n 19 tools/provingground/run.sh -id drill.act2.assemble.stepexec,drill.act2.duriel.stepexec -class Paladin -seed 11 -repeat 3 -parallel 1`
 - Knobs are the scenario files' own: `quests.stepExec` (1) and `resource.pointsDecisions` (1).
 - Heroes are Proving Ground throwaways made by SETUP verbs before the start. Provenance is CHEATED, so the results are mechanics only.
 - No writes after the start (the `no_writes` assertion is green on the assemble runs).
