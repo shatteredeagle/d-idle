@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"io"
 	"os"
@@ -60,17 +61,22 @@ func appendLine(path string, line []byte) error {
 	return err
 }
 
-// cmdLedger: `ledger status-doc -in L [-branch B] [-out F]` renders the generated status page; `ledger check -in L`
-// validates every line. There is no hand-written append: lines come from the runner (shipLedger) only.
+// cmdLedger: `ledger status-doc -in L [-branch B] [-tiers F] [-releases F] [-out F]` renders the generated status page
+// (docs/process/proving-ground-status.md); `ledger page-json` writes the same derivation as JSON for the board's /pg page
+// (plus the release view with -commit); `ledger check -in L` validates every line. There is no hand-written append: lines
+// come from the runner (shipLedger) only.
 func cmdLedger(args []string, w io.Writer) error {
 	if len(args) == 0 {
-		return fmt.Errorf("usage: ledger status-doc|check -in ledger.jsonl [-branch B] [-out file]")
+		return fmt.Errorf("usage: ledger status-doc|page-json|check -in ledger.jsonl [-branch B] [-tiers F] [-releases F] [-commit C] [-out file]")
 	}
 	sub := args[0]
 	fs := newFlags("ledger " + sub)
 	in := fs.String("in", "", "ledger file (JSON lines)")
-	branch := fs.String("branch", "main", "status-doc: branch to show (empty: all)")
-	out := fs.String("out", "", "status-doc: write here instead of stdout")
+	branch := fs.String("branch", "main", "status-doc, page-json: branch to show (empty: all)")
+	tiersPath := fs.String("tiers", "tools/provingground/scenarios/tiers.json", "status-doc, page-json: tiers file (empty: no tiers)")
+	relPath := fs.String("releases", "", "status-doc, page-json: releases of quarantined scenarios (JSON array; empty: none)")
+	commit := fs.String("commit", "", "page-json: bot commit of the release view (EARNED and SETUP runs only)")
+	out := fs.String("out", "", "status-doc, page-json: write here instead of stdout")
 	if _, err := parseArgs(fs, args[1:]); err != nil {
 		return err
 	}
@@ -86,6 +92,7 @@ func cmdLedger(args []string, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	var doc []byte
 	switch sub {
 	case "check":
 		for i, r := range recs {
@@ -94,15 +101,54 @@ func cmdLedger(args []string, w io.Writer) error {
 			}
 		}
 		fmt.Fprintf(w, "ledger ok: %d lines\n", len(recs))
-	case "status-doc":
-		doc := scenario.StatusDoc(recs, strings.TrimSpace(*branch))
-		if *out == "" {
-			_, err = io.WriteString(w, doc)
+		return nil
+	case "status-doc", "page-json":
+		page, err := pgPage(recs, strings.TrimSpace(*branch), *tiersPath, *relPath)
+		if err != nil {
 			return err
 		}
-		return os.WriteFile(*out, []byte(doc), 0o644)
+		if sub == "status-doc" {
+			doc = []byte(scenario.PGStatusDoc(page))
+			break
+		}
+		data := struct {
+			scenario.PGPage
+			ReleaseCommit string                  `json:"release_commit,omitempty"`
+			ReleaseView   []scenario.LedgerRecord `json:"release_view,omitempty"`
+		}{page, *commit, scenario.ReleaseView(recs, *commit)}
+		if doc, err = json.MarshalIndent(data, "", " "); err != nil {
+			return err
+		}
+		doc = append(doc, '\n')
 	default:
 		return fmt.Errorf("ledger: unknown subcommand %q", sub)
 	}
-	return nil
+	if *out == "" {
+		_, err = w.Write(doc)
+		return err
+	}
+	return os.WriteFile(*out, doc, 0o644)
+}
+
+// pgPage loads the optional tiers and releases files and derives the page.
+func pgPage(recs []scenario.LedgerRecord, branch, tiersPath, relPath string) (scenario.PGPage, error) {
+	var tiers scenario.TierFile
+	if tiersPath != "" {
+		t, err := scenario.LoadTiers(tiersPath)
+		if err != nil {
+			return scenario.PGPage{}, err
+		}
+		tiers = t
+	}
+	var rels []scenario.Release
+	if relPath != "" {
+		b, err := os.ReadFile(relPath)
+		if err != nil {
+			return scenario.PGPage{}, err
+		}
+		if err := json.Unmarshal(b, &rels); err != nil {
+			return scenario.PGPage{}, fmt.Errorf("%s: %w", relPath, err)
+		}
+	}
+	return scenario.BuildPGPage(recs, rels, tiers, branch)
 }

@@ -2,6 +2,8 @@
 
 > status: current. Tags: V verified (run named), S secondary, U unverified. Host: the builder main lane, lab d2d slots, bot of branch agent/cainchain, `tools/provingground/run.sh -id cain.chain -class <C> -seed <n> -parallel 1`. Every setup is CHEATED (scenario `provenance`): mechanics evidence only, never balance or play evidence.
 
+> verdicts: current verdicts per scenario and class are in [proving-ground-status.md](../process/proving-ground-status.md) (generated from the results ledger) and on the board page /pg. The tables below record these runs only; new runs are cited by run id, not added here (design 2026-11-21 Q10).
+
 ## Verdicts (V, builder)
 
 | scenario | verdict | job |
