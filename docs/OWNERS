@@ -220,7 +220,6 @@ docs/onboarding-tour.md  credit-runner  onboardtour
 docs/onboarding.md  credit-runner  reconnectux
 docs/probes/checkpoint-live-drill.md  live-agent  ckptlive
 docs/probes/classorder1.md  user  classorder1
-docs/probes/combat-drills-2026-11-27.md  credit-runner  whirlscen
 docs/probes/exitsread-2026-11-22.md  credit-runner  exitsread
 docs/probes/flipwave2.md  live-agent  flipwave2
 docs/probes/h1-baseline.md  user  h1baseline
@@ -395,7 +394,6 @@ internal/questboard/state.go  credit-runner  qdmatrix
 internal/questboard/state_test.go  credit-runner  qdmatrix
 internal/resource  credit-runner  town5
 internal/saves/progress.go  credit-runner  qdmatrix
-internal/scenario/  credit-runner  whirlscen
 internal/scenario/earned.go  credit-runner  pgearned
 internal/scenario/earned_test.go  credit-runner  pgearned
 internal/scenario/ledger.go  credit-runner  pgearned
@@ -519,13 +517,11 @@ tools/provingground/pgenv_test.sh  credit-runner  pgledgeron
 tools/provingground/run.sh  credit-runner  pgledgeron
 tools/provingground/scenarios/cain.json  credit-runner  cainfix3
 tools/provingground/scenarios/cain.json  credit-runner  pgearned
-tools/provingground/scenarios/combatdrills.json  credit-runner  whirlscen
 tools/provingground/scenarios/navexit.json  credit-runner  stage1fix
 tools/provingground/scenarios/necro-acts.json  live-agent  epic-class-necromancer
 tools/provingground/scenarios/necro-epic.json  live-agent  epic-class-necromancer
 tools/provingground/scenarios/necro.json  credit-runner  stage1fix
 tools/provingground/scenarios/questdrill.json  credit-runner  qdmatrix
-tools/provingground/scenarios/tiers.json  credit-runner  whirlscen
 tools/provingground/scenarios/tiers.json  live-agent  epic-class-necromancer
 tools/provingground/scenarios/townplan.json  credit-runner  town5
 tools/provingground/status_doc.sh  credit-runner  pgpage
