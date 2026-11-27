@@ -15,8 +15,11 @@ ordinal: 473000
 card: "agencyp3"
 owns:
   - "docs/design/agency-p3.md"
+  - "internal/buildfile/share.go"
+  - "internal/buildfile/share_test.go"
 exclusive: []
 contracts: []
+result: "Done offline, not verified live. ReadShared, ImportKolbotBuild, export/import identity test over all shipped plan tables, Paladin+Sorceress kolbot import tests; NIP importer and /api/hero/track not built."
 ---
 
 ## Description
@@ -29,5 +32,5 @@ Recommendation of the 2026-11-19 design review (06-roadmap R15; prototype branch
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Import and export round trip test with two builds
+- [x] #1 Import and export round trip test with two builds
 <!-- AC:END -->

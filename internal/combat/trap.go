@@ -202,7 +202,7 @@ func planTrap(me input.Point, known map[string]SkillSpec, mana int, hs []Target,
 					cs = append(cs, c)
 				}
 			}
-			if c, ok := pickExplosionCorpse(cs, hs, cat, 1); ok && !coveredBy(c.X, c.Y, cover) {
+			if c, ok := pickCorpse(corpseRowSentry, cs, hs, cat); ok && !coveredBy(c.X, c.Y, cover) {
 				return trapPlan{sp: sp, at: input.Point{X: c.X, Y: c.Y}, target: "corpse", dist: dist(me.X, me.Y, c.X, c.Y)}, true
 			}
 			continue

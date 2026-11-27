@@ -90,10 +90,30 @@ func routeEdges(names []string, settleFirst bool) [][2]string {
 	return out
 }
 
-// stopPenalty is what opening one more stop costs besides the walk (the approach, the panel, the greeting), in subtiles:
-// a stop on the way (the stash between the repair vendor and the shop) is not free, so one stash stop beats two (U: the
-// value is a judgment, nothing measures it; it only breaks ties between equal walks).
-const stopPenalty = 10
+// routeCosts is the price list of a walk, in subtiles. StopPenalty is what opening one more stop costs besides the walk
+// (the approach, the panel, the greeting): a stop on the way (the stash between the repair vendor and the shop) is not
+// free, so one stash stop beats two (U: the value is a judgment, nothing measures it; it only breaks ties between equal
+// walks). Walk is the distance between two stops; nil = straight line, the navigator's path length when it can price one.
+type routeCosts struct {
+	StopPenalty int
+	Walk        func(a, b input.Point) int
+}
+
+// defaultRouteCosts is the straight-line price list with the stop penalty of the judgment above.
+var defaultRouteCosts = routeCosts{StopPenalty: 10}
+
+func (c routeCosts) walk(a, b input.Point) int {
+	if c.Walk != nil {
+		return c.Walk(a, b)
+	}
+	return int(math.Round(math.Hypot(float64(a.X-b.X), float64(a.Y-b.Y))))
+}
+
+// PathCoster is what a navigator offers when it can price a walk on the map it knows: the path length in subtiles, false
+// when it has no map or no path (the route then falls back to the straight line for the whole visit).
+type PathCoster interface {
+	PathCost(from, to input.Point) (int, bool)
+}
 
 // routeResult is the chosen order, the visited stops in order (consecutive duplicates merged, "" chores walk nowhere)
 // and the walk cost in subtiles.
@@ -108,10 +128,15 @@ type routeResult struct {
 // input order when every position is the same. Exhaustive over the reachable subsets (DP); more than 22 chores or an
 // edge cycle returns the input order unchanged.
 func routeOrder(names []string, edges [][2]string, pos map[string]input.Point, start input.Point) routeResult {
+	return routeOrderWith(names, edges, pos, start, defaultRouteCosts)
+}
+
+// routeOrderWith is routeOrder with an explicit price list.
+func routeOrderWith(names []string, edges [][2]string, pos map[string]input.Point, start input.Point, rc routeCosts) routeResult {
 	n := len(names)
 	keep := func() routeResult {
 		r := routeResult{Order: slices.Clone(names)}
-		r.Stops, r.Cost = walkOf(names, pos, start)
+		r.Stops, r.Cost = walkOf(names, pos, start, rc)
 		return r
 	}
 	if n == 0 || n > 22 {
@@ -152,14 +177,14 @@ func routeOrder(names []string, edges [][2]string, pos map[string]input.Point, s
 			return 0
 		}
 		pa, pb := pos[a], pos[b]
-		return stopPenalty + int(math.Round(math.Hypot(float64(pa.X-pb.X), float64(pa.Y-pb.Y))))
+		return rc.StopPenalty + rc.walk(pa, pb)
 	}
 	startDist := func(role string) int {
 		if role == "" {
 			return 0
 		}
 		p := pos[role]
-		return stopPenalty + int(math.Round(math.Hypot(float64(p.X-start.X), float64(p.Y-start.Y))))
+		return rc.StopPenalty + rc.walk(start, p)
 	}
 	var solve func(mask uint32, last int) val
 	solve = func(mask uint32, last int) val {
@@ -209,12 +234,12 @@ func routeOrder(names []string, edges [][2]string, pos map[string]input.Point, s
 		}
 		mask |= 1 << v.next
 	}
-	res.Stops, res.Cost = walkOf(res.Order, pos, start)
+	res.Stops, res.Cost = walkOf(res.Order, pos, start, rc)
 	return res
 }
 
 // walkOf is the stop sequence and walk cost of running the chores in the given order.
-func walkOf(order []string, pos map[string]input.Point, start input.Point) (stops []string, cost int) {
+func walkOf(order []string, pos map[string]input.Point, start input.Point, rc routeCosts) (stops []string, cost int) {
 	cur, at := "", start
 	for _, nm := range order {
 		r := choreRole[nm]
@@ -222,7 +247,7 @@ func walkOf(order []string, pos map[string]input.Point, start input.Point) (stop
 			continue
 		}
 		p := pos[r]
-		cost += stopPenalty + int(math.Round(math.Hypot(float64(p.X-at.X), float64(p.Y-at.Y))))
+		cost += rc.StopPenalty + rc.walk(at, p)
 		cur, at = r, p
 		stops = append(stops, r)
 	}
@@ -250,7 +275,38 @@ func (t *Town) reorderChores(s *d2.Snapshot, a *Act, names []string, settleFirst
 			return names
 		}
 	}
-	res := routeOrder(names, routeEdges(names, settleFirst), pos, input.Point{X: s.Player.X, Y: s.Player.Y})
+	start := input.Point{X: s.Player.X, Y: s.Player.Y}
+	rc := t.routePrices(pos, start)
+	res := routeOrderWith(names, routeEdges(names, settleFirst), pos, start, rc)
 	t.e.Log.Info(fmt.Sprintf("town plan: route stops=%s cost=%d settle-first=%v order=%s", strings.Join(res.Stops, ","), res.Cost, settleFirst, strings.Join(res.Order, ",")))
 	return res.Order
+}
+
+// routePrices is the price list of this visit: the navigator's path length when every leg between the start and the role
+// positions can be priced (all or nothing, so the legs stay comparable), else the straight line.
+func (t *Town) routePrices(pos map[string]input.Point, start input.Point) routeCosts {
+	rc := defaultRouteCosts
+	pc, ok := t.mv.(PathCoster)
+	if !ok {
+		return rc
+	}
+	memo := map[[2]input.Point]int{}
+	pts := []input.Point{start}
+	for _, p := range pos {
+		pts = append(pts, p)
+	}
+	for _, a := range pts {
+		for _, b := range pts {
+			if a == b {
+				continue
+			}
+			c, ok := pc.PathCost(a, b)
+			if !ok {
+				return rc
+			}
+			memo[[2]input.Point{a, b}] = c
+		}
+	}
+	rc.Walk = func(a, b input.Point) int { return memo[[2]input.Point{a, b}] }
+	return rc
 }

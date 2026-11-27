@@ -218,9 +218,13 @@ func (f *Fighter) planMinion(snap *d2.Snapshot, pr *Profile, inFight, allowWalk 
 		if len(corpses) == 0 {
 			continue
 		}
-		u := corpses[0]
+		row := corpseRowNearest
 		if g.Strongest {
-			u = bestRevivable(corpses, f.cat)
+			row = corpseRowBest
+		}
+		u, ok := f.corpseFor(p, sp.Name, row, corpses, nil)
+		if !ok {
+			continue
 		}
 		return minionPlan{sp: sp, group: g.Name, corpse: &u, walk: dist(me.X, me.Y, u.X, u.Y) > castReach}, true
 	}
@@ -241,7 +245,7 @@ func (f *Fighter) castMinion(ctx context.Context, snap *d2.Snapshot, pr *Profile
 		return false, err
 	}
 	if pl.corpse != nil {
-		f.necro.tried[pl.corpse.ID] = true
+		f.takeCorpse(pl.corpse.ID)
 	}
 	if err := f.sleep(ctx, ms(f.tune().CastGapMs)+ms(500)); err != nil {
 		return false, err
@@ -297,7 +301,7 @@ func (f *Fighter) keepMinions(ctx context.Context) (int, error) {
 		}
 		if pl.walk {
 			if err := f.mv.GoTo(ctx, input.Point{X: pl.corpse.X, Y: pl.corpse.Y}); err != nil {
-				f.necro.tried[pl.corpse.ID] = true
+				f.takeCorpse(pl.corpse.ID)
 				continue
 			}
 			if snap, err = f.read(ctx); err != nil {

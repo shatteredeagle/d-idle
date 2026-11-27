@@ -14,8 +14,11 @@ ordinal: 472000
 card: "agencyp1b"
 owns:
   - "docs/design/agency-p1b.md"
+  - "internal/agency/drive.go"
+  - "internal/agency/drive_test.go"
 exclusive: []
 contracts: []
+result: "Partial, not verified live. agency.DriveOf (the mode 2 decision) and docs/design/agency-p1b.md built; knob Max stays 1 until the fighter is wired; shadow review, owner go, wiring and flip are owner/live."
 ---
 
 ## Description
