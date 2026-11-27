@@ -257,6 +257,7 @@ docs/live-checks.md  credit-runner  repairtrip
 docs/onboarding-tour.md  credit-runner  onboardtour
 docs/onboarding.md  credit-runner  reconnectux
 docs/plan/STATUS.md  credit-runner  statusrefresh
+docs/plan/data/  credit-runner  questpts
 docs/plan/data/admission.json  credit-runner  admit1
 docs/plan/data/earlyroutes.json  credit-runner  admit1
 docs/plan/data/povertyfarm.json  credit-runner  admit1
@@ -394,6 +395,7 @@ internal/bot/zonemodel.go  credit-runner  survrecover
 internal/bot/zonerecover_test.go  credit-runner  survrecover
 internal/bot/zoneshadow.go  credit-runner  intake
 internal/bot/zoneshadow.go  credit-runner  survrecover
+internal/buildfile/  credit-runner  questpts
 internal/campaign/  credit-runner  campaign1
 internal/combat/  credit-runner  cainfix3
 internal/combat/  credit-runner  dlv-aim-corpse
@@ -478,6 +480,7 @@ internal/input/useitem_test.go  credit-runner  inputl3
 internal/invdesk/mercverbs.go  credit-runner  uib9
 internal/invdesk/mercverbs_test.go  credit-runner  uib9
 internal/invdesk/sets.go  credit-runner  uib9
+internal/leveler/  credit-runner  questpts
 internal/leveler/mainattack_test.go  credit-runner  necroteeth
 internal/loot/  credit-runner  town6
 internal/nav/  credit-runner  dlv-move-tele
@@ -511,6 +514,7 @@ internal/nav/roam.go  credit-runner  pursuers
 internal/nav/route.go  credit-runner  exitsread
 internal/nav/walk.go  credit-runner  pursuers
 internal/nav/warpread_test.go  credit-runner  warptrigger
+internal/plandata/  credit-runner  questpts
 internal/plandata/admission.json  credit-runner  admit1
 internal/plandata/earlyroutes.json  credit-runner  admit1
 internal/plandata/povertyfarm.json  credit-runner  admit1
@@ -533,6 +537,7 @@ internal/resource/tuning.go  credit-runner  freshstart
 internal/resource/tuning.go  live-agent  recoverypace
 internal/saves/progress.go  credit-runner  qdmatrix
 internal/scenario/earned.go  credit-runner  pgearned
+internal/scenario/hero/  credit-runner  questpts
 internal/scenario/hero/selfcheck.go  credit-runner  pgselfcheck
 internal/scenario/pgpage.go  credit-runner  pgpage
 internal/scenario/pgpage_test.go  credit-runner  pgpage

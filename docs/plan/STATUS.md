@@ -50,6 +50,7 @@
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
 | deploy88-ledger | proposed | - | `data/darklaunch.json` | - |
 | placefix | proposed | - | `internal/questboard/`<br>`internal/bot/questboard.go`<br>`data/questboard/act2.json`<br>`tools/provingground/scenarios/stepexec-act2.json`<br>`tools/provingground/scenarios/questdrill.json`<br>`internal/scenario/placefix_test.go`<br>`docs/questboard.md`<br>`internal/task/act1.go`<br>`internal/task/act2.go`<br>`internal/task/placefix_test.go`<br>`internal/d2dinput/controller.go`<br>`internal/d2dinput/placefix_test.go`<br>`internal/d2dctl/parse.go`<br>`internal/d2dctl/verbs.go`<br>`internal/d2dctl/fake/fake.go` | - |
+| questpts | in-progress | - | `internal/plandata/`<br>`internal/buildfile/`<br>`internal/leveler/`<br>`docs/plan/data/`<br>`internal/scenario/hero/` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
@@ -245,6 +246,7 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 808277b83 11-27 07:06 `Merge agent/questpts: questpts: card owns as directories` (questpts)
 - 7288badbe 11-27 06:37 `Merge agent/placefix3: Merge branch 'main' into placefix` (placefix3)
 - 44412dbb8 11-27 06:35 `Merge branch 'main' into placefix` (-)
 - c01bdcf8f 11-27 06:29 `Merge agent/act2drill3: Merge branch 'main' into stepexec1` (act2drill3)
@@ -254,5 +256,4 @@
 - 488cf96cc 11-27 05:16 `Merge branch 'main' into placefix` (-)
 - 640cb0c41 11-27 05:06 `Merge agent/act2drill2: act2drill2: card result for the Duriel rerun` (act2drill2)
 - d2ce0e875 11-27 04:42 `Merge agent/aimpoint: Merge branch 'main' into dlv-aim-point` (aimpoint)
-- e67faa8f5 11-27 04:41 `Merge branch 'main' into dlv-aim-point` (-)
 <!-- statusgen:end -->
