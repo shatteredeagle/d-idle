@@ -245,6 +245,7 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 640cb0c41 11-27 05:06 `Merge agent/act2drill2: act2drill2: card result for the Duriel rerun` (act2drill2)
 - d2ce0e875 11-27 04:42 `Merge agent/aimpoint: Merge branch 'main' into dlv-aim-point` (aimpoint)
 - e67faa8f5 11-27 04:41 `Merge branch 'main' into dlv-aim-point` (-)
 - 194b61f57 11-27 04:33 `Merge agent/placefix: placefix: Duriel drills keep the Staff placeable; seven_tombs opens on the Staff made` (placefix)
@@ -254,5 +255,4 @@
 - 9e8522d83 11-27 03:49 `Merge agent/act2drill: Merge branch 'main' into stepexec1` (act2drill)
 - bcee08864 11-27 03:47 `Merge branch 'main' into stepexec1` (-)
 - e74b65753 11-27 03:11 `Merge agent/upkeepcmp: Merge branch 'main' into upkeepcmp` (upkeepcmp)
-- 2f3ae2bd7 11-27 03:10 `Merge branch 'main' into upkeepcmp` (-)
 <!-- statusgen:end -->
