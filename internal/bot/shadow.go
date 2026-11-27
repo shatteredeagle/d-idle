@@ -183,7 +183,7 @@ func (r *Runner) shadowTick(v arbiter.View, acted bool) {
 	}
 	if d, ok := sh.Last(); ok {
 		for _, in := range d.Starved {
-			r.inv.noteStarved(in.Key() + ": " + in.Reason)
+			r.inv.noteStarved(r.starvedCause(d, in))
 		}
 	}
 }

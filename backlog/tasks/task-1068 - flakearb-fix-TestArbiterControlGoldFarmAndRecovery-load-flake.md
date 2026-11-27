@@ -1,10 +1,11 @@
 ---
 id: TASK-1068
 title: 'flakearb: fix TestArbiterControlGoldFarmAndRecovery load flake'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T21:33:00Z'
+updated_date: '2026-11-27T22:42:00Z'
 labels:
   - bot
   - bug

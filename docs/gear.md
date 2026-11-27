@@ -34,7 +34,7 @@ WeaponProblem rules: class-restricted item on the wrong class, launcher without 
 - `town`: chore "restock": `Restock(e)` then `VendorForAct`; Charsi Misc tab (V live: tab click (361,75), Arrows cell (1,6), Bolts (2,0), 81 gold per full Arrows stack). Equip the quiver into slot 5 (shield slot). First shopping for a bow Amazon: `StartPurchases`.
 - `leveler`: allow `miss` weapons for the Amazon (finding 1), never put a shield over the quiver, `leveler.buildFiles` entries for the four builds below (copy `internal/gear/builds/*.json` into `internal/plandata` and docs/plan/data, or read `gear.BuildJSON`); `DefaultBuildName`: amazon -> `amazon_bow_normal30`, necromancer -> `necromancer_summoner_normal30` (`gear.DefaultBuild`).
 
-## Builds (`internal/gear/builds/*.json`, same schema as `build-paladin-normal30.json`, plus `main_attack`)
+## Builds (`internal/plandata/build-<name>.json`, the single source since task gearcopy: `internal/gear/builds` is gone and `gear.BuildJSON` reads plandata; same schema as `build-paladin-normal30.json`, plus `main_attack`)
 `gen_builds.py` writes them and asserts prerequisites, skill reqlevels, 5 stat points and max 20 per row against skills.txt; `TestBuilds` repeats the checks in Go.
 | file | source |
 |---|---|

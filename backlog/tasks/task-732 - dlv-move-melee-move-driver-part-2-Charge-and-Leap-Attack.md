@@ -1,9 +1,9 @@
 ---
 id: TASK-732
 title: 'dlv-move-melee: move driver part 2: Charge and Leap Attack'
-status: Proposed
+status: In Progress
 assignee:
-  - credit-runner
+  - live-agent
 created_date: '2026-11-21T04:44:00Z'
 labels:
   - bot
@@ -16,7 +16,7 @@ owns:
   - "internal/combat/"
 exclusive: []
 contracts: []
-result: "Offline only, NOT verified live. Gap rows in the move driver (move.go gapClose): Leap Attack (Barbarian default and frenzy; gap through the target by 1 subtile, plus escape out of a surround) and Charge (Paladin default and hammerdin; gap at the target), numbers are planning values (source U). A left-hand skill is refused unless the backend casts by id (hotkeys select only the right hand), so Charge needs d2d. Knob combat.deliveryUpkeep 0/1/2. Tests Barbarian + Paladin (gap) and Sorceress (hop). No layout keys added. Live: the combat.teleport-reposition rows and the landing rules of Leap Attack and Charge."
+result: "Offline only, NOT verified live. Gap rows in the move driver (move.go gapClose): Leap Attack (Barbarian default and frenzy; gap through the target by 1 subtile, plus escape out of a surround) and Charge (Paladin default and hammerdin; gap at the target), numbers are planning values (source U). A left-hand skill is refused unless the backend casts by id (hotkeys select only the right hand), so Charge needs d2d. Knob combat.deliveryUpkeep 0/1/2. Tests Barbarian + Paladin (gap) and Sorceress (hop). No layout keys added. Live: the combat.teleport-reposition rows and the landing rules of Leap Attack and Charge. Remaining (live): AC 4 race gate x20 on the worker host; Leap Attack and Charge rows live in combat.teleport-reposition."
 lane: next
 ---
 
