@@ -1,10 +1,11 @@
 ---
 id: TASK-1078
 title: 'zonepace: zone picker forgets old hardness, drops zones far below the hero'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T23:24:00Z'
+updated_date: '2026-11-27T23:50:00Z'
 labels:
   - bot
   - bot-fix
