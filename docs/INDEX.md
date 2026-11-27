@@ -338,6 +338,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [admission-p4.md](design/admission-p4.md): Admission function (P4, card admit1, TASK-970) (status: step 1 built (package, data, tests); step 2 (wiring) waits for the outcomes2 cards TASK-958 and TASK-961.)
 - [autoalloc-and-currencies-2026-11-21.md](design/autoalloc-and-currencies-2026-11-21.md): Automatic Allocate Skills, the gold respec and the currency consolidation (design, 2026-11-21) (status: DESIGN plus a built first slice (agent autoalloc). Tags: **V** verified (how said), **S** secondary, **U**...)
 - [bulk-identify-2026-11-18.md](design/bulk-identify-2026-11-18.md): Bulk identify: Cain-free, lazy reveal, filter (design, 2026-11-18) (status: BUILT offline (B1-B5 and the town adapters, scroll path and Ether tap payer of slice B6, task bulkid2),...)
+- [charm-management-2026-11-27.md](design/charm-management-2026-11-27.md): Charm management: carry, pack budget, build wants, Vault and Inventory UI (status: design note, docs only (2026-11-27, agent charms). Nothing here is built. Tags: V = read in this tree at...)
 - [danger-protocol-2026-11-25.md](design/danger-protocol-2026-11-25.md): Danger protocol and checkpoint portals (2026-11-25) (status: design proposal, no code. Part 1 reads the code (tags: V = verified in code or a cited live record, S =...)
 
 `design/fable-review-2026-11-19/`
@@ -611,7 +612,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 `reviews/`
 
 - [support-bundle-security-2026-11-15.md](reviews/support-bundle-security-2026-11-15.md): Security review: support bundle upload (branch agent/support, tip 88eecae7b) (status: review of task 542 / card `support` before merge (mergeq #811). Reviewer: Opus, single, offline. Nothing...)
-- [roadmap-fable.md](roadmap-fable.md): Fable roadmap: every recommendation, its state, and what flips it (status: current (card fableroadmap, 2026-11-26; refreshed by card roadmap2 the same day against `git log...)
+- [roadmap-fable.md](roadmap-fable.md): Fable roadmap: every recommendation, its state, and what flips it (status: current (card fableroadmap, 2026-11-26; refreshed by card roadmap2 the same day and by card roadmap3 on...)
 - [roamleg.md](roamleg.md): ROAMLEG: a mouth-gate hold is not a failed roam target (status: offline fix, tests pass, verified live in DRILLS23 (docs/probes/drills/README.md): 0 failed legs (was 50),...)
 - [roamspacing.md](roamspacing.md): Roam coverage spacing (TASK-301) (status: CURRENT. Tags: V = measured (log read-only, or the simulator run in this worktree on the worker host), S =...)
 - [running.md](running.md): How to run d.idle (status: current as of 2026-11-01 (card readmedocs; Teleport and `--build` note added by card capdocs). Every...)
@@ -1054,6 +1055,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 `probes/`
 
 - [act2-stepexec-drill-2026-11-27.md](probes/act2-stepexec-drill-2026-11-27.md): Act 2 step executor drill (card stepexec1, 2026-11-27) (status: current (lab drill of TASK-976 AC #4; docs/design/stepexec-p9.md is the design).)
+- [akara-handin-click-2026-11-27.md](probes/akara-handin-click-2026-11-27.md): Hand in to Akara (Search for Cain): why a click can be a silent no-op (2026-11-27) (status: read-only code diagnosis, nothing run, sandbox untouched. Tags: V = read in the code at main 388dcc3da...)
 - [andariel-gate-recalibration-2026-11-24.md](probes/andariel-gate-recalibration-2026-11-24.md): Andariel gate recalibration: a proposal, nothing applied (2026-11-24)
 - [autoalloc-necro-summoner-default-2026-11-23.md](probes/autoalloc-necro-summoner-default-2026-11-23.md): Necromancer Summoner auto-alloc: what the table says, which default (2026-11-23) (status: recommendation, no data defaults changed here (the build-choice card owns `defaultVariant`).)
 
@@ -1076,6 +1078,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [combat-foundation-2026-11-21.md](probes/combat-foundation-2026-11-21.md): Combat engine foundation group, 2026-11-21 (status: record of the foundation group of the approved combat engine plan...)
 - [countess-knobs-2026-11-22.md](probes/countess-knobs-2026-11-22.md): The Countess three ways: nav.fullGrid and nav.warpRead on a lab slot (card mapverify, 2026-11-22) (status: current. Scenario `act1.forgotten.countess` (Paladin) and `act1.forgotten.countess.sorc` (Sorceress),...)
 - [currency1.md](probes/currency1.md): Probe: currency slice 1, the Raven's Mark rows (TASK-63) (status: UNVERIFIED live, 2026-11-06. Offline checks passed; the live run was not started because Gate 2 seeds were...)
+- [dark-queue-plan-2026-11-27.md](probes/dark-queue-plan-2026-11-27.md): Dark queue: plan to clear it (2026-11-27) (status: current (docs-only plan, nothing run, nothing flipped). Sources: `data/darklaunch.json` (38 rows),...)
 - [deploy-cockpit-2026-11-15.md](probes/deploy-cockpit-2026-11-15.md): Deploy record: cockpit UI to the sandbox, 2026-11-15 (status: record. Task TASK-490. Tags: V = verified in this run (command named), U = not verified.)
 - [devp8-2026-11-15.md](probes/devp8-2026-11-15.md): Sandbox image devp8: hero stats and merc item verbs (2026-11-15) (status: result record, deployed. Tags: V = run and seen (command named), S = read, U = unverified. Task: TASK-516....)
 - [drill-zip-2026-11-14.md](probes/drill-zip-2026-11-14.md): Friend pack 0.1.1 drilled on the user's original install zip (2026-11-14) (status: RUN 2026-11-14 on the worker host. Tags: V = run and output seen, S = read in the source or docs, U = not...)
