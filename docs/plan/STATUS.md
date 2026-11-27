@@ -137,7 +137,7 @@
 | countess3 | proposed | - | `internal/d2dctl`<br>`internal/d2dworld`<br>`internal/boss`<br>`internal/d2map`<br>`cmd/d2bot/boss.go`<br>`docs/process/layout-read.md`<br>`docs/probes/provingground-countess-2026-11-20.md`<br>`internal/env/tuning_quests.go`<br>`docs/knobs.md` | `fork-branch:didle/level-monsters-20261121` |
 | wpstep | proposed | - | `internal/task/executor.go`<br>`internal/task/timeoutpolicy_test.go`<br>`internal/d2map/static.go`<br>`internal/d2map/tracker.go`<br>`internal/d2map/tracker_test.go`<br>`internal/d2dworld/`<br>`internal/bot/task.go`<br>`tools/provingground/scenarios/cain.json` | - |
 | fid-probe-readers | deferred | - | `docs/probes/fid/fid-probe-readers.md` | - |
-| dlv-upkeep-state | proposed | - | `internal/combat/`<br>`internal/data/` | - |
+| dlv-upkeep-state | proposed | - | `internal/combat/`<br>`internal/data/`<br>`internal/env/tuning_combat.go`<br>`docs/knobs.md`<br>`data/darklaunch.json` | - |
 | dlv-upkeep-minions | proposed | - | `internal/combat/` | - |
 | dlv-mark | proposed | - | `internal/combat/` | - |
 | dlv-stance-army | proposed | - | `internal/combat/`<br>`internal/arbiter/` | - |
@@ -244,7 +244,9 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- d3a579824 11-27 00:39 `Merge agent/upkeep: Merge branch 'main' into dlv-upkeep-state` (upkeep)
 - ff87b2ee9 11-27 00:39 `Merge agent/proptest1: Merge branch 'main' into proptest1` (proptest1)
+- d7515ab9a 11-27 00:37 `Merge branch 'main' into dlv-upkeep-state` (-)
 - a69afe04b 11-27 00:37 `Merge branch 'main' into proptest1` (-)
 - 732d38dd9 11-27 00:33 `Merge agent/arbmig2: Merge branch 'main' into arbmig` (arbmig2)
 - ad09964ce 11-27 00:31 `Merge branch 'main' into arbmig` (-)
@@ -252,6 +254,4 @@
 - b9ea4cd04 11-27 00:12 `Merge branch 'main' into sellsnap` (-)
 - add24a8d9 11-27 00:07 `Merge agent/townflip: Merge branch 'main' into townflip` (townflip)
 - 2a75046de 11-27 00:05 `Merge branch 'main' into townflip` (-)
-- 75e4c2f4e 11-26 23:54 `Merge branch 'main' into sellsnap` (-)
-- ee716b023 11-26 23:45 `Merge agent/ticklog: ticklog: tests, ledger row, knob doc, design doc, card` (ticklog)
 <!-- statusgen:end -->
