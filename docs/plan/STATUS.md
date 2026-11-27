@@ -245,6 +245,7 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 2836d51ab 11-27 13:18 `Merge agent/town6b: town6b: stage 4 scenario live checklist (docs only)` (town6b)
 - d65dd27d6 11-27 10:29 `Merge agent/hostilespin: Merge branch 'main' into hostilespin` (hostilespin)
 - 6062a47fd 11-27 10:28 `Merge branch 'main' into hostilespin` (-)
 - 0191a0523 11-27 10:15 `Merge agent/featuresoak2: Merge remote-tracking branch 'origin/main' into agent/featuresoak2` (featuresoak2)
@@ -254,5 +255,4 @@
 - c2af036e3 11-27 09:32 `Merge agent/deploy94: Merge branch 'main' into deploy94-ledger` (deploy94)
 - 4ab536c5f 11-27 09:30 `Merge branch 'main' into deploy94-ledger` (-)
 - e1bf805a5 11-27 08:36 `Merge agent/act2handin: Merge remote-tracking branch 'origin/main' into agent/act2handin` (act2handin)
-- 5307199f6 11-27 08:33 `Merge remote-tracking branch 'origin/main' into agent/act2handin` (-)
 <!-- statusgen:end -->
