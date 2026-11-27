@@ -1,10 +1,13 @@
 ---
 id: TASK-1076
-title: 'racefix: board hand-in reads a stale world cache (confirming instead of done under -race)'
-status: Proposed
+title: >-
+  racefix: board hand-in reads a stale world cache (confirming instead of done
+  under -race)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T22:57:00Z'
+updated_date: '2026-11-27T23:47:00Z'
 labels:
   - bot
   - bot-fix

@@ -279,10 +279,8 @@ internal/bot/guided_test.go  credit-runner  campaign1
 internal/bot/leveling.go  live-agent  town5
 internal/bot/loop.go  live-agent  arbmig
 internal/bot/questboard.go  credit-runner  qdmatrix
-internal/bot/questboard.go  credit-runner  racefix
 internal/bot/questboard.go  live-agent  bsmdef
 internal/bot/questboard_s7b_test.go  credit-runner  qdmatrix
-internal/bot/questboard_test.go  credit-runner  racefix
 internal/bot/routeguard.go  live-agent  bsmdef
 internal/bot/runner.go  credit-runner  campaign1
 internal/bot/shadow.go  live-agent  arbmig

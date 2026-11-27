@@ -42,7 +42,6 @@
 | diffbaal | proposed | - | `internal/quest/baaldone.go`<br>`internal/quest/baaldone_test.go` | - |
 | releasenotes-next | proposed | - | `docs/releases/next-draft.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
-| racefix | proposed | - | `internal/bot/questboard.go`<br>`internal/bot/questboard_test.go` | - |
 | tuningwrite | proposed | - | `internal/store/`<br>`internal/bot/tuner.go`<br>`internal/bot/tuner_test.go`<br>`tools/flip/` | - |
 | zonepace | proposed | - | `internal/survival/`<br>`cmd/d2bot/survivalwire.go` | - |
 | relaunches | proposed | - | `internal/bot`<br>`cmd/d2bot/behaviors.go`<br>`cmd/d2bot/d2dwire.go` | - |
