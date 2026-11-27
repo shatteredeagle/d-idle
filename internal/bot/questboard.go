@@ -373,7 +373,7 @@ func (f boardFacts) Quest(diff int, id string) questboard.Fact {
 	t := evTier(st.Ev)
 	return questboard.Fact{Known: st.Ev != task.EvNone || st.Stage != task.StageNone, Tier: t,
 		Done: st.Stage >= task.StageDone, Started: st.Stage >= task.StageStarted,
-		Pending: st.Stage == task.StageCleared && t.Exact()}
+		Pending: st.Stage == task.StageCleared && t.Exact(), Cleared: st.Stage >= task.StageCleared}
 }
 
 // legacyChunk is the single-chunk quest that runs its own task group as a whole (slice S3): its done and objective
