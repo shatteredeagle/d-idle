@@ -8,6 +8,8 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- akarafix: hand-in queued/served logs, stale request drop, why-waiting reason (TASK-1051) <!--sg:agent/akarafix-->
+- mercvault: Equip on merc from the Vault (TASK-1049) <!--sg:agent/mercvault-->
 - charms: charm management design (docs) <!--sg:agent/charms-->
 - akarahand: hand-in click diagnosis (docs) <!--sg:agent/akarahand-->
 - fastflip: 2 h default flip window <!--sg:agent/fastflip-->

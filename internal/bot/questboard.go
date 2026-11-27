@@ -29,6 +29,7 @@ func (r *Runner) questBoardOn() bool { return r.e.Tune.Quests.Board != 0 }
 const boardFailGap = 15 * time.Second
 
 type boardHandInReq struct {
+	ctx  context.Context // the tapper's bound; a request whose ctx ended is dropped, never served
 	q    questboard.Quest
 	c    questboard.Chunk
 	done chan error
@@ -43,6 +44,8 @@ type boardRT struct {
 	st    *questboard.Store
 	hero  string // the hero the store belongs to ("" when built by NewQuestBoard)
 	reqs  chan boardHandInReq
+	// handWhy is what holds a queued hand-in tap, in words ("" when none is queued or the loop serves it); guarded by mu.
+	handWhy string
 
 	// yieldKey is the chunk a goal travel already yielded to once (boardYield).
 	yieldKey string
@@ -617,20 +620,96 @@ type boardActions struct{ rt *boardRT }
 // HandIn hands the tap to the runner loop (the dialogue must run on the loop's goroutine, inside its guard) and
 // waits for the result. The caller bounds the wait with ctx (a town trip or a death delays the pick-up); S4 sets it.
 func (a boardActions) HandIn(ctx context.Context, q questboard.Quest, c questboard.Chunk) error {
-	req := boardHandInReq{q: q, c: c, done: make(chan error, 1)}
-	select {
-	case a.rt.reqs <- req:
-	case <-ctx.Done():
-		return ctx.Err()
-	default:
-		return errors.New("a hand-in is already waiting for the bot")
+	req := boardHandInReq{ctx: ctx, q: q, c: c, done: make(chan error, 1)}
+	k := questboard.ChunkKey(q.ID, c.ID)
+	if err := a.rt.enqueue(req); err != nil {
+		return err
 	}
+	a.rt.r.e.Log.Info("quest board: hand-in queued " + k)
 	select {
 	case err := <-req.done:
 		return err
 	case <-ctx.Done():
+		a.rt.dropOwn(req)
+		a.rt.r.e.Log.Info("quest board: hand-in dropped "+k+" (not served in time)", "err", ctx.Err())
 		return ctx.Err()
 	}
+}
+
+// enqueue puts the tap in the one-slot mailbox. A request whose ctx has ended is stale and makes room (before this
+// it stayed for ever and refused every later tap with "already waiting").
+func (rt *boardRT) enqueue(req boardHandInReq) error {
+	for {
+		select {
+		case rt.reqs <- req:
+			return nil
+		case <-req.ctx.Done():
+			return req.ctx.Err()
+		default:
+		}
+		select {
+		case old := <-rt.reqs:
+			if old.ctx.Err() == nil {
+				select {
+				case rt.reqs <- old: // still live: put it back
+				default:
+				}
+				return errors.New("a hand-in is already waiting for the bot")
+			}
+		default:
+		}
+	}
+}
+
+// dropOwn takes the caller's own request out of the mailbox when it timed out unserved.
+func (rt *boardRT) dropOwn(req boardHandInReq) {
+	select {
+	case old := <-rt.reqs:
+		if old.done != req.done {
+			select {
+			case rt.reqs <- old:
+			default:
+			}
+		}
+	default:
+	}
+	rt.mu.Lock()
+	rt.handWhy = ""
+	rt.mu.Unlock()
+}
+
+// QuestHandInWhy is DeskConfig.HandInWhy: why a queued hand-in tap waits ("" when none waits or it is being served).
+func (r *Runner) QuestHandInWhy() string {
+	rt := r.qbRT()
+	if rt == nil {
+		return ""
+	}
+	rt.mu.Lock()
+	defer rt.mu.Unlock()
+	if len(rt.reqs) == 0 {
+		return ""
+	}
+	return rt.handWhy
+}
+
+// noteHandInHold records what keeps a queued tap from being served this tick (reason.code handin_waiting).
+func (r *Runner) noteHandInHold(snap *d2.Snapshot, c control) {
+	rt := r.qbRT()
+	if rt == nil || len(rt.reqs) == 0 {
+		return
+	}
+	why := "the hero is finishing another step first."
+	switch {
+	case snap == nil || snap.Player == nil || !snap.Player.InTown():
+		why = "the hero is out in the field; it hands in at the next town visit."
+	case r.recoveryActive():
+		why = "the hero is refilling the purse and restocking first."
+	case !r.questBoardOn():
+		why = "the quest board is off."
+	}
+	rt.mu.Lock()
+	rt.handWhy = why
+	rt.mu.Unlock()
 }
 
 // Stop forgets the per-process notes of the chunk. A slice that is running ends at its own bound (the guard cancels it
@@ -960,6 +1039,9 @@ func (r *Runner) boardAwait(ctx context.Context, snap *d2.Snapshot, c control, d
 // else. It reports true when it used the tick.
 func (r *Runner) boardServeHandIn(ctx context.Context, snap *d2.Snapshot, c control) bool {
 	rt := r.qbRT()
+	if rt == nil {
+		return false
+	}
 	// V lab drill CAIN-L3 (2026-11-19): a tap that landed while the hero was out in the Dark Wood was taken off the
 	// queue in the field, answered "not in town" three times in one second and parked the chunk (docs/questboard.md
 	// promises the hand-in waits for the next town visit). The request stays queued until the hero stands in town.
@@ -968,6 +1050,14 @@ func (r *Runner) boardServeHandIn(ctx context.Context, snap *d2.Snapshot, c cont
 	}
 	select {
 	case req := <-rt.reqs:
+		if req.ctx.Err() != nil { // the tapper gave up: nobody waits for this talk
+			r.e.Log.Info("quest board: hand-in dropped " + questboard.ChunkKey(req.q.ID, req.c.ID) + " (tapper gone)")
+			return false
+		}
+		rt.mu.Lock()
+		rt.handWhy = ""
+		rt.mu.Unlock()
+		r.e.Log.Info("quest board: hand-in served " + questboard.ChunkKey(req.q.ID, req.c.ID))
 		req.done <- r.boardHandIn(ctx, snap, c, req)
 		return true
 	default:

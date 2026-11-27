@@ -155,6 +155,7 @@ cmd/d2bot/live.go  credit-runner  maphistoryA
 cmd/d2bot/live.go  credit-runner  maphistoryC
 cmd/d2bot/live.go  credit-runner  maptrail
 cmd/d2bot/playertuning_test.go  live-agent  recoverypace
+cmd/d2bot/questwire.go  credit-runner  akarafix
 cmd/d2bot/repairwire.go  credit-runner  repairtrip
 cmd/d2bot/resource_test.go  credit-runner  freshstart
 cmd/d2bot/sensesfeed.go  credit-runner  maptrail
@@ -169,6 +170,8 @@ cmd/d2bot/senseshistory_test.go  credit-runner  maphistoryC
 cmd/d2bot/survivalwire.go  credit-runner  intake
 cmd/d2bot/task.go  credit-runner  qdmatrix
 cmd/d2bot/task_test.go  credit-runner  qdmatrix
+cmd/d2bot/vaultequip.go  credit-runner  mercvault
+cmd/d2bot/vaultkeep.go  credit-runner  mercvault
 cmd/d2bot/vaultkeep.go  credit-runner  sellall
 cmd/d2firsthour/  live-agent  firsthour
 cmd/d2scenario/  credit-runner  arbmig
@@ -297,6 +300,7 @@ docs/process/proving-ground-status.md  credit-runner  pgpage
 docs/pursuers.md  credit-runner  pursuers
 docs/quest-givers.md  credit-runner  campaign1
 docs/quest-hints.md  live-agent  questdrill
+docs/questboard.md  credit-runner  akarafix
 docs/questboard.md  credit-runner  cainfix3
 docs/questboard.md  credit-runner  handinbtn
 docs/questboard.md  credit-runner  placefix
@@ -332,6 +336,7 @@ docs/ui-overlays.md  credit-runner  menufit2
 docs/ui/redesign-2026-11-14/stash-anywhere.md  credit-runner  stashany
 docs/ui/vault-sell-all  credit-runner  sellall
 docs/upstream/bodies/monster-block-body.md  credit-runner  decomp43
+docs/vault.md  credit-runner  mercvault
 docs/vault.md  credit-runner  sellall
 internal/admit/  credit-runner  admit1
 internal/arbiter  credit-runner  town10
@@ -352,6 +357,7 @@ internal/bot/drought.go  credit-runner  freshstart
 internal/bot/earlyroute.go  credit-runner  admit1
 internal/bot/farm.go  credit-runner  pgclock
 internal/bot/farmclock_test.go  credit-runner  pgclock
+internal/bot/goal.go  credit-runner  akarafix
 internal/bot/goal.go  credit-runner  arbloop
 internal/bot/goal.go  credit-runner  maphistoryA
 internal/bot/goal.go  credit-runner  qdmatrix
@@ -371,9 +377,11 @@ internal/bot/observe.go  credit-runner  freshstart
 internal/bot/observe.go  credit-runner  intake
 internal/bot/observe.go  credit-runner  survrecover
 internal/bot/povertyfarm.go  credit-runner  admit1
+internal/bot/questboard.go  credit-runner  akarafix
 internal/bot/questboard.go  credit-runner  placefix
 internal/bot/questboard.go  credit-runner  qdmatrix
 internal/bot/questboard.go  credit-runner  stage1fix
+internal/bot/questboard_goal_test.go  credit-runner  akarafix
 internal/bot/questboard_s7b_test.go  credit-runner  qdmatrix
 internal/bot/questboard_test.go  credit-runner  stage1fix
 internal/bot/repairtrip.go  credit-runner  repairtrip
@@ -424,6 +432,8 @@ internal/combat/reach.go  credit-runner  maphistoryC
 internal/d2dcombat/  credit-runner  dlv-cast-verbs
 internal/d2dcombat/  credit-runner  dlv-press
 internal/d2dctl  credit-runner  countess3
+internal/d2dctl/direct_merc.go  credit-runner  mercvault
+internal/d2dctl/direct_merc_test.go  credit-runner  mercvault
 internal/d2dctl/fake/fake.go  credit-runner  inputl3
 internal/d2dctl/fake/fake.go  credit-runner  placefix
 internal/d2dctl/fake/fake.go  credit-runner  warptrigger
@@ -521,9 +531,13 @@ internal/power/archetype.go  credit-runner  qdmatrix
 internal/power/skilldamage_test.go  credit-runner  qdmatrix
 internal/questboard/  credit-runner  placefix
 internal/questboard/def.go  credit-runner  cainfix3
+internal/questboard/desk.go  credit-runner  akarafix
 internal/questboard/desk.go  credit-runner  handinbtn
 internal/questboard/desk_action.go  credit-runner  handinbtn
 internal/questboard/desk_action_test.go  credit-runner  handinbtn
+internal/questboard/desk_reason.go  credit-runner  akarafix
+internal/questboard/desk_test.go  credit-runner  akarafix
+internal/questboard/sm_reason.go  credit-runner  akarafix
 internal/questboard/state.go  credit-runner  qdmatrix
 internal/questboard/state_test.go  credit-runner  qdmatrix
 internal/repair  credit-runner  repairtrip
@@ -592,6 +606,9 @@ internal/town/trip.go  credit-runner  inputl3
 internal/vault  credit-runner  vaultperf
 internal/vaultkeep  credit-runner  sellall
 internal/vaultkeep  credit-runner  vaultperf
+internal/vaultkeep/equipdirect.go  credit-runner  mercvault
+internal/vaultkeep/equipmerc.go  credit-runner  mercvault
+internal/vaultkeep/equipmerc_test.go  credit-runner  mercvault
 internal/watch  credit-runner  sellall
 internal/watch  credit-runner  town9
 internal/watch  credit-runner  vaultperf
@@ -652,6 +669,8 @@ internal/watch/testdata/senses-failures.json  credit-runner  maphistoryC
 internal/watch/testdata/senses-trail.json  credit-runner  maphistory
 internal/watch/testdata/senses-trail.json  credit-runner  maphistoryA
 internal/watch/testdata/senses-trail.json  credit-runner  maptrail
+internal/watch/vaultapi.go  credit-runner  mercvault
+internal/watch/vaultmerc_test.go  credit-runner  mercvault
 internal/watch/web  credit-runner  vaultperf
 internal/watch/web/components.css  credit-runner  uis6
 internal/watch/web/gear.js  credit-runner  repairtrip
@@ -690,7 +709,10 @@ internal/watch/web/shell.js  credit-runner  uis6
 internal/watch/web/shell.json  credit-runner  uis1
 internal/watch/web/shell.json  credit-runner  uis6
 internal/watch/web/tokens.css  credit-runner  uis1
+internal/watch/web/vault-logic.js  credit-runner  mercvault
+internal/watch/web/vault.js  credit-runner  mercvault
 internal/watch/web/vault.js  credit-runner  vaultphone
+internal/watch/web/vault.json  credit-runner  mercvault
 internal/watch/whyline.json  credit-runner  repairtrip
 internal/watch/whyline_test.go  credit-runner  repairtrip
 tools/ci/  credit-runner  dlv-cleanup
