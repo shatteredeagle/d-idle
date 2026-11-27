@@ -171,3 +171,64 @@ Verdict GREEN. The BLOCKED row (Paladin seed 3) is not the executor: its `take_s
 | typedoutcome0 | sorceress | 201 | 0.97 | 27 | 2.1 | 12>12 | 1 | 318 | -142 | 22 | 29 | 0 | 43 | 9 | 0 | 0 |
 | typedoutcome0 | sorceress | 202 | 0.97 | 28 | 2.0 | 12>12 | 0 | 527 | 1301 | 27 | 32 | 0 | 30 | 10 | 0 | 0 |
 | typedoutcome0 | sorceress | 203 | 0.98 | 18 | 3.3 | 12>12 | 0 | 936 | -131 | 18 | 28 | 0 | 17 | 6 | 0 | 0 |
+
+<!-- pass2 -->
+## 5. Pass 2: the same campaign with points decisions on (20 of 69 rows complete)
+
+Every arm also carries `resource.pointsDecisions` 1 and each row sets `D2BOT_RUN`, so the heroes spend their points (V, check row before the pass: the Necromancer casts Teeth and Clay Golem, the Sorceress Charged Bolt, the Paladin allocated Might 8, Sacrifice 1, Prayer 1, Smite 1 and runs the Might aura). Same binaries as pass 1. Rows ran with taskset cores 0-7, nice 19, at most 4 at once.
+
+### 5.1 Per feature and class
+
+| feature | class | n on/off | xp/h on vs off (median) | gold/h | deaths | hard hits on/off | stalls on/off | short rows on/off | noise (off spread) | verdict |
+|---|---|---|---|---|---|---|---|---|---|---|
+| arbiter-control-families-3 | paladin | 3/3 | 7412 vs 8363 (-951) | 1021 vs 915 (+106) | 0.0 vs 0.0 | 0/0 | 20/20 | 0/0 | xp 1752 gold 5959 deaths 0.0 | NEUTRAL |
+| arbiter-control-families-3 | necromancer | 3/3 | 17294 vs 19519 (-2224) | 3464 vs 524 (+2940) | 0.0 vs 0.0 | 0/0 | 20/27 | 0/0 | xp 1761 gold 4620 deaths 0.0 | RED (xp/h regress -2224) |
+| arbiter-control-families-3 | sorceress | 3/3 | 6750 vs 6084 (+666) | 70 vs 7 (+64) | 0.0 vs 0.0 | 0/0 | 33/29 | 0/0 | xp 1592 gold 1550 deaths 0.0 | NEUTRAL |
+| kit-floor-tiers-poverty-farm | paladin | 3/3 | 8363 vs 6305 (+2058) | 915 vs 625 (+290) | 0.0 vs 0.0 | 0/0 | 20/6 | 0/3 | xp 9223 gold 455 deaths 0.0 | NEUTRAL |
+| kit-floor-tiers-poverty-farm | necromancer | 3/3 | 19519 vs 16466 (+3053) | 524 vs 6851 (-6327) | 0.0 vs 0.0 | 0/0 | 27/23 | 0/0 | xp 6879 gold 3367 deaths 0.0 | RED (gold/h regress -6327) |
+| kit-floor-tiers-poverty-farm | sorceress | 3/1 | 6084 vs 5455 (+629) | 7 vs -203 (+209) | 0.0 vs 0.0 | 0/0 | 29/7 | 0/1 | xp 0 gold 0 deaths 0.0 | GREEN |
+| reflex-drink-portal | paladin | 3/0 | no data | | | | | | | NO-DATA |
+| reflex-drink-portal | necromancer | 3/0 | no data | | | | | | | NO-DATA |
+| reflex-drink-portal | sorceress | 3/0 | no data | | | | | | | NO-DATA |
+| arbiter-control-families-255 | paladin | 0/3 | no data | | | | | | | NO-DATA |
+| arbiter-control-families-255 | necromancer | 0/3 | no data | | | | | | | NO-DATA |
+| arbiter-control-families-255 | sorceress | 0/3 | no data | | | | | | | NO-DATA |
+| admission-early-route-guard | paladin | 3/0 | no data | | | | | | | NO-DATA |
+| admission-early-route-guard | necromancer | 3/0 | no data | | | | | | | NO-DATA |
+| admission-early-route-guard | sorceress | 3/0 | no data | | | | | | | NO-DATA |
+| typed-outcomes | paladin | 3/0 | no data | | | | | | | NO-DATA |
+| typed-outcomes | necromancer | 3/0 | no data | | | | | | | NO-DATA |
+| typed-outcomes | sorceress | 3/0 | no data | | | | | | | NO-DATA |
+| paladin-without-sacrifice | paladin | 3/0 | no data | | | | | | | NO-DATA |
+| necromancer-summoner-defaults | necromancer | 3/0 | no data | | | | | | | NO-DATA |
+
+
+### 5.2 Per row
+
+| arm | class | seed | virtual h | wall min | ratio | clvl | deaths | xp/h | gold/h | potions bought | potions used | hard hits | soft hits | stalls | exit | writes after start |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| arbiter3 | necromancer | 201 | 0.97 | 36 | 1.6 | 12>13 | 0 | 25633 | 3639 | 30 | 39 | 0 | 12 | 7 | 0 | 0 |
+| arbiter3 | necromancer | 202 | 0.97 | 28 | 2.1 | 12>12 | 0 | 17098 | 172 | 40 | 53 | 0 | 23 | 8 | 0 | 0 |
+| arbiter3 | necromancer | 203 | 0.97 | 26 | 2.2 | 12>12 | 0 | 17294 | 3464 | 41 | 55 | 0 | 13 | 5 | 0 | 0 |
+| arbiter3 | paladin | 201 | 0.97 | 47 | 1.2 | 12>12 | 0 | 7412 | 1021 | 6 | 15 | 0 | 11 | 7 | 0 | 0 |
+| arbiter3 | paladin | 202 | 0.98 | 56 | 1.0 | 12>12 | 0 | 6696 | 580 | 9 | 20 | 0 | 7 | 6 | 0 | 0 |
+| arbiter3 | paladin | 203 | 0.98 | 54 | 1.1 | 12>12 | 0 | 9251 | 2226 | 15 | 38 | 0 | 10 | 7 | 0 | 0 |
+| arbiter3 | sorceress | 201 | 0.97 | 37 | 1.6 | 12>12 | 0 | 13130 | 4277 | 39 | 46 | 0 | 16 | 11 | 0 | 0 |
+| arbiter3 | sorceress | 202 | 0.97 | 35 | 1.6 | 12>12 | 0 | 5786 | 70 | 23 | 31 | 0 | 20 | 11 | 0 | 0 |
+| arbiter3 | sorceress | 203 | 0.97 | 29 | 2.0 | 12>12 | 0 | 6750 | -128 | 12 | 25 | 0 | 18 | 11 | 0 | 0 |
+| base | necromancer | 201 | 0.97 | 48 | 1.2 | 12>12 | 0 | 19519 | 5144 | 52 | 82 | 0 | 29 | 10 | 0 | 0 |
+| base | necromancer | 202 | 0.97 | 45 | 1.3 | 12>12 | 0 | 19016 | 56 | 34 | 52 | 0 | 28 | 9 | 0 | 0 |
+| base | necromancer | 203 | 0.97 | 24 | 2.4 | 12>12 | 0 | 21279 | 524 | 50 | 55 | 0 | 18 | 8 | 0 | 0 |
+| base | paladin | 201 | 0.98 | 47 | 1.3 | 12>12 | 0 | 9732 | 915 | 13 | 21 | 0 | 7 | 6 | 0 | 0 |
+| base | paladin | 202 | 0.98 | 42 | 1.4 | 12>12 | 0 | 6611 | 6875 | 4 | 18 | 0 | 5 | 6 | 0 | 0 |
+| base | paladin | 203 | 0.98 | 43 | 1.4 | 12>12 | 0 | 8363 | -27 | 29 | 45 | 0 | 10 | 8 | 0 | 0 |
+| base | sorceress | 201 | 0.98 | 29 | 2.0 | 12>12 | 0 | 6073 | 1557 | 17 | 24 | 0 | 17 | 9 | 0 | 0 |
+| base | sorceress | 202 | 0.90 | - | - | 12>12 | 0 | 7677 | 7 | 34 | 53 | 0 | 17 | 10 | None | None |
+| base | sorceress | 203 | 0.98 | 20 | 3.0 | 12>12 | 0 | 6084 | 6 | 11 | 26 | 0 | 17 | 10 | 0 | 0 |
+| nokit | necromancer | 201 | 0.97 | 27 | 2.1 | 12>12 | 0 | 10759 | 6851 | 32 | 50 | 0 | 22 | 6 | 0 | 0 |
+| nokit | necromancer | 202 | 0.97 | 35 | 1.7 | 12>13 | 0 | 23345 | 5063 | 44 | 59 | 0 | 22 | 9 | 0 | 0 |
+| nokit | necromancer | 203 | 0.97 | 22 | 2.7 | 12>12 | 0 | 16466 | 10219 | 49 | 61 | 0 | 27 | 8 | 0 | 0 |
+| nokit | paladin | 201 | 0.05 | - | - | 12>12 | 0 | 5760 | 320 | 2 | 0 | 0 | 1 | 1 | None | None |
+| nokit | paladin | 202 | 0.08 | - | - | 12>12 | 0 | 15528 | 1080 | 2 | 2 | 0 | 1 | 1 | None | None |
+| nokit | paladin | 203 | 0.40 | - | - | 12>12 | 0 | 6305 | 625 | 17 | 17 | 0 | 3 | 4 | None | None |
+| nokit | sorceress | 201 | 0.62 | - | - | 12>12 | 0 | 5455 | -203 | 13 | 13 | 0 | 13 | 7 | None | None |
