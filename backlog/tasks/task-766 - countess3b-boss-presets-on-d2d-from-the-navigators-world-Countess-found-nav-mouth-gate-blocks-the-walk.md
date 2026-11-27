@@ -22,7 +22,7 @@ owns:
 exclusive: []
 contracts: []
 lane: next
-result: "Offline regression cellar5walk_test.go (2 synthetic maps, must-fail pair); the gate was already fixed by later commits, no gate change. Recorded Tower Cellar 5 grid and the live Paladin check stay live-only (docs/probes/countess-nav-fixture.md). Not verified live."
+result: "Offline regression cellar5walk_test.go (2 synthetic maps, must-fail pair); the gate was already fixed by later commits, no gate change. Recorded Tower Cellar 5 grid and the live Paladin check stay live-only (docs/probes/countess-nav-fixture.md). Not verified live. Remaining (live): AC 2 Paladin 11 with the new fork binary."
 ---
 
 ## Description

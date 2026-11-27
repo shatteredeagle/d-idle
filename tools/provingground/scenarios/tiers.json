@@ -253,6 +253,11 @@
    "source": "map",
    "note": "not in the catalogue; tier full mapped"
   },
+  "drill.act2.amulet.stepexec": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
   "drill.act2.amulet.strong": {
    "tier": "T3",
    "source": "map",
@@ -269,6 +274,11 @@
    "note": "not in the catalogue; tier full mapped"
   },
   "drill.act2.cube": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.act2.cube.stepexec": {
    "tier": "T3",
    "source": "map",
    "note": "not in the catalogue; tier full mapped"
@@ -293,6 +303,11 @@
    "source": "map",
    "note": "not in the catalogue; tier full mapped"
   },
+  "drill.act2.radament.handin.stepexec": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
   "drill.act2.radament.l30": {
    "tier": "T3",
    "source": "map",
@@ -303,12 +318,27 @@
    "source": "map",
    "note": "not in the catalogue; tier full mapped"
   },
+  "drill.act2.radament.stepexec": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
   "drill.act2.shaft": {
    "tier": "T3",
    "source": "map",
    "note": "not in the catalogue; tier full mapped"
   },
+  "drill.act2.shaft.stepexec": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
   "drill.act2.summoner": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.act2.summoner.stepexec": {
    "tier": "T3",
    "source": "map",
    "note": "not in the catalogue; tier full mapped"

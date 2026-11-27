@@ -43,14 +43,13 @@
 |---|---|---|---|---|
 | m3-act1run | deferred | m3-act1run | `docs/act1-run.md`<br>`docs/probes/act1run/**` | `soak-slot:3` |
 | fid-matrix-refresh | deferred | - | `docs/probes/fid/fid-matrix-refresh.md` | - |
-| smeaura | proposed | - | `docs/sme/paladin-auras-2026-11-26.md` | - |
 | necrocorpse | proposed | - | `docs/probes/necrocaps-2026-11-26.md` | - |
 | fid-poison-res-diag | proposed | - | `docs/research/fid-poisonres-trace.md` | - |
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
 | placefix | proposed | - | `internal/questboard/`<br>`internal/bot/questboard.go`<br>`data/questboard/act2.json`<br>`tools/provingground/scenarios/stepexec-act2.json`<br>`tools/provingground/scenarios/questdrill.json`<br>`internal/scenario/placefix_test.go`<br>`docs/questboard.md`<br>`internal/task/act1.go`<br>`internal/task/act2.go`<br>`internal/task/placefix_test.go`<br>`internal/d2dinput/controller.go`<br>`internal/d2dinput/placefix_test.go`<br>`internal/d2dctl/parse.go`<br>`internal/d2dctl/verbs.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dsrc/items.go`<br>`internal/d2dsrc/source_test.go` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | vaultperf | proposed | - | `internal/watch`<br>`internal/watch/web`<br>`internal/vaultkeep`<br>`internal/vault` | - |
-| tyrael | proposed | - | `internal/town/npc.go`<br>`internal/town/fieldnpc_test.go`<br>`internal/town/fieldnpc_int_test.go`<br>`tools/provingground/scenarios/stepexec-act2.json`<br>`docs/probes/act2-stepexec-drill-2026-11-27.md` | - |
+| townguard | proposed | - | `internal/task/`<br>`internal/bot/`<br>`internal/env/tuning_town.go`<br>`internal/town/route.go`<br>`internal/town/route_test.go`<br>`internal/nav/pathcost.go`<br>`docs/knobs.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | returnmock | proposed | - | `docs/research/mocks/return.html`<br>`docs/research/return-screen.md` | - |
@@ -77,6 +76,7 @@
 | t0-slice | deferred | t0-slice | `internal/decide/t0/**`<br>`internal/ladder/**`<br>`internal/env/tuning_ladder.go`<br>`internal/town/ladder_test.go`<br>`internal/drill/t0.go`<br>`internal/drill/t0_test.go`<br>`cmd/d2drill/t0_lab.go`<br>`cmd/d2drill/t0_lab_test.go`<br>`docs/probes/t0drill.md`<br>`internal/bot/thoughts.go`<br>`internal/bot/thoughts_test.go`<br>`internal/combat/thoughtshook.go`<br>`docs/t0-slice.md` | - |
 | ready-audit | proposed | - | `docs/probes/ready-audit.md` | - |
 | ready-wire-gates | deferred | - | `internal/bot/riskfacts.go`<br>`internal/bot/geargate.go`<br>`internal/task/gate.go` | - |
+| decisions-mirror | deferred | - | `tools/backlog/decisions_mirror.py`<br>`backlog/decisions/` | - |
 | ready-meter | deferred | - | `internal/watch/unlockrisk.go`<br>`internal/watch/unlockrisk_test.go` | - |
 | ready-whyline | deferred | - | `internal/bot/whyline.go`<br>`internal/bot/whyline_test.go` | - |
 | ready-bossrows | deferred | - | `internal/readiness/bossrows.go`<br>`internal/readiness/bossrows_test.go` | - |
@@ -88,22 +88,11 @@
 | reconnectux | proposed | - | `docs/onboarding.md`<br>`internal/watch/onboarding.go`<br>`internal/watch/web/panels/onboarding` | - |
 | palprofile | deferred | - | `docs/sme/class-paladin.md`<br>`docs/sme/class-early-game.md`<br>`internal/combat/classdata` | - |
 | testerdocs | deferred | - | `docs/tester-guide.md` | - |
-| pursuers | proposed | - | `internal/nav/pursuit.go`<br>`internal/nav/pursuit_test.go`<br>`docs/pursuers.md`<br>`internal/nav/walk.go`<br>`internal/nav/roam.go`<br>`internal/nav/explore.go`<br>`internal/nav/exit.go`<br>`internal/nav/nav.go`<br>`internal/env/tuning_nav.go`<br>`docs/knobs.md` | - |
-| minimapfix | proposed | - | `internal/watch/web/shell.js`<br>`internal/watch/minimapfix_test.go` | - |
 | testerreport | proposed | - | `deploy/d2d-container/tester-report.sh`<br>`docs/first-session.md` | - |
 | testerlicence | in-progress | - | `docs/tester-licence.md` | - |
 | testerpack | proposed | - | `tools/tester-pack.sh`<br>`docs/tester-guide.md` | - |
-| maptrail | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/nav/covview.go`<br>`internal/nav/covview_test.go`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/senses_stitch_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/senses-trail.json`<br>`internal/watch/testdata/senses-coverage.json`<br>`internal/nav/roam.go`<br>`cmd/d2bot/sensesfeed.go`<br>`cmd/d2bot/sensesfeed_test.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`tools/uishots/serve.go`<br>`docs/senses-map.md` | - |
-| maptrail2 | proposed | - | `internal/senses/coverage.go`<br>`internal/senses/trail_test.go`<br>`internal/watch/web/panels/map`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/senses-coverage.json`<br>`docs/senses-map.md` | - |
 | m3-merc | deferred | m3-merc | `internal/merc/**`<br>`internal/bot/merc_test.go`<br>`docs/merc-d2d.md`<br>`docs/probes/merc/**` | `soak-slot:3` |
-| repairtrip | proposed | - | `docs/repair.md`<br>`docs/live-checks.md`<br>`internal/repair`<br>`internal/goldfarm`<br>`internal/bot/repairtrip.go`<br>`internal/bot/repairtrip_test.go`<br>`internal/bot/goal.go`<br>`internal/bot/goldfarm.go`<br>`internal/bot/runner.go`<br>`internal/bot/whyline.go`<br>`internal/town/chores.go`<br>`internal/town/town.go`<br>`internal/town/repairtrip_test.go`<br>`internal/watch/repairapi.go`<br>`internal/watch/repairapi_test.go`<br>`internal/watch/web/panels/gear`<br>`internal/watch/web/inventory.js`<br>`internal/watch/web/gear.js`<br>`internal/watch/testdata/gear_repairtrip_dom.js`<br>`internal/watch/testdata/gear_repairtrip_dom.txt`<br>`internal/watch/testdata/gear_farm_dom.txt`<br>`internal/watch/testdata/compat`<br>`internal/watch/whyline.json`<br>`internal/watch/whyline_test.go`<br>`cmd/d2bot/repairwire.go`<br>`cmd/d2bot/goldfarmwire_test.go` | - |
-| maphistory | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/senses-trail.json`<br>`internal/combat/fightend.go`<br>`internal/combat/fighter.go`<br>`internal/combat/fight.go`<br>`cmd/d2bot/senseshistory.go`<br>`cmd/d2bot/senseshistory_test.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`tools/uishots/serve.go`<br>`docs/senses-map.md` | - |
-| nopins | proposed | - | `internal/watch/web/inventory.js`<br>`internal/watch/web/inventory-actions.js`<br>`internal/watch/web/inventory-tip.js`<br>`internal/watch/nopins_test.go`<br>`docs/inventory-ui.md`<br>`docs/gear-policy.md`<br>`docs/ui-design-system.md`<br>`internal/watch/invui.go`<br>`internal/watch/web/inventory-tip.css`<br>`internal/watch/testdata/inventory_dom.js`<br>`internal/watch/testdata/itemactions/act_dom.js`<br>`internal/watch/testdata/itemtip/tip_dom.js` | - |
-| maphistoryA | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/history.json`<br>`internal/watch/testdata/senses-trail.json`<br>`internal/bot/runner.go`<br>`internal/bot/goal.go`<br>`cmd/d2bot/senseshistory.go`<br>`cmd/d2bot/senseshistory_test.go`<br>`cmd/d2bot/funwire.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`docs/senses-map.md` | - |
 | zealdiff | proposed | - | `tools/emu/zd_*` | - |
-| maphistoryB | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/history-heat.json`<br>`cmd/d2bot/senseshistory.go`<br>`docs/senses-map.md` | - |
-| maphistoryC | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/senses-failures.json`<br>`internal/nav/roam.go`<br>`internal/nav/nav.go`<br>`internal/nav/covview_test.go`<br>`internal/combat/fighter.go`<br>`internal/combat/fightend.go`<br>`internal/combat/reach.go`<br>`internal/combat/fight.go`<br>`internal/combat/castfirst.go`<br>`cmd/d2bot/senseshistory.go`<br>`cmd/d2bot/senseshistory_test.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`docs/senses-map.md` | - |
-| maphistoryD | proposed | - | `internal/watch/web/panels/map`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/history-export.json`<br>`docs/senses-map.md` | - |
 | campaign1 | proposed | - | `internal/task/guided.go`<br>`internal/task/guided_test.go`<br>`internal/bot/guided.go`<br>`internal/bot/guided_test.go`<br>`internal/campaign/`<br>`internal/task/campaign.go`<br>`internal/bot/runner.go`<br>`cmd/d2bot/journeywire.go`<br>`cmd/d2bot/behaviors.go`<br>`cmd/d2bot/live.go`<br>`cmd/d2bot/d2dbackend.go`<br>`docs/campaign.md`<br>`docs/inventory-actions.md`<br>`docs/quest-givers.md` | - |
 | ordersux2 | deferred | - | `internal/watch/orders.go`<br>`internal/watch/mapview.go`<br>`internal/watch/ordersmap_test.go`<br>`docs/orders-slice2.md` | - |
 | dpwire | deferred | - | `docs/dp-wiring.md` | - |
@@ -124,16 +113,12 @@
 | uib9 | proposed | - | `internal/d2dctl/item_verbs_merc.go`<br>`internal/d2dctl/item_verbs_merc_test.go`<br>`internal/invdesk/mercverbs.go`<br>`internal/invdesk/mercverbs_test.go`<br>`internal/invdesk/sets.go`<br>`cmd/d2bot/invverbs.go`<br>`cmd/d2bot/invverbs_test.go`<br>`docs/research/merc-gear.md` | - |
 | onboardtour | proposed | - | `internal/watch/web/onboarding.js`<br>`internal/watch/web/onboarding.css`<br>`docs/onboarding-tour.md` | - |
 | onboardctl | deferred | - | `internal/watch/control.go`<br>`internal/watch/control_test.go`<br>`docs/onboarding-controls.md` | - |
-| intake | proposed | - | `internal/bot/hpfields.go`<br>`internal/survival/ledger.go`<br>`internal/watch/glance.go`<br>`tools/levelsim/shadow.go`<br>`docs/survival/ledger.md`<br>`internal/bot/observe.go`<br>`internal/bot/areametrics.go`<br>`internal/bot/zoneshadow.go`<br>`internal/d2dsoakstat/minute.go`<br>`cmd/d2bot/glancewire.go`<br>`cmd/d2bot/survivalwire.go` | - |
 | fidprobe-vendor | proposed | - | `internal/fidvendor`<br>`docs/research/fidelity-vendor-probe.md` | - |
 | botcpulive | proposed | - | `docs/probes/bot-cpu-live-2026-11-16.md` | - |
 | custom-overlay | deferred | - | `docs/research/custom-overlay-spec.md`<br>`docs/overlay.md`<br>`docs/research/custom-items.md`<br>`internal/overlay/`<br>`internal/data/`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/d2dbackend_test.go` | - |
 | custom-item-1 | deferred | - | `docs/research/custom-item-1.md` | - |
 | boardmoderace | proposed | - | `internal/bot/task.go`<br>`internal/bot/waypoints.go` | - |
 | survrecover | proposed | - | `internal/bot/zonemodel.go`<br>`internal/bot/zonerecover_test.go`<br>`internal/bot/broke.go`<br>`docs/probes/survival-ab-recovery-2026-11-17.md`<br>`internal/bot/goal.go`<br>`internal/bot/loop.go`<br>`internal/bot/observe.go`<br>`internal/bot/zoneshadow.go` | - |
-| menufit2 | proposed | - | `internal/watch/web/shell.css`<br>`tools/uishots/fixtures_menu.go`<br>`docs/ui-overlays.md` | - |
-| vaultphone | proposed | - | `internal/watch/web/vault.js`<br>`tools/uishots.sh` | - |
-| morefit | proposed | - | `internal/watch/web/panels/orders/panel.css`<br>`tools/uishots/fixtures_menu.go` | - |
 | currency-rows | deferred | - | `data/overlay/didle-v1/`<br>`internal/overlay/didlev1_test.go`<br>`internal/loot/currencymark_test.go`<br>`internal/loot/pickit_starter.json`<br>`docs/research/currency-rows.md`<br>`docs/probes/currency1.md`<br>`docs/probes/currency1-drill.py`<br>`docs/overlay.md` | - |
 | currency-slice | deferred | - | `internal/currencyflow/`<br>`docs/probes/currency-drill.md` | - |
 | cainfix3 | proposed | - | `cmd/d2bot/adapters.go`<br>`data/questboard/act1.json`<br>`docs/combat.md`<br>`docs/knobs.md`<br>`docs/questboard.md`<br>`internal/bot/`<br>`internal/combat/`<br>`internal/env/tuning_combat.go`<br>`internal/questboard/def.go`<br>`internal/task/banote_test.go`<br>`internal/task/gate.go`<br>`internal/task/world.go`<br>`tools/provingground/scenarios/cain.json` | - |
@@ -161,8 +146,7 @@
 | pgnightly | proposed | - | `docs/process/pg-ops-pgnightly.md`<br>`tools/provingground/nightly.sh` | - |
 | pgearned | proposed | - | `internal/scenario/earned.go`<br>`tools/provingground/earned` | - |
 | town5 | in-progress | - | `internal/town`<br>`internal/resource`<br>`internal/bot/broke.go`<br>`internal/bot/leveling.go`<br>`tools/provingground/scenarios/townplan.json`<br>`docs/probes/town-plan-stage3-2026-11-22.md`<br>`docs/design/fable-review-2026-11-21/town-planner-b-model.md`<br>`town-basics` | - |
-| town7 | proposed | - | `internal/supply`<br>`internal/town`<br>`internal/resource` | - |
-| town8 | proposed | - | `internal/supply`<br>`internal/town` | - |
+| town8 | proposed | - | `internal/supply/`<br>`internal/town/` | - |
 | town9 | proposed | - | `internal/watch`<br>`internal/supply` | - |
 | town10 | proposed | - | `internal/arbiter`<br>`internal/supply` | - |
 | town11 | proposed | - | `internal/town`<br>`docs/town.md`<br>`town-basics` | - |
@@ -207,13 +191,12 @@
 | arbmig | in-progress | - | `docs/design/arbiter-migration-p6.md`<br>`docs/arbiter.md`<br>`internal/arbiter/`<br>`cmd/d2scenario/`<br>`tools/provingground/arbiter-outcomes/`<br>`internal/bot/arbiter_control.go`<br>`internal/bot/arbiter_control_test.go`<br>`internal/bot/shadow.go`<br>`internal/bot/loop.go`<br>`internal/env/tuning_bot.go`<br>`data/darklaunch.json`<br>`docs/knobs.md` | - |
 | fid-adapter-rows | deferred | - | `docs/probes/fid/fid-adapter-rows.md` | - |
 | ticklog | in-progress | - | `docs/design/ticklog-t4.md`<br>`docs/arbiter.md`<br>`internal/bot/ticklog.go`<br>`internal/bot/ticklog_test.go`<br>`internal/bot/shadow.go`<br>`internal/env/tuning_bot.go`<br>`internal/arbiter/replay.go`<br>`internal/arbiter/replay_ticklog_test.go`<br>`data/darklaunch.json` | - |
-| bsmchk | proposed | - | `docs/design/boardsm-checker.md` | - |
 | bsmdef | proposed | - | `docs/design/boardsm-flip.md` | - |
 | agencyp1b | proposed | - | `docs/design/agency-p1b.md` | - |
 | agencyp3 | proposed | - | `docs/design/agency-p3.md` | - |
 | inputl3 | in-progress | - | `docs/design/input-i3.md`<br>`internal/input/useitem.go`<br>`internal/input/useitem_test.go`<br>`internal/d2dctl/use_verb.go`<br>`internal/d2dctl/use_verb_test.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dinput/useitem.go`<br>`internal/combat/portalverb.go`<br>`internal/combat/portalverb_test.go`<br>`internal/combat/fighter.go`<br>`internal/town/portalverb.go`<br>`internal/town/portalverb_test.go`<br>`internal/town/portalverb_unit_test.go`<br>`internal/town/portalverb_export_test.go`<br>`internal/town/trip.go`<br>`data/input/caps/`<br>`data/input/caps_test.go`<br>`docs/design/input-cast-verbs.md`<br>`backlog/tasks/task-726 - dlv-cast-verbs-input-caps-cast-unit-cast-point-cast-hold.md` | - |
-| inputl4 | proposed | - | `docs/design/input-i4.md` | - |
-| inputl5 | proposed | - | `docs/design/input-i5-i7.md` | - |
+| inputl4 | proposed | - | `docs/design/input-i4.md`<br>`internal/input/repairverbs.go`<br>`internal/d2dctl/repair_verb.go`<br>`internal/d2dctl/use_verb_test.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dinput/repairverbs.go`<br>`internal/town/repairverb.go`<br>`internal/town/repairverb_test.go`<br>`internal/town/chores.go`<br>`internal/town/portalverb_export_test.go`<br>`internal/town/portalverb_unit_test.go` | - |
+| inputl5 | proposed | - | `docs/design/input-i5-i7.md`<br>`tools/ci/pointercount.py`<br>`tools/ci/test_pointercount.py`<br>`tools/ci/pointercount-baseline.json`<br>`tools/ci/check.sh` | - |
 | fid-lowvalue | deferred | - | `docs/probes/fid/fid-lowvalue.md` | - |
 | ckptlive | proposed | - | `docs/probes/checkpoint-live-drill.md` | - |
 | advisor1 | proposed | - | `docs/design/advisor-r14.md` | - |
@@ -241,14 +224,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
-- d8ffd5419 11-27 14:12 `Merge agent/tyrael: tyrael: Duriel Tyrael hand-in via field-NPC table (TASK-1053)` (tyrael)
-- cf6abed60 11-27 14:07 `Merge branch 'main' into tyrael` (-)
-- 9058de0a1 11-27 13:59 `Merge agent/necroteeth: necroteeth: scenario hero profile field (played default), spend points` (necroteeth)
-- 43bdb0282 11-27 13:59 `Merge agent/darkflip: darkflip: final dark queue flip list (docs)` (darkflip)
-- 8ef7cc46d 11-27 13:59 `Merge agent/closecards: closecards: close verified merged cards, stale dependency fix` (closecards)
-- f689ff4f1 11-27 13:57 `Merge branch 'main' into necroteeth` (-)
-- 27de5d572 11-27 13:57 `Merge branch 'main' into darkflip` (-)
-- d9999a7d9 11-27 13:57 `Merge branch 'main' into closecards` (-)
-- fc04b3bed 11-27 13:49 `Merge agent/akarafix: akarafix: hand-in queued/served logs, stale request drop, why-waiting reason (TASK-1051)` (akarafix)
-- 27c304655 11-27 13:49 `Merge agent/mercvault: mercvault: Equip on merc from the Vault (TASK-1049)` (mercvault)
+- 1ea6463d4 11-27 14:54 `Merge agent/difftrans: difftrans: difficulty transition design (docs)` (difftrans)
+- 819ef370c 11-27 14:54 `Merge agent/wpstep2: wpstep2: close TASK-716 card (fixed by TASK-770)` (wpstep2)
+- 6d9ce4ddf 11-27 14:53 `Merge branch 'main' into difftrans` (-)
+- 3cb07d622 11-27 14:53 `Merge branch 'main' into wpstep2` (-)
+- 149ba7319 11-27 14:45 `Merge agent/nightplan: nightplan: lab night plan 2026-11-27 (docs)` (nightplan)
+- 412dc797c 11-27 14:45 `Merge agent/townguard: townguard: hand-over in the guard refusal, route path cost (TASK-1057)` (townguard)
+- 51d1cdd1a 11-27 14:45 `Merge agent/inputl4: inputl4: repair and menu-choose client verbs, pointer-call count CI check (TASK-988/989)` (inputl4)
+- cedb40af3 11-27 14:43 `Merge branch 'main' into nightplan` (-)
+- 88ddca6c9 11-27 14:43 `Merge branch 'main' into townguard` (-)
+- f992a90b6 11-27 14:43 `Merge branch 'main' into inputl4` (-)
 <!-- statusgen:end -->

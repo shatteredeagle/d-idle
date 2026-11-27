@@ -58,7 +58,7 @@ type Tuning struct {
 	MinFieldBeltPct  int
 
 	GearGateMode, GearRiskMedium, GearRiskHigh, GearDeathsHigh, EarlyGearMax, GearDecisions int
-	PointsApi, PointsDecisions, SkillCapPerLevel                                            int
+	PointsApi, PointsDecisions                                                              int
 	TripBudget                                                                              int
 	TripWindowMin                                                                           int
 	TripGoldFloor                                                                           int
@@ -120,7 +120,6 @@ func Knobs() []env.Knob {
 		k("gearDecisions", "Who decides equipment", "0/1", "0 = the player: the bot never equips, swaps or buys equipment and never fills an empty slot (it only advises); 1 = the bot (legacy: drills, soaks, measured runs set it through D2BOT_RUN, and the Gear Sets unlock). Potions, scrolls, keys, ammo, repair, selling and pickup are not equipment and do not change. docs/gear-policy.md.", d.GearDecisions, 0, 1, false),
 		k("pointsApi", "Points sheet", "0/1", "1 = serve the read-only stat and skill points sheet (GET /api/hero/points) and show the Points tile; spending is always an explicit player action, never automatic. docs/points.md.", d.PointsApi, 0, 1, true),
 		k("pointsDecisions", "Who spends points", "0/1", "0 = the player: stat and skill points are banked and the hero asks (Needs you, return screen); 1 = the bot from its plan table (legacy: drills, soaks and measured runs set it through D2BOT_RUN; a hero's autopilot switch does the same for that hero). docs/points.md.", d.PointsDecisions, 0, 1, false),
-		k("skillCapPerLevel", "Skill cap by level", "0/1", "1 = a skill takes no more hard points than character level minus its required level plus one (the kolbot rule). d2d's can_learn and game.exe's icon check do not enforce it, so it is off; the table checker reports rows that would break it. docs/points.md.", d.SkillCapPerLevel, 0, 1, false),
 		k("earlyGearMax", "Early gear below clvl", "level", "Below this level armor is ignored (worn only if it drops and is better, never bought, never a trip or gate reason) and a weapon matters only for Amazon, Paladin, Barbarian, Assassin. 0 = off (old rebuy and gate). docs/sme/early-gear-policy.md.", d.EarlyGearMax, 0, 40, true),
 		k("tripBudget", "Trip budget", "trips", "Finished town trips allowed per window before a thin belt no longer sends the bot home (it drinks and fights on). 0 = no budget.", d.TripBudget, 0, 10, true),
 		k("tripWindowMin", "Trip budget window", "min", "Minutes the trip budget looks back.", d.TripWindowMin, 1, 60, true),
@@ -170,7 +169,7 @@ func FromEnv(t env.Tuning) Tuning {
 		MercDeadPack: r.MercDeadPack,
 		FleeLifePct:  r.FleeLifePct, KitTPGold: r.KitTPGold, KitPotionGold: r.KitPotionGold, PovertyMargin: r.PovertyMargin, PovertyLevels: r.PovertyLevels,
 		RetreatBelt: r.RetreatBelt, RetreatCountPack: r.RetreatCountPack, ManaPaysCasts: r.ManaPaysCasts, MinFieldBeltPct: r.MinFieldBeltPct,
-		GearGateMode: r.GearGateMode, GearRiskMedium: r.GearRiskMedium, GearRiskHigh: r.GearRiskHigh, GearDeathsHigh: r.GearDeathsHigh, EarlyGearMax: r.EarlyGearMax, GearDecisions: r.GearDecisions, PointsApi: r.PointsApi, PointsDecisions: r.PointsDecisions, SkillCapPerLevel: r.SkillCapPerLevel,
+		GearGateMode: r.GearGateMode, GearRiskMedium: r.GearRiskMedium, GearRiskHigh: r.GearRiskHigh, GearDeathsHigh: r.GearDeathsHigh, EarlyGearMax: r.EarlyGearMax, GearDecisions: r.GearDecisions, PointsApi: r.PointsApi, PointsDecisions: r.PointsDecisions,
 		TripBudget: r.TripBudget, TripWindowMin: r.TripWindowMin, TripGoldFloor: r.TripGoldFloor,
 		RecoveryOn: r.RecoveryOn, RecoveryKitGold: r.RecoveryKitGold, RecoveryTargetGold: r.RecoveryTargetGold,
 		RecoveryMaxMin: r.RecoveryMaxMin, RecoveryCooldownMin: r.RecoveryCooldownMin, RecoveryStallMin: r.RecoveryStallMin, RecoveryStallGold: r.RecoveryStallGold, RecoveryStallHoldMin: r.RecoveryStallHoldMin, RecoveryPotionFloor: r.RecoveryPotionFloor, RecoveryManaFloor: r.RecoveryManaFloor, RecoveryXPPick: r.RecoveryXPPick, RecoveryMaxAreaAbove: r.RecoveryMaxAreaAbove, RecoveryXPEarly: r.RecoveryXPEarly, RecoveryKitGate: r.RecoveryKitGate, KitGateLevel: r.KitGateLevel, KitMinHP: r.KitMinHP, KitMinMP: r.KitMinMP, KitTripCap: r.KitTripCap, PovertySellMin: r.PovertySellMin, RecoveryEndOnKit: r.RecoveryEndOnKit, BRAttempts: r.BRAttempts, BRLevelGap: r.BRLevelGap,

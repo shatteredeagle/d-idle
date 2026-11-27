@@ -18,6 +18,7 @@ owns:
 exclusive: []
 contracts: []
 lane: next
+result: " Remaining: AC 2 race run (-count=200 -cpu 1,2,4) was not re-run by closecards2; AC 1 code change is merged but left unticked until the race run is recorded."
 ---
 
 ## Description

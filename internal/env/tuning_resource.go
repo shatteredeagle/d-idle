@@ -47,18 +47,17 @@ type ResourceTuning struct {
 	ManaPaysCasts    int // below the mana-drink line a caster still skips the potion while its mana pays this many casts of the cheapest spell; 0 = always drink at the line
 	MinFieldBeltPct  int // leave town only with at least this % of the planned healing potions; 0 = off
 
-	GearGateMode     int // 0 hard (old binary gate), 1 graded risk (docs/gear-gate.md)
-	GearRiskMedium   int // risk points at which gear risk is medium
-	GearRiskHigh     int // risk points at which gear risk is high and the field is closed
-	GearDeathsHigh   int // deaths in the hour or in one area from which deaths add gear risk
-	GearDecisions    int // who makes equipment decisions: 0 = the player (the bot never equips, swaps or buys gear), 1 = the bot (legacy; drills, soaks, measured runs, the Gear Sets unlock); docs/gear-policy.md
-	PointsApi        int // 1: the read-only points sheet (GET /api/hero/points) and the Points tile are served; spending is always an explicit player POST (docs/points.md)
-	PointsDecisions  int // who spends stat and skill points: 0 = the player (the bot banks them and asks), 1 = the bot from its plan table (legacy; drills, soaks, measured runs, or a hero whose autopilot switch is on); docs/points.md
-	SkillCapPerLevel int // 1: a skill takes no more hard points than clvl - reqlevel + 1 (the kolbot rule; d2d and game.exe do not enforce it, so 0 by default); docs/points.md
-	EarlyGearMax     int // below this clvl armor is ignored and only weapon-dependent classes need a weapon (docs/sme/early-gear-policy.md); 0 = off
-	TripBudget       int // finished town trips allowed per TripWindowMin before a thin belt no longer sends the bot home; 0 = no budget
-	TripWindowMin    int // minutes the trip budget looks back
-	TripGoldFloor    int // below this gold a thin belt does not trigger a retreat (a trip could not restock) and town buys only one portal scroll; 0 = off
+	GearGateMode    int // 0 hard (old binary gate), 1 graded risk (docs/gear-gate.md)
+	GearRiskMedium  int // risk points at which gear risk is medium
+	GearRiskHigh    int // risk points at which gear risk is high and the field is closed
+	GearDeathsHigh  int // deaths in the hour or in one area from which deaths add gear risk
+	GearDecisions   int // who makes equipment decisions: 0 = the player (the bot never equips, swaps or buys gear), 1 = the bot (legacy; drills, soaks, measured runs, the Gear Sets unlock); docs/gear-policy.md
+	PointsApi       int // 1: the read-only points sheet (GET /api/hero/points) and the Points tile are served; spending is always an explicit player POST (docs/points.md)
+	PointsDecisions int // who spends stat and skill points: 0 = the player (the bot banks them and asks), 1 = the bot from its plan table (legacy; drills, soaks, measured runs, or a hero whose autopilot switch is on); docs/points.md
+	EarlyGearMax    int // below this clvl armor is ignored and only weapon-dependent classes need a weapon (docs/sme/early-gear-policy.md); 0 = off
+	TripBudget      int // finished town trips allowed per TripWindowMin before a thin belt no longer sends the bot home; 0 = no budget
+	TripWindowMin   int // minutes the trip budget looks back
+	TripGoldFloor   int // below this gold a thin belt does not trigger a retreat (a trip could not restock) and town buys only one portal scroll; 0 = off
 
 	RecoveryOn           int // 1: a broke character pauses its quest step and farms gold in a safe area (docs/recovery.md); 0 = old behaviour
 	RecoveryKitGold      int // recovery starts when gold is below this and the missing kit costs more than the gold

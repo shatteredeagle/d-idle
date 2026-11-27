@@ -24,6 +24,7 @@ owns:
 exclusive: []
 contracts: []
 lane: next
+result: " Remaining (live): AC 2 scenario vault.sell-all GREEN on a lab slot."
 ---
 
 ## Description

@@ -1,7 +1,7 @@
 ---
 id: TASK-22
 title: 'decisions-mirror: ADRs mirrored read-only into backlog/decisions for the board'
-status: Done
+status: Deferred
 assignee:
   - credit-runner
 created_date: '2026-11-05T19:25:00Z'
@@ -18,6 +18,7 @@ owns:
   - "backlog/decisions/"
 exclusive: []
 contracts: []
+result: " closecards2: status was Done but decisions_mirror.py does not exist on main (git log: only the deferred card merged); set back to Deferred."
 ---
 
 ## Description

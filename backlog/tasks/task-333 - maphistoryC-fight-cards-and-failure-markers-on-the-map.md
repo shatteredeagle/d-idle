@@ -1,7 +1,7 @@
 ---
 id: TASK-333
 title: 'maphistoryC: fight cards and failure markers on the map'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T19:35:00Z'
@@ -35,6 +35,7 @@ owns:
 exclusive: []
 contracts: []
 lane: next
+result: "Merged (agent/maphistoryC): fight card and failure markers from passive hooks; Go and node tests. Not verified live."
 ---
 
 ## Description
@@ -47,5 +48,5 @@ Why: TODO. Done when: TODO.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Fight card on click of a combat segment or kill marker; failure markers (roam leg failed, mouth-gate hold, ignore window, target fallback, nav yield) from passive hooks
+- [x] #1 Fight card on click of a combat segment or kill marker; failure markers (roam leg failed, mouth-gate hold, ignore window, target fallback, nav yield) from passive hooks
 <!-- AC:END -->

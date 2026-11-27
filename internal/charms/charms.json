@@ -1,0 +1,15 @@
+{
+  "_comment": "Charm bases of classic 1.14d. Cells are invwidth x invheight of misc.txt: U (from memory, not read from the game files here; check with db.ItemByCode before relying on a cell count). Legal qualities: Arreat Summit 'Charms' says only magic and unique exist (V, 2012 snapshot); rare, set and crafted charms do not.",
+  "legalQuality": ["magic", "unique"],
+  "legalQualityNum": [4, 7],
+  "bases": [
+    {"code": "cm1", "type": "scha", "name": "Small Charm", "w": 1, "h": 1},
+    {"code": "cm2", "type": "mcha", "name": "Large Charm", "w": 1, "h": 2},
+    {"code": "cm3", "type": "lcha", "name": "Grand Charm", "w": 1, "h": 3}
+  ],
+  "uniques": [
+    {"code": "cm1", "name": "Annihilus"},
+    {"code": "cm2", "name": "Hellfire Torch"},
+    {"code": "cm3", "name": "Gheed's Fortune"}
+  ]
+}

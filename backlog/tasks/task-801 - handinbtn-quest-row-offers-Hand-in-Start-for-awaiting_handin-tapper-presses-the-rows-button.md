@@ -25,6 +25,7 @@ owns:
 exclusive: []
 contracts: []
 lane: next
+result: " Merged (agent/handinbtn); ACs 1 to 3 checked against desk_action_test.go and the quest-board panel. Remaining (live): AC 4 scenarios merc.kashya-handin and act1.burial.blood_raven on a lab slot."
 ---
 
 ## Description
@@ -37,8 +38,8 @@ Why: TODO. Done when: TODO.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Row of an awaiting_handin part shows one button (Start without a record, Hand in with one)
-- [ ] #2 Table test over every board state: a button or a stated reason
-- [ ] #3 Tapper presses the server action of the row
+- [x] #1 Row of an awaiting_handin part shows one button (Start without a record, Hand in with one)
+- [x] #2 Table test over every board state: a button or a stated reason
+- [x] #3 Tapper presses the server action of the row
 - [ ] #4 merc.kashya-handin and act1.burial.blood_raven green on a lab slot
 <!-- AC:END -->

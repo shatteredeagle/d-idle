@@ -31,7 +31,7 @@ Refusals carry `code` and `reason` in words. Other codes: `off` (resource.points
 ## 4. Legality
 
 - The game's own rules (V: d2d `can_learn`, `components/rules/rules.hpp:1757`, which is the decompiled game.exe icon check FUN_004ac200): a point is free, the skill is under its `maxlvl`, character level >= `reqlevel`, every `reqskill` has a hard point. `skilltree.CanAdd` mirrors it; the desk adds the class gate (another class's skill is refused).
-- The per-level cap (kolbot `AutoSkill.js:54-62`: points <= clvl - reqlevel + 1): d2d and the decompiled check do NOT enforce it (V, same function: no such test), so it is a knob, `resource.skillCapPerLevel`, default 0. The brief's "lab check" is therefore half answered: d2d does not enforce it; whether Game.exe 1.14d does is U (checklist below). The shipped tables that would break it if it were enforced: the hammerdin endgame table banks and spends 11 hammer points at clvl 18 where the cap allows 1 (V `TestHammerdinTableBreaksThePerLevelCap`); the full sweep over every table with the real skills.txt is `TestPerLevelCapOnShippedTablesReal` (runs on the worker host, logs each first break). No table was changed: under d2d they are legal.
+- The per-level cap (kolbot `AutoSkill.js:54-62`: points <= clvl - reqlevel + 1): d2d and the decompiled check do NOT enforce it (V, same function: no such test), so the bot does not enforce it (the knob `resource.skillCapPerLevel` was retired 2026-11-27). The brief's "lab check" is therefore half answered: d2d does not enforce it; whether Game.exe 1.14d does is U (checklist below). The shipped tables that would break it if it were enforced: the hammerdin endgame table banks and spends 11 hammer points at clvl 18 where the cap allows 1 (V `TestHammerdinTableBreaksThePerLevelCap`); the full sweep over every table with the real skills.txt is `TestPerLevelCapOnShippedTablesReal` (runs on the worker host, logs each first break). No table was changed: under d2d they are legal.
 - Capability label (interim, until the generated capability table of P1): `supported` when a combat profile names the skill (`combat.Playable`) or it is a passive; otherwise `unsupported`. "Attack" is a skill with a kind in `internal/power/profiles.json` `skillKinds`. An unsupported attack needs one confirmation; everything else is allowed.
 - Ladder-only runewords: five endgame tables carry `"ladder_only": [...]` (barbarian_warcry: Spirit, Insight, Fortitude; druid_tornado, necromancer_summoner, sorceress_blizzard: Spirit; paladin_hammerdin: Spirit, Fortitude). Tagged, not deleted; `leveler.Build.LadderOnly` exposes it; `TestLadderTagsOnEndgameTables` pins the list against the 23 documented ladder words (S: design review 03; V for Spirit and Insight: `docs/sme/builds-gear.md`). The check against `runes.txt` is `data.Runeword.Ladder` on real data (not run here).
 - Missing skill kinds in the power profiles: 58 attack skills had a damage row but no `skillKinds` entry, among them Fire Bolt, Fire Ball, Frozen Orb, Meteor, Nova, Hydra, Whirlwind, Blade Fury, Immolation Arrow (V: `skilldamage.json` vs `profiles.json`; `TestSkillKindsCoverAttacks`). Added, each as melee, missile or spell by how the skill is delivered (S: veteran knowledge, not checked against the tables; borderline: Shock Wave and Blade Fury are U). A resolver run that failed with "no kind" now resolves; a name that resolved before resolves the same (`go test ./internal/power` unchanged). 21 damage-table names stay unkinded on purpose (auras, armors, buffs, monster skills; listed in the test).
@@ -40,7 +40,7 @@ Refusals carry `code` and `reason` in words. Other codes: `off` (resource.points
 
 ## 5. Knobs (`docs/knobs.md`)
 
-`resource.pointsApi` (1: the read-only sheet and tile), `resource.pointsDecisions` (0: the player; 1: the bot, set to 1 by `withGearPolicy` for measured and drill runs), `resource.skillCapPerLevel` (0). Group `resource` because the knob groups are a closed set (like `gearDecisions`). Per hero: the autopilot switch.
+`resource.pointsApi` (1: the read-only sheet and tile), `resource.pointsDecisions` (0: the player; 1: the bot, set to 1 by `withGearPolicy` for measured and drill runs) (the former `resource.skillCapPerLevel` is retired). Group `resource` because the knob groups are a closed set (like `gearDecisions`). Per hero: the autopilot switch.
 
 ## 6. Tests and scenarios
 
@@ -53,7 +53,7 @@ Refusals carry `code` and `reason` in words. Other codes: `off` (resource.points
 2. `POST .../skill` with a legal skill: `ok`; with a level-18 skill at level 6: 409 `rule` "needs character level 18".
 3. Unsupported attack (Blessed Hammer at level 18 on a Paladin): 409 `confirm`, then with `confirm:true` 200 and the Skills page shows the point.
 4. Autopilot on: the bot spends the rest by verb (log line `leveler: plan ...`, no panel clicks); off: points wait, the Needs row shows.
-5. Game.exe (lab check, U): put 2 points into a level-18 skill at character level 18 by hand; does the game refuse the second? That settles `resource.skillCapPerLevel`.
+5. Game.exe (lab check, U): put 2 points into a level-18 skill at character level 18 by hand; does the game refuse the second? Only if the game refuses would a cap need to come back (as a rule, not a knob).
 6. Akara respec on d2d (needed by P1, U).
 
 ## 8. Not done (by design of this card)
