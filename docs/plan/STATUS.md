@@ -42,7 +42,6 @@
 | diffbaal | proposed | - | `internal/quest/baaldone.go`<br>`internal/quest/baaldone_test.go` | - |
 | releasenotes-next | proposed | - | `docs/releases/next-draft.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
-| questresume | proposed | - | `internal/questboard/`<br>`data/questboard/`<br>`internal/bot/questboard.go`<br>`internal/bot/questauto.go`<br>`internal/bot/boardprogress.go`<br>`internal/bot/boardprogress_test.go`<br>`internal/bot/starvedcause.go`<br>`internal/bot/starvedcause_test.go`<br>`internal/bot/goal.go`<br>`internal/bot/arbiter_control.go`<br>`internal/bot/shadow.go`<br>`internal/env/tuning_quests.go`<br>`internal/watch/questsection.go`<br>`internal/watch/questsection_test.go`<br>`internal/watch/funwire.go`<br>`cmd/d2bot/funwire.go`<br>`data/darklaunch.json`<br>`docs/knobs.md`<br>`docs/questboard.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
