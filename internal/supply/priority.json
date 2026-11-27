@@ -1,0 +1,17 @@
+{
+  "_comment": "Short-gold priority (town-planner section 4.2, user answer Q5): what is dropped first is the bottom. Steps are spent in this order until the budget is out. 'order' is the default; 'profiles' replaces it for one excursion profile. A line the plan does not model yet (repair, ammo, merc_revive, ...) is listed so the table stays the whole of 4.2 and is skipped by Solve until its card adds it. D3: potions before the first scroll. Numbers are the position in 4.2.",
+  "order": [
+    {"prio": 1,  "line": "healing",      "to": "min"},
+    {"prio": 2,  "line": "portal",       "to": "one"},
+    {"prio": 3,  "line": "repair",       "to": "min"},
+    {"prio": 4,  "line": "ammo",         "to": "min"},
+    {"prio": 5,  "line": "mana",         "to": "min"},
+    {"prio": 6,  "line": "gold_carry",   "to": "min"},
+    {"prio": 7,  "line": "portal",       "to": "min"},
+    {"prio": 8,  "line": "merc_revive",  "to": "min"},
+    {"prio": 9,  "line": "healing",      "to": "target"},
+    {"prio": 9,  "line": "mana",         "to": "target"},
+    {"prio": 9,  "line": "portal",       "to": "target"}
+  ],
+  "profiles": {}
+}
