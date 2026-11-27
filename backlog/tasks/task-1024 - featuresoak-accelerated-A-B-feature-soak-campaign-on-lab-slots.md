@@ -1,10 +1,11 @@
 ---
 id: TASK-1024
 title: 'featuresoak: accelerated A/B feature soak campaign on lab slots'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-26T21:45:00Z'
+updated_date: '2026-11-27T07:01:00Z'
 labels:
   - d2d
   - d2d-measure

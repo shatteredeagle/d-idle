@@ -45,7 +45,6 @@
 | fid-matrix-refresh | deferred | - | `docs/probes/fid/fid-matrix-refresh.md` | - |
 | smeaura | proposed | - | `docs/sme/paladin-auras-2026-11-26.md` | - |
 | necrocorpse | proposed | - | `docs/probes/necrocaps-2026-11-26.md` | - |
-| featuresoak | proposed | - | `tools/provingground/campaigns/`<br>`tools/provingground/featuresoak.py`<br>`tools/provingground/featuresoak-row.sh`<br>`docs/probes/feature-soak-2026-11-26.md` | `d2d-lab-binary` |
 | fid-poison-res-diag | proposed | - | `docs/research/fid-poisonres-trace.md` | - |
 | necroteeth | proposed | - | `internal/combat/classdata/profiles.json`<br>`internal/combat/necro_test.go`<br>`internal/leveler/mainattack_test.go` | - |
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |

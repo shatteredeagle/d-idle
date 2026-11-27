@@ -256,7 +256,6 @@ docs/probes/checkpoint-live-drill.md  live-agent  ckptlive
 docs/probes/classorder1.md  user  classorder1
 docs/probes/exitsread-2026-11-22.md  credit-runner  exitsread
 docs/probes/faultsoak-design-2026-11-26.md  credit-runner  faultstall
-docs/probes/feature-soak-2026-11-26.md  credit-runner  featuresoak
 docs/probes/firsthour.md  live-agent  firsthour
 docs/probes/flipwave2.md  live-agent  flipwave2
 docs/probes/h1-baseline.md  user  h1baseline
@@ -685,10 +684,7 @@ tools/probes/exitsread.py  credit-runner  exitsread
 tools/probes/objectlist.py  credit-runner  qdmatrix
 tools/probes/presets.py  credit-runner  qdmatrix
 tools/provingground/arbiter-outcomes/  credit-runner  arbmig
-tools/provingground/campaigns/  credit-runner  featuresoak
 tools/provingground/earned  credit-runner  pgearned
-tools/provingground/featuresoak-row.sh  credit-runner  featuresoak
-tools/provingground/featuresoak.py  credit-runner  featuresoak
 tools/provingground/nightly.sh  credit-runner  pgnightly
 tools/provingground/pgenv.sh  credit-runner  pgledgeron
 tools/provingground/pgenv_test.sh  credit-runner  pgledgeron
