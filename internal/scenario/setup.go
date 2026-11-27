@@ -81,6 +81,13 @@ func BuildSetup(s Scenario, class string, seed int64) (Setup, error) {
 		add(fmt.Sprintf("raw stat %d", st.Stat), fmt.Sprintf("debug stat %d %d", st.Stat, st.Value))
 		tags["stat-write"] = true
 	}
+	for _, sk := range p.Skills {
+		if sk.Skill < 0 || sk.Skill > 400 || sk.Points < 1 || sk.Points > 20 {
+			return Setup{}, fmt.Errorf("scenario %s: skill %d points %d", s.ID, sk.Skill, sk.Points)
+		}
+		add(fmt.Sprintf("skill %d points", sk.Skill), fmt.Sprintf("debug points %d %d", sk.Skill, sk.Points))
+		tags["stat-write"] = true
+	}
 	if p.Gold > 0 {
 		add("purse", fmt.Sprintf("debug stat 14 %d", p.Gold))
 	}

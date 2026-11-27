@@ -122,3 +122,4 @@ Closing rule: a card closes when merged with offline acceptance proven; every op
 | TASK-1033 necroteeth | #5 | Live: a clvl 12 Necromancer row with points spent casts Teeth | live drill on the sandbox, fresh hero, per the card result | open |
 | TASK-1053 tyrael | #3 | Live rerun of drill.act2.duriel.stepexec (needs a lab slot) | live drill on the sandbox, fresh hero, per the card result | open |
 | TASK-766 countess3b | #2 | Paladin 11 with the new fork binary: Countess located, walk reaches her (live check) | live drill on the sandbox, fresh hero, per the card result | open |
+| TASK-1016 necrocorpse | #2 | Live: run the pair on seeds 11 to 13; move the default table to 1 point only if ce1 reads equal or better (live check, may stay open) | live drill on the sandbox, fresh hero, per the card result | open |

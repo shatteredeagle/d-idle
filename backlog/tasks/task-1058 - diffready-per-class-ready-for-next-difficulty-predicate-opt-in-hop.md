@@ -1,17 +1,18 @@
 ---
 id: TASK-1058
 title: 'diffready: per-class ready-for-next-difficulty predicate (opt-in hop)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T19:46:00Z'
+updated_date: '2026-11-27T21:28:00Z'
 labels:
   - bot
   - feature
 dependencies: []
-knob_net: owner-ok
 priority: medium
 ordinal: 512000
+knob_net: owner-ok
 card: "diffready"
 lane: next
 owns:

@@ -373,6 +373,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [town-planner-a-current.md](design/fable-review-2026-11-21/town-planner-a-current.md): Town planner, appendix A: the chores today and where their rules disagree (status: current (design review 2026-11-21, docs only). Main doc: town-planner.md. Tree read: `origin/main` at...)
 - [town-planner-b-model.md](design/fable-review-2026-11-21/town-planner-b-model.md): Town planner, appendix B: data model, scenarios, migration (status: current (design review 2026-11-21, docs only; proposals, nothing built). Main doc: town-planner.md;...)
 - [town-planner.md](design/fable-review-2026-11-21/town-planner.md): Town and chores planner: one supply need, one town plan (status: current (Fable design review 2026-11-21, docs only; nothing here is built or decided). Tree read:...)
+- [town-profiles-sme.md](design/fable-review-2026-11-21/town-profiles-sme.md): Town supply profiles: SME review (card town12) (status: brief ready, review not run (2026-11-27). The d2-sme agent fills section 3; advice only, no number in...)
 
 `design/fable-review-2026-11-22/`
 
@@ -551,6 +552,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [npc-skip.md](npc-skip.md): NPC greeting skip (internal/town/skip.go, cmd/npcprobe)
 - [npc.md](npc.md): NPC interaction (town/npc.go, cmd/d2bot/task.go)
 - [onboarding-slice-a.md](onboarding-slice-a.md): Onboarding slice A: setup stepper, go-ahead and access (status: BUILT offline (task TASK-44, card onboardA, 2026-11-06). Design and mock:...)
+- [onboarding-tour.md](onboarding-tour.md): Onboarding tour, Help sheet and Now line (TASK-48) (status: BUILT offline (card onboardtour, 2026-11-27). Node stub-DOM tests only; not looked at in a browser, not...)
 - [onboarding.md](onboarding.md): Onboarding on /watch: welcome card, first 30 minutes, reconnect banners (status: BUILT offline (TASK-247 firstminutes, TASK-249 reconnectux, 2026-11-11). Node DOM goldens and Go tests...)
 - [operator.md](operator.md): Operator quest control (status: current (card opsquest). Code: `internal/ops`, `cmd/d2bot/ops*.go`, `tools/questloop.sh`.)
 - [outcomes.md](outcomes.md): Typed step outcome (knob `bot.typedOutcome`) (status: current, stage 1 (card outcome1, 2026-11-25). Source: P2 of...)
@@ -1086,6 +1088,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [cainstart-2026-11-19.md](probes/cainstart-2026-11-19.md): cainstart: why `cain.scroll` stayed RED from the camp (2026-11-19) (status: current (card cainstart). Tags: V verified (run named), U unverified. CHEATED setup (clvl 17, waypoints,...)
 - [chores2-2026-11-21.md](probes/chores2-2026-11-21.md): chores2: restock to the route guard kit, stash pays (2026-11-21) (status: current. Tags: V verified (named run or test), S secondary, U unverified. Setups of the scenario runs are...)
 - [classpacing.md](probes/classpacing.md): classpacing probe (status: see `docs/soaks/classpacing.md` (the result doc of TASK-147); scripts and per-minute data are in...)
+- [combat-drills-2026-11-27.md](probes/combat-drills-2026-11-27.md): Combat drill scenarios, lab run commands (2026-11-27) (status: current. Authored offline (card whirlscen); NOT run live. Tags: V verified, S secondary, U unverified.)
 - [combat-foundation-2026-11-21.md](probes/combat-foundation-2026-11-21.md): Combat engine foundation group, 2026-11-21 (status: record of the foundation group of the approved combat engine plan...)
 - [countess-knobs-2026-11-22.md](probes/countess-knobs-2026-11-22.md): The Countess three ways: nav.fullGrid and nav.warpRead on a lab slot (card mapverify, 2026-11-22) (status: current. Scenario `act1.forgotten.countess` (Paladin) and `act1.forgotten.countess.sorc` (Sorceress),...)
 - [countess-nav-fixture.md](probes/countess-nav-fixture.md): Tower Cellar 5 walk fixture (cards countess3b, countessnav, 2026-11-27) (status: offline regression done with SYNTHETIC maps; the recorded grid is still to be captured (live-only, needs a...)
@@ -1218,6 +1221,8 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [search-for-cain-l3-2026-11-19.md](probes/search-for-cain-l3-2026-11-19.md): Search for Cain, drill L3: the real bot chain on a d2d lab slot (2026-11-19) (status: result of drill CAIN-L3 (task `cainl3`), follow-up to `search-for-cain-l2-2026-11-18.md`. NOT Game.exe, no...)
 - [shortdrills.md](probes/shortdrills.md): Short live drills for the g2e/g2f fixes (card shortdrills) (status: current (2026-11-06). Tags: V = run live on the worker host, S = secondary, U = unverified.)
 - [skeleton-speed-2026-11-23.md](probes/skeleton-speed-2026-11-23.md): Skeleton minions: speed and pathing on the lab d2d (2026-11-23) (status: probe record, current. Question (user, 2026-11-22): "skeleton minions seem way too fast and their...)
+- [sme-necromancer-review-2026-11-27.md](probes/sme-necromancer-review-2026-11-27.md): SME review: Necromancer data built by card necroepic (2026-11-27) (status: current. Advice only, no code run, no game. Tags: SRC (read in this repo, path given), EXP (veteran...)
+- [sme-paladin-sorceress-review-2026-11-27.md](probes/sme-paladin-sorceress-review-2026-11-27.md): SME review: Sorceress (cold default) and Paladin (hammerdin, hammerdin_zeal), 2026-11-27 (status: advice only, no code or data changed. Tags: SRC = read in this checkout this turn (path given), EXP =...)
 - [stepgrounds-fork-request.md](probes/stepgrounds-fork-request.md): Fork request card: verbs the step proving grounds are missing (card stepgrounds, 2026-11-23) (status: F1 and F2 DONE in devp25 stepverbs (2026-11-23, V proofs in the devp25 doc and docs/probes/stepgrounds.md...)
 - [stepgrounds-stand.md](probes/stepgrounds-stand.md): Smith stand click, why the scenario was RED (toolstrade38, 2026-11-23)
 - [stepgrounds.md](probes/stepgrounds.md): Step-level proving grounds (card stepgrounds, 2026-11-23) (status: current. Tags: V verified by a named run or probe, U unverified. Every setup is CHEATED (lab verbs,...)

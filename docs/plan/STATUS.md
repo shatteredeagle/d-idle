@@ -36,19 +36,18 @@
 |---|---|---|---|---|
 | m3-act1run | deferred | m3-act1run | `docs/act1-run.md`<br>`docs/probes/act1run/**` | `soak-slot:3` |
 | fid-matrix-refresh | deferred | - | `docs/probes/fid/fid-matrix-refresh.md` | - |
-| necrocorpse | proposed | - | `docs/probes/necrocaps-2026-11-26.md` | - |
 | fid-poison-res-diag | proposed | - | `docs/research/fid-poisonres-trace.md` | - |
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
-| diffready | proposed | - | `internal/diffready`<br>`internal/env/tuning_bot.go`<br>`internal/bot/leveling.go`<br>`internal/bot/explain.go`<br>`cmd/d2bot/util.go`<br>`data/darklaunch.json`<br>`internal/bot/diffready.go`<br>`internal/bot/diffready_test.go`<br>`internal/bot/runner.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`docs/diffready.md`<br>`docs/knobs.md` | - |
 | diffbaal | proposed | - | `internal/quest/baaldone.go`<br>`internal/quest/baaldone_test.go` | - |
+| diffgo | proposed | - | `internal/diffready/consent.go`<br>`internal/bot/diffready.go`<br>`internal/bot/diffready_test.go`<br>`internal/bot/explain.go`<br>`internal/ops`<br>`cmd/d2bot/opscmd.go`<br>`cmd/d2bot/opswire.go`<br>`cmd/d2bot/funwire.go`<br>`cmd/d2bot/live.go`<br>`internal/watch/difficultydesk.go`<br>`internal/watch/difficultydesk_test.go`<br>`internal/watch/funwire.go`<br>`internal/watch/returnscreen.go`<br>`docs/diffready.md` | - |
+| whirlscen | proposed | - | `tools/provingground/scenarios/combatdrills.json`<br>`tools/provingground/scenarios/tiers.json`<br>`internal/scenario/`<br>`docs/probes/combat-drills-2026-11-27.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | returnmock | proposed | - | `docs/research/mocks/return.html`<br>`docs/research/return-screen.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
-| dietarchive | proposed | - | `docs/archive`<br>`docs/research/README.md` | - |
 | dietrule | proposed | - | `docs/backlog-howto.md` | - |
 | ghcrpublish | in-progress | - | `.github/workflows/tester-image.yml`<br>`docs/registry-publish.md`<br>`deploy/d2d-container/compose.friends.yml`<br>`docs/tester-registry.md`<br>`deploy/d2d-container/compose.tester.yml`<br>`deploy/d2d-container/context.sh`<br>`deploy/d2d-container/tester_image_test.go` | - |
 | d2d-container-soak | deferred | d2d-container-soak | `docs/d2d-container-soak.md` | `soak-slot:1` |
@@ -97,7 +96,7 @@
 | uis6 | proposed | - | `internal/watch/web/panels/area-map/`<br>`internal/watch/web/panels/log/`<br>`internal/watch/web/panels/map/`<br>`internal/watch/testdata/areamap/`<br>`internal/watch/testdata/logpanel/`<br>`internal/watch/logtab.go`<br>`internal/watch/logtab_test.go`<br>`internal/watch/areamap_test.go`<br>`internal/watch/web/shell.js`<br>`internal/watch/web/shell.css`<br>`internal/watch/web/components.css`<br>`internal/watch/web/layout.js`<br>`internal/watch/web/shell.json`<br>`internal/watch/web/layouts/cockpit.json`<br>`internal/watch/layout.go`<br>`internal/watch/panels.go`<br>`internal/watch/serve.go`<br>`tools/uishots/`<br>`tools/uishots.sh`<br>`tools/uilint/lint.go` | - |
 | ordersux3 | deferred | - | `internal/watch/mapdata.go`<br>`internal/watch/web/**`<br>`docs/orders-slice3.md` | - |
 | uib9 | proposed | - | `internal/d2dctl/item_verbs_merc.go`<br>`internal/d2dctl/item_verbs_merc_test.go`<br>`internal/invdesk/mercverbs.go`<br>`internal/invdesk/mercverbs_test.go`<br>`internal/invdesk/sets.go`<br>`cmd/d2bot/invverbs.go`<br>`cmd/d2bot/invverbs_test.go`<br>`docs/research/merc-gear.md` | - |
-| onboardtour | proposed | - | `internal/watch/web/onboarding.js`<br>`internal/watch/web/onboarding.css`<br>`docs/onboarding-tour.md` | - |
+| onboardtour | proposed | - | `internal/watch/web/onboarding.js`<br>`internal/watch/web/onboarding.css`<br>`internal/watch/web/onboarding.json`<br>`internal/watch/web/watch.html`<br>`internal/watch/onboardingtour_test.go`<br>`internal/watch/testdata/onboarding_tour_test.cjs`<br>`docs/onboarding-tour.md` | - |
 | onboardctl | deferred | - | `internal/watch/control.go`<br>`internal/watch/control_test.go`<br>`docs/onboarding-controls.md` | - |
 | fidprobe-vendor | proposed | - | `internal/fidvendor`<br>`docs/research/fidelity-vendor-probe.md` | - |
 | custom-overlay | deferred | - | `docs/research/custom-overlay-spec.md`<br>`docs/overlay.md`<br>`docs/research/custom-items.md`<br>`internal/overlay/`<br>`internal/data/`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/d2dbackend_test.go` | - |
@@ -198,14 +197,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
-- 98f9bd0b3 11-27 16:02 `Merge agent/diffready: diffready+diffbaal: readiness predicate, opt-in hop, Baal-dead reader (TASK-1058/1059)` (diffready)
-- 689b57e34 11-27 15:59 `Merge origin/main into diffready (explain.go and darklaunch.json: both sides kept)` (-)
-- 69abed554 11-27 15:43 `Merge agent/ledgertrial: ledger: stepExec trial row` (ledgertrial)
-- 1235cddd1 11-27 15:42 `Merge branch 'main' into ledgertrial` (-)
-- 2f9abaad7 11-27 15:34 `Merge agent/classkeys: classkeys: main-attack hotkeys for all classes, profile skill check, merc aura note (TASK-1063)` (classkeys)
-- 2947d96a6 11-27 15:34 `Merge agent/testerreport: testerreport: scrubbed tester report bundle, first-session doc (TASK-27)` (testerreport)
-- bb0a720a8 11-27 15:34 `Merge agent/closecards3: closecards3: third card cleanup pass` (closecards3)
-- 0dd5a9f51 11-27 15:34 `Merge agent/admit2: admit2: admission function shadow wiring, bot.admission knob (TASK-970 step 2)` (admit2)
-- 083e2a95b 11-27 15:32 `Merge branch 'main' into classkeys` (-)
-- 25030e532 11-27 15:32 `Merge branch 'main' into testerreport` (-)
+- 1280a6928 11-27 16:31 `Merge agent/smepal: smepal: SME Paladin and Sorceress review (docs)` (smepal)
+- 719aeae00 11-27 16:31 `Merge agent/onboardtour2: onboardtour2: tour tips, Help sheet, Now line (TASK-48 partial)` (onboardtour2)
+- 881df5215 11-27 16:31 `Merge agent/whirlscen: whirlscen: combat drill scenarios, pre.skills setup field (TASK-1065)` (whirlscen)
+- 9c6c61d38 11-27 16:30 `Merge agent/diffgo: diffgo: go-difficulty ops verb, persisted go, Return screen button (TASK-1061)` (diffgo)
+- c43a986dd 11-27 16:28 `Merge branch 'main' into smepal` (-)
+- e5ae7cd10 11-27 16:28 `Merge branch 'main' into onboardtour2` (-)
+- ab9acccd0 11-27 16:28 `Merge branch 'main' into whirlscen` (-)
+- 9eaa2ed43 11-27 16:28 `Merge branch 'main' into diffgo` (-)
+- e2e724c59 11-27 16:20 `Merge agent/smenecro: smenecro: SME Necromancer review (docs)` (smenecro)
+- be94247fd 11-27 16:20 `Merge agent/diet: diet: archive 5 finished research reports, docs diet rule (TASK-117/118)` (diet)
 <!-- statusgen:end -->
