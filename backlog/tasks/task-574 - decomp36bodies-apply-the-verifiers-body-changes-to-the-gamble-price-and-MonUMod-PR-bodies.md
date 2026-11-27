@@ -20,7 +20,7 @@ owns:
   - "docs/upstream/bodies/umod-multishot-body.md"
 exclusive: []
 contracts: []
-result: "Bodies updated per the verifier (G1-G6, U1-U6); PRs posted in this run (not verified live, no game)."
+result: "Bodies updated per the verifier (G1-G6, U1-U6); PRs posted in this run (not verified live, no game). closecards3: ticked #3 (PRs posted per result)."
 lane: next
 ---
 
@@ -36,5 +36,5 @@ Why: TODO. Done when: TODO.
 <!-- AC:BEGIN -->
 - [x] #1 Gamble body: G1 to G6 applied
 - [x] #2 MonUMod body: U1 to U6 applied incl. the Act 1 and 2 correction and the classic-pricing limit
-- [ ] #3 Both PRs posted upstream from fid/gamble-price-r2 and fid/umod-can-take-r3 with these bodies
+- [x] #3 Both PRs posted upstream from fid/gamble-price-r2 and fid/umod-can-take-r3 with these bodies
 <!-- AC:END -->

@@ -20,7 +20,7 @@ exclusive:
   - "fork-branch:fid/swing-start-r3"
   - "upstream-pr:swing-start"
 contracts: []
-result: "Posted 2026-11-14: https://github.com/psi29a/d2decomped/pull/530 (fid/swing-start-r3; upstream main unchanged). CodeRabbit: one valid comment fixed in 16198be6 and answered. Nothing run on the worker host."
+result: "Posted 2026-11-14: https://github.com/psi29a/d2decomped/pull/530 (fid/swing-start-r3; upstream main unchanged). CodeRabbit: one valid comment fixed in 16198be6 and answered. Nothing run on the worker host. closecards3: ticked #1, #2 (posted, answered, in result)."
 lane: next
 ---
 
@@ -34,6 +34,6 @@ Posting step for the swing-start candidate after the verifier pass (TASK-418) an
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 PR posted with the verified body
-- [ ] #2 CodeRabbit comment answered
+- [x] #1 PR posted with the verified body
+- [x] #2 CodeRabbit comment answered
 <!-- AC:END -->
