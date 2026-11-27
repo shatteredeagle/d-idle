@@ -79,7 +79,7 @@ Not in any batch: `bot.arbiterControl` and `bot.arbiterFamilies` (rerun first, s
 
 ## 3. Drills for the 23:00 to 07:00 EST window tonight (max 3 lab runs)
 
-Each is one `labrun BUILDER --lane long --detach --notify --pull provingground-out -- tools/provingground/run.sh ...` job; check the worker host capacity first (`labrun orion -- top -bn2 -d1`, idle plus nice 25 percent or more).
+Each is one `labrun BUILDER --lane long --detach --notify --pull provingground-out -- tools/provingground/run.sh ...` job; check the worker host capacity first (`labrun the worker host -- top -bn2 -d1`, idle plus nice 25 percent or more).
 
 1. Nav A/B (feeds B2): a loop of `tools/provingground/knobs3way.sh <id> Paladin "11 3"` over `nav.bloodmoor-coldplains`, `nav.barracks-return`, `nav.inner-cloister-cathedral`, `nav.catacombs-hop-33-34`, `nav.catacombs-hop-34-35`. Pass: ON arms (`grid`, `gridwarp`) no BLOCKED or RED that the `off` arm does not have. Serial, so check the wall time (U, about 30 runs).
 2. Board restart (feeds B3): `run.sh -id board.sm.restart-mid-chain,board.park.persist-restart,board.sm.stop-cascades -class Sorceress -seed 3 -parallel 1`, then the same for Paladin 11 in the same job if time allows. Pass: GREEN, hard invariants 0. Expected risk (V boardsm-progress): park.persist-restart may stay pending because its setup cannot be made.
