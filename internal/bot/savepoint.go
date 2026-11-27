@@ -2,6 +2,7 @@ package bot
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"d2lod-bot/internal/d2"
@@ -85,6 +86,7 @@ func (r *Runner) savePointStep(ctx context.Context, s *d2.Snapshot, c control) b
 	l.saveNext = now.Add(savePointRetry)
 	r.logXPAtRisk("save point")
 	r.e.Log.Info("save point: saving and re-entering the game", "level", s.Player.Level)
+	r.noteRelaunch(RelaunchSavePoint, fmt.Sprintf("level=%d", s.Player.Level))
 	r.obMu.Lock()
 	r.ob.plannedGames++
 	r.obMu.Unlock()

@@ -151,7 +151,7 @@ func TestInvariantRefusals(t *testing.T) {
 	f := invHeroes[0].facts(t0)
 	runInv(m, f, 2, nil)
 	for i := 0; i < 10; i++ {
-		m.noteRefusal()
+		m.noteRefusal("step: not ready")
 	}
 	m.noteRefusalFailure("quest board step", errors.New("not ready: early road"))
 	var names []string
