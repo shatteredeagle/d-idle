@@ -164,6 +164,7 @@ data/darklaunch.json  credit-runner  dlv-upkeep-state
 data/darklaunch.json  credit-runner  ticklog
 data/input/caps/  credit-runner  inputl3
 data/input/caps_test.go  credit-runner  inputl3
+data/onboarding/en.json  credit-runner  reconnectux
 data/questboard/act1.json  credit-runner  cainfix3
 data/questboard/act2.json  credit-runner  qdmatrix
 deploy/d2d-container/compose.friends.yml  credit-runner  ghcrpublish
@@ -438,12 +439,14 @@ internal/watch/areamap_test.go  credit-runner  uis6
 internal/watch/difficultydesk.go  credit-runner  diffgo
 internal/watch/difficultydesk_test.go  credit-runner  diffgo
 internal/watch/funwire.go  credit-runner  diffgo
+internal/watch/funwire.go  credit-runner  reconnectux
 internal/watch/layout.go  credit-runner  uis1
 internal/watch/layout.go  credit-runner  uis6
 internal/watch/layout_test.go  credit-runner  uis1
 internal/watch/logtab.go  credit-runner  uis6
 internal/watch/logtab_test.go  credit-runner  uis6
 internal/watch/onboarding.go  credit-runner  reconnectux
+internal/watch/onboarding_test.go  credit-runner  reconnectux
 internal/watch/onboardingtour_test.go  credit-runner  onboardtour
 internal/watch/panels.go  credit-runner  uis6
 internal/watch/policypreview_test.go  live-agent  epic-class-necromancer
@@ -453,6 +456,8 @@ internal/watch/serve.go  credit-runner  uis6
 internal/watch/stance_test.go  live-agent  epic-class-necromancer
 internal/watch/testdata/areamap/  credit-runner  uis6
 internal/watch/testdata/logpanel/  credit-runner  uis6
+internal/watch/testdata/onboarding_dom.js  credit-runner  reconnectux
+internal/watch/testdata/onboarding_dom.txt  credit-runner  reconnectux
 internal/watch/testdata/onboarding_tour_test.cjs  credit-runner  onboardtour
 internal/watch/unlockrisk_test.go  live-agent  epic-class-necromancer
 internal/watch/web/components.css  credit-runner  uis6
