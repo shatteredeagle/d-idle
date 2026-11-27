@@ -51,6 +51,10 @@ type Fixtures struct {
 	// starting "err " is an error reply, anything else the JSON line before "ok". A verb without an entry is unknown, like
 	// an older build.
 	World map[string]string
+	// Hold answers "cmd skillhold status" in order, one entry per call, the last one repeating (e.g. "held=3 casts=1
+	// frames=15 state=running"); nil: the hold verb is unknown, like a build without it. HoldErr refuses the start.
+	Hold    []string
+	HoldErr string
 }
 
 // Options model misbehaviour.
@@ -388,6 +392,8 @@ func (s *Server) cmd(f []string) (string, bool, bool) {
 			return "ok\n", true, false
 		}
 		return "ok\n", false, false
+	case "skillhold":
+		return s.skillHold(f), false, false
 	case "skill":
 		if u, ok := ParseSkill(f); ok { // handle holds s.mu
 			s.skills = append(s.skills, u)
@@ -397,6 +403,29 @@ func (s *Server) cmd(f []string) (string, bool, bool) {
 		return "ok\n", false, false
 	}
 	return fmt.Sprintf("err unknown cmd '%s'\n", f[1]), false, false
+}
+
+// skillHold is the fork's hold verb: the start answers at once, "status" reads the hold (Fixtures.Hold).
+func (s *Server) skillHold(f []string) string {
+	switch {
+	case s.Fix.Hold == nil:
+		return "err unknown cmd 'skillhold'\n"
+	case len(f) == 3 && f[2] == "status":
+		st := s.Fix.Hold[0]
+		if len(s.Fix.Hold) > 1 {
+			s.Fix.Hold = s.Fix.Hold[1:]
+		}
+		return st + "\nok\n"
+	case len(f) < 7:
+		return "err usage: cmd skillhold <id> <x> <y> <unit> <frames> [left]\n"
+	case s.Fix.HoldErr != "":
+		return "err skillhold: " + s.Fix.HoldErr + "\n"
+	}
+	hand := "right"
+	if len(f) > 7 && f[7] != "0" {
+		hand = "left"
+	}
+	return fmt.Sprintf("ok hold=%s skill=%s %s\n", f[6], f[2], hand)
 }
 
 func (s *Server) debug(f []string) (string, bool, bool) {

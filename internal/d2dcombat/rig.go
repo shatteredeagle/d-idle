@@ -74,6 +74,7 @@ func New(cfg Config) (*Rig, error) {
 	tune := env.DefaultTuning()
 	r.Env = &env.Env{ID: "d2dcombat", Log: log, Read: viewReader{r.Src}, In: r.In, Data: cfg.Tables, Clock: r.Meter, Tune: &tune}
 	r.Env.Planner = newPlanner(ctx, r.Env, cfg.Ctl)
+	ctl.Planner = r.Env.Planner // the casts (Deliver, CastAt, Swing) and the world verbs read the same knob, as in Attach
 	r.Nav = nav.New(r.Env)
 	r.Nav.UseWorld(r.World)
 	r.Fighter = combat.New(r.Env, r.Nav)

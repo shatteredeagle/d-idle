@@ -18,7 +18,7 @@ import (
 )
 
 // castInput is the combat input over a fake d2d whose monster list also holds a corpse (unit 8 at cell 20, 20).
-func castInput(t *testing.T, p *input.Planner) (*Input, *fake.Server) {
+func castInput(t *testing.T, p *input.Planner, mods ...func(*fake.Fixtures)) (*Input, *fake.Server) {
 	t.Helper()
 	path, cleanup, err := fake.TempSocket()
 	if err != nil {
@@ -27,6 +27,9 @@ func castInput(t *testing.T, p *input.Planner) (*Input, *fake.Server) {
 	t.Cleanup(cleanup)
 	fix := fake.Sample()
 	fix.Monsters = append(fix.Monsters, "fallen1\t20.00\t20.00\t900\t500\t0/2\tDD\t-\t-\tlvl1\tFallen\t#8\t-")
+	for _, m := range mods {
+		m(&fix)
+	}
 	srv, err := fake.New(path, fix, fake.Options{})
 	if err != nil {
 		t.Fatal(err)
@@ -110,31 +113,50 @@ func TestDeliverTwoBuilds(t *testing.T) {
 	}
 }
 
-// A repeat press asks for the hold verb; no d2d build has one, so the old single command goes out once.
-func TestDeliverHoldFallsBackOnce(t *testing.T) {
+// A repeat press asks for the hold verb. A build that lists the cap but refuses the start (here: an older fork without
+// the verb) gets the old single command once; a build whose hold starts gets the hold alone, never a second cast.
+func TestDeliverHold(t *testing.T) {
 	tab, err := delivery.Load(capdata.JSON)
 	if err != nil {
 		t.Fatal(err)
 	}
 	for _, class := range []string{"paladin", "barbarian"} { // the Sorceress has no repeat or channel row
-		t.Run(class, func(t *testing.T) {
-			_, use := rowOf(t, tab, class, "", true)
-			p := &input.Planner{Enabled: func() bool { return true }, Caps: &input.BackendCaps{Verbs: []string{input.CapCastHold}}}
-			in, srv := castInput(t, p)
-			if err := in.Deliver(7, use, input.Point{X: 400, Y: 400}, 600*time.Millisecond); err != nil {
-				t.Fatal(err)
-			}
-			got := srv.Lines()
-			if len(got) > 0 && got[0] == "monsters" && use.Target == "unit" { // nobody near the aim: a point cast
-				got = got[1:]
-			}
-			if len(got) != 1 || got[0] != "cmd skill 7 80.1 80.1"+tail(use.Hand == "left", 0) {
-				t.Fatalf("lines %q", got)
-			}
-			if v, k, _, _ := p.Counts(); v != 0 || k != 1 {
-				t.Fatalf("verb=%d key=%d", v, k)
-			}
-		})
+		for _, verb := range []bool{false, true} {
+			t.Run(fmt.Sprintf("%s/verb=%v", class, verb), func(t *testing.T) {
+				_, use := rowOf(t, tab, class, "", true)
+				p := &input.Planner{Enabled: func() bool { return true }, Caps: &input.BackendCaps{Verbs: []string{input.CapCastHold}}}
+				in, srv := castInput(t, p, func(f *fake.Fixtures) {
+					if verb {
+						f.Hold = []string{"held=15 casts=1 frames=15 state=done"}
+					}
+				})
+				if err := in.Deliver(7, use, input.Point{X: 400, Y: 400}, 600*time.Millisecond); err != nil {
+					t.Fatal(err)
+				}
+				got := srv.Lines()
+				if len(got) > 0 && got[0] == "monsters" && use.Target == "unit" { // nobody near the aim: a point cast
+					got = got[1:]
+				}
+				l := "0"
+				if use.Hand == "left" {
+					l = "1"
+				}
+				want := []string{"cmd skillhold 7 80.1 80.1 -1 15 " + l, "cmd skill 7 80.1 80.1" + tail(use.Hand == "left", 0)}
+				wv, wk := 0, 1
+				if verb {
+					want, wv, wk = []string{want[0], "cmd skillhold status"}, 1, 0
+				}
+				if !reflect.DeepEqual(got, want) {
+					t.Fatalf("lines\n got %q\nwant %q", got, want)
+				}
+				if v, k, _, _ := p.Counts(); v != wv || k != wk {
+					t.Fatalf("verb=%d key=%d", v, k)
+				}
+				if in.Stats().Casts[7] != 1 {
+					t.Fatalf("stats %+v", in.Stats())
+				}
+			})
+		}
 	}
 }
 

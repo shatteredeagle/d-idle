@@ -83,6 +83,7 @@ type Fighter struct {
 	buffAt        map[int]time.Time
 	buffTries     map[int]int // consecutive casts cut by a hit, per skill (card armorcut)
 	upk           upkeepState // the state-observed upkeep driver (upkeep.go)
+	upkCmp        upkeepCmp   // shadow comparison counts (upkeepcmp.go)
 	mark          markState   // the mark driver (mark.go)
 	stance        stanceState // the army stance (stance.go)
 	lastDodge     time.Time
@@ -762,6 +763,7 @@ func (f *Fighter) buffPass(ctx context.Context, snap *d2.Snapshot) (cast bool, e
 				mark = f.upkeepIsMark(sp) || prof.isMarkRow(name)
 			} else if mode == 1 && mark != f.upkeepIsMark(sp) {
 				f.upkeepShadow(sp, "mark", mark, !mark)
+				f.upkCmp.note(cmpBuff, false)
 			}
 			if mark {
 				continue
@@ -770,7 +772,11 @@ func (f *Fighter) buffPass(ctx context.Context, snap *d2.Snapshot) (cast bool, e
 			if mode == 2 {
 				due = f.upkeepDue(p, sp)
 			} else if mode == 1 {
-				if d := f.upkeepDue(p, sp); d != due {
+				d := f.upkeepDue(p, sp)
+				if mark == f.upkeepIsMark(sp) { // a curse split already counted this skill as a disagreement
+					f.upkCmp.note(cmpBuff, d == due)
+				}
+				if d != due {
 					f.upkeepShadow(sp, "due", due, d)
 				} else {
 					delete(f.upk.shadowLast, sp.ID)
@@ -863,10 +869,11 @@ type holdClicker interface {
 }
 
 func (f *Fighter) cast(snap *d2.Snapshot, sp SkillSpec, at input.Point) error {
-	var err error
+	delivered, err := f.deliverCast(snap.Player, sp, at) // input.planner on: one cast request (castdeliver.go)
 	left := sp.Hand == HandLeft || sp.ID == meleeSpec().ID
 	sw, swings := f.e.In.(swinger)
 	switch {
+	case delivered:
 	case left && swings:
 		err = sw.Swing(sp.ID, at)
 	case left:

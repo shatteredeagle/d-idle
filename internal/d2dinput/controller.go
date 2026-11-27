@@ -59,6 +59,9 @@ type Controller struct {
 	chainStart time.Time // start of the current chain of moves at full stamina
 	lastMoveAt time.Time
 	stam       stamTrack // previous stamina sample for the exact run/walk classification (run.go)
+
+	holdMu   sync.Mutex
+	lastHold HoldResult // end of the last CastHold (casthold.go)
 }
 
 // New returns a Controller with default transform and polling.
