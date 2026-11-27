@@ -56,9 +56,9 @@
      "uses": ["travel", "escape"],
      "range": 18,
      "minHop": 4,
-     "escapeSurround": 4,
-     "escapeLifePct": 65,
-     "source": "V range: a cast moves about 18 subtiles (docs/act2.md live results, nav teleport.go). U escape triggers: four in contact under 65 percent life, the melee profiles' surround numbers"
+     "escapeSurround": 3,
+     "escapeLifePct": 75,
+     "source": "V range: a cast moves about 18 subtiles (docs/act2.md live results, nav teleport.go). U escape triggers: three in contact or under 75 percent life (SME review 2026-11-27, confidence medium; was four and 65)"
     }
    ]
   },
@@ -112,9 +112,9 @@
      "uses": ["travel", "escape"],
      "range": 18,
      "minHop": 4,
-     "escapeSurround": 4,
-     "escapeLifePct": 65,
-     "source": "V range: a cast moves about 18 subtiles (docs/act2.md live results, nav teleport.go). U escape triggers: four in contact under 65 percent life, the melee profiles' surround numbers"
+     "escapeSurround": 3,
+     "escapeLifePct": 75,
+     "source": "V range: a cast moves about 18 subtiles (docs/act2.md live results, nav teleport.go). U escape triggers: three in contact or under 75 percent life (SME review 2026-11-27, confidence medium; was four and 65)"
     }
    ]
   },
@@ -179,9 +179,9 @@
      "uses": ["travel", "escape"],
      "range": 18,
      "minHop": 4,
-     "escapeSurround": 4,
-     "escapeLifePct": 65,
-     "source": "V range: a cast moves about 18 subtiles (docs/act2.md live results, nav teleport.go). U escape triggers: four in contact under 65 percent life, the melee profiles' surround numbers"
+     "escapeSurround": 3,
+     "escapeLifePct": 75,
+     "source": "V range: a cast moves about 18 subtiles (docs/act2.md live results, nav teleport.go). U escape triggers: three in contact or under 75 percent life (SME review 2026-11-27, confidence medium; was four and 65)"
     }
    ]
   },
@@ -225,9 +225,9 @@
      "uses": ["travel", "escape"],
      "range": 18,
      "minHop": 4,
-     "escapeSurround": 4,
-     "escapeLifePct": 65,
-     "source": "V range: a cast moves about 18 subtiles (docs/act2.md live results, nav teleport.go). U escape triggers: four in contact under 65 percent life, the melee profiles' surround numbers"
+     "escapeSurround": 3,
+     "escapeLifePct": 75,
+     "source": "V range: a cast moves about 18 subtiles (docs/act2.md live results, nav teleport.go). U escape triggers: three in contact or under 75 percent life (SME review 2026-11-27, confidence medium; was four and 65)"
     }
    ]
   },

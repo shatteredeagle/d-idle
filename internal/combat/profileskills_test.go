@@ -139,3 +139,34 @@ func TestHammerdinZealFallbackDealsDamage(t *testing.T) {
 		t.Errorf("hammerdin clvl 18 attacks %v", got)
 	}
 }
+
+// SME review 2026-11-27, confidence medium: a low-life caster hops before the fourth attacker closes. Every Sorceress
+// profile's Teleport escape row asks for three in contact or 75 percent life; the other classes' escape rows are untouched.
+func TestSorceressTeleportEscapeEarly(t *testing.T) {
+	seen := 0
+	for _, p := range Profiles() {
+		for _, m := range p.Moves {
+			if m.Name != "Teleport" {
+				continue
+			}
+			if p.Class != "sorceress" {
+				t.Errorf("%s/%s: unexpected Teleport row", p.Class, p.Build)
+				continue
+			}
+			seen++
+			if m.EscapeSurround != 3 || m.EscapeLifePct != 75 {
+				t.Errorf("%s/%s: escape at %d in contact / %d%% life, want 3 / 75", p.Class, p.Build, m.EscapeSurround, m.EscapeLifePct)
+			}
+		}
+	}
+	if seen != 4 {
+		t.Errorf("%d Sorceress Teleport rows, want 4", seen)
+	}
+	for _, p := range Profiles() {
+		for _, m := range p.Moves {
+			if p.Class != "sorceress" && m.EscapeSurround == 3 && m.EscapeLifePct == 75 {
+				t.Errorf("%s/%s escape row changed", p.Class, p.Build)
+			}
+		}
+	}
+}
