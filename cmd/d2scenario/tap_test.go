@@ -12,6 +12,7 @@ import (
 	"testing"
 	"time"
 
+	"d2lod-bot/internal/questboard"
 	"d2lod-bot/internal/scenario"
 )
 
@@ -324,5 +325,95 @@ func TestTapperWaitsForTheHandInBeforeTheNextStart(t *testing.T) {
 	 {"id":"sisters_burial_grounds","chunks":[{"id":"blood_raven","state":"ready","action":{"verb":"start"}}]}]}`)
 	if tap, _, _ := tp.Step(ctx); tap != "start blood_raven" {
 		t.Fatalf("after the hand-in: %q", tap)
+	}
+}
+
+// --- scripted taps (card pgtaps step 2): the engine decides on the bot's virtual second, with no wall clock ---
+
+func boardWith(quest, chunk, verb string) questboard.View {
+	return questboard.View{Quests: []questboard.QuestRow{{ID: quest, Chunks: []questboard.ChunkRow{{ID: chunk, Action: &questboard.ActionView{Verb: verb}}}}}}
+}
+
+func TestTapEngineTapsOnTheVirtualGridPoint(t *testing.T) {
+	// two builds' quests: a caster's den and a melee's blood raven chunk (the engine is data-driven, no class in it)
+	for _, c := range []struct{ quest, chunk string }{{"den_of_evil", "den"}, {"sisters_burial_grounds", "scroll"}} {
+		e := scenario.NewTapEngine(scenario.TapScript{Quest: c.quest, EveryS: 30})
+		var pressed []string
+		press := func(verb, q, ch string) { pressed = append(pressed, verb+" "+q+"/"+ch) }
+		v := boardWith(c.quest, c.chunk, "start")
+		if got := e.Poll(v, 29.9, press); got != "" || len(pressed) != 0 {
+			t.Fatalf("%s: tapped before the first grid point: %q", c.quest, got)
+		}
+		if got := e.Poll(v, 41, press); got != "start "+c.chunk {
+			t.Fatalf("%s: first grid point after the offer: %q", c.quest, got)
+		}
+		if e.Poll(v, 44, press) != "" {
+			t.Fatalf("%s: tapped twice inside one grid cell", c.quest)
+		}
+		if len(pressed) != 1 || e.Taps[0].At != 41 {
+			t.Fatalf("%s: %v %v", c.quest, pressed, e.Taps)
+		}
+	}
+}
+
+func TestTapEngineRulesMatchTheHTTPTapper(t *testing.T) {
+	press := func(string, string, string) {}
+	// another quest is not tapped; a chunk outside the list is not tapped; "*" taps every quest
+	e := scenario.NewTapEngine(scenario.TapScript{Quest: "a", Chunks: []string{"x"}, EveryS: 10})
+	if e.Poll(boardWith("b", "x", "start"), 10, press) != "" || e.Poll(boardWith("a", "y", "start"), 20, press) != "" {
+		t.Fatal("tapped a quest or chunk that is not wanted")
+	}
+	if e.Poll(boardWith("a", "x", "start"), 30, press) != "start x" {
+		t.Fatal("wanted chunk not tapped")
+	}
+	star := scenario.NewTapEngine(scenario.TapScript{Quest: "*", EveryS: 10})
+	if star.Poll(boardWith("zz", "q", "start"), 10, press) != "start q" {
+		t.Fatal("* must tap any quest")
+	}
+	// a Start waits while a chunk runs; a hand-in is held until its button is gone
+	run := boardWith("a", "x", "start")
+	run.Running = &questboard.RunView{Quest: "a", Chunk: "x"}
+	e = scenario.NewTapEngine(scenario.TapScript{Quest: "a", EveryS: 10})
+	if e.Poll(run, 10, press) != "" {
+		t.Fatal("Start tapped while a chunk runs")
+	}
+	hv := boardWith("a", "x", "handin")
+	if e.Poll(hv, 20, press) != "handin x" {
+		t.Fatal("hand-in not tapped")
+	}
+	next := boardWith("a", "x", "start")
+	next.Quests[0].Chunks[0].State = "awaiting_handin"
+	if e.Poll(next, 30, press) != "" {
+		t.Fatal("Start tapped while the hand-in dialogue still waits")
+	}
+	next.Quests[0].Chunks[0].State = "done"
+	if e.Poll(next, 40, press) != "start x" {
+		t.Fatal("hold not released after the hand-in")
+	}
+}
+
+func TestParseTapScript(t *testing.T) {
+	s, err := scenario.ParseTapScript([]byte(`{"quest":"a,b","chunks":["x"]}`))
+	if err != nil || s.EveryS != 30 || s.Quest != "a,b" {
+		t.Fatalf("%+v %v", s, err)
+	}
+	for _, bad := range []string{`{}`, `{"quest":"a","every_s":-1}`, `{"quest":"a","nope":1}`, `x`} {
+		if _, err := scenario.ParseTapScript([]byte(bad)); err == nil {
+			t.Errorf("%s accepted", bad)
+		}
+	}
+}
+
+func TestReadScriptedTaps(t *testing.T) {
+	f := t.TempDir() + "/x.taps.json"
+	if taps, at := readScriptedTaps(f); taps != nil || at != nil {
+		t.Fatal("a missing file must read as no taps")
+	}
+	if err := os.WriteFile(f, []byte(`[{"tap":"start scroll","at":30},{"tap":"handin read","at":90}]`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	taps, at := readScriptedTaps(f)
+	if len(taps) != 2 || taps[1] != "handin read" || at[0] != 30 || at[1] != 90 {
+		t.Fatalf("%v %v", taps, at)
 	}
 }

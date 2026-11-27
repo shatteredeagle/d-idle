@@ -6,7 +6,9 @@ import (
 	"d2lod-bot/internal/paths"
 	"d2lod-bot/internal/points"
 	"d2lod-bot/internal/questboard"
+	"d2lod-bot/internal/scenario"
 	"encoding/base64"
+	"encoding/json"
 	"errors"
 	"flag"
 	"fmt"
@@ -55,6 +57,10 @@ type ladderOptions struct {
 	// play: the play-session command (play.go) is running; a person plays through the watch screen and the session
 	// record (internal/watch/sessionrec.go) is written. Set by `d2bot play`, never a flag of its own.
 	play bool
+
+	// scriptedTaps: a file of scenario.TapScript; the person's board taps are made inside the bot on the stepping goroutine
+	// (lockstep only), not over HTTP (card pgtaps). Output: <file>.taps.json, the taps and their virtual seconds.
+	scriptedTaps string
 
 	on      bool
 	profile string // "" = a person answers through the watch screen; NAME or holdout:SEED = a scripted player
@@ -113,6 +119,7 @@ type ladderOptions struct {
 }
 
 func ladderFlags(fs *flag.FlagSet, l *ladderOptions) {
+	fs.StringVar(&l.scriptedTaps, "scripted-taps", envOr("D2BOT_SCRIPTED_TAPS", ""), "FILE of a tap script (JSON: quest, chunks, every_s): the quest board taps Start and Hand in by itself on the stepping goroutine, on a grid of virtual time, and writes FILE.taps.json; lockstep d2d only (env D2BOT_SCRIPTED_TAPS; default off, the HTTP tapper of d2scenario stays for sandbox runs)")
 	fs.BoolVar(&l.on, "ladder", envBool("D2BOT_LADDER"), "turn the decision ladder on (knob ladder.enabled 1): the T0/T1 points ask a store whose untrained answer is the legacy one; state under <instance state>/ladder (env D2BOT_LADDER; default off)")
 	fs.StringVar(&l.profile, "ladder-profile", envOr("D2BOT_LADDER_PROFILE", ""), "with --ladder: a scripted player for drills (cautious, bold, inconsistent, holdout:SEED); default none, a person answers on the watch screen")
 	fs.StringVar(&l.store, "ladder-store", envOr("D2BOT_LADDER_STORE", ""), "with --ladder: the store under <instance state>/ladder/runs/NAME; default the run named by D2BOT_RUN (so drills are independent), or the shared store when no run is named; \"shared\" forces the shared store (learning carries on across sessions)")
@@ -716,4 +723,63 @@ func envInt(key string, def int) int {
 		return n
 	}
 	return def
+}
+
+// tapDesk is the part of the quest board desk the scripted taps press.
+type tapDesk interface {
+	View() questboard.View
+	Start(quest, chunk string) questboard.Reply
+	HandIn(quest, chunk string) questboard.Reply
+}
+
+// tapClock is the lockstep clock the scripted taps ride on (d2denv.LateClock).
+type tapClock interface {
+	Now() time.Time
+	OnSleep(fn func()) bool
+}
+
+// installScriptedTaps loads the tap script and runs the engine after every lockstep sleep, i.e. on the goroutine that steps the
+// game, so a tap is a function of the stepped ticks and not of a wall-clock poll (design 2.8 step 3). The board is read only when
+// the virtual grid point is due. U: that Desk.Start and Desk.HandIn are safe to call from inside a Sleep of the bot loop (they
+// take the desk's own lock; a Sleep made while the desk lock is held would deadlock): the hook is not re-entered, and the first
+// live pair (docs/probes) is the proof.
+func installScriptedTaps(clk tapClock, desk tapDesk, file string, log *slog.Logger) error {
+	b, err := os.ReadFile(file)
+	if err != nil {
+		return fmt.Errorf("--scripted-taps: %w", err)
+	}
+	script, err := scenario.ParseTapScript(b)
+	if err != nil {
+		return fmt.Errorf("--scripted-taps %s: %w", file, err)
+	}
+	if desk == nil {
+		return errors.New("--scripted-taps: the quest board is not wired (no hero board)")
+	}
+	eng := scenario.NewTapEngine(script)
+	t0 := clk.Now()
+	out := file + ".taps.json"
+	if !clk.OnSleep(func() {
+		v := clk.Now().Sub(t0).Seconds()
+		if !eng.Due(v) {
+			return
+		}
+		tap := eng.Poll(desk.View(), v, func(verb, quest, chunk string) {
+			var rep questboard.Reply
+			if verb == "handin" {
+				rep = desk.HandIn(quest, chunk)
+			} else {
+				rep = desk.Start(quest, chunk)
+			}
+			log.Info("scripted tap", "tap", verb+" "+chunk, "quest", quest, "virtual_s", v, "ok", rep.OK, "code", rep.Code, "reason", rep.Reason)
+		})
+		if tap != "" {
+			if j, err := json.Marshal(eng.Taps); err == nil {
+				_ = os.WriteFile(out, j, 0o644)
+			}
+		}
+	}) {
+		return errors.New("--scripted-taps needs a lockstep d2d (the taps ride on its stepping goroutine)")
+	}
+	log.Info("scripted taps on", "file", file, "quest", script.Quest, "every_s", script.EveryS)
+	return nil
 }

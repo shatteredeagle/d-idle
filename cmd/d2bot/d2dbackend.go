@@ -430,6 +430,15 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 		return err
 	}
 	defer lrig.StopRec()
+	if o.ladder.scriptedTaps != "" {
+		var desk tapDesk
+		if o.ladder.quests != nil {
+			desk = o.ladder.quests
+		}
+		if err := installScriptedTaps(be.Clock, desk, o.ladder.scriptedTaps, log); err != nil {
+			return err
+		}
+	}
 	useFun(lrig, runner, runID())
 	useGlance(lrig, runner, db, cfg.LevelerBuild, ref)
 	useFightFeed(lrig, feedFighter, ldir, log)
@@ -460,7 +469,11 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 		var cancel context.CancelFunc
 		ctx, cancel = context.WithCancel(ctx)
 		defer cancel()
-		go stopAtVirtual(ctx, cancel, e.Clock, h, log)
+		// Tick based: the stop fires on the stepping goroutine, not on a wall-second ticker (card pgclock, B3).
+		be.Clock.StopAfter(h, func() {
+			log.Info("virtual run length reached", "virtual", h)
+			cancel()
+		})
 	}
 
 	var ready atomic.Bool
@@ -576,7 +589,7 @@ func d2dGoalsOptions(r goals.Runner, path string, chain *goals.Chain, clk env.Cl
 	return goals.Options{Runner: r, Path: path, Clock: clk.Now, Chain: chain, Logf: logf}
 }
 
-// stopAtVirtual cancels the run once the env clock (virtual under lockstep) has advanced by d. --run-for stays wall
+// stopAtVirtual cancels the run once (a free-running clock; lockstep uses LateClock.StopAfter) the env clock (virtual under lockstep) has advanced by d. --run-for stays wall
 // clock; this is the soak runner's hour count, which only means something in game time.
 func stopAtVirtual(ctx context.Context, cancel context.CancelFunc, clk env.Clock, d time.Duration, log *slog.Logger) {
 	t0 := clk.Now()
