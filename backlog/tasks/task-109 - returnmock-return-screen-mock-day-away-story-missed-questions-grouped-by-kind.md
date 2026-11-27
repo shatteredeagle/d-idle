@@ -1,10 +1,13 @@
 ---
 id: TASK-109
-title: 'returnmock: return-screen mock (day-away story, missed questions grouped by kind)'
-status: Proposed
+title: >-
+  returnmock: return-screen mock (day-away story, missed questions grouped by
+  kind)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-07T21:56:00Z'
+updated_date: '2026-11-27T21:49:00Z'
 labels:
   - watch
   - research
