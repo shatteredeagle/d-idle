@@ -50,6 +50,7 @@
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
 | deploy88-ledger | proposed | - | `data/darklaunch.json` | - |
 | placefix | proposed | - | `internal/questboard/`<br>`internal/bot/questboard.go`<br>`data/questboard/act2.json`<br>`tools/provingground/scenarios/stepexec-act2.json`<br>`tools/provingground/scenarios/questdrill.json`<br>`internal/scenario/placefix_test.go`<br>`docs/questboard.md`<br>`internal/task/act1.go`<br>`internal/task/act2.go`<br>`internal/task/placefix_test.go`<br>`internal/d2dinput/controller.go`<br>`internal/d2dinput/placefix_test.go`<br>`internal/d2dctl/parse.go`<br>`internal/d2dctl/verbs.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dsrc/items.go`<br>`internal/d2dsrc/source_test.go` | - |
+| bossdone | proposed | - | `internal/bot/stepexec.go`<br>`internal/bot/task.go`<br>`internal/bot/bossdone_test.go`<br>`data/questspec/act2.json`<br>`data/questspec/caps/`<br>`docs/design/stepexec-p9.md` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
@@ -244,6 +245,9 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- a3b66f2e0 11-27 08:20 `Merge agent/bossdone: Merge branch 'main' into bossdone` (bossdone)
+- 608f022e0 11-27 08:19 `Merge branch 'main' into bossdone` (-)
+- e53929dfb 11-27 08:06 `Merge agent/act2drill5: act2drill5: fifth Duriel run, lair entered and Duriel killed 3/3, blocked on the kill step` (act2drill5)
 - c5a59100e 11-27 07:37 `Merge agent/lairentry: Merge branch 'main' into placefix` (lairentry)
 - 1b1555425 11-27 07:35 `Merge branch 'main' into placefix` (-)
 - 0b82c29ec 11-27 07:32 `Merge agent/pgselfcheck: Merge branch 'main' into pgselfcheck` (pgselfcheck)
@@ -251,7 +255,4 @@
 - 41692595c 11-27 07:28 `Merge agent/act2drill4: Merge branch 'main' into stepexec1` (act2drill4)
 - 3a0e8f864 11-27 07:27 `Merge branch 'main' into stepexec1` (-)
 - 808277b83 11-27 07:06 `Merge agent/questpts: questpts: card owns as directories` (questpts)
-- 7288badbe 11-27 06:37 `Merge agent/placefix3: Merge branch 'main' into placefix` (placefix3)
-- 44412dbb8 11-27 06:35 `Merge branch 'main' into placefix` (-)
-- c01bdcf8f 11-27 06:29 `Merge agent/act2drill3: Merge branch 'main' into stepexec1` (act2drill3)
 <!-- statusgen:end -->
