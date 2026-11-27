@@ -1,7 +1,7 @@
 ---
 id: TASK-334
 title: 'maphistoryD: map session export as PNG and JSON'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T19:38:00Z'
@@ -22,6 +22,7 @@ owns:
 exclusive: []
 contracts: []
 lane: next
+result: "Merged (agent/maphistoryD): /api/history export plus Export PNG/JSON buttons in the map panel; Go and node tests. Not verified live."
 ---
 
 ## Description
@@ -34,5 +35,5 @@ Why: TODO. Done when: TODO.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 GET /api/history/export JSON (trail, events, samples, heat, coverage, build; no credentials) and Export PNG/JSON buttons in the map panel
+- [x] #1 GET /api/history/export JSON (trail, events, samples, heat, coverage, build; no credentials) and Export PNG/JSON buttons in the map panel
 <!-- AC:END -->

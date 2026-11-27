@@ -2,6 +2,7 @@ package watch
 
 import (
 	"context"
+	"d2lod-bot/internal/charms"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -47,12 +48,13 @@ const (
 // VaultRoutes are the viewer paths (the page and its files, the two GET routes); VaultPostRoutes the answer ones.
 var (
 	VaultRoutes     = []string{VaultRoute, VaultItemRoute, VaultEquipGet, "/watch/vault", "/watch/vault.js", "/watch/vault-logic.js", "/watch/vault.css", "/watch/vault.json"}
-	VaultPostRoutes = []string{VaultPinRoute, VaultUnpinRoute, VaultDiscardRoute, VaultKeepRoute, VaultRevealRoute, VaultSellRoute, VaultCancelRoute, VaultPromptRoute, VaultMissedRoute, VaultEquipRoute, VaultEquipCancel, VaultRevealGoldRoute, VaultRevealGoldCancelRoute, VaultSellQuote}
+	VaultPostRoutes = []string{VaultPinRoute, VaultUnpinRoute, VaultDiscardRoute, VaultKeepRoute, VaultRevealRoute, VaultSellRoute, VaultCancelRoute, VaultPromptRoute, VaultMissedRoute, VaultEquipRoute, VaultEquipCancel, VaultCarryRoute, VaultStowRoute, VaultRevealGoldRoute, VaultRevealGoldCancelRoute, VaultSellQuote}
 )
 
 // VaultDesk is what the routes need from the bot side (cmd/d2bot/vaultwire.go). Every field is a func read per request, so a
 // hero switch or a knob change shows at once.
 type VaultDesk struct {
+	cache *vaultCache         // set by Bind: the poll-time preview and facets, keyed by the store version
 	On    func() bool         // the knob loot.vault; nil counts as on
 	Store func() *vault.Store // the active hero's vault, nil while there is none
 	Tiers *vault.Tiers        // the capacity table, for the tier line
@@ -306,7 +308,12 @@ type VaultAPI struct {
 
 func NewVaultAPI() *VaultAPI { return &VaultAPI{} }
 
-func (a *VaultAPI) Bind(d VaultDesk) { a.mu.Lock(); a.d = &d; a.mu.Unlock() }
+func (a *VaultAPI) Bind(d VaultDesk) {
+	d.cache = &vaultCache{}
+	a.mu.Lock()
+	a.d = &d
+	a.mu.Unlock()
+}
 
 func (a *VaultAPI) desk() *VaultDesk { a.mu.Lock(); defer a.mu.Unlock(); return a.d }
 
@@ -376,6 +383,7 @@ type VaultItem struct {
 	Ethereal   bool           `json:"ethereal,omitempty"`
 	Sockets    int            `json:"sockets,omitempty"`
 	Pin        bool           `json:"pin,omitempty"`
+	Charm      bool           `json:"charm,omitempty"` // a charm that can be carried (internal/charms)
 	State      string         `json:"state"`
 	Status     string         `json:"status"`
 	Value      int            `json:"value"`
@@ -403,7 +411,7 @@ func vaultRow(r *vault.Rec, tip VaultTipFunc) VaultItem {
 	}
 	v := VaultItem{ID: r.ID, Code: r.Code, Name: name, Quality: qualityWord(r.Quality), Q: r.Quality, Ilvl: r.Ilvl, Level: r.Ilvl,
 		Identified: r.Identified, Ethereal: r.Eth, Sockets: r.Sockets, Pin: r.Pin, State: string(r.State), Status: r.Status(),
-		Value: r.Value, Area: r.Found.Area, Reason: r.Reason}
+		Value: r.Value, Area: r.Found.Area, Reason: r.Reason, Charm: charms.Is(r.Code) && charms.LegalQualityNum(r.Quality)}
 	if !r.Found.Time.IsZero() {
 		v.Found = r.Found.Time.UTC().Format(time.RFC3339)
 	}
@@ -521,6 +529,7 @@ type VaultView struct {
 	Types     []vaultFacet    `json:"types,omitempty"`
 	Anomalies int             `json:"anomalies,omitempty"`
 	Equip     *VaultEquipFlag `json:"equip,omitempty"` // one-tap Equip: offered (knob on) or why not; absent when the bot has none
+	Carry     *VaultCarryView `json:"carry,omitempty"` // Carry and Stow of charms (vaultcarry.go); absent when the bot has none
 	Keep      *VaultKeepView  `json:"keep,omitempty"`  // schema additive: absent when the bot has no Keep queue
 	Act       *VaultActView   `json:"act,omitempty"`   // Reveal and Sell (V6); absent when the bot has neither
 	// AutoTrim is loot.vaultAutoTrim: false (default) the vault never removes an item by itself, so a full vault does not record new drops.
@@ -825,6 +834,9 @@ func (d *VaultDesk) view(ctx context.Context, q vaultQuery, kinds vaultTexts) Va
 			v.Equip.Merc = me.MercDirect(ctx)
 		}
 	}
+	if cv := d.carryView(); cv != nil {
+		v.Carry = cv
+	}
 	if d.Act != nil {
 		av := d.Act.Act(ctx)
 		if !d.on() {
@@ -843,17 +855,7 @@ func (d *VaultDesk) view(ctx context.Context, q vaultQuery, kinds vaultTexts) Va
 	}
 	v.Exists, v.Hero = true, st.Hero()
 	if v.Act != nil && d.MassFilter != nil && d.Quality != nil && d.on() {
-		no := false
-		recs, _ := st.Query(vault.Filter{Identified: &no})
-		r := v.Act.Reveal
-		m := bulkid.MassReveal(d.MassFilter, recs, d.Quality, bulkid.Price{Free: r.Free, Charges: r.Charges, ScrollGold: d.ScrollGold, EtherPer: r.EtherPer, EtherBal: r.Balance})
-		v.Act.Reveal.Mass = &m
-		v.Act.Reveal.Bar = d.bar(ctx, recs, r)
-		if ga, ok := d.Act.(VaultGoldActor); ok {
-			gi := ga.GoldInfo(ctx)
-			gi.Unrevealed = len(bulkid.UnrevealedIDs(recs, gi.Decode))
-			v.Act.Reveal.Gold = &gi
-		}
+		d.massPreview(ctx, st, v.Act)
 	}
 	recs, total := st.Query(q.f)
 	v.Total = total
@@ -883,7 +885,7 @@ func (d *VaultDesk) view(ctx context.Context, q vaultQuery, kinds vaultTexts) Va
 		}
 	}
 	if q.facets {
-		for id, n := range st.Facets().Types {
+		for id, n := range d.cache.facets(st) {
 			label := kinds.Types[id]
 			if label == "" {
 				label = id
@@ -1060,6 +1062,7 @@ type vaultReply struct {
 	Sale    *VaultSale  `json:"sale,omitempty"` // sell: the instant sale that ran (gold added to the stash, stash after)
 	// Equipped lists, per piece, what an Equip or Wear set did at once (Equip v2): the slot, what came off, where it went.
 	Equipped []vaultWorn `json:"equipped,omitempty"`
+	Where    string      `json:"where,omitempty"` // stow: where the charm went (vault, or stash when the vault could not take it)
 }
 
 type vaultWorn struct {
@@ -1164,6 +1167,10 @@ func (a *VaultAPI) PostHandler(o AnswerOptions, route string) http.Handler {
 		}
 		if route == VaultEquipRoute || route == VaultEquipCancel {
 			a.equip(w, r, d, route, &b)
+			return
+		}
+		if route == VaultCarryRoute || route == VaultStowRoute {
+			a.carry(r.Context(), w, d, route, &b)
 			return
 		}
 		if route == VaultKeepRoute {

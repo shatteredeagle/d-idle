@@ -27,7 +27,7 @@ owns:
   - "deploy/d2d-container/tester_image_test.go"
 exclusive: []
 contracts: []
-result: "PREP only (2026-11-08, agent/ghcrprep): inert workflow_dispatch workflow + environment gate written, compose.tester.yml takes D2_IMAGE, static tests, worker-host dry run (smoke PASS, cold build numbers in docs/tester-registry.md). Nothing pushed or run on GitHub; AC 1 and 3 partly (no live registry, no scan on a hosted runner), AC 2 uses compose.tester.yml instead of compose.friends.yml; task stays open for the first publish. Status sync 2026-11-08 (stays open): PREP only, registry publish not done."
+result: "PREP only (2026-11-08, agent/ghcrprep): inert workflow_dispatch workflow + environment gate written, compose.tester.yml takes D2_IMAGE, static tests, worker-host dry run (smoke PASS, cold build numbers in docs/tester-registry.md). Nothing pushed or run on GitHub; AC 1 and 3 partly (no live registry, no scan on a hosted runner), AC 2 uses compose.tester.yml instead of compose.friends.yml; task stays open for the first publish. Status sync 2026-11-08 (stays open): PREP only, registry publish not done. closecards2: status Done is PREP only (see result); compose.friends.yml and docs/registry-publish.md do not exist on main."
 ---
 
 ## Description

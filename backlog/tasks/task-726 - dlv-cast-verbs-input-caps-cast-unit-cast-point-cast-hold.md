@@ -27,7 +27,7 @@ exclusive:
   - "fork-branch:didle/cast-verbs"
 contracts: []
 lane: next
-result: "Built offline. Fork differential run 2026-11-27 in two headless d2d, NOT verified live: the fused cast verb equals select then a press with the old hand put back, 0 differences on unit, point, left hand, corpse and four refusals, and the point spell lands within one cell; a hold verb was added to the private fork and equals a held left button. The fork branch lists cast-unit, cast-point and cast-hold. Still open: the Fighter cast section still calls CastAt and Click, the controller has no CastHold yet, and the scenario input.cast-point-lands has not run. Class and skill literals added in Go: 0 (rows from the capability table)."
+result: "Built offline. Fork differential run 2026-11-27 in two headless d2d, NOT verified live: the fused cast verb equals select then a press with the old hand put back, 0 differences on unit, point, left hand, corpse and four refusals, and the point spell lands within one cell; a hold verb was added to the private fork and equals a held left button. The fork branch lists cast-unit, cast-point and cast-hold. Still open: the Fighter cast section still calls CastAt and Click, the controller has no CastHold yet, and the scenario input.cast-point-lands has not run. Class and skill literals added in Go: 0 (rows from the capability table). Remaining (live): AC 1 scenario input.cast-point-lands."
 ---
 
 ## Description

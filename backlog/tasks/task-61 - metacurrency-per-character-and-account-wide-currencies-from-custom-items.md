@@ -21,7 +21,7 @@ owns:
   - "docs/research/metacurrency-design.md"
 exclusive: []
 contracts: []
-result: "paused by direction review D1/D4/D5, 2026-11-07 (docs/research/direction-review.md section 6)"
+result: "paused by direction review D1/D4/D5, 2026-11-07 (docs/research/direction-review.md section 6) closecards2: ACs 1 to 3 verified against docs/research/metacurrency-design.md (sections 1 to 5, runner-up, first slice) and currency-rows.md."
 ---
 
 ## Description
@@ -36,9 +36,9 @@ Done when: Currency model: registry, scopes, storage recommendation with runner-
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Currency model: registry, scopes, storage recommendation with runner-up
-- [ ] #2 Item and overlay mapping: sources, sinks, fidelity and safety
-- [ ] #3 First slice defined with estimate, dependencies and proposed tasks
+- [x] #1 Currency model: registry, scopes, storage recommendation with runner-up
+- [x] #2 Item and overlay mapping: sources, sinks, fidelity and safety
+- [x] #3 First slice defined with estimate, dependencies and proposed tasks
 <!-- AC:END -->
 
 ## Implementation Notes

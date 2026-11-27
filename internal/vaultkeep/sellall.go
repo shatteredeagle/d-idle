@@ -113,17 +113,18 @@ func (k *Keeper) SellAllCount() (n int, left []SaleReason) {
 	}
 	man := k.managed()
 	var pinned, order int
-	for _, r := range st.Dump() {
+	st.Scan(func(r *vault.Rec) bool {
 		switch {
 		case !r.State.Live():
 		case r.Pin:
 			pinned++
-		case heldByOrder(r, man):
+		case heldByOrder(*r, man):
 			order++
 		default:
 			n++
 		}
-	}
+		return true
+	})
 	if pinned > 0 {
 		left = append(left, SaleReason{Code: "pinned", N: pinned, Why: sellAllWords["pinned"]})
 	}

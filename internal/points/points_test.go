@@ -31,9 +31,9 @@ func tables() Tables {
 	}
 }
 
-func legal(cap bool) Legal {
+func legal() Legal {
 	return Legal{
-		T: tables(), LevelCap: cap,
+		T:        tables(),
 		Playable: func(n string) bool { return n != "Blessed Hammer" && n != "Fire Ball" },
 		Attack:   func(n string) bool { return n != "Warmth" && n != "Might" },
 	}
@@ -96,7 +96,7 @@ func TestSheetWithoutHero(t *testing.T) {
 }
 
 func TestCheckSkillTwoClasses(t *testing.T) {
-	l := legal(false)
+	l := legal()
 	mk := func(code, name string, lvl, unspent int, pts map[int]int) d2.Player {
 		p := d2.Player{Class: map[string]d2.Class{"sor": d2.Sorceress, "pal": d2.Paladin}[code], Level: lvl, SkillPoints: unspent}
 		for id, n := range pts {
@@ -106,7 +106,7 @@ func TestCheckSkillTwoClasses(t *testing.T) {
 	}
 	check := func(l Legal, p d2.Player, id int, confirm bool) SkillVerdict {
 		dk := NewDesk(Config{T: tables()})
-		return Legal{T: l.T, LevelCap: l.LevelCap, Playable: l.Playable, Attack: l.Attack}.CheckSkill(dk.hero(&p), id, confirm)
+		return Legal{T: l.T, Playable: l.Playable, Attack: l.Attack}.CheckSkill(dk.hero(&p), id, confirm)
 	}
 	// a legal point, a passive and an aura never ask
 	for _, tc := range []struct {
@@ -147,13 +147,10 @@ func TestCheckSkillTwoClasses(t *testing.T) {
 	if v := check(l, mk("pal", "", 18, 1, nil), 112, true); !v.OK || v.Tier != TierUnsupported {
 		t.Errorf("hammer confirmed: %+v", v)
 	}
-	// the level cap rule is a knob, off by default in the game and on here
+	// the game has no per-level cap: a second point in a level-18 skill at clvl 18 is legal
 	p := mk("pal", "", 18, 1, map[int]int{112: 1})
-	if v := check(legal(false), p, 112, true); !v.OK {
-		t.Errorf("cap off: %+v", v)
-	}
-	if v := check(legal(true), p, 112, true); v.OK || v.Code != CodeLevelCap {
-		t.Errorf("cap on: %+v", v)
+	if v := check(l, p, 112, true); !v.OK {
+		t.Errorf("no cap: %+v", v)
 	}
 	if SkillCap(18, 18) != 1 || SkillCap(19, 18) != 2 || SkillCap(5, 18) != 0 {
 		t.Error("SkillCap")
@@ -193,7 +190,7 @@ type fake struct {
 
 func (f *fake) desk(t *testing.T, dir string) *Desk {
 	return NewDesk(Config{
-		Hero: "Palli", T: tables(), Dir: dir, LevelCap: func() bool { return false },
+		Hero: "Palli", T: tables(), Dir: dir,
 		Player: func() *d2.Player { q := f.p; return &q },
 		Fresh:  func(context.Context) (*d2.Player, error) { q := f.p; return &q, nil },
 		Busy:   func() bool { return f.busy },

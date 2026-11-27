@@ -90,6 +90,38 @@ func (s *Store) Query(f Filter) ([]Rec, int) {
 		}
 		return name == "" || strings.Contains(strings.ToLower(r.Name), name)
 	}
+	// A page of the default or oldest-first order reads the source from the matching end and keeps only the window it needs
+	// (the source is in insertion order: seq is the slot index). The rest of the matches are only counted.
+	if f.Limit > 0 && (f.Order == "" || f.Order == "new" || f.Order == "old") {
+		n := len(s.recs)
+		if cand != nil {
+			n = len(cand)
+		}
+		rec := func(i int) *Rec {
+			if cand != nil {
+				return s.recs[cand[i]]
+			}
+			return s.recs[i]
+		}
+		want, total := f.Offset+f.Limit, 0
+		for k := 0; k < n; k++ {
+			i := k
+			if f.Order != "old" {
+				i = n - 1 - k
+			}
+			if r := rec(i); match(r) {
+				if total >= f.Offset && total < want {
+					hit = append(hit, r)
+				}
+				total++
+			}
+		}
+		out := make([]Rec, len(hit))
+		for i, r := range hit {
+			out[i] = *r
+		}
+		return out, total
+	}
 	if cand == nil {
 		for _, r := range s.recs {
 			if match(r) {
@@ -105,7 +137,10 @@ func (s *Store) Query(f Filter) ([]Rec, int) {
 	}
 	switch f.Order {
 	case "old":
-		sort.SliceStable(hit, func(i, j int) bool { return hit[i].seq < hit[j].seq })
+		// Both scans (candidate lists and the records) run in insertion order, so the common orders need no sort.
+		if !sort.SliceIsSorted(hit, func(i, j int) bool { return hit[i].seq < hit[j].seq }) {
+			sort.SliceStable(hit, func(i, j int) bool { return hit[i].seq < hit[j].seq })
+		}
 	case "value":
 		sort.SliceStable(hit, func(i, j int) bool {
 			if hit[i].Value != hit[j].Value {
@@ -136,7 +171,13 @@ func (s *Store) Query(f Filter) ([]Rec, int) {
 			return hit[i].seq > hit[j].seq
 		})
 	default:
-		sort.SliceStable(hit, func(i, j int) bool { return hit[i].seq > hit[j].seq })
+		if sort.SliceIsSorted(hit, func(i, j int) bool { return hit[i].seq < hit[j].seq }) {
+			for i, j := 0, len(hit)-1; i < j; i, j = i+1, j-1 {
+				hit[i], hit[j] = hit[j], hit[i]
+			}
+		} else {
+			sort.SliceStable(hit, func(i, j int) bool { return hit[i].seq > hit[j].seq })
+		}
 	}
 	total := len(hit)
 	if f.Offset > 0 {
