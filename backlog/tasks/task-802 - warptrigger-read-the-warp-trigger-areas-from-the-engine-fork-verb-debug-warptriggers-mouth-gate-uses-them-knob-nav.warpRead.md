@@ -1,7 +1,7 @@
 ---
 id: TASK-802
 title: 'warptrigger: read the warp trigger areas from the engine (fork verb debug warptriggers), mouth gate uses them (knob nav.warpRead)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-22T04:21:00Z'
