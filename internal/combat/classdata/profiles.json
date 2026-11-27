@@ -358,6 +358,13 @@
     "surround": 4,
     "surroundLifePct": 65,
     "manaReserve": 4
+   },
+   "stance": {
+    "kind": "insidePack",
+    "standOff": 2,
+    "leaveSurround": 5,
+    "leaveLifePct": 50,
+    "source": "U judgment: the design's insidePack defaults (combat-engine-b-grammar section 5); the survival model's contact archetype must judge before knob 2"
    }
   },
   {
@@ -1014,6 +1021,13 @@
     "Lower Resist": "f5",
     "Clay Golem": "f6",
     "Amplify Damage": "f7"
+   },
+   "stance": {
+    "kind": "insidePack",
+    "standOff": 3,
+    "leaveSurround": 4,
+    "leaveLifePct": 55,
+    "source": "U judgment: a nova reaches about 8 subtiles, so the hero stands three from the centroid and leaves earlier than a hammer paladin"
    },
    "corpseAims": [
     {
