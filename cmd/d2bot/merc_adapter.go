@@ -11,9 +11,9 @@ import (
 // HireMerc and ReviveMerc make townAdapter a bot.MercTown. Hire stops with ErrMercRowUnknown until a RowPicker is
 // set (the aura of a hire-window row is only readable on screen, U); the bot logs it and retries after its backoff.
 func (a townAdapter) HireMerc(ctx context.Context, s *d2.Snapshot) (bool, error) {
-	w, ok := town.HirePolicy(data.Difficulty(s.Player.Difficulty), d2.FindMerc(s), s.Player.Gold)
-	if !ok {
-		return false, nil
+	w, ok, err := town.HirePolicy(s.Player.Class, data.Difficulty(s.Player.Difficulty), d2.FindMerc(s), s.Player.Gold)
+	if err != nil || !ok {
+		return false, err
 	}
 	rep, err := a.t.Hire(ctx, w)
 	return rep.Hired, err

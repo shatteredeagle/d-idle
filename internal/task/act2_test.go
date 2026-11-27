@@ -420,3 +420,44 @@ func TestHellforgeIsNotDoneWithoutItsWord(t *testing.T) {
 		}
 	}
 }
+
+// auraGame adds the optional MercAuraChooser capability to the fake.
+type auraGame struct {
+	*act2Game
+	aura string
+	set  bool
+	err  error
+}
+
+func (a auraGame) MercAura() (string, bool, error) { return a.aura, a.set, a.err }
+
+func TestAct2HireAuraFromClassRow(t *testing.T) {
+	for _, c := range []struct {
+		name string
+		g    auraGame
+		want string
+	}{
+		{"class row", auraGame{aura: "Prayer", set: true}, "hire:2:Prayer"},
+		{"no class row keeps Defiance", auraGame{}, "hire:2:Defiance"},
+	} {
+		c.g.act2Game = newAct2(true, 1)
+		c.g.W.Level, c.g.W.Gold = 30, 5000
+		hire := task.Handler(task.QMercAct2)[0].Step
+		if err := hire.Do(context.Background(), c.g); err != nil {
+			t.Fatalf("%s: %v", c.name, err)
+		}
+		if pos(c.g.Log, c.want) < 0 {
+			t.Errorf("%s: log %v want %s", c.name, c.g.Log, c.want)
+		}
+	}
+	// A plain Actions without the capability hires Defiance (today's behaviour).
+	g := newAct2(true, 1)
+	if err := task.Handler(task.QMercAct2)[0].Step.Do(context.Background(), g); err != nil || pos(g.Log, "hire:2:Defiance") < 0 {
+		t.Fatalf("default: %v %v", err, g.Log)
+	}
+	// A chooser error stops the hire.
+	bad := auraGame{act2Game: newAct2(true, 1), err: fmt.Errorf("no traits")}
+	if err := task.Handler(task.QMercAct2)[0].Step.Do(context.Background(), bad); err == nil || bad.Hired != 0 {
+		t.Fatalf("chooser error must stop the hire: %v hired %d", err, bad.Hired)
+	}
+}

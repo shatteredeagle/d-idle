@@ -3,6 +3,7 @@ package questboard
 import (
 	"strconv"
 	"strings"
+	"time"
 )
 
 // Reason codes in the API (card bsm6, design appendix B.1/B.2): every live chunk row says why it does not move, as a
@@ -13,6 +14,10 @@ type ReasonView struct {
 	Code   string `json:"code"`
 	Text   string `json:"text"`
 	Remedy Remedy `json:"remedy,omitempty"`
+	// Since and Clears fill in for a park (card questresume): when it began and, in words, what lifts it (the policy of
+	// resume.go, or only the player's Try again). Both are empty for every other reason.
+	Since  *time.Time `json:"since,omitempty"`
+	Clears string     `json:"clears,omitempty"`
 }
 
 // ChangedRow is one run a verb touched, with its state and reason after the verb.
@@ -85,7 +90,22 @@ func (d *Desk) chunkReason(quest string, cv ChunkView, run *Run, a *Active, hand
 		if run != nil {
 			args["n"] = strconv.Itoa(max(run.Failures, run.Deaths, 1))
 		}
-		return reasonView(code, args, cv.Why)
+		rv := reasonView(code, args, cv.Why)
+		if run != nil && run.Status == RunParked && rv != nil {
+			if code == "died_too_often" {
+				// the stored code stays (old pages, plan files); the API says what the player sees: a pause, since when, what clears it
+				rv.Code = "paused_after_deaths"
+				rv.Text = Sentence(rv.Code, args)
+			}
+			if !run.ParkedAt.IsZero() {
+				t := run.ParkedAt
+				rv.Since = &t
+			}
+			if x, _ := d.exec(); x != nil {
+				rv.Clears = x.ResumeNote(*run)
+			}
+		}
+		return rv
 	case Done:
 		if !cv.Confirmed && run != nil {
 			return reasonView("confirming", nil, "")
@@ -130,4 +150,26 @@ func (d *Desk) handInWaitReason() *ReasonView {
 		return reasonView(CodeHandInWaiting, nil, why)
 	}
 	return nil
+}
+
+// ParkLines are the Return screen's lines for a board that is held by a park: what stopped, since when, and what clears
+// it. Empty while nothing is parked (the section then hides).
+func (d *Desk) ParkLines() []string {
+	v := d.View()
+	b := v.Blocked
+	if !v.Enabled || b == nil {
+		return nil
+	}
+	line := b.QuestTitle + " is stuck: " + b.Why
+	var since string
+	if r := b.Reason; r != nil {
+		line = r.Text
+		if r.Since != nil {
+			since = " Since " + r.Since.UTC().Format("2006-01-02 15:04") + " UTC."
+		}
+		if r.Clears != "" {
+			since += " " + r.Clears
+		}
+	}
+	return []string{line + since}
 }

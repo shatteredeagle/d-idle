@@ -5,7 +5,7 @@ title: >-
   skill
 status: In Progress
 assignee:
-  - credit-runner
+  - live-agent
 created_date: '2026-11-26T03:58:00Z'
 updated_date: '2026-11-27T18:49:00Z'
 labels:
@@ -38,7 +38,7 @@ owns:
   - "backlog/tasks/task-726 - dlv-cast-verbs-input-caps-cast-unit-cast-point-cast-hold.md"
 exclusive: []
 contracts: []
-result: "Bot side built offline, NOT verified live. Town portal casts send the use-item verb when input.planner is on and the build lists input.use-item; verified by the portal object, the scroll gone or the tome charges falling; a sent verb with no effect is never followed by the click. Fork differential run 2026-11-27 in two headless d2d: town portal by the verb equals the pack right-click, scroll, tome twice and three refusals, 0 differences; the private fork branch now lists input.use-item and the caps set is in the repo. Stat and skill points were already on verbs; their differential has not run, so criterion one stays open. Nothing is build-specific; tests on four classes. Remaining (live): the differential run on the fork for the town portal and points verbs (AC 1). Remaining (live): AC 1 town portal and points differential on the new fork binary."
+result: "Bot side built offline, NOT verified live. Town portal casts send the use-item verb when input.planner is on and the build lists input.use-item; verified by the portal object, the scroll gone or the tome charges falling; a sent verb with no effect is never followed by the click. Fork differential run 2026-11-27 in two headless d2d: town portal by the verb equals the pack right-click, scroll, tome twice and three refusals, 0 differences; the private fork branch now lists input.use-item and the caps set is in the repo. Stat and skill points were already on verbs; their differential has not run, so criterion one stays open. Nothing is build-specific; tests on four classes. Remaining (live): the differential run on the fork for the town portal and points verbs (AC 1). Remaining (live): AC 1 town portal and points differential on the new fork binary. Remaining (live): AC 1 town portal and points differential on the new fork binary."
 ---
 
 ## Description

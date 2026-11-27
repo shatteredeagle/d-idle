@@ -1,9 +1,9 @@
 ---
 id: TASK-728
 title: 'dlv-aim-corpse: corpse aims as data, one shared corpse reservation'
-status: Proposed
+status: In Progress
 assignee:
-  - credit-runner
+  - live-agent
 created_date: '2026-11-21T04:43:00Z'
 labels:
   - bot
@@ -17,7 +17,7 @@ owns:
 exclusive: []
 contracts: []
 lane: next
-result: "Corpse aims as profile rows (Profile.CorpseAims: corpseNearest, corpseBest, corpseNearPack with radius and minHit, tagged U) in internal/combat/aimcorpse.go, which replaces necro_corpse.go; rows shipped for Corpse Explosion and Revive on the three Necromancer profiles. One corpse reservation (corpseRes, takeCorpse) now shared by raise, revive, explode and Death Sentry. Knob combat.deliveryUpkeep 0/1/2 (0 and 1 pick as the old callers did, 1 counts rows that would differ, 2 rows pick and may refuse); counters via Fighter.CorpseCounts. Offline tests: Necromancer rows and modes, Sorceress with no rows keeps the default, validation. Find Potion and Find Item utility rows not done. No new Go skill or class literal. Scenario combat.corpse-explodes not written (live); not verified live."
+result: "Corpse aims as profile rows (Profile.CorpseAims: corpseNearest, corpseBest, corpseNearPack with radius and minHit, tagged U) in internal/combat/aimcorpse.go, which replaces necro_corpse.go; rows shipped for Corpse Explosion and Revive on the three Necromancer profiles. One corpse reservation (corpseRes, takeCorpse) now shared by raise, revive, explode and Death Sentry. Knob combat.deliveryUpkeep 0/1/2 (0 and 1 pick as the old callers did, 1 counts rows that would differ, 2 rows pick and may refuse); counters via Fighter.CorpseCounts. Offline tests: Necromancer rows and modes, Sorceress with no rows keeps the default, validation. Find Potion and Find Item utility rows not done. No new Go skill or class literal. Scenario combat.corpse-explodes not written (live); not verified live. Remaining (live): AC 1 combat.corpse-explodes run; AC 4 race gate (labrun the worker host -- go test -race -count=20 on the touched packages)."
 ---
 
 ## Description

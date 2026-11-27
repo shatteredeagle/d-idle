@@ -15,6 +15,7 @@ import (
 	"d2lod-bot/internal/goals"
 	"d2lod-bot/internal/input"
 	"d2lod-bot/internal/task"
+	"d2lod-bot/internal/town"
 )
 
 // The campaign goal: internal/task decides WHICH step, this file lets it read the world (Env) and use the bot's
@@ -964,6 +965,15 @@ func (a taskActs) HireMerc(ctx context.Context, act int, aura string) error {
 	return a.tag(td.HireMerc(ctx, act, aura))
 }
 
+// MercAura implements task.MercAuraChooser: the class row for the snapshot's difficulty.
+func (a taskActs) MercAura() (string, bool, error) {
+	s, err := a.r.e.Snapshot()
+	if err != nil {
+		return "", false, err
+	}
+	return town.ClassMercAura(s.Player.Class, data.Difficulty(s.Player.Difficulty))
+}
+
 // ClaimFreeMerc implements task.MercClaimer over TaskDeps.ClaimMerc. Without a backend it is a logged no-op, never an error.
 func (a taskActs) ClaimFreeMerc(ctx context.Context) error {
 	td := a.r.d.Task
@@ -1288,6 +1298,7 @@ var _ task.StallRecoverer = taskActs{}
 var _ task.WeaponUser = taskActs{}
 var _ task.Transmuter = taskActs{}
 var _ task.MercHirer = taskActs{}
+var _ task.MercAuraChooser = taskActs{}
 var _ task.OrbSmasher = taskActs{}
 var _ task.Env = taskEnv{}
 

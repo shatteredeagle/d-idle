@@ -84,7 +84,7 @@ func TestSacrificeNeedsPotionsAndLiveMerc(t *testing.T) {
 	}
 }
 
-// No change for other classes: no other profile has a life-price skill, and the Amazon ladder is untouched.
+// No change for other classes: no other profile has a life-price skill (the Amazon ladder moved Exploding Arrow first in card classapply).
 func TestLifePriceOnlyPaladin(t *testing.T) {
 	for _, pr := range Profiles() {
 		if pr.Class != "paladin" && len(pr.LifePrice) != 0 {
@@ -103,7 +103,7 @@ func TestLifePriceOnlyPaladin(t *testing.T) {
 	}
 	known := func(n string) bool { return n == "Multiple Shot" || n == "Exploding Arrow" }
 	got := ProfileFor(d2.Amazon, "").AttackNames(20, known)
-	if got[0] != "Multiple Shot" || slices.Contains(got, "Sacrifice") {
+	if got[0] != "Exploding Arrow" || slices.Contains(got, "Sacrifice") {
 		t.Errorf("amazon: %v", got)
 	}
 }

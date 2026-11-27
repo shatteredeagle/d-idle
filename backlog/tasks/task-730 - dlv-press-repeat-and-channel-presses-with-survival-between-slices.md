@@ -1,9 +1,9 @@
 ---
 id: TASK-730
 title: 'dlv-press: repeat and channel presses with survival between slices'
-status: Proposed
+status: In Progress
 assignee:
-  - credit-runner
+  - live-agent
 created_date: '2026-11-21T04:44:00Z'
 labels:
   - bot
@@ -17,7 +17,7 @@ owns:
   - "internal/d2dcombat/"
 exclusive: []
 contracts: []
-result: "Offline only, NOT verified live. Press rows as profile data (press.go): sliceMs per held skill, commit gate (commitLifePct: a commit press is not started under that life percent, the pick falls to the next slot), hard bounds 100..3000 ms so every hold has an explicit release. Knob combat.deliveryUpkeep 0/1/2 (existing dark-launch row; 1 counts and logs differences). Row shipped: Zeal at today's 600 ms (source S); Strafe, Fend, Arctic Blast, Inferno rows wait for a profile that plays them (no profile attacks with them yet; Inferno is not in skills.json) and for fidelity A1. d2dcombat needed no change: the verb already carries the slice as its press time. Tests on Paladin (Zeal) and Druid (Arctic Blast). Scenario combat.hold-interruptible: survival between slices is the fight tick, live drill pending."
+result: "Offline only, NOT verified live. Press rows as profile data (press.go): sliceMs per held skill, commit gate (commitLifePct: a commit press is not started under that life percent, the pick falls to the next slot), hard bounds 100..3000 ms so every hold has an explicit release. Knob combat.deliveryUpkeep 0/1/2 (existing dark-launch row; 1 counts and logs differences). Row shipped: Zeal at today's 600 ms (source S); Strafe, Fend, Arctic Blast, Inferno rows wait for a profile that plays them (no profile attacks with them yet; Inferno is not in skills.json) and for fidelity A1. d2dcombat needed no change: the verb already carries the slice as its press time. Tests on Paladin (Zeal) and Druid (Arctic Blast). Scenario combat.hold-interruptible: survival between slices is the fight tick, live drill pending. Remaining (live): AC 2 A1 attack-sequence rate (combat.hold-interruptible), AC 5 race gate x20 on the worker host."
 lane: next
 ---
 
