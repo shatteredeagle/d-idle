@@ -36,7 +36,7 @@ Monastery road and Barracks (`task.RouteWhy`, `BarracksWhy`), Forgotten Tower (`
 (asked last, refusal is `route_closed`); each becomes a row or a typed provider one at a time with the shadow-then-flip habit.
 
 ## Step 2 as built
-- `internal/bot/admission.go`: `admitEnter` (called last in `areaGuardWhy`, after the route, Forgotten-Tower-road and Barracks guards) runs the old four row judges and
+- `internal/bot/admission.go`: `admitEnter` (called last in `areaGuardWhy`, after the route, Barracks and Forgotten Keep guards) runs the old four row judges and
   `admit.MayEnter`; `admitLeave` (called by `fillEarly`) runs `questWalkCheck` and `admit.MayLeaveTown`. Under `bot.admission` 0 the old words are returned,
   a disagreement is logged once per case as `admission shadow` (area, purpose, old, new, row, need); under 1 the function's words are returned.
   The lean life line at the town exit has no old judge: logged as a difference, never acted on yet.
