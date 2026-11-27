@@ -49,6 +49,7 @@
 | necroteeth | proposed | - | `internal/combat/classdata/profiles.json`<br>`internal/combat/necro_test.go`<br>`internal/leveler/mainattack_test.go` | - |
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
 | deploy88-ledger | proposed | - | `data/darklaunch.json` | - |
+| auraupkeep | proposed | - | `internal/combat/` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
@@ -245,7 +246,9 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 7db510622 11-27 02:15 `Merge agent/auraupkeep: Merge branch 'main' into auraupkeep` (auraupkeep)
 - 848edfa61 11-27 02:15 `Merge agent/stepexec2: Merge branch 'main' into stepexec1` (stepexec2)
+- de2461073 11-27 02:13 `Merge branch 'main' into auraupkeep` (-)
 - 0aa47d75a 11-27 02:13 `Merge branch 'main' into stepexec1` (-)
 - 1e7ac4599 11-27 02:08 `Merge agent/castverbs: Merge branch 'main' into dlv-cast-verbs` (castverbs)
 - c99e25214 11-27 02:08 `Merge agent/pghero: Merge branch 'main' into pghero` (pghero)
@@ -253,6 +256,4 @@
 - 920dfe59d 11-27 02:05 `Merge branch 'main' into pghero` (-)
 - b7f493e78 11-27 01:57 `Merge agent/mark: Merge branch 'main' into dlv-mark` (mark)
 - d151d522e 11-27 01:54 `Merge branch 'main' into dlv-mark` (-)
-- 973166ee5 11-27 01:50 `Merge origin/main into agent/mark (keep marks and minions fields; Lower Resist rows stay removed)` (dlv-mark)
-- 3835f3995 11-27 01:46 `Merge agent/faultstall: Merge branch 'main' into faultstall` (faultstall)
 <!-- statusgen:end -->

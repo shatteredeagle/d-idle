@@ -375,6 +375,7 @@ internal/bot/zonerecover_test.go  credit-runner  survrecover
 internal/bot/zoneshadow.go  credit-runner  intake
 internal/bot/zoneshadow.go  credit-runner  survrecover
 internal/campaign/  credit-runner  campaign1
+internal/combat/  credit-runner  auraupkeep
 internal/combat/  credit-runner  cainfix3
 internal/combat/  credit-runner  dlv-aim-corpse
 internal/combat/  credit-runner  dlv-aim-point
