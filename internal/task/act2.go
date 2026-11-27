@@ -388,7 +388,8 @@ func durielNodes() []Node {
 	toCanyon := withReady(StepTravelA2(id(q, "to-canyon"), "Go to the Canyon of the Magi", CanyonOfMagi, onward), a2gate(20, "the Canyon needs clvl 20"))
 	place := StepInteract(id(q, "place"), "Place the Staff in the orifice", "tal-orifice", onward, func(w World) bool { return w.Items[ItemStaff] > 0 && w.Area == CanyonOfMagi })
 	place.Budget = 10 * time.Minute // the tomb scan walks up to seven tomb levels
-	tyrael := StepTalk(id(q, "tyrael"), "Talk to Tyrael", NPCTyrael, "reward", not(a2Is(q, StageCleared)), a2in(DurielsLair))
+	// Done is Tyrael's bits, not the stage: the kill holds the word at Cleared until Meshif sets bit 0.
+	tyrael := StepTalk(id(q, "tyrael"), "Talk to Tyrael", NPCTyrael, "reward", a2or(tyraelTalked, not(killed)), a2in(DurielsLair))
 	tyrael.Ready = nil // Tyrael stands in the lair, not in town
 	return []Node{
 		{Step: wpCanyon},
@@ -401,14 +402,15 @@ func durielNodes() []Node {
 	}
 }
 
-// Act 2 complete: Jerhyn (U) and Meshif's boat to the Kurast docks. Done is the world seeing act 3 (EvMemory).
+// Act 2 complete: Jerhyn's reward line, then Meshif's boat to the Kurast docks. Done is the world seeing act 3
+// (EvMemory). Both talks read the Seven Tombs bits (act2handin.go): Jerhyn after Tyrael's bits until his own reward
+// bit, Meshif only after that bit, so the hero never sails with Jerhyn's line unsaid. The Act 2 word is no evidence
+// for Jerhyn: it may be set before his line.
 func act2HopNodes() []Node {
 	q := QAct2Done
 	done := func(w World) bool { return w.Act >= 3 }
-	ready := a2At(QDuriel, StageCleared)
-	jerhyn := StepTalk(id(q, "jerhyn"), "Talk to Jerhyn", NPCJerhyn, "act2", a2At(QAct2Word, StageDone), ready)
-	jerhyn.Optional = true // U: the word may already be set by Tyrael
-	meshif := StepTalk(id(q, "meshif"), "Sail east with Meshif", NPCMeshif, "sail east", done, ready)
+	jerhyn := StepTalk(id(q, "jerhyn"), "Talk to Jerhyn", NPCJerhyn, "act2", jerhynTalked, jerhynOpen)
+	meshif := StepTalk(id(q, "meshif"), "Sail east with Meshif", NPCMeshif, "sail east", done, meshifOpen)
 	meshif.Evidence = done // not needed until Duriel is cleared is no evidence of a trip (see hopNodes)
 	return []Node{
 		{Step: jerhyn},

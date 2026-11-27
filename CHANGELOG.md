@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Merge remote-tracking branch 'origin/main' into agent/act2handin <!--sg:agent/act2handin-->
 - Merge branch 'main' into bossdone <!--sg:agent/bossdone-->
 - act2drill5: fifth Duriel run, lair entered and Duriel killed 3/3, blocked on the kill step <!--sg:agent/act2drill5-->
 - Merge branch 'main' into placefix <!--sg:agent/lairentry-->
