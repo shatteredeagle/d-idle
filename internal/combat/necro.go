@@ -466,7 +466,11 @@ func (f *Fighter) necroTick(ctx context.Context, snap *d2.Snapshot) (bool, error
 	if err != nil {
 		return false, err
 	}
-	if sp, corpse, walk, ok := f.planSummon(snap, nd, false); ok && !walk {
+	if f.upkeepMode() == 2 {
+		if done, err := f.minionTick(ctx, snap); done || err != nil {
+			return done, err
+		}
+	} else if sp, corpse, walk, ok := f.planSummon(snap, nd, false); ok && !walk {
 		return f.castSummon(ctx, snap, nd, sp, corpse)
 	}
 	return f.corpseExplode(ctx, snap, nd, hs)

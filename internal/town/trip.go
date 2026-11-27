@@ -243,6 +243,9 @@ func (t *Town) openPortal(ctx context.Context) (d2.Unit, error) {
 	if !ok {
 		return d2.Unit{}, ErrNoPortal
 	}
+	if p, handled, err := t.portalByVerb(ctx, tool); handled {
+		return p, err
+	}
 	if s, err = t.h.OpenInventory(ctx); err != nil {
 		return d2.Unit{}, err
 	}

@@ -724,6 +724,17 @@ func (r *Runner) advanceTrip(ctx context.Context, snap *d2.Snapshot, c control) 
 		}
 		return true
 	default:
+		if p.InTown() && r.belowResume(p) {
+			// The leg back out never leaves town under the resume line. A chicken whose action was not the trip's own
+			// (the survive hook fighting where it stood mid-leg) re-enters in town with the trip still here: the old leg
+			// walked out at 9/45 life with no potion, chickened on arrival and came back, 169 times in a virtual hour
+			// (featuresoak arbiter3 necromancer seed 201). Ending the trip hands the hero to lowLifeGate, which heals
+			// and holds with a bound; the chain and the arbiter's chores hook both come through here.
+			r.e.Log.Warn("back to field: life below the resume line in town, ending the trip", "life", p.LifePct(), "line", r.resumeLifePct(), "returnTo", t.returnTo)
+			r.repairTripEnd(t, "")
+			l.trip = nil
+			return false
+		}
 		if r.gateField(snap, t) {
 			return true
 		}

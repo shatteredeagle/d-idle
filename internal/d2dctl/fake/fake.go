@@ -336,7 +336,7 @@ func (s *Server) cmd(f []string) (string, bool, bool) {
 			return "ok\n", true, false
 		}
 		return "ok\n", false, false
-	case "skill", "pickup", "resurrect", "stat", "skillpt", "select", "belt":
+	case "skill", "pickup", "resurrect", "stat", "skillpt", "select", "belt", "use":
 		return "ok\n", false, false
 	}
 	return fmt.Sprintf("err unknown cmd '%s'\n", f[1]), false, false
