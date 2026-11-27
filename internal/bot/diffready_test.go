@@ -90,7 +90,14 @@ func TestRequestDifficultyGoRefusedWhenNotReady(t *testing.T) {
 
 // A ready hero takes the go for the next difficulty only, and the hop consumes it once.
 func TestRequestDifficultyGoConsumedOnce(t *testing.T) {
+	for _, c := range []d2.Class{d2.Sorceress, d2.Barbarian} {
+		t.Run(c.String(), func(t *testing.T) { requestGoConsumedOnce(t, c) })
+	}
+}
+
+func requestGoConsumedOnce(t *testing.T, c d2.Class) {
 	g, s := readyRig(t, 60)
+	s.Player.Class = c
 	if _, err := g.r.RequestDifficultyGo("hell"); err == nil {
 		t.Fatal("hell is not the next difficulty")
 	}
