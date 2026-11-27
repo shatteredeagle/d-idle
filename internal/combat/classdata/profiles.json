@@ -443,8 +443,8 @@
      "minLevel": 18,
      "requires": "Multiple Shot",
      "attack": [
-      "Multiple Shot",
       "Exploding Arrow",
+      "Multiple Shot",
       "Fire Arrow",
       "Magic Arrow",
       "Jab",
@@ -486,6 +486,46 @@
     "Guided Arrow": "f7",
     "Dopplezon": "f8"
    }
+  },
+  {
+   "class": "amazon",
+   "bands": [
+    {
+     "minLevel": 6,
+     "requires": "Multiple Shot",
+     "attack": [
+      "Multiple Shot",
+      "Magic Arrow",
+      "Jab",
+      "Attack"
+     ]
+    },
+    {
+     "attack": [
+      "Magic Arrow",
+      "Fire Arrow",
+      "Jab",
+      "Attack"
+     ]
+    }
+   ],
+   "buffs": [
+    [
+     "Valkyrie"
+    ]
+   ],
+   "layout": {
+    "Magic Arrow": "f1",
+    "Fire Arrow": "f2",
+    "Multiple Shot": "f3",
+    "Valkyrie": "f4",
+    "Inner Sight": "f5",
+    "Exploding Arrow": "f6",
+    "Guided Arrow": "f7",
+    "Dopplezon": "f8"
+   },
+   "build": "multishot",
+   "source": "SME review 2026-11-27, confidence medium-high: Multiple Shot is the main attack of the multishot table from clvl 6, so its band starts there (the default band starts at clvl 18); Exploding Arrow does not lead because the table never buys it"
   },
   {
    "class": "necromancer",
