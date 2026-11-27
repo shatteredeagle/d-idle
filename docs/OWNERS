@@ -155,6 +155,7 @@ cmd/d2bot/live.go  credit-runner  maphistoryA
 cmd/d2bot/live.go  credit-runner  maphistoryC
 cmd/d2bot/live.go  credit-runner  maptrail
 cmd/d2bot/playertuning_test.go  live-agent  recoverypace
+cmd/d2bot/questwire.go  credit-runner  akarafix
 cmd/d2bot/repairwire.go  credit-runner  repairtrip
 cmd/d2bot/resource_test.go  credit-runner  freshstart
 cmd/d2bot/sensesfeed.go  credit-runner  maptrail
@@ -299,6 +300,7 @@ docs/process/proving-ground-status.md  credit-runner  pgpage
 docs/pursuers.md  credit-runner  pursuers
 docs/quest-givers.md  credit-runner  campaign1
 docs/quest-hints.md  live-agent  questdrill
+docs/questboard.md  credit-runner  akarafix
 docs/questboard.md  credit-runner  cainfix3
 docs/questboard.md  credit-runner  handinbtn
 docs/questboard.md  credit-runner  placefix
@@ -355,6 +357,7 @@ internal/bot/drought.go  credit-runner  freshstart
 internal/bot/earlyroute.go  credit-runner  admit1
 internal/bot/farm.go  credit-runner  pgclock
 internal/bot/farmclock_test.go  credit-runner  pgclock
+internal/bot/goal.go  credit-runner  akarafix
 internal/bot/goal.go  credit-runner  arbloop
 internal/bot/goal.go  credit-runner  maphistoryA
 internal/bot/goal.go  credit-runner  qdmatrix
@@ -374,9 +377,11 @@ internal/bot/observe.go  credit-runner  freshstart
 internal/bot/observe.go  credit-runner  intake
 internal/bot/observe.go  credit-runner  survrecover
 internal/bot/povertyfarm.go  credit-runner  admit1
+internal/bot/questboard.go  credit-runner  akarafix
 internal/bot/questboard.go  credit-runner  placefix
 internal/bot/questboard.go  credit-runner  qdmatrix
 internal/bot/questboard.go  credit-runner  stage1fix
+internal/bot/questboard_goal_test.go  credit-runner  akarafix
 internal/bot/questboard_s7b_test.go  credit-runner  qdmatrix
 internal/bot/questboard_test.go  credit-runner  stage1fix
 internal/bot/repairtrip.go  credit-runner  repairtrip
@@ -526,9 +531,13 @@ internal/power/archetype.go  credit-runner  qdmatrix
 internal/power/skilldamage_test.go  credit-runner  qdmatrix
 internal/questboard/  credit-runner  placefix
 internal/questboard/def.go  credit-runner  cainfix3
+internal/questboard/desk.go  credit-runner  akarafix
 internal/questboard/desk.go  credit-runner  handinbtn
 internal/questboard/desk_action.go  credit-runner  handinbtn
 internal/questboard/desk_action_test.go  credit-runner  handinbtn
+internal/questboard/desk_reason.go  credit-runner  akarafix
+internal/questboard/desk_test.go  credit-runner  akarafix
+internal/questboard/sm_reason.go  credit-runner  akarafix
 internal/questboard/state.go  credit-runner  qdmatrix
 internal/questboard/state_test.go  credit-runner  qdmatrix
 internal/repair  credit-runner  repairtrip
