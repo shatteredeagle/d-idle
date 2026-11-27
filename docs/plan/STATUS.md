@@ -123,8 +123,8 @@
 | fid-probe-regen-speed | deferred | - | `docs/probes/fid/fid-probe-regen-speed.md` | - |
 | pgpage | in-progress | - | `docs/process/proving-ground-status.md`<br>`tools/provingground/status_doc.sh`<br>`internal/scenario/pgpage.go`<br>`internal/scenario/pgpage_test.go`<br>`cmd/d2scenario/ledger.go`<br>`cmd/d2scenario/ledger_test.go`<br>`cmd/d2scenario/main.go`<br>`docs/probes/provingground-act1more-2026-11-20.md`<br>`docs/probes/provingground-act1next-2026-11-20.md`<br>`docs/probes/provingground-cain-2026-11-19.md`<br>`docs/probes/provingground-cainchain-2026-11-20.md`<br>`docs/probes/provingground-cainfix3-2026-11-19.md`<br>`docs/probes/provingground-countess-2026-11-20.md`<br>`docs/probes/provingground-pgfix4-2026-11-20.md`<br>`docs/probes/provingground-run-2026-11-19.md` | - |
 | mgonejob | proposed | - | `docs/process/pg-ops-mgonejob.md` | - |
-| pgnightly | proposed | - | `docs/process/pg-ops-pgnightly.md`<br>`tools/provingground/nightly.sh` | - |
-| pgearned | proposed | - | `internal/scenario/earned.go`<br>`tools/provingground/earned` | - |
+| pgnightly | proposed | - | `docs/process/pg-ops-pgnightly.md`<br>`tools/provingground/nightly.sh`<br>`tools/provingground/nightly.json`<br>`internal/scenario/nightly.go`<br>`internal/scenario/nightly_test.go`<br>`cmd/d2scenario/nightly.go`<br>`cmd/d2scenario/nightly_test.go`<br>`cmd/d2scenario/main.go`<br>`docs/probes/pg-nightly-earned-handoff-2026-11-27.md` | - |
+| pgearned | proposed | - | `internal/scenario/earned.go`<br>`tools/provingground/earned`<br>`internal/scenario/earned_test.go`<br>`internal/scenario/setup.go`<br>`internal/scenario/scenario.go`<br>`internal/scenario/ledger.go`<br>`internal/scenario/result.go`<br>`internal/scenario/pgpage.go`<br>`cmd/d2scenario/validate.go`<br>`cmd/d2scenario/ledger.go`<br>`cmd/d2scenario/main_test.go`<br>`tools/provingground/scenarios/cain.json`<br>`docs/process/proving-ground.md` | - |
 | town5 | in-progress | - | `internal/town`<br>`internal/resource`<br>`internal/bot/broke.go`<br>`internal/bot/leveling.go`<br>`tools/provingground/scenarios/townplan.json`<br>`docs/probes/town-plan-stage3-2026-11-22.md`<br>`docs/design/fable-review-2026-11-21/town-planner-b-model.md`<br>`town-basics` | - |
 | town9 | proposed | - | `internal/watch`<br>`internal/supply` | - |
 | town10 | proposed | - | `internal/arbiter`<br>`internal/supply` | - |
@@ -197,7 +197,9 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- a65a48c0a 11-27 16:41 `Merge agent/pgcards2: pgcards2: nightly run set, earned-hero tier, release-check (TASK-754/756 repo side)` (pgcards2)
 - 66d7cee98 11-27 16:41 `Merge agent/uifix: uifix: return mock, onboarding chickens line, layout test (TASK-109/249/424)` (uifix)
+- d5e38d0bf 11-27 16:38 `Merge branch 'main' into pgcards2` (-)
 - f0dc78eff 11-27 16:38 `Merge branch 'main' into uifix` (-)
 - 1280a6928 11-27 16:31 `Merge agent/smepal: smepal: SME Paladin and Sorceress review (docs)` (smepal)
 - 719aeae00 11-27 16:31 `Merge agent/onboardtour2: onboardtour2: tour tips, Help sheet, Now line (TASK-48 partial)` (onboardtour2)
@@ -205,6 +207,4 @@
 - 9c6c61d38 11-27 16:30 `Merge agent/diffgo: diffgo: go-difficulty ops verb, persisted go, Return screen button (TASK-1061)` (diffgo)
 - c43a986dd 11-27 16:28 `Merge branch 'main' into smepal` (-)
 - e5ae7cd10 11-27 16:28 `Merge branch 'main' into onboardtour2` (-)
-- ab9acccd0 11-27 16:28 `Merge branch 'main' into whirlscen` (-)
-- 9eaa2ed43 11-27 16:28 `Merge branch 'main' into diffgo` (-)
 <!-- statusgen:end -->
