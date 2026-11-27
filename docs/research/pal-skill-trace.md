@@ -47,7 +47,7 @@ Tags: **V read** disassembled with upstream's `tools/emu/disasm.py` (addresses g
 
 **Q6. Damage chain.** Min / max: FUN_0064b860 at creation (S: PR #154 proof, equal here: 8,640 cases below) times the Concentration influence (V read, V run for the factor) -> the roll at the hit -> the undead / demon +50 % (V read) -> resistance (S, SKMISS). Level 20 with Vigor 20 and Blessed Aim 20 and Concentration 20: min / max 1,293.6 .. 1,320 x (1 + 1.72) = 3,519 .. 3,590, and x 1.5 on a demon or an undead = about 5,280 .. 5,390 (arithmetic on the V run elements: I, the product itself was not run through FUN_005ad2f0).
 
-**Q7. Hammer synergy.** The patched table's synergy is `(Vigor + Blessed Aim) x 14` percent, not Concentration (D; the plan's endgame build trains Vigor 20, Blessed Aim 20 and Concentration 20, `internal/gear/builds/paladin_hammerdin_zeal_endgame90.json`). Concentration enters through the influence rule (Q5), not through EDmgSymPerCalc. Run: `pal_dmg.py`, level 1..40 x synergy 0, 1, 5, 10, 20, 30 x clvl 1, 30, 99 x two synergy patterns: d2d `elem_damage` equals game.exe on all of them.
+**Q7. Hammer synergy.** The patched table's synergy is `(Vigor + Blessed Aim) x 14` percent, not Concentration (D; the plan's endgame build trains Vigor 20, Blessed Aim 20 and Concentration 20, `internal/plandata/build-paladin_hammerdin_zeal_endgame90.json`). Concentration enters through the influence rule (Q5), not through EDmgSymPerCalc. Run: `pal_dmg.py`, level 1..40 x synergy 0, 1, 5, 10, 20, 30 x clvl 1, 30, 99 x two synergy patterns: d2d `elem_damage` equals game.exe on all of them.
 
 ## 3. The auras (V read + V run)
 
@@ -81,7 +81,7 @@ Prayer's `edns` value is the table's `edns` operand in 256ths (512 = 2 life a pu
 ## 5. The bot's use (our repo; described, not changed)
 
 - `internal/combat/classdata/profiles.json` paladin: band minLevel 18 `requires Blessed Hammer`: attack ladder Blessed Hammer, Zeal, Smite, Attack; aura ladder Prayer (restLifePct 70), Concentration, Holy Fire (elem fire), Might; then Zeal band 12; `layout` keys Might f1, Holy Fire f2, Concentration f3, Vigor f4, Holy Shield f5, Thorns f6, Resist Fire f7, Prayer f8. `skills.json`: Holy Bolt `bolt` range 20 left hand; Blessed Hammer `ground` range 9, hold.
-- Plans (`internal/gear/builds/paladin_hammerdin_zeal_endgame90.json`, `internal/plandata/build-paladin-zealot-lite.json`): Holy Bolt 1 point as the prerequisite, Blessed Hammer to 20, Concentration 20, Vigor 20, Blessed Aim 20: the table's synergies (Vigor + Blessed Aim) are in the plan, Concentration through the influence rule.
+- Plans (`internal/plandata/build-paladin_hammerdin_zeal_endgame90.json`, `internal/plandata/build-paladin-zealot-lite.json`): Holy Bolt 1 point as the prerequisite, Blessed Hammer to 20, Concentration 20, Vigor 20, Blessed Aim 20: the table's synergies (Vigor + Blessed Aim) are in the plan, Concentration through the influence rule.
 - `combat.Cost = ceil(ManaCost)` and the left / right hand binder: unchanged from SKMISS / SKMANA.
 
 | id | finding | tag | impact |
