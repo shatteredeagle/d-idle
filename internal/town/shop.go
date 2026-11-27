@@ -665,6 +665,7 @@ func (t *Town) sellableIf(s *d2.Snapshot, full bool) (out []d2.Unit) {
 	rvOver := t.rejuvOverCap(s)
 	planKeep := t.planSellKeep(s)
 	loose := map[string]int{}
+	eval := t.evalFor(s)
 	for _, u := range s.Inventory.Container(d2.ContInventory) {
 		if u.Item.Flags&d2.FlagStartItem != 0 {
 			continue
@@ -688,7 +689,7 @@ func (t *Town) sellableIf(s *d2.Snapshot, full bool) (out []d2.Unit) {
 			out = append(out, u)
 			continue
 		}
-		v := t.judge.EvaluateUnit(u)
+		v := eval(u)
 		if sp != nil {
 			// loot.rulesEngine 3: the rules decide sell or keep; a failure of the engine falls through to today's code
 			// for this item. The rejuvenation cap and the spare-supply surplus are supply counts, not rules, and stay.
