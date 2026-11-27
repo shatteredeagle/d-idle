@@ -41,7 +41,7 @@ func TestSellNowBatchMatchesSingle(t *testing.T) {
 	if dump(a) != dump(b) {
 		t.Fatalf("state differs:\n%s\n%s", dump(a), dump(b))
 	}
-	ar := func(d string) string { x, _ := os.ReadFile(filepath.Join(d, "sorc", ArchiveFile)); return string(x) }
+	ar := func(d string) string { x, _ := os.ReadFile(filepath.Join(d, ArchiveFile)); return string(x) }
 	if got, want := strings.Count(ar(d2), "\n"), strings.Count(ar(d1), "\n"); got != want || got != 11 {
 		t.Fatalf("archive lines %d, want %d", got, want)
 	}
