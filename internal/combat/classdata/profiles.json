@@ -891,15 +891,11 @@
     ],
     [
      "Shout"
-    ],
-    [
-     "Iron Skin"
     ]
    ],
    "layout": {
     "Battle Orders": "f1",
     "Shout": "f2",
-    "Iron Skin": "f3",
     "Battle Command": "f4"
    },
    "moves": [

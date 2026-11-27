@@ -75,3 +75,20 @@ func TestAssassinLayoutKeysTheSentryTable(t *testing.T) {
 		}
 	}
 }
+
+// SME review 2026-11-27, confidence high (backlog B8): Iron Skin is a passive, so no profile may list it as a buff or
+// give it a key (a key on a passive is a cast that does nothing and a buff group that never lands).
+func TestNoPassiveIronSkinInBuffsOrLayout(t *testing.T) {
+	for _, p := range Profiles() {
+		if _, ok := p.Layout["Iron Skin"]; ok {
+			t.Errorf("profile %s keys passive Iron Skin", p.ProfileID())
+		}
+		for _, g := range p.Buffs {
+			for _, n := range g {
+				if n == "Iron Skin" {
+					t.Errorf("profile %s buffs passive Iron Skin", p.ProfileID())
+				}
+			}
+		}
+	}
+}
