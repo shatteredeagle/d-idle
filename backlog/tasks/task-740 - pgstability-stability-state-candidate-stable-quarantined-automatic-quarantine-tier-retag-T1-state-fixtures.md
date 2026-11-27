@@ -1,10 +1,13 @@
 ---
 id: TASK-740
-title: 'pgstability: stability state candidate/stable/quarantined, automatic quarantine, tier retag, T1 state fixtures'
-status: In Progress
+title: >-
+  pgstability: stability state candidate/stable/quarantined, automatic
+  quarantine, tier retag, T1 state fixtures
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-21T04:47:00Z'
+updated_date: '2026-11-27T06:13:00Z'
 labels:
   - bot
   - feature
