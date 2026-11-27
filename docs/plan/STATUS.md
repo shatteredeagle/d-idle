@@ -215,7 +215,9 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 05db9a45b 11-27 15:21 `Merge agent/statusrefresh: statusrefresh: STATUS.md hand-written part rewritten (TASK-46)` (statusrefresh)
 - 0be1da55f 11-27 15:21 `Merge agent/playsession: playsession: tools/play-session.sh one-command LAN session (TASK-43)` (playsession)
+- 4bfa01ad8 11-27 15:19 `Merge branch 'main' into statusrefresh` (-)
 - e2876514c 11-27 15:19 `Merge branch 'main' into playsession` (-)
 - 68fd626b6 11-27 15:16 `Merge agent/advisorwire: advisorwire: advisor lines on the Return screen (TASK-1060)` (advisorwire)
 - ea036def4 11-27 15:15 `Merge branch 'main' into advisorwire` (-)
@@ -223,6 +225,4 @@
 - cfb83895d 11-27 15:09 `Merge agent/agencydrive: agencydrive: fighter reads agency.DriveOf at planner mode 2 (TASK-984 AC2)` (agencydrive)
 - c7c9c5ec3 11-27 15:09 `Merge agent/advisor1: advisor1: runeword and cube advisor lines, items.advisor dark knob (TASK-991)` (advisor1)
 - 66b4f7f50 11-27 15:09 `Merge agent/countessnav: countessnav: Tower Cellar 5 walk regression on two synthetic maps (TASK-766 AC3)` (countessnav)
-- bd2ab0cb7 11-27 15:06 `Merge branch 'main' into necroepic` (-)
-- 47547cb56 11-27 15:06 `Merge branch 'main' into agencydrive` (-)
 <!-- statusgen:end -->
