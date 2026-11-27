@@ -40,6 +40,7 @@
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | diffbaal | proposed | - | `internal/quest/baaldone.go`<br>`internal/quest/baaldone_test.go` | - |
+| releasenotes-next | proposed | - | `docs/releases/next-draft.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
@@ -193,6 +194,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 0a4584998 11-27 16:52 `Merge agent/rel012: rel012: unnumbered next-release draft notes (TASK-1066)` (rel012)
+- f4523d37b 11-27 16:50 `Merge branch 'main' into rel012` (-)
 - 38845a378 11-27 16:41 `Merge agent/necroapply: necroapply: SME Necromancer data changes (bonespear Teeth/Bone Spear points, mana_heavy, merc doc)` (necroapply)
 - 0ae6b91df 11-27 16:41 `Merge agent/town11: town11: townLegacy seam for old town counters, deletion plan (TASK-764 partial)` (town11)
 - a65a48c0a 11-27 16:41 `Merge agent/pgcards2: pgcards2: nightly run set, earned-hero tier, release-check (TASK-754/756 repo side)` (pgcards2)
@@ -201,6 +204,4 @@
 - e4986e3c8 11-27 16:38 `Merge branch 'main' into town11` (-)
 - d5e38d0bf 11-27 16:38 `Merge branch 'main' into pgcards2` (-)
 - f0dc78eff 11-27 16:38 `Merge branch 'main' into uifix` (-)
-- 1280a6928 11-27 16:31 `Merge agent/smepal: smepal: SME Paladin and Sorceress review (docs)` (smepal)
-- 719aeae00 11-27 16:31 `Merge agent/onboardtour2: onboardtour2: tour tips, Help sheet, Now line (TASK-48 partial)` (onboardtour2)
 <!-- statusgen:end -->

@@ -612,6 +612,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [0.1.2.md](releases/0.1.2.md): d.idle friends release 0.1.2 (status: BUILT AND STAGED 2026-11-14, NOT PUBLISHED, and the live drills have NOT run (they need docker with real...)
 - [0.1.3-drills.md](releases/0.1.3-drills.md): friends 0.1.3 pre-release drills (2026-11-15) (status: RUN, all drills PASS. Tags: V = run and seen, U = not run. Run on the worker host in its own docker...)
 - [0.1.3.md](releases/0.1.3.md): d.idle friends release 0.1.3 (status: BUILT, DRILLED AND STAGED 2026-11-15 (card cut013), NOT PUBLISHED. It supersedes 0.1.2, which was built...)
+- [next-draft.md](releases/next-draft.md): Friends release notes: draft for the next cut (status: DRAFT. The version number is not chosen (the owner picks it at cut time). Covers what merged on main after...)
 - [repair.md](repair.md): Manual repair (TASK-226, repairmanual) and the repair trip (TASK-303, repairtrip) (status: since 2026-11-11 "Repair now" is a TRIP, not a wait for the next town visit (user decision, section "The...)
 - [reset.md](reset.md): Reset: leave the game and rejoin (status: current (botreset + resetinstant, 2026-11-15). Offline tested only; not verified live (checklist at the end).)
 - [resource.md](resource.md): Resource policy: internal/resource (agent RESOURCE)

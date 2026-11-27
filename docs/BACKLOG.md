@@ -1567,6 +1567,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - pgnightly: one nightly scheduler job: T2, T3, pairs, one T4; smoke stage after each push (TASK-754, merged 2026-11-27, acceptance 2 of 2): Repo side done, offline only: the nightly run set is data (tools/provingground/nightly.json, window 23:00-07:00 EST, at most 3 jobs, nice 19, hidden lab slots, caps per stage, smoke report-only for 7 clean days), validated and expanded by ... <!--sg:agent/pgcards2-->
 - town11: cleanup, delete stage 0 and retired knobs (TASK-764, merged 2026-11-27, acceptance 0 of 2): NOT DONE, blocked on a precondition (no code changed): the card deletes stage 0, and stage 0 is today the default path (town.plan default 0, stages 3 to 5 still dark, townflip-p5 section 3 flip sequence not run, no release at stage 5). ... <!--sg:agent/town11-->
 - agent/necroapply: necroapply: SME Necromancer data changes (bonespear Teeth/Bone Spear points, mana_heavy, merc doc) (merged 2026-11-27) <!--sg:agent/necroapply-->
+- releasenotes-next: player-language notes after 0.1.3 (TASK-1066, merged 2026-11-27, acceptance 1 of 1) <!--sg:agent/rel012-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
