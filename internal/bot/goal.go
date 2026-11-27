@@ -754,6 +754,8 @@ func (r *Runner) advanceTrip(ctx context.Context, snap *d2.Snapshot, c control) 
 			r.setWhy(WhyBackToField)
 		}
 		ok := r.do(ctx, c, StateResupplying, "Returning to the field", sec(r.cfg.TravelTimeoutSec), "back to field", func(ctx context.Context) error {
+			r.backField.begin()
+			defer r.backField.end()
 			err := r.returnToField(ctx, t.returnTo, t.redirected)
 			if err == nil {
 				r.waitForMerc(ctx, "portal")

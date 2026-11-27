@@ -231,6 +231,7 @@ type Runner struct {
 	farmOff        string                       // why the farm loop is off for this session (mu)
 	bossRun        atomic.Bool                  // a boss script is running (Deps.Task.Boss): routine town trips wait, the guard's re-plan cancels are off
 	chores         choreWatch                   // a town chore is running (townguard.go)
+	backField      choreWatch                   // the leg back to the field is running (townguard.go)
 	safetyBusy     atomic.Int32                 // safety actions in flight (carryOut); the item fast lane stays closed meanwhile (SafetyBusy)
 	bossStart      map[string]time.Time         // start of the last unfinished boss run by name (taskActs.KillBoss, loop goroutine only)
 	levelerPaused  bool                         // selfStop came from the leveler (LevelerPause), guarded by mu

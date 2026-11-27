@@ -21,7 +21,8 @@ func TestPlanForBuildManaHeavy(t *testing.T) {
 		{d2.Nightmare, 20, b, [4]Potion{hp, mp, mp, hp}},
 		{d2.Nightmare, 40, b, [4]Potion{hp, mp, mp, rv}},
 		{d2.Hell, 70, b, [4]Potion{rv, mp, mp, rv}},
-		{d2.Hell, 70, "paladin_hammerdin_zeal_endgame90", PlanForDiff(d2.Barbarian, 70, d2.Hell).Cols},
+		{d2.Hell, 70, "paladin_hammerdin_zeal_endgame90", [4]Potion{rv, mp, mp, rv}}, // SME review 2026-11-27
+		{d2.Hell, 70, "paladin_normal30_v2", PlanForDiff(d2.Barbarian, 70, d2.Hell).Cols},
 	}
 	for _, c := range cases {
 		if got := PlanForBuild(d2.Barbarian, c.lvl, c.d, c.build).Cols; got != c.want {
@@ -86,18 +87,18 @@ func TestManaHeavyMatchesJSON(t *testing.T) {
 // hammerdin table now is (probe F5).
 func TestManaHeavyFromTableFlag(t *testing.T) {
 	for _, b := range []string{"barbarian_warcry_endgame90", "sorceress_blizzard_endgame90", "druid_tornado_endgame90",
-		"necromancer_summoner_endgame90", "paladin_hammerdin_endgame90",
-		"necromancer_summoner_normal30", "necromancer_leveling_normal30"} { // last two: SME review 2026-11-27, medium
+		"necromancer_summoner_endgame90", "paladin_hammerdin_endgame90", "paladin_hammerdin_zeal_endgame90", "sorceress_normal30",
+		"necromancer_summoner_normal30", "necromancer_leveling_normal30"} {
 		if !ManaHeavyBuild(b) {
 			t.Errorf("%s should be mana-heavy", b)
 		}
 	}
-	for _, b := range []string{"", "paladin_hammerdin_zeal_endgame90", "paladin_normal30_v2", "amazon_multishot_endgame90", "lightning_chain_v3"} {
+	for _, b := range []string{"", "paladin_normal30_v2", "amazon_multishot_endgame90", "lightning_chain_v3"} {
 		if ManaHeavyBuild(b) {
 			t.Errorf("%q must not be mana-heavy", b)
 		}
 	}
-	if n := len(loadManaHeavy()); n != 7 {
-		t.Errorf("%d mana-heavy builds, want 7", n)
+	if n := len(loadManaHeavy()); n != 9 {
+		t.Errorf("%d mana-heavy builds, want 9", n)
 	}
 }
