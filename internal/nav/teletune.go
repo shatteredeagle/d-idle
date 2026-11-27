@@ -145,7 +145,7 @@ func (n *Navigator) pathHop(o *obs, target input.Point) (cell input.Point, saved
 		cum += math.Hypot(float64(x-px), float64(y-py))
 		px, py = x, y
 		c := input.Point{X: x, Y: y}
-		if d := dist(c, o.pos); d > r || d < teleportMinHop || n.teleBad[[2]int{x, y}] > 0 {
+		if d := dist(c, o.pos); d > r || d < n.teleMinHop() || n.teleBad[[2]int{x, y}] > 0 {
 			continue
 		}
 		if cum > saved {

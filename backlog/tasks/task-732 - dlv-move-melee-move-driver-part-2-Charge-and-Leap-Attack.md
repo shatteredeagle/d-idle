@@ -16,6 +16,7 @@ owns:
   - "internal/combat/"
 exclusive: []
 contracts: []
+result: "Offline only, NOT verified live. Gap rows in the move driver (move.go gapClose): Leap Attack (Barbarian default and frenzy; gap through the target by 1 subtile, plus escape out of a surround) and Charge (Paladin default and hammerdin; gap at the target), numbers are planning values (source U). A left-hand skill is refused unless the backend casts by id (hotkeys select only the right hand), so Charge needs d2d. Knob combat.deliveryUpkeep 0/1/2. Tests Barbarian + Paladin (gap) and Sorceress (hop). No layout keys added. Live: the combat.teleport-reposition rows and the landing rules of Leap Attack and Charge."
 lane: next
 ---
 
@@ -29,8 +30,8 @@ Design: docs/design/fable-review-2026-11-21/combat-engine-d-cards.md (user-appro
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Row added to combat.teleport-reposition for a Barbarian and a Paladin
-- [ ] #2 Two builds tested (Paladin + Sorceress), no class or skill literal added, literal count reported in result (may only fall)
-- [ ] #3 Knob combat.delivery.<driver> 0/1/2 where a driver ships; rollback is the knob
+- [x] #1 Row added to combat.teleport-reposition for a Barbarian and a Paladin
+- [x] #2 Two builds tested (Paladin + Sorceress), no class or skill literal added, literal count reported in result (may only fall)
+- [x] #3 Knob combat.delivery.<driver> 0/1/2 where a driver ships; rollback is the knob
 - [ ] #4 go test -race -count=20 on touched packages; tools/ci/check.sh, contracts/backlog checks and leakcheck clean
 <!-- AC:END -->

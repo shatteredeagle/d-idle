@@ -163,7 +163,7 @@ func (n *Navigator) planHops(o *obs, target input.Point) (path []input.Point, re
 		for dy := -1; dy <= 1; dy++ {
 			for dx := -1; dx <= 1; dx++ {
 				for _, id := range grid[[2]int{k[0] + dx, k[1] + dy}] {
-					if d := dist(p, nodes[id]); d <= r && d >= teleportMinHop {
+					if d := dist(p, nodes[id]); d <= r && d >= n.teleMinHop() {
 						fn(id, d)
 					}
 				}
@@ -252,7 +252,7 @@ func (n *Navigator) blindCell(o *obs, target input.Point) (input.Point, bool) {
 	best, bestS, found := input.Point{}, math.MaxFloat64, false
 	for dy := -ri; dy <= ri; dy++ {
 		for dx := -ri; dx <= ri; dx++ {
-			if f := math.Hypot(float64(dx), float64(dy)); f > r || f < teleportMinHop+2 {
+			if f := math.Hypot(float64(dx), float64(dy)); f > r || f < n.teleMinHop()+2 {
 				continue
 			}
 			c := input.Point{X: o.pos.X + dx, Y: o.pos.Y + dy}
