@@ -46,6 +46,8 @@
 | smeaura | proposed | - | `docs/sme/paladin-auras-2026-11-26.md` | - |
 | necrocorpse | proposed | - | `docs/probes/necrocaps-2026-11-26.md` | - |
 | fid-poison-res-diag | proposed | - | `docs/research/fid-poisonres-trace.md` | - |
+| necroteeth | proposed | - | `internal/combat/classdata/profiles.json`<br>`internal/combat/necro_test.go`<br>`internal/leveler/mainattack_test.go` | - |
+| arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
@@ -154,7 +156,6 @@
 | pgtaps | in-progress | - | `cmd/d2bot/ladder.go`<br>`cmd/d2scenario/tap.go`<br>`internal/scenario/taps.go`<br>`cmd/d2scenario/run.go`<br>`cmd/d2scenario/tap_test.go`<br>`internal/scenario/result.go` | - |
 | pgclock | proposed | - | `cmd/d2bot/d2dbackend.go`<br>`internal/bot/farm.go`<br>`internal/goals/clock_test.go`<br>`internal/bot/farmclock_test.go`<br>`internal/d2denv/reader.go`<br>`internal/d2denv/recent_test.go`<br>`internal/d2denv/env.go`<br>`cmd/d2bot/goalsclock_test.go`<br>`docs/d2d-determinism.md` | - |
 | fid-probe-regen-speed | deferred | - | `docs/probes/fid/fid-probe-regen-speed.md` | - |
-| pgstability | proposed | - | `internal/scenario/stability.go`<br>`tools/provingground/scenarios/tiers.json` | - |
 | pghero | proposed | - | `internal/scenario/hero`<br>`tools/ab/prep`<br>`tools/survival` | - |
 | pgselfcheck | proposed | - | `internal/scenario/hero/selfcheck.go`<br>`cmd/d2scenario/validate.go` | - |
 | pgpage | proposed | - | `docs/process/proving-ground-status.md`<br>`tools/provingground/status_doc.sh` | - |
@@ -208,13 +209,12 @@
 | townflip | proposed | - | `docs/design/townflip-p5.md`<br>`internal/town/sellplan.go`<br>`internal/town/sellplan_test.go`<br>`internal/town/shop.go`<br>`internal/town/town.go`<br>`internal/town/chores.go`<br>`internal/env/tuning_town.go` | - |
 | arbmig | proposed | - | `docs/design/arbiter-migration-p6.md`<br>`docs/arbiter.md`<br>`internal/arbiter/`<br>`cmd/d2scenario/`<br>`tools/provingground/arbiter-outcomes/`<br>`internal/bot/arbiter_control.go`<br>`internal/bot/arbiter_control_test.go`<br>`internal/bot/shadow.go`<br>`internal/bot/loop.go`<br>`internal/env/tuning_bot.go`<br>`data/darklaunch.json`<br>`docs/knobs.md` | - |
 | fid-adapter-rows | deferred | - | `docs/probes/fid/fid-adapter-rows.md` | - |
-| proptest1 | proposed | - | `docs/design/proptest-t3.md`<br>`internal/combat/decide_prop_test.go`<br>`internal/supply/solve_prop_test.go`<br>`internal/arbiter/decide_prop_test.go` | - |
 | ticklog | proposed | - | `docs/design/ticklog-t4.md`<br>`docs/arbiter.md`<br>`internal/bot/ticklog.go`<br>`internal/bot/ticklog_test.go`<br>`internal/bot/shadow.go`<br>`internal/env/tuning_bot.go`<br>`internal/arbiter/replay.go`<br>`internal/arbiter/replay_ticklog_test.go`<br>`data/darklaunch.json` | - |
 | bsmchk | proposed | - | `docs/design/boardsm-checker.md` | - |
 | bsmdef | proposed | - | `docs/design/boardsm-flip.md` | - |
 | agencyp1b | proposed | - | `docs/design/agency-p1b.md` | - |
 | agencyp3 | proposed | - | `docs/design/agency-p3.md` | - |
-| inputl3 | proposed | - | `docs/design/input-i3.md` | - |
+| inputl3 | proposed | - | `docs/design/input-i3.md`<br>`internal/input/useitem.go`<br>`internal/input/useitem_test.go`<br>`internal/d2dctl/use_verb.go`<br>`internal/d2dctl/use_verb_test.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dinput/useitem.go`<br>`internal/combat/portalverb.go`<br>`internal/combat/portalverb_test.go`<br>`internal/combat/fighter.go`<br>`internal/town/portalverb.go`<br>`internal/town/portalverb_test.go`<br>`internal/town/portalverb_unit_test.go`<br>`internal/town/portalverb_export_test.go`<br>`internal/town/trip.go` | - |
 | inputl4 | proposed | - | `docs/design/input-i4.md` | - |
 | inputl5 | proposed | - | `docs/design/input-i5-i7.md` | - |
 | fid-lowvalue | deferred | - | `docs/probes/fid/fid-lowvalue.md` | - |
@@ -244,14 +244,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
-- 4626dd212 11-27 00:46 `Merge agent/town6: Merge branch 'main' into town6` (town6)
-- 7217351dc 11-27 00:44 `Merge branch 'main' into town6` (-)
-- d3a579824 11-27 00:39 `Merge agent/upkeep: Merge branch 'main' into dlv-upkeep-state` (upkeep)
-- ff87b2ee9 11-27 00:39 `Merge agent/proptest1: Merge branch 'main' into proptest1` (proptest1)
-- d7515ab9a 11-27 00:37 `Merge branch 'main' into dlv-upkeep-state` (-)
-- a69afe04b 11-27 00:37 `Merge branch 'main' into proptest1` (-)
-- 17863496b 11-27 00:33 `Merge remote-tracking branch 'origin/main' into agent/town6` (-)
-- 732d38dd9 11-27 00:33 `Merge agent/arbmig2: Merge branch 'main' into arbmig` (arbmig2)
-- ad09964ce 11-27 00:31 `Merge branch 'main' into arbmig` (-)
-- 7f0a43fb1 11-27 00:14 `Merge agent/sellsnap: Merge branch 'main' into sellsnap` (sellsnap)
+- fce2a0b5d 11-27 01:33 `Merge agent/arbloop: Merge branch 'main' into arbloop` (arbloop)
+- 0abcad620 11-27 01:33 `Merge agent/necroteeth: Merge branch 'main' into necroteeth` (necroteeth)
+- 722fe51c8 11-27 01:30 `Merge branch 'main' into arbloop` (-)
+- 110f0e328 11-27 01:30 `Merge branch 'main' into necroteeth` (-)
+- acf7e202c 11-27 01:21 `Merge agent/minions: Merge branch 'main' into dlv-upkeep-minions` (minions)
+- 47d55ac65 11-27 01:19 `Merge branch 'main' into dlv-upkeep-minions` (-)
+- a49fdac79 11-27 01:15 `Merge agent/inputl3: Merge branch 'main' into inputl3` (inputl3)
+- 61bca5cdb 11-27 01:13 `Merge branch 'main' into inputl3` (-)
+- b4f120b15 11-27 01:06 `Merge branch 'main' into dlv-upkeep-minions` (-)
+- 46a2302b0 11-27 01:06 `Merge branch 'main' into inputl3` (-)
 <!-- statusgen:end -->

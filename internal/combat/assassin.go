@@ -83,8 +83,9 @@ func (f *Fighter) assassinTick(ctx context.Context, snap *d2.Snapshot) (bool, er
 	return true, f.sleep(ctx, ms(f.tune().CastGapMs))
 }
 
-// KeepShadow casts Shadow Warrior (or Shadow Master) when no shadow stands: out of a fight, never in town. Shadows
-// share the trap cap in the real game (U, docs/classes/assassin.md), so only one is kept. Returns the casts made.
+// KeepShadow casts the first usable skill of the profile's afterFight minion groups (the shadows) when no shadow
+// stands: out of a fight, never in town. Shadows share the trap cap in the real game (U, docs/classes/assassin.md),
+// so only one is kept. Returns the casts made.
 func (f *Fighter) KeepShadow(ctx context.Context) (int, error) {
 	snap, err := f.read(ctx)
 	if err != nil {
@@ -94,12 +95,8 @@ func (f *Fighter) KeepShadow(ctx context.Context) (int, error) {
 	if !isAssassin(p) || p.InTown() || isDead(p) || CountAssassinPets(snap, f.cat).Shadows > 0 {
 		return 0, nil
 	}
-	known := KnownSkills(p, f.cat, f.keys)
-	for _, name := range []string{"Shadow Master", "Shadow Warrior"} {
-		sp, ok := known[name]
-		if !ok || (sp.Key == "" && p.RightSkill != sp.ID) || sp.Cost > p.Mana-p.MaxMana/10 {
-			continue
-		}
+	if name := f.oldMinionPick(snap, false, false); name != "" {
+		sp := KnownSkills(p, f.cat, f.keys)[name]
 		if err := f.cast(snap, sp, input.Point{X: p.X, Y: p.Y}); err != nil {
 			return 0, err
 		}
