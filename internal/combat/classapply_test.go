@@ -1,6 +1,10 @@
 package combat
 
-import "testing"
+import (
+	"testing"
+
+	"d2lod-bot/internal/d2"
+)
 
 // Card classapply (SME review 2026-11-27, confidence medium-high): a skill a profile band lists as an attack must not
 // be a KindBuff skill, because the cast loop (castfirst.go, rules.go PickAttack) skips buffs, so the band entry is
@@ -58,6 +62,16 @@ func TestAmazonBandOrder(t *testing.T) {
 		}
 		if got := p.AttackNames(tc.clvl, all)[0]; got != tc.want {
 			t.Errorf("amazon %q clvl %d leads with %s, want %s", tc.build, tc.clvl, got, tc.want)
+		}
+	}
+}
+
+// SME review 2026-11-27, confidence high: planTrap lays only keyed skills, so every trap the sentry table buys needs a
+// layout key; Death Sentry had none.
+func TestAssassinLayoutKeysTheSentryTable(t *testing.T) {
+	for _, n := range []string{"Death Sentry", "Lightning Sentry", "Charged Bolt Sentry", "Wake of Fire Sentry"} {
+		if k := ProfileFor(d2.Assassin, "").Layout[n]; k == "" { // d2.Assassin
+			t.Errorf("assassin layout has no key for %s", n)
 		}
 	}
 }
