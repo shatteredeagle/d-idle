@@ -56,7 +56,7 @@ func TestStanceMinionSummary(t *testing.T) {
 		st.tel.cast()
 		st.tel.sample(h.f, w.snap, hs) // same cell
 		st.tel.cast()
-		w.snap.Monsters = append(w.snap.Monsters[:len(w.snap.Monsters)-1]) // skeleton 201 is gone
+		w.snap.Monsters = w.snap.Monsters[:len(w.snap.Monsters)-1] // skeleton 201 is gone
 		st.tel.sample(h.f, w.snap, hs)
 		h.f.telemSummaries(st, w.snap)
 		out := buf.String()
