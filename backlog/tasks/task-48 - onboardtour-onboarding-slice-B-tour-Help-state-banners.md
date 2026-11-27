@@ -18,10 +18,14 @@ card: "onboardtour"
 owns:
   - "internal/watch/web/onboarding.js"
   - "internal/watch/web/onboarding.css"
+  - "internal/watch/web/onboarding.json"
+  - "internal/watch/web/watch.html"
+  - "internal/watch/onboardingtour_test.go"
+  - "internal/watch/testdata/onboarding_tour_test.cjs"
   - "docs/onboarding-tour.md"
 exclusive: []
 contracts: []
-result: "Re-scoped 2026-11-10 (trueup2): in-app explain (tour, Help, banners); welcome card stays TASK-247. Not built, not verified live."
+result: "Built offline 2026-11-27: tour of five state-tied tips, Now line from explain, Help sheet, seen in localStorage; node stub-DOM tests green; not looked at in a browser (checklist in docs/onboarding-tour.md), not verified live."
 lane: next
 ---
 
@@ -35,8 +39,8 @@ Done when: tour of five steps with a page-only sample thought, Back/Skip/resume,
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Tour of five steps with a page-only sample thought, Back/Skip/resume, phone bottom sheet
-- [ ] #2 Help sheet and state banners; tour_seen stored
-- [ ] #3 Tests and a 390/1280 px check
-- [ ] #4 the tour links to the welcome card and first-30-minutes text of TASK-247 (not built here)
+- [x] #1 Tour of five steps with a page-only sample thought, Back/Skip/resume, phone bottom sheet
+- [x] #2 Help sheet and state banners; tour_seen stored
+- [x] #3 Tests and a 390/1280 px check
+- [x] #4 the tour links to the welcome card and first-30-minutes text of TASK-247 (not built here)
 <!-- AC:END -->
