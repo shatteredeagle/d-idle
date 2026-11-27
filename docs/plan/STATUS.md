@@ -52,6 +52,7 @@
 | placefix | proposed | - | `internal/questboard/`<br>`internal/bot/questboard.go`<br>`data/questboard/act2.json`<br>`tools/provingground/scenarios/stepexec-act2.json`<br>`tools/provingground/scenarios/questdrill.json`<br>`internal/scenario/placefix_test.go`<br>`docs/questboard.md`<br>`internal/task/act1.go`<br>`internal/task/act2.go`<br>`internal/task/placefix_test.go`<br>`internal/d2dinput/controller.go`<br>`internal/d2dinput/placefix_test.go`<br>`internal/d2dctl/parse.go`<br>`internal/d2dctl/verbs.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dsrc/items.go`<br>`internal/d2dsrc/source_test.go` | - |
 | deploy94-ledger | in-progress | - | `data/darklaunch.json` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
+| vaultperf | proposed | - | `internal/watch`<br>`internal/watch/web`<br>`internal/vaultkeep`<br>`internal/vault` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | returnmock | proposed | - | `docs/research/mocks/return.html`<br>`docs/research/return-screen.md` | - |
@@ -245,14 +246,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
-- d65dd27d6 11-27 10:29 `Merge agent/hostilespin: Merge branch 'main' into hostilespin` (hostilespin)
-- 6062a47fd 11-27 10:28 `Merge branch 'main' into hostilespin` (-)
-- 0191a0523 11-27 10:15 `Merge agent/featuresoak2: Merge remote-tracking branch 'origin/main' into agent/featuresoak2` (featuresoak2)
-- e4a4180d6 11-27 10:12 `Merge remote-tracking branch 'origin/main' into agent/featuresoak2` (-)
-- 947a4a255 11-27 09:40 `Merge agent/prereq: Merge branch 'main' into prereq` (prereq)
-- 9836f0994 11-27 09:38 `Merge branch 'main' into prereq` (-)
-- c2af036e3 11-27 09:32 `Merge agent/deploy94: Merge branch 'main' into deploy94-ledger` (deploy94)
-- 4ab536c5f 11-27 09:30 `Merge branch 'main' into deploy94-ledger` (-)
-- e1bf805a5 11-27 08:36 `Merge agent/act2handin: Merge remote-tracking branch 'origin/main' into agent/act2handin` (act2handin)
-- 5307199f6 11-27 08:33 `Merge remote-tracking branch 'origin/main' into agent/act2handin` (-)
+- 41a339a10 11-27 13:33 `Merge agent/vaultperf: vaultperf: batch sell-all, counts refresh, shared busy-button feedback (TASK-1050)` (vaultperf)
+- 0ff85e305 11-27 13:32 `Merge branch 'main' into vaultperf` (-)
+- dd43964ff 11-27 13:29 `Merge agent/charms: charms: charm management design (docs)` (charms)
+- 482daed6e 11-27 13:29 `Merge agent/akarahand: akarahand: hand-in click diagnosis (docs)` (akarahand)
+- 1612e4751 11-27 13:29 `Merge agent/fastflip: fastflip: 2 h default flip window` (fastflip)
+- 2a0dbd60d 11-27 13:29 `Merge agent/pgclock2: pgclock2: scripted taps, tick-based soak stop (TASK-738/739)` (pgclock2)
+- eb644f64e 11-27 13:27 `Merge branch 'main' into charms` (-)
+- 9fd3f41bd 11-27 13:27 `Merge branch 'main' into akarahand` (-)
+- 2d6e8fb89 11-27 13:27 `Merge branch 'main' into fastflip` (-)
+- 07630a935 11-27 13:27 `Merge branch 'main' into pgclock2` (-)
 <!-- statusgen:end -->

@@ -1033,6 +1033,115 @@ func (s *Store) SellNow(id string, gold int, order string) error {
 	return s.commit(&event{Ev: "soldnow", ID: id, N: gold, Reason: order})
 }
 
+// SoldLine is one record of a batch sale: the id and the gold the engine paid for it.
+type SoldLine struct {
+	ID   string
+	Gold int
+}
+
+// SellNowBatch is SellNow for many records under one lock with ONE archive write, ONE log write and ONE fsync each (a
+// per-record SellNow costs two fsyncs a record: seconds for a whole vault). A record that cannot be sold is skipped and
+// counted in failed; err is the last such error. The order is the same as SellNow: archive first, then the log, then the
+// in-memory state, so a crash in between leaves records that the same order id sells again.
+func (s *Store) SellNowBatch(lines []SoldLine, order string) (done int, failed int, err error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	var evs []*event
+	var arch []byte
+	seen := map[string]bool{}
+	for _, l := range lines {
+		r := s.byID[l.ID]
+		if r == nil || seen[l.ID] {
+			failed++
+			err = ErrNotFound
+			continue
+		}
+		seen[l.ID] = true
+		if e := s.dry(&event{Ev: "soldnow", ID: l.ID}); e != nil {
+			failed++
+			err = e
+			continue
+		}
+		b, e := json.Marshal(archived{At: s.opt.Now().UTC(), Reason: fmt.Sprintf("sold: %d gold, order %s", l.Gold, order), Rec: *r})
+		if e != nil {
+			return 0, failed, e
+		}
+		arch = append(append(arch, b...), '\n')
+		evs = append(evs, &event{Ev: "soldnow", ID: l.ID, N: l.Gold, Reason: order})
+	}
+	if len(evs) == 0 {
+		return 0, failed, err
+	}
+	if e := s.appendArchive(arch); e != nil {
+		return 0, failed, e
+	}
+	if e := s.commitBatch(evs); e != nil {
+		return 0, failed, e
+	}
+	return len(evs), failed, err
+}
+
+func (s *Store) appendArchive(b []byte) error {
+	fh, err := os.OpenFile(filepath.Join(s.dir, ArchiveFile), os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0o644)
+	if err != nil {
+		return err
+	}
+	_, err = fh.Write(b)
+	if err == nil && !s.opt.NoSync {
+		err = fh.Sync()
+	}
+	if cerr := fh.Close(); err == nil {
+		err = cerr
+	}
+	return err
+}
+
+// commitBatch is commit for several events: one fsync for the lot, then each is applied. On a write error the events written
+// so far stay in the log and are applied (the log is the truth), the rest are dropped.
+func (s *Store) commitBatch(evs []*event) error {
+	var werr error
+	n := 0
+	for _, ev := range evs {
+		ev.T = s.opt.Now().UTC()
+		s.seq++
+		ev.Seq = s.seq
+		b, err := json.Marshal(ev)
+		if err == nil {
+			w := append(b, '\n')
+			var herr error
+			if s.hook != nil {
+				w, herr = s.hook(w)
+			}
+			if len(w) > 0 {
+				k, e := s.f.Write(w)
+				s.size += int64(k)
+				if e != nil && herr == nil {
+					herr = e
+				}
+			}
+			err = herr
+		}
+		if err != nil {
+			s.seq--
+			werr = err
+			break
+		}
+		s.lastLine = sha256.Sum256(b)
+		n++
+	}
+	if n > 0 && !s.opt.NoSync {
+		if err := s.f.Sync(); err != nil && werr == nil {
+			werr = err
+		}
+	}
+	for _, ev := range evs[:n] {
+		if err := s.apply(ev); err != nil {
+			return fmt.Errorf("vault: applying committed event: %w", err)
+		}
+	}
+	return werr
+}
+
 // Recover resolves every InFlight keep after a restart. present reports whether the item (matched by Raw hash
 // in the stash) exists in the game: true completes the keep, false clears the mark so it is queued again. An
 // error leaves the record in flight. It returns the ids it completed and requeued.
@@ -1114,18 +1223,7 @@ func (s *Store) archive(r *Rec, reason string) error {
 	if err != nil {
 		return err
 	}
-	fh, err := os.OpenFile(filepath.Join(s.dir, ArchiveFile), os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0o644)
-	if err != nil {
-		return err
-	}
-	_, err = fh.Write(append(b, '\n'))
-	if err == nil && !s.opt.NoSync {
-		err = fh.Sync()
-	}
-	if cerr := fh.Close(); err == nil {
-		err = cerr
-	}
-	return err
+	return s.appendArchive(append(b, '\n'))
 }
 
 // Archived lists the archive newest last; a record archived twice (a retry after a crash) appears once, the

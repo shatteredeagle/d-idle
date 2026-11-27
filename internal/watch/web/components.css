@@ -117,6 +117,14 @@
   .d-btn[data-variant="danger"] { color: var(--d-bad); }
   .d-btn[data-size="sm"] { min-block-size: 32px; min-inline-size: 32px; padding: 2px var(--d-sp-2); font-size: var(--d-fs-1); align-items: center; }
   .d-btn:disabled { opacity: .5; cursor: not-allowed; }
+  /* the one busy button (toast.js dBusy): pressed state at once, spinner while the request runs, then a mark for done or failed */
+  [data-busy] { position: relative; }
+  [data-busy="working"] { cursor: progress; opacity: .75; pointer-events: none; }
+  [data-busy="working"]::before { content: ""; display: inline-block; inline-size: .9em; block-size: .9em; margin-inline-end: .4em; border: 2px solid currentColor; border-inline-end-color: transparent; border-radius: 50%; animation: d-spin var(--d-dur-pulse) linear infinite; vertical-align: -.1em; }
+  [data-busy="done"]::after { content: " \2713"; color: var(--d-good); }
+  [data-busy="failed"] { outline: 2px solid var(--d-bad); outline-offset: 1px; }
+  [data-busy="failed"]::after { content: " failed"; color: var(--d-bad); font-weight: 650; }
+  @keyframes d-spin { to { transform: rotate(360deg); } }
   .d-btn[aria-pressed="true"] { background: var(--d-accent); color: var(--d-on-accent); border-color: var(--d-accent); font-weight: 650; }
   .d-btn .does { font-size: var(--d-fs-0); color: var(--d-text-2); font-weight: 400; }
   .d-btn[data-variant="primary"] .does { color: inherit; opacity: .85; }

@@ -210,11 +210,13 @@ export function mountVault(d) {
     if (!j || j.schema !== 'watch.vault/1') return null;
     return j;
   }
+  // Every reload carries the type counts (the chips and the Type list): a sale or a reveal changes them, and a reload that skipped
+  // them left the old numbers until a page refresh. They are one pass over the type index on the server.
   async function reload(keep) {
     S.loading = !S.view; S.err = false;
     if (!keep && win && win.scrollTo && main.getBoundingClientRect && main.getBoundingClientRect().top < 0) win.scrollTo(0, win.scrollY + main.getBoundingClientRect().top); // a new query starts at the top of the list
     const limit = keep ? Math.min(Math.max(S.items.length, PAGE), MAX_LOADED) : PAGE;
-    const [j] = await Promise.all([fetchPage(0, Math.min(limit, 200), !S.view || !S.facets.types.length), refreshEther()]);
+    const [j] = await Promise.all([fetchPage(0, Math.min(limit, 200), true), refreshEther()]);
     if (!j) { S.err = true; S.loading = false; draw(); return; }
     let items = j.items;
     if (limit > 200) { // a reload that keeps a long list fetches it in pages of 200

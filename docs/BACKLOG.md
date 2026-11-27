@@ -1511,6 +1511,15 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - prereq: the leveler buys missing prerequisites before a planned skill (TASK-1047, merged 2026-11-27, acceptance 3 of 4): The leveler buys the missing prerequisites of a planned skill first, from the game tables, and the auto allocator spends them without the unsupported attack confirmation, so Sacrifice is learned and Zeal follows ... <!--sg:agent/prereq-->
 - agent/featuresoak2: Merge remote-tracking branch 'origin/main' into agent/featuresoak2 (merged 2026-11-27): Feature soak pass 2 table: 64 of 69 lab rows with class skills, zero writes after start; no feature hits a hard invariant when on; arbiter families 255 red on one watchdog hang in the hostile check, families 3 weak red on necromancer xp, reflex drink green on ... <!--sg:agent/featuresoak2-->
 - hostilespin: the hostile check cannot spin (TASK-1048, merged 2026-11-27, acceptance 4 of 4): The featuresoak Sorceress hang was not a spin: one long quest-board slice outlasted the 10 min watchdog while still killing (already fixed on main by loophang) ... <!--sg:agent/hostilespin-->
+- agent/town6b: town6b: stage 4 scenario live checklist (docs only) (merged 2026-11-27) <!--sg:agent/town6b-->
+- dlv-upkeep-state: upkeep driver, state-observed (TASK-722, merged 2026-11-27, acceptance 5 of 6): First slice built offline, NOT verified live and not in a Proving Ground run. internal/data reads the Skills.txt columns aurastate and auratargetstate and resolves each skill state to its states.txt id and a curse flag (cache schema 7). ... <!--sg:agent/dlvupkeep-->
+- agent/roadmap3: roadmap3: docs (merged 2026-11-27) <!--sg:agent/roadmap3-->
+- agent/act2drill6: act2drill6: docs (merged 2026-11-27) <!--sg:agent/act2drill6-->
+- agent/darkqueue: darkqueue: dark queue plan (merged 2026-11-27) <!--sg:agent/darkqueue-->
+- pgtaps: scripted taps and API calls on the virtual clock inside the bot (TASK-738, merged 2026-11-27, acceptance 3 of 4): Steps 1 and 2 done. Step 1: board tapper polls the bot virtual clock grid (30 virtual s), taps_at recorded. Step 2: d2bot --scripted-taps FILE (scenario.TapScript JSON: quest, chunks, every_s): scenario.TapEngine decides the Start and Hand in taps on a ... <!--sg:agent/pgclock2-->
+- agent/fastflip: fastflip: 2 h default flip window (merged 2026-11-27) <!--sg:agent/fastflip-->
+- agent/akarahand: akarahand: hand-in click diagnosis (docs) (merged 2026-11-27) <!--sg:agent/akarahand-->
+- agent/charms: charms: charm management design (docs) (merged 2026-11-27) <!--sg:agent/charms-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
