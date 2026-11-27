@@ -83,6 +83,7 @@ type Fighter struct {
 	buffAt        map[int]time.Time
 	buffTries     map[int]int // consecutive casts cut by a hit, per skill (card armorcut)
 	upk           upkeepState // the state-observed upkeep driver (upkeep.go)
+	mark          markState   // the mark driver (mark.go)
 	lastDodge     time.Time
 	diagMu        sync.Mutex // guards portalCast and casts (read from the bot's autopsy)
 	portalCast    PortalCast
@@ -754,7 +755,7 @@ func (f *Fighter) buffPass(ctx context.Context, snap *d2.Snapshot) (cast bool, e
 			}
 			mark := curses[name]
 			if mode == 2 {
-				mark = f.upkeepIsMark(sp)
+				mark = f.upkeepIsMark(sp) || prof.isMarkRow(name)
 			} else if mode == 1 && mark != f.upkeepIsMark(sp) {
 				f.upkeepShadow(sp, "mark", mark, !mark)
 			}
