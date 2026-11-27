@@ -58,7 +58,7 @@ All drills go on the builder long lane in the 23:00 to 07:00 EST window, one `la
 
 Both knobs are still read by code (V grep), so retiring the ledger row first would leave a marked default-0 knob with a retired row; the ledger edit goes in the same PR as the code removal.
 
-### Card `retire-skillcap`: `resource.skillCapPerLevel`
+### Card `retire-skillcap`: `resource.skillCapPerLevel` (retired 2026-11-27, TASK-1055)
 Evidence: V ledger why_off "Kolbot rule not enforced by d2d or game.exe; off until the player model needs it"; enable criteria `U`; no consumer, no scenario. Steps: (1) `internal/points/legal.go`: delete `CodeLevelCap`, the `LevelCap` field and the level-cap check; (2) `internal/points/desk.go` line 38 comment and the field `LevelCap`; (3) `cmd/d2bot/pointswire.go` line 150 `LevelCap:`; (4) `internal/env/tuning_resource.go` line 57 and `internal/resource/tuning.go` (field in the `PointsApi, PointsDecisions, SkillCapPerLevel` list, line 61, and the `k("skillCapPerLevel", ...)` row, line 123); (5) tests: `internal/points/tables_test.go`, `points_test.go`, `internal/bot/kitlevel_test.go`; (6) regenerate `docs/knobs.md`, edit `docs/points.md`, `docs/kitgate.md`; (7) ledger: set the row `"status": "retired"` with a `note`; run `python3 -I tools/darklaunch/check.py`, `go vet` and `go test -p 1 ./internal/points ./internal/resource ./internal/env ./internal/bot ./cmd/d2bot` (whole repo through `labrun`). Size S. Check first (U): a saved tuning file that names the key must still load (unknown key rule of `internal/resource`).
 
 ### Card `retire-farmreset`: `bot.farmReset` (and `farmResetPct`, `farmResetCooldownMin`)
