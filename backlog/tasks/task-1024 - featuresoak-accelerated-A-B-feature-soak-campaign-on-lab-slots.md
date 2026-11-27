@@ -21,6 +21,7 @@ owns:
 exclusive:
   - "d2d-lab-binary"
 contracts: []
+result: "Lab A/B feature soak, pass 1 (1 virtual hour per row, 69 rows, 3 classes x 3 seeds, writes after start 0 in every row; lab only, not verified live): arbiter control families 3 RED (necromancer resupply/leave-game loop, 24 mode-no-exit hits), families 255 NEUTRAL, kit floor tiers NEUTRAL (sorceress gold lower), early route guard GREEN, typed outcomes NEUTRAL, reflex drink GREEN, step executor GREEN on the Cain scenarios, Paladin without Sacrifice and Necromancer defaults not exercised; lockstep speed is about 3x, 24 virtual hours per row did not run"
 ---
 
 ## Description
@@ -33,8 +34,8 @@ Why: TODO. Done when: TODO.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 campaign file, runner and row script exist and plan lists the rows
-- [ ] #2 stage 0 calibration table recorded
-- [ ] #3 per-feature ON vs OFF table with verdicts in docs/probes/feature-soak-2026-11-26.md
-- [ ] #4 how-to-rerun page in the doc
+- [x] #1 campaign file, runner and row script exist and plan lists the rows
+- [x] #2 stage 0 calibration table recorded
+- [x] #3 per-feature ON vs OFF table with verdicts in docs/probes/feature-soak-2026-11-26.md
+- [x] #4 how-to-rerun page in the doc
 <!-- AC:END -->
