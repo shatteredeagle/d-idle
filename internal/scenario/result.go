@@ -49,6 +49,10 @@ type Result struct {
 	Journal string `json:"journal,omitempty"`
 	// Prov records the binaries, host role, load and pace of the run (nil in results written before it existed).
 	Prov *Provenance `json:"prov,omitempty"`
+	// FromSave, SaveRun and SavePort record the earned save the hero started from (pre.from_save), see LedgerRecord.
+	FromSave string `json:"from_save,omitempty"`
+	SaveRun  string `json:"save_run,omitempty"`
+	SavePort string `json:"save_portability,omitempty"`
 	// Faults says which fault set ran and what it injected (nil: no fault proxy).
 	Faults *FaultReport `json:"faults,omitempty"`
 }

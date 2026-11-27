@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"strings"
 	"sync"
+	"time"
 
 	"d2lod-bot/internal/currency"
 	"d2lod-bot/internal/decide"
@@ -90,6 +91,8 @@ type FunConfig struct {
 	OrderLoop *OrderLoopConfig
 	// Unlock turns the unlock ladder on (TASK-153): the engine of the profile (unlock.Open). nil: no ladder, no routes.
 	Unlock *unlock.Engine
+	// Difficulty turns the opt-in difficulty hop section and its POST on (difficultydesk.go); nil: no section, no route.
+	Difficulty *DifficultyConfig
 	// Hall turns the Hall of Fame and the retire question on (TASK-135). StatePath "" keeps the state next to the ledger.
 	Hall *HallConfig
 	// Monsters gives the bestiary its type, attack pattern and resists (TASK-158). nil: cards carry the flavour only.
@@ -121,6 +124,8 @@ type Fun struct {
 	Proposals *ProposalDesk
 	// Unlocks is nil when the unlock ladder is off.
 	Unlocks *Unlocks
+	// Difficulty is nil when the difficulty hop is not wired.
+	Difficulty *DifficultyConfig
 	// Hall is nil when the Hall of Fame is off.
 	Hall *HallDesk
 	// Chronicle is nil unless the ladder has the Chronicle rows (TASK-154).
@@ -223,7 +228,8 @@ func NewFun(c FunConfig) (*Fun, error) {
 		c.Visit = NewVisit("", nil)
 	}
 	ob, err := NewOnboarding(OnboardingConfig{Path: c.OnboardingPath, Hero: func() string { return c.Hub.heroNow().Name },
-		Signals: func() map[string]bool { return onboardingSignals(f.Away) }, Away: c.Visit.awayOK, Art: func() (string, int, int) { return artProgress(f.Art) }})
+		Signals: func() map[string]bool { return onboardingSignals(f.Away) }, Away: c.Visit.awayOK, Art: func() (string, int, int) { return artProgress(f.Art) },
+		Chickens: func() int { return chickenCount(f.Away, time.Now()) }})
 	if err != nil {
 		return nil, err
 	}
@@ -234,6 +240,10 @@ func NewFun(c FunConfig) (*Fun, error) {
 		sec.Register(CodexSectionID, CodexReturnSection(f.CodexSource()))
 	}
 	sec.Register("quiet", QuietSection(c.Hub))
+	if c.Difficulty != nil {
+		f.Difficulty = c.Difficulty
+		sec.Register(DifficultySectionID, DifficultySection(c.Difficulty))
+	}
 	if c.Advice != nil {
 		sec.Register(AdviceSectionID, AdviceSection(c.Advice))
 	}
@@ -846,6 +856,9 @@ func (f *Fun) wrapAnswer(base http.Handler, o AnswerOptions) http.Handler {
 	}
 	if f.Hall != nil {
 		m.Handle(HallPostRoute, f.Hall.PostHandler(o))
+	}
+	if f.Difficulty != nil {
+		m.Handle(DifficultyPostRoute, DifficultyPostHandler(f.Difficulty, o))
 	}
 	if f.Pacts != nil {
 		for _, p := range PactPostRoutes {

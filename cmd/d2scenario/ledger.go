@@ -67,7 +67,7 @@ func appendLine(path string, line []byte) error {
 // come from the runner (shipLedger) only.
 func cmdLedger(args []string, w io.Writer) error {
 	if len(args) == 0 {
-		return fmt.Errorf("usage: ledger status-doc|page-json|check -in ledger.jsonl [-branch B] [-tiers F] [-releases F] [-commit C] [-out file]")
+		return fmt.Errorf("usage: ledger status-doc|page-json|check|release-check -in ledger.jsonl [-branch B] [-tiers F] [-releases F] [-commit C] [-out file]")
 	}
 	sub := args[0]
 	fs := newFlags("ledger " + sub)
@@ -101,6 +101,16 @@ func cmdLedger(args []string, w io.Writer) error {
 			}
 		}
 		fmt.Fprintf(w, "ledger ok: %d lines\n", len(recs))
+		return nil
+	case "release-check":
+		// exit 3 unless the release commit has an EARNED act run (ADR 0027 item 8); from the release after card pgearned
+		runs, err := scenario.ReleaseEarned(recs, *commit)
+		if err != nil {
+			return exitErr{3, err.Error()}
+		}
+		for _, r := range runs {
+			fmt.Fprintf(w, "earned act run: %s (%s, %s)\n", r.Run, r.Class, r.Verdict)
+		}
 		return nil
 	case "status-doc", "page-json":
 		page, err := pgPage(recs, strings.TrimSpace(*branch), *tiersPath, *relPath)

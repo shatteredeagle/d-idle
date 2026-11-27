@@ -31,5 +31,5 @@ Why: TODO. Done when: TODO.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 d2-sme reviews data/supply/profiles.json numbers (healing, mana, portal, gold_carry per profile) and records advice in the doc; advice only, no numbers changed
+- [ ] #1 d2-sme reviews internal/supply/profiles.json numbers (healing, mana, portal, gold_carry per profile) and records advice in the doc; advice only, no numbers changed
 <!-- AC:END -->

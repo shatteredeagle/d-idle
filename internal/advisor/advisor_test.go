@@ -141,3 +141,27 @@ func TestStockAdd(t *testing.T) {
 		t.Errorf("%+v", s)
 	}
 }
+
+// SME review 2026-11-27, confidence medium: an offline Necromancer (ladder knob off) is never advised Spirit, a ladder
+// runeword; with the knob on it is. Bone (not ladder) stays advised either way.
+func TestSpiritSkippedOfflineForNecromancer(t *testing.T) {
+	st := Stock{Runes: spiritRunes()}
+	off, _ := Lines(st, Options{Class: "necromancer", Max: 9})
+	for _, x := range off {
+		if strings.Contains(x, "Spirit") {
+			t.Errorf("Spirit advised offline: %s", x)
+		}
+	}
+	on, _ := Lines(st, Options{Class: "necromancer", Ladder: true, Max: 9})
+	found := false
+	for _, x := range on {
+		found = found || strings.Contains(x, "Spirit")
+	}
+	if !found {
+		t.Errorf("Spirit not advised with the ladder knob on: %v", on)
+	}
+	bone, _ := Lines(Stock{Runes: map[string]int{"r12": 1, "r22": 2}}, Options{Class: "necromancer", Max: 9})
+	if len(bone) == 0 {
+		t.Error("Bone must stay advised offline")
+	}
+}

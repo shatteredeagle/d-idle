@@ -8,6 +8,13 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- necroapply: SME Necromancer data changes (bonespear Teeth/Bone Spear points, mana_heavy, merc doc) <!--sg:agent/necroapply-->
+- town11: townLegacy seam for old town counters, deletion plan (TASK-764 partial) <!--sg:agent/town11-->
+- pgcards2: nightly run set, earned-hero tier, release-check (TASK-754/756 repo side) <!--sg:agent/pgcards2-->
+- smepal: SME Paladin and Sorceress review (docs) <!--sg:agent/smepal-->
+- onboardtour2: tour tips, Help sheet, Now line (TASK-48 partial) <!--sg:agent/onboardtour2-->
+- whirlscen: combat drill scenarios, pre.skills setup field (TASK-1065) <!--sg:agent/whirlscen-->
+- diffgo: go-difficulty ops verb, persisted go, Return screen button (TASK-1061) <!--sg:agent/diffgo-->
 - smenecro: SME Necromancer review (docs) <!--sg:agent/smenecro-->
 - diet: archive 5 finished research reports, docs diet rule (TASK-117/118) <!--sg:agent/diet-->
 - dlvwhirl: Whirlwind move row driver (TASK-734) <!--sg:agent/dlvwhirl-->

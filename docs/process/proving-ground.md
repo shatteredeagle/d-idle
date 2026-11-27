@@ -155,3 +155,12 @@ V live on the builder long lane, lab d2d build devp16 (`--vault-verbs`), bot of 
 | vault.reveal-gold, vault.reveal-gold-short | PENDING | PENDING | not run: `debug paygold` is not in devp16 (devp17), and the bot refuses the payment in a measured run |
 
 Reproduce: `labrun BUILDER --lane long --detach --pull provingground-out -- env PG_D2D_BIN=<devp16 d2d> tools/provingground/run.sh -id <ids, comma list> -class Paladin -seed 11 -parallel 2`.
+
+## 11. The nightly set and earned saves (cards pgnightly and pgearned, 2026-11-27)
+
+- Nightly: `tools/provingground/nightly.json`, `d2scenario nightly check|plan`, `tools/provingground/nightly.sh`; page `docs/process/pg-ops-pgnightly.md`.
+- Earned saves: a scenario may declare `pre.from_save: <milestone>` (`tools/provingground/earned/milestones.json`) instead of setup verbs. `d2scenario validate` refuses it with any setup write, with a field start (the warp is CHEATED) or with CHEATED/IMPOSSIBLE in its provenance, and checks the milestone name. Its setup tag is EARNED, as is a fresh town-start hero with no setup verb at all (before: SETUP-only). `validate` also refuses a scenario whose setup is CHEATED but whose provenance text does not say CHEATED (the provenance rule of the private agent rules).
+- A save is exported only by a GREEN, EARNED run with zero writes after the start on a clean tree (`scenario.NewManifest`); the manifest records the run id, bot commit, d2d hash, the parent save, file hashes and every load check. `SaveManifest.Portability(d2d hash)` answers same-build, verified, unverified or refused; the runner must not use an unverified or refused save (U: whether a save loads unchanged on a newer d2d is the first live check, design 6.3).
+- Ledger lines gain `from_save`, `save_run`, `save_portability`; an EARNED line with writes after the start, or a from_save line that is not EARNED, with no save run or with an unverified save, is refused.
+- Release rule (ADR 0027 item 8, from the release after this card): `d2scenario ledger release-check -in L.jsonl -commit C` exits 3 unless the release commit has a GREEN EARNED T4 act run with zero writes; CHEATED and IMPOSSIBLE runs never enter the release view, so they stay out of the release notes.
+- Not wired yet: `BuildSetup` lists `pre.from_save` as Unsupported, so a run of such a scenario is BLOCKED naming it (never faked) until the runner copies a verified save into the instance. No scenario uses `from_save` yet.

@@ -195,3 +195,19 @@ func PGStatusDoc(p PGPage) string {
 	}
 	return b.String()
 }
+
+// ReleaseEarned is the release rule of ADR 0027 item 8: at least one EARNED act run (a T4 run, GREEN, zero writes after
+// the start) on the release commit. It returns those runs; the error says what is missing. CHEATED and IMPOSSIBLE runs
+// never count and never appear in ReleaseView, so they stay out of the release notes by construction.
+func ReleaseEarned(recs []LedgerRecord, commit string) ([]LedgerRecord, error) {
+	var out []LedgerRecord
+	for _, r := range ReleaseView(recs, commit) {
+		if r.Setup == SetupEarned && r.Tier == TierT4 && r.Verdict == Green && r.WritesN != nil && *r.WritesN == 0 {
+			out = append(out, r)
+		}
+	}
+	if len(out) == 0 {
+		return nil, fmt.Errorf("release %s: no EARNED act run (tier T4, GREEN, writes after start 0) in the ledger", commit)
+	}
+	return out, nil
+}
