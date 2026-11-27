@@ -645,12 +645,12 @@
   },
   {
    "id": "board.park.persist-restart",
-   "title": "A parked chunk stays parked after a restart (Q5, I9)",
+   "title": "A parked chunk (hold_timeout) is still parked after a restart (Q5, I9)",
    "kind": "step",
    "tier": "full",
    "quest": {
-    "quest": "search_for_cain",
-    "chunk": "scroll"
+    "quest": "forgotten_tower",
+    "chunk": "countess"
    },
    "step": {
     "action": "interact",
@@ -668,17 +668,22 @@
     "internal/task/"
    ],
    "pre": {
-    "level": 6,
-    "gold": 5000,
+    "level": 24,
+    "gold": 0,
     "waypoints": [
      1,
      2,
      3
     ],
     "board": {
-     "quest": "search_for_cain",
-     "chunk": "scroll"
-    }
+     "quest": "forgotten_tower",
+     "chunk": "countess"
+    },
+    "belt": [
+     "hp1",
+     "hp1",
+     "hp1"
+    ]
    },
    "trigger": {
     "goals": "reach:30",
@@ -686,10 +691,11 @@
      "quests.board": 1,
      "quests.boardSM": 1,
      "resource.pointsDecisions": 1
-    }
+    },
+    "restart_at_s": 1500
    },
    "budget": {
-    "virtual_min": 30
+    "virtual_min": 100
    },
    "matrix": {
     "classes": [
@@ -702,27 +708,34 @@
     ]
    },
    "provenance": "Hero created fresh, clvl 17 by stat verbs, purse 5000, waypoints Cold Plains to Dark Wood, board records as the scenario says. CHEATED: waypoints and level are SETUP writes (mechanics evidence only, never balance).",
-   "notes": "Needs `restart_at_s` and a hero that dies on the chunk (U).",
+   "notes": "Setup of board.hold.timeout (a short belt and no gold: the hold outlives its budget and parks as hold_timeout at about 60 virtual minutes), then trigger.restart_at_s stops and starts the bot on the same plan file (U: 1500 wall seconds is about 75 virtual minutes at pace 3; tune it from the first run). Pass: the park is stored (state blocked, reason hold_timeout) and survives the restart; the chunk is not started again.",
    "assert": [
     {
+     "kind": "log_line",
+     "pattern": "quest board: hold",
+     "min": 1,
+     "why": "the hold the park comes from was seen before the restart"
+    },
+    {
      "kind": "board",
-     "quest": "search_for_cain",
-     "chunk": "scroll",
+     "quest": "forgotten_tower",
+     "chunk": "countess",
      "state": "blocked",
-     "reason": "died_too_often"
+     "reason": "hold_timeout"
     },
     {
      "kind": "log_line",
-     "pattern": "quest board: starting chunk",
+     "pattern": "quest board: starting chunk forgotten_tower",
      "max": 0,
-     "from_min": 20
+     "from_min": 75,
+     "why": "after the restart the park is kept: the chunk is not started again (the restart drill, TASK-983)"
     },
     {
      "kind": "no_writes"
     }
    ],
    "status": "pending",
-   "pending_reason": "needs a deterministic park to restart after (U): the runner restart exists (bsm9), but no setup parks a chunk on its own; hold_timeout parks at 60 virtual minutes, which a restart scenario of 80 minutes could use"
+   "pending_reason": "bsmprep 2026-11-27: rewritten to take its park from the hold.timeout setup instead of a hero that dies; not run. U: hold.timeout itself stayed RED (kit minima, bsm7 fixed it for restock only), and restart_at_s timing. A scenario fault here is not a finding."
   },
   {
    "id": "board.retry.runs-a-step",

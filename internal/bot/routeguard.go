@@ -438,7 +438,7 @@ const kitProfile = "monastery_road"
 // state machine (quests.boardSM). The guard's constants ask for more healing than a belt with a mana column holds, so a
 // chores trip ended one potion short and the chunk was parked (Proving Ground boardsmrun, hold.restock); the plan is
 // clamped to what the hero can carry and names the line it cannot close.
-func (r *Runner) kitPlanOn() bool { return r.e.Tune.Town.Plan >= 2 || r.e.Tune.Quests.BoardSM != 0 }
+func (r *Runner) kitPlanOn() bool { return r.e.Tune.Town.Plan >= 2 || !r.boardLegacy() }
 
 // kitPlanOf is the town planner's view of the guard kit at stage 2 of the knob town.plan: nil at stage 0 or 1 (the
 // guards keep their constants) or when the planner cannot answer, which is logged once.
