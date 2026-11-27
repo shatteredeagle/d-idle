@@ -67,6 +67,6 @@ Why: TODO. Done when: TODO.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Matrix doc lists every chunk through Act 2 with a verdict
-- [ ] #2 Each RED has a root cause or a named blocker
+- [x] #1 Matrix doc lists every chunk through Act 2 with a verdict
+- [x] #2 Each RED has a root cause or a named blocker
 <!-- AC:END -->
