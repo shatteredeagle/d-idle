@@ -52,6 +52,8 @@ Read-only data: `Runner.Arbiter()` returns the last `Decision` (for the watch AP
 
 `go run ./cmd/d2arbiter [-follow] [-trace] LOG.jsonl` feeds a JSON-lines log (`minute` lines, or `tick` lines: area, kills, xp, chain, objectiveArea, facts) to the arbiter. Without `-follow` the arbiter sees the logged hero (divergences and counters). With `-follow` the simulated hero obeys the arbiter, facts and progress still come from the log, and an intent that ran its estimated cost in place with its reason still holding is reported failed.
 
+Recorded sessions: the bot writes these `tick` lines itself with `bot.tickLogSec` above 0 (default 0); a log with tick lines replays from them only and its minute lines are skipped (docs/design/ticklog-t4.md, card ticklog).
+
 Fixture `internal/arbiter/testdata/darkwood_pingpong.jsonl`: the Dark Wood, camp, Dark Wood, Cold Plains cycle of 2026-11-18 over 12 minutes. V: the area sequence and gaps are the real ones copied from the sandbox log into `internal/bot/flail_test.go`. U: facts (belt 1 under 4, 350 pack gold, a quest step in Dark Wood, no progress) are assumed from docs/probes/treefix3-2026-11-19.md, not logged. Result (V, `TestReplayPingPong`): the chain made 412 area changes; the arbiter, obeying itself, makes 2 (one to town, one back after the back-off), refusing 359 undo trips, each with both reasons in the trace (`testdata/pingpong_replay.golden`). Limit: the log never says whether the town visit helped; a chore that stays wanted is treated as failed after its cost.
 
 ## Measured (V, this branch)
