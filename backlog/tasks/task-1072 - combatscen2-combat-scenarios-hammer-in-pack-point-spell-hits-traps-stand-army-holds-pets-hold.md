@@ -1,10 +1,13 @@
 ---
 id: TASK-1072
-title: 'combatscen2: combat scenarios (hammer-in-pack, point-spell-hits, traps-stand, army-holds, pets-hold)'
-status: Proposed
+title: >-
+  combatscen2: combat scenarios (hammer-in-pack, point-spell-hits, traps-stand,
+  army-holds, pets-hold)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T22:13:00Z'
+updated_date: '2026-11-27T23:18:00Z'
 labels:
   - bot
   - drill

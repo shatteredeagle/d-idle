@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- docsweep: stale citations, roadmap refresh, 2 h wording <!--sg:agent/docsweep-->
 - combattelem: fight-end aim/stance/minion summaries, skill-id test (TASK-1073) <!--sg:agent/combattelem-->
 - nightcheck: night plan preflight script and corrected launch commands (TASK-1075) <!--sg:agent/nightcheck-->
 - mercaura: per-class per-difficulty merc aura data, HirePolicy takes the class (TASK-1074) <!--sg:agent/mercaura-->
