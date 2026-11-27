@@ -49,7 +49,6 @@
 | necroteeth | proposed | - | `internal/combat/classdata/profiles.json`<br>`internal/combat/necro_test.go`<br>`internal/leveler/mainattack_test.go` | - |
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
 | deploy88-ledger | proposed | - | `data/darklaunch.json` | - |
-| skillhand | in-progress | - | `internal/d2dctl/verbs.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dctl/skillhand_test.go`<br>`internal/d2dctl/client_test.go`<br>`internal/d2dctl/combat_verbs_test.go`<br>`internal/d2dinput/castverbs_test.go`<br>`internal/d2dinput/controller_test.go`<br>`internal/d2dcombat/castverbs_test.go`<br>`internal/d2dcombat/input_test.go`<br>`docs/d2dctl.md` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
