@@ -22,6 +22,7 @@ owns:
   - "internal/d2dcombat/input.go"
 exclusive: []
 contracts: []
+result: "Not verified live (offline tests only). A build table skill entry may carry a quest key; such a point is bought only once the hero holds more skill points than its levels grant (Have.QuestPts from hard tree points plus unspent), so a missing Den never delays later rows and a granted bonus point is spent at once. Zealot-lite rows: clvl 4 Might, row 5 Might tagged den_of_evil, row 16 Zeal plus Holy Fire tagged radament. On d2d a right-hand attack skill with no hotkey yet is cast by its id (Teeth learned mid-game no longer waits for the next binding); Zeal was already swung by id. Build-specific: only the zealot-lite table data; other tables that fold a quest point into a row (paladin normal30 v2 row 5 and others) are not tagged yet."
 ---
 
 ## Description
@@ -39,5 +40,3 @@ Why: live 2026-11-27 the sandbox zealot-lite Paladin (Doofer) killed 4954 monste
 - [x] #3 On the d2d swinger backend the main attack is chosen by skill id from the profile band (Attack before Zeal is learned, Zeal from then), tested on Paladin and Necromancer Teeth
 - [ ] #4 Live: a fresh zealot-lite Paladin logs last_skill=Zeal at kills from clvl 12
 <!-- AC:END -->
-
-result: Not verified live (offline tests only). A build table skill entry may carry a quest key; such a point is bought only once the hero holds more skill points than its levels grant (Have.QuestPts from hard tree points plus unspent), so a missing Den never delays later rows and a granted bonus point is spent at once. Zealot-lite rows: clvl 4 Might, row 5 Might tagged den_of_evil, row 16 Zeal plus Holy Fire tagged radament. On d2d a right-hand attack skill with no hotkey yet is cast by its id (Teeth learned mid-game no longer waits for the next binding); Zeal was already swung by id. Build-specific: only the zealot-lite table data; other tables that fold a quest point into a row (paladin normal30 v2 row 5 and others) are not tagged yet.
