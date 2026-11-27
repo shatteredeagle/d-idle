@@ -185,6 +185,7 @@ func (r *Runner) recoveryAreaBase(s *d2.Snapshot, ban map[int]bool) (int, bool) 
 	if r.denKitShort(s) {
 		ex[areaDenOfEvil] = true // a dungeon needs a potion buffer
 	}
+	r.recoveryPoorExclude(s, diff, ex)
 	if diff == "normal" && s.Player.Act == 0 && r.e.Tune.Resource.RecoveryXPPick != 0 {
 		if a, ok := r.recoveryXPArea(s, ex); ok {
 			return a, true

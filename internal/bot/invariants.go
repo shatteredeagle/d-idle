@@ -265,7 +265,7 @@ func (m *invMon) tick(f invFacts) []invHit {
 			hit(r.Name, "life=%d%% min=%d%% area=%d", f.lifePct, r.Pct, f.area)
 		}
 		if f.kitKnown && len(f.kitMissing) > 0 {
-			hit("field-entry-no-kit", "missing=%s area=%d", strings.Join(f.kitMissing, ","), f.area)
+			hit("field-entry-no-kit", "missing=%s area=%d gold=%d", strings.Join(f.kitMissing, ","), f.area, f.gold)
 		}
 	}
 

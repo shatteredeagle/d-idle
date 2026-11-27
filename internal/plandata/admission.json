@@ -27,7 +27,7 @@
     }
   ],
   "questWalk": {"evidence": 1, "evidence_ref": "single incident: needs seed set", "fromLevel": 5, "belowLevel": 15, "healing": 2, "portal": 1},
-  "poverty": {"evidence": 1, "evidence_ref": "single incident: needs seed set", "noPotionGap": 3, "fromLevel": 8},
+  "poverty": {"evidence": 1, "evidence_ref": "single incident: needs seed set", "noPotionGap": 3, "fromLevel": 8, "recoveryFromLevel": 1, "recoveryEvidence": "Doofer clvl 4, 15 gold, belt 0, killed by Fallen in Cold Plains while Recovery: farming gold (deaths.jsonl 2026-11-26 23:35 EST); single incident: needs seed set"},
   "kitFloor": {"evidence": 1, "evidence_ref": "single incident: needs seed set", "potionsBelow": 4, "fromLevel": 8,
     "tiers": [{"evidence": 1, "evidence_ref": "single incident: needs seed set (Questy 2026-11-26 poverty deadlock: 3 potions, gold 14, only Blood Moor open at 1.4 gold per minute, 106 refusals)", "potionsAtLeast": 2, "fields": 2, "farBelow": 6, "farFromLevel": 10}]},
   "arrival": {"evidence": 1, "evidence_ref": "Claw Viper Temple stand-in met 19 to 21 hostiles within 12 s of arriving and died, lab runs 20261126-110921 series and the act2temple run (CHEATED setup, mechanics only): needs seed set", "areas": [56, 57, 58, 60, 61, 62, 63, 64], "crowdN": 14, "radius": 8, "withinSec": 60, "lifePct": 100},
