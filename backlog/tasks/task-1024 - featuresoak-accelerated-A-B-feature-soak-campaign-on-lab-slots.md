@@ -22,7 +22,7 @@ owns:
 exclusive:
   - "d2d-lab-binary"
 contracts: []
-result: "Lab A/B feature soak, pass 1 (1 virtual hour per row, 69 rows, 3 classes x 3 seeds, writes after start 0 in every row; lab only, not verified live): arbiter control families 3 RED (necromancer resupply/leave-game loop, 24 mode-no-exit hits), families 255 NEUTRAL, kit floor tiers NEUTRAL (sorceress gold lower), early route guard GREEN, typed outcomes NEUTRAL, reflex drink GREEN, step executor GREEN on the Cain scenarios, Paladin without Sacrifice and Necromancer defaults not exercised; lockstep speed is about 3x, 24 virtual hours per row did not run"
+result: "Lab A/B feature soak (lab only, not verified live). Pass 1 is mechanics-only (heroes had no class skills). Pass 2, 64 of 69 rows of 1 virtual hour, writes after start 0: no feature has a hard invariant hit ON; arbiter families 255 RED on one watchdog hang (busy loop in the hostile check), families 3 weak RED on Necromancer xp, reflex drink green on safety with more potion spend, kit floor tiers, early route guard, typed outcomes and Paladin without Sacrifice neutral, Necromancer defaults not run, step executor green on the Cain scenarios"
 ---
 
 ## Description

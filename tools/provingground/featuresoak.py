@@ -192,8 +192,8 @@ def cmd_report(c, a):
     L.append("|---|---|---|---|---|---|---|---|---|---|---|")
     for f in c["features"]:
         for cl in f.get("classes", list(c["classes"])):
-            on = [r for (arm, k, s), r in R.items() if arm == f["on"] and k == cl and r["minutes"] > 0]
-            off = [r for (arm, k, s), r in R.items() if arm == f["off"] and k == cl and r["minutes"] > 0]
+            on = [r for (arm, k, s), r in R.items() if arm == f["on"] and k == cl and r["minutes"] > 0 and r["writes"] is not None]
+            off = [r for (arm, k, s), r in R.items() if arm == f["off"] and k == cl and r["minutes"] > 0 and r["writes"] is not None]
             if not on or not off:
                 L.append("| %s | %s | %d/%d | no data | | | | | | | NO-DATA |" % (f["name"], cl, len(on), len(off))); continue
             g = lambda rs, k: [x[k] for x in rs]
@@ -205,7 +205,7 @@ def cmd_report(c, a):
             def worse(key, sign):  # seeds present in both arms where ON is worse than OFF (sign -1: lower is worse, +1: higher is worse)
                 d = []
                 for (arm, k, sd), r in R.items():
-                    if arm == f["on"] and k == cl and r["minutes"] > 0 and (f["off"], cl, sd) in R and R[(f["off"], cl, sd)]["minutes"] > 0:
+                    if arm == f["on"] and k == cl and r["minutes"] > 0 and (f["off"], cl, sd) in R and R[(f["off"], cl, sd)]["minutes"] > 0 and r["writes"] is not None and R[(f["off"], cl, sd)]["writes"] is not None:
                         d.append(sign * (r[key] - R[(f["off"], cl, sd)][key]))
                 return sum(1 for x in d if x > 0), len(d)
             wx, wn = worse("xph", -1); wg, _ = worse("goldh", -1); wd, _ = worse("deaths", 1)
