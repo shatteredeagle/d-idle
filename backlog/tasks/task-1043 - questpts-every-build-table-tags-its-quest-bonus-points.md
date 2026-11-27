@@ -1,10 +1,11 @@
 ---
 id: TASK-1043
 title: 'questpts: every build table tags its quest bonus points'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T11:54:00Z'
+updated_date: '2026-11-27T12:17:00Z'
 labels:
   - bot
   - chore
