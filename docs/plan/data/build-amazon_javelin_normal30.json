@@ -1,6 +1,7 @@
 {
  "build": "amazon_javelin_normal30",
  "class": "amazon",
+ "combat": "javelin",
  "schema": "per-clvl allocation, same shape as build-paladin-normal30.json (leveler.ParseBuild). main_attack: extra, for combat: skill to use as main attack per clvl range, weapon says which equipped weapon type it needs ('any' = none). Quest points (Den, Radament, Izual) are not in the rows (rows count level points only): an unspent quest point pulls the next rows forward.",
  "tags": "Skills: U (own design; V only that Poison Javelin is Maxroll's clvl 6-10 skill in the Act 1 leveling guide https://maxroll.gg/d2/guides/amazon-leveling-guide, fetched 2026-10-29, and Lightning Bolt requires Poison Javelin at clvl 12, V skills.txt). Rows 2-5 are empty (points saved) and row 6 spends 5 points, because Poison Javelin unlocks at clvl 6 (V reqlevel). No weapon swap needed: javelins only. Javelins are a stack with tiny durability (V smoke-amazon: start Javelin max stack 60, durability 2) so restock is part of the plan (docs/gear.md). Stats: U (Vit, then 3 Str 2 Dex per level 12-16; this does NOT reach Maiden Javelin str 33 / dex 47, V weapons.txt, so plain Javelin/Pilum stacks are used in Normal). Prerequisites checked against skills.txt (V Patch_D2.mpq).",
  "respec": {

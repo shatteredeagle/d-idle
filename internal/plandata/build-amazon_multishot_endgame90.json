@@ -14,13 +14,13 @@
    "from_clvl": 2
   },
   {
-   "key": "F2",
+   "key": "F3",
    "skill": "Multiple Shot",
    "hand": "right",
    "from_clvl": 6
   },
   {
-   "key": "F3",
+   "key": "F7",
    "skill": "Guided Arrow",
    "hand": "right",
    "from_clvl": 18
@@ -32,7 +32,7 @@
    "from_clvl": 30
   },
   {
-   "key": "F5",
+   "key": "F8",
    "skill": "Dopplezon",
    "hand": "right",
    "from_clvl": 24

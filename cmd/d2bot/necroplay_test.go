@@ -12,7 +12,7 @@ import (
 )
 
 // Card necroepic: every plan table of a class resolves to a combat profile whose layout has a key for each skill the
-// table uses as a main attack (a skill without a key is never cast: the corpse-explosion bug of card necroaudit). The
+// table uses as a main attack (a skill without a key is never cast: the corpse-explosion bug of card necroaudit). It runs over every class (card classkeys). The
 // rule (a key, or a band that attacks with the skill) is data-driven, so it runs over the Necromancer tables and over a second class (Paladin) alike.
 func TestMainAttackSkillsHaveAKey(t *testing.T) {
 	files, _ := filepath.Glob(filepath.Join("..", "..", "internal", "plandata", "build-*.json"))
@@ -33,7 +33,7 @@ func TestMainAttackSkillsHaveAKey(t *testing.T) {
 			continue
 		}
 		c, ok := classByName(b.Class)
-		if !ok || (c != d2.Necromancer && c != d2.Sorceress) { // other classes: see docs/classes/necromancer-gap-2026-11-27.md
+		if !ok {
 			continue
 		}
 		cp := planForClass(c, b.Build, 30, nil)
@@ -51,7 +51,7 @@ func TestMainAttackSkillsHaveAKey(t *testing.T) {
 			t.Errorf("%s: a Necromancer table without a combat line fights with the class default layout", b.Build)
 		}
 		for _, m := range b.MainAttack {
-			if m.Skill == "Attack" || m.Skill == "" {
+			if m.Skill == "Attack" || m.Skill == "Throw" || m.Skill == "" { // the generic attacks (capabilities.json "generic") are the weapon's basic attack, no key
 				continue
 			}
 			if !inLayoutOrBand(pr, m.Skill) {
