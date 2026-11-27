@@ -29,7 +29,7 @@ owns:
 exclusive: []
 contracts: []
 allow-adr: true
-result: "Built offline and Proving Ground GREEN on the devp29 binary (swap and 10-piece wearset, Paladin 11, builder lab). NOT verified live on the sandbox image (needs devp29); Sorceress 3 not run."
+result: "Built offline and Proving Ground GREEN on the devp29 binary (swap and 10-piece wearset, Paladin 11, builder lab). NOT verified live on the sandbox image (needs devp29); Sorceress 3 not run. closecards3 Remaining (live): #5 need the live game, a browser or a worker-host run; not verified here."
 ---
 
 ## Description

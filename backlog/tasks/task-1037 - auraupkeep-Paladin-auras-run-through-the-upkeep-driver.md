@@ -18,7 +18,7 @@ owns:
   - "internal/combat/"
 exclusive: []
 contracts: []
-result: "Offline only, not verified live. keepAura now runs under combat.deliveryUpkeep: in mode 1 the old aura code acts and the driver logs each disagreement once (upkeep shadow, what aura or aura recheck); in mode 2 the driver decides whether the profile chosen aura is up (right hand holds it, then the active aura read, then the learned Skills.txt aurastate) and re-picks it at once when it dropped between checks instead of waiting for combat.auraCheckMs. The aura choice stays the profile ladder. Tests cover Paladin Might and Holy Fire in modes 0, 1 and 2, the learned state fallback and a silent Sorceress. The live shadow run is open."
+result: "Offline only, not verified live. keepAura now runs under combat.deliveryUpkeep: in mode 1 the old aura code acts and the driver logs each disagreement once (upkeep shadow, what aura or aura recheck); in mode 2 the driver decides whether the profile chosen aura is up (right hand holds it, then the active aura read, then the learned Skills.txt aurastate) and re-picks it at once when it dropped between checks instead of waiting for combat.auraCheckMs. The aura choice stays the profile ladder. Tests cover Paladin Might and Holy Fire in modes 0, 1 and 2, the learned state fallback and a silent Sorceress. The live shadow run is open. closecards3 Remaining (live): #3 need the live game, a browser or a worker-host run; not verified here."
 ---
 
 ## Description
