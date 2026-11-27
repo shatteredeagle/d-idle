@@ -168,3 +168,7 @@ Next blocker, for the next card:
 - The scenario's record 14 bit 0x0001 assertion needs the hand-in; until then it cannot pass.
 
 Run output is kept on the worker host under the lab dir `act2drill6-out/results`.
+
+## Fix for the Tyrael blocker (card tyrael, offline)
+
+Decision: the field-NPC path. Tyrael stands in Duriel's Lair after the kill (S, internal/quest/act2.go), so going to town first would leave him behind. `town.fieldNPCAreas` (internal/town/npc.go) is a data row, class 251 in area 73, that lets the opener skip the in-town guard; every other class still gets ErrNotInTown outside a town. The scenario assertion on record 14 now reads 0x0020 (the kill, V drill 5 and 6) plus 0x2000 (Tyrael's line, S); the old 0x0001 is Meshif's line and is not reachable in this scenario. Not run live: the rerun is `tools/live.sh tyrael provingground -id drill.act2.duriel.stepexec -class Paladin -seed 11 -repeat 3 -parallel 1` on a hidden instance in the lab window (the exact flags of the sixth run). U until then: whether the walk to Tyrael in the lair works and whether bit 13 is what he sets.
