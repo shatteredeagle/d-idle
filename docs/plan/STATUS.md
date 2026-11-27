@@ -40,7 +40,6 @@
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | diffbaal | proposed | - | `internal/quest/baaldone.go`<br>`internal/quest/baaldone_test.go` | - |
-| townwire | proposed | - | `docs/knobs.md`<br>`cmd/d2bot/townplanwire.go`<br>`cmd/d2bot/townplanwire_test.go`<br>`cmd/d2bot/ladder.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`internal/bot/shadow.go`<br>`internal/bot/upkeepwire_test.go`<br>`internal/town/planshadow.go`<br>`internal/town/planview_test.go`<br>`internal/town/town.go`<br>`internal/town/route.go`<br>`docs/arbiter.md`<br>`backlog/tasks/task-765 - town12-SME-review-of-the-supply-profile-numbers-advice-only.md` | - |
 | releasenotes-next | proposed | - | `docs/releases/next-draft.md` | - |
 | logsink | proposed | - | `internal/logx`<br>`cmd/d2bot/main.go`<br>`cmd/d2bot/opscmd.go`<br>`cmd/d2bot/logsink_test.go`<br>`docs/ops` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |

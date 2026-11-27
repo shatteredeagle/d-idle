@@ -1,10 +1,11 @@
 ---
 id: TASK-1064
 title: 'townwire: bind /api/townplan in d2bot, upkeep sources behind the chores bit'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T21:12:00Z'
+updated_date: '2026-11-27T22:24:00Z'
 labels:
   - bot
   - feature

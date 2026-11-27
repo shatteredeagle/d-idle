@@ -129,32 +129,26 @@ docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-extras.jsonl.gz  gaterun  gate
 .github/workflows/tester-image.yml  credit-runner  ghcrpublish
 backlog/tasks/task-726 - dlv-cast-verbs-input-caps-cast-unit-cast-point-cast-hold.md  credit-runner  inputl3
 backlog/tasks/task-765 - town12-SME-review-of-the-supply-profile-numbers-advice-only.md  credit-runner  town11
-backlog/tasks/task-765 - town12-SME-review-of-the-supply-profile-numbers-advice-only.md  credit-runner  townwire
 cmd/d2bot/acts_test.go  credit-runner  qdmatrix
 cmd/d2bot/adapters.go  credit-runner  cainfix3
 cmd/d2bot/agencydrive_test.go  credit-runner  agencyp1b
 cmd/d2bot/agencywire.go  credit-runner  agencyp1b
 cmd/d2bot/behaviors.go  credit-runner  campaign1
 cmd/d2bot/d2dbackend.go  credit-runner  campaign1
-cmd/d2bot/d2dbackend.go  credit-runner  townwire
 cmd/d2bot/d2dwire.go  credit-runner  agencyp1b
 cmd/d2bot/hotkeydrift_test.go  live-agent  epic-class-necromancer
 cmd/d2bot/invverbs.go  credit-runner  uib9
 cmd/d2bot/invverbs_test.go  credit-runner  uib9
 cmd/d2bot/journeywire.go  credit-runner  campaign1
 cmd/d2bot/ladder.go  credit-runner  pgtaps
-cmd/d2bot/ladder.go  credit-runner  townwire
 cmd/d2bot/live.go  credit-runner  agencyp1b
 cmd/d2bot/live.go  credit-runner  campaign1
-cmd/d2bot/live.go  credit-runner  townwire
 cmd/d2bot/logsink_test.go  credit-runner  logsink
 cmd/d2bot/main.go  credit-runner  logsink
 cmd/d2bot/necroplay_test.go  live-agent  epic-class-necromancer
 cmd/d2bot/opscmd.go  credit-runner  logsink
 cmd/d2bot/task.go  credit-runner  qdmatrix
 cmd/d2bot/task_test.go  credit-runner  qdmatrix
-cmd/d2bot/townplanwire.go  credit-runner  townwire
-cmd/d2bot/townplanwire_test.go  credit-runner  townwire
 cmd/d2scenario/  credit-runner  arbmig
 cmd/d2scenario/ledger.go  credit-runner  pgearned
 cmd/d2scenario/ledger.go  credit-runner  pgpage
@@ -182,7 +176,6 @@ deploy/d2d-container/context.sh  credit-runner  ghcrpublish
 deploy/d2d-container/tester_image_test.go  credit-runner  ghcrpublish
 docs/arbiter.md  credit-runner  arbmig
 docs/arbiter.md  credit-runner  ticklog
-docs/arbiter.md  credit-runner  townwire
 docs/away-drill.md  live-agent  awaydrill
 docs/backlog-howto.md  credit-runner  dietrule
 docs/campaign.md  credit-runner  campaign1
@@ -223,7 +216,6 @@ docs/inventory-actions.md  credit-runner  campaign1
 docs/knobs.md  credit-runner  arbmig
 docs/knobs.md  credit-runner  cainfix3
 docs/knobs.md  credit-runner  dlv-upkeep-state
-docs/knobs.md  credit-runner  townwire
 docs/onboarding-tour.md  credit-runner  onboardtour
 docs/onboarding.md  credit-runner  reconnectux
 docs/ops  credit-runner  logsink
@@ -302,12 +294,10 @@ internal/bot/runner.go  credit-runner  campaign1
 internal/bot/runner.go  credit-runner  fieldstate
 internal/bot/shadow.go  credit-runner  arbmig
 internal/bot/shadow.go  credit-runner  ticklog
-internal/bot/shadow.go  credit-runner  townwire
 internal/bot/state.go  credit-runner  fieldstate
 internal/bot/task.go  credit-runner  boardmoderace
 internal/bot/ticklog.go  credit-runner  ticklog
 internal/bot/ticklog_test.go  credit-runner  ticklog
-internal/bot/upkeepwire_test.go  credit-runner  townwire
 internal/bot/waypoints.go  credit-runner  boardmoderace
 internal/campaign/  credit-runner  campaign1
 internal/combat/  credit-runner  cainfix3
@@ -439,8 +429,6 @@ internal/town  credit-runner  town11
 internal/town  credit-runner  town5
 internal/town/chores.go  credit-runner  inputl4
 internal/town/chores.go  credit-runner  townflip
-internal/town/planshadow.go  credit-runner  townwire
-internal/town/planview_test.go  credit-runner  townwire
 internal/town/portalverb.go  credit-runner  inputl3
 internal/town/portalverb_export_test.go  credit-runner  inputl3
 internal/town/portalverb_export_test.go  credit-runner  inputl4
@@ -449,12 +437,10 @@ internal/town/portalverb_unit_test.go  credit-runner  inputl3
 internal/town/portalverb_unit_test.go  credit-runner  inputl4
 internal/town/repairverb.go  credit-runner  inputl4
 internal/town/repairverb_test.go  credit-runner  inputl4
-internal/town/route.go  credit-runner  townwire
 internal/town/sellplan.go  credit-runner  townflip
 internal/town/sellplan_test.go  credit-runner  townflip
 internal/town/shop.go  credit-runner  townflip
 internal/town/town.go  credit-runner  townflip
-internal/town/town.go  credit-runner  townwire
 internal/town/trip.go  credit-runner  inputl3
 internal/watch  credit-runner  town9
 internal/watch/areamap_test.go  credit-runner  uis6
