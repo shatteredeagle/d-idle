@@ -67,6 +67,12 @@ func (i *Input) CastAt(hotkey string, w input.Point) error {
 	if !ok {
 		return i.Controller.CastAt(hotkey, w)
 	}
+	return i.CastSkill(id, w)
+}
+
+// CastSkill casts skill id at w like CastAt, with no hotkey: a skill learned after the last BindSkills (a point spent
+// mid-game by the allocator) is cast by its id at once instead of waiting for the next game's binding (palzeal).
+func (i *Input) CastSkill(id int, w input.Point) error {
 	unit, _ := i.unitNear(w, 1, false)
 	c := input.Cast{Skill: id, At: w, Unit: unit}
 	return i.send(c, func() error { return i.Controller.Cast(id, w, unit) }, false)
