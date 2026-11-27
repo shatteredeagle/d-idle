@@ -185,16 +185,7 @@ func (r *Runner) areaGuardWhy(s *d2.Snapshot, a int) string {
 	case task.TowerGuarded(task.Area(a)):
 		return r.towerGuardWhy(s)
 	}
-	if why := r.earlyRouteWhy(s, a); why != "" {
-		return why
-	}
-	if why := r.povertyAreaWhy(s, a); why != "" {
-		return why
-	}
-	if why := r.kitFloorWhy(s, a); why != "" {
-		return why
-	}
-	return r.leanEntryWhy(s, a)
+	return r.admitEnter(s, a)
 }
 
 // areaLeaveWhy is areaGuardWhy for a hero that already stands in area a: the road guard uses its mid-route verdict.
@@ -515,7 +506,7 @@ func (r *Runner) fillEarly(w *task.World) {
 	if s != nil && s.Player != nil {
 		w.FirstField = task.Area(r.firstFieldArea(s))
 	}
-	if why, kit := r.questWalkCheck(s); why != "" {
+	if why, kit := r.admitLeave(s); why != "" {
 		w.WalkBlocked = task.EarlyBlock{Why: why, KitOnly: kit}
 	}
 	for _, rt := range rs {

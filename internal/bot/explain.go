@@ -50,7 +50,9 @@ type ExplainView struct {
 	Arbiter   string            `json:"arbiter,omitempty"` // the shadow's last choice, when the shadow runs
 	// ArbiterDecision is the same choice as a record: intent, family, reason and what it displaced.
 	ArbiterDecision *arbiter.Explained `json:"arbiterDecision,omitempty"`
-	Journey         string             `json:"journey,omitempty"` // why the quest journey is blocked now
+	// Admission is the admission function's line (admission.go): mode, agreement with the old judges, last refusal with its row, need and wake.
+	Admission AdmissionExplain `json:"admission"`
+	Journey   string           `json:"journey,omitempty"` // why the quest journey is blocked now
 	// Invariants are the monitor counters with a since time; the Hard ones are what the flip watcher reverts on.
 	Invariants []InvCounter `json:"invariants"`
 	// Knobs are the live values of every knob (set by the wiring, not by the runner); tools/flip --verify reads the flipped one.
@@ -177,6 +179,7 @@ func (r *Runner) Explain() ExplainView {
 		v.Refusals = v.Refusals[:explainRefMax]
 	}
 	v.Invariants = r.inv.Counters()
+	v.Admission = r.admissionExplain()
 	r.mu.Lock()
 	v.Journey = r.journeyWhy
 	r.mu.Unlock()
