@@ -21,7 +21,7 @@ func TestCmdSkillHandAndUnitAsD2dReadsThem(t *testing.T) {
 	}
 	for _, o := range casts {
 		if err := c.CmdSkill(ctx(), 36, 13, 29.5, o); err != nil {
-			t.Fatal(err)
+			t.Errorf("%+v: %v", o, err)
 		}
 	}
 	want := []fake.UseSkill{
@@ -34,9 +34,9 @@ func TestCmdSkillHandAndUnitAsD2dReadsThem(t *testing.T) {
 	}
 	got := srv.Skills()
 	if len(got) != len(want) {
-		t.Fatalf("got %d casts %+v", len(got), got)
+		t.Errorf("got %d casts %+v", len(got), got)
 	}
-	for i := range want {
+	for i := range min(len(got), len(want)) {
 		if got[i] != want[i] {
 			t.Errorf("cast %d %+v: d2d reads %+v, want %+v (line %q)", i, casts[i], got[i], want[i], srv.Lines()[i])
 		}

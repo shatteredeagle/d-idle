@@ -389,10 +389,8 @@ func (s *Server) cmd(f []string) (string, bool, bool) {
 		}
 		return "ok\n", false, false
 	case "skill":
-		if u, ok := ParseSkill(f); ok {
-			s.mu.Lock()
+		if u, ok := ParseSkill(f); ok { // handle holds s.mu
 			s.skills = append(s.skills, u)
-			s.mu.Unlock()
 		}
 		return "ok\n", false, false
 	case "pickup", "resurrect", "stat", "skillpt", "select", "belt", "use":
