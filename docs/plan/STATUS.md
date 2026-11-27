@@ -158,7 +158,7 @@
 | pgtaps | in-progress | - | `cmd/d2bot/ladder.go`<br>`cmd/d2scenario/tap.go`<br>`internal/scenario/taps.go`<br>`cmd/d2scenario/run.go`<br>`cmd/d2scenario/tap_test.go`<br>`internal/scenario/result.go` | - |
 | pgclock | proposed | - | `cmd/d2bot/d2dbackend.go`<br>`internal/bot/farm.go`<br>`internal/goals/clock_test.go`<br>`internal/bot/farmclock_test.go`<br>`internal/d2denv/reader.go`<br>`internal/d2denv/recent_test.go`<br>`internal/d2denv/env.go`<br>`cmd/d2bot/goalsclock_test.go`<br>`docs/d2d-determinism.md` | - |
 | fid-probe-regen-speed | deferred | - | `docs/probes/fid/fid-probe-regen-speed.md` | - |
-| pgselfcheck | proposed | - | `internal/scenario/hero/selfcheck.go`<br>`cmd/d2scenario/validate.go` | - |
+| pgselfcheck | proposed | - | `internal/scenario/hero/selfcheck.go`<br>`internal/scenario/hero/selfcheck_test.go`<br>`cmd/d2scenario/validate.go`<br>`cmd/d2scenario/validate_test.go`<br>`cmd/d2scenario/cmds.go`<br>`cmd/d2scenario/run.go` | - |
 | pgpage | proposed | - | `docs/process/proving-ground-status.md`<br>`tools/provingground/status_doc.sh`<br>`internal/scenario/pgpage.go`<br>`internal/scenario/pgpage_test.go`<br>`cmd/d2scenario/ledger.go`<br>`cmd/d2scenario/ledger_test.go`<br>`cmd/d2scenario/main.go`<br>`docs/probes/provingground-act1more-2026-11-20.md`<br>`docs/probes/provingground-act1next-2026-11-20.md`<br>`docs/probes/provingground-cain-2026-11-19.md`<br>`docs/probes/provingground-cainchain-2026-11-20.md`<br>`docs/probes/provingground-cainfix3-2026-11-19.md`<br>`docs/probes/provingground-countess-2026-11-20.md`<br>`docs/probes/provingground-pgfix4-2026-11-20.md`<br>`docs/probes/provingground-run-2026-11-19.md` | - |
 | mgonejob | proposed | - | `docs/process/pg-ops-mgonejob.md` | - |
 | pgnightly | proposed | - | `docs/process/pg-ops-pgnightly.md`<br>`tools/provingground/nightly.sh` | - |
@@ -245,14 +245,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 0b82c29ec 11-27 07:32 `Merge agent/pgselfcheck: Merge branch 'main' into pgselfcheck` (pgselfcheck)
+- 18c05eb97 11-27 07:31 `Merge branch 'main' into pgselfcheck` (-)
+- 41692595c 11-27 07:28 `Merge agent/act2drill4: Merge branch 'main' into stepexec1` (act2drill4)
+- 3a0e8f864 11-27 07:27 `Merge branch 'main' into stepexec1` (-)
 - 808277b83 11-27 07:06 `Merge agent/questpts: questpts: card owns as directories` (questpts)
 - 7288badbe 11-27 06:37 `Merge agent/placefix3: Merge branch 'main' into placefix` (placefix3)
 - 44412dbb8 11-27 06:35 `Merge branch 'main' into placefix` (-)
 - c01bdcf8f 11-27 06:29 `Merge agent/act2drill3: Merge branch 'main' into stepexec1` (act2drill3)
 - c857d85d0 11-27 06:27 `Merge branch 'main' into stepexec1` (-)
 - 65263cf51 11-27 06:22 `Merge agent/palzeal: palzeal: owns the leveler directory` (palzeal)
-- 09f065a32 11-27 05:18 `Merge agent/placefix2: Merge branch 'main' into placefix` (placefix2)
-- 488cf96cc 11-27 05:16 `Merge branch 'main' into placefix` (-)
-- 640cb0c41 11-27 05:06 `Merge agent/act2drill2: act2drill2: card result for the Duriel rerun` (act2drill2)
-- d2ce0e875 11-27 04:42 `Merge agent/aimpoint: Merge branch 'main' into dlv-aim-point` (aimpoint)
 <!-- statusgen:end -->
