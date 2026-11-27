@@ -49,9 +49,6 @@
 | placefix | proposed | - | `internal/questboard/`<br>`internal/bot/questboard.go`<br>`data/questboard/act2.json`<br>`tools/provingground/scenarios/stepexec-act2.json`<br>`tools/provingground/scenarios/questdrill.json`<br>`internal/scenario/placefix_test.go`<br>`docs/questboard.md`<br>`internal/task/act1.go`<br>`internal/task/act2.go`<br>`internal/task/placefix_test.go`<br>`internal/d2dinput/controller.go`<br>`internal/d2dinput/placefix_test.go`<br>`internal/d2dctl/parse.go`<br>`internal/d2dctl/verbs.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dsrc/items.go`<br>`internal/d2dsrc/source_test.go` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | vaultperf | proposed | - | `internal/watch`<br>`internal/watch/web`<br>`internal/vaultkeep`<br>`internal/vault` | - |
-| charmvault | proposed | - | `internal/charms`<br>`internal/vaultkeep`<br>`internal/lootrules`<br>`internal/town/stash.go`<br>`internal/watch`<br>`cmd/d2bot/vaultequip.go`<br>`cmd/d2bot/vaultkeep.go`<br>`docs/charms.md` | - |
-| skillcapretire | proposed | - | `internal/points`<br>`internal/resource`<br>`internal/env/tuning_resource.go`<br>`cmd/d2bot/pointswire.go`<br>`cmd/d2bot/resource_test.go`<br>`data/darklaunch.json`<br>`docs/points.md`<br>`docs/knobs.md`<br>`docs/process/points-verbs-devp14.md` | - |
-| act2chunks | proposed | - | `data/questspec/act2.json`<br>`internal/bot/stepexec.go`<br>`internal/bot/stepexec_act2_test.go`<br>`internal/bot/stepexec_act2chunks_test.go`<br>`internal/bot/task.go`<br>`internal/questspec/`<br>`tools/provingground/scenarios/stepexec-act2chunks.json`<br>`tools/provingground/scenarios/tiers.json`<br>`docs/design/stepexec-p9.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | returnmock | proposed | - | `docs/research/mocks/return.html`<br>`docs/research/return-screen.md` | - |
@@ -126,7 +123,6 @@
 | cainfix3 | proposed | - | `cmd/d2bot/adapters.go`<br>`data/questboard/act1.json`<br>`docs/combat.md`<br>`docs/knobs.md`<br>`docs/questboard.md`<br>`internal/bot/`<br>`internal/combat/`<br>`internal/env/tuning_combat.go`<br>`internal/questboard/def.go`<br>`internal/task/banote_test.go`<br>`internal/task/gate.go`<br>`internal/task/world.go`<br>`tools/provingground/scenarios/cain.json` | - |
 | decomp43 | proposed | - | `docs/research/decomp43-monster-block-trace.md`<br>`docs/upstream/bodies/monster-block-body.md`<br>`tools/emu/mb_explore.py`<br>`tools/emu/mb_gate.py`<br>`tools/emu/mb_act2.py`<br>`tools/emu/mb_col.py`<br>`tools/emu/mb_block.py`<br>`tools/emu/mb_mut.py`<br>`tools/emu/mb_mut2.py`<br>`tools/emu/mb_edge.sh` | `fork-branch:fid/monster-block-r1` |
 | countess3 | proposed | - | `internal/d2dctl`<br>`internal/d2dworld`<br>`internal/boss`<br>`internal/d2map`<br>`cmd/d2bot/boss.go`<br>`docs/process/layout-read.md`<br>`docs/probes/provingground-countess-2026-11-20.md`<br>`internal/env/tuning_quests.go`<br>`docs/knobs.md` | `fork-branch:didle/level-monsters-20261121` |
-| wpstep | proposed | - | `internal/task/executor.go`<br>`internal/task/timeoutpolicy_test.go`<br>`internal/d2map/static.go`<br>`internal/d2map/tracker.go`<br>`internal/d2map/tracker_test.go`<br>`internal/d2dworld/`<br>`internal/bot/task.go`<br>`tools/provingground/scenarios/cain.json` | - |
 | fid-probe-readers | deferred | - | `docs/probes/fid/fid-probe-readers.md` | - |
 | dlv-upkeep-state | in-progress | - | `internal/combat/`<br>`internal/data/`<br>`internal/env/tuning_combat.go`<br>`docs/knobs.md`<br>`data/darklaunch.json` | - |
 | dlv-upkeep-minions | in-progress | - | `internal/combat/` | - |
@@ -148,13 +144,12 @@
 | pgnightly | proposed | - | `docs/process/pg-ops-pgnightly.md`<br>`tools/provingground/nightly.sh` | - |
 | pgearned | proposed | - | `internal/scenario/earned.go`<br>`tools/provingground/earned` | - |
 | town5 | in-progress | - | `internal/town`<br>`internal/resource`<br>`internal/bot/broke.go`<br>`internal/bot/leveling.go`<br>`tools/provingground/scenarios/townplan.json`<br>`docs/probes/town-plan-stage3-2026-11-22.md`<br>`docs/design/fable-review-2026-11-21/town-planner-b-model.md`<br>`town-basics` | - |
-| town7 | proposed | - | `internal/supply/`<br>`internal/town/`<br>`internal/resource/` | - |
 | town8 | proposed | - | `internal/supply/`<br>`internal/town/` | - |
 | town9 | proposed | - | `internal/watch`<br>`internal/supply` | - |
 | town10 | proposed | - | `internal/arbiter`<br>`internal/supply` | - |
 | town11 | proposed | - | `internal/town`<br>`docs/town.md`<br>`town-basics` | - |
 | town12 | proposed | - | `docs/design/fable-review-2026-11-21/town-profiles-sme.md` | - |
-| countess3b | proposed | - | `cmd/d2bot/boss.go`<br>`cmd/d2bot/boss_levelmonsters_test.go`<br>`internal/nav/nav.go`<br>`docs/probes/provingground-countess-2026-11-20.md` | - |
+| countess3b | proposed | - | `cmd/d2bot/boss.go`<br>`cmd/d2bot/boss_levelmonsters_test.go`<br>`internal/nav/nav.go`<br>`docs/probes/provingground-countess-2026-11-20.md`<br>`docs/probes/countess-nav-fixture.md`<br>`internal/nav/cellar5walk_test.go` | - |
 | pgledgeron | proposed | - | `docs/process/pg-ledger-ops.md`<br>`tools/provingground/run.sh`<br>`tools/provingground/pgenv.sh`<br>`tools/provingground/pgenv_test.sh` | - |
 | handinbtn | proposed | - | `internal/questboard/desk_action.go`<br>`internal/questboard/desk_action_test.go`<br>`internal/questboard/desk.go`<br>`internal/watch/web/panels/quest-board/panel.js`<br>`internal/watch/testdata/questui/quest_ui.mjs`<br>`internal/watch/testdata/quests/`<br>`cmd/d2scenario/tap.go`<br>`cmd/d2scenario/tap_test.go`<br>`docs/questboard.md` | - |
 | warptrigger | proposed | - | `docs/probes/warptrigger-2026-11-22.md`<br>`internal/d2dctl/warptriggers.go`<br>`internal/d2dctl/warptriggers_test.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/nav/mouthgate.go`<br>`internal/nav/warpread_test.go`<br>`internal/d2map/static.go`<br>`internal/d2dworld/triggers_test.go`<br>`internal/d2denv/env.go` | `fork-branch:didle/warp-triggers-20261122` |
@@ -177,7 +172,7 @@
 | fid-quest-andariel | deferred | - | `docs/probes/fid/fid-quest-andariel.md` | - |
 | epic-act5 | proposed | - | `docs/epics/epic-act5.md` | - |
 | epic-class-amazon | proposed | - | `docs/epics/epic-class-amazon.md` | - |
-| epic-class-necromancer | proposed | - | `docs/epics/epic-class-necromancer.md` | - |
+| epic-class-necromancer | proposed | - | `docs/epics/epic-class-necromancer.md`<br>`docs/classes/necromancer-gap-2026-11-27.md`<br>`internal/combat/classdata/profiles.json`<br>`internal/plandata/build-necromancer_leveling_normal30.json`<br>`internal/plandata/build-necromancer_summoner_endgame90.json`<br>`internal/plandata/levelplan-normal.json`<br>`internal/plandata/act2plan.json`<br>`internal/decide/catalogue.json`<br>`internal/decide/policy_chores.json`<br>`internal/decide/proposezone.json`<br>`internal/decide/necro_test.go`<br>`internal/decide/build_test.go`<br>`internal/decide/firsts_test.go`<br>`internal/decide/policy_test.go`<br>`internal/decide/preview_test.go`<br>`internal/decide/proposezone_test.go`<br>`internal/levelplan/necro_test.go`<br>`cmd/d2bot/necroplay_test.go`<br>`cmd/d2bot/hotkeydrift_test.go`<br>`tools/provingground/scenarios/necro-acts.json`<br>`tools/provingground/scenarios/necro-epic.json`<br>`tools/provingground/scenarios/tiers.json`<br>`internal/watch/policypreview_test.go`<br>`internal/watch/policysheet_test.go`<br>`internal/watch/stance_test.go`<br>`internal/watch/unlockrisk_test.go` | - |
 | epic-class-barbarian | proposed | - | `docs/epics/epic-class-barbarian.md` | - |
 | epic-class-sorceress | proposed | - | `docs/epics/epic-class-sorceress.md` | - |
 | epic-class-paladin | proposed | - | `docs/epics/epic-class-paladin.md` | - |
@@ -194,16 +189,14 @@
 | arbmig | in-progress | - | `docs/design/arbiter-migration-p6.md`<br>`docs/arbiter.md`<br>`internal/arbiter/`<br>`cmd/d2scenario/`<br>`tools/provingground/arbiter-outcomes/`<br>`internal/bot/arbiter_control.go`<br>`internal/bot/arbiter_control_test.go`<br>`internal/bot/shadow.go`<br>`internal/bot/loop.go`<br>`internal/env/tuning_bot.go`<br>`data/darklaunch.json`<br>`docs/knobs.md` | - |
 | fid-adapter-rows | deferred | - | `docs/probes/fid/fid-adapter-rows.md` | - |
 | ticklog | in-progress | - | `docs/design/ticklog-t4.md`<br>`docs/arbiter.md`<br>`internal/bot/ticklog.go`<br>`internal/bot/ticklog_test.go`<br>`internal/bot/shadow.go`<br>`internal/env/tuning_bot.go`<br>`internal/arbiter/replay.go`<br>`internal/arbiter/replay_ticklog_test.go`<br>`data/darklaunch.json` | - |
-| bsmchk | proposed | - | `docs/design/boardsm-checker.md`<br>`internal/questspec`<br>`internal/task/guardcodes_test.go`<br>`docs/questspec.md` | - |
 | bsmdef | proposed | - | `docs/design/boardsm-flip.md` | - |
-| agencyp1b | proposed | - | `docs/design/agency-p1b.md` | - |
-| agencyp3 | proposed | - | `docs/design/agency-p3.md` | - |
+| agencyp1b | proposed | - | `docs/design/agency-p1b.md`<br>`internal/agency/drive.go`<br>`internal/agency/drive_test.go`<br>`cmd/d2bot/agencywire.go`<br>`cmd/d2bot/agencydrive_test.go`<br>`cmd/d2bot/d2dwire.go`<br>`cmd/d2bot/live.go`<br>`internal/combat/drive_test.go`<br>`internal/combat/fighter.go`<br>`internal/combat/aura.go`<br>`internal/env/tuning_agency.go` | - |
 | inputl3 | in-progress | - | `docs/design/input-i3.md`<br>`internal/input/useitem.go`<br>`internal/input/useitem_test.go`<br>`internal/d2dctl/use_verb.go`<br>`internal/d2dctl/use_verb_test.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dinput/useitem.go`<br>`internal/combat/portalverb.go`<br>`internal/combat/portalverb_test.go`<br>`internal/combat/fighter.go`<br>`internal/town/portalverb.go`<br>`internal/town/portalverb_test.go`<br>`internal/town/portalverb_unit_test.go`<br>`internal/town/portalverb_export_test.go`<br>`internal/town/trip.go`<br>`data/input/caps/`<br>`data/input/caps_test.go`<br>`docs/design/input-cast-verbs.md`<br>`backlog/tasks/task-726 - dlv-cast-verbs-input-caps-cast-unit-cast-point-cast-hold.md` | - |
-| inputl4 | proposed | - | `docs/design/input-i4.md` | - |
-| inputl5 | proposed | - | `docs/design/input-i5-i7.md` | - |
+| inputl4 | proposed | - | `docs/design/input-i4.md`<br>`internal/input/repairverbs.go`<br>`internal/d2dctl/repair_verb.go`<br>`internal/d2dctl/use_verb_test.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dinput/repairverbs.go`<br>`internal/town/repairverb.go`<br>`internal/town/repairverb_test.go`<br>`internal/town/chores.go`<br>`internal/town/portalverb_export_test.go`<br>`internal/town/portalverb_unit_test.go` | - |
+| inputl5 | proposed | - | `docs/design/input-i5-i7.md`<br>`tools/ci/pointercount.py`<br>`tools/ci/test_pointercount.py`<br>`tools/ci/pointercount-baseline.json`<br>`tools/ci/check.sh` | - |
 | fid-lowvalue | deferred | - | `docs/probes/fid/fid-lowvalue.md` | - |
 | ckptlive | proposed | - | `docs/probes/checkpoint-live-drill.md` | - |
-| advisor1 | proposed | - | `docs/design/advisor-r14.md` | - |
+| advisor1 | proposed | - | `docs/design/advisor-r14.md`<br>`internal/advisor/`<br>`internal/watch/advisorsection.go`<br>`internal/watch/funwire.go`<br>`internal/watch/returnscreen_test.go`<br>`internal/cubejobs/cubejobs.go`<br>`internal/env/tuning_items.go`<br>`docs/knobs.md`<br>`data/darklaunch.json` | - |
 | flipwave2 | proposed | - | `docs/probes/flipwave2.md` | - |
 | classorder1 | proposed | - | `docs/probes/classorder1.md` | - |
 
@@ -228,14 +221,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
-- 9f534dbe4 11-27 14:32 `Merge agent/act2chunks: act2chunks: Radament/cube/shaft/amulet/summoner chunks as step-executor data (TASK-1056)` (act2chunks)
-- d60306160 11-27 14:32 `Merge agent/town7: town7: short-gold priority table as data + town8 stage 5 route stops (TASK-759/761)` (town7)
-- 6992ea23f 11-27 14:30 `Merge branch 'main' into act2chunks` (-)
-- 8cee71e86 11-27 14:30 `Merge branch 'main' into town7` (-)
-- f723f0cac 11-27 14:26 `Merge agent/vaultpoll: vaultpoll: cached vault poll, windowed query (TASK-1054)` (vaultpoll)
-- c6dde6ea4 11-27 14:25 `Merge branch 'main' into vaultpoll` (-)
-- ea06a941c 11-27 14:19 `Merge agent/skillcapretire: skillcapretire: retire resource.skillCapPerLevel (TASK-1055)` (skillcapretire)
-- 3392b8986 11-27 14:19 `Merge agent/bsmchk: bsmchk: questspec rules 12-14 (TASK-982)` (bsmchk)
-- 66f69ba02 11-27 14:19 `Merge agent/closecards2: closecards2: close/annotate stale cards (16 Done, 35 annotated)` (closecards2)
-- d788bfd1c 11-27 14:18 `Merge agent/charmvault: charmvault: charms recorded in the Vault, player Carry/Stow (TASK-1052)` (charmvault)
+- 5ee52c7a2 11-27 15:09 `Merge agent/necroepic: necroepic: Necromancer profiles/tables/policy rows, 24 scenarios, gap doc (TASK-942 AC1)` (necroepic)
+- cfb83895d 11-27 15:09 `Merge agent/agencydrive: agencydrive: fighter reads agency.DriveOf at planner mode 2 (TASK-984 AC2)` (agencydrive)
+- c7c9c5ec3 11-27 15:09 `Merge agent/advisor1: advisor1: runeword and cube advisor lines, items.advisor dark knob (TASK-991)` (advisor1)
+- 66b4f7f50 11-27 15:09 `Merge agent/countessnav: countessnav: Tower Cellar 5 walk regression on two synthetic maps (TASK-766 AC3)` (countessnav)
+- bd2ab0cb7 11-27 15:06 `Merge branch 'main' into necroepic` (-)
+- 47547cb56 11-27 15:06 `Merge branch 'main' into agencydrive` (-)
+- 3681d5c60 11-27 15:06 `Merge branch 'main' into advisor1` (-)
+- 2e2714e36 11-27 15:06 `Merge branch 'main' into countessnav` (-)
+- 555650c52 11-27 14:58 `Merge agent/dlvwave3: dlvwave3: aim-corpse (TASK-728) + stance-pack, press, move-tele, move-melee (TASK-729..732)` (dlvwave3)
+- 2d837813f 11-27 14:57 `Merge agent/agencyp3: agencyp3: shared build file reader, kolbot importer, DriveOf (TASK-985, TASK-984 partial)` (agencyp3)
 <!-- statusgen:end -->

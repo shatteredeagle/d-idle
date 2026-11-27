@@ -345,6 +345,9 @@ func guardFault(w World, name, stepID, why string, kitOnly bool) *Fault {
 	if k := w.KitPlan; k != nil && k.Short != "" {
 		// the plan cannot close the line with the gold owned: a chores trip would end "ran but still needed", so say what is
 		// missing. With the board SM this is the hold: the plan's open line is the reason (gold first).
+		if k.Hand != "" {
+			return refusal(w, "needs_gold_farm", msg+"; "+k.Hand)
+		}
 		return refusal(w, "needs_gold_farm", msg+"; "+k.Short)
 	}
 	f := &Fault{Kind: KindResource, Why: msg, Insert: []Step{StepChores("guard/" + stepID + "/chores")}}

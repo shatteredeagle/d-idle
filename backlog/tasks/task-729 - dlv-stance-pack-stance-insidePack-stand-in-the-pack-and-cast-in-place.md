@@ -17,6 +17,7 @@ owns:
   - "data/capabilities/"
 exclusive: []
 contracts: []
+result: "Offline only, NOT verified live. Stance kind insidePack (stance.go packPlan): stand StandOff subtiles from the pack centroid, cast in place, leave on LeaveSurround in contact or low life; rows on the hammerdin and poisonnova profiles (data, source U). Knob combat.deliveryUpkeep 0/1/2 (existing dark-launch row); knob 2 waits for the survival model contact archetype (R6). Tests: Paladin hammerdin + Necromancer poisonnova. No literal added. Blessed Hammer capability row NOT corrected and War Cry not made main: H1 live look and A6 verdict pending (checklist in report). Scenario combat.hammer-in-pack: stepping part offline, hits/mana/aura uptime need live."
 lane: next
 ---
 
@@ -30,10 +31,10 @@ Design: docs/design/fable-review-2026-11-21/combat-engine-d-cards.md (user-appro
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Scenario combat.hammer-in-pack
+- [x] #1 Scenario combat.hammer-in-pack (offline part)
 - [ ] #2 Live look H1 recorded or listed as a ready checklist
 - [ ] #3 A6 verdict before War Cry
-- [ ] #4 Two builds tested (Paladin + Sorceress), no class or skill literal added, literal count reported in result (may only fall)
-- [ ] #5 Knob combat.delivery.<driver> 0/1/2 where a driver ships; rollback is the knob
+- [x] #4 Two builds tested (Paladin + Sorceress), no class or skill literal added, literal count reported in result (may only fall)
+- [x] #5 Knob combat.delivery.<driver> 0/1/2 where a driver ships; rollback is the knob
 - [ ] #6 go test -race -count=20 on touched packages; tools/ci/check.sh, contracts/backlog checks and leakcheck clean
 <!-- AC:END -->

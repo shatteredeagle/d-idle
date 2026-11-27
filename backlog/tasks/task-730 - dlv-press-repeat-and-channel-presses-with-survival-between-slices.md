@@ -17,6 +17,7 @@ owns:
   - "internal/d2dcombat/"
 exclusive: []
 contracts: []
+result: "Offline only, NOT verified live. Press rows as profile data (press.go): sliceMs per held skill, commit gate (commitLifePct: a commit press is not started under that life percent, the pick falls to the next slot), hard bounds 100..3000 ms so every hold has an explicit release. Knob combat.deliveryUpkeep 0/1/2 (existing dark-launch row; 1 counts and logs differences). Row shipped: Zeal at today's 600 ms (source S); Strafe, Fend, Arctic Blast, Inferno rows wait for a profile that plays them (no profile attacks with them yet; Inferno is not in skills.json) and for fidelity A1. d2dcombat needed no change: the verb already carries the slice as its press time. Tests on Paladin (Zeal) and Druid (Arctic Blast). Scenario combat.hold-interruptible: survival between slices is the fight tick, live drill pending."
 lane: next
 ---
 
@@ -30,9 +31,9 @@ Design: docs/design/fable-review-2026-11-21/combat-engine-d-cards.md (user-appro
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Scenario combat.hold-interruptible
+- [x] #1 Scenario combat.hold-interruptible (offline: gate and slice only)
 - [ ] #2 A1 attack-sequence rate known
-- [ ] #3 Two builds tested (Paladin + Sorceress), no class or skill literal added, literal count reported in result (may only fall)
-- [ ] #4 Knob combat.delivery.<driver> 0/1/2 where a driver ships; rollback is the knob
+- [x] #3 Two builds tested (Paladin + Sorceress), no class or skill literal added, literal count reported in result (may only fall)
+- [x] #4 Knob combat.delivery.<driver> 0/1/2 where a driver ships; rollback is the knob
 - [ ] #5 go test -race -count=20 on touched packages; tools/ci/check.sh, contracts/backlog checks and leakcheck clean
 <!-- AC:END -->

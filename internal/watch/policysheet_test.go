@@ -346,8 +346,8 @@ func TestPolicyErrorsNameTheThing(t *testing.T) {
 	if _, _, err := r.sheet.Set("repair", "melt"); !errors.Is(err, ErrPolicyOption) || !strings.Contains(err.Error(), "melt") || !strings.Contains(err.Error(), "repair") {
 		t.Errorf("option: %v", err)
 	}
-	r.class = "necromancer"
-	if _, err := r.sheet.View(); err == nil || !strings.Contains(err.Error(), `"necromancer"`) {
+	r.class = "barbarian"
+	if _, err := r.sheet.View(); err == nil || !strings.Contains(err.Error(), `"barbarian"`) {
 		t.Errorf("class: %v", err)
 	}
 	r.class = ""

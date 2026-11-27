@@ -90,7 +90,7 @@ func TestRowsForClass(t *testing.T) {
 			t.Fatalf("%s: %v %d", c, err, len(rows))
 		}
 	}
-	if _, err := tbl.RowsFor(cat, "necromancer"); err == nil || !strings.Contains(err.Error(), `"necromancer"`) {
+	if _, err := tbl.RowsFor(cat, "barbarian"); err == nil || !strings.Contains(err.Error(), `"barbarian"`) {
 		t.Fatalf("unknown class: %v", err)
 	}
 	if _, err := tbl.Row("nope"); err == nil || !strings.Contains(err.Error(), `"nope"`) {
@@ -185,14 +185,14 @@ func TestPolicyClassKnobsNameTheMissingClass(t *testing.T) {
 		return `{"version":1,"rows":[{"id":"r","label":"L","help":"H","default":"d","options":[{"id":"d","label":"D"},{"id":"x","label":"X","classKnobs":` + ck + `}]}]}`
 	}
 	for name, c := range map[string]struct{ ck, want string }{
-		"missing class": {`{"paladin":{"bot.clearRadius":20}}`, `"sorceress"`},
-		"unknown class": {`{"paladin":{},"sorceress":{},"necromancer":{}}`, `"necromancer"`},
+		"missing class": {`{"paladin":{"bot.clearRadius":20},"necromancer":{}}`, `"sorceress"`},
+		"unknown class": {`{"paladin":{},"sorceress":{},"necromancer":{},"barbarian":{}}`, `"barbarian"`},
 	} {
 		if _, err := ParsePolicy([]byte(row(c.ck)), cat); err == nil || !strings.Contains(err.Error(), c.want) {
 			t.Errorf("%s: %v", name, err)
 		}
 	}
-	if _, err := ParsePolicy([]byte(row(`{"paladin":{},"sorceress":{}}`)), cat); err != nil {
+	if _, err := ParsePolicy([]byte(row(`{"paladin":{},"sorceress":{},"necromancer":{}}`)), cat); err != nil {
 		t.Errorf("complete table: %v", err)
 	}
 }

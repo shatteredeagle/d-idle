@@ -164,8 +164,8 @@ func TestFirsts_ClassDataAndErrors(t *testing.T) {
 	}
 	cat, _ := mustCat(t).WithFirsts(tbl)
 	st, _ := New(cat, "p1", &ManualClock{})
-	_, err := NewTracker(tbl, cat, st, NewCodex("p1"), &ManualClock{}, Who{Class: "necromancer", Diff: "normal"})
-	if err == nil || !strings.Contains(err.Error(), "necromancer") {
+	_, err := NewTracker(tbl, cat, st, NewCodex("p1"), &ManualClock{}, Who{Class: "barbarian", Diff: "normal"})
+	if err == nil || !strings.Contains(err.Error(), "barbarian") {
 		t.Fatalf("unknown class: %v", err)
 	}
 	if _, err := NewTracker(tbl, mustCat(t), st, NewCodex("p1"), &ManualClock{}, Who{Class: "sorceress", Diff: "normal"}); err == nil {

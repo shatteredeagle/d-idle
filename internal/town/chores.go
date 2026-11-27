@@ -11,7 +11,6 @@ import (
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/data"
 	"d2lod-bot/internal/gear"
-	"d2lod-bot/internal/input"
 	"d2lod-bot/internal/ladder"
 	"d2lod-bot/internal/loot"
 	"d2lod-bot/internal/repair"
@@ -859,7 +858,7 @@ func (t *Town) repair(ctx context.Context, a *Act, rep *ChoreReport) error {
 	if _, err := t.openShop(ctx, a.Repair, t.npcPreset(a.Repair...)); err != nil {
 		return err
 	}
-	if err := t.e.In.Click(input.Left, RepairAll.X, RepairAll.Y); err != nil {
+	if err := t.pressRepairAll(); err != nil {
 		_ = t.h.CloseAll(ctx)
 		return err
 	}

@@ -294,9 +294,10 @@ type aimSeen struct {
 
 // aimState is the fighter's aim memory and counters (zero value usable).
 type aimState struct {
-	seen                       map[uint32]aimSeen
-	aimed, refused, fallbacks  int
-	shadowMoved, shadowRefused int
+	seen                                      map[uint32]aimSeen
+	aimed, refused, fallbacks                 int
+	shadowMoved, shadowRefused                int
+	corpsePicked, corpseRefused, corpseShadow int
 }
 
 // observe updates the velocity memory from the hostiles of this tick.

@@ -143,7 +143,7 @@ func TestRiskVerdictLifeLevelResistAndCloseCalls(t *testing.T) {
 
 func TestRiskUnknownClassAndZoneAreErrors(t *testing.T) {
 	rules := riskRules(t)
-	if _, err := rules.Assess(RiskInput{Class: "Necromancer", Clvl: 16, Facts: goodFacts()}); err == nil || !strings.Contains(err.Error(), `"Necromancer"`) {
+	if _, err := rules.Assess(RiskInput{Class: "Barbarian", Clvl: 16, Facts: goodFacts()}); err == nil || !strings.Contains(err.Error(), `"Barbarian"`) {
 		t.Errorf("class: %v", err)
 	}
 	f := goodFacts()

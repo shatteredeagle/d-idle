@@ -174,3 +174,108 @@ func TestValidateStance(t *testing.T) {
 		}
 	}
 }
+
+// packWorld is a hero at (100,100) with n hostiles around (112,100) on a class and build whose profile has an
+// insidePack stance.
+func packWorld(t *testing.T, class d2.Class, build string, mode, n int) (*harness, *nworld) {
+	h, w := newClassWorld(t, class, nil, nil, nil)
+	h.f.Build = Build(build)
+	h.f.e.Tune.Combat.DeliveryUpkeep = mode
+	w.snap.Player.X, w.snap.Player.Y = 100, 100
+	for i := 0; i < n; i++ {
+		w.snap.Monsters = append(w.snap.Monsters, mon(uint32(300+i), 1, 112, 98+i))
+	}
+	return h, w
+}
+
+// Scenario combat.hammer-in-pack (offline part): a Hammerdin and a Poison Nova Necromancer walk to the pack's edge at
+// 2, only log at 1, stay put at 0, hold on the spot, and back out of a surround or at low life. Hits per cast, mana and
+// the aura uptime of the scenario need the live look H1 and the survival model (R6).
+func TestStanceInsidePack(t *testing.T) {
+	ctx := context.Background()
+	for _, b := range []struct {
+		class d2.Class
+		build string
+		off   int
+	}{{d2.Paladin, "hammerdin", 2}, {d2.Necromancer, "poisonnova", 3}} {
+		for _, mode := range []int{0, 1, 2} {
+			h, w := packWorld(t, b.class, b.build, mode, 4)
+			acted, err := h.f.stanceTick(ctx, w.snap, castJustNow(h))
+			if err != nil {
+				t.Fatal(err)
+			}
+			if acted != (mode == 2) || (len(w.walkedTo) > 0) != (mode == 2) {
+				t.Fatalf("%s mode %d: acted %v walked %v", b.build, mode, acted, w.walkedTo)
+			}
+			if mode == 2 {
+				if d := pdist(w.walkedTo[0], input.Point{X: 112, Y: 100}); d < float64(b.off)-1 || d > float64(b.off)+1 {
+					t.Fatalf("%s stepped to %v, %v from the pack", b.build, w.walkedTo[0], d)
+				}
+			}
+			if mode == 1 && h.f.StanceShadowSteps() != 1 {
+				t.Fatalf("%s shadow steps %d", b.build, h.f.StanceShadowSteps())
+			}
+		}
+		// in the pack's edge: cast in place
+		h, w := packWorld(t, b.class, b.build, 2, 4)
+		w.snap.Player.X = 112 - b.off
+		if act, _, why := h.f.stancePlan(w.snap); act != "" {
+			t.Fatalf("%s on its spot: %s %s", b.build, act, why)
+		}
+		// a lone hostile is no pack
+		h, w = packWorld(t, b.class, b.build, 2, 1)
+		if act, _, _ := h.f.stancePlan(w.snap); act != "" {
+			t.Fatalf("%s one hostile: %s", b.build, act)
+		}
+		// surrounded: leave, away from the pack
+		h, w = packWorld(t, b.class, b.build, 2, 0)
+		for i := 0; i < 5; i++ {
+			w.snap.Monsters = append(w.snap.Monsters, mon(uint32(400+i), 1, 101+i%2, 99+i%3))
+		}
+		act, to, _ := h.f.stancePlan(w.snap)
+		if act != "leave" || pdist(to, input.Point{X: 101, Y: 100}) <= 1 {
+			t.Fatalf("%s surrounded: %s to %v", b.build, act, to)
+		}
+		// low life with one in contact: leave; full life with one in contact: hold
+		h, w = packWorld(t, b.class, b.build, 2, 0)
+		w.snap.Monsters = append(w.snap.Monsters, mon(401, 1, 101, 100), mon(402, 1, 108, 100), mon(403, 1, 108, 101))
+		w.snap.Player.MaxLife, w.snap.Player.Life = 400, 100
+		if act, _, _ := h.f.stancePlan(w.snap); act != "leave" {
+			t.Fatalf("%s low life: %q", b.build, act)
+		}
+		w.snap.Player.Life = 400
+		if act, _, _ := h.f.stancePlan(w.snap); act == "leave" {
+			t.Fatalf("%s full life left", b.build)
+		}
+	}
+	// no cast lately: the step may not take the tick
+	h, w := packWorld(t, d2.Paladin, "hammerdin", 2, 4)
+	if acted, _ := h.f.stanceTick(ctx, w.snap, newFightState()); acted || len(w.walkedTo) > 0 {
+		t.Fatal("pack step replaced a cast")
+	}
+	// builds without a stance block stay put
+	h, w = packWorld(t, d2.Sorceress, "fire", 2, 4)
+	if act, _, _ := h.f.stancePlan(w.snap); act != "" {
+		t.Fatalf("fire sorceress: %q", act)
+	}
+}
+
+func TestValidateStanceInsidePack(t *testing.T) {
+	ok := Profile{Class: "paladin", Stance: &ArmyStance{Kind: StanceInsidePack, StandOff: 2, LeaveSurround: 5, LeaveLifePct: 50, Source: "U test"}}
+	if err := validateStance([]Profile{ok}); err != nil {
+		t.Fatal(err)
+	}
+	for _, mod := range []func(*ArmyStance){
+		func(s *ArmyStance) { s.StandOff = 0 },
+		func(s *ArmyStance) { s.LeaveSurround = 0 },
+		func(s *ArmyStance) { s.LeaveLifePct = 0 },
+		func(s *ArmyStance) { s.LeaveLifePct = 101 },
+		func(s *ArmyStance) { s.Source = "" },
+	} {
+		st := *ok.Stance
+		mod(&st)
+		if validateStance([]Profile{{Class: "paladin", Stance: &st}}) == nil {
+			t.Fatalf("accepted %+v", st)
+		}
+	}
+}
