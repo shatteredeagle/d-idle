@@ -121,8 +121,8 @@ var (
 	tyraelTalked = orStage(func(c specClauses) questspec.Clause { return c.tyraelPost }, a2At(QDuriel, StageDone))
 	// jerhynOpen: what Jerhyn's reward line needs (Tyrael's bits).
 	jerhynOpen = orStage(func(c specClauses) questspec.Clause { return c.jerhynPre }, durielDead)
-	// jerhynTalked: Jerhyn's reward bit is set (or the quest is done). Without the word: the Act 2 word.
-	jerhynTalked = orStage(func(c specClauses) questspec.Clause { return c.jerhynPost }, a2At(QAct2Word, StageDone))
+	// jerhynTalked: Jerhyn's reward bit is set (or the quest is done). Without the word: the Act 2 word, or act 3.
+	jerhynTalked = orStage(func(c specClauses) questspec.Clause { return c.jerhynPost }, a2or(a2At(QAct2Word, StageDone), a2At(QDuriel, StageDone)))
 	// meshifOpen: Meshif waits for Jerhyn's bit. Without the word: Duriel dead, as before.
 	meshifOpen = orStage(func(c specClauses) questspec.Clause { return c.jerhynPost }, durielDead)
 )
