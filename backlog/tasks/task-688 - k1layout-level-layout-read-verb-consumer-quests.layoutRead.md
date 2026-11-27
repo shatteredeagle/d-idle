@@ -1,10 +1,11 @@
 ---
 id: TASK-688
 title: 'k1layout: level layout read verb consumer (quests.layoutRead)'
-status: Proposed
+status: Done
 assignee:
   - live-agent
 created_date: '2026-11-20T14:49:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - d2d
   - feature

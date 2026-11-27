@@ -1,10 +1,11 @@
 ---
 id: TASK-371
 title: 'itemverbs2: identify, drop, move, gold verbs and bot wiring'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-12T17:03:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - d2d
   - feature

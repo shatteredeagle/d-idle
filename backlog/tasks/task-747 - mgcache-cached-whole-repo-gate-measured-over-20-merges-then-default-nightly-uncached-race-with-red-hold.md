@@ -1,10 +1,13 @@
 ---
 id: TASK-747
-title: 'mgcache: cached whole-repo gate measured over 20 merges then default; nightly uncached race with red hold'
-status: In Progress
+title: >-
+  mgcache: cached whole-repo gate measured over 20 merges then default; nightly
+  uncached race with red hold
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-21T04:49:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - ops
   - feature

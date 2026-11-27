@@ -352,3 +352,28 @@ func TestSummonWatchIsData(t *testing.T) {
 		}
 	}
 }
+
+// Questy 2026-11-26 (deploy 83): the hero walked between the camp and a dry Blood Moor for 28 minutes, xp, kills and gold frozen;
+// the area changes reset mode-no-exit. no-earn (soft) fires after five minutes without a change of xp, kills or gold, whatever the
+// area does; earning, a pause or a parked hero keep it quiet. Two heroes.
+func TestNoEarnIgnoresAreaChanges(t *testing.T) {
+	for _, h := range invHeroes {
+		for _, c := range []struct {
+			name  string
+			n     int
+			edit  func(f *invFacts, i int)
+			fires bool
+		}{
+			{"walking between two areas, nothing earned", 400, func(f *invFacts, i int) { f.area = 1 + i%2; f.xp, f.kills, f.gold = 1000, 10, 19 }, true},
+			{"earning gold", 400, func(f *invFacts, i int) { f.area = 1 + i%2; f.gold = 19 + i/30 }, false},
+			{"parked on purpose", 400, func(f *invFacts, i int) { f.parked = true; f.xp, f.kills, f.gold = 1000, 10, 19 }, false},
+			{"under the five minutes", 250, func(f *invFacts, i int) { f.xp, f.kills, f.gold = 1000, 10, 19 }, false},
+		} {
+			m := &invMon{}
+			got := runInv(m, h.facts(t0), c.n, c.edit)
+			if (got["no-earn"] > 0) != c.fires {
+				t.Errorf("%s/%s: no-earn fired %d, want fires=%v", h.name, c.name, got["no-earn"], c.fires)
+			}
+		}
+	}
+}

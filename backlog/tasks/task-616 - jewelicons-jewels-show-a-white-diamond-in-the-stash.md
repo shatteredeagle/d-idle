@@ -1,10 +1,11 @@
 ---
 id: TASK-616
 title: 'jewelicons: jewels show a white diamond in the stash'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-17T14:36:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - watch
   - bug

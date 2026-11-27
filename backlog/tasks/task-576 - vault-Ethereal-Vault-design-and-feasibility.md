@@ -1,10 +1,11 @@
 ---
 id: TASK-576
 title: 'vault: Ethereal Vault design and feasibility'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-17T02:22:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - docs
   - research

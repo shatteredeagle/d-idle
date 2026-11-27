@@ -1,10 +1,11 @@
 ---
 id: TASK-1020
 title: 'necrokeys: Keys for Weaken, Decrepify, Lower Resist, Fire Golem beyond F8'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-26T19:14:00Z'
+updated_date: '2026-11-27T02:03:00Z'
 labels:
   - bot
   - feature

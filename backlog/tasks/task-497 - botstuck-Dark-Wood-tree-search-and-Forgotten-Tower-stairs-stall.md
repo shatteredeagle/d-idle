@@ -1,10 +1,11 @@
 ---
 id: TASK-497
 title: 'botstuck: Dark Wood tree search and Forgotten Tower stairs stall'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-15T14:37:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - bot
   - bug

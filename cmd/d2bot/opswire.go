@@ -41,9 +41,21 @@ var (
 // explainNow is the decision ring of the runner, or nil before it exists (both the socket and /api/explain read it).
 func explainNow() any {
 	if r := opsRunner.Load(); r != nil {
-		return r.Explain()
+		v := r.Explain()
+		if f := opsKnobs.Load(); f != nil {
+			v.Knobs = (*f)()
+		}
+		return v
 	}
 	return nil
+}
+
+// opsKnobs returns the live knob values; the backend wiring sets it from the tuner (nil: the view has no knobs).
+var opsKnobs atomic.Pointer[func() map[string]float64]
+
+func setOpsKnobs(t *bot.Tuner) {
+	f := func() map[string]float64 { return t.Snapshot().Values }
+	opsKnobs.Store(&f)
 }
 
 // hubOrders places the operator's orders through the same Hub.Give the viewer's order box uses.

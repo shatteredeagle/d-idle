@@ -1,10 +1,11 @@
 ---
 id: TASK-708
 title: 'andariel1: why Andariel is not offered at clvl 26, and the Monastery road nav'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-21T02:53:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - bot
   - bot-fix

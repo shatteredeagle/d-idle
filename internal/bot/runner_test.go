@@ -1149,3 +1149,25 @@ func goneTargetClear(t *testing.T, cl d2.Class) {
 		t.Fatalf("second Clear came %v after the first: the sweep ignored the hostile for a long futile window", d)
 	}
 }
+
+// Doofer 2026-11-27 (d2play-20261108): one Clear action in the Den of Evil ran past the 600 s watchdog limit while the hero kept
+// killing (kills 36 to 52, xp 1003 to 1313), no step finished, and the watchdog restarted d2bot. A kill, xp gain or level is a
+// heartbeat; with none of them and no finished step the heartbeat still goes stale (a hung step is still caught).
+func TestKillsAndXPAreAHeartbeat(t *testing.T) {
+	old := time.Now().Add(-15 * time.Minute)
+	for _, tc := range []struct {
+		name  string
+		bump  bool
+		fresh bool
+	}{{"kill inside a long action", true, true}, {"hung step, nothing observed", false, false}} {
+		var r Runner
+		r.lastStep.Store(old.UnixNano())
+		if tc.bump {
+			r.ob.bumpReal(time.Now())
+		}
+		age := time.Since(r.LastStep())
+		if got := age < time.Minute; got != tc.fresh {
+			t.Errorf("%s: heartbeat age %v, fresh=%v want %v", tc.name, age.Round(time.Second), got, tc.fresh)
+		}
+	}
+}

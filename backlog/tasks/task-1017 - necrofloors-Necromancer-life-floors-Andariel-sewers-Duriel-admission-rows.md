@@ -1,10 +1,11 @@
 ---
 id: TASK-1017
 title: 'necrofloors: Necromancer life floors: Andariel, sewers, Duriel admission rows'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-26T19:13:00Z'
+updated_date: '2026-11-27T02:03:00Z'
 labels:
   - bot
   - feature

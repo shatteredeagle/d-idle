@@ -1,10 +1,13 @@
 ---
 id: TASK-568
-title: 'survab8: Survival A/B 8-seed Paladin confirmation and Sorceress rescreen, bot.zoneModel 0 vs 1'
-status: Proposed
+title: >-
+  survab8: Survival A/B 8-seed Paladin confirmation and Sorceress rescreen,
+  bot.zoneModel 0 vs 1
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-16T21:56:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - bot
   - probe

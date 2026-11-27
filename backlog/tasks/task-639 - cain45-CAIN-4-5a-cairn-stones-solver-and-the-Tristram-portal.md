@@ -1,10 +1,11 @@
 ---
 id: TASK-639
 title: 'cain45: CAIN-4/5a cairn stones solver and the Tristram portal'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-18T15:15:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - bot
   - feature

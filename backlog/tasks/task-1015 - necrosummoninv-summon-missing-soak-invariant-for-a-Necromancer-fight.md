@@ -1,10 +1,11 @@
 ---
 id: TASK-1015
 title: 'necrosummoninv: summon-missing soak invariant for a Necromancer fight'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-26T19:13:00Z'
+updated_date: '2026-11-27T02:03:00Z'
 labels:
   - bot
   - feature

@@ -663,7 +663,9 @@ func (t *Town) sellableIf(s *d2.Snapshot, full bool) (out []d2.Unit) {
 	sp := t.sellPass(s)
 	kept := map[string]int{}
 	rvOver := t.rejuvOverCap(s)
+	planKeep := t.planSellKeep(s)
 	loose := map[string]int{}
+	eval := t.evalFor(s)
 	for _, u := range s.Inventory.Container(d2.ContInventory) {
 		if u.Item.Flags&d2.FlagStartItem != 0 {
 			continue
@@ -679,7 +681,7 @@ func (t *Town) sellableIf(s *d2.Snapshot, full bool) (out []d2.Unit) {
 				continue
 			}
 		}
-		if t.sellMarksOnly {
+		if t.sellMarksOnly || planKeep[u.ID] {
 			continue
 		}
 		if t.looseScrollSurplus(s, u, loose) {
@@ -687,7 +689,7 @@ func (t *Town) sellableIf(s *d2.Snapshot, full bool) (out []d2.Unit) {
 			out = append(out, u)
 			continue
 		}
-		v := t.judge.EvaluateUnit(u)
+		v := eval(u)
 		if sp != nil {
 			// loot.rulesEngine 3: the rules decide sell or keep; a failure of the engine falls through to today's code
 			// for this item. The rejuvenation cap and the spare-supply surplus are supply counts, not rules, and stay.
@@ -699,7 +701,7 @@ func (t *Town) sellableIf(s *d2.Snapshot, full bool) (out []d2.Unit) {
 				case sell:
 					t.e.Log.Debug("sell: rules say sell", "item", t.nameOf(u), "rule", rule, "why", why)
 					out = append(out, u)
-				case full && t.spareSurplus(u, v, kept):
+				case full && t.spareSurplus(u, v, kept, planKeep != nil):
 					out = append(out, u)
 				}
 				continue
@@ -719,7 +721,7 @@ func (t *Town) sellableIf(s *d2.Snapshot, full bool) (out []d2.Unit) {
 			out = append(out, u)
 		} else if v.Action == loot.Sell || v.Action == loot.Drop && full && v.Tier != "S" {
 			out = append(out, u)
-		} else if full && t.spareSurplus(u, v, kept) {
+		} else if full && t.spareSurplus(u, v, kept, planKeep != nil) {
 			out = append(out, u)
 		}
 	}
@@ -775,7 +777,9 @@ func (t *Town) rejuvOverCap(s *d2.Snapshot) map[uint32]bool {
 // spareSurplus reports whether u is a spare potion or identify scroll beyond SpareKeep of its kind. The starter pickit keeps
 // these (tier C, "already in the pack") but nothing belts or reads them, so a pack full of them stays full for good (G1
 // attempt 10: 97 percent full, nothing sellable, a superior Cap left on the ground). kept counts what stays per code.
-func (t *Town) spareSurplus(u d2.Unit, v loot.Verdict, kept map[string]int) bool {
+// planned: the supply plan already kept what it needs (town.plan >= 4, sellplan.go), so every other healing or mana
+// potion is surplus.
+func (t *Town) spareSurplus(u d2.Unit, v loot.Verdict, kept map[string]int, planned bool) bool {
 	b := t.base(u)
 	if b == nil || v.Action != loot.Keep || v.Tier != "C" || v.Prio != 0 || !t.isSupply(b) {
 		return false
@@ -783,6 +787,9 @@ func (t *Town) spareSurplus(u d2.Unit, v loot.Verdict, kept map[string]int) bool
 	kept[b.Code]++
 	if t.e.Data.IsA(b.Type, "rpot") {
 		return false // rejuvOverCap decides, regardless of how full the pack is
+	}
+	if k := belt.PotionKind(b); planned && (k == belt.HP || k == belt.MP) {
+		return true
 	}
 	return kept[b.Code] > t.spareAllowance(b.Code)
 }

@@ -1,10 +1,11 @@
 ---
 id: TASK-797
 title: 'gridwhole: probe, is debug grid whole at arrival (maze levels included)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-22T02:18:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - d2d
   - probe

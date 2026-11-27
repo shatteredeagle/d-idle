@@ -655,6 +655,52 @@
   },
   {
    "class": "druid",
+   "minions": {
+    "lifePct": 40,
+    "groups": [
+     {
+      "name": "spirit",
+      "skills": [
+       "Oak Sage",
+       "Heart of Wolverine",
+       "Spirit of Barbs"
+      ],
+      "exclusive": true
+     },
+     {
+      "name": "bear",
+      "skills": [
+       "Summon Grizzly"
+      ],
+      "max": 1,
+      "source": "U guess: one per skill level up to the docs/classes/druid.md cap (S); capSeen finds the real cap live"
+     },
+     {
+      "name": "dire",
+      "skills": [
+       "Summon Fenris"
+      ],
+      "max": 3,
+      "source": "U guess: one per skill level up to the docs/classes/druid.md cap (S); capSeen finds the real cap live"
+     },
+     {
+      "name": "wolf",
+      "skills": [
+       "Summon Spirit Wolf"
+      ],
+      "max": 5,
+      "source": "U guess: one per skill level up to the docs/classes/druid.md cap (S); capSeen finds the real cap live"
+     },
+     {
+      "name": "raven",
+      "skills": [
+       "Raven"
+      ],
+      "max": 5,
+      "source": "U guess: one per skill level up to the docs/classes/druid.md cap (S); capSeen finds the real cap live"
+     }
+    ]
+   },
    "bands": [
     {
      "minLevel": 12,
@@ -692,6 +738,19 @@
   },
   {
    "class": "assassin",
+   "minions": {
+    "groups": [
+     {
+      "name": "shadow",
+      "skills": [
+       "Shadow Master",
+       "Shadow Warrior"
+      ],
+      "exclusive": true,
+      "afterFight": true
+     }
+    ]
+   },
    "bands": [
     {
      "attack": [
@@ -773,6 +832,52 @@
   },
   {
    "class": "druid",
+   "minions": {
+    "lifePct": 40,
+    "groups": [
+     {
+      "name": "spirit",
+      "skills": [
+       "Oak Sage",
+       "Heart of Wolverine",
+       "Spirit of Barbs"
+      ],
+      "exclusive": true
+     },
+     {
+      "name": "bear",
+      "skills": [
+       "Summon Grizzly"
+      ],
+      "max": 1,
+      "source": "U guess: one per skill level up to the docs/classes/druid.md cap (S); capSeen finds the real cap live"
+     },
+     {
+      "name": "dire",
+      "skills": [
+       "Summon Fenris"
+      ],
+      "max": 3,
+      "source": "U guess: one per skill level up to the docs/classes/druid.md cap (S); capSeen finds the real cap live"
+     },
+     {
+      "name": "wolf",
+      "skills": [
+       "Summon Spirit Wolf"
+      ],
+      "max": 5,
+      "source": "U guess: one per skill level up to the docs/classes/druid.md cap (S); capSeen finds the real cap live"
+     },
+     {
+      "name": "raven",
+      "skills": [
+       "Raven"
+      ],
+      "max": 5,
+      "source": "U guess: one per skill level up to the docs/classes/druid.md cap (S); capSeen finds the real cap live"
+     }
+    ]
+   },
    "build": "fire",
    "bands": [
     {

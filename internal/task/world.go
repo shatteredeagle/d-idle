@@ -176,6 +176,9 @@ type World struct {
 	EarlyBlocked map[Area]EarlyBlock
 	// WalkBlocked is the kit rule of every quest walk into a field (earlyroutes.json questWalk, filled by the bot).
 	WalkBlocked EarlyBlock
+	// FirstField is the first field of the hero's act (filled with WalkBlocked): the quest-walk kit rule never closes it, because a hero
+	// in town with an empty purse earns nothing anywhere else (Questy 2026-11-26).
+	FirstField Area
 	// TowerMinLevel (0 = tower guard off) and TowerNeedsMerc are the Forgotten Tower knobs (route.go); TowerBlocked is
 	// TowerWhy(w) filled by the bot, kept out of areas 20-25 by fieldReady.
 	TowerMinLevel     int

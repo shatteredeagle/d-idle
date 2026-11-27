@@ -1,10 +1,13 @@
 ---
 id: TASK-524
-title: 'lootwire-L3: adapter filling lootrules.Item and Ctx from ground, pack, stash, hero and merc'
-status: Proposed
+title: >-
+  lootwire-L3: adapter filling lootrules.Item and Ctx from ground, pack, stash,
+  hero and merc
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-16T02:11:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - bot
   - feature

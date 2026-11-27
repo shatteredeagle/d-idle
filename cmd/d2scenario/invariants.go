@@ -2,7 +2,7 @@ package main
 
 import (
 	"bytes"
-	_ "embed"
+	"embed"
 	"encoding/json"
 	"fmt"
 	"sort"
@@ -13,6 +13,12 @@ import (
 
 //go:embed invariants.json
 var invariantsJSON []byte
+
+// invariantFragments are per-feature additions (invariants.d/<feature>.json, same shape as invariants.json, no _doc):
+// a new invariant row goes into its own file so two branches never edit the same list line.
+//
+//go:embed invariants.d
+var invariantFragments embed.FS
 
 type invariantPolicy struct {
 	Hard       []string            `json:"hard"`
@@ -25,6 +31,26 @@ func loadInvariantPolicy() invariantPolicy {
 	var p invariantPolicy
 	if err := json.Unmarshal(invariantsJSON, &p); err != nil {
 		panic("invariants.json: " + err.Error())
+	}
+	ents, _ := invariantFragments.ReadDir("invariants.d")
+	for _, e := range ents { // ReadDir is sorted: a stable merge order
+		if !strings.HasSuffix(e.Name(), ".json") {
+			continue
+		}
+		raw, _ := invariantFragments.ReadFile("invariants.d/" + e.Name())
+		var f invariantPolicy
+		if err := json.Unmarshal(raw, &f); err != nil {
+			panic("invariants.d/" + e.Name() + ": " + err.Error())
+		}
+		p.Hard = append(p.Hard, f.Hard...)
+		p.Soft = append(p.Soft, f.Soft...)
+		p.ReportOnly = append(p.ReportOnly, f.ReportOnly...)
+		for k, v := range f.SoftIn {
+			if p.SoftIn == nil {
+				p.SoftIn = map[string][]string{}
+			}
+			p.SoftIn[k] = append(p.SoftIn[k], v...)
+		}
 	}
 	return p
 }

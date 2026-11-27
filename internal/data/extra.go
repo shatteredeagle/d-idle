@@ -494,6 +494,7 @@ func (db *DB) indexExtra() {
 		db.stateByID[s.ID] = s
 		db.stateByName[lc(s.Name)] = s
 	}
+	linkSkillStates(db.Skills, db.stateByName)
 	db.missileByID, db.missileByName = map[int]*Missile{}, map[string]*Missile{}
 	for _, m := range db.Missiles {
 		db.missileByID[m.ID] = m
@@ -502,5 +503,19 @@ func (db *DB) indexExtra() {
 	db.warpByID = map[int]*LevelWarp{}
 	for _, w := range db.Warps {
 		db.warpByID[w.ID] = w
+	}
+}
+
+// linkSkillStates resolves each skill's aurastate to its states.txt id and marks a curse target state (the upkeep
+// driver reads the id; a curse is never kept up as a self buff).
+func linkSkillStates(skills []*Skill, byName map[string]*State) {
+	for _, s := range skills {
+		s.StateID, s.Curse = 0, false
+		if st := byName[lc(s.AuraState)]; st != nil && s.AuraState != "" {
+			s.StateID, s.Curse = st.ID, st.Curse
+		}
+		if st := byName[lc(s.AuraTargetState)]; st != nil && s.AuraTargetState != "" {
+			s.Curse = s.Curse || st.Curse
+		}
 	}
 }

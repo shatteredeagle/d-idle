@@ -1,10 +1,13 @@
 ---
 id: TASK-777
-title: 'pgledgeron: turn the Proving Ground ledger on for builder runs (event, branch, job, ingest command)'
-status: In Progress
+title: >-
+  pgledgeron: turn the Proving Ground ledger on for builder runs (event, branch,
+  job, ingest command)
+status: Proposed
 assignee:
   - credit-runner
 created_date: '2026-11-21T14:50:00Z'
+updated_date: '2026-11-27T02:03:00Z'
 labels:
   - ops
   - feature

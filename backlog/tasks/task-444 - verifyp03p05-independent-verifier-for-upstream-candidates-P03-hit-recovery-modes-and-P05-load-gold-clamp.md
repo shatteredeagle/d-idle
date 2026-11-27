@@ -3,11 +3,11 @@ id: TASK-444
 title: >-
   verifyp03p05: independent verifier for upstream candidates P03 (hit-recovery
   modes) and P05 (load gold clamp)
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-14T21:28:00Z'
-updated_date: '2026-11-14T21:42:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - docs
   - research

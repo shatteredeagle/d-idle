@@ -32,6 +32,7 @@ var (
 	errLeftGame    = errors.New("bot: left the game")
 	errTripDue     = errors.New("bot: town trip due")
 	errReplan      = errors.New("bot: level changed, re-plan")
+	errFightStall  = errors.New("bot: a fight made no progress for too long")
 	errLeftTown    = errors.New("bot: town chores outside town")
 	errStepTimeout = errors.New("bot: action timed out")
 	errGuardPanic  = errors.New("bot: guard panicked, action cancelled")

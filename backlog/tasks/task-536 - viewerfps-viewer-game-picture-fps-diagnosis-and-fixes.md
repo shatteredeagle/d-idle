@@ -1,10 +1,11 @@
 ---
 id: TASK-536
 title: 'viewerfps: viewer game picture fps diagnosis and fixes'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-16T03:31:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - watch
   - feature

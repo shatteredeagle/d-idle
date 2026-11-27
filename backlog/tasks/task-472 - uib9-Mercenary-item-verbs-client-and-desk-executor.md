@@ -1,10 +1,11 @@
 ---
 id: TASK-472
 title: 'uib9: Mercenary item verbs, client and desk executor'
-status: In Progress
+status: Proposed
 assignee:
   - credit-runner
 created_date: '2026-11-15T04:59:00Z'
+updated_date: '2026-11-27T02:03:00Z'
 labels:
   - d2d
   - feature

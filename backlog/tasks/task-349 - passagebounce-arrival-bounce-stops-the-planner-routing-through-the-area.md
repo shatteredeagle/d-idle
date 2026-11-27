@@ -1,10 +1,11 @@
 ---
 id: TASK-349
 title: 'passagebounce: arrival bounce stops the planner routing through the area'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T22:45:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - bot
   - bug

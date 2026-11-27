@@ -1,10 +1,13 @@
 ---
 id: TASK-733
-title: 'pgprov: result records bot commit, d2d hash, host role, load, pace; a run cut by the wall limit is BLOCKED'
-status: In Progress
+title: >-
+  pgprov: result records bot commit, d2d hash, host role, load, pace; a run cut
+  by the wall limit is BLOCKED
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-21T04:44:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - bot
   - feature

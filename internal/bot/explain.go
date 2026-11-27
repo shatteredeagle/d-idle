@@ -53,6 +53,8 @@ type ExplainView struct {
 	Journey         string             `json:"journey,omitempty"` // why the quest journey is blocked now
 	// Invariants are the monitor counters with a since time; the Hard ones are what the flip watcher reverts on.
 	Invariants []InvCounter `json:"invariants"`
+	// Knobs are the live values of every knob (set by the wiring, not by the runner); tools/flip --verify reads the flipped one.
+	Knobs map[string]float64 `json:"knobs,omitempty"`
 }
 
 type explainState struct {

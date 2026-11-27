@@ -1,10 +1,13 @@
 ---
 id: TASK-183
-title: 'recoverypace: every class sits in Blood Moor on the recovery gold farm for most of the first 90 minutes, so class pace is not measured'
-status: In Progress
+title: >-
+  recoverypace: every class sits in Blood Moor on the recovery gold farm for
+  most of the first 90 minutes, so class pace is not measured
+status: Proposed
 assignee:
   - live-agent
 created_date: '2026-11-08T11:07:00Z'
+updated_date: '2026-11-27T02:03:00Z'
 labels:
   - bot
   - bug

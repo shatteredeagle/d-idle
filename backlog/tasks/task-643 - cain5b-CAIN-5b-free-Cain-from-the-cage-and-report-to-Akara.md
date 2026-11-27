@@ -1,10 +1,11 @@
 ---
 id: TASK-643
 title: 'cain5b: CAIN-5b free Cain from the cage and report to Akara'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-18T15:41:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - bot
   - feature

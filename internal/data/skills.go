@@ -55,7 +55,15 @@ type Skill struct {
 	ELevLen        [3]int
 	Calc           [4]string // calc1..calc4 (radius, duration, ...)
 	AuraLenCalc    string    // auralencalc: duration of the state the skill switches on (frames), see AuraFrames
-	Param          [8]int    // Param1..8 values (par1..par8 in formulas)
+	// AuraState and AuraTargetState are the states.txt names of the aurastate and auratargetstate columns (the state the
+	// skill puts on its caster, and on its target). StateID is the states.txt id of AuraState, 0 when the skill has none
+	// or the state is unknown (states.txt row 0 is "none"); Curse says one of the two states is a curse. Both are
+	// resolved when the DB is indexed (linkSkillStates). S: column names as the fork's `debug states set` reads them
+	// (docs/forkdbg.md); V-offline by the test with stock rows only where the real install is present.
+	AuraState, AuraTargetState string
+	StateID                    int
+	Curse                      bool
+	Param                      [8]int // Param1..8 values (par1..par8 in formulas)
 }
 
 var skillCols = []string{
@@ -66,7 +74,7 @@ var skillCols = []string{
 	"MaxDam", "MaxLevDam1", "MaxLevDam2", "MaxLevDam3", "MaxLevDam4", "MaxLevDam5", "DmgSymPerCalc",
 	"EType", "EMin", "EMinLev1", "EMinLev2", "EMinLev3", "EMinLev4", "EMinLev5",
 	"EMax", "EMaxLev1", "EMaxLev2", "EMaxLev3", "EMaxLev4", "EMaxLev5", "EDmgSymPerCalc", "ELen", "ELevLen1", "ELevLen2", "ELevLen3",
-	"auralencalc", "calc1", "calc2", "calc3", "calc4", "Param1", "Param2", "Param3", "Param4", "Param5", "Param6", "Param7", "Param8",
+	"auralencalc", "aurastate", "auratargetstate", "calc1", "calc2", "calc3", "calc4", "Param1", "Param2", "Param3", "Param4", "Param5", "Param6", "Param7", "Param8",
 }
 
 var skillDescCols = []string{"skilldesc", "SkillPage", "SkillRow", "SkillColumn", "IconCel", "str name", "str short", "str long"}
@@ -113,6 +121,7 @@ func loadSkills(t, desc *Table) []*Skill {
 			s.ELevLen[k] = r.Int("ELevLen" + itoa(k+1))
 		}
 		s.AuraLenCalc = r.Str("auralencalc")
+		s.AuraState, s.AuraTargetState = r.Str("aurastate"), r.Str("auratargetstate")
 		for k := 0; k < 4; k++ {
 			s.Calc[k] = r.Str("calc" + itoa(k+1))
 		}

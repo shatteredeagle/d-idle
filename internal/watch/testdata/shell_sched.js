@@ -49,6 +49,18 @@ const tick = () => { const due = timers; timers = []; due.forEach((t) => t.f());
   (waiting['/api/hero'] || []).splice(0).forEach((w) => w.rej(new Error('boom')));
   await settle();
   assert.ok(hero.every((s) => s.got.join() === 'h1,h2,err' && !s.inflight), 'a failure releases every slot');
+  // a page restored from the back-forward cache: the request that was in flight is gone for good; rewake asks again at once
+  {
+    now += 9000; tick(); await settle();
+    const before = calls.filter((u) => u === '/api/hero').length;
+    assert.strictEqual(waiting['/api/hero'].length, 1, 'one hanging request');
+    waiting['/api/hero'].length = 0; // the browser dropped it: it will never settle
+    now += 1000; tick(); await settle();
+    assert.strictEqual(calls.filter((u) => u === '/api/hero').length, before, 'without rewake the slot stays in flight');
+    sched.rewake(); tick(); await settle();
+    assert.strictEqual(calls.filter((u) => u === '/api/hero').length, before + 1, 'rewake polls again at once');
+    reply('/api/hero', { v: 'h2b' }); await settle();
+  }
   // a panel whose update throws does not take the others down
   hero[0].api.update = () => { throw new Error('render'); };
   now += 9000; tick(); await settle();

@@ -1,10 +1,11 @@
 ---
 id: TASK-378
 title: 'bounce3: warp arrival bounce, priming click inside d2d warp radius'
-status: In Progress
+status: Done
 assignee:
   - pro-runner
 created_date: '2026-11-12T20:03:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - bot
   - bug

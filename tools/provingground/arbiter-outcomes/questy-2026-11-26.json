@@ -1,0 +1,119 @@
+{
+ "version": "didle.arbiter-outcomes/1",
+ "rules": [
+  {
+   "name": "broke-leaves-the-sell-undone",
+   "hit": "no-earn",
+   "families": [
+    "quest",
+    "level",
+    "goldfarm",
+    "recovery"
+   ],
+   "when": [
+    "in_town==1",
+    "sellable>=1",
+    "pack_gold<kit_gold"
+   ],
+   "why": "a broke hero stands in town with items the vendor would buy and starts a farm or a step instead of selling them first: the gold never comes (soft row no-earn, model of the monitor, U)"
+  },
+  {
+   "name": "dry-area-stays",
+   "hit": "no-earn",
+   "families": [
+    "quest",
+    "level"
+   ],
+   "when": [
+    "area_dry>=1",
+    "pack_gold<kit_gold",
+    "in_town==0"
+   ],
+   "why": "the farm area is dry (no monsters respawn within a game) and the hero keeps leveling or questing there: nothing is earned (soft row no-earn, model of the monitor, U)"
+  },
+  {
+   "name": "drink-skipped-pack",
+   "hit": "potion-not-drunk",
+   "families": [
+    "quest",
+    "level",
+    "chores",
+    "goldfarm",
+    "recovery"
+   ],
+   "when": [
+    "in_town==0",
+    "hostile>=1",
+    "life_pct<survive_below",
+    "potions>=1"
+   ],
+   "why": "life under the drink line with hostiles near and potions in the belt while the choice is not the reflex"
+  }
+ ],
+ "cases": [
+  {
+   "id": "arb.questy-death15-portal",
+   "incident": "incident.questy-death15-cave-1",
+   "family": "survive",
+   "area": "cave_level_1",
+   "chain": "quest",
+   "facts": {
+    "in_town": 0,
+    "life_pct": 33,
+    "hostile": 7,
+    "survive_below": 55,
+    "potions": 6,
+    "potions_min": 4,
+    "pack_gold": 0,
+    "objective": 1
+   },
+   "provenance": "RECORDED chain choice (Questy 2026-11-26 14:58Z, Quest: fighting while the portal cast died to the guard; 7 hostiles, life 33% at the drink line 55, 6 potions). V: the log lines of the death autopsy. The cast bug itself is a shared-mechanism fix (Fighter.PortalInFlight, #1371); the arbiter's part is that it picks survive, whose hook drinks first."
+  },
+  {
+   "id": "arb.questy-poverty-sell",
+   "incident": "incident.questy-poverty-sell",
+   "family": "chores",
+   "area": "town",
+   "chain": "quest",
+   "facts": {
+    "in_town": 1,
+    "life_pct": 100,
+    "hostile": 0,
+    "potions": 3,
+    "potions_min": 4,
+    "pack_gold": 19,
+    "stash_gold": 0,
+    "need_gold": 0,
+    "recovery": 1,
+    "sellable": 7,
+    "kit_gold": 30,
+    "objective": 1,
+    "survive_below": 55
+   },
+   "provenance": "RECORDED chain state (Questy 2026-11-26 20:53Z: recovery stalled, sellable 7 in the log line, gold 19, hero in the camp). U: the price of the kit (30) and the quiet start are assumed."
+  },
+  {
+   "id": "arb.questy-dry-throttle",
+   "incident": "incident.questy-dry-blood-moor",
+   "family": "recovery",
+   "area": "blood_moor",
+   "chain": "level",
+   "facts": {
+    "in_town": 0,
+    "life_pct": 100,
+    "hostile": 0,
+    "potions": 3,
+    "potions_min": 4,
+    "pack_gold": 19,
+    "stash_gold": 0,
+    "need_gold": 0,
+    "recovery": 1,
+    "sellable": 0,
+    "area_dry": 1,
+    "kit_gold": 30,
+    "survive_below": 55
+   },
+   "provenance": "RECORDED chain state (Questy 2026-11-26 20:50Z to 21:18Z: Blood Moor skipped as dry-recovery, kills 6154 and gold 19 constant for 28 minutes, the xp-gain throttle held the fresh game). U: the facts are read from the minute lines, the area_dry fact is new."
+  }
+ ]
+}

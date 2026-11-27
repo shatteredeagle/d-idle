@@ -76,6 +76,12 @@ var toCombat = map[bot.SafetyAction]combat.SafetyAction{
 // LastPortalCast and RecentCasts feed the death autopsy (bot.fighterDiag).
 func (a fighterAdapter) LastPortalCast() combat.PortalCast { return a.f.LastPortalCast() }
 
+// Attacking is the unit id of the current attack target (0: none), read by the guard's fight stall check.
+func (a fighterAdapter) Attacking() uint32 { return a.f.Attacking() }
+
+// IgnoreFor keeps a target out of the fights (bot.blameFightTarget).
+func (a fighterAdapter) IgnoreFor(id uint32, d time.Duration) { a.f.IgnoreFor(id, d) }
+
 // PortalInFlight tells the guard that the fight loop is casting a town portal (bot.portalInFlight).
 func (a fighterAdapter) PortalInFlight() bool                           { return a.f.PortalInFlight() }
 func (a fighterAdapter) RecentCasts(w time.Duration) (int, map[int]int) { return a.f.RecentCasts(w) }

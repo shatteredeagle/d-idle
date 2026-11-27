@@ -17,6 +17,7 @@ func TestGateRefusalIsTypedNoStrike(t *testing.T) {
 	for _, class := range []d2.Class{d2.Sorceress, d2.Barbarian} {
 		g := newRig(t)
 		g.w.set(func(w *world) { w.state = d2.StateInGame; w.area = 2; w.class = class })
+		g.r.poll() // the wake facts of a refusal read the latest snapshot: without one the first look has no facts and the second logs a change
 		buf := &lockedBuf{}
 		g.r.e.Log = slog.New(slog.NewTextHandler(buf, nil))
 		mk := func() error {

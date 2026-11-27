@@ -1,10 +1,11 @@
 ---
 id: TASK-360
 title: 'cutfix: checklist accepts an empty UPDATE_FEED (CI red)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-12T14:33:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - container
   - bug

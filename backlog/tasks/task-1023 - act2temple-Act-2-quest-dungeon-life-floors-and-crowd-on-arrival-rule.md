@@ -1,10 +1,11 @@
 ---
 id: TASK-1023
 title: 'act2temple: Act 2 quest dungeon life floors and crowd-on-arrival rule'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-26T20:00:00Z'
+updated_date: '2026-11-27T02:03:00Z'
 labels:
   - bot
   - bot-fix

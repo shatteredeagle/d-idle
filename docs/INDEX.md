@@ -375,12 +375,16 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 `design/`
 
+- [input-i3.md](design/input-i3.md): Input layer I3: town portal by verb; stat and skill points by verb (status: bot side built offline (TASK-986, card inputl3, 2026-11-27), dark behind `input.planner` (0) and the...)
 - [item-colour-2026-11-18.md](design/item-colour-2026-11-18.md): Item colour in the inventory art: chain and slice plan (2026-11-18) (status: design, task-634 (card itemcolour). Follow-up to jewelcolor (task-632), which removed the invented wash....)
 - [item-verbs.md](design/item-verbs.md): Item verbs: inventory, stash and equipment actions through d2d's own item handlers (TASK-367) (status: DESIGN plus the built verbs (equip, unequip, move, identify, drop, gold, `caps`), 2026-11-12; stage 2 and...)
 - [loot-vault-2026-11-16.md](design/loot-vault-2026-11-16.md): Ethereal Vault: a database of every drop, created in the game only on Keep (design and feasibility) (status: DESIGN, 2026-11-16. Nothing here was built or run; the fork was read, not changed. "Ethereal Vault" is the...)
 - [necromancer-sme-answers-2026-11-22.md](design/necromancer-sme-answers-2026-11-22.md): Necromancer build answers for the unattended bot (SME, 2026-11-22) (status: current. Answers the five questions of `docs/probes/necromancer-readiness-2026-11-22.md` section 4 (card...)
+- [proptest-t3.md](design/proptest-t3.md): Property tests on the pure deciders (T3) (status: current (TASK-980, card proptest1). Roadmap row T3, docs/research/fable-logic-review-2026-11-25.md section...)
 - [quest-board-2026-11-16.md](design/quest-board-2026-11-16.md): Quest board: quests as events the player takes part in (status: design proposal (2026-11-16, card questdesign, TASK-575), not built; waits for the user's answers (section...)
 - [stepexec-p9.md](design/stepexec-p9.md): P9: the generic step executor (card stepexec1, TASK-976) (status: current (2026-11-26). Source: docs/research/fable-logic-review-2026-11-25.md 2.4 (classes F, H), 7.1 P9;...)
+- [ticklog-t4.md](design/ticklog-t4.md): Recorded sessions: the tick line (T4) (status: current (card ticklog, TASK-981, 2026-11-26). Roadmap row T4 (docs/roadmap-fable.md); why:...)
+- [townflip-p5.md](design/townflip-p5.md): townflip: finishing and flipping town.plan (roadmap P5, TASK-972) (status: current (2026-11-26). Runbook and state of the knob `town.plan` stage by stage. Design: town-planner.md;...)
 - [ui-build-ratings-sme-2026-11-22.md](design/ui-build-ratings-sme-2026-11-22.md): Build catalogue: ballpark star thresholds and first-draft ratings (SME, 2026-11-22) (status: current. Answers `docs/design/fable-review-2026-11-22/ui-unification.md` sections D3 and D5 (user decision...)
 - [desktop-app.md](desktop-app.md): Desktop app: d2idle-watch (status: the Go launcher is the FALLBACK; the main desktop app is now `apps/desktop-electron`...)
 - [desktop-electron.md](desktop-electron.md): Desktop app on Electron: d2idle-watch (status: built, not yet run on real desktops (TASK-289 skeleton, TASK-290 tray, autostart, hide-to-tray, update...)
@@ -944,6 +948,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [fork-sync-cadence.md](process/fork-sync-cadence.md): Fork sync cadence (status: current (card forksync, 2026-11-23). Keeps the private d2d fork close to upstream so a rebase stays small....)
 - [friends-gamedata-2026-11-15.md](process/friends-gamedata-2026-11-15.md): Friends game-data bundle (2026-11-15)
 - [gamecode-guard.md](process/gamecode-guard.md): Game-code guard, labpath class, path scrubber
+- [generated-files.md](process/generated-files.md): Generated and single-source files (dedupdata, 2026-11-27) (status: current. Reason: most merge conflicts of the speed review (docs/research/speed-review-2026-11-27.md) were...)
 - [grill-agent.md](process/grill-agent.md): The grill agent: one command to be interviewed
 - [grill-queue-2026-11-11.md](process/grill-queue-2026-11-11.md): Grill queue 2026-11-11: paste-ready decisions, ADR drafts and glossary text (status: input for the user's next grill session (TASK-342). Docs only. Nothing here is written to...)
 - [grill-workflow.md](process/grill-workflow.md): Grill workflow: deciding with the user in a dedicated session (status: the "create change cards with changecheck new" step is retired for new work (OpenSpec retired, user...)

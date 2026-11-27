@@ -1,10 +1,11 @@
 ---
 id: TASK-433
 title: 'prpost4: post the swing-start PR (upstream 530) and answer CodeRabbit'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-14T16:21:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - d2d
   - upstream-pr

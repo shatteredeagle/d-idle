@@ -1,10 +1,11 @@
 ---
 id: TASK-337
 title: 'campaign1: guided planner, modes, intents, persisted journey state'
-status: In Progress
+status: Proposed
 assignee:
   - credit-runner
 created_date: '2026-11-11T20:15:00Z'
+updated_date: '2026-11-27T02:03:00Z'
 labels:
   - bot
   - feature

@@ -1,10 +1,13 @@
 ---
 id: TASK-352
-title: 'prpost: post Lightning last-unit and Cold Enchanted upstream PRs #444 and #445 and watch CodeRabbit'
-status: Proposed
+title: >-
+  prpost: post Lightning last-unit and Cold Enchanted upstream PRs #444 and #445
+  and watch CodeRabbit
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-12T01:28:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - d2d
   - upstream-pr

@@ -21,8 +21,14 @@
    "enable_criteria": "Per family: d2scenario arbiter-replay verdict passes and the incident scenario rows green on a lockstep run, then flip on ONE sandbox with bot.arbiterShadow 1, 24 h invariant-monitor watch with automatic revert on a hard breach (docs/process/dark-launch.md), owner go per family",
    "owner": "coordinator",
    "review_by": "2026-12-09",
-   "status": "dark",
-   "criteria_met": "no"
+   "status": "enabled",
+   "criteria_met": "no",
+   "trial_started": "2026-11-26T22:23:04Z",
+   "trial_instance": "d2play-20261108",
+   "trial_value": 1.0,
+   "trial_window": "1800s",
+   "trial_why": "accelerated soak: arbiter survive+player",
+   "enabled_at": "2026-11-26T22:54:00Z"
   },
   {
    "name": "town.plan",
@@ -32,8 +38,15 @@
    "enable_criteria": "Stage 2 scenario set green; scenario/drill green, then flip on the sandboxes with a 24 h invariant-monitor watch and automatic revert on a hard breach; stages 3, 4, 5 the same, one at a time (owner looks before 3 to 5, ADR 0028)",
    "owner": "coordinator",
    "review_by": "2026-12-09",
-   "status": "dark",
-   "criteria_met": "U"
+   "status": "enabled",
+   "criteria_met": "U",
+   "trial_started": "2026-11-26T23:25:47Z",
+   "trial_instance": "d2play-20261108",
+   "trial_value": 2.0,
+   "trial_window": "2700s",
+   "trial_why": "accelerated soak: bundle 2",
+   "trial_bundle": "town.plan,bot.portalGuard,combat.deliveryExpect,combat.threatDodge,combat.standOK,combat.missileDodge,bot.checkpointEnable",
+   "enabled_at": "2026-11-27T00:11:21Z"
   },
   {
    "name": "quests.boardSM",
@@ -54,8 +67,15 @@
    "enable_criteria": "Live drill green (portal cast healthy, retreat at low life, return after death); scenario/drill green, then flip on the sandboxes with a 24 h invariant-monitor watch and automatic revert on a hard breach",
    "owner": "coordinator",
    "review_by": "2026-12-09",
-   "status": "dark",
-   "criteria_met": "U"
+   "status": "enabled",
+   "criteria_met": "U",
+   "trial_started": "2026-11-26T23:25:47Z",
+   "trial_instance": "d2play-20261108",
+   "trial_value": 1.0,
+   "trial_window": "2700s",
+   "trial_why": "accelerated soak: bundle 2",
+   "trial_bundle": "town.plan,bot.portalGuard,combat.deliveryExpect,combat.threatDodge,combat.standOK,combat.missileDodge,bot.checkpointEnable",
+   "enabled_at": "2026-11-27T00:11:21Z"
   },
   {
    "name": "resource.pointsDecisions",
@@ -120,8 +140,15 @@
    "enable_criteria": "Live drill: dodge succeeds vs fire wall, lightning, hydra; no flail",
    "owner": "coordinator",
    "review_by": "2026-12-09",
-   "status": "dark",
-   "criteria_met": "U"
+   "status": "enabled",
+   "criteria_met": "U",
+   "trial_started": "2026-11-26T23:25:47Z",
+   "trial_instance": "d2play-20261108",
+   "trial_value": 1.0,
+   "trial_window": "2700s",
+   "trial_why": "accelerated soak: bundle 2",
+   "trial_bundle": "town.plan,bot.portalGuard,combat.deliveryExpect,combat.threatDodge,combat.standOK,combat.missileDodge,bot.checkpointEnable",
+   "enabled_at": "2026-11-27T00:11:21Z"
   },
   {
    "name": "combat.threatDodge",
@@ -131,8 +158,15 @@
    "enable_criteria": "Live drill green; then scenario/drill green, then flip on the sandboxes with a 24 h invariant-monitor watch and automatic revert on a hard breach",
    "owner": "coordinator",
    "review_by": "2026-12-09",
-   "status": "dark",
-   "criteria_met": "U"
+   "status": "enabled",
+   "criteria_met": "U",
+   "trial_started": "2026-11-26T23:25:47Z",
+   "trial_instance": "d2play-20261108",
+   "trial_value": 1.0,
+   "trial_window": "2700s",
+   "trial_why": "accelerated soak: bundle 2",
+   "trial_bundle": "town.plan,bot.portalGuard,combat.deliveryExpect,combat.threatDodge,combat.standOK,combat.missileDodge,bot.checkpointEnable",
+   "enabled_at": "2026-11-27T00:11:21Z"
   },
   {
    "name": "combat.standOK",
@@ -142,8 +176,15 @@
    "enable_criteria": "Live drill with a standing Fallen",
    "owner": "coordinator",
    "review_by": "2026-12-09",
-   "status": "dark",
-   "criteria_met": "U"
+   "status": "enabled",
+   "criteria_met": "U",
+   "trial_started": "2026-11-26T23:25:47Z",
+   "trial_instance": "d2play-20261108",
+   "trial_value": 1.0,
+   "trial_window": "2700s",
+   "trial_why": "accelerated soak: bundle 2",
+   "trial_bundle": "town.plan,bot.portalGuard,combat.deliveryExpect,combat.threatDodge,combat.standOK,combat.missileDodge,bot.checkpointEnable",
+   "enabled_at": "2026-11-27T00:11:21Z"
   },
   {
    "name": "combat.minionRead",
@@ -164,8 +205,15 @@
    "enable_criteria": "Mode 1 failure log reviewed; then scenario/drill green, then flip on the sandboxes with a 24 h invariant-monitor watch and automatic revert on a hard breach",
    "owner": "coordinator",
    "review_by": "2026-12-09",
-   "status": "dark",
-   "criteria_met": "U"
+   "status": "enabled",
+   "criteria_met": "U",
+   "trial_started": "2026-11-26T23:25:47Z",
+   "trial_instance": "d2play-20261108",
+   "trial_value": 1.0,
+   "trial_window": "2700s",
+   "trial_why": "accelerated soak: bundle 2",
+   "trial_bundle": "town.plan,bot.portalGuard,combat.deliveryExpect,combat.threatDodge,combat.standOK,combat.missileDodge,bot.checkpointEnable",
+   "enabled_at": "2026-11-27T00:11:21Z"
   },
   {
    "name": "nav.fullGrid",
@@ -241,8 +289,15 @@
    "enable_criteria": "Drill R3 green",
    "owner": "coordinator",
    "review_by": "2026-12-09",
-   "status": "dark",
-   "criteria_met": "U"
+   "status": "enabled",
+   "criteria_met": "U",
+   "trial_started": "2026-11-26T23:25:47Z",
+   "trial_instance": "d2play-20261108",
+   "trial_value": 1.0,
+   "trial_window": "2700s",
+   "trial_why": "accelerated soak: bundle 2",
+   "trial_bundle": "town.plan,bot.portalGuard,combat.deliveryExpect,combat.threatDodge,combat.standOK,combat.missileDodge,bot.checkpointEnable",
+   "enabled_at": "2026-11-27T00:11:21Z"
   },
   {
    "name": "bot.farmReset",
@@ -384,6 +439,46 @@
    "enable_criteria": "Scenarios cain.scroll.stepexec and cain.read.stepexec green 2 of 3 runs each on the lab, then flip on one sandbox with a 24 h watch and auto-revert on a hard breach (docs/process/dark-launch.md); the old handler is deleted after the watch.",
    "owner": "coordinator",
    "review_by": "2026-12-03",
+   "status": "dark",
+   "criteria_met": "no"
+  },
+  {
+   "name": "bot.arbiterFamilies",
+   "built_by": "arbfam (#1377, #1387)",
+   "dark_since": "2026-11-26",
+   "why_off": "Family mask of the arbiter control path (default 3: survive and player); takes effect only with bot.arbiterControl 1, which is dark. Flipped together with it as one bundle.",
+   "enable_criteria": "Accelerated soak green plus a 45 min live watch on one sandbox with automatic revert on a hard breach (docs/process/dark-launch.md, bundle flip)",
+   "owner": "coordinator",
+   "review_by": "2026-12-09",
+   "status": "enabled",
+   "criteria_met": "U",
+   "trial_started": "2026-11-26T22:54:58Z",
+   "trial_instance": "d2play-20261108",
+   "trial_value": 255.0,
+   "trial_window": "1800s",
+   "trial_why": "accelerated soak: all wired families",
+   "trial_bundle": "bot.arbiterFamilies",
+   "enabled_at": "2026-11-26T23:25:41Z"
+  },
+  {
+   "name": "bot.tickLogSec",
+   "built_by": "ticklog (TASK-981)",
+   "dark_since": "2026-11-26",
+   "why_off": "Log volume: one tick line per second is about 3600 lines an hour. Built and tested offline only; no sandbox night recorded yet.",
+   "enable_criteria": "Set to 1 on both sandboxes for one night; cmd/d2arbiter -follow replays each night log without a panic or a parse error (procedure docs/design/ticklog-t4.md); 24 h watch with automatic revert on a hard breach",
+   "owner": "coordinator",
+   "review_by": "2026-12-09",
+   "status": "dark",
+   "criteria_met": "no"
+  },
+  {
+   "name": "combat.deliveryUpkeep",
+   "built_by": "dlv-upkeep-state (TASK-722)",
+   "dark_since": "2026-11-27",
+   "why_off": "Built and tested offline only (simulator, two builds). The buff state ids now come from Skills.txt aurastate; no live or Proving Ground run has read them back for Paladin, Barbarian or Druid.",
+   "enable_criteria": "Mode 1 shadow on a sandbox night shows no disagreement beyond the state learning lines; scenario combat.buffs-stay-up green for Sorceress and Barbarian at mode 2; then 24 h watch with automatic revert on a hard breach",
+   "owner": "coordinator",
+   "review_by": "2026-12-11",
    "status": "dark",
    "criteria_met": "no"
   }

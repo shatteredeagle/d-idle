@@ -1,10 +1,13 @@
 ---
 id: TASK-997
-title: 'arbfam: arbiter families chores claim goldfarm recovery quest level behind bot.arbiterFamilies'
-status: Proposed
+title: >-
+  arbfam: arbiter families chores claim goldfarm recovery quest level behind
+  bot.arbiterFamilies
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-26T17:39:00Z'
+updated_date: '2026-11-27T02:03:00Z'
 labels:
   - bot
   - feature
@@ -25,6 +28,7 @@ owns:
   - "docs/knobs.md"
 exclusive: []
 contracts: []
+result: "Arbiter families for chores, claim, goldfarm, recovery, quest and level are in, behind the bot.arbiterFamilies knob; merged with the arbfam4 branch."
 ---
 
 ## Description

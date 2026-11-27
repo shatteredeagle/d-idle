@@ -1,10 +1,11 @@
 ---
 id: TASK-711
 title: 'chores2: shop buys healing to the route guard kit minimum'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-21T03:06:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - bot
   - bot-fix

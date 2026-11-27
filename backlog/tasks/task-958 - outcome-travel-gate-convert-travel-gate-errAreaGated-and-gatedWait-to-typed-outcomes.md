@@ -1,10 +1,13 @@
 ---
 id: TASK-958
-title: 'outcome-travel-gate: convert travel gate errAreaGated and gatedWait to typed outcomes'
-status: In Progress
+title: >-
+  outcome-travel-gate: convert travel gate errAreaGated and gatedWait to typed
+  outcomes
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-26T03:41:00Z'
+updated_date: '2026-11-27T02:03:00Z'
 labels:
   - bot
   - feature

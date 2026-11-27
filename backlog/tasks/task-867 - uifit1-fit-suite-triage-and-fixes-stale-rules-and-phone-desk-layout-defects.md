@@ -1,10 +1,11 @@
 ---
 id: TASK-867
 title: 'uifit1: fit suite triage and fixes (stale rules and phone/desk layout defects)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-23T07:10:00Z'
+updated_date: '2026-11-27T02:03:00Z'
 labels:
   - watch
   - bug

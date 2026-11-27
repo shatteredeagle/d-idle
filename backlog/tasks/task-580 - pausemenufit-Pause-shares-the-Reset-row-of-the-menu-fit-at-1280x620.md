@@ -1,10 +1,11 @@
 ---
 id: TASK-580
 title: 'pausemenufit: Pause shares the Reset row of the menu (fit at 1280x620)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-17T03:05:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - watch
   - bug

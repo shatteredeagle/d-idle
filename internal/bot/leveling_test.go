@@ -366,3 +366,30 @@ func TestStarveAreaWithoutPortalIsInTheCharactersAct(t *testing.T) {
 		t.Fatalf("act 2 character without a portal: area %d (act %d) ok %v", a, g.r.d.Plan.Act(a), ok)
 	}
 }
+
+// Questy 2026-11-26 deploy 83: the hero stood in the Rogue Encampment for 28 minutes (clvl 13, 3 potions, no portal scroll, 19 gold,
+// xp frozen, 0 hostiles) because nothing let it leave to earn gold. Whatever the rules say about the kit, a hero in town with
+// nothing to buy must go and farm the first field at least. Two classes.
+func TestPoorHeroInTownLeavesToFarm(t *testing.T) {
+	for _, class := range []d2.Class{d2.Paladin, d2.Sorceress} {
+		g := newRig(t, func(c *Config, d *Deps, tu *env.Tuning) { tu.Route.EarlyRoute = 1; tu.Resource.RecoveryKitGate = 1 })
+		g.mover.exploreFn = blockExplore
+		g.w.set(func(w *world) {
+			w.class, w.level, w.area, w.gold0 = class, 13, 1, 19
+			var keep []d2.Unit
+			for _, u := range w.items {
+				if u.Class != 1 && u.Class != 5 {
+					keep = append(keep, u)
+				}
+			}
+			w.items = keep
+			for i := 0; i < 3; i++ {
+				w.items = append(w.items, d2.Unit{ID: uint32(700 + i), Type: d2.TypeItem, Class: 1, Item: &d2.Item{Where: d2.ContBelt}})
+			}
+		})
+		g.run()
+		g.r.Start(reach(14))
+		g.waitFor("left town to farm", func() bool { return g.r.Status().Character.AreaID != 1 && g.w.count("explore") > 0 })
+		g.finish()
+	}
+}

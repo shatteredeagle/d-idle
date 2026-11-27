@@ -1,10 +1,11 @@
 ---
 id: TASK-414
 title: 'levelplan3: level plan v3 as per-class data (XP table, survival gates, sim)'
-status: In Progress
+status: Done
 assignee:
   - pro-runner
 created_date: '2026-11-14T11:59:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - bot
   - feature

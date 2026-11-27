@@ -295,7 +295,10 @@ function makeScheduler() {
     const es = window.d2events || (window.d2events = new EventSource('/api/events'));
     es.addEventListener('change', () => { changed = true; });
   }
-  return { add(s) { s.next = 0; s.fails = 0; slots.push(s); }, start: tick, poke(id) { slots.forEach((s) => { if (s.m.id === id) s.next = 0; }); } };
+  // A page restored from the back-forward cache (the Back button from the Vault) keeps its in-flight requests, which the browser
+  // killed while it was frozen: forget them and poll everything now instead of waiting for a timeout that may never come.
+  const rewake = () => { flying.clear(); slots.forEach((s) => { s.inflight = false; s.stopped = false; s.fails = 0; s.next = 0; }); };
+  return { add(s) { s.next = 0; s.fails = 0; slots.push(s); }, start: tick, rewake, poke(id) { slots.forEach((s) => { if (s.m.id === id) s.next = 0; }); } };
 }
 
 // ---- layout manifest (docs/ui-design-system.md section 6.4) ----
@@ -967,6 +970,7 @@ async function start() {
   const slotList = list.filter((m) => m.slot).map((m) => ({ id: m.id, title: m.title }));
   if (layoutReq) list = selectPanels(list, sel && sel.layout, html.dataset.mode);
   const sched = theSched = makeScheduler();
+  window.addEventListener('pageshow', (e) => { if (e.persisted) sched.rewake(); });
   // the Help button opens the onboarding panel's Help entries (panels/onboarding), which listens for this event
   const helpBtn = document.getElementById('btn-help');
   // in the cockpit the panel lives in a drawer: open it; the panel opens its Help on every d2help while it sits in a drawer, so a

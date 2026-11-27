@@ -1,10 +1,11 @@
 ---
 id: TASK-523
 title: 'lootwire-L2: hireling wear data (which hireling types can wear an item)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-16T02:10:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - bot
   - feature

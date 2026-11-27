@@ -436,6 +436,8 @@ func (r *Runner) do(ctx context.Context, c control, st State, activity string, t
 		}
 		l.trip = &trip{plan: r.fullChores("emergency town portal"), returnTo: fieldArea0(area), emergency: true}
 		r.setLastTrip(r.e.Clock.Now())
+	case errors.Is(cause, errFightStall):
+		r.blameFightTarget() // not a failure: the next step plans again
 	case errors.Is(cause, errLeftTown):
 		// The chores left the town (a portal, an exit walked by mistake): not a failure. The trip is out of town, so the next
 		// step starts it again from the way home (advanceTrip).
@@ -1134,6 +1136,10 @@ func (r *Runner) guardOnce(ctx context.Context, cancel context.CancelCauseFunc, 
 			return false
 		}
 		r.stallCheck(snap, now) // diagnostic only (stallguard.go)
+		if r.fightStallCheck(snap, now, st) {
+			cancel(errFightStall)
+			return true
+		}
 		if isDead(snap.Player) {
 			cancel(errDied)
 			return true

@@ -1,10 +1,13 @@
 ---
 id: TASK-332
-title: 'prprep: upstream PR prep: audit of local candidates, Lightning and Cold Enchanted rebased with differentials, drafts, pr-queue'
-status: Proposed
+title: >-
+  prprep: upstream PR prep: audit of local candidates, Lightning and Cold
+  Enchanted rebased with differentials, drafts, pr-queue
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T19:35:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - d2d
   - upstream-pr

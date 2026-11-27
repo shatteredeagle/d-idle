@@ -1,10 +1,13 @@
 ---
 id: TASK-865
-title: 'failspend: a failed board step spends game time so the lockstep clock reaches the failure gap'
-status: Proposed
+title: >-
+  failspend: a failed board step spends game time so the lockstep clock reaches
+  the failure gap
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-23T06:51:00Z'
+updated_date: '2026-11-27T02:03:00Z'
 labels:
   - bot
   - bot-fix

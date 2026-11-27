@@ -224,3 +224,49 @@ func TestLevelOutcomes(t *testing.T) {
 		}
 	}
 }
+
+const questy1126Outcomes = "../../tools/provingground/arbiter-outcomes/questy-2026-11-26.json"
+
+// The Questy 2026-11-26 cases (death 15, the poverty deadlock, the dry area): the chain's recorded choice hits a row, the arbiter's
+// choice does not. Death 15: the chain's quest step against a hard potion-not-drunk, the arbiter picks survive. Poverty: a broke hero
+// in the camp with sellable items sells first (chores) instead of a quest step. Dry area: recovery with the new game step instead of
+// leveling in the dry field. MUST-FAIL halves: without the sellable fact, or without the area_dry fact, the arbiter's pick does not
+// improve on the chain.
+func TestQuesty1126Outcomes(t *testing.T) {
+	f, err := LoadOutcomes(questy1126Outcomes)
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := map[string]struct {
+		arbiter    string
+		chainHits  int
+		arbiterHit int
+	}{"arb.questy-death15-portal": {"survive", 1, 0}, "arb.questy-poverty-sell": {"chores", 1, 0}, "arb.questy-dry-throttle": {"recovery", 1, 0}}
+	for _, c := range f.Cases {
+		w := want[c.ID]
+		s := f.Score(c, DefaultConfig())
+		if s.Arbiter != w.arbiter || len(s.ChainHits) != w.chainHits || len(s.ArbiterHits) != w.arbiterHit {
+			t.Errorf("%s: arbiter %q chain hits %v arbiter hits %v, want %+v", c.ID, s.Arbiter, s.ChainHits, s.ArbiterHits, w)
+		}
+	}
+	for _, c := range f.Cases {
+		var drop string
+		switch c.ID {
+		case "arb.questy-poverty-sell":
+			drop = FactSellable
+		case "arb.questy-dry-throttle":
+			drop = FactAreaDry
+		default:
+			continue
+		}
+		m := map[string]int{}
+		for k, v := range c.Facts {
+			m[k] = v
+		}
+		m[drop] = 0
+		c.Facts = m
+		if s := f.Score(c, DefaultConfig()); len(s.ChainHits) != 0 && len(s.ArbiterHits) == 0 && s.Arbiter == want[c.ID].arbiter && drop == FactSellable {
+			t.Errorf("%s: without %s the case still shows the arbiter beating the chain: %+v", c.ID, drop, s)
+		}
+	}
+}

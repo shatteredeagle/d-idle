@@ -1,10 +1,11 @@
 ---
 id: TASK-410
 title: 'boss1: Act 1 Normal boss and unique fights, min safe clvl and tactics'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-14T11:29:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - docs
   - research

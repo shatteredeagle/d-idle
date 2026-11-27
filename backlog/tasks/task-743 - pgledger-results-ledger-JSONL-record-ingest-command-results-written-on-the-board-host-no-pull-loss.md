@@ -1,10 +1,13 @@
 ---
 id: TASK-743
-title: 'pgledger: results ledger: JSONL record, ingest command, results written on the board host (no pull loss)'
-status: In Progress
+title: >-
+  pgledger: results ledger: JSONL record, ingest command, results written on the
+  board host (no pull loss)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-21T04:48:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - bot
   - feature

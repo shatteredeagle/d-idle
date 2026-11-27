@@ -1,10 +1,11 @@
 ---
 id: TASK-957
 title: 'outcome-task-step: convert taskStep and planningBlock to typed outcomes'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-26T03:41:00Z'
+updated_date: '2026-11-27T02:03:00Z'
 labels:
   - bot
   - feature

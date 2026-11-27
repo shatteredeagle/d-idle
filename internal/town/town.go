@@ -56,13 +56,16 @@ type Town struct {
 	judge Judge
 	h     *hand.Hand
 
-	kitHealing    int            // ChorePlan.KitHealing of the visit under way
-	kitMana       int            // ChorePlan.KitMana of the visit under way
-	purseSpend    int            // town.plan >= 3: the gold the visit under way plans to spend (plan.Spent); the purse keeps it on top of the carry line
-	reserveGold   int            // ChorePlan.ReserveGold of the visit under way: optional shop buys stay above it
-	sellMarksOnly bool           // set while a visit sells the player's marks but not the pickit's junk
-	marks         ItemMarks      // the player's sell and keep marks (SetItemMarks)
-	pinned        func(int) bool // the player's slot pins (SetPinned)
+	kitHealing    int                    // ChorePlan.KitHealing of the visit under way
+	kitMana       int                    // ChorePlan.KitMana of the visit under way
+	visitProfile  string                 // supply profile of the chores visit under way ("" = field); the stage 4 sell keep reads it
+	excursion     atomic.Pointer[string] // supply profile the last chores visit filled to; the stage 4 pickup reads it (nil = field)
+	pickupErr     atomic.Pointer[string] // last plan error the pickup logged
+	purseSpend    int                    // town.plan >= 3: the gold the visit under way plans to spend (plan.Spent); the purse keeps it on top of the carry line
+	reserveGold   int                    // ChorePlan.ReserveGold of the visit under way: optional shop buys stay above it
+	sellMarksOnly bool                   // set while a visit sells the player's marks but not the pickit's junk
+	marks         ItemMarks              // the player's sell and keep marks (SetItemMarks)
+	pinned        func(int) bool         // the player's slot pins (SetPinned)
 
 	bulk     *BulkID // bulk identify (SetBulkID); nil: the chore is off
 	bulkIdle int     // pack item count at the last trip that planned nothing (-1: none), see bulkid.go
@@ -127,6 +130,7 @@ func New(e *env.Env, mv Mover) *Town {
 	t := &Town{e: e, mv: mv, h: hand.New(e), sellByCursor: true, tidyDrops: tidy.NewDrops(func() time.Time { return e.Clock.Now() })}
 	t.judge = loot.New(e, mv)
 	t.owner = t.readOwner
+	t.shareLooter(t.judge)
 	return t
 }
 
@@ -240,6 +244,7 @@ func (t *Town) markOf(u d2.Unit) string {
 // SetJudge replaces the item judge.
 func (t *Town) SetJudge(j Judge) {
 	t.judge = j
+	t.shareLooter(j)
 	if t.build != "" {
 		if l, ok := j.(*loot.Looter); ok {
 			l.SetBuild(t.build)

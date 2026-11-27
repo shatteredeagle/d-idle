@@ -1,10 +1,13 @@
 ---
 id: TASK-709
-title: 'boardprereq: accepting a chunk accepts its unmet prerequisite chain, a lone later record is repaired at board load'
-status: Proposed
+title: >-
+  boardprereq: accepting a chunk accepts its unmet prerequisite chain, a lone
+  later record is repaired at board load
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-21T02:55:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - bot
   - bug

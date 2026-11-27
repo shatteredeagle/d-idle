@@ -1,10 +1,11 @@
 ---
 id: TASK-657
 title: 'forkrebase2: regular fork rebase routine, script and first round (devp13)'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-19T14:06:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - d2d
   - chore

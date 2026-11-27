@@ -1,10 +1,11 @@
 ---
 id: TASK-699
 title: 'countess: walk to her known spawn when the preset and hint fail on d2d'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-20T19:34:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - bot
   - bot-fix
@@ -38,4 +39,3 @@ Why: on d2d the Countess has no monster preset, the Kolbot hint is refused by th
 - [x] #1 Unit test (Paladin and Sorceress arrival) fails without the fix, passes with it
 - [ ] #2 act1.forgotten.countess GREEN Paladin 11 and Sorceress 3 on the builder (CHEATED setup, mechanics only)
 <!-- AC:END -->
-

@@ -1,10 +1,11 @@
 ---
 id: TASK-721
 title: 'dlv-reads: flag-gated read verbs: minions, skillstate, combat events'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-21T04:41:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - bot
   - feature

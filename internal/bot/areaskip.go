@@ -161,3 +161,29 @@ func (r *Runner) deadNow() bool {
 	s := r.latest()
 	return s != nil && isDead(s.Player)
 }
+
+// dryAreas lists the areas currently kept out of play because they ran dry (dry-recovery, kill-drought): monsters do not respawn
+// within a game, so only a new game refills them.
+func (r *Runner) dryAreas() []int {
+	now := r.e.Clock.Now()
+	r.obMu.Lock()
+	defer r.obMu.Unlock()
+	var out []int
+	for a, until := range r.avoid {
+		if until.After(now) && (r.avoidWhy[a] == whyDryRecovery || r.avoidWhy[a] == whyDrought) {
+			out = append(out, a)
+		}
+	}
+	sort.Ints(out)
+	return out
+}
+
+// forgetDry lifts the dry skips: a new game repopulated those areas.
+func (r *Runner) forgetDry() {
+	for _, a := range r.dryAreas() {
+		r.obMu.Lock()
+		delete(r.avoid, a)
+		delete(r.avoidWhy, a)
+		r.obMu.Unlock()
+	}
+}

@@ -1,10 +1,13 @@
 ---
 id: TASK-846
-title: 'allocfix: auto-alloc skills before stats, summoner Vit-first, Points page says what is spent'
-status: Proposed
+title: >-
+  allocfix: auto-alloc skills before stats, summoner Vit-first, Points page says
+  what is spent
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-23T03:43:00Z'
+updated_date: '2026-11-27T02:03:00Z'
 labels:
   - bot
   - bug

@@ -536,3 +536,38 @@ func TestKitFloorTiersEndThePovertyDeadlock(t *testing.T) {
 		}
 	}
 }
+
+// The quest-walk kit rule (no portal scroll, gold under the price: "farm gold first") never closes the first field: the hero must
+// be able to go and earn the gold (Questy 2026-11-26, 28 minutes of frozen xp). Other fields stay closed. Two classes.
+func TestQuestWalkRuleLeavesTheFirstFieldOpen(t *testing.T) {
+	for _, class := range []d2.Class{d2.Paladin, d2.Sorceress} {
+		g := newRig(t, func(c *Config, d *Deps, tu *env.Tuning) { tu.Route.EarlyRoute = 1 })
+		g.w.set(func(w *world) {
+			w.class, w.level, w.area, w.gold0 = class, 13, 1, 19
+			var keep []d2.Unit
+			for _, u := range w.items {
+				if u.Class != 1 && u.Class != 5 {
+					keep = append(keep, u)
+				}
+			}
+			w.items = keep
+			for i := 0; i < 3; i++ {
+				w.items = append(w.items, d2.Unit{ID: uint32(700 + i), Type: d2.TypeItem, Class: 1, Item: &d2.Item{Where: d2.ContBelt}})
+			}
+		})
+		g.r.poll()
+		var w task.World
+		g.r.fillEarly(&w)
+		if w.WalkBlocked.Why == "" || w.FirstField == 0 {
+			t.Fatalf("%v: walk %+v first field %d", class, w.WalkBlocked, w.FirstField)
+		}
+		first, other := w.FirstField, w.FirstField+1
+		w.Area = 1
+		if f := task.StepClear("c", "clear", first, func(task.World) bool { return false }, 60*1e9).Ready(w); f != nil {
+			t.Errorf("%v: the first field is closed: %+v", class, f)
+		}
+		if f := task.StepClear("c", "clear", other, func(task.World) bool { return false }, 60*1e9).Ready(w); f == nil {
+			t.Errorf("%v: another field is open without the kit", class)
+		}
+	}
+}

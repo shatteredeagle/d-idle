@@ -8,6 +8,7 @@ import (
 	"runtime"
 	"sort"
 	"strings"
+	"sync/atomic"
 	"time"
 
 	"d2lod-bot/internal/combat"
@@ -77,8 +78,9 @@ type observer struct {
 	lastProgress  time.Time
 	campaignAt    time.Time // last campaign progress (stall.go): kill or xp, non-town area entered, purchase, quest step
 	rearmAt       time.Time
-	real          uint64    // progress that resets the failsafe ladder
-	killXPAt      time.Time // last kill or xp gain (drought watchdog); fieldSince: entry into the current non-town area
+	real          uint64       // progress that resets the failsafe ladder
+	realWall      atomic.Int64 // wall-clock unix nanos of the last kill, xp or level (heartbeat for the d2bot watchdog, see LastStep)
+	killXPAt      time.Time    // last kill or xp gain (drought watchdog); fieldSince: entry into the current non-town area
 	fieldSince    time.Time
 	townLeftAt    time.Time   // last departure from a town area (the farm loop measures the walk back from it)
 	droughtAt     time.Time   // last drought action (drought.go)
@@ -387,6 +389,7 @@ func (o *observer) bumpReal(now time.Time) {
 	o.nkMech = ""
 	o.fsWhy = "" // the failsafe reason shown in the minute line is the one since the last kill or XP gain
 	o.real++
+	o.realWall.Store(time.Now().UnixNano())
 }
 
 // rearm gives the watchdog a fresh window without counting progress (after a ladder step). Caller holds obMu.

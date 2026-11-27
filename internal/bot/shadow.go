@@ -21,6 +21,7 @@ type arbShadow struct {
 	// arbiter chose this tick (set by runGoalControlled while the chain runs; the quest hook reads it)
 	refNeed, refFacts, chose string
 	ctl                      atomic.Int64 // ticks the arbiter acted for since the last minute line (arbiter_control.go)
+	tickAt                   time.Time    // last "tick" line (ticklog.go)
 }
 
 // minuteKV is the "arb" attribute of the minute line: per hook family diverged/ticks since the last minute line.
@@ -60,20 +61,38 @@ func (r *Runner) runGoalShadowed(ctx context.Context, snap *d2.Snapshot, c contr
 func (r *Runner) runGoalArb(ctx context.Context, snap *d2.Snapshot, c control) bool {
 	t := r.e.Tune.Bot
 	if t.ArbiterShadow == 0 {
-		return r.runGoal(ctx, snap, c)
+		acted := r.runGoal(ctx, snap, c)
+		if t.TickLogSec > 0 {
+			if v, ok := r.arbView(snap, c); ok {
+				r.tickLog(snap, v, acted)
+			}
+		}
+		return acted
 	}
 	v, ok := r.shadowView(snap, c)
 	if ok && t.ArbiterControl != 0 {
-		return r.runGoalControlled(ctx, snap, c, v)
+		acted := r.runGoalControlled(ctx, snap, c, v)
+		r.tickLog(snap, v, acted)
+		return acted
 	}
 	acted := r.runGoal(ctx, snap, c)
 	if ok {
 		r.shadowTick(v, acted)
+		r.tickLog(snap, v, acted)
 	}
 	return acted
 }
 
-func (r *Runner) shadowView(snap *d2.Snapshot, c control) (v arbiter.View, ok bool) {
+func (r *Runner) shadowView(snap *d2.Snapshot, c control) (arbiter.View, bool) {
+	v, ok := r.arbView(snap, c)
+	if ok {
+		v.Now = r.shadowNow()
+	}
+	return v, ok
+}
+
+// arbView collects the arbiter's world facts without touching the shadow (View.Now stays 0).
+func (r *Runner) arbView(snap *d2.Snapshot, c control) (v arbiter.View, ok bool) {
 	defer func() {
 		if recover() != nil {
 			ok = false
@@ -115,12 +134,14 @@ func (r *Runner) shadowView(snap *d2.Snapshot, c control) (v arbiter.View, ok bo
 		arbiter.FactObjective:    b(c.spec.camp != nil),
 		arbiter.FactQuestRefused: b(r.questRefusalStands(snap)),
 		arbiter.FactSurviveBelow: r.e.Tune.Combat.DrinkLifePct,
+		arbiter.FactSellable:     r.resInput(snap).Sellable,
+		arbiter.FactAreaDry:      b(len(r.dryAreas()) > 0),
 	}
 	obj := ""
 	if l.stepArea > 0 && c.spec.camp != nil {
 		obj = r.areaName(l.stepArea) // U: the area of the quest step the planner picked last
 	}
-	return arbiter.View{Now: r.shadowNow(), Area: area, Progress: real, Facts: f, ObjectiveArea: obj}, true
+	return arbiter.View{Area: area, Progress: real, Facts: f, ObjectiveArea: obj}, true
 }
 
 func (r *Runner) shadowNow() float64 {

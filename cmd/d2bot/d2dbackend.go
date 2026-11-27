@@ -152,9 +152,13 @@ func d2dConfig(o options, log *slog.Logger, tune *env.Tuning, db *data.DB, home 
 	if name == "" {
 		name = "D2dbot"
 	}
+	class := o.d2d.class
+	if o.managed {
+		class = classForStart(class, home, name, log)
+	}
 	cfg := d2denv.Config{
 		ID: env.InstanceID(o.instance), Log: log, Tune: tune, Data: db, Sock: d2dSock(o), Dial: o.d2d.dial, LinkWait: o.d2d.linkWait,
-		Spec: d2dinput.Spec{Name: name, Class: o.d2d.class, Seed: o.d2d.seed, NoSave: o.d2d.noSave},
+		Spec: d2dinput.Spec{Name: name, Class: class, Seed: o.d2d.seed, NoSave: o.d2d.noSave},
 	}
 	if o.managed {
 		cfg.Bin, cfg.DataDir, cfg.Nice, cfg.Home = o.d2d.bin, o.d2d.data, o.d2d.nice, home
@@ -378,6 +382,7 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 	}
 	o.ladder.knobs = knobSetter(tuner)
 	o.ladder.knobValue = tuner.Value
+	setOpsKnobs(tuner)
 	o.ladder.supportKnobs, o.ladder.supportLayout = func() any { return tuner.Snapshot().Values }, o.layout
 	o.ladder.inv = invAPI(ref.inv)
 	o.ladder.skills = skillsAPI(db, ref)

@@ -21,7 +21,11 @@ import (
 // intent that has run in place for its EstCost with its reason still holding is reported as failed, which backs it off.
 // Without follow the arbiter sees the logged hero and only the divergence lines and counters are meaningful.
 //
-// A tick that carries no "facts" inherits the last facts seen. Time comes from the "time" field (RFC 3339).
+// A tick that carries no "facts" inherits the last facts seen. Time comes from "vtMs" (the bot clock in Unix
+// milliseconds, which is the game clock under lockstep) when present, else from the "time" field (RFC 3339).
+//
+// The bot's own tick lines (knob bot.tickLogSec, docs/design/ticklog-t4.md) carry the full fact set once a second; when a
+// log has any tick line its minute lines are skipped, because their area is a number and their counters lag a minute.
 type ReplayResult struct {
 	Ticks        int
 	AreaChanges  int      // changes of the logged area: what the chain did
@@ -30,6 +34,7 @@ type ReplayResult struct {
 	Divergences  []string // the shadow's divergence lines (rate-limited)
 	Trace        []string // one Decision.String per tick, the golden trace
 	FamilyCounts string
+	Points       []SessionPoint // one per tick: the facts, the chain's family and the arbiter's (ScoreSession)
 }
 
 type logLine struct {
@@ -44,6 +49,7 @@ type logLine struct {
 	Chain         string          `json:"chain"`
 	ObjectiveArea string          `json:"objectiveArea"`
 	Facts         map[string]int  `json:"facts"`
+	VTMs          int64           `json:"vtMs"`
 }
 
 func areaName(raw json.RawMessage) string {
@@ -60,12 +66,27 @@ func Replay(in io.Reader, cfg Config, sc ShadowConfig, follow bool) (ReplayResul
 	prevArea, simArea := "", ""
 	var run *Intent
 	var runSince float64
+	var lines []logLine
+	ticks := false
 	for sc2.Scan() {
 		var l logLine
 		if json.Unmarshal(sc2.Bytes(), &l) != nil || (l.Msg != "minute" && l.Msg != "tick") {
 			continue
 		}
+		ticks = ticks || l.Msg == "tick"
+		lines = append(lines, l)
+	}
+	if err := sc2.Err(); err != nil {
+		return res, err
+	}
+	for _, l := range lines {
+		if ticks && l.Msg == "minute" {
+			continue
+		}
 		ts, err := time.Parse(time.RFC3339, l.Time)
+		if l.VTMs > 0 {
+			ts, err = time.UnixMilli(l.VTMs), nil
+		}
 		if err != nil {
 			return res, fmt.Errorf("bad time %q", l.Time)
 		}
@@ -99,6 +120,11 @@ func Replay(in io.Reader, cfg Config, sc ShadowConfig, follow bool) (ReplayResul
 			res.Divergences = append(res.Divergences, fmt.Sprintf("t=%05.0f %s", v.Now, line))
 		}
 		d, _ := sh.Last()
+		mine := ""
+		if d.Chosen != nil {
+			mine = Family(d.Chosen.Source)
+		}
+		res.Points = append(res.Points, SessionPoint{Now: v.Now, Facts: cp, Chain: l.Chain, Arbiter: mine})
 		res.Ticks++
 		res.Trace = append(res.Trace, d.String())
 		if follow && d.Chosen != nil {
@@ -122,5 +148,5 @@ func Replay(in io.Reader, cfg Config, sc ShadowConfig, follow bool) (ReplayResul
 		}
 	}
 	res.FamilyCounts = sh.Drain()
-	return res, sc2.Err()
+	return res, nil
 }

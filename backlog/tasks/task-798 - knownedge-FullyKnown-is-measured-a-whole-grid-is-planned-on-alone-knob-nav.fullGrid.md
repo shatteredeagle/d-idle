@@ -1,10 +1,13 @@
 ---
 id: TASK-798
-title: 'knownedge: FullyKnown is measured; a whole grid is planned on alone (knob nav.fullGrid)'
-status: Proposed
+title: >-
+  knownedge: FullyKnown is measured; a whole grid is planned on alone (knob
+  nav.fullGrid)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-22T02:31:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - bot
   - feature

@@ -1,10 +1,11 @@
 ---
 id: TASK-655
 title: 'survhold3: starved caster yield, risk route closed at the k limit, holdout 3'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-18T22:46:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - bot
   - bug

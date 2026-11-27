@@ -1,10 +1,13 @@
 ---
 id: TASK-622
-title: 'brightness: viewer brightness investigation and a viewer-side Brightness control'
-status: Proposed
+title: >-
+  brightness: viewer brightness investigation and a viewer-side Brightness
+  control
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-17T15:31:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - watch
   - bug

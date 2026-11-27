@@ -124,6 +124,7 @@ type Runner struct {
 	e *env.Env
 	d Deps
 
+	sellMemo sellMemo  // the last sell count and its snapshot (sellable.go)
 	planWarn sync.Once // a failing town planner is logged once (routeguard.go kitPlanOf)
 	cfg      Config
 	ch       chan goals.Event
@@ -146,10 +147,12 @@ type Runner struct {
 
 	lastStep atomic.Int64 // wall-clock unix nanos of the last finished loop iteration (heartbeat for the d2bot watchdog)
 
-	lastLogAt   atomic.Int64 // clock nanos of the last log record (stallguard.go)
-	lastStallAt atomic.Int64 // clock nanos of the last stall line
-	stalls      atomic.Int32 // stall lines since the process started (minute line key stalls)
-	actionAt    atomic.Int64 // clock nanos when the running action began (runAction)
+	lastLogAt   atomic.Int64  // clock nanos of the last log record (stallguard.go)
+	lastStallAt atomic.Int64  // clock nanos of the last stall line
+	stalls      atomic.Int32  // stall lines since the process started (minute line key stalls)
+	actionAt    atomic.Int64  // clock nanos when the running action began (runAction)
+	fightProg   fightProgress // the guard's progress memory of a Fighting action (stallguard.go)
+	fightTarget atomic.Uint32 // the target the guard blamed for a broken fight, taken by do()
 
 	mu          sync.Mutex // control and status
 	goal        *goals.Goal
@@ -781,8 +784,11 @@ func (r *Runner) Beat() { r.lastStep.Store(time.Now().UnixNano()) }
 
 // LastStep is the wall-clock time of the last finished Run loop iteration (zero before Run started). The loop keeps
 // iterating while paused, self-paused or in an error wait, so a stale value means a step is stuck or the loop died.
+// A kill, xp gain or level counts as a finished step too: one Clear action (the Den of Evil sweep) legitimately runs longer
+// than the watchdog limit on a loaded host while the hero keeps killing (Doofer 2026-11-27, restart after 613 s, 52 kills).
+// The value is atomic on purpose: the watchdog must never wait on a lock a hung step holds.
 func (r *Runner) LastStep() time.Time {
-	n := r.lastStep.Load()
+	n := max(r.lastStep.Load(), r.ob.realWall.Load())
 	if n == 0 {
 		return time.Time{}
 	}

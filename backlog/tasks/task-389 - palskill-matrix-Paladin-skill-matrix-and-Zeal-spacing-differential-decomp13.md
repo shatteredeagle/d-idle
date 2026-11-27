@@ -1,10 +1,11 @@
 ---
 id: TASK-389
 title: 'palskill-matrix: Paladin skill matrix and Zeal spacing differential (decomp13)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-12T23:39:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - docs
   - research

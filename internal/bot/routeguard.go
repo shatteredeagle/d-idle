@@ -111,7 +111,7 @@ func (r *Runner) guardWorld(s *d2.Snapshot) *task.World {
 	if task.MercAlive != nil {
 		w.MercAlive, w.MercKnown = task.MercAlive()
 	}
-	in := r.resInput(s)
+	in := r.resInputOpt(s, false) // the watch API calls this too: no sell judgement (sellsnap)
 	w.Potions, _, _ = r.beltAndInv(s)
 	w.Potions += in.Belt.PackHP + in.Belt.PackRV
 	w.HasTP, w.ManaPotions = in.HasTP, in.Belt.MP
@@ -512,6 +512,9 @@ func (r *Runner) fillEarly(w *task.World) {
 	s := r.latest()
 	rs, _ := loadEarlyRoutes()
 	w.EarlyBlocked, w.WalkBlocked = nil, task.EarlyBlock{}
+	if s != nil && s.Player != nil {
+		w.FirstField = task.Area(r.firstFieldArea(s))
+	}
 	if why, kit := r.questWalkCheck(s); why != "" {
 		w.WalkBlocked = task.EarlyBlock{Why: why, KitOnly: kit}
 	}

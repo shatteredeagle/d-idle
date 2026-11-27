@@ -33,7 +33,9 @@ const invDefaultGapSec = 60
 var invRows = []invRow{
 	{Name: "potion-not-drunk", Hard: true, Secs: 8, Why: "in the field under the drink line with a healing potion in the belt and none drunk for Secs"},
 	{Name: "portal-not-cast", Secs: 6, Why: "in the field at or under the chicken line with hostiles near and a town portal scroll, still in the same area after Secs"},
-	{Name: "guard-stall", Secs: 10, Count: 2, GapSec: 300, Why: "no log line for Secs while Count or more hostiles are near (stall.go logs the goroutine stack once per five minutes)"},
+	{Name: "guard-stall", Secs: 60, Count: 2, GapSec: 300, Why: "no log line for Secs while Count or more hostiles are near (stall.go logs the goroutine stack once per five minutes)"},
+	{Name: "no-earn", Secs: 300, Why: "in a clearing, traveling or resupplying state for Secs with no change of xp, kills or gold (area changes do not count: Questy 2026-11-26 walked camp and Blood Moor for 28 minutes with nothing to kill), not paused or parked"},
+	{Name: "fight-stall", Secs: 120, Count: 60, Pct: 5, GapSec: 300, Why: "a Fighting action older than Secs with no kill, xp or target life change for Count s: the guard breaks it and keeps the target out for Pct minutes (stallguard.go)"},
 	{Name: "stuck-in-pack", Secs: 8, Count: 5, Pct: 60, Why: "in the field with Count or more hostiles near and life under Pct for Secs (a crowd fight that neither kills nor leaves)"},
 	{Name: "field-entry-hurt", Pct: 50, Why: "left town with life under Pct of max"},
 	{Name: "field-entry-no-kit", Why: "left town while the kit (portal, healing, mana minimum) is incomplete"},
@@ -151,6 +153,8 @@ type invMon struct {
 	modeKey               string
 	modeSince             time.Time
 	modeProg              string
+	earnKey               string
+	earnSince             time.Time
 	trips                 []time.Time
 	poorSince             time.Time
 	poorKills             int
@@ -190,6 +194,13 @@ func (m *invMon) noteRefusalFailure(what string, err error) {
 func (m *invMon) noteStall(what string) {
 	m.mu.Lock()
 	m.pending = append(m.pending, invHit{"guard-stall", what})
+	m.mu.Unlock()
+}
+
+// noteFightStall records a broken Fighting action (soft row fight-stall).
+func (m *invMon) noteFightStall(what string) {
+	m.mu.Lock()
+	m.pending = append(m.pending, invHit{"fight-stall", what})
 	m.mu.Unlock()
 }
 
@@ -299,6 +310,15 @@ func (m *invMon) tick(f invFacts) []invHit {
 	}
 	if d := f.now.Sub(m.modeSince); d >= limit {
 		hit(r.Name, "state=%s step=%q for=%ds without progress", f.state, f.step, int(d.Seconds()))
+	}
+
+	r = invRowOf("no-earn")
+	earn := fmt.Sprintf("%d|%d|%d", f.xp, f.kills, f.gold)
+	if earn != m.earnKey || f.paused || f.parked || !watchedState(State(f.state)) {
+		m.earnKey, m.earnSince = earn, f.now
+	}
+	if d := f.now.Sub(m.earnSince); d >= r.dur() {
+		hit(r.Name, "xp=%d kills=%d gold=%d for=%ds area=%d state=%s step=%q", f.xp, f.kills, f.gold, int(d.Seconds()), f.area, f.state, f.step)
 	}
 
 	r = invRowOf("corpse-unresolved")

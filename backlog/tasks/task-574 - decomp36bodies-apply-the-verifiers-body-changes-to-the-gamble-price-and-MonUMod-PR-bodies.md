@@ -1,10 +1,13 @@
 ---
 id: TASK-574
-title: 'decomp36bodies: apply the verifier''s body changes to the gamble price and MonUMod PR bodies'
-status: Proposed
+title: >-
+  decomp36bodies: apply the verifier's body changes to the gamble price and
+  MonUMod PR bodies
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-17T02:04:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - d2d
   - upstream-pr

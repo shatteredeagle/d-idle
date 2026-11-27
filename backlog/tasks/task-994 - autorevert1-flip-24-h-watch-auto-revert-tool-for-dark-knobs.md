@@ -1,10 +1,11 @@
 ---
 id: TASK-994
 title: 'autorevert1: flip, 24 h watch, auto-revert tool for dark knobs'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-26T04:15:00Z'
+updated_date: '2026-11-27T02:03:00Z'
 labels:
   - ops
   - feature
@@ -26,7 +27,7 @@ owns:
   - "internal/bot/explain.go"
 exclusive: []
 contracts: []
-result: "Built, not verified live: bot counters (hard flag, since) on /api/explain and ops status --why; tools/flip/flip.py flip and watch with fake-sandbox tests. The AC 2 drill on a real sandbox is still open (see docs/process/dark-launch.md How to flip)."
+result: "Built (v2 fixes the envelope: data.overrides, live knob verify, dry-run, restart mode), not verified live: bot counters (hard flag, since) on /api/explain and ops status --why; tools/flip/flip.py flip and watch with fake-sandbox tests. The AC 2 drill on a real sandbox is still open (see docs/process/dark-launch.md How to flip)."
 ---
 
 ## Description

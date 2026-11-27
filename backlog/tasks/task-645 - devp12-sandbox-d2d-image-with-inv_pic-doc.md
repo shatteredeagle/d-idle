@@ -1,10 +1,11 @@
 ---
 id: TASK-645
 title: 'devp12: sandbox d2d image with inv_pic (doc)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-18T16:08:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - docs
   - chore

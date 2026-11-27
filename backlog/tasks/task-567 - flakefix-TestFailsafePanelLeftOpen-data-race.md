@@ -1,10 +1,11 @@
 ---
 id: TASK-567
 title: 'flakefix: TestFailsafePanelLeftOpen data race'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-16T21:52:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - bot
   - bug

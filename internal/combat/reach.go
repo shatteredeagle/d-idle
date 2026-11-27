@@ -226,3 +226,15 @@ func (f *Fighter) assess(tr *track, me input.Point, tg Target, reach int) (reach
 func (f *Fighter) inFiringSpot(me, target input.Point, dist float64, reach int) bool {
 	return dist <= float64(reach) && f.los(me, target)
 }
+
+// IgnoreFor keeps unit id out of the fights for d (the bot's guard blames a target that made a fight stall). Call it only while no
+// fight runs: the ignore list belongs to the fight loop.
+func (f *Fighter) IgnoreFor(id uint32, d time.Duration) {
+	if f.ignores == nil {
+		f.ignores = map[uint32]ignoreRec{}
+	}
+	rec := f.ignores[id]
+	rec.Ignored = Ignored{ID: id, Why: IgnoreNoProgress, Detail: "guard: fight stall", At: f.now(), Strikes: rec.Strikes + 1}
+	rec.until = f.now().Add(d)
+	f.ignores[id] = rec
+}

@@ -125,6 +125,29 @@ const charterDone = (async () => {
   assert.ok(find(body, (x) => x.className === 'zm-n zm-row').length > 5, 'the list shows the orderable areas');
 }
 
+// a failed first fetch (the server stalled, 500, a timeout) leaves a sentence in the tile, never a blank box; the first answer then
+// replaces it with the grid (the user's "act screen is gone": only the legend title was there)
+{
+  const { inst, body } = make();
+  inst.update(null, { status: 0, fails: 1 });
+  const em = find(body, (x) => x.className === 'zm-empty')[0], gr = find(body, (x) => x.className === 'zm-grid')[0];
+  assert.ok(!em.hidden && /Waiting for the bot/.test(em.textContent), 'a failed first fetch says so');
+  assert.ok(gr.hidden, 'no empty grid next to it');
+  inst.update(fx('map-fixture-sorceress.json'));
+  assert.ok(em.hidden && !gr.hidden && find(body, (x) => x.className === 'zm-n').length > 5, 'the first answer shows the zones');
+  inst.update(null, { status: 0, fails: 1 });
+  assert.ok(em.hidden && !gr.hidden, 'a later failed poll keeps the zones it has');
+}
+// a zone that makes the draw throw leaves a sentence, and the panel still reports ready
+{
+  const { inst, body } = make();
+  const m = JSON.parse(JSON.stringify(fx('map-fixture-sorceress.json')));
+  m.nodes[0].name = { toString() { throw new Error('boom'); } };
+  inst.update(m);
+  const em = find(body, (x) => x.className === 'zm-empty')[0];
+  assert.ok(!em.hidden && /could not be drawn/.test(em.textContent), 'a draw failure is said, not blank');
+}
+
 // the helpers
 const v1 = fx('map-fixture-sorceress.json');
 const g = P.gridOf(v1.nodes);

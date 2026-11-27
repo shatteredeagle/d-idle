@@ -1,10 +1,11 @@
 ---
 id: TASK-557
 title: 'seqfollow: upstream follow-up PR draft for #565 (seq-rate test hardening)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-16T18:37:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - docs
   - upstream-pr

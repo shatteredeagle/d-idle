@@ -1,10 +1,11 @@
 ---
 id: TASK-791
 title: 'vaultwire: d2d wires VaultKeep, equip fresh pack, item mover lockstep'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-21T20:55:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - bot
   - bug

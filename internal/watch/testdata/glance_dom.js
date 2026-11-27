@@ -117,5 +117,18 @@ for (const id of Object.keys(cases)) {
   assert.strictEqual((out.match(/aria-live/g) || []).length, 1, 'one live region');
   assert.ok(out.includes('title=' + JSON.stringify('Cold Plains · ' + longReason)), 'full text in the title');
 }
+// a single failed poll after good data keeps the sentence; two in a row say No signal
+{
+  const P = load(path.join(dir, 'statusline', 'panel.js'));
+  const { root, c } = ctxFor(true);
+  const inst = P.mount(root, c);
+  inst.update(sent({}));
+  inst.update(null, { status: 0, fails: 1 });
+  assert.ok(dump(root, '').includes('Fighting') && !dump(root, '').includes('No signal'), 'one failed poll is a blip');
+  inst.update(null, { status: 0, fails: 2 });
+  assert.ok(dump(root, '').includes('No signal'), 'two failed polls say No signal');
+  inst.update(sent({}));
+  assert.ok(dump(root, '').includes('Fighting'), 'it recovers');
+}
 if (bad) process.exit(1);
 console.log('ok');

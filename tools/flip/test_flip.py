@@ -13,6 +13,19 @@ T0 = datetime(2026, 11, 26, 12, 0, 0, tzinfo=timezone.utc)
 HARD = ["potion-not-drunk", "life-zero-alive", "refusal-storm", "xp-frozen", "mode-no-exit", "corpse-unresolved"]
 
 
+ENVELOPE = json.dumps({"version": 1, "data": {"profile": "optimal", "overrides": {
+    "agency.autoAlloc": 1, "boss.andarielHold": 1, "bot.arbiterShadow": 1, "combat.chickenPct": 22, "combat.kiteLifePct": 70}}}, indent=2) + "\n"
+
+
+def overrides(text):
+    return json.loads(text)["data"]["overrides"]
+
+
+BUNDLE7 = {"town.plan": 2.0, "bot.portalGuard": 1.0, "combat.deliveryExpect": 1.0, "combat.threatDodge": 1.0,
+           "combat.standOK": 1.0, "combat.missileDodge": 1.0, "bot.checkpointEnable": 1.0}
+BUNDLE2 = {"bot.arbiterControl": 1.0, "bot.arbiterFamilies": 15.0}
+
+
 class Clock:
     def __init__(self):
         self.t = T0
@@ -25,10 +38,13 @@ class FakeSandbox:
     """Holds a tuning text and a status feed; failures are switches."""
 
     def __init__(self):
-        self.tuning = json.dumps({"profile": "player", "overrides": {"combat.chickenPct": 22.0}})
+        # the real shape of a sandbox tuning.json (internal/store envelope; keys and values of the Questy sandbox)
+        self.tuning = ENVELOPE
         self.counts = {n: 0 for n in HARD}
         self.since = "2026-11-26T11:00:00Z"
         self.restarts = 0
+        self.knobs_live = True  # False: the restarted child does not show the knob (file shape ignored)
+        self.mode = "container"
         self.fail_restart = 0   # number of next restarts that fail
         self.fail_write = False
         self.fail_status = False
@@ -54,13 +70,16 @@ class FakeSandbox:
         self.since = (T0 + timedelta(minutes=self.restarts)).strftime("%Y-%m-%dT%H:%M:%SZ")
         self.counts = {n: 0 for n in HARD}  # a restart resets the counters
         self.log.append("restart")
+        self.live = {}
+        if self.tuning:  # the bot reads data.overrides only, like tunerState in internal/bot/tuner.go
+            self.live = dict(json.loads(self.tuning).get("data", {}).get("overrides", {})) if self.knobs_live else {}
 
     def status(self):
         if self.fail_status:
             raise F.FlipError("unreachable")
         inv = [{"name": n, "hard": True, "count": c, "since": self.since} for n, c in self.counts.items()]
         inv.append({"name": "town-thrash", "hard": False, "count": 99, "since": self.since})
-        return {"invariants": inv}
+        return {"invariants": inv, "knobs": dict(getattr(self, "live", {}))}
 
 
 class FlipTest(unittest.TestCase):
@@ -68,25 +87,33 @@ class FlipTest(unittest.TestCase):
         self.d = tempfile.TemporaryDirectory()
         self.addCleanup(self.d.cleanup)
         self.lp = os.path.join(self.d.name, "darklaunch.json")
-        row = {"name": "town.plan", "built_by": "x", "dark_since": "2026-11-20", "why_off": "w", "enable_criteria": "c",
-               "owner": "coordinator", "review_by": "2026-12-09", "status": "dark", "criteria_met": "U"}
+        rows = [{"name": n, "built_by": "x", "dark_since": "2026-11-20", "why_off": "w", "enable_criteria": "c",
+                 "owner": "coordinator", "review_by": "2026-12-09", "status": "dark", "criteria_met": "U"} for n in BUNDLE7]
         with open(self.lp, "w") as f:
-            json.dump({"version": 1, "items": [row]}, f)
+            json.dump({"version": 1, "items": rows}, f)
         self.sb = FakeSandbox()
         self.clock = Clock()
         self.out = []
         self.f = F.Flipper(lambda inst: self.sb, F.Store(os.path.join(self.d.name, "st")), F.Ledger(self.lp), clock=self.clock,
-                           out=self.out.append, env={})
+                           out=self.out.append, env={"D2_FLIP_VERIFY_S": "10"}, sleep=lambda s: None)
+        self.sb.restart()  # the running child, before any flip
+        self.sb.restarts = 0
 
     def row(self):
         return F.Ledger(self.lp).row("town.plan")
 
+    def rows(self, status):
+        return {i["name"] for i in json.load(open(self.lp))["items"] if i["status"] == status}
+
     def flip(self, window=3600):
-        return self.f.flip("sb1", "town.plan", 2.0, "scenario green", window)
+        return self.f.flip("sb1", {"town.plan": 2.0}, "scenario green", window)
 
     def test_flip_writes_backup_knob_and_ledger(self):
         w = self.flip()
-        self.assertEqual(json.loads(self.sb.tuning)["overrides"], {"combat.chickenPct": 22.0, "town.plan": 2.0})
+        self.assertEqual(overrides(self.sb.tuning), {**overrides(ENVELOPE), "town.plan": 2.0})
+        env = json.loads(self.sb.tuning)
+        self.assertEqual((env["version"], env["data"]["profile"]), (1, "optimal"))
+        self.assertNotIn("overrides", env)  # a top-level overrides would be ignored by the bot
         self.assertEqual(self.sb.restarts, 1)
         self.assertTrue(w["tag"].startswith("bak-flip-"))
         self.assertEqual(self.row()["status"], "trial")
@@ -98,7 +125,7 @@ class FlipTest(unittest.TestCase):
         self.assertEqual(self.f.poll("sb1"), "open")
         self.sb.counts["potion-not-drunk"] = 1
         self.assertEqual(self.f.poll("sb1"), "reverted")
-        self.assertEqual(json.loads(self.sb.tuning), {"profile": "player", "overrides": {"combat.chickenPct": 22.0}})
+        self.assertEqual(json.loads(self.sb.tuning), json.loads(ENVELOPE))
         self.assertEqual(self.sb.restarts, 2)
         r = self.row()
         self.assertEqual((r["status"], r["revert_reason"].split(":")[0]), ("dark", "hard invariant breach"))
@@ -118,8 +145,7 @@ class FlipTest(unittest.TestCase):
         self.clock.t += timedelta(minutes=6)
         self.assertEqual(self.f.poll("sb1"), "closed")
         self.assertEqual(self.row()["status"], "enabled")
-        self.assertIn("overrides", self.sb.tuning)
-        self.assertEqual(json.loads(self.sb.tuning)["overrides"]["town.plan"], 2.0)
+        self.assertEqual(overrides(self.sb.tuning)["town.plan"], 2.0)
         self.assertIsNone(self.f.store.get("sb1"))
 
     def test_breach_after_window_end_still_reverts_first(self):
@@ -143,7 +169,7 @@ class FlipTest(unittest.TestCase):
         with self.assertRaises(F.FlipError) as c:
             self.flip()
         self.assertIn("pending", str(c.exception))
-        self.assertEqual(self.sb.tuning, json.dumps(json.loads(self.sb.tuning)))  # a whole file
+        self.assertEqual(self.sb.tuning, ENVELOPE)  # restored whole, never half set
         self.assertIsNotNone(self.f.store.get("sb1"))
         self.assertEqual(self.row()["status"], "dark")
 
@@ -153,7 +179,7 @@ class FlipTest(unittest.TestCase):
         self.sb.fail_restart = 1
         self.assertEqual(self.f.poll("sb1"), "open")
         self.assertTrue(any(o.startswith("REVERT FAILED") and "restart" in o for o in self.out))
-        self.assertEqual(json.loads(self.sb.tuning)["overrides"], {"combat.chickenPct": 22.0})  # file already restored
+        self.assertEqual(self.sb.tuning, ENVELOPE)  # file already restored
         self.assertEqual(self.row()["status"], "trial")
         self.assertEqual(self.f.poll("sb1"), "reverted")  # next poll retries
         self.assertEqual(self.row()["status"], "dark")
@@ -189,9 +215,9 @@ class FlipTest(unittest.TestCase):
         f2 = F.Flipper(lambda i: self.sb, F.Store(os.path.join(self.d.name, "st2")), F.Ledger(self.lp), clock=self.clock,
                        out=self.out.append, env={"D2BOT_RUN": "r1"})
         with self.assertRaises(F.FlipError):
-            f2.flip("sb2", "town.plan", 1.0, "x", 60)
+            f2.flip("sb2", {"town.plan": 1.0}, "x", 60)
         with self.assertRaises(F.FlipError):
-            self.f.flip("sb3", "no.such", 1.0, "x", 60)
+            self.f.flip("sb3", {"no.such": 1.0}, "x", 60)
 
     def test_watch_once_and_loop(self):
         self.flip(window=120)
@@ -206,17 +232,175 @@ class FlipTest(unittest.TestCase):
 
     def test_no_backup_file_restores_by_removal(self):
         self.sb.tuning = None
-        self.sb.read_tuning = lambda: None
         self.flip()
         self.sb.counts["xp-frozen"] = 1
         self.f.poll("sb1")
         self.assertIsNone(self.sb.tuning)
+
+    def test_top_level_overrides_is_wrong(self):
+        # must-fail guard: the old tool wrote {"overrides": ...} at the top level; the bot would ignore it
+        flat = json.dumps({"profile": "player", "overrides": {"combat.chickenPct": 22.0}})
+        with self.assertRaises(F.FlipError):
+            F.set_override(flat, "town.plan", 2.0)
+        text, old = F.set_override(ENVELOPE, "bot.arbiterShadow", 0.0)
+        self.assertEqual(old, 1)
+        env = json.loads(text)
+        self.assertNotIn("overrides", env)
+        self.assertEqual(env["data"]["overrides"]["bot.arbiterShadow"], 0.0)
+        a, b = json.loads(ENVELOPE), env
+        b["data"]["overrides"]["bot.arbiterShadow"] = 1
+        self.assertEqual(a, b)  # every other key unchanged
+        text, old = F.set_override(None, "town.plan", 2.0)
+        self.assertEqual((json.loads(text), old), ({"version": 1, "data": {"overrides": {"town.plan": 2.0}}}, None))
+
+    def test_verify_failure_reverts_the_flip(self):
+        self.sb.knobs_live = False  # the child comes up but does not show the knob
+        with self.assertRaises(F.FlipError) as c:
+            self.flip()
+        self.assertIn("verify failed", str(c.exception))
+        self.assertEqual(self.sb.tuning, ENVELOPE)
+        self.assertEqual(self.row()["status"], "dark")
+        self.assertIsNone(self.f.store.get("sb1"))
+
+    def test_dry_run_writes_nothing(self):
+        f = F.Flipper(lambda i: self.sb, self.f.store, F.Ledger(self.lp), clock=self.clock, out=self.out.append, env={}, dry_run=True)
+        before = open(self.lp).read()
+        f.flip("sb1", {"town.plan": 2.0}, "x", 60)
+        self.assertEqual(self.sb.tuning, ENVELOPE)
+        self.assertEqual((self.sb.restarts, self.sb.log), (0, ["restart"]))  # only the setup restart
+        self.assertEqual(open(self.lp).read(), before)
+        self.assertIsNone(self.f.store.get("sb1"))
+        self.assertTrue(any("DRY-RUN" in o for o in self.out))
+
+    def bundle(self, knobs, window=2700):
+        names = list(knobs)
+        for n in names:  # rows exist for every bundle knob; BUNDLE2 rows are added to the fake ledger
+            if self.f.ledger.row(n) is None:
+                d = json.load(open(self.lp))
+                d["items"].append({**d["items"][0], "name": n})
+                json.dump(d, open(self.lp, "w"))
+        return self.f.flip("sb1", knobs, "bundle green", window)
+
+    def test_two_knob_bundle_one_write_one_restart(self):
+        self.bundle(BUNDLE2)
+        self.assertEqual(self.sb.log[-2:], ["write", "restart"])
+        self.assertEqual(self.sb.log.count("write"), 1)
+        ov = overrides(self.sb.tuning)
+        self.assertEqual({k: ov[k] for k in BUNDLE2}, BUNDLE2)
+        self.assertEqual(self.rows("trial"), set(BUNDLE2))
+        self.assertEqual(json.load(open(self.lp))["items"][-1]["trial_bundle"], "bot.arbiterControl,bot.arbiterFamilies")
+
+    def test_seven_knob_bundle_breach_reverts_all(self):
+        self.bundle(BUNDLE7)
+        self.assertEqual(self.rows("trial"), set(BUNDLE7))
+        self.sb.counts["life-zero-alive"] = 1
+        self.assertEqual(self.f.poll("sb1"), "reverted")
+        self.assertEqual(self.sb.tuning, ENVELOPE)  # every knob gone with the one backup
+        self.assertEqual(self.sb.log.count("write"), 2)
+        self.assertEqual(self.rows("dark"), set(BUNDLE7))
+        items = {i["name"]: i for i in json.load(open(self.lp))["items"]}
+        for k in BUNDLE7:
+            self.assertEqual(items[k]["revert_breach"], "life-zero-alive")
+            self.assertEqual(items[k]["revert_bundle"], ",".join(BUNDLE7))
+        # bisect: the bundle minus one knob, from the finished window
+        w = self.f.store.get_last("sb1")
+        line = F.bisect_line(w, "combat.standOK", "45m")
+        self.assertIn("combat.threatDodge=1", line)
+        self.assertNotIn("combat.standOK=", line)
+        self.assertIn("--window 45m", line)
+        with self.assertRaises(F.FlipError):
+            F.bisect_line(w, "not.inBundle", "45m")
+
+    def test_partial_verify_failure_restores_backup(self):
+        real = self.sb.status
+
+        def partial():  # the child shows all knobs but one
+            v = real()
+            v["knobs"].pop("combat.standOK", None)
+            return v
+        self.sb.status = partial
+        with self.assertRaises(F.FlipError) as c:
+            self.bundle(BUNDLE7)
+        self.assertIn("combat.standOK", str(c.exception))
+        self.assertEqual(self.sb.tuning, ENVELOPE)
+        self.assertEqual(self.rows("trial"), set())
+        self.assertIsNone(self.f.store.get("sb1"))
+
+    def test_bundle_needs_every_row(self):
+        with self.assertRaises(F.FlipError):
+            self.f.flip("sb1", {"town.plan": 2.0, "bot.noRow": 1.0}, "x", 60)
+        self.assertEqual(self.sb.log.count("write"), 0)
+
+    def test_bundle_clean_window_closes_all(self):
+        self.bundle(BUNDLE7, window=600)
+        self.clock.t += timedelta(minutes=11)
+        self.assertEqual(self.f.poll("sb1"), "closed")
+        self.assertEqual(self.rows("enabled"), set(BUNDLE7))
+
+    def test_empty_write_aborts_before_restart(self):
+        orig_write = self.sb.write_tuning
+        calls = []
+        self.sb.write_tuning = lambda text: orig_write("" if not calls and not calls.append(1) else text)  # the first write is dropped
+        r0 = self.sb.restarts
+        with self.assertRaises(F.FlipError) as c:
+            self.flip()
+        self.assertIn("no restart", str(c.exception))
+        self.assertEqual(self.sb.restarts, r0)
+        self.assertEqual(self.sb.tuning, ENVELOPE)  # put back
+        self.assertEqual(self.row()["status"], "dark")
+        self.assertIsNone(self.f.store.get("sb1"))
 
     def test_parse_window(self):
         self.assertEqual(F.parse_window("24h"), 86400)
         self.assertEqual(F.parse_window("90s"), 90)
         with self.assertRaises(F.FlipError):
             F.parse_window("soon")
+
+
+FAKE_DOCKER = """#!/bin/sh
+# fake `docker exec <c> CMD...`: runs CMD locally with NO stdin (like labrun); FAKE_DROP=1 also empties the payload
+[ "$1" = exec ] || exit 2
+shift; shift
+exec </dev/null
+if [ "$FAKE_DROP" = 1 ] && [ "$1" = sh ]; then set -- sh -c "$(printf %s "$3" | sed 's/printf %s [^ ]* |/printf %s "" |/')"; fi
+exec "$@"
+"""
+
+
+class TransportTest(unittest.TestCase):
+    """The real Sandbox class through a prefix that has no stdin (what labrun does)."""
+
+    def setUp(self):
+        self.d = tempfile.TemporaryDirectory()
+        self.addCleanup(self.d.cleanup)
+        bindir = os.path.join(self.d.name, "bin")
+        os.mkdir(bindir)
+        with open(os.path.join(bindir, "docker"), "w") as f:
+            f.write(FAKE_DOCKER)
+        os.chmod(os.path.join(bindir, "docker"), 0o755)
+        self.path = os.path.join(self.d.name, "tuning.json")
+        self.env = {"D2_FLIP_RUN": f"env PATH={bindir}:{os.environ['PATH']}", "D2_FLIP_TUNING": self.path}
+
+    def test_write_survives_a_transport_without_stdin(self):
+        sb = F.Sandbox("c1", self.env)
+        sb.write_tuning(ENVELOPE)
+        self.assertEqual(open(self.path).read(), ENVELOPE)
+        self.assertEqual(sb.read_tuning(), ENVELOPE)
+
+    def test_dropped_payload_never_replaces_the_file(self):
+        open(self.path, "w").write(ENVELOPE)
+        os.environ["FAKE_DROP"] = "1"
+        self.addCleanup(os.environ.pop, "FAKE_DROP", None)
+        sb = F.Sandbox("c1", self.env)
+        with self.assertRaises(F.FlipError):
+            sb.write_tuning(ENVELOPE.replace("22", "23"))
+        self.assertEqual(open(self.path).read(), ENVELOPE)  # untouched, and no stray temp file
+        self.assertFalse(os.path.exists(self.path + ".new"))
+
+    def test_oversize_refused(self):
+        sb = F.Sandbox("c1", self.env)
+        with self.assertRaises(F.FlipError):
+            sb.write_tuning("x" * 200000)
 
 
 if __name__ == "__main__":

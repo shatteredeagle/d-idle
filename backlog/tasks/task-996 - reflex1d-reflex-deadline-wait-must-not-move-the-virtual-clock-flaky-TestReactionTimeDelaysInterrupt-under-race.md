@@ -1,10 +1,13 @@
 ---
 id: TASK-996
-title: 'reflex1d: reflex deadline wait must not move the virtual clock (flaky TestReactionTimeDelaysInterrupt under -race)'
-status: Proposed
+title: >-
+  reflex1d: reflex deadline wait must not move the virtual clock (flaky
+  TestReactionTimeDelaysInterrupt under -race)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-26T05:50:00Z'
+updated_date: '2026-11-27T02:03:00Z'
 labels:
   - bot
   - bug

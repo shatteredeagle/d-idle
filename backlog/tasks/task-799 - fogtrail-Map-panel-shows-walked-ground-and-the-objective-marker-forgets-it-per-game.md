@@ -1,10 +1,13 @@
 ---
 id: TASK-799
-title: 'fogtrail: Map panel shows walked ground and the objective marker, forgets it per game'
-status: Proposed
+title: >-
+  fogtrail: Map panel shows walked ground and the objective marker, forgets it
+  per game
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-22T02:35:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - watch
   - feature

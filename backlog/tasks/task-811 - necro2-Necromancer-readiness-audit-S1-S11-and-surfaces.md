@@ -1,10 +1,11 @@
 ---
 id: TASK-811
 title: 'necro2: Necromancer readiness audit S1-S11 and surfaces'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-22T18:56:00Z'
+updated_date: '2026-11-27T02:03:00Z'
 labels:
   - docs
   - probe

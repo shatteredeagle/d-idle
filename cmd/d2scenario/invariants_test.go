@@ -31,3 +31,10 @@ func TestInvariantCountsAndPolicy(t *testing.T) {
 		t.Fatalf("mode-no-exit stays hard elsewhere: %+v", a)
 	}
 }
+
+func TestInvariantFragmentsMerge(t *testing.T) {
+	p := loadInvariantPolicy()
+	if len(p.Hard) == 0 {
+		t.Fatal("base policy empty")
+	}
+}

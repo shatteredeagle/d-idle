@@ -1,10 +1,13 @@
 ---
 id: TASK-501
-title: 'uiphone: phone Pack and stash tab redesign (inventory squish on a 412 px screen) and fit fixtures at the real phone sizes'
-status: Proposed
+title: >-
+  uiphone: phone Pack and stash tab redesign (inventory squish on a 412 px
+  screen) and fit fixtures at the real phone sizes
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-15T15:00:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - watch
   - bug

@@ -1,10 +1,11 @@
 ---
 id: TASK-739
 title: 'pgclock: goals clock, farm timers and the soak stop on the env clock'
-status: In Progress
+status: Proposed
 assignee:
   - credit-runner
 created_date: '2026-11-21T04:47:00Z'
+updated_date: '2026-11-27T02:03:00Z'
 labels:
   - bot
   - bug

@@ -15,8 +15,12 @@ card: "dlv-upkeep-state"
 owns:
   - "internal/combat/"
   - "internal/data/"
+  - "internal/env/tuning_combat.go"
+  - "docs/knobs.md"
+  - "data/darklaunch.json"
 exclusive: []
 contracts: []
+result: "First slice built offline, NOT verified live and not in a Proving Ground run. internal/data reads the Skills.txt columns aurastate and auratargetstate and resolves each skill state to its states.txt id and a curse flag (cache schema 7). internal/combat/upkeep.go is the state-observed upkeep driver behind knob combat.deliveryUpkeep (default 0, dark-launch row; named like combat.deliveryExpect, the key form the knob table uses for combat.delivery.upkeep): 0 the old buff pass, 1 shadow (old pass acts, each lasting disagreement logged once and counted), 2 the driver acts: state id from the table, trusted only after it was seen present (a wrong id falls back to the clock, no recast spam), a skill whose state is a curse is never cast as a self buff, inside a fight a non-vital slot casts at most once in four casts and only above a 10 percent mana reserve (profile block upkeep with vital, shareEvery, manaReservePct; defaults of Q7), and a pass after each clear. Tests on Paladin Holy Shield and Sorceress Frozen Armor plus a Necromancer curse case; must-fail checked by disabling the budget and the state read. Build-specific data: none in Go; state ids come from the game tables, the vital list from the profile. Literal count unchanged (no literal added; buffStates and the curse list stay for mode 0 until the cleanup card). NOT done: scenario combat.buffs-stay-up (scenario runner not owned here), differential rows for war cry and Holy Shield states (need the fork reads live), the skill-named aura knob. go test -race -count=20 data, env, combat green on the worker host; whole-repo vet and test, check.sh, contracts, backlog, leakcheck clean; knob budget +1 net (needs the owner word)."
 lane: next
 ---
 
@@ -31,9 +35,9 @@ Design: docs/design/fable-review-2026-11-21/combat-engine-d-cards.md (user-appro
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
 - [ ] #1 Scenario combat.buffs-stay-up RED first, then green for Sorceress and Barbarian
-- [ ] #2 Knob combat.delivery.upkeep
+- [x] #2 Knob combat.delivery.upkeep
 - [ ] #3 Differential rows for war-cry and Holy Shield states
-- [ ] #4 Two builds tested (Paladin + Sorceress), no class or skill literal added, literal count reported in result (may only fall)
-- [ ] #5 Knob combat.delivery.<driver> 0/1/2 where a driver ships; rollback is the knob
-- [ ] #6 go test -race -count=20 on touched packages; tools/ci/check.sh, contracts/backlog checks and leakcheck clean
+- [x] #4 Two builds tested (Paladin + Sorceress), no class or skill literal added, literal count reported in result (may only fall)
+- [x] #5 Knob combat.delivery.<driver> 0/1/2 where a driver ships; rollback is the knob
+- [x] #6 go test -race -count=20 on touched packages; tools/ci/check.sh, contracts/backlog checks and leakcheck clean
 <!-- AC:END -->

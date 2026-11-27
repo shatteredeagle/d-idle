@@ -1,10 +1,13 @@
 ---
 id: TASK-525
-title: 'lootwire-L4: shadow stage logging disagreements between today and the Starter loot rules'
-status: Proposed
+title: >-
+  lootwire-L4: shadow stage logging disagreements between today and the Starter
+  loot rules
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-16T02:11:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - bot
   - feature

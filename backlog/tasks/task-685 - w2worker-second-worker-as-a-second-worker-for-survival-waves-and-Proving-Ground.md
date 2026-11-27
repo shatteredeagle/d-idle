@@ -1,10 +1,11 @@
 ---
 id: TASK-685
 title: 'w2worker: second worker host for survival waves and Proving Ground'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-20T05:14:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - ops
   - chore

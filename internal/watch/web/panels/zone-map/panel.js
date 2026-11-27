@@ -371,11 +371,17 @@ export function mount(root, ctx) {
       if (!v) {
         if (err && (err.status === 404 || err.status === 503)) { ctx.hide(true); return; }
         ctx.hide(false);
+        // never a blank box: before the first answer the tile says so (the legend title alone looked like a broken panel)
+        if (!st.view) { grid.hidden = true; list.hidden = true; empty.hidden = false; empty.textContent = 'Waiting for the bot. The map shows as soon as it answers.'; }
         return;
       }
       ctx.hide(false);
       st.view = v;
-      draw();
+      try { draw(); } catch (e) { // a zone that cannot be drawn must not leave the tile empty and the panel stuck loading
+        grid.hidden = true; list.hidden = true; empty.hidden = false; empty.textContent = 'The map could not be drawn. Orders still work through Go to.';
+        ctx.state('ready');
+        return;
+      }
       measure();
       if (st.deep && ns0(v)) { // a deep link: ?zone=<id> opens that zone's menu once
         st.deep = false;

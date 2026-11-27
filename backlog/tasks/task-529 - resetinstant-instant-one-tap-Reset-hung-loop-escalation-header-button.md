@@ -1,10 +1,11 @@
 ---
 id: TASK-529
 title: 'resetinstant: instant one-tap Reset, hung-loop escalation, header button'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-16T02:30:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - bot
   - bug

@@ -21,6 +21,8 @@ const (
 	FactObjective    = "objective"
 	FactQuestRefused = "quest_refused" // 1 while a typed refusal of the quest step stands and its wake facts have not changed
 	FactSurviveBelow = "survive_below" // life percent under which a hostile makes the hero flee or drink
+	FactSellable     = "sellable"      // pack items the town sell chore would sell now (Town.SellableCount)
+	FactAreaDry      = "area_dry"      // 1 while an area is skipped as dry (dry-recovery, kill-drought): only a new game refills it
 )
 
 // Source names and the hook family each belongs to (the counters of the minute line are per family).
@@ -100,6 +102,11 @@ func StdSources() []Source {
 			if f[FactPotionsMin] == 0 || f[FactPotions] >= f[FactPotionsMin] {
 				return nil
 			}
+			if f[FactSellable] > 0 && (f[FactRecovery] > 0 && f[FactNeedGold] == 0 || f[FactNeedGold] > 0 && f[FactPackGold]+f[FactStashGold] < f[FactNeedGold]) {
+				// broke with items to sell: the vendor pays before any farm or fresh game does (Questy 2026-11-26: 7 sellable items, 19 gold)
+				return &Intent{Kind: "sell", Class: Upkeep, Urgency: 0.85, NeedsArea: Town, EstCost: 60, Steps: []string{"sell_junk", "buy_potions"},
+					Reason: fmt.Sprintf("broke, belt %d under %d: sell %d items first", f[FactPotions], f[FactPotionsMin], f[FactSellable])}
+			}
 			if f[FactRecovery] > 0 && f[FactNeedGold] == 0 {
 				return nil // recovery means the purse cannot pay; with the price unknown the refill is recovery's business
 			}
@@ -119,7 +126,12 @@ func StdSources() []Source {
 			if v.Facts[FactRecovery] == 0 {
 				return nil
 			}
-			return &Intent{Kind: "farm_gold", Class: Objective, Urgency: 0.8, NeedsArea: Any, EstCost: 600, Reason: "broke: recovery farm"}
+			in := Intent{Kind: "farm_gold", Class: Objective, Urgency: 0.8, NeedsArea: Any, EstCost: 600, Reason: "broke: recovery farm"}
+			if v.Facts[FactAreaDry] > 0 {
+				in.Steps = []string{"new_game"} // monsters do not respawn within a game: a dry farm area needs a new one first
+				in.Reason += " (area dry: new game first)"
+			}
+			return &in
 		}),
 		fn(SrcGoldFarm, func(v View) *Intent {
 			if v.Facts[FactGoldFarm] == 0 {

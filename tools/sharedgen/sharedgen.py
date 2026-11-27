@@ -234,7 +234,27 @@ def regen(root):
             raise SystemExit("sharedgen: %s failed: %s" % (" ".join(cmd[2:4]), (r.stderr or r.stdout).strip()[-300:]))
         if (open(os.path.join(root, rel), "rb").read() if os.path.exists(os.path.join(root, rel)) else b"") != before:
             changed.append(rel)
+    # generated copies of single-source data (docs/process/generated-files.md): skipped when the tool or go is absent
+    for rel, tool, args in (("docs/plan/data", "tools/plandatasync", []), ("docs/knobs.md", "tools/knobdump", ["-write"])):
+        if not os.path.isdir(os.path.join(root, tool)) or not shutil.which("go"):
+            continue
+        before = tree_hash(os.path.join(root, rel))
+        r = run(["go", "run", "./" + tool] + args, root)
+        if r.returncode:
+            raise SystemExit("sharedgen: %s failed: %s" % (tool, (r.stderr or r.stdout).strip()[-300:]))
+        if tree_hash(os.path.join(root, rel)) != before:
+            changed.append(rel)
     return changed
+
+
+def tree_hash(path):
+    h = hashlib.sha256()
+    for dp, dn, fn in sorted(os.walk(path)) if os.path.isdir(path) else [(os.path.dirname(path), [], [os.path.basename(path)])]:
+        dn.sort()
+        for f in sorted(fn):
+            if os.path.exists(os.path.join(dp, f)):
+                h.update(f.encode() + open(os.path.join(dp, f), "rb").read())
+    return h.hexdigest()
 
 
 def head_date(root):

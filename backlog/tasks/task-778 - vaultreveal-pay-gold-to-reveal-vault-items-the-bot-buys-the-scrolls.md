@@ -1,10 +1,11 @@
 ---
 id: TASK-778
 title: 'vaultreveal: pay gold to reveal vault items (the bot buys the scrolls)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-21T15:01:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - watch
   - feature

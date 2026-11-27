@@ -63,3 +63,28 @@ func TestSellableAsksTheTownForTheChoresCount(t *testing.T) {
 		}
 	}
 }
+
+// Questy 2026-11-26 (28 minutes of frozen xp): the hero stood in the Rogue Encampment with 7 sellable items and 19 gold, and no
+// town visit planned the sell chore. A poor hero in town with sellable items sells first. Two classes; with nothing sellable, or
+// after a trip the vendor left items unsold, no sell is planned.
+func TestPoorHeroInTownSellsFirst(t *testing.T) {
+	for _, class := range []d2.Class{d2.Paladin, d2.Sorceress} {
+		for _, tc := range []struct {
+			sellable int
+			left     int
+			want     bool
+		}{{7, 0, true}, {0, 0, false}, {7, 7, false}} {
+			g := newRig(t)
+			g.r.d.Town = sellTown{g.r.d.Town, tc.sellable}
+			g.w.set(func(w *world) { w.class, w.level, w.area, w.gold0 = class, 13, 1, 19 })
+			g.w.belt() // no potions: poor
+			g.r.poll()
+			g.r.ob.poor = true
+			g.r.setSellLeft(tc.left)
+			plan, _, _ := g.r.choresDue(g.r.latest())
+			if plan.Sell != tc.want {
+				t.Errorf("%v sellable %d left %d: sell planned %v, want %v (%+v)", class, tc.sellable, tc.left, plan.Sell, tc.want, plan)
+			}
+		}
+	}
+}

@@ -1,10 +1,11 @@
 ---
 id: TASK-351
 title: 'arrivalsettle: the priming click no longer lands on the return warp'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T23:41:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - bot
   - bug

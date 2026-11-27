@@ -1,10 +1,13 @@
 ---
 id: TASK-737
-title: 'pgjournal: runner passes the journal variable; determinism-run -n N; the journal pair proof with d2ddet'
-status: In Progress
+title: >-
+  pgjournal: runner passes the journal variable; determinism-run -n N; the
+  journal pair proof with d2ddet
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-21T04:46:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - bot
   - probe

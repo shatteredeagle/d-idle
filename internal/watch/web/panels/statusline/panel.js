@@ -70,9 +70,14 @@ export function mount(root, ctx) {
     pop.append(a);
   }
   show('info', '...', '', 'waiting for the bot', []);
+  let good = false;
   return {
     update(v, err) {
       const s = v && v.sentence;
+      // one slow or failed poll after good data is a blip (a busy bot, a page just restored from the back-forward cache): keep the
+      // sentence, say "No signal" only when two polls in a row failed
+      if (!s && good && (!err || !(err.fails >= 2))) return;
+      if (s) good = true;
       if (!s) { show('warn', 'No signal', '', 'the page cannot reach the bot', []); ctx.state('error'); return; }
       show(tone(s.tone), s.word || '', s.place || '', s.reason || '', rows(s));
       ctx.state('ready');

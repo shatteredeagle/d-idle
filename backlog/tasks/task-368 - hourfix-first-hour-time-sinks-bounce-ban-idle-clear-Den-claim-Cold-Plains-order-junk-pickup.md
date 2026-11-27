@@ -1,10 +1,13 @@
 ---
 id: TASK-368
-title: 'hourfix: first-hour time sinks (bounce ban, idle clear, Den claim, Cold Plains order, junk pickup)'
-status: Proposed
+title: >-
+  hourfix: first-hour time sinks (bounce ban, idle clear, Den claim, Cold Plains
+  order, junk pickup)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-12T16:33:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - bot
   - bug

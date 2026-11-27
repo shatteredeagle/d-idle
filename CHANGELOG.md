@@ -8,6 +8,29 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Merge branch 'main' into dlv-upkeep-minions <!--sg:agent/minions-->
+- Merge branch 'main' into inputl3 <!--sg:agent/inputl3-->
+- Merge branch 'main' into pgstability <!--sg:agent/pgstability-->
+- Merge branch 'main' into town6 <!--sg:agent/town6-->
+- Merge branch 'main' into dlv-upkeep-state <!--sg:agent/upkeep-->
+- Merge branch 'main' into proptest1 <!--sg:agent/proptest1-->
+- Merge branch 'main' into sellsnap <!--sg:agent/sellsnap-->
+- Merge branch 'main' into townflip <!--sg:agent/townflip-->
+- ticklog: tests, ledger row, knob doc, design doc, card <!--sg:agent/ticklog-->
+- Merge branch 'main' into savefix <!--sg:agent/savefix-->
+- loophang: the d2bot watchdog counts kills, xp and levels as a heartbeat (a long Den clear was restarted after 613 s) <!--sg:agent/loophang-->
+- cardsync: task card and stale In Progress cards back to Proposed <!--sg:agent/cardsync-->
+- Merge branch 'main' into actpanel <!--sg:agent/actpanel-->
+- Merge branch 'main' into ledgerflips <!--sg:agent/ledgerflips-->
+- dedupdata: rule page, card, knobdump write fix <!--sg:agent/dedupdata-->
+- arbiter doc: Questy 2026-11-26 cases <!--sg:agent/toolstrade92-->
+- autorevert4: flip writes via base64 argument, checks size and sha, reads back before any restart <!--sg:agent/autorevert4-->
+- Merge branch 'main' into toolstrade90 <!--sg:agent/toolstrade90-->
+- Merge branch 'main' into autorevert1 <!--sg:agent/autorevert3-->
+- Merge branch 'main' into speedreview <!--sg:agent/speedreview-->
+- Merge origin/main <!--sg:agent/toolstrade89-->
+- autorevert2: card result <!--sg:agent/autorevert2-->
+- no-earn soft invariant (5 min without xp, kills or gold, area changes do not count); the quest-walk kit rule never closes the first field <!--sg:agent/toolstrade88-->
 - Merge origin/main into act2temple (admission rows reconciled) <!--sg:agent/act2temple-->
 - Merge branch 'main' into necrocaps <!--sg:agent/necro2e-->
 - Merge branch 'main' into necromercrogue <!--sg:agent/necro2d-->

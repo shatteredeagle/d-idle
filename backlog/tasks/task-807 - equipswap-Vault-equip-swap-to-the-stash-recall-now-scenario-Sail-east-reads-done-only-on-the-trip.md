@@ -1,10 +1,13 @@
 ---
 id: TASK-807
-title: 'equipswap: Vault equip swap to the stash, recall-now scenario, Sail east reads done only on the trip'
-status: Proposed
+title: >-
+  equipswap: Vault equip swap to the stash, recall-now scenario, Sail east reads
+  done only on the trip
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-22T15:48:00Z'
+updated_date: '2026-11-27T02:03:00Z'
 labels:
   - bot
   - bug

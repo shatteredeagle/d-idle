@@ -10,6 +10,10 @@
  ],
  "soft": [
   "portal-not-cast",
+"no-earn",
+"guard-stall",
+"fight-stall",
+"stuck-in-pack",
   "field-entry-hurt",
   "field-entry-no-kit",
   "resupply-in-field",

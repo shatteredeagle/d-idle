@@ -1,10 +1,13 @@
 ---
 id: TASK-391
-title: 'beltfix: belt layout keeps healing columns, repairs mana-filled belts, drinks from the pack'
-status: In Progress
+title: >-
+  beltfix: belt layout keeps healing columns, repairs mana-filled belts, drinks
+  from the pack
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-12T23:58:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - bot
   - bug

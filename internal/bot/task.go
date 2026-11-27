@@ -1144,7 +1144,8 @@ func (r *Runner) setTargetArea(a int) {
 // start a new game (monsters respawn) rather than farm areas far below the character for no experience. done is false
 // when that is not possible (no out-of-game flow, or nothing was cleared, so the lack of a target has another cause).
 func (r *Runner) freshGameToLevel(ctx context.Context, s *d2.Snapshot) (done bool, err error) {
-	if r.d.Cycler == nil || len(r.loop.cleared) == 0 {
+	dry := len(r.dryAreas()) > 0
+	if r.d.Cycler == nil || len(r.loop.cleared) == 0 && !dry {
 		return false, nil
 	}
 	if !s.Player.InTown() {
@@ -1156,7 +1157,7 @@ func (r *Runner) freshGameToLevel(ctx context.Context, s *d2.Snapshot) (done boo
 		r.Beat()
 		return true, ctx.Err()
 	}
-	if !r.freshAllowed(ctx, s) {
+	if !r.freshAllowedFor(ctx, s, dry && len(r.loop.cleared) == 0) {
 		return true, ctx.Err()
 	}
 	r.e.Log.Info("leveling: everything worth farming is cleared, starting a fresh game", "level", s.Player.Level, "cleared", len(r.loop.cleared),
@@ -1171,8 +1172,35 @@ func (r *Runner) freshGameToLevel(ctx context.Context, s *d2.Snapshot) (done boo
 // never sees the restart loop spin (Gate 2 rerun seed 13: 75 restarts in 4 h, no XP). The wait is sliced so a stop
 // (ctx) and the watchdog heartbeat stay live. Returns false when ctx ended during the wait.
 func (r *Runner) freshAllowed(ctx context.Context, s *d2.Snapshot) bool {
+	return r.freshAllowedFor(ctx, s, false)
+}
+
+// freshDryGap is the floor between two fresh games when the last area ran dry: monsters do not respawn within a game, so a dry
+// farm area needs a new game to be farmed again, and the xp-gain check below must not block it (Questy 2026-11-26: a broke hero
+// waited 28 minutes in a dry Blood Moor, where a new game gains no xp for a clvl 13 hero but does refill the gold).
+const freshDryGap = 5 * time.Minute
+
+// freshAllowedFor is freshAllowed; dry says the restart is for an area that ran dry (skipped as dry-recovery or kill-drought):
+// it only keeps freshDryGap between two restarts and does not count toward the no-gain bound.
+func (r *Runner) freshAllowedFor(ctx context.Context, s *d2.Snapshot, dry bool) bool {
 	rt, l := r.e.Tune.Route, &r.loop
 	now, exp := r.e.Clock.Now(), s.Player.Exp
+	if dry {
+		if !l.freshAt.IsZero() {
+			wait := l.freshAt.Add(freshDryGap).Sub(now)
+			for wait > 0 && ctx.Err() == nil {
+				step := min(wait, 5*time.Second)
+				r.e.Clock.Sleep(step)
+				r.Beat()
+				wait -= step
+			}
+			if ctx.Err() != nil {
+				return false
+			}
+		}
+		l.freshAt, l.freshExp = r.e.Clock.Now(), exp
+		return true
+	}
 	var gained uint32
 	if !l.freshAt.IsZero() {
 		if exp > l.freshExp {

@@ -3,10 +3,12 @@ package bot
 import (
 	"bytes"
 	"context"
+	"fmt"
 	"log/slog"
 	"runtime/pprof"
 	"strconv"
 	"strings"
+	"sync"
 	"sync/atomic"
 	"time"
 
@@ -99,4 +101,70 @@ func (r *Runner) stallKV() []any {
 		return []any{"stalls", int(n)}
 	}
 	return nil
+}
+
+// fightProgress remembers, for the running action, the last look at the fight's progress signals.
+type fightProgress struct {
+	mu     sync.Mutex
+	action int64     // actionAt of the action it belongs to
+	key    string    // kills, xp and the life of the attacked target at the last change
+	since  time.Time // when key last changed
+}
+
+// fightStallCheck is the guard's break for a Fighting action that stopped making progress (Doofer 2026-11-26: Fighting in Dark
+// Wood for 147 s with 4 hostiles near, xp +260 in 30 minutes). Progress is a kill, an xp change or a drop of the attacked
+// target's life. The row fight-stall says how old the action must be (Secs) and how long nothing may change (Count). It returns
+// true when the action must be cancelled; the target is blamed in fightTarget and kept out by do() once the action has returned.
+// Boss runs and every other state are left alone.
+func (r *Runner) fightStallCheck(snap *d2.Snapshot, now time.Time, st State) bool {
+	row := invRowOf("fight-stall")
+	if r.e.Tune.Bot.Invariants == 0 || st != StateClearing || r.bossRun.Load() || snap == nil || snap.Player == nil || snap.Player.InTown() {
+		return false
+	}
+	r.mu.Lock()
+	activity := r.activity
+	r.mu.Unlock()
+	if !strings.HasPrefix(activity, "Fighting") || r.hostileNear(snap, r.e.Tune.Combat.FightRadius) == 0 {
+		return false
+	}
+	var target uint32
+	if a, ok := r.d.Fighter.(interface{ Attacking() uint32 }); ok {
+		target = a.Attacking()
+	}
+	life := -1
+	for i := range snap.Monsters {
+		if snap.Monsters[i].ID == target && target != 0 && snap.Monsters[i].Monster != nil {
+			life = snap.Monsters[i].Monster.LifePct
+		}
+	}
+	key := fmt.Sprintf("%d|%d|%d", r.lifetimeKills(snap.Player.Name), snap.Player.Exp, life)
+	at := r.actionAt.Load()
+	p := &r.fightProg
+	p.mu.Lock()
+	defer p.mu.Unlock()
+	if p.action != at || p.key != key {
+		p.action, p.key, p.since = at, key, now
+		return false
+	}
+	age := now.Sub(time.Unix(0, at))
+	if age < row.dur() || now.Sub(p.since) < time.Duration(row.Count)*time.Second {
+		return false
+	}
+	r.fightTarget.Store(target)
+	r.e.Log.Warn("fight stall: breaking the action", "actionAgeSec", int(age.Seconds()), "quietSec", int(now.Sub(p.since).Seconds()), "target", target, "activity", activity)
+	r.inv.noteFightStall(fmt.Sprintf("age=%ds quiet=%ds target=%d", int(age.Seconds()), int(now.Sub(p.since).Seconds()), target))
+	p.action = 0 // the next action starts a new memory
+	return true
+}
+
+// blameFightTarget keeps the target of a broken fight out of the next fights for the row's Pct minutes (the fighter's own ignore
+// list, applied after the action has returned so it never races the fight loop).
+func (r *Runner) blameFightTarget() {
+	id := r.fightTarget.Swap(0)
+	if id == 0 {
+		return
+	}
+	if ig, ok := r.d.Fighter.(interface{ IgnoreFor(uint32, time.Duration) }); ok {
+		ig.IgnoreFor(id, time.Duration(invRowOf("fight-stall").Pct)*time.Minute)
+	}
 }

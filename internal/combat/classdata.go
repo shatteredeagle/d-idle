@@ -97,6 +97,10 @@ type Profile struct {
 	// Necro is the summon, curse and golem data of a Necromancer profile (card necro4): required on every
 	// necromancer profile, rejected on any other class (validateNecro).
 	Necro *NecroParams `json:"necro"`
+	// Upkeep is the in-fight upkeep budget of the upkeep driver (upkeep.go); nil takes the defaults.
+	Upkeep *UpkeepParams `json:"upkeep,omitempty"`
+	// Minions is the minion driver's groups (minions.go); nil on a Necromancer derives them from the necro block.
+	Minions *MinionParams `json:"minions,omitempty"`
 }
 
 // NecroParams is the upkeep data of a Necromancer profile; combat/necro.go holds no skill name.
@@ -268,6 +272,9 @@ func loadClassData() *classData {
 			classDB.skills[s.Name] = skillMeta{Kind: kindOf(s.Kind), Range: s.Range, Hand: handOf(s.Hand), Hold: s.Hold}
 		}
 		if err := validateNecro(pr.Profiles); err != nil {
+			panic("combat: classdata/profiles.json: " + err.Error())
+		}
+		if err := validateMinions(pr.Profiles); err != nil {
 			panic("combat: classdata/profiles.json: " + err.Error())
 		}
 		classDB.profiles = pr.Profiles

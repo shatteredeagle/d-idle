@@ -12,7 +12,9 @@
 | name | fires when |
 |---|---|
 | `potion-not-drunk` | in the field under the drink line, healing potion in the belt, none drunk for 8 s |
-| `guard-stall` | no log line for 10 s while 2 or more hostiles are near (soft, diagnostic: `stallguard.go` logs one `stall: goroutine stack` per 5 min with the bot goroutines' stacks, the action name and its age; the minute line carries `stalls`) |
+| `guard-stall` | no log line for 60 s while 2 or more hostiles are near (soft, diagnostic: `stallguard.go` logs one `stall: goroutine stack` per 5 min with the bot goroutines' stacks, the action name and its age; the minute line carries `stalls`) |
+| `no-earn` | in a clearing, traveling or resupplying state for 5 min with no change of xp, kills or gold, not paused or parked (soft; area changes do not count) |
+| `fight-stall` | a Fighting action older than 120 s with no kill, xp or target life change for 60 s (soft): the guard breaks the action and keeps the target out for 5 min (`stallguard.go`, `fightStallCheck`) |
 | `stuck-in-pack` | in the field with 5 or more hostiles near and life under 60% for 8 s (a crowd fight that neither kills nor leaves) |
 | `portal-not-cast` | in the field at or under the chicken line, hostiles near, a town portal scroll, same area after 6 s |
 | `field-entry-hurt` | first tick outside town with life under 50 percent |

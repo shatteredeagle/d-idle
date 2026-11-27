@@ -1,10 +1,13 @@
 ---
 id: TASK-312
-title: 'queuespeed: implement the safe merge-queue speedups from the 2026-11-11 profile (stale red hold, electron workflow, auto-Done head, gate trims)'
-status: Proposed
+title: >-
+  queuespeed: implement the safe merge-queue speedups from the 2026-11-11
+  profile (stale red hold, electron workflow, auto-Done head, gate trims)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T17:14:00Z'
+updated_date: '2026-11-27T02:03:00Z'
 labels:
   - ops
   - chore

@@ -1,10 +1,13 @@
 ---
 id: TASK-781
-title: 'bsm7: quest board SM kit-belt (the guard kit reads the supply plan under quests.boardSM, a chores trip reports its hold)'
-status: Proposed
+title: >-
+  bsm7: quest board SM kit-belt (the guard kit reads the supply plan under
+  quests.boardSM, a chores trip reports its hold)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-21T17:46:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - bot
   - bot-fix

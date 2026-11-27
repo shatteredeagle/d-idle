@@ -1,10 +1,11 @@
 ---
 id: TASK-720
 title: 'dlv-expect: cast expectation ledger: record, settle, demote with back-off'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-21T04:41:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - bot
   - feature

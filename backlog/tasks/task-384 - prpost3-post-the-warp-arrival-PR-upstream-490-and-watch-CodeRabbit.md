@@ -1,10 +1,11 @@
 ---
 id: TASK-384
 title: 'prpost3: post the warp-arrival PR (upstream 490) and watch CodeRabbit'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-12T20:47:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - d2d
   - upstream-pr

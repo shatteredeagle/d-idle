@@ -1,10 +1,11 @@
 ---
 id: TASK-654
 title: 'bulkid: bulk identify, Cain trip planner, mass reveal'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-18T21:49:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - bot
   - feature

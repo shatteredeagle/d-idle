@@ -1,10 +1,13 @@
 ---
 id: TASK-735
-title: 'pgdigest: assertion digest D1; determinism compares D1 hard and the state digest as drift'
-status: In Progress
+title: >-
+  pgdigest: assertion digest D1; determinism compares D1 hard and the state
+  digest as drift
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-21T04:45:00Z'
+updated_date: '2026-11-27T02:02:00Z'
 labels:
   - bot
   - feature
