@@ -1520,6 +1520,8 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - agent/fastflip: fastflip: 2 h default flip window (merged 2026-11-27) <!--sg:agent/fastflip-->
 - agent/akarahand: akarahand: hand-in click diagnosis (docs) (merged 2026-11-27) <!--sg:agent/akarahand-->
 - agent/charms: charms: charm management design (docs) (merged 2026-11-27) <!--sg:agent/charms-->
+- mercvault: Equip from the Vault onto the mercenary (instant) (TASK-1049, merged 2026-11-27, acceptance 3 of 3): Built offline, unit-tested for two classes (fakes). NOT verified live: needs the fork build with item merc-equip on the sandbox image. <!--sg:agent/mercvault-->
+- akarafix: hand-in tap is observable and cannot go stale (TASK-1051, merged 2026-11-27, acceptance 4 of 5): Tap logs queued/served/dropped; stale or timed-out requests leave the mailbox; handin_waiting reason in the API; idle goal serves the tap in town. Offline tests only, not verified live; live drill open. <!--sg:agent/akarafix-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
