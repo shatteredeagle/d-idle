@@ -497,6 +497,7 @@ var questItemNames = []string{task.ItemMalus, task.ItemBark, task.ItemCainSc,
 var questItemCodes = map[string]string{"bks": task.ItemBark, "bkd": task.ItemCainSc,
 	// the Horadric Staff parts (S misc.txt and weapons.txt codes, the set internal/loot/questcodes_test.go keeps)
 	"box": task.ItemCube, "msf": task.ItemShaft, "vip": task.ItemStaffTop, "hst": task.ItemStaff,
+	"ass": task.ItemBook, "tr1": task.ItemScroll,
 	"j34": task.ItemJade, "g34": task.ItemGolden, "bbb": task.ItemLamTome, "d33": task.ItemGidbinnRaw}
 
 func (r *Runner) scanQuestItems(s *d2.Snapshot, out map[string]int) {
@@ -999,6 +1000,10 @@ func (a taskActs) PickUp(ctx context.Context, item string) error {
 	if a.r.d.Loot == nil {
 		return task.Errorf(task.KindNotFound, "no looter: cannot pick up %s", item)
 	}
+	// Knob quests.stepExec: a chest row of the data (interact, then pick up) already put the item in the pack.
+	if a.r.e.Tune.Quests.StepExec == 1 && isQuestItemName(item) && a.packHolds(item) {
+		return nil
+	}
 	rep, err := a.r.d.Loot.PickUp(ctx, PickOpts{Radius: 30, Names: []string{item}})
 	if err == nil && rep.Picked == 0 {
 		// nothing was taken: say so, so a step that clicks a stand first (the Malus) can tell "not on the ground" from "done" (V lab
@@ -1022,6 +1027,18 @@ func (a taskActs) PickUp(ctx context.Context, item string) error {
 		}
 	}
 	return a.tag(err)
+}
+
+// packHolds: the latest snapshot's pack has the named quest item.
+func (a taskActs) packHolds(item string) bool {
+	a.r.poll()
+	s := a.r.latest()
+	if s == nil || a.r.d.Catalog == nil {
+		return false
+	}
+	got := map[string]int{}
+	a.r.scanQuestItems(s, got)
+	return got[item] > 0
 }
 
 // isQuestItemName: the item is one scanQuestItems counts (a named quest item), so the pack can confirm it.

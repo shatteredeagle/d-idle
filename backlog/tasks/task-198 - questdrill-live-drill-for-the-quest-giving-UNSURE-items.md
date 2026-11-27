@@ -18,6 +18,7 @@ owns:
 exclusive: []
 contracts: []
 lane: next
+result: " Remaining (live): AC 1 live drill checklist in docs/quest-hints.md."
 ---
 
 ## Description

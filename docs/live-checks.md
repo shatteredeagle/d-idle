@@ -119,3 +119,5 @@ Closing rule: a card closes when merged with offline acceptance proven; every op
 | TASK-1045 act2handin | #4 | Live: a drill hands in kill, Tyrael, Jerhyn, Meshif and ends with bit 0x0001 | live drill on the sandbox, fresh hero, per the card result | open |
 | TASK-1047 prereq | #4 | Live: Doofer learns Sacrifice and Zeal after deploy and logs last_skill=Zeal at kills | live drill on the sandbox, fresh hero, per the card result | open |
 | TASK-1051 akarafix | #5 | Live drill on a lab slot (Proving Ground cain.read, writes after start: 0) | live drill on the sandbox, fresh hero, per the card result | open |
+| TASK-1033 necroteeth | #5 | Live: a clvl 12 Necromancer row with points spent casts Teeth | live drill on the sandbox, fresh hero, per the card result | open |
+| TASK-1053 tyrael | #3 | Live rerun of drill.act2.duriel.stepexec (needs a lab slot) | live drill on the sandbox, fresh hero, per the card result | open |

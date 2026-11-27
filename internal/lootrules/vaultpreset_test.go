@@ -86,3 +86,28 @@ func TestVaultPresetUnidentifiedJewelry(t *testing.T) {
 		}
 	}
 }
+
+// Charms of every size and quality, identified or not and with no pack room at all, are recorded: the Vault preset needs no
+// charmroom (the user decision of 2026-11-27: charms are handled like any other item).
+func TestVaultPresetCharmsAllRecorded(t *testing.T) {
+	for _, cls := range []string{"Sorceress", "Paladin"} {
+		c, err := Compile(VaultPreset(false), cls, "")
+		if err != nil {
+			t.Fatal(err)
+		}
+		cx := &Ctx{Class: cls, CLvl: 20, Gold: 5000, Needs: func(string, *Item) bool { return false }}
+		for _, tc := range []struct {
+			label string
+			it    Item
+		}{
+			{"identified grand charm with life", Item{Code: "cm3", Types: []string{"lcha"}, Quality: "magic", Identified: true, Stats: map[string]int{"life": 30}}},
+			{"identified large charm with fire res", Item{Code: "cm2", Types: []string{"mcha"}, Quality: "magic", Identified: true, Stats: map[string]int{"fireres": 12}}},
+			{"unique charm", Item{Code: "cm1", Types: []string{"scha"}, Quality: "unique", Identified: true}},
+		} {
+			tc.it.Place = PlaceGround
+			if d := c.Decide(&tc.it, cx); d.Action != Vault {
+				t.Errorf("%s %s: %+v", cls, tc.label, d)
+			}
+		}
+	}
+}

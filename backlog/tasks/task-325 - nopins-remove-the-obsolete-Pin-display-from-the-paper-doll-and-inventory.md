@@ -1,7 +1,7 @@
 ---
 id: TASK-325
 title: 'nopins: remove the obsolete Pin display from the paper doll and inventory'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T19:11:00Z'
@@ -27,7 +27,7 @@ owns:
   - "internal/watch/testdata/itemtip/tip_dom.js"
 exclusive: []
 contracts: []
-result: "PIN badge, legend chip, Unpin button/menu entry and tooltip badge removed; pins and /api/inventory/unpin kept as deprecated; new .nopin goldens added; not verified live."
+result: "PIN badge, legend chip, Unpin button/menu entry and tooltip badge removed; pins and /api/inventory/unpin kept as deprecated; new .nopin goldens added; not verified live. Closed by closecards2: merged, ACs verified against the merge diff and tests."
 lane: next
 ---
 
@@ -41,7 +41,7 @@ Why: under gearDecisions=player the bot never equips, so pins carry no informati
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 No PIN badge, legend chip, Unpin button or menu entry renders
-- [ ] #2 pins and unpin endpoint kept in the API as deprecated; old fixtures untouched, new goldens added
-- [ ] #3 whole-repo gate green
+- [x] #1 No PIN badge, legend chip, Unpin button or menu entry renders
+- [x] #2 pins and unpin endpoint kept in the API as deprecated; old fixtures untouched, new goldens added
+- [x] #3 whole-repo gate green
 <!-- AC:END -->

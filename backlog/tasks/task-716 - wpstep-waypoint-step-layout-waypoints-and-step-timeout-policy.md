@@ -23,7 +23,7 @@ owns:
   - "tools/provingground/scenarios/cain.json"
 exclusive: []
 contracts: []
-result: "Partly done, NOT verified green. Layout objects of Kind waypoint now count as waypoint presets whatever their class (must-fail test, d2dworld); step timeouts extend once only while exploration progresses, then skip or park with the reason 'step timeout N (explored X%)' (task executor tests, Paladin and Sorceress). Scenario act1.wp.dark-wood(.layout) is RED on the builder (layoutRead 0 and 1) and marked pending: debug levelmap lists only the objects of rooms already built, so the Dark Wood waypoint is not named ahead (V builder jobs 20261120-234605-ae5b, 20261121-001400-6854). Next: the waypoint room's LvlPrest def. Not verified live in the sandbox."
+result: "Partly done, NOT verified green. Layout objects of Kind waypoint now count as waypoint presets whatever their class (must-fail test, d2dworld); step timeouts extend once only while exploration progresses, then skip or park with the reason 'step timeout N (explored X%)' (task executor tests, Paladin and Sorceress). Scenario act1.wp.dark-wood(.layout) is RED on the builder (layoutRead 0 and 1) and marked pending: debug levelmap lists only the objects of rooms already built, so the Dark Wood waypoint is not named ahead (V builder jobs 20261120-234605-ae5b, 20261121-001400-6854). Next: the waypoint room's LvlPrest def. Not verified live in the sandbox. Remaining: AC 3 act1.wp.dark-wood green on the builder (RED at merge)."
 lane: next
 ---
 

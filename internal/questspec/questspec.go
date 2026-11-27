@@ -44,7 +44,10 @@ type Chain struct {
 	ID     string `json:"id"`
 	// Quest is the id of the data/questboard quest this chain describes (empty: a chain with no board row, e.g. a
 	// test fixture); every Step.Chunk and Step.Board then has to exist there (CheckBoard).
-	Quest   string          `json:"quest,omitempty"`
+	Quest string `json:"quest,omitempty"`
+	// Latched lists the chunks whose last step has only volatile readers for its posts: the board latches them so
+	// a restart does not lose them (rule 13).
+	Latched []string        `json:"latched,omitempty"`
 	Initial []string        `json:"initial"`
 	Areas   map[string]Area `json:"areas"`
 	Steps   []Step          `json:"steps"`

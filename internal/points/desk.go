@@ -35,9 +35,8 @@ type Config struct {
 	Dir string
 	Now func() time.Time
 
-	// Enabled is resource.pointsApi; LevelCap is resource.skillCapPerLevel.
-	Enabled  func() bool
-	LevelCap func() bool
+	// Enabled is resource.pointsApi.
+	Enabled func() bool
 
 	Player func() *d2.Player                             // the newest snapshot's player, nil before the first
 	Fresh  func(ctx context.Context) (*d2.Player, error) // a re-read for the read-back
@@ -250,7 +249,7 @@ func (d *Desk) hero(p *d2.Player) skilltree.Hero {
 }
 
 func (d *Desk) legal() Legal {
-	return Legal{T: d.c.T, LevelCap: d.c.LevelCap != nil && d.c.LevelCap(), Playable: d.c.Playable, Attack: d.c.Attack}
+	return Legal{T: d.c.T, Playable: d.c.Playable, Attack: d.c.Attack}
 }
 
 // CheckSkill is the legality of one more point, for the page's per-skill buttons and the POST.

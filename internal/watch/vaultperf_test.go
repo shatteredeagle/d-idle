@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"d2lod-bot/internal/vault"
 )
 
 // The vault API at the size of a real vault (capacity 400..2400): what one poll (limit=1, every 6 s) and one page cost on the
@@ -28,13 +30,13 @@ func benchVault(b *testing.B, n int, path string) {
 }
 
 func BenchmarkVaultPoll(b *testing.B) {
-	for _, n := range []int{400, 2400} {
+	for _, n := range []int{400, 2400, 5000, 20000} {
 		b.Run(fmt.Sprint(n), func(b *testing.B) { benchVault(b, n, "/api/vault?limit=1") })
 	}
 }
 
 func BenchmarkVaultPage(b *testing.B) {
-	for _, n := range []int{400, 2400} {
+	for _, n := range []int{400, 2400, 5000, 20000} {
 		b.Run(fmt.Sprint(n), func(b *testing.B) { benchVault(b, n, "/api/vault?limit=200&facets=1") })
 	}
 }
@@ -109,3 +111,74 @@ func TestVaultPollCost(t *testing.T) {
 		t.Errorf("a poll costs %d ns at 2400 records (ceiling 10 ms)", res.NsPerOp())
 	}
 }
+
+// The poll-time cache never serves a stale preview or facet list: after every kind of write the cached answer equals a
+// freshly bound (uncached) desk's.
+func TestVaultPollCacheFollowsWrites(t *testing.T) {
+	s := testVault(t, 60, 200)
+	a := &stubActor{st: s, free: true}
+	cached := massAPI(t, s, a, true).Handler()
+	same := func(step string) {
+		t.Helper()
+		for _, p := range []string{"/api/vault?limit=1", "/api/vault?limit=1&facets=1"} {
+			got := gzGet(cached, p, nil).Body.String()
+			want := gzGet(massAPI(t, s, a, true).Handler(), p, nil).Body.String()
+			if got != want {
+				t.Fatalf("%s %s: cached answer differs\n got %s\nwant %s", step, p, got, want)
+			}
+		}
+	}
+	same("start")
+	same("again") // a hit
+	recs, _ := s.Query(vault.Filter{Identified: ptrBool(false)})
+	if len(recs) < 3 {
+		t.Fatalf("fixture has %d unidentified", len(recs))
+	}
+	if err := s.Pin(recs[0].ID); err != nil {
+		t.Fatal(err)
+	}
+	same("pin")
+	if err := s.Discard(recs[1].ID, "test"); err != nil {
+		t.Fatal(err)
+	}
+	same("discard")
+	v0 := s.Version()
+	if err := s.MarkSell(recs[2].ID); err != nil {
+		t.Fatal(err)
+	}
+	if s.Version() == v0 {
+		t.Fatal("a write left the store version unchanged")
+	}
+	same("sellq")
+	a.free, a.charges = false, 1 // the price input changes with no store write
+	same("price")
+}
+
+// A page read from the matching end equals the full sort, for every offset and both directions.
+func TestVaultQueryWindowMatchesFullSort(t *testing.T) {
+	s := testVault(t, 90, 200)
+	for _, order := range []string{"", "new", "old"} {
+		for _, f := range []vault.Filter{{}, {Quality: []int{3}}, {Type: "rune"}} {
+			full := f
+			full.Order = order
+			all, total := s.Query(full)
+			for _, off := range []int{0, 1, 7, 50, 500} {
+				w := full
+				w.Offset, w.Limit = off, 9
+				got, n := s.Query(w)
+				lo := min(off, len(all))
+				want := all[lo:min(lo+9, len(all))]
+				if n != total || len(got) != len(want) {
+					t.Fatalf("order %q filter %+v offset %d: total %d/%d rows %d/%d", order, f, off, n, total, len(got), len(want))
+				}
+				for i := range got {
+					if got[i].ID != want[i].ID {
+						t.Fatalf("order %q filter %+v offset %d row %d: %s want %s", order, f, off, i, got[i].ID, want[i].ID)
+					}
+				}
+			}
+		}
+	}
+}
+
+func ptrBool(b bool) *bool { return &b }
