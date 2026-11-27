@@ -18,10 +18,11 @@ ordinal: 27000
 card: "testerreport"
 owns:
   - "deploy/d2d-container/tester-report.sh"
+  - "deploy/d2d-container/tester_report_test.go"
   - "docs/first-session.md"
 exclusive: []
 contracts: []
-result: "Re-scoped 2026-11-10 (trueup2): exportable feedback record, absorbs the report-preview hook of TASK-49; docs/first-session.md added to owns for the known-broken table. Not built, not verified live."
+result: "Built 2026-11-27: deploy/d2d-container/tester-report.sh (POSIX sh + sed, no python in the image) writes a scrubbed tar.gz of bot log, d2d log, minute lines, deaths, ladder journal, wizard inputs without paths and d2dping state; tests with fake secrets (go test ./deploy/d2d-container -run Scrub|Bundle, positive and negative fixtures). first-session.md sections D, H, I made current and section J tells the friend what to send. NOT run in a live container (U); dash/Ubuntu sh not tried; Dockerfile does not yet COPY the script (docker cp meant, not owned here)."
 lane: next
 ---
 
@@ -35,6 +36,6 @@ Done when: a docker exec script writes a scrubbed tarball (bot log, d2d log, min
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 docker exec script writes a tarball with bot log, d2d log, minute lines, deaths, ladder journal, wizard inputs without paths and the d2dping state; scrubs token, key-shaped text, home paths and hostnames; a test greps the output
-- [ ] #2 the known-broken table of docs/first-session.md is current and the bundle text tells the friend what to send (beta exit criterion 6; the watch-page link is TASK-47's)
+- [x] #1 docker exec script writes a tarball with bot log, d2d log, minute lines, deaths, ladder journal, wizard inputs without paths and the d2dping state; scrubs token, key-shaped text, home paths and hostnames; a test greps the output
+- [x] #2 the known-broken table of docs/first-session.md is current and the bundle text tells the friend what to send (beta exit criterion 6; the watch-page link is TASK-47's)
 <!-- AC:END -->

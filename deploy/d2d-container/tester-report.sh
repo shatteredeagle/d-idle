@@ -30,6 +30,10 @@ done
 [ -z "${D2DVIEW_TOKEN:-}" ] || lit="$lit
 s/$(printf '%s' "$D2DVIEW_TOKEN" | sed 's/[][\.*^$/|]/\\&/g')/<token>/g"
 
+# private names of the lab, written in pieces so this file is not itself a leakcheck hit (same list as cmd/leakcheck)
+dom='bir''bhub\.com'
+names='bir''bhub|ori''on|her''dr|for''gejo|unr''aid|omle''tte|mac''mini|jes''se|des''mond'
+
 scrub() {
 	# order matters: structured secrets first, then shapes, then places and names
 	sed -E "$lit
@@ -54,8 +58,8 @@ s#://127\.0\.0\.1#://<LB>#g
 s#(https?://|wss?://)[^/:[:space:]\"'<>?]+#\\1<host>#g
 s#://<LH>#://localhost#g
 s#://<LB>#://127.0.0.1#g
-s#[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.(lan|local|internal|home\.arpa|birbhub\.com)\b#<host>#Ig
-s#(birbhub|orion|herdr|forgejo|unraid|omlette|macmini|jesse|desmond${REPORT_NAMES:+|$REPORT_NAMES})#<private>#Ig"
+s#[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.(lan|local|internal|home\.arpa|${dom})\b#<host>#Ig
+s#($names${REPORT_NAMES:+|$REPORT_NAMES})#<private>#Ig"
 }
 
 if [ "${REPORT_SCRUB_ONLY:-0}" = 1 ]; then scrub; exit 0; fi

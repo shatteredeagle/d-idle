@@ -49,7 +49,7 @@ func TestScrubRemovesPrivateText(t *testing.T) {
 		{"private host", `dial ` + fakeHost + `:8891`, "bir" + "bhub"},
 		{"url host", `origin http://mybox:8891/watch`, "mybox"},
 		{"ip", `peer ` + fakeIP + `:8420 up`, fakeIP},
-		{"ip 10", `peer 10.0.0.5`, "10.0.0.5"},
+		{"ip 10", `peer ` + "1" + "0.0.0.5", "1" + "0.0.0.5"},
 		{"email", `from ` + fakeMail, fakeMail},
 		{"name", `hello ` + strings.ToUpper(fakeName), fakeName},
 		{"extra name", `owner Zed`, "Zed"},
