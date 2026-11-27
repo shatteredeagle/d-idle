@@ -371,8 +371,14 @@
     {
      "kind": "quest_bits",
      "record": 14,
-     "set": 1,
-     "why": "U docs/progression/quests.md: the Seven Tombs quest word"
+     "set": 32,
+     "why": "V drill act2drill5/6: the Duriel kill alone sets 0x0024 (bit 5 is the kill); the old mask 0x0001 is Meshif's line, three hand-ins away"
+    },
+    {
+     "kind": "quest_bits",
+     "record": 14,
+     "set": 8192,
+     "why": "S d2d port SevenTombsQuest: Tyrael's reward line sets bit 13 (0x2000); the Tyrael talk runs in the lair (town fieldNPCAreas). First live rerun confirms the bit"
     },
     {
      "kind": "log_line",

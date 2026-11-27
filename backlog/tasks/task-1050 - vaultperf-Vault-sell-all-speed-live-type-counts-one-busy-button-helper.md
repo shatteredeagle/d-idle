@@ -20,7 +20,7 @@ owns:
   - "internal/vault"
 exclusive: []
 contracts: []
-result: "Sell all batches its writes (SellNowBatch: one archive write, one log write, one fsync); every reload carries the type counts; dBusy in toast.js gives every POST button an immediate working/done/failed state. Verified in Go and node tests only, not on a real page (first-load wire work was already done by the earlier vaultperf probe)."
+result: "Sell all batches its writes (SellNowBatch: one archive write, one log write, one fsync); every reload carries the type counts; dBusy in toast.js gives every POST button an immediate working/done/failed state. Verified in Go and node tests only, not on a real page (first-load wire work was already done by the earlier vaultperf probe). Remaining (live): AC 5 first load and button states on a real page; the card then closes."
 ---
 
 ## Description

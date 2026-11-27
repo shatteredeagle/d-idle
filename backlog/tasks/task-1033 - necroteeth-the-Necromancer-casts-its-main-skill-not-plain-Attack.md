@@ -1,11 +1,11 @@
 ---
 id: TASK-1033
 title: 'necroteeth: the Necromancer casts its main skill, not plain Attack'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T06:15:00Z'
-updated_date: '2026-11-27T06:17:00Z'
+updated_date: '2026-11-27T19:07:00Z'
 labels:
   - bot
   - bug

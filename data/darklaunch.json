@@ -114,7 +114,8 @@
    "enable_criteria": "U",
    "owner": "coordinator",
    "review_by": "2026-12-09",
-   "status": "dark",
+   "status": "retired",
+   "note": "2026-11-27 retired (skillcapretire): knob and level-cap check removed; d2d and game.exe do not enforce the rule, no consumer. The table checker TableViolations stays.",
    "criteria_met": "U"
   },
   {

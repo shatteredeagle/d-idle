@@ -80,7 +80,7 @@ func TestLadderTagsOnEndgameTables(t *testing.T) {
 // hammer points and spends 11 of them at clvl 18, where a skill that needs level 18 takes one (kolbot AutoSkill rule). The
 // required level 18 is V (the table's own tags: "reqlevel 18, V skills.txt"). d2d does not enforce the rule (V: fork
 // components/rules/rules.hpp can_learn), so the table stays as it is; the real-data sweep of every table is
-// TestPerLevelCapOnShippedTablesReal. The rule is the knob resource.skillCapPerLevel.
+// TestPerLevelCapOnShippedTablesReal. The rule is no longer a knob (retired); only the table checker keeps it.
 func TestHammerdinTableBreaksThePerLevelCap(t *testing.T) {
 	tb := shippedTables(t)["build-paladin_hammerdin_endgame90.json"]
 	var rows []TableRow

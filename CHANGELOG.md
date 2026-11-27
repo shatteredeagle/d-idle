@@ -8,6 +8,12 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- vaultpoll: cached vault poll, windowed query (TASK-1054) <!--sg:agent/vaultpoll-->
+- skillcapretire: retire resource.skillCapPerLevel (TASK-1055) <!--sg:agent/skillcapretire-->
+- bsmchk: questspec rules 12-14 (TASK-982) <!--sg:agent/bsmchk-->
+- closecards2: close/annotate stale cards (16 Done, 35 annotated) <!--sg:agent/closecards2-->
+- charmvault: charms recorded in the Vault, player Carry/Stow (TASK-1052) <!--sg:agent/charmvault-->
+- tyrael: Duriel Tyrael hand-in via field-NPC table (TASK-1053) <!--sg:agent/tyrael-->
 - darkflip: final dark queue flip list (docs) <!--sg:agent/darkflip-->
 - closecards: close verified merged cards, stale dependency fix <!--sg:agent/closecards-->
 - akarafix: hand-in queued/served logs, stale request drop, why-waiting reason (TASK-1051) <!--sg:agent/akarafix-->

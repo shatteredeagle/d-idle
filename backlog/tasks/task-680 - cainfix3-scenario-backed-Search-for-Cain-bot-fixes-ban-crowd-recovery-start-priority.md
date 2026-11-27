@@ -28,7 +28,7 @@ owns:
   - "tools/provingground/scenarios/cain.json"
 exclusive: []
 contracts: []
-result: "GREEN on the builder lab slots (CHEATED setups, mechanics only): cain.stones Paladin 11 and Sorceress 3, cain.cage both, cain.scroll Sorceress 3. cain.chain Paladin 11 is FLAKY, not green: GREEN once without the d2bot adapter wiring of the crowd override, RED once with it (potion trip out of Tristram returns by a stale town portal, see docs/probes/provingground-cainfix3-2026-11-19.md). F1 ban waiver and F2 override are unit-tested; no run hit a death ban. Build-specific data: Chunk.noGold in data/questboard/act1.json, knob combat.crowdAbandonQuestN."
+result: "GREEN on the builder lab slots (CHEATED setups, mechanics only): cain.stones Paladin 11 and Sorceress 3, cain.cage both, cain.scroll Sorceress 3. cain.chain Paladin 11 is FLAKY, not green: GREEN once without the d2bot adapter wiring of the crowd override, RED once with it (potion trip out of Tristram returns by a stale town portal, see docs/probes/provingground-cainfix3-2026-11-19.md). F1 ban waiver and F2 override are unit-tested; no run hit a death ban. Build-specific data: Chunk.noGold in data/questboard/act1.json, knob combat.crowdAbandonQuestN. Remaining (lab): AC 3 cain.chain Paladin 11 is flaky, not green."
 lane: next
 ---
 
