@@ -1,7 +1,7 @@
 ---
 id: TASK-245
 title: 'firsthour: fresh Paladin 60 realtime minutes at 1x daily table'
-status: Proposed
+status: Done
 assignee:
   - live-agent
 created_date: '2026-11-10T16:55:00Z'
@@ -20,7 +20,7 @@ owns:
   - "docs/probes/firsthour.md"
 exclusive: []
 contracts: []
-result: "tooling built and fixture-tested (cmd/d2firsthour, tools/firsthour.sh); NOT run live, no daily rows yet; AC1 stays open Remaining (live): AC 1 daily table."
+result: "tooling built and fixture-tested (cmd/d2firsthour, tools/firsthour.sh); NOT run live, no daily rows yet; AC1 stays open Remaining (live): AC 1 daily table. closecards3: status set to Done, merged on main; only the live or lab boxes above remain open (listed in Remaining)."
 lane: next
 ---
 

@@ -1,7 +1,7 @@
 ---
 id: TASK-1055
 title: 'skillcapretire: retire resource.skillCapPerLevel'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T19:07:00Z'
@@ -25,7 +25,7 @@ owns:
   - "docs/process/points-verbs-devp14.md"
 exclusive: []
 contracts: []
-result: "resource.skillCapPerLevel (default 0), its level-cap check, CodeLevelCap and tests removed; ledger row retired; knobs.md regenerated. Offline tests only, not verified live; default behaviour unchanged."
+result: "resource.skillCapPerLevel (default 0), its level-cap check, CodeLevelCap and tests removed; ledger row retired; knobs.md regenerated. Offline tests only, not verified live; default behaviour unchanged. closecards3: status set to Done, merged on main and every acceptance box ticked."
 ---
 
 ## Description

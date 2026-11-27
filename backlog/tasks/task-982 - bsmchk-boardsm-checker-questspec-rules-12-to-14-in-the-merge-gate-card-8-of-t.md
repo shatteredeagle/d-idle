@@ -1,7 +1,7 @@
 ---
 id: TASK-982
 title: 'bsmchk: boardsm checker: questspec rules 12 to 14 in the merge gate (card 8 of t'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-26T03:57:00Z'
@@ -19,7 +19,7 @@ owns:
   - "docs/questspec.md"
 exclusive: []
 contracts: []
-result: "Rules 12 (CheckOrder), 13 (CheckLatched, chain field latched), 14 (CheckGuardCodes, task/gate.go scan) with positive and negative tests; 12 and 13 in TestShippedChains, shipped data clean, no allow entries. Offline, not verified live."
+result: "Rules 12 (CheckOrder), 13 (CheckLatched, chain field latched), 14 (CheckGuardCodes, task/gate.go scan) with positive and negative tests; 12 and 13 in TestShippedChains, shipped data clean, no allow entries. Offline, not verified live. closecards3: status set to Done, merged on main and every acceptance box ticked."
 ---
 
 ## Description

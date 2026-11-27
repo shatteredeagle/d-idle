@@ -1,7 +1,7 @@
 ---
 id: TASK-1050
 title: 'vaultperf: Vault sell-all speed, live type counts, one busy-button helper'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T18:28:00Z'
@@ -20,7 +20,7 @@ owns:
   - "internal/vault"
 exclusive: []
 contracts: []
-result: "Sell all batches its writes (SellNowBatch: one archive write, one log write, one fsync); every reload carries the type counts; dBusy in toast.js gives every POST button an immediate working/done/failed state. Verified in Go and node tests only, not on a real page (first-load wire work was already done by the earlier vaultperf probe). Remaining (live): AC 5 first load and button states on a real page; the card then closes."
+result: "Sell all batches its writes (SellNowBatch: one archive write, one log write, one fsync); every reload carries the type counts; dBusy in toast.js gives every POST button an immediate working/done/failed state. Verified in Go and node tests only, not on a real page (first-load wire work was already done by the earlier vaultperf probe). Remaining (live): AC 5 first load and button states on a real page; the card then closes. closecards3: status set to Done, merged on main; only the live or lab boxes above remain open (listed in Remaining)."
 ---
 
 ## Description

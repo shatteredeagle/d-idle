@@ -1,7 +1,7 @@
 ---
 id: TASK-766
 title: 'countess3b: boss presets on d2d from the navigator''s world; Countess found, nav mouth gate blocks the walk'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-21T04:59:00Z'
@@ -20,7 +20,7 @@ owns:
 exclusive: []
 contracts: []
 lane: next
-result: " Remaining (live): AC 2 Paladin 11 with the new fork binary."
+result: " Remaining (live): AC 2 Paladin 11 with the new fork binary. closecards3: status set to Done, merged on main; only the live or lab boxes above remain open (listed in Remaining)."
 ---
 
 ## Description

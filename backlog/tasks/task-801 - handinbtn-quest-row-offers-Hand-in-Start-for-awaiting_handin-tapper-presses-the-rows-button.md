@@ -1,7 +1,7 @@
 ---
 id: TASK-801
 title: 'handinbtn: quest row offers Hand in / Start for awaiting_handin, tapper presses the row''s button'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-22T04:03:00Z'
@@ -25,7 +25,7 @@ owns:
 exclusive: []
 contracts: []
 lane: next
-result: " Merged (agent/handinbtn); ACs 1 to 3 checked against desk_action_test.go and the quest-board panel. Remaining (live): AC 4 scenarios merc.kashya-handin and act1.burial.blood_raven on a lab slot."
+result: " Merged (agent/handinbtn); ACs 1 to 3 checked against desk_action_test.go and the quest-board panel. Remaining (live): AC 4 scenarios merc.kashya-handin and act1.burial.blood_raven on a lab slot. closecards3: status set to Done, merged on main; only the live or lab boxes above remain open (listed in Remaining)."
 ---
 
 ## Description
