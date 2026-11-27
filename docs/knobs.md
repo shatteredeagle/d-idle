@@ -21,7 +21,6 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 
 
 <!-- knobdump:begin -->
-
 ### nav.*
 
 | key | default | range | unit | worst (rookie) | readers | what it changes |
@@ -598,6 +597,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | key | default | range | unit | worst (rookie) | readers | what it changes |
 |---|---|---|---|---|---|---|
 | items.ladderRunewords | 0 | 0..1 | bool | 0 | 3 | 1: the planner may socket the ladder-only runewords (Spirit, Insight and the rest of the Runes.txt server rows) and the Return screen shows 'ladder runewords: on'. Set it only together with the fork flag --ladder-runewords (ADR 0024, d.idle mode); read at start. 0 (default, vanilla): they stay unavailable, as in every gate and fidelity run. |
+| items.advisor | 0 | 0..1 | bool | 0 | 0 | [dark-launch] 1: the Return screen shows up to 3 advice lines from what you own (pack, stash, vault): 'you have the runes for Lore; socket base ...', a cube upgrade path, or the one rune you lack. Lines only: it never moves, sockets or cubes an item. Ladder-only runewords follow items.ladderRunewords. 0 (default): no advice section. |
 
 ### respec.*
 
@@ -609,6 +609,8 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | respec.firstFree | 0 | 0..10 | count | 0 | 0 | How many of a hero's first respecs cost nothing (they do not count for the escalation). 0 = every respec is paid. PLACEHOLDER number: the model matters, the value is not decided (docs/autoalloc.md). |
 | respec.minGold | 1000 | 0..1e+06 | gold | 1000 | 0 | The price before the escalation is at least this. PLACEHOLDER number: the model matters, the value is not decided (docs/autoalloc.md). |
 | respec.maxGold | 1e+05 | 0..1e+07 | gold | 1e+05 | 0 | The price before the escalation is at most this (0 = no cap). PLACEHOLDER number: the model matters, the value is not decided (docs/autoalloc.md). |
+
+Fields without a knob entry:
 <!-- knobdump:end -->
 
 ### Fields without a Knob entry (V)
