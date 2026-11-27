@@ -86,7 +86,8 @@ func TestManaHeavyMatchesJSON(t *testing.T) {
 // hammerdin table now is (probe F5).
 func TestManaHeavyFromTableFlag(t *testing.T) {
 	for _, b := range []string{"barbarian_warcry_endgame90", "sorceress_blizzard_endgame90", "druid_tornado_endgame90",
-		"necromancer_summoner_endgame90", "paladin_hammerdin_endgame90"} {
+		"necromancer_summoner_endgame90", "paladin_hammerdin_endgame90",
+		"necromancer_summoner_normal30", "necromancer_leveling_normal30"} { // last two: SME review 2026-11-27, medium
 		if !ManaHeavyBuild(b) {
 			t.Errorf("%s should be mana-heavy", b)
 		}
@@ -96,7 +97,7 @@ func TestManaHeavyFromTableFlag(t *testing.T) {
 			t.Errorf("%q must not be mana-heavy", b)
 		}
 	}
-	if n := len(loadManaHeavy()); n != 5 {
-		t.Errorf("%d mana-heavy builds, want 5", n)
+	if n := len(loadManaHeavy()); n != 7 {
+		t.Errorf("%d mana-heavy builds, want 7", n)
 	}
 }
