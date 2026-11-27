@@ -48,6 +48,7 @@
 | fid-poison-res-diag | proposed | - | `docs/research/fid-poisonres-trace.md` | - |
 | necroteeth | proposed | - | `internal/combat/classdata/profiles.json`<br>`internal/combat/necro_test.go`<br>`internal/leveler/mainattack_test.go` | - |
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
+| deploy88-ledger | proposed | - | `data/darklaunch.json` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
@@ -244,6 +245,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 317b4e3c0 11-27 01:46 `Merge agent/deploy88: Merge branch 'main' into deploy88-ledger` (deploy88)
+- 364447af7 11-27 01:41 `Merge branch 'main' into deploy88-ledger` (-)
 - fce2a0b5d 11-27 01:33 `Merge agent/arbloop: Merge branch 'main' into arbloop` (arbloop)
 - 0abcad620 11-27 01:33 `Merge agent/necroteeth: Merge branch 'main' into necroteeth` (necroteeth)
 - 722fe51c8 11-27 01:30 `Merge branch 'main' into arbloop` (-)
@@ -252,6 +255,4 @@
 - 47d55ac65 11-27 01:19 `Merge branch 'main' into dlv-upkeep-minions` (-)
 - a49fdac79 11-27 01:15 `Merge agent/inputl3: Merge branch 'main' into inputl3` (inputl3)
 - 61bca5cdb 11-27 01:13 `Merge branch 'main' into inputl3` (-)
-- b4f120b15 11-27 01:06 `Merge branch 'main' into dlv-upkeep-minions` (-)
-- 46a2302b0 11-27 01:06 `Merge branch 'main' into inputl3` (-)
 <!-- statusgen:end -->
