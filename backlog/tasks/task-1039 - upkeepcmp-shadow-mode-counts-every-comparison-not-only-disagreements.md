@@ -24,6 +24,7 @@ owns:
   - "internal/combat/minions.go"
   - "internal/combat/stance.go"
   - "internal/bot/upkeepkv.go"
+  - "cmd/d2bot/adapters.go"
   - "internal/bot/observe.go"
 exclusive: []
 contracts: []

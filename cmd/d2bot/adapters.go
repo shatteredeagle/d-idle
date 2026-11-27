@@ -52,6 +52,7 @@ func (m moverAdapter) TeleportToArea(ctx context.Context, levelNo int) error {
 type fighterAdapter struct{ f *combat.Fighter }
 
 func (a fighterAdapter) IsIgnored(id uint32, dist float64) bool { return a.f.IsIgnored(id, dist) }
+func (a fighterAdapter) UpkeepCompareField() string             { return a.f.UpkeepCompareField() }
 
 func (a fighterAdapter) Clear(ctx context.Context, o bot.ClearOpts) (bot.ClearResult, error) {
 	res, err := a.f.Clear(ctx, combat.ClearOpts{Radius: o.Radius, Interlude: o.Interlude})
