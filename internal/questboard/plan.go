@@ -57,6 +57,7 @@ const (
 	EvAutoStart        = "autoStart"
 	EvAutoHandIn       = "autoHandIn"
 	EvAutoHandInFailed = "autoHandInFailed"
+	EvAutoResume       = "autoResume" // the pause policy lifted a park (resume.go)
 )
 
 // autoLogMax bounds the log: enough for the per-day cap and one away stretch.

@@ -1,6 +1,9 @@
 package bot
 
-import "d2lod-bot/internal/questboard"
+import (
+	"d2lod-bot/internal/d2"
+	"d2lod-bot/internal/questboard"
+)
 
 // The knobs of the opt-in auto-start (slice S8, docs/questboard.md "Auto-start and away"): the limits live in
 // internal/env QuestsTuning, the rule in internal/questboard/auto.go. Nothing here runs with quests.board = 0.
@@ -23,4 +26,32 @@ func (r *Runner) QuestLevel() int {
 		return s.Player.Level
 	}
 	return 0
+}
+
+// questResumeOptions is the pause policy of the board (quests.resumeAfterDeaths, table in data/questboard/resume.json).
+// A table that does not parse leaves the policy off: a parked chunk then waits for the player, as before.
+func (r *Runner) questResumeOptions() questboard.ResumeOptions {
+	if r.e.Tune.Quests.ResumeAfterDeaths == 0 {
+		return questboard.ResumeOptions{}
+	}
+	p, err := questboard.LoadResume()
+	if err != nil {
+		r.boardNote("resume", "quest board: pause policy off: "+err.Error())
+		return questboard.ResumeOptions{}
+	}
+	return questboard.ResumeOptions{Enabled: true, Policy: p}
+}
+
+// questResumeInput is what the pause policy needs from the hero now.
+func (r *Runner) questResumeInput(snap *d2.Snapshot) questboard.ResumeInput {
+	r.obMu.Lock()
+	died := r.ob.lastDeathAt
+	r.obMu.Unlock()
+	return questboard.ResumeInput{
+		Paused:    r.PlayerPauseView().State != PauseRunning,
+		Calm:      r.safeToPause(snap),
+		Recovery:  r.recoveryActive(),
+		LifePct:   snap.Player.Life * 100 / max(snap.Player.MaxLife, 1),
+		LastDeath: died,
+	}
 }

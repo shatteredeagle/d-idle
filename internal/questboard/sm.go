@@ -65,6 +65,10 @@ type Run struct {
 	At       time.Time `json:"at"`
 	Failures int       `json:"failures,omitempty"` // kept with a park
 	Deaths   int       `json:"deaths,omitempty"`
+	// ParkedAt is when the run was parked and AutoResumes how many times the pause policy (resume.go) lifted its parks in a
+	// row; a player's Try again clears the count. Additive in plan file v1: old files read both as zero.
+	ParkedAt    time.Time `json:"parked_at,omitempty"`
+	AutoResumes int       `json:"auto_resumes,omitempty"`
 	// Release is the bot release that stored a gave_up park; RetriesAfterRelease counts the one automatic retry a new
 	// release gets (additive in plan file v1: old files read both as zero).
 	Release             string `json:"release,omitempty"`
@@ -428,6 +432,7 @@ func (m *SM) Retry(b *Board, diff, quest, chunk string, again bool, at time.Time
 	}
 	tr, _ := Step(r.Status, EvRetry, "")
 	r.Status, r.Code, r.Failures, r.Deaths = tr.To, tr.Code, 0, 0
+	r.ParkedAt, r.AutoResumes = time.Time{}, 0
 	changed = append(changed, Ref{quest, chunk})
 	m.Promote(b, diff)
 	return changed, false, nil

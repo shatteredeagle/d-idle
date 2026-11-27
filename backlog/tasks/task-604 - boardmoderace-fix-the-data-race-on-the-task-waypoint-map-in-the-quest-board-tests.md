@@ -18,7 +18,7 @@ owns:
 exclusive: []
 contracts: []
 lane: next
-result: " Remaining: AC 2 race run (-count=200 -cpu 1,2,4) was not re-run by closecards2; AC 1 code change is merged but left unticked until the race run is recorded."
+result: "AC 1 done (merged 7266196e2: mutex around task.wp and the per-game reset). Race run on the worker host, nice 19: go test -race -count=200 -cpu 1,2,4 -run Board ./internal/bot/ (75 min, 600 test runs): no DATA RACE reported. One non-race failure in that run: TestQuestBoardAcceptRunStopHandIn line 116 got Outcome confirming instead of done (the hand-in save evidence lands after the first read in the fake; a timing flake under -race load, needs its own card). AC 2 left open: not green until that flake is fixed, and the whole-package -race run was not done. Not verified live."
 ---
 
 ## Description
@@ -31,6 +31,6 @@ Why: S7b gate failed with DATA RACE on l.task.wp in boardmode_test (World built 
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 l.task.wp and the per-game reset are guarded; the quest board world build off the loop goroutine no longer races
+- [x] #1 l.task.wp and the per-game reset are guarded; the quest board world build off the loop goroutine no longer races
 - [ ] #2 go test -race -count=200 -cpu 1,2,4 on Board tests and the whole internal/bot package under -race pass
 <!-- AC:END -->

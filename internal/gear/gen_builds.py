@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-"""Writes builds/*.json (same schema as internal/plandata/build-paladin-normal30.json plus main_attack).
+"""HISTORICAL: the plan tables now live only in internal/plandata (gear reads them from there) and were edited by hand since,
+so this generator writes to ./builds-out/ and must be merged by hand. Writes builds-out/*.json (same schema as internal/plandata/build-paladin-normal30.json plus main_attack).
 Run from this directory; validates prerequisites and reqlevels against the d2tables gear.json (V from the MPQ tables; run cmd/d2tables first)."""
 import json, os
+os.makedirs("builds-out", exist_ok=True)
 
 TABLES = os.environ.get("D2_TABLES_DIR") or os.path.expanduser("~/.cache/d2lod/tables")
 D = json.load(open(os.path.join(TABLES, "gear.json")))["skills"]
@@ -36,7 +38,7 @@ def build(name, cls, schema_tags, seq, stat_rows, hotkeys, main, respec=None):
            "tags": schema_tags,
            "respec": respec or {"enabled": False},
            "hotkeys": hotkeys, "main_attack": main, "rows": rows}
-    json.dump(out, open(f"builds/{name}.json", "w"), indent=1)
+    json.dump(out, open(f"builds-out/{name}.json", "w"), indent=1)
 
 def stat_table(spec):
     t = {}
