@@ -447,14 +447,15 @@
    "enable_criteria": "Scenarios cain.scroll.stepexec, cain.read.stepexec, drill.act2.assemble.stepexec and drill.act2.duriel.stepexec green 2 of 3 runs each on the lab, then flip on one sandbox with a 24 h watch and auto-revert on a hard breach (docs/process/dark-launch.md); the old handler is deleted after the watch.",
    "owner": "coordinator",
    "review_by": "2026-12-03",
-   "status": "trial",
+   "status": "enabled",
    "criteria_met": "no",
    "trial_started": "2026-11-27T19:02:39Z",
    "trial_instance": "d2play-20261125q",
    "trial_value": 1.0,
    "trial_window": "7200s",
    "trial_why": "dark queue: Cain scroll chunks + Act 2 assemble 3/3 green; Duriel chunk parks safely",
-   "trial_bundle": "quests.stepExec"
+   "trial_bundle": "quests.stepExec",
+   "enabled_at": "2026-11-27T21:03:18Z"
   },
   {
    "name": "bot.arbiterFamilies",
