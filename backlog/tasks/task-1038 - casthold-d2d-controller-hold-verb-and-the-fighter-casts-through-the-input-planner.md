@@ -1,10 +1,13 @@
 ---
 id: TASK-1038
-title: 'casthold: d2d controller hold verb and the fighter casts through the input planner'
-status: In Progress
+title: >-
+  casthold: d2d controller hold verb and the fighter casts through the input
+  planner
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T07:51:00Z'
+updated_date: '2026-11-27T08:19:00Z'
 labels:
   - bot
   - feature

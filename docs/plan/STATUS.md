@@ -49,7 +49,6 @@
 | necroteeth | proposed | - | `internal/combat/classdata/profiles.json`<br>`internal/combat/necro_test.go`<br>`internal/leveler/mainattack_test.go` | - |
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
 | deploy88-ledger | proposed | - | `data/darklaunch.json` | - |
-| casthold | in-progress | - | `internal/d2dinput/`<br>`internal/d2dcombat/`<br>`internal/d2dctl/fake/`<br>`internal/combat/fighter.go`<br>`internal/combat/castdeliver.go`<br>`internal/combat/castdeliver_test.go`<br>`docs/design/input-cast-verbs.md` | - |
 | upkeepcmp | in-progress | - | `internal/combat/upkeepcmp.go`<br>`internal/combat/upkeepcmp_test.go`<br>`internal/combat/aura.go`<br>`internal/combat/fighter.go`<br>`internal/combat/mark.go`<br>`internal/combat/minions.go`<br>`internal/combat/stance.go`<br>`internal/bot/upkeepkv.go`<br>`cmd/d2bot/adapters.go`<br>`internal/bot/observe.go` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
