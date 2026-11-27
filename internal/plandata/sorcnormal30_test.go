@@ -108,3 +108,36 @@ func TestSorceressNormal30AgainstRealTables(t *testing.T) {
 		}
 	}
 }
+
+// SME review 2026-11-27, confidence medium-high: the cold band casts Ice Blast ahead of Glacial Spike, so Glacial Spike
+// gets its one Blizzard-prerequisite point at clvl 24 and the points of clvl 25-29 go to Ice Blast (15 by clvl 29).
+func TestSorcNormal30IceBlastNotGlacialSpike(t *testing.T) {
+	b, err := leveler.LoadBuild(sorcNormal30, "")
+	if err != nil {
+		t.Fatal(err)
+	}
+	have := map[string]int{}
+	for _, r := range b.Rows {
+		for _, s := range r.Skills {
+			have[s.Skill] += s.Points
+		}
+		switch {
+		case r.Clvl == 24 && have["Glacial Spike"] != 1:
+			t.Errorf("clvl 24: Glacial Spike %d, want 1", have["Glacial Spike"])
+		case r.Clvl >= 24 && r.Clvl < 30 && have["Glacial Spike"] != 1:
+			t.Errorf("clvl %d: Glacial Spike %d, want it to stay 1", r.Clvl, have["Glacial Spike"])
+		case r.Clvl == 29 && have["Ice Blast"] != 15:
+			t.Errorf("clvl 29: Ice Blast %d, want 15", have["Ice Blast"])
+		case r.Clvl == 30 && have["Blizzard"] != 1:
+			t.Errorf("clvl 30: Blizzard %d", have["Blizzard"])
+		}
+	}
+	// The other Sorceress table still loads (the edit touched only the normal30 file).
+	e, err := leveler.LoadBuild("sorceress_blizzard_endgame90", "")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if e.Class != "sorceress" {
+		t.Errorf("class %q", e.Class)
+	}
+}
