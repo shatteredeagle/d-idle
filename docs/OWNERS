@@ -426,6 +426,7 @@ internal/env/tuning_nav.go  credit-runner  pursuers
 internal/env/tuning_quests.go  credit-runner  countess3
 internal/env/tuning_resource.go  credit-runner  freshstart
 internal/env/tuning_resource.go  live-agent  recoverypace
+internal/env/tuning_town.go  credit-runner  townflip
 internal/fidvendor  live-agent  fidprobe-vendor
 internal/goals/clock_test.go  credit-runner  pgclock
 internal/goldfarm  credit-runner  repairtrip
@@ -525,8 +526,13 @@ internal/town  credit-runner  town6
 internal/town  credit-runner  town7
 internal/town  credit-runner  town8
 internal/town/chores.go  credit-runner  repairtrip
+internal/town/chores.go  credit-runner  townflip
 internal/town/repairtrip_test.go  credit-runner  repairtrip
+internal/town/sellplan.go  credit-runner  townflip
+internal/town/sellplan_test.go  credit-runner  townflip
+internal/town/shop.go  credit-runner  townflip
 internal/town/town.go  credit-runner  repairtrip
+internal/town/town.go  credit-runner  townflip
 internal/vaultkeep  credit-runner  sellall
 internal/watch  credit-runner  sellall
 internal/watch  credit-runner  town9
