@@ -42,7 +42,6 @@
 | diffbaal | proposed | - | `internal/quest/baaldone.go`<br>`internal/quest/baaldone_test.go` | - |
 | releasenotes-next | proposed | - | `docs/releases/next-draft.md` | - |
 | gearcopy | proposed | - | `internal/gear`<br>`docs/gear.md` | - |
-| flakearb | proposed | - | `internal/bot/arbiter_control_test.go` | - |
 | logsink | proposed | - | `internal/logx`<br>`cmd/d2bot/main.go`<br>`cmd/d2bot/opscmd.go`<br>`cmd/d2bot/logsink_test.go`<br>`docs/ops` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | fieldstate | proposed | - | `internal/bot/loop.go`<br>`internal/bot/goal.go`<br>`internal/bot/state.go`<br>`internal/bot/runner.go`<br>`internal/bot/fieldstate_test.go` | - |

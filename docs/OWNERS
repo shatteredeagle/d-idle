@@ -277,7 +277,6 @@ internal/arbiter/replay_ticklog_test.go  live-agent  ticklog
 internal/bot/  credit-runner  cainfix3
 internal/bot/arbiter_control.go  credit-runner  questresume
 internal/bot/arbiter_control.go  live-agent  arbmig
-internal/bot/arbiter_control_test.go  credit-runner  flakearb
 internal/bot/arbiter_control_test.go  live-agent  arbmig
 internal/bot/arbloop_test.go  live-agent  arbloop
 internal/bot/boardprogress.go  credit-runner  questresume
