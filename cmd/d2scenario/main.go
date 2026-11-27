@@ -50,6 +50,8 @@ func main() {
 		err = cmdDeterminismRun(args, os.Stdout)
 	case "ledger":
 		err = cmdLedger(args, os.Stdout)
+	case "nightly":
+		err = cmdNightly(args, os.Stdout)
 	case "gate-check":
 		err = cmdGateCheck(args, os.Stdout)
 	case "run":
@@ -98,6 +100,7 @@ func usage(w io.Writer) {
   incident    [-class C] [-seed N] [-out DIR] FILE.json..   build replay rows from incident files the bot wrote at a death (report-only tier)
   determinism-run -n N -out DIR [run flags]      run the selection N times (journals on) and compare every run with the first
   ledger status-doc|page-json|check -in L.jsonl the results ledger: generated status page, board /pg data, line check (lines are written by exec-one)
+  nightly     check|plan [-day D] [-format text|json|cmds]   the night's run set from tools/provingground/nightly.json (starts nothing)
   determinism a.json b.json                     same seed twice: same verdict (and state digest)
   gate-check  results.json                      exit 3 unless GREEN (no RED, no BLOCKED)
   soak        -faults SET -duration D [-id ID,..] [-class C] [-seed N] [-dry-run] [-strict]   run rows under injected faults, report invariant hits and survival (lab only)
