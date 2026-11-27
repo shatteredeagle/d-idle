@@ -18,6 +18,7 @@ owns:
   - "internal/resource"
   - "internal/env/tuning_resource.go"
   - "cmd/d2bot/pointswire.go"
+  - "cmd/d2bot/resource_test.go"
   - "data/darklaunch.json"
   - "docs/points.md"
   - "docs/knobs.md"
