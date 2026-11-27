@@ -50,6 +50,7 @@
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
 | deploy88-ledger | proposed | - | `data/darklaunch.json` | - |
 | casthold | in-progress | - | `internal/d2dinput/`<br>`internal/d2dcombat/`<br>`internal/d2dctl/fake/`<br>`internal/combat/fighter.go`<br>`internal/combat/castdeliver.go`<br>`internal/combat/castdeliver_test.go`<br>`docs/design/input-cast-verbs.md` | - |
+| upkeepcmp | in-progress | - | `internal/combat/upkeepcmp.go`<br>`internal/combat/upkeepcmp_test.go`<br>`internal/combat/aura.go`<br>`internal/combat/fighter.go`<br>`internal/combat/mark.go`<br>`internal/combat/minions.go`<br>`internal/combat/stance.go`<br>`internal/bot/upkeepkv.go`<br>`cmd/d2bot/adapters.go`<br>`internal/bot/observe.go` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
@@ -245,6 +246,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- e74b65753 11-27 03:11 `Merge agent/upkeepcmp: Merge branch 'main' into upkeepcmp` (upkeepcmp)
+- 2f3ae2bd7 11-27 03:10 `Merge branch 'main' into upkeepcmp` (-)
 - 9f3e208a6 11-27 03:05 `Merge agent/casthold: casthold: card result and criteria` (casthold)
 - 9b255fdc1 11-27 02:55 `Merge origin/main into casthold` (-)
 - 67d74d66e 11-27 02:47 `Merge agent/forkcaps: Merge branch 'main' into inputl3` (forkcaps)
@@ -253,6 +256,4 @@
 - a5ab785fe 11-27 02:36 `Merge branch 'main' into dlv-stance-army` (-)
 - 670290dff 11-27 02:35 `Merge agent/pgpage: Merge branch 'main' into pgpage` (pgpage)
 - c4464d60b 11-27 02:33 `Merge branch 'main' into pgpage` (-)
-- 7db510622 11-27 02:15 `Merge agent/auraupkeep: Merge branch 'main' into auraupkeep` (auraupkeep)
-- 848edfa61 11-27 02:15 `Merge agent/stepexec2: Merge branch 'main' into stepexec1` (stepexec2)
 <!-- statusgen:end -->
