@@ -26,8 +26,9 @@ type povertyFarmData struct {
 	EarlyShop struct {
 		SurplusPct int `json:"surplusPct"`
 	} `json:"earlyShop"`
-	KitFloor admit.KitFloorRow `json:"kitFloor"`
-	Lean     struct {
+	RecoveryFromLevel int               `json:"-"`
+	KitFloor          admit.KitFloorRow `json:"kitFloor"`
+	Lean              struct {
 		PotionsBelow int `json:"potionsBelow"`
 		EntryLifePct int `json:"entryLifePct"`
 	} `json:"noPortalLean"`
@@ -45,6 +46,7 @@ func loadPovertyFarm() povertyFarmData {
 		}
 		if rows, err := admit.Load(); err == nil { // the floors live in admission.json (card admit1)
 			povData.NoPotionGap, povData.FromLevel = rows.Poverty.NoPotionGap, rows.Poverty.FromLevel
+			povData.RecoveryFromLevel = rows.Poverty.RecoveryFromLevel
 			povData.KitFloor, povData.Lean = rows.KitFloor, rows.Lean
 		}
 	})
@@ -188,4 +190,19 @@ func (r *Runner) earlyShopBudget(s *d2.Snapshot) int {
 		return 0
 	}
 	return max(p.Gold-t.GearReserve, 0) * d.EarlyShop.SurplusPct / 100
+}
+
+// recoveryPoorExclude adds to ex the plan areas a recovering hero with no healing potion must not farm: monster level above clvl minus
+// poverty.noPotionGap (Doofer died at clvl 4 in Cold Plains, monster level 2, with an empty belt). It reports whether the rule applied.
+func (r *Runner) recoveryPoorExclude(s *d2.Snapshot, diff string, ex map[int]bool) bool {
+	d := loadPovertyFarm()
+	if d.NoPotionGap <= 0 || d.RecoveryFromLevel <= 0 || diff != "normal" || s.Player.Level < d.RecoveryFromLevel || !r.noPotions(s) {
+		return false
+	}
+	for _, st := range r.d.Plan.Steps[diff] {
+		if ml := r.recoveryMLvl(st.Area, s.Player.Difficulty); ml > s.Player.Level-d.NoPotionGap {
+			ex[st.Area] = true
+		}
+	}
+	return true
 }

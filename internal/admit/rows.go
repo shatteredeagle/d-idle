@@ -16,6 +16,9 @@ type Rows struct {
 	Poverty    struct {
 		NoPotionGap int `json:"noPotionGap"`
 		FromLevel   int `json:"fromLevel"`
+		// RecoveryFromLevel: from this clvl the recovery farm of a hero with no healing potion takes only areas whose monster level is
+		// at most clvl minus NoPotionGap (the first field when none is). 0 = off.
+		RecoveryFromLevel int `json:"recoveryFromLevel"`
 	} `json:"poverty"`
 	KitFloor KitFloorRow `json:"kitFloor"`
 	Arrival  ArrivalRow  `json:"arrival"`
