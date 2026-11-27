@@ -323,6 +323,7 @@ internal/bot/  credit-runner  cainfix3
 internal/bot/admit_need_test.go  credit-runner  admit1
 internal/bot/arbiter_control.go  credit-runner  arbmig
 internal/bot/arbiter_control_test.go  credit-runner  arbmig
+internal/bot/arbloop_test.go  credit-runner  arbloop
 internal/bot/areametrics.go  credit-runner  intake
 internal/bot/broke.go  credit-runner  survrecover
 internal/bot/broke.go  credit-runner  town5
@@ -330,6 +331,7 @@ internal/bot/drought.go  credit-runner  freshstart
 internal/bot/earlyroute.go  credit-runner  admit1
 internal/bot/farm.go  credit-runner  pgclock
 internal/bot/farmclock_test.go  credit-runner  pgclock
+internal/bot/goal.go  credit-runner  arbloop
 internal/bot/goal.go  credit-runner  maphistoryA
 internal/bot/goal.go  credit-runner  qdmatrix
 internal/bot/goal.go  credit-runner  repairtrip
