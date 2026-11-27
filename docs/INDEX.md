@@ -337,6 +337,8 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 `design/`
 
 - [admission-p4.md](design/admission-p4.md): Admission function (P4, card admit1, TASK-970) (status: step 1 built (package, data, tests); step 2 (wiring) waits for the outcomes2 cards TASK-958 and TASK-961.)
+- [agency-p1b.md](design/agency-p1b.md): Agency P1b: the planner drives (mode 2) (status: partial (TASK-984, 2026-11-27). Offline pieces built; the review and the flip are the owner's. Tags: V =...)
+- [agency-p3.md](design/agency-p3.md): Agency P3: share and import build files (status: current (TASK-985, 2026-11-27). Tags: V = ran in a test of `internal/buildfile`, U = unverified.)
 - [autoalloc-and-currencies-2026-11-21.md](design/autoalloc-and-currencies-2026-11-21.md): Automatic Allocate Skills, the gold respec and the currency consolidation (design, 2026-11-21) (status: DESIGN plus a built first slice (agent autoalloc). Tags: **V** verified (how said), **S** secondary, **U**...)
 - [bulk-identify-2026-11-18.md](design/bulk-identify-2026-11-18.md): Bulk identify: Cain-free, lazy reveal, filter (design, 2026-11-18) (status: BUILT offline (B1-B5 and the town adapters, scroll path and Ether tap payer of slice B6, task bulkid2),...)
 - [charm-management-2026-11-27.md](design/charm-management-2026-11-27.md): Charm management: carry, pack budget, build wants, Vault and Inventory UI (status: design note, docs only (2026-11-27, agent charms). Nothing here is built. Tags: V = read in this tree at...)

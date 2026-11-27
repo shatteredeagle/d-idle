@@ -288,6 +288,8 @@ docs/ui/vault-sell-all  credit-runner  sellall
 docs/upstream/bodies/monster-block-body.md  credit-runner  decomp43
 docs/vault.md  credit-runner  sellall
 internal/admit/  credit-runner  admit1
+internal/agency/drive.go  credit-runner  agencyp1b
+internal/agency/drive_test.go  credit-runner  agencyp1b
 internal/arbiter  credit-runner  town10
 internal/arbiter/  credit-runner  arbmig
 internal/arbiter/replay.go  credit-runner  ticklog
@@ -333,6 +335,8 @@ internal/bot/waypoints.go  credit-runner  boardmoderace
 internal/bot/zonemodel.go  credit-runner  survrecover
 internal/bot/zonerecover_test.go  credit-runner  survrecover
 internal/bot/zoneshadow.go  credit-runner  survrecover
+internal/buildfile/share.go  credit-runner  agencyp3
+internal/buildfile/share_test.go  credit-runner  agencyp3
 internal/campaign/  credit-runner  campaign1
 internal/combat/  credit-runner  cainfix3
 internal/combat/  credit-runner  dlv-aim-corpse

@@ -192,8 +192,8 @@
 | fid-adapter-rows | deferred | - | `docs/probes/fid/fid-adapter-rows.md` | - |
 | ticklog | in-progress | - | `docs/design/ticklog-t4.md`<br>`docs/arbiter.md`<br>`internal/bot/ticklog.go`<br>`internal/bot/ticklog_test.go`<br>`internal/bot/shadow.go`<br>`internal/env/tuning_bot.go`<br>`internal/arbiter/replay.go`<br>`internal/arbiter/replay_ticklog_test.go`<br>`data/darklaunch.json` | - |
 | bsmdef | proposed | - | `docs/design/boardsm-flip.md` | - |
-| agencyp1b | proposed | - | `docs/design/agency-p1b.md` | - |
-| agencyp3 | proposed | - | `docs/design/agency-p3.md` | - |
+| agencyp1b | proposed | - | `docs/design/agency-p1b.md`<br>`internal/agency/drive.go`<br>`internal/agency/drive_test.go` | - |
+| agencyp3 | proposed | - | `docs/design/agency-p3.md`<br>`internal/buildfile/share.go`<br>`internal/buildfile/share_test.go` | - |
 | inputl3 | in-progress | - | `docs/design/input-i3.md`<br>`internal/input/useitem.go`<br>`internal/input/useitem_test.go`<br>`internal/d2dctl/use_verb.go`<br>`internal/d2dctl/use_verb_test.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dinput/useitem.go`<br>`internal/combat/portalverb.go`<br>`internal/combat/portalverb_test.go`<br>`internal/combat/fighter.go`<br>`internal/town/portalverb.go`<br>`internal/town/portalverb_test.go`<br>`internal/town/portalverb_unit_test.go`<br>`internal/town/portalverb_export_test.go`<br>`internal/town/trip.go`<br>`data/input/caps/`<br>`data/input/caps_test.go`<br>`docs/design/input-cast-verbs.md`<br>`backlog/tasks/task-726 - dlv-cast-verbs-input-caps-cast-unit-cast-point-cast-hold.md` | - |
 | inputl4 | proposed | - | `docs/design/input-i4.md`<br>`internal/input/repairverbs.go`<br>`internal/d2dctl/repair_verb.go`<br>`internal/d2dctl/use_verb_test.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dinput/repairverbs.go`<br>`internal/town/repairverb.go`<br>`internal/town/repairverb_test.go`<br>`internal/town/chores.go`<br>`internal/town/portalverb_export_test.go`<br>`internal/town/portalverb_unit_test.go` | - |
 | inputl5 | proposed | - | `docs/design/input-i5-i7.md`<br>`tools/ci/pointercount.py`<br>`tools/ci/test_pointercount.py`<br>`tools/ci/pointercount-baseline.json`<br>`tools/ci/check.sh` | - |
@@ -224,6 +224,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 2d837813f 11-27 14:57 `Merge agent/agencyp3: agencyp3: shared build file reader, kolbot importer, DriveOf (TASK-985, TASK-984 partial)` (agencyp3)
+- ac877999a 11-27 14:56 `Merge branch 'main' into agencyp3` (-)
 - 1ea6463d4 11-27 14:54 `Merge agent/difftrans: difftrans: difficulty transition design (docs)` (difftrans)
 - 819ef370c 11-27 14:54 `Merge agent/wpstep2: wpstep2: close TASK-716 card (fixed by TASK-770)` (wpstep2)
 - 6d9ce4ddf 11-27 14:53 `Merge branch 'main' into difftrans` (-)
@@ -232,6 +234,4 @@
 - 412dc797c 11-27 14:45 `Merge agent/townguard: townguard: hand-over in the guard refusal, route path cost (TASK-1057)` (townguard)
 - 51d1cdd1a 11-27 14:45 `Merge agent/inputl4: inputl4: repair and menu-choose client verbs, pointer-call count CI check (TASK-988/989)` (inputl4)
 - cedb40af3 11-27 14:43 `Merge branch 'main' into nightplan` (-)
-- 88ddca6c9 11-27 14:43 `Merge branch 'main' into townguard` (-)
-- f992a90b6 11-27 14:43 `Merge branch 'main' into inputl4` (-)
 <!-- statusgen:end -->

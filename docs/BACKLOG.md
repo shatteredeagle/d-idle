@@ -1537,6 +1537,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - agent/nightplan: nightplan: lab night plan 2026-11-27 (docs) (merged 2026-11-27) <!--sg:agent/nightplan-->
 - wpstep: waypoint step layout waypoints and step timeout policy (TASK-716, merged 2026-11-27, acceptance 3 of 3): Done on the builder, NOT verified live in the sandbox. Layout objects of Kind waypoint count as waypoint presets whatever their class (must-fail test, d2dworld) ... <!--sg:agent/wpstep2-->
 - agent/difftrans: difftrans: difficulty transition design (docs) (merged 2026-11-27) <!--sg:agent/difftrans-->
+- agencyp3: Agency P3 and importer: share and import build files, kolbot list and (TASK-985, merged 2026-11-27, acceptance 1 of 1): Done offline, not verified live. ReadShared, ImportKolbotBuild, export/import identity test over all shipped plan tables, Paladin+Sorceress kolbot import tests; NIP importer and /api/hero/track not built. <!--sg:agent/agencyp3-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
