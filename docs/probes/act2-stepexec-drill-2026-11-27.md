@@ -62,3 +62,18 @@ The Cain hand-in moves record 10 from 0x0800 to 0x0c78 on the first talk.
 A talk row for `horadric_staff/talk_cain` can use the post "record 10 has bit 0x0400 set" (or "word != the value before the talk"). It must not use "bit 0 set".
 
 Caveat (U): these words come from the lab d2d's quest model, not from game.exe.
+
+## Rerun after placefix (origin/main 6391311d7, labrun job 20261127-044935-9921)
+
+The rerun used the same command as above with `-id drill.act2.duriel.stepexec` only. The Duriel setup now writes record 10 = 0x0c78.
+
+Result: BLOCKED 3/3 again, with a new cause (V, the same in all three runs).
+- The d2d reads record 10 back as 0x0c08, not 0x0c78 (first `memory quest words` line).
+- The board then refuses the chunk. Taps log: `not startable seven_tombs/duriel: state locked ... "locked until The Horadric Staff"`.
+- The hero idles in Lut Gholein until the 60 virtual min stall rule ends the run. It never travels.
+
+The placement was never reached, so record 10 after the placement is still NOT observed.
+
+Next step, for the placefix owner:
+- Option 1: make `requiresCleared` treat the word the d2d keeps (0x0c08) as cleared.
+- Option 2: find which setup word survives the write. 0x0c78 masked to 0x0c08 suggests that bits 0x0070 are not stored by the lab quest model (U).
