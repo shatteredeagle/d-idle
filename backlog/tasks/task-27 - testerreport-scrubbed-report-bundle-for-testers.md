@@ -1,11 +1,11 @@
 ---
 id: TASK-27
 title: 'testerreport: exportable feedback record (scrubbed bundle) for the friend beta'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-06T14:27:00Z'
-updated_date: '2026-11-10T17:11:00Z'
+updated_date: '2026-11-27T20:57:00Z'
 labels:
   - container
   - feature

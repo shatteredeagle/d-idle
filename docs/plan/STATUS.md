@@ -76,7 +76,6 @@
 | reconnectux | proposed | - | `docs/onboarding.md`<br>`internal/watch/onboarding.go`<br>`internal/watch/web/panels/onboarding` | - |
 | palprofile | deferred | - | `docs/sme/class-paladin.md`<br>`docs/sme/class-early-game.md`<br>`internal/combat/classdata` | - |
 | testerdocs | deferred | - | `docs/tester-guide.md` | - |
-| testerreport | proposed | - | `deploy/d2d-container/tester-report.sh`<br>`deploy/d2d-container/tester_report_test.go`<br>`docs/first-session.md` | - |
 | testerlicence | in-progress | - | `docs/tester-licence.md` | - |
 | testerpack | proposed | - | `tools/tester-pack.sh`<br>`docs/tester-guide.md` | - |
 | m3-merc | deferred | m3-merc | `internal/merc/**`<br>`internal/bot/merc_test.go`<br>`docs/merc-d2d.md`<br>`docs/probes/merc/**` | `soak-slot:3` |

@@ -168,9 +168,7 @@ data/questboard/act2.json  credit-runner  qdmatrix
 deploy/d2d-container/compose.friends.yml  credit-runner  ghcrpublish
 deploy/d2d-container/compose.tester.yml  credit-runner  ghcrpublish
 deploy/d2d-container/context.sh  credit-runner  ghcrpublish
-deploy/d2d-container/tester-report.sh  credit-runner  testerreport
 deploy/d2d-container/tester_image_test.go  credit-runner  ghcrpublish
-deploy/d2d-container/tester_report_test.go  credit-runner  testerreport
 docs/arbiter.md  credit-runner  arbmig
 docs/arbiter.md  credit-runner  ticklog
 docs/archive  credit-runner  dietarchive
@@ -208,7 +206,6 @@ docs/epics/epic-hell.md  live-agent  epic-hell
 docs/epics/epic-merc.md  live-agent  epic-merc
 docs/epics/epic-nightmare.md  live-agent  epic-nightmare
 docs/epics/epic-normal.md  live-agent  epic-normal
-docs/first-session.md  credit-runner  testerreport
 docs/friend-checklist-0.1.2.md  credit-runner  cut012
 docs/friend-guide.md  credit-runner  cut012
 docs/inventory-actions.md  credit-runner  campaign1
