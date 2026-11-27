@@ -18,7 +18,6 @@ owns:
   - "docs/probes/necro-readiness-2026-11-26.md"
   - "docs/epics/epic-class-necromancer.md"
   - "internal/plandata/build-necromancer_summoner_normal30.json"
-  - "internal/gear/builds/necromancer_summoner_normal30.json"
   - "cmd/d2bot/class_test.go"
   - "internal/leveler/necrosummoner_test.go"
   - "docs/plan/data/build-necromancer_summoner_normal30.json"

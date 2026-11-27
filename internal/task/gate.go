@@ -303,7 +303,7 @@ func fieldReady(a Area) func(World) *Fault {
 			// refused at the hop, counted as "too weak" three times and parked for 1h30m)
 			return guardFault(w, "early road", "early", w.EarlyBlocked[a].Why, w.EarlyBlocked[a].KitOnly)
 		case w.Gated && a != w.SafeArea:
-			if w.BoardSM && w.GatedFix == "potions" {
+			if !w.boardLegacy() && w.GatedFix == "potions" {
 				// bug 4: a missing potion kit is fixed by a town visit, so the hero goes now and nothing is counted
 				return &Fault{Kind: KindResource, Code: "needs_potions", Why: "not ready: " + w.GatedWhy,
 					Insert: []Step{StepChores(fmt.Sprintf("field.%d/chores", a))}}
@@ -318,7 +318,7 @@ func fieldReady(a Area) func(World) *Fault {
 // reason code and is a hold; without it the fault is exactly the old one.
 func refusal(w World, code, why string) *Fault {
 	f := &Fault{Kind: KindDanger, Why: why}
-	if w.BoardSM {
+	if !w.boardLegacy() {
 		f.Code, f.Hold = code, true
 	}
 	return f
@@ -351,7 +351,7 @@ func guardFault(w World, name, stepID, why string, kitOnly bool) *Fault {
 		return refusal(w, "needs_gold_farm", msg+"; "+k.Short)
 	}
 	f := &Fault{Kind: KindResource, Why: msg, Insert: []Step{StepChores("guard/" + stepID + "/chores")}}
-	if w.BoardSM {
+	if !w.boardLegacy() {
 		f.Code = "needs_potions" // a fixable kit shortage is a restock trip, never counted
 	}
 	return f
@@ -362,10 +362,13 @@ func guardFault(w World, name, stepID, why string, kitOnly bool) *Fault {
 // talk-charsi retry/skipped, then 'Go to the Barracks' not ready, twice). The planner levels it in its safe area instead.
 func gatedReady(w World) *Fault {
 	if w.Gated {
-		if w.BoardSM && w.GatedFix == "potions" {
+		if !w.boardLegacy() && w.GatedFix == "potions" {
 			return &Fault{Kind: KindResource, Code: "needs_potions", Why: "not ready: " + w.GatedWhy, Insert: []Step{StepChores("gate.chores")}}
 		}
 		return refusal(w, gatedCode(w), "not ready: "+w.GatedWhy)
 	}
 	return nil
 }
+
+// boardLegacy is true while quests.boardSM is 0: guards keep the old uncoded faults. Removal deletes the branches that read it.
+func (w *World) boardLegacy() bool { return !w.BoardSM }

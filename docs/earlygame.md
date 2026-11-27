@@ -30,7 +30,7 @@ classes (Necromancer, Paladin, Barbarian, Druid, Assassin, Amazon), who use plai
 Raise Skeleton exists at clvl 1: charstats start skill is "raise skeleton", whether it is level 1 or only pre-selected was not read).
 
 ### Comparison with the SME no-respec tables (docs/sme/class-*.md section 4, builds-leveling.md section 3)
-The bot's default tables come from the Maxroll-based `internal/gear/builds` files and the live-proven Sorceress/Paladin tables. They differ from the SME lines; NOT changed
+The bot's default tables come from the Maxroll-based `internal/plandata` build files and the live-proven Sorceress/Paladin tables. They differ from the SME lines; NOT changed
 (each is a build decision for the user, none is a bug):
 - Sorceress: SME wants the cold line (Ice Bolt, Ice Blast, Blizzard at 24). The bot buys Lightning (Charged Bolt to 10, Static Field at 6, Teleport at 18). Frost Nova (the
   combat code casts it on crowds of 3, `castfirst.go`) is never bought, so that code is dormant; Frozen Armor arrives at clvl 22 (before that no armor spell is cast). The
@@ -94,7 +94,7 @@ Selection: `leveler.SelectBuild(class, level, ownedSkills)` (used by the leveler
 |---|---|---|---|
 | Sorceress | `fallback-lightning-v2`: Charged Bolt 4 and Frozen Armor 1 (Den point) by clvl 5, Frost Nova 1 at 6 (Static Field dropped), Telekinesis 11, Charged Bolt 8 at 10, 12 at 15, 5 Vit per level after the Str 12 floor | plandata + docs/plan/data, `TestBuildV2SorceressSequence` | V offline |
 | Sorceress | `combat.novaManaFloor` 25: no Frost Nova on a crowd below this mana (the crowd rule is 3 within 4 subtiles); Frozen Armor recast by the existing `combat.buffRecastSec` 150 s timer (profile buff group 1) | `castfirst.go`, `tuning_combat.go`, docs/knobs.md (38 combat knobs) | V offline; floor value and armor duration U |
-| Amazon | bow table: Multiple Shot at 7 (6 with the Den point); javelin variant kept; trip at 150 gold for a bowless bow-path Amazon, ammo chore before the potion shop | plandata + gear/builds copies, `town/ammo.go`, `chores.go` | trip test needs /tmp/d2mpq (skipped on the head box); price U |
+| Amazon | bow table: Multiple Shot at 7 (6 with the Den point); javelin variant kept; trip at 150 gold for a bowless bow-path Amazon, ammo chore before the potion shop | plandata tables (gear reads them), `town/ammo.go`, `chores.go` | trip test needs /tmp/d2mpq (skipped on the head box); price U |
 | Paladin | `paladin-normal30-v2` (above); Sacrifice removed from every combat band | plandata, `classdata/profiles.json`, `TestPaladinBands` | V offline |
 | Barbarian | opener Bash, then Double Swing | profiles.json | V offline; live U |
 | all | `combat bind` summary line (class, level, wanted, bound list, failed) at the end of `EnsureHotkeys`, also for "popup rows not loaded" | `combat/bind.go` | V offline |

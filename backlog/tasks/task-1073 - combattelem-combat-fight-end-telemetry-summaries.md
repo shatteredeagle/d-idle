@@ -1,10 +1,11 @@
 ---
 id: TASK-1073
 title: 'combattelem: combat fight-end telemetry summaries'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T22:18:00Z'
+updated_date: '2026-11-27T23:18:00Z'
 labels:
   - bot
   - feature
