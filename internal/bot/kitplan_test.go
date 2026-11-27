@@ -62,6 +62,9 @@ func TestFillKitStages(t *testing.T) {
 			if wantPlan && (w.KitPlan.Healing != 3 || w.KitPlan.Short != "short of gold: needs 60 more for healing") {
 				t.Fatalf("%v: plan %+v", class, *w.KitPlan)
 			}
+			if wantPlan && !strings.Contains(w.KitPlan.Hand, "sell, then recovery") { // card town7: the vault row is off by default
+				t.Fatalf("%v: hand-over %q, want sell then recovery", class, w.KitPlan.Hand)
+			}
 		}
 	}
 }

@@ -25,17 +25,10 @@ type Step struct {
 	To   string // "one", "min" or "target"
 }
 
-// Policy holds the order gold is spent in and the gold the plan must not spend.
+// Policy holds the order gold is spent in (empty: the data of priority.json for the need's profile) and the gold the plan must not spend.
 type Policy struct {
 	Priority []Step
 	Reserve  int // gold kept back (merc revive, floor), taken from the budget first
-}
-
-// DefaultPriority is table 4.2 of the design restricted to the modelled lines (user answer Q5): potions before the
-// first scroll (decision D3), the chunk's gold carry at position 6, targets last.
-var DefaultPriority = []Step{
-	{Healing, "min"}, {Portal, "one"}, {Mana, "min"}, {GoldCarry, "min"}, {Portal, "min"},
-	{Healing, "target"}, {Mana, "target"}, {Portal, "target"},
 }
 
 // PlanLine is one row of the plan.
@@ -63,7 +56,7 @@ type Plan struct {
 func Solve(n Need, c Count, p Prices, pol Policy, saleEstimate int) Plan {
 	order := pol.Priority
 	if len(order) == 0 {
-		order = DefaultPriority
+		order = PriorityOf(n.Profile)
 	}
 	names := make([]string, 0, len(n.Lines))
 	for l := range n.Lines {

@@ -389,7 +389,7 @@ func (t *Town) Chores(ctx context.Context, plan ChorePlan) (rep ChoreReport, _ e
 			t.e.Log.Warn("town plan (purse): " + perr.Error())
 		} else {
 			t.purseSpend = pl.Spent
-			t.e.Log.Info(fmt.Sprintf("town plan: purse keep=%d spend=%d purse=%d stash=%d verdict=%s", t.goldKeep(s.Player.Level), pl.Spent, s.Player.Gold, s.Player.StashGold, pl.Verdict))
+			t.e.Log.Info(fmt.Sprintf("town plan: purse keep=%d spend=%d purse=%d stash=%d verdict=%s", t.goldKeep(s.Player.Level), pl.Spent, s.Player.Gold, s.Player.StashGold, pl.Verdict) + t.planLineTail(s, pl))
 		}
 	}
 	a := ActOfLevel(s.Player.Area)

@@ -62,3 +62,20 @@ func TestStepChoresNeedFollowsThePlan(t *testing.T) {
 		t.Error("a trip the plan cannot pay must not run just to end 'ran but is still needed'")
 	}
 }
+
+// Card town7: a gold shortage hands over (sell, stash, the vault row, recovery); the fault names the sources and its code
+// is the gold-farm hold, never an attention state.
+func TestKitPlanShortGoldHandsOver(t *testing.T) {
+	for _, caster := range []bool{false, true} {
+		w := routeWorld(22, func(w *task.World) { w.Caster, w.Potions = caster, 1 })
+		w.KitPlan = &task.KitPlan{Healing: 4, Mana: 2, Portals: 2, Short: "short of gold: needs 90 more for healing", Hand: "needs 90 more gold for healing: sell, then recovery"}
+		w.RouteBlocked = task.RouteWhy(w)
+		f := task.StepTravel("t", "travel", 7, func(task.World) bool { return false }).Ready(w)
+		if f == nil || !strings.Contains(f.Why, "sell, then recovery") || strings.Contains(f.Code+f.Why, "needs_attention") || len(f.Insert) != 0 {
+			t.Errorf("caster=%v: fault %+v, want the hand-over named and no attention", caster, f)
+		}
+		if f != nil && f.Code != "" && f.Code != "needs_gold_farm" {
+			t.Errorf("caster=%v: code %q, want needs_gold_farm", caster, f.Code)
+		}
+	}
+}

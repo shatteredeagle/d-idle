@@ -6,6 +6,8 @@ import (
 	"d2lod-bot/internal/resource"
 	"d2lod-bot/internal/supply"
 	"d2lod-bot/internal/town/belt"
+	"fmt"
+	"strings"
 )
 
 // Stage 1 of the town planner (docs/design/fable-review-2026-11-21/town-planner.md, knob town.plan): the plan is solved
@@ -76,4 +78,32 @@ func (t *Town) logPlanShadow(s *d2.Snapshot, plan ChorePlan) {
 // knob town.plan. It reads and changes nothing.
 func (t *Town) SupplyPlan(s *d2.Snapshot, profile string, reserve int) (supply.Plan, error) {
 	return t.planOf(s, ChorePlan{Profile: profile, ReserveGold: reserve})
+}
+
+// planLineTail is the end of the per-visit plan line (stage 3 and up): the lines the plan dropped with the gold each was
+// short, the number of items the sell chore would offer and, for a short-gold plan, where the gold comes from next
+// (scenarios gold-short-priorities and short-gold-handover read these fields).
+func (t *Town) planLineTail(s *d2.Snapshot, pl supply.Plan) string {
+	sellN := 0
+	if lay, err := t.layout(s); err == nil {
+		sellN = len(t.sellable(s, lay))
+	}
+	return planTail(pl, sellN, t.e.Tune.Loot.Vault != 0 && t.e.Tune.Loot.VaultSellPrompt != 0)
+}
+
+func planTail(pl supply.Plan, sellN int, vaultPrompt bool) string {
+	var dropped []string
+	for _, ln := range pl.Lines {
+		if ln.Status == "dropped" || ln.Status == "short" {
+			dropped = append(dropped, fmt.Sprintf("%s(%d short)", ln.Line, max(ln.Min-ln.Have-ln.Buy, 0)))
+		}
+	}
+	out := fmt.Sprintf(" sell=%d", sellN)
+	if len(dropped) > 0 {
+		out += " dropped=" + strings.Join(dropped, ",")
+	}
+	if h := pl.Handover(supply.Gold{Sellable: sellN > 0, VaultPrompt: vaultPrompt}); len(h.Sources) > 0 {
+		out += " hand-over: " + h.Reason
+	}
+	return out
 }
