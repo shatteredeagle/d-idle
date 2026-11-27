@@ -58,6 +58,7 @@ type Town struct {
 
 	kitHealing    int            // ChorePlan.KitHealing of the visit under way
 	kitMana       int            // ChorePlan.KitMana of the visit under way
+	visitProfile  string         // supply profile of the chores visit under way ("" = field); the stage 4 sell keep reads it
 	purseSpend    int            // town.plan >= 3: the gold the visit under way plans to spend (plan.Spent); the purse keeps it on top of the carry line
 	reserveGold   int            // ChorePlan.ReserveGold of the visit under way: optional shop buys stay above it
 	sellMarksOnly bool           // set while a visit sells the player's marks but not the pickit's junk
