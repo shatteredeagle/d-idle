@@ -23,6 +23,7 @@ owns:
   - "docs/knobs.md"
 exclusive: []
 contracts: []
+result: "offline only, not verified live: the guard needs_gold_farm hold says the supply Handover text (needs N more gold for X: sell, then recovery) via KitPlan.Hand, typed outcome and one log line per change unchanged; knob text and docs/knobs.md fixed; route.go prices legs with Navigator.PathCost (all legs or straight line), stop penalty is routeCosts.StopPenalty (U: value is a judgment). Build-neutral."
 ---
 
 ## Description
