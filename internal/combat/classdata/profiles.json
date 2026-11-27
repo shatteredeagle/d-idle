@@ -443,6 +443,20 @@
     "Lower Resist": "f7",
     "Clay Golem": "f8"
    },
+   "corpseAims": [
+    {
+     "name": "Corpse Explosion",
+     "rule": "corpseNearPack",
+     "radius": 6,
+     "minHit": 2,
+     "source": "U radius 6 is the skills.txt calc column not read (ceRadius), minHit 2 is a planning value"
+    },
+    {
+     "name": "Revive",
+     "rule": "corpseBest",
+     "source": "U a higher level monster is a better minion; the monstats revive restrictions are not read"
+    }
+   ],
    "necro": {
     "golems": [
      "FireGolem",
@@ -546,6 +560,20 @@
     "bossMin": 2,
     "source": "U judgment: four subtiles keeps the skeletons' melee line between hero and pack; under two minions a boss reaches the hero (docs/process/necromancer-support.md S8, S11)"
    },
+   "corpseAims": [
+    {
+     "name": "Corpse Explosion",
+     "rule": "corpseNearPack",
+     "radius": 6,
+     "minHit": 2,
+     "source": "U radius 6 is the skills.txt calc column not read (ceRadius), minHit 2 is a planning value"
+    },
+    {
+     "name": "Revive",
+     "rule": "corpseBest",
+     "source": "U a higher level monster is a better minion; the monstats revive restrictions are not read"
+    }
+   ],
    "necro": {
     "golems": [
      "FireGolem",
@@ -987,6 +1015,20 @@
     "Clay Golem": "f6",
     "Amplify Damage": "f7"
    },
+   "corpseAims": [
+    {
+     "name": "Corpse Explosion",
+     "rule": "corpseNearPack",
+     "radius": 6,
+     "minHit": 2,
+     "source": "U radius 6 is the skills.txt calc column not read (ceRadius), minHit 2 is a planning value"
+    },
+    {
+     "name": "Revive",
+     "rule": "corpseBest",
+     "source": "U a higher level monster is a better minion; the monstats revive restrictions are not read"
+    }
+   ],
    "necro": {
     "golems": [
      "Clay Golem"
