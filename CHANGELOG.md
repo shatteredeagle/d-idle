@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- smepal: SME Paladin and Sorceress review (docs) <!--sg:agent/smepal-->
 - onboardtour2: tour tips, Help sheet, Now line (TASK-48 partial) <!--sg:agent/onboardtour2-->
 - whirlscen: combat drill scenarios, pre.skills setup field (TASK-1065) <!--sg:agent/whirlscen-->
 - diffgo: go-difficulty ops verb, persisted go, Return screen button (TASK-1061) <!--sg:agent/diffgo-->
