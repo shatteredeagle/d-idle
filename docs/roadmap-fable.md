@@ -215,7 +215,7 @@ Class order of care (user decision 2026-11-26, after the live Paladin). Dated li
 
 ## Other built-dark rows of the ledger (not from a Fable recommendation)
 
-These are in `data/darklaunch.json` and owned by the ledger, not by this tracker: `resource.gearDecisions`, `resource.skillCapPerLevel`, `agency.autoAlloc`, `combat.minionRead`, `quests.layoutRead`, `loot.vault`, `loot.rulesEngine`, `bot.farmReset`, `bot.mercReviveUnverified`, `bot.cubeJobs`, `town.identifyTome`, `ladder.enabled`, `invdesk.verbs`, `invdesk.instant`, `ui.managementFast`, `watch.paletteFeed`, `input.planner`, `input.hotkeyMap`, `items.ladderRunewords`. Flipped on the sandbox since 2026-11-26 (ledger `enabled`, default still 0): `combat.missileDodge`, `combat.threatDodge`, `combat.standOK`, `bot.portalGuard`. The weekly `python3 -I tools/darklaunch/report.py` is their review; do not repeat them here.
+These are in `data/darklaunch.json` and owned by the ledger, not by this tracker: `resource.gearDecisions`, `resource.skillCapPerLevel` (retired 2026-11-27, TASK-1055, V ledger row retired), `agency.autoAlloc`, `combat.minionRead`, `quests.layoutRead`, `loot.vault`, `loot.rulesEngine`, `bot.farmReset`, `bot.mercReviveUnverified`, `bot.cubeJobs`, `town.identifyTome`, `ladder.enabled`, `invdesk.verbs`, `invdesk.instant`, `ui.managementFast`, `watch.paletteFeed`, `input.planner`, `input.hotkeyMap`, `items.ladderRunewords`. Flipped on the sandbox since 2026-11-26 (ledger `enabled`, default still 0): `combat.missileDodge`, `combat.threatDodge`, `combat.standOK`, `bot.portalGuard`. The weekly `python3 -I tools/darklaunch/report.py` is their review; do not repeat them here.
 
 ## Order of work (the coordinator's reading, updated 2026-11-27)
 
