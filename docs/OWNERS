@@ -220,7 +220,6 @@ docs/probes/classorder1.md  user  classorder1
 docs/probes/flipwave2.md  live-agent  flipwave2
 docs/probes/h1-baseline.md  user  h1baseline
 docs/probes/h3-verdict.md  user  h3verdict
-docs/probes/lab-night-commands-2026-11-27.md  credit-runner  nightcheck
 docs/probes/necromancer-act1-drill-2026-11-22.md  credit-runner  stage1fix
 docs/probes/provingground-act1more-2026-11-20.md  credit-runner  pgpage
 docs/probes/provingground-act1next-2026-11-20.md  credit-runner  pgpage
@@ -488,8 +487,6 @@ tools/probes/objectlist.py  credit-runner  qdmatrix
 tools/probes/presets.py  credit-runner  qdmatrix
 tools/provingground/arbiter-outcomes/  live-agent  arbmig
 tools/provingground/earned  credit-runner  pgearned
-tools/provingground/nightcheck.sh  credit-runner  nightcheck
-tools/provingground/nightcheck_test.sh  credit-runner  nightcheck
 tools/provingground/pgenv.sh  credit-runner  pgledgeron
 tools/provingground/pgenv_test.sh  credit-runner  pgledgeron
 tools/provingground/run.sh  credit-runner  pgledgeron

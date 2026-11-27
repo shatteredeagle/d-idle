@@ -1,10 +1,11 @@
 ---
 id: TASK-1075
 title: 'nightcheck: preflight and corrected commands for the 2026-11-27 night run'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T22:49:00Z'
+updated_date: '2026-11-27T23:18:00Z'
 labels:
   - ops
   - chore
