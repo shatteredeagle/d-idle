@@ -173,7 +173,7 @@ Verdict GREEN. The BLOCKED row (Paladin seed 3) is not the executor: its `take_s
 | typedoutcome0 | sorceress | 203 | 0.98 | 18 | 3.3 | 12>12 | 0 | 936 | -131 | 18 | 28 | 0 | 17 | 6 | 0 | 0 |
 
 <!-- pass2 -->
-## 5. Pass 2: the same campaign with points decisions on (47 of 69 rows complete)
+## 5. Pass 2: the same campaign with points decisions on (64 of 69 rows complete)
 
 Every arm also carries `resource.pointsDecisions` 1 and each row sets `D2BOT_RUN`, so the heroes spend their points (V, check row before the pass: the Necromancer casts Teeth and Clay Golem, the Sorceress Charged Bolt, the Paladin allocated Might 8, Sacrifice 1, Prayer 1, Smite 1 and runs the Might aura). Same binaries as pass 1. Rows ran with taskset cores 0-7, nice 19, at most 4 at once.
 
@@ -191,16 +191,34 @@ Every arm also carries `resource.pointsDecisions` 1 and each row sets `D2BOT_RUN
 | reflex-drink-portal | necromancer | 3/3 | 19519 vs 22612 (-3093) | 524 vs 3851 (-3327) | 0.0 vs 0.0 | 0/0 | 27/19 | 0/0 | xp 4452 gold 2277 deaths 0.0 | RED (gold/h regress -3327) |
 | reflex-drink-portal | sorceress | 3/3 | 6084 vs 4438 (+1647) | 6 vs -86 (+92) | 0.0 vs 0.0 | 0/0 | 30/30 | 0/0 | xp 4750 gold 1323 deaths 0.0 | NEUTRAL |
 | arbiter-control-families-255 | paladin | 3/3 | 7128 vs 8363 (-1236) | 837 vs 915 (-78) | 0.0 vs 0.0 | 0/0 | 23/20 | 0/0 | xp 1752 gold 5959 deaths 0.0 | NEUTRAL |
-| arbiter-control-families-255 | necromancer | 3/3 | 16770 vs 19519 (-2749) | 360 vs 524 (-164) | 0.0 vs 0.0 | 0/0 | 19/27 | 1/0 | xp 1761 gold 4620 deaths 0.0 | RED (xp/h regress -2749) |
+| arbiter-control-families-255 | necromancer | 3/3 | 20307 vs 19519 (+788) | 360 vs 524 (-164) | 0.0 vs 0.0 | 0/0 | 22/27 | 0/0 | xp 1761 gold 4620 deaths 0.0 | NEUTRAL |
 | arbiter-control-families-255 | sorceress | 3/3 | 8950 vs 6084 (+2866) | -139 vs 6 (-145) | 0.0 vs 0.0 | 0/0 | 32/30 | 0/0 | xp 2282 gold 1551 deaths 0.0 | RED (1 failed or written rows) |
 | admission-early-route-guard | paladin | 3/1 | 8363 vs 15826 (-7462) | 915 vs 1211 (-296) | 0.0 vs 0.0 | 0/0 | 20/10 | 0/0 | xp 0 gold 0 deaths 0.0 | NEUTRAL |
-| admission-early-route-guard | necromancer | 3/3 | 19519 vs 21310 (-1791) | 524 vs 3266 (-2742) | 0.0 vs 0.0 | 0/0 | 27/14 | 0/0 | xp 7404 gold 2823 deaths 0.0 | NEUTRAL |
-| admission-early-route-guard | sorceress | 3/2 | 6084 vs 8112 (-2028) | 6 vs -278 (+284) | 0.0 vs 0.0 | 0/0 | 30/10 | 0/2 | xp 452 gold 55 deaths 0.0 | RED (xp/h regress -2028) |
-| typed-outcomes | paladin | 3/0 | no data | | | | | | | NO-DATA |
-| typed-outcomes | necromancer | 3/0 | no data | | | | | | | NO-DATA |
-| typed-outcomes | sorceress | 3/0 | no data | | | | | | | NO-DATA |
-| paladin-without-sacrifice | paladin | 3/0 | no data | | | | | | | NO-DATA |
-| necromancer-summoner-defaults | necromancer | 3/0 | no data | | | | | | | NO-DATA |
+| admission-early-route-guard | necromancer | 3/3 | 19519 vs 20195 (-677) | 524 vs 3266 (-2742) | 0.0 vs 0.0 | 0/0 | 27/15 | 0/0 | xp 7235 gold 2839 deaths 0.0 | NEUTRAL |
+| admission-early-route-guard | sorceress | 3/3 | 6084 vs 10096 (-4012) | 6 vs -76 (+82) | 0.0 vs 0.0 | 0/0 | 30/33 | 0/0 | xp 4286 gold 1407 deaths 0.0 | NEUTRAL |
+| typed-outcomes | paladin | 3/3 | 8363 vs 8363 (+0) | 915 vs 915 (+0) | 0.0 vs 0.0 | 0/0 | 20/20 | 0/0 | xp 1752 gold 5959 deaths 0.0 | NEUTRAL |
+| typed-outcomes | necromancer | 3/3 | 19519 vs 21191 (-1673) | 524 vs 497 (+27) | 0.0 vs 0.0 | 0/0 | 27/20 | 0/0 | xp 9995 gold 1951 deaths 0.0 | NEUTRAL |
+| typed-outcomes | sorceress | 3/3 | 6084 vs 8367 (-2282) | 6 vs 1557 (-1551) | 0.0 vs 0.0 | 0/0 | 30/29 | 0/0 | xp 8580 gold 2601 deaths 0.0 | NEUTRAL |
+| paladin-without-sacrifice | paladin | 3/2 | 8363 vs 9394 (-1031) | 915 vs 4128 (-3213) | 0.0 vs 0.0 | 0/0 | 20/14 | 0/0 | xp 1867 gold 507 deaths 0.0 | RED (gold/h regress -3213) |
+| necromancer-summoner-defaults | necromancer | 3/1 | 19519 vs 19519 (+0) | 524 vs 5144 (-4620) | 0.0 vs 0.0 | 0/0 | 27/10 | 0/0 | xp 0 gold 0 deaths 0.0 | NEUTRAL |
+
+### 5.1a Pass 2 verdicts and causes (read by hand)
+
+Arms not complete at the 10:30 EST cut: earlyroute0 Paladin 202 and 203, nosac Paladin 203, nonecro Necromancer 202 and 203 (rows still running or not started are left out of 5.1; their pairs show as n on/off below 3). 64 of 69 rows complete, every complete row `writes after start: 0`, 63 `exit 0`, 1 `exit 4`.
+
+Caveat on gold/h: it is purse plus stash at the end minus the start, so a hero that buys more potions reads lower. The shared base arm (the ON side of four features) ended low on gold in 2 of 3 seeds for Paladin and Necromancer (915 and 524 gold/h medians), so several gold REDs below compare against an unlucky base and are a cost, not a fault; no feature has a hard-invariant hit ON.
+
+| feature | pass 2 verdict | evidence and cause |
+|---|---|---|
+| arbiter control families 255 | RED (one row) | Sorceress seed 201 `exit 4` at virtual minute 55: `watchdog: runner loop made no progress` after 606 wall s, the main goroutine runnable inside `resInput` / `hostileNear` / `combat.IsFriendly` (a busy loop with no game step, no virtual time passing), state farming. Same watchdog signature as the fault-soak hang (3.4); no other row of the 64 has it. Hard invariants 0. Do not flip before that loop is understood (card loophang territory). |
+| arbiter control families 3 | RED (Necromancer xp) | Necromancer xp/h 17294 vs 19519, 2 of 3 seeds lower; gold higher (3464 vs 524); no hard hits (the pass 1 `mode-no-exit` loop did not recur with skills). Paladin and Sorceress NEUTRAL. Weak RED: within one seed's spread; rerun before deciding. |
+| reflex drink and portal | GREEN on safety; gold lower | the OFF arm has the only hard hit (`potion-not-drunk` 1, Paladin seed 203); ON buys and drinks more potions (Necromancer bought 52/34/50 vs 57/18/14), so gold/h is lower for Paladin and Necromancer (flagged RED by the gold rule): the intended cost of drinking on time. |
+| kit floor tiers and poverty farm | NEUTRAL; Necromancer gold lower | Necromancer gold/h 524 vs 6851 with xp/h higher (19519 vs 16466): ON reaches more areas and buys more potions; Paladin and Sorceress NEUTRAL. |
+| early route guard | NEUTRAL | no hard hits; xp/h lower with the guard on (it keeps the hero off the dangerous road), gold mixed; the Paladin OFF side has 1 complete row only. |
+| typed outcomes | NEUTRAL | Paladin rows identical in both arms; no hard hits. |
+| Paladin without Sacrifice | NEUTRAL in effect (gold rule RED on 2 pairs) | 2 of 3 nosac rows complete; the pass 2 Paladin allocates Sacrifice 1 and runs the Might aura; xp within the noise, gold lower than the old profile on 2 pairs. Not enough to call a regression. |
+| Necromancer summoner defaults | NOT RUN (1 of 3 pairs) | only seed 201 complete: identical to base (the change is not exercised in that seed). |
+| step executor (Cain, section 3.3) | GREEN | from pass 1's scenario runs; those scenarios set points themselves (clvl 17 heroes with their skills) and are not affected by the pass 1 fault. |
 
 
 ### 5.2 Per row
@@ -208,7 +226,7 @@ Every arm also carries `resource.pointsDecisions` 1 and each row sets `D2BOT_RUN
 | arm | class | seed | virtual h | wall min | ratio | clvl | deaths | xp/h | gold/h | potions bought | potions used | hard hits | soft hits | stalls | exit | writes after start |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | arbiter255 | necromancer | 201 | 0.97 | 46 | 1.3 | 12>12 | 0 | 16770 | 360 | 31 | 52 | 0 | 28 | 9 | 0 | 0 |
-| arbiter255 | necromancer | 202 | 0.40 | - | - | 12>12 | 0 | 12682 | 1142 | 4 | 2 | 0 | 9 | 3 | None | None |
+| arbiter255 | necromancer | 202 | 0.97 | 43 | 1.4 | 12>12 | 0 | 22801 | 2101 | 8 | 22 | 0 | 16 | 6 | 0 | 0 |
 | arbiter255 | necromancer | 203 | 0.97 | 23 | 2.5 | 12>12 | 0 | 20307 | -121 | 45 | 51 | 0 | 26 | 7 | 0 | 0 |
 | arbiter255 | paladin | 201 | 0.98 | 45 | 1.3 | 12>12 | 0 | 7128 | 837 | 10 | 17 | 0 | 10 | 9 | 0 | 0 |
 | arbiter255 | paladin | 202 | 0.98 | 49 | 1.2 | 12>12 | 0 | 6696 | 580 | 9 | 20 | 0 | 7 | 6 | 0 | 0 |
@@ -236,10 +254,13 @@ Every arm also carries `resource.pointsDecisions` 1 and each row sets `D2BOT_RUN
 | base | sorceress | 203 | 0.98 | 20 | 3.0 | 12>12 | 0 | 6084 | 6 | 11 | 26 | 0 | 17 | 10 | 0 | 0 |
 | earlyroute0 | necromancer | 201 | 0.98 | 37 | 1.6 | 12>12 | 0 | 13906 | 3266 | 11 | 35 | 0 | 15 | 6 | 0 | 0 |
 | earlyroute0 | necromancer | 202 | 0.98 | 37 | 1.6 | 12>13 | 0 | 27430 | 4347 | 9 | 26 | 0 | 16 | 4 | 0 | 0 |
-| earlyroute0 | necromancer | 203 | 0.90 | - | - | 12>12 | 0 | 21310 | 443 | 24 | 43 | 0 | 14 | 4 | None | None |
+| earlyroute0 | necromancer | 203 | 0.97 | 29 | 2.0 | 12>12 | 0 | 20195 | 427 | 25 | 47 | 0 | 16 | 5 | 0 | 0 |
 | earlyroute0 | paladin | 201 | 0.98 | 44 | 1.3 | 12>12 | 0 | 15826 | 1211 | 23 | 29 | 0 | 11 | 10 | 0 | 0 |
-| earlyroute0 | sorceress | 201 | 0.57 | - | - | 12>12 | 0 | 7661 | -222 | 8 | 12 | 0 | 11 | 7 | None | None |
-| earlyroute0 | sorceress | 202 | 0.18 | - | - | 12>12 | 0 | 8564 | -333 | 7 | 7 | 0 | 5 | 3 | None | None |
+| earlyroute0 | paladin | 202 | 0.53 | - | - | 12>12 | 0 | 12938 | 3855 | 3 | 7 | 0 | 6 | 6 | None | None |
+| earlyroute0 | paladin | 203 | 0.72 | - | - | 12>12 | 0 | 14944 | 4460 | 12 | 18 | 0 | 9 | 8 | None | None |
+| earlyroute0 | sorceress | 201 | 0.98 | 20 | 3.0 | 12>12 | 0 | 10096 | -76 | 23 | 25 | 0 | 21 | 12 | 0 | 0 |
+| earlyroute0 | sorceress | 202 | 0.97 | 27 | 2.1 | 12>12 | 0 | 8367 | -118 | 36 | 56 | 0 | 19 | 11 | 0 | 0 |
+| earlyroute0 | sorceress | 203 | 0.97 | 26 | 2.2 | 12>12 | 0 | 14382 | 1330 | 40 | 48 | 0 | 20 | 10 | 0 | 0 |
 | nokit | necromancer | 201 | 0.97 | 27 | 2.1 | 12>12 | 0 | 10759 | 6851 | 32 | 50 | 0 | 22 | 6 | 0 | 0 |
 | nokit | necromancer | 202 | 0.97 | 35 | 1.7 | 12>13 | 0 | 23345 | 5063 | 44 | 59 | 0 | 22 | 9 | 0 | 0 |
 | nokit | necromancer | 203 | 0.97 | 22 | 2.7 | 12>12 | 0 | 16466 | 10219 | 49 | 61 | 0 | 27 | 8 | 0 | 0 |
@@ -249,6 +270,11 @@ Every arm also carries `resource.pointsDecisions` 1 and each row sets `D2BOT_RUN
 | nokit | sorceress | 201 | 0.97 | 18 | 3.2 | 12>12 | 0 | 4084 | 151 | 21 | 21 | 0 | 18 | 8 | 0 | 0 |
 | nokit | sorceress | 202 | 0.97 | 27 | 2.2 | 12>12 | 0 | 11892 | 331 | 35 | 44 | 0 | 15 | 9 | 0 | 0 |
 | nokit | sorceress | 203 | 0.98 | 22 | 2.7 | 12>12 | 0 | 8096 | -86 | 11 | 28 | 0 | 17 | 11 | 0 | 0 |
+| nonecro | necromancer | 201 | 0.97 | 33 | 1.8 | 12>12 | 0 | 19519 | 5144 | 52 | 82 | 0 | 29 | 10 | 0 | 0 |
+| nonecro | necromancer | 203 | 0.35 | - | - | 12>12 | 0 | 26914 | 54 | 4 | 8 | 0 | 5 | 3 | None | None |
+| nosac | paladin | 201 | 0.98 | 36 | 1.7 | 12>12 | 0 | 7527 | 3621 | 7 | 17 | 0 | 6 | 7 | 0 | 0 |
+| nosac | paladin | 202 | 0.12 | - | - | 12>12 | 0 | 7963 | 617 | 3 | 3 | 0 | 1 | 2 | None | None |
+| nosac | paladin | 203 | 0.98 | 34 | 1.7 | 12>12 | 0 | 11261 | 4635 | 6 | 20 | 0 | 7 | 7 | 0 | 0 |
 | reflexdrink0 | necromancer | 201 | 0.97 | 39 | 1.5 | 12>12 | 0 | 22612 | 1574 | 57 | 84 | 0 | 28 | 9 | 0 | 0 |
 | reflexdrink0 | necromancer | 202 | 0.97 | 42 | 1.4 | 12>12 | 0 | 19429 | 3851 | 18 | 42 | 0 | 15 | 5 | 0 | 0 |
 | reflexdrink0 | necromancer | 203 | 0.97 | 32 | 1.8 | 12>13 | 0 | 27064 | 5075 | 14 | 35 | 0 | 16 | 5 | 0 | 0 |
@@ -258,3 +284,12 @@ Every arm also carries `resource.pointsDecisions` 1 and each row sets `D2BOT_RUN
 | reflexdrink0 | sorceress | 201 | 0.97 | 31 | 1.9 | 12>12 | 0 | 9188 | 1237 | 28 | 32 | 0 | 20 | 11 | 0 | 0 |
 | reflexdrink0 | sorceress | 202 | 0.95 | 29 | 1.9 | 12>12 | 0 | 4438 | -142 | 15 | 30 | 0 | 20 | 9 | 0 | 0 |
 | reflexdrink0 | sorceress | 203 | 0.97 | 20 | 2.9 | 12>12 | 0 | 3193 | -86 | 11 | 17 | 0 | 18 | 10 | 0 | 0 |
+| typedoutcome0 | necromancer | 201 | 0.97 | 34 | 1.7 | 12>12 | 0 | 11196 | 390 | 34 | 49 | 0 | 13 | 7 | 0 | 0 |
+| typedoutcome0 | necromancer | 202 | 0.98 | 45 | 1.3 | 12>13 | 0 | 27491 | 2448 | 13 | 36 | 0 | 19 | 5 | 0 | 0 |
+| typedoutcome0 | necromancer | 203 | 0.98 | 17 | 3.4 | 12>12 | 0 | 21191 | 497 | 50 | 57 | 0 | 18 | 8 | 0 | 0 |
+| typedoutcome0 | paladin | 201 | 0.98 | 46 | 1.3 | 12>12 | 0 | 9732 | 915 | 13 | 21 | 0 | 7 | 6 | 0 | 0 |
+| typedoutcome0 | paladin | 202 | 0.98 | 41 | 1.4 | 12>12 | 0 | 6611 | 6875 | 4 | 18 | 0 | 5 | 6 | 0 | 0 |
+| typedoutcome0 | paladin | 203 | 0.98 | 43 | 1.4 | 12>12 | 0 | 8363 | -27 | 29 | 45 | 0 | 10 | 8 | 0 | 0 |
+| typedoutcome0 | sorceress | 201 | 0.98 | 29 | 2.0 | 12>12 | 0 | 6073 | 1557 | 17 | 24 | 0 | 17 | 9 | 0 | 0 |
+| typedoutcome0 | sorceress | 202 | 0.97 | 28 | 2.1 | 12>12 | 0 | 8367 | -118 | 36 | 56 | 0 | 19 | 11 | 0 | 0 |
+| typedoutcome0 | sorceress | 203 | 0.97 | 23 | 2.5 | 12>12 | 0 | 16947 | 4158 | 40 | 54 | 0 | 11 | 9 | 0 | 0 |
