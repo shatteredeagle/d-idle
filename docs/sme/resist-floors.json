@@ -1,0 +1,28 @@
+{
+  "_doc": "Resist floors per difficulty, classic LoD 1.14d. Companion of docs/sme/resist-floors.md. Tags: V fetched, S secondary/community, U unverified heuristic.",
+  "penalty": {
+    "normal": {"value": 0, "tag": "V", "src": "https://classic.battle.net/diablo2exp/basics/resistances.shtml"},
+    "nightmare": {"value": -40, "tag": "V", "src": "https://classic.battle.net/diablo2exp/basics/resistances.shtml"},
+    "hell": {"value": -100, "tag": "V", "src": "https://classic.battle.net/diablo2exp/basics/resistances.shtml"}
+  },
+  "classic_nonexpansion_penalty": {"nightmare": -20, "hell": -50, "tag": "V", "src": "https://www.theamazonbasin.com/wiki/index.php/Resistance", "note": "not our target"},
+  "cap_default": 75,
+  "cap_hard": 95,
+  "floor": -100,
+  "tag_caps": "V",
+  "src_caps": "https://classic.battle.net/diablo2exp/basics/resistances.shtml",
+  "applies_to_merc": true,
+  "anya_scroll_bonus_all": {"value": 10, "per_difficulty": true, "lost_on_death_until_rejoin": true, "tag": "V", "src": "https://www.theamazonbasin.com/wiki/index.php/Resistance"},
+  "raw_gear_for_cap_75": {"normal": 75, "nightmare": 115, "hell": 175, "tag": "V (arithmetic)"},
+  "floors_displayed": [
+    {"stage": "normal", "clvl_entry": 1, "fcl": 0, "poison": 0, "tag": "U"},
+    {"stage": "nightmare_act1_2", "clvl_entry": 40, "fcl": 0, "poison": -40, "tag": "U"},
+    {"stage": "nightmare_act3_5", "clvl_entry": 45, "fcl": 20, "poison": 0, "tag": "S", "note": "repo early-gear-policy target"},
+    {"stage": "nightmare_late_hell_prep", "clvl_entry": 60, "fcl": 75, "poison": 0, "poison_max": 50, "tag": "S"},
+    {"stage": "hell_act1_2", "clvl_entry": 70, "fcl": 0, "fcl_good": 25, "poison": -100, "poison_good": 0, "tag": "U"},
+    {"stage": "hell_act3_5", "clvl_entry": 80, "fcl": 50, "fcl_good": 75, "poison": 0, "poison_good": 75, "tag": "U"}
+  ],
+  "fcl": "fire, cold, lightning",
+  "class_overrides": {},
+  "class_overrides_note": "No class has a different penalty or cap (V). Skill-based resist sources not tabulated (U)."
+}

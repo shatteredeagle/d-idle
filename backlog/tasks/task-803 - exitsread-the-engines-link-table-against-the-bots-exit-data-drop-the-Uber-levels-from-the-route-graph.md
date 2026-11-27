@@ -1,7 +1,7 @@
 ---
 id: TASK-803
 title: 'exitsread: the engine''s link table against the bot''s exit data; drop the Uber levels from the route graph'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-22T04:54:00Z'

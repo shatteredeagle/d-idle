@@ -8,6 +8,12 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- miscfix: card updates 604/856/880/330 (no Go change) <!--sg:agent/miscfix-->
+- smegaps: sourced resist floors, merc auras, FCR/FHR/FBR tables (docs/sme) <!--sg:agent/smegaps-->
+- deployplan: sandbox deploy runbook (docs) <!--sg:agent/deployplan-->
+- cardfix2: card hygiene redo, live-queue doc <!--sg:agent/cardfix2-->
+- questresume: park resume policy (dark), paused visibility, campaign counter, starved cause (TASK-1071) <!--sg:agent/questresume-->
+- gearcopy: gear scoring reads plandata tables, drifted copies deleted (TASK-1067) <!--sg:agent/gearcopy-->
 - flakearb: fix TestArbiterControlGoldFarmAndRecovery race (test starts in wrong area) (TASK-1068) <!--sg:agent/flakearb-->
 - fieldstate: return-to-field leg hands over to the fighter when hostiles are near (TASK-1070) <!--sg:agent/fieldstate-->
 - logsink: bot own rotating log file, ops log verb, docker log NUL root cause (TASK-1069) <!--sg:agent/logsink-->
