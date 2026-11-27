@@ -162,6 +162,7 @@ cmd/d2scenario/tap_test.go  credit-runner  handinbtn
 cmd/d2scenario/tap_test.go  credit-runner  pgtaps
 cmd/d2scenario/tap_test.go  credit-runner  stage1fix
 data/capabilities/  credit-runner  dlv-stance-pack
+data/darklaunch.json  credit-runner  admit1
 data/darklaunch.json  credit-runner  arbmig
 data/darklaunch.json  credit-runner  dlv-upkeep-state
 data/darklaunch.json  credit-runner  ticklog
@@ -295,6 +296,8 @@ internal/arbiter/replay.go  credit-runner  ticklog
 internal/arbiter/replay_ticklog_test.go  credit-runner  ticklog
 internal/boss  credit-runner  countess3
 internal/bot/  credit-runner  cainfix3
+internal/bot/admission.go  credit-runner  admit1
+internal/bot/admission_test.go  credit-runner  admit1
 internal/bot/admit_need_test.go  credit-runner  admit1
 internal/bot/arbiter_control.go  credit-runner  arbmig
 internal/bot/arbiter_control_test.go  credit-runner  arbmig
@@ -303,6 +306,7 @@ internal/bot/broke.go  credit-runner  survrecover
 internal/bot/broke.go  credit-runner  town5
 internal/bot/drought.go  credit-runner  freshstart
 internal/bot/earlyroute.go  credit-runner  admit1
+internal/bot/explain.go  credit-runner  admit1
 internal/bot/goal.go  credit-runner  arbloop
 internal/bot/goal.go  credit-runner  qdmatrix
 internal/bot/goal.go  credit-runner  stage1fix
@@ -322,6 +326,8 @@ internal/bot/questboard.go  credit-runner  qdmatrix
 internal/bot/questboard.go  credit-runner  stage1fix
 internal/bot/questboard_s7b_test.go  credit-runner  qdmatrix
 internal/bot/questboard_test.go  credit-runner  stage1fix
+internal/bot/routeguard.go  credit-runner  admit1
+internal/bot/runner.go  credit-runner  admit1
 internal/bot/runner.go  credit-runner  campaign1
 internal/bot/shadow.go  credit-runner  arbmig
 internal/bot/shadow.go  credit-runner  ticklog
@@ -398,6 +404,7 @@ internal/decide/queue_test.go  credit-runner  qqueue
 internal/decide/variants.go  credit-runner  qdensity
 internal/decide/variants_test.go  credit-runner  qdensity
 internal/env/tuning_agency.go  credit-runner  agencyp1b
+internal/env/tuning_bot.go  credit-runner  admit1
 internal/env/tuning_bot.go  credit-runner  arbmig
 internal/env/tuning_bot.go  credit-runner  freshstart
 internal/env/tuning_bot.go  credit-runner  ticklog

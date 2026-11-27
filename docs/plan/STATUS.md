@@ -174,7 +174,7 @@
 | epic-merc | proposed | - | `docs/epics/epic-merc.md` | - |
 | fid-death | deferred | - | `docs/probes/fid/fid-death.md` | - |
 | fid-gatea-ab | deferred | - | `docs/probes/fid/fid-gatea-ab.md` | - |
-| admit1 | proposed | - | `docs/design/admission-p4.md`<br>`internal/admit/`<br>`internal/plandata/admission.json`<br>`internal/plandata/earlyroutes.json`<br>`internal/plandata/povertyfarm.json`<br>`docs/plan/data/admission.json`<br>`docs/plan/data/earlyroutes.json`<br>`docs/plan/data/povertyfarm.json`<br>`internal/bot/earlyroute.go`<br>`internal/bot/povertyfarm.go`<br>`internal/bot/admit_need_test.go` | - |
+| admit1 | proposed | - | `docs/design/admission-p4.md`<br>`internal/admit/`<br>`internal/plandata/admission.json`<br>`internal/plandata/earlyroutes.json`<br>`internal/plandata/povertyfarm.json`<br>`docs/plan/data/admission.json`<br>`docs/plan/data/earlyroutes.json`<br>`docs/plan/data/povertyfarm.json`<br>`internal/bot/earlyroute.go`<br>`internal/bot/povertyfarm.go`<br>`internal/bot/admit_need_test.go`<br>`internal/bot/admission.go`<br>`internal/bot/admission_test.go`<br>`internal/bot/routeguard.go`<br>`internal/bot/runner.go`<br>`internal/bot/explain.go`<br>`internal/env/tuning_bot.go`<br>`data/darklaunch.json` | - |
 | townflip | in-progress | - | `docs/design/townflip-p5.md`<br>`internal/town/sellplan.go`<br>`internal/town/sellplan_test.go`<br>`internal/town/shop.go`<br>`internal/town/town.go`<br>`internal/town/chores.go`<br>`internal/env/tuning_town.go` | - |
 | arbmig | in-progress | - | `docs/design/arbiter-migration-p6.md`<br>`docs/arbiter.md`<br>`internal/arbiter/`<br>`cmd/d2scenario/`<br>`tools/provingground/arbiter-outcomes/`<br>`internal/bot/arbiter_control.go`<br>`internal/bot/arbiter_control_test.go`<br>`internal/bot/shadow.go`<br>`internal/bot/loop.go`<br>`internal/env/tuning_bot.go`<br>`data/darklaunch.json`<br>`docs/knobs.md` | - |
 | fid-adapter-rows | deferred | - | `docs/probes/fid/fid-adapter-rows.md` | - |
@@ -210,14 +210,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 0dd5a9f51 11-27 15:34 `Merge agent/admit2: admit2: admission function shadow wiring, bot.admission knob (TASK-970 step 2)` (admit2)
+- 8e0028717 11-27 15:32 `Merge branch 'main' into admit2` (-)
 - 7a5210b1c 11-27 15:21 `Merge agent/fliptool: fliptool: flip.py transport probe, --reflip, watcher heartbeat/unit, --commit-ledger (TASK-1062)` (fliptool)
 - 05db9a45b 11-27 15:21 `Merge agent/statusrefresh: statusrefresh: STATUS.md hand-written part rewritten (TASK-46)` (statusrefresh)
 - 0be1da55f 11-27 15:21 `Merge agent/playsession: playsession: tools/play-session.sh one-command LAN session (TASK-43)` (playsession)
+- 2ae395801 11-27 15:20 `Merge origin/main into admit2 (darklaunch.json: both rows kept)` (-)
 - 5f0a3af5a 11-27 15:19 `Merge branch 'main' into fliptool` (-)
 - 4bfa01ad8 11-27 15:19 `Merge branch 'main' into statusrefresh` (-)
 - e2876514c 11-27 15:19 `Merge branch 'main' into playsession` (-)
 - 68fd626b6 11-27 15:16 `Merge agent/advisorwire: advisorwire: advisor lines on the Return screen (TASK-1060)` (advisorwire)
-- ea036def4 11-27 15:15 `Merge branch 'main' into advisorwire` (-)
-- 5ee52c7a2 11-27 15:09 `Merge agent/necroepic: necroepic: Necromancer profiles/tables/policy rows, 24 scenarios, gap doc (TASK-942 AC1)` (necroepic)
-- cfb83895d 11-27 15:09 `Merge agent/agencydrive: agencydrive: fighter reads agency.DriveOf at planner mode 2 (TASK-984 AC2)` (agencydrive)
 <!-- statusgen:end -->

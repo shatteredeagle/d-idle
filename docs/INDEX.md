@@ -337,7 +337,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 `design/`
 
-- [admission-p4.md](design/admission-p4.md): Admission function (P4, card admit1, TASK-970) (status: step 1 built (package, data, tests); step 2 (wiring) waits for the outcomes2 cards TASK-958 and TASK-961.)
+- [admission-p4.md](design/admission-p4.md): Admission function (P4, card admit1, TASK-970) (status: step 1 built (package, data, tests); step 2 wired in shadow for the four entry rows and the quest-walk kit...)
 - [advisor-r14.md](design/advisor-r14.md): Advisor R14: runeword and cube advice (TASK-991) (status: built dark (knob `items.advisor`, default 0). Advice lines only.)
 - [agency-p1b.md](design/agency-p1b.md): Agency P1b: the planner drives (mode 2) (status: partial (TASK-984, 2026-11-27). Offline pieces built; the review and the flip are the owner's. Tags: V =...)
 - [agency-p3.md](design/agency-p3.md): Agency P3: share and import build files (status: current (TASK-985, 2026-11-27). Tags: V = ran in a test of `internal/buildfile`, U = unverified.)
