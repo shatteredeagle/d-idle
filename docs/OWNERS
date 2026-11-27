@@ -126,6 +126,7 @@ docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-minutes.jsonl.gz  gaterun  gat
 docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-extras.jsonl.gz  gaterun  gate2multi-20261107-1811-g2h
 
 # BEGIN GENERATED OWNERS (tools/sharedgen/sharedgen.py from the owns: keys of open tasks; do not edit between the markers)
+backlog/tasks/task-726 - dlv-cast-verbs-input-caps-cast-unit-cast-point-cast-hold.md  credit-runner  inputl3
 cmd/d2bot/acts_test.go  credit-runner  qdmatrix
 cmd/d2bot/adapters.go  credit-runner  cainfix3
 cmd/d2bot/adapters.go  credit-runner  dlv-stance-army
@@ -188,7 +189,9 @@ data/darklaunch.json  credit-runner  deploy88-ledger
 data/darklaunch.json  credit-runner  dlv-upkeep-state
 data/darklaunch.json  credit-runner  ticklog
 data/input/caps/  credit-runner  dlv-cast-verbs
+data/input/caps/  credit-runner  inputl3
 data/input/caps_test.go  credit-runner  dlv-cast-verbs
+data/input/caps_test.go  credit-runner  inputl3
 data/questboard/act1.json  credit-runner  cainfix3
 data/questboard/act2.json  credit-runner  qdmatrix
 deploy/d2d-container/tester-report.sh  credit-runner  testerreport
@@ -211,6 +214,7 @@ docs/design/boardsm-flip.md  credit-runner  bsmdef
 docs/design/fable-review-2026-11-21/town-planner-b-model.md  credit-runner  town5
 docs/design/fable-review-2026-11-21/town-profiles-sme.md  credit-runner  town12
 docs/design/input-cast-verbs.md  credit-runner  dlv-cast-verbs
+docs/design/input-cast-verbs.md  credit-runner  inputl3
 docs/design/input-i3.md  credit-runner  inputl3
 docs/design/input-i4.md  credit-runner  inputl4
 docs/design/input-i5-i7.md  credit-runner  inputl5

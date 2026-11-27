@@ -1,0 +1,6 @@
+{
+ "schema": "inputcaps/1",
+ "backend": "d2d-fork-forkcaps",
+ "verbs": ["input.select", "input.repair", "input.menu-choose", "input.item-equip", "input.item-unequip", "input.item-move", "input.item-identify", "input.item-drop", "input.gold-stash", "input.buy", "input.sell", "input.waypoint", "input.portal", "input.pickup", "input.use-item", "input.cast-unit", "input.cast-point", "input.cast-hold"],
+ "note": "Fork branch didle/forkcaps-20261127 (private remote only, tip b88f72bd6), lab binary built on the builder from bd2140853 (sha256 prefix 18d4c6938eec34fb; later commits change tests and docs only); no sandbox image loaded, nothing switched. Differentials of fork tests/input_cast_tp_diff_d2d.py, 0 differences (V, 2026-11-27): town portal by cmd use against the pack right-click (6 steps: scroll, tome twice, three refusals); fused cmd skill against select then a press (unit, point, left hand, corpse, four refusals; the point lands within one cell); cmd skillhold against a held left button (Zeal on a monster), right-hand holds checked on the verb run only. The controller has no CastHold yet, so a hold still falls back to one cast. The bot adopts the names only with input.planner=1."
+}
