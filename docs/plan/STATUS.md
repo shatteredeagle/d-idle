@@ -42,6 +42,7 @@
 | diffbaal | proposed | - | `internal/quest/baaldone.go`<br>`internal/quest/baaldone_test.go` | - |
 | releasenotes-next | proposed | - | `docs/releases/next-draft.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
+| racefix | proposed | - | `internal/bot/questboard.go`<br>`internal/bot/questboard_test.go` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
@@ -192,7 +193,9 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 20f13e0a4 11-27 18:31 `Merge agent/racefix: racefix: hand-in rebuilds the cached world before signalling done (TASK-1076)` (racefix)
 - b50b24aa8 11-27 18:31 `Merge agent/denreward: denreward: hold every non-emergency trip while a quest reward is pending, nav.barracks-return scenario (TASK-880)` (denreward)
+- 064b9c30b 11-27 18:28 `Merge branch 'main' into racefix` (-)
 - b0ba5397d 11-27 18:28 `Merge branch 'main' into denreward` (-)
 - d894a57bf 11-27 18:20 `Merge agent/bsmprep: bsmprep: boardLegacy seam, boardSM removal plan, drill scenarios (TASK-983 prep)` (bsmprep)
 - 25c9ee658 11-27 18:18 `Merge branch 'main' into bsmprep` (-)
@@ -200,6 +203,4 @@
 - cb47f585c 11-27 18:13 `Merge origin/main into denreward (card result lines combined, docs sections both kept)` (-)
 - 9e7ad03c9 11-27 18:13 `Merge origin/main into bsmprep (card result lines combined, docs sections both kept)` (-)
 - 5da31f09f 11-27 18:13 `Merge origin/main into docsweep (docs/gear.md: take main, the gearcopy wording)` (-)
-- 1d9770f19 11-27 18:04 `Merge agent/combattelem: combattelem: fight-end aim/stance/minion summaries, skill-id test (TASK-1073)` (combattelem)
-- 3b4e20513 11-27 18:03 `Merge branch 'main' into combattelem` (-)
 <!-- statusgen:end -->
