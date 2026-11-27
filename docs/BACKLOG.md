@@ -1551,6 +1551,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - agent/closecards3: closecards3: third card cleanup pass (merged 2026-11-27) <!--sg:agent/closecards3-->
 - testerreport: exportable feedback record (scrubbed bundle) for the friend beta (TASK-27, merged 2026-11-27, acceptance 2 of 2): Built 2026-11-27: deploy/d2d-container/tester-report.sh (POSIX sh + sed, no python in the image) writes a scrubbed tar.gz of bot log, d2d log, minute lines, deaths, ladder journal, wizard inputs without paths and d2dping state ... <!--sg:agent/testerreport-->
 - classkeys: main-attack keys for every class, profile skills by name, merc aura note (TASK-1063, merged 2026-11-27, acceptance 3 of 3): Not verified live (offline tests only). New combat profiles druid/tornado, barbarian/warcry, amazon/javelin, paladin/hammerdin_zeal (table combat key set on those plan tables, hammerdin tables named hammerdin) ... <!--sg:agent/classkeys-->
+- agent/ledgertrial: ledger: stepExec trial row (merged 2026-11-27) <!--sg:agent/ledgertrial-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

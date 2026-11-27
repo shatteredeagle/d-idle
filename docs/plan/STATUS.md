@@ -199,6 +199,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 69abed554 11-27 15:43 `Merge agent/ledgertrial: ledger: stepExec trial row` (ledgertrial)
+- 1235cddd1 11-27 15:42 `Merge branch 'main' into ledgertrial` (-)
 - 2f9abaad7 11-27 15:34 `Merge agent/classkeys: classkeys: main-attack hotkeys for all classes, profile skill check, merc aura note (TASK-1063)` (classkeys)
 - 2947d96a6 11-27 15:34 `Merge agent/testerreport: testerreport: scrubbed tester report bundle, first-session doc (TASK-27)` (testerreport)
 - bb0a720a8 11-27 15:34 `Merge agent/closecards3: closecards3: third card cleanup pass` (closecards3)
@@ -207,6 +209,4 @@
 - 25030e532 11-27 15:32 `Merge branch 'main' into testerreport` (-)
 - 175037f1a 11-27 15:32 `Merge branch 'main' into closecards3` (-)
 - 8e0028717 11-27 15:32 `Merge branch 'main' into admit2` (-)
-- 7a5210b1c 11-27 15:21 `Merge agent/fliptool: fliptool: flip.py transport probe, --reflip, watcher heartbeat/unit, --commit-ledger (TASK-1062)` (fliptool)
-- 05db9a45b 11-27 15:21 `Merge agent/statusrefresh: statusrefresh: STATUS.md hand-written part rewritten (TASK-46)` (statusrefresh)
 <!-- statusgen:end -->
