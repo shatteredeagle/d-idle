@@ -52,6 +52,7 @@
 | charmvault | proposed | - | `internal/charms`<br>`internal/vaultkeep`<br>`internal/lootrules`<br>`internal/town/stash.go`<br>`internal/watch`<br>`cmd/d2bot/vaultequip.go`<br>`cmd/d2bot/vaultkeep.go`<br>`docs/charms.md` | - |
 | vaultpoll | proposed | - | `internal/watch`<br>`internal/vault`<br>`internal/vaultkeep`<br>`docs/probes/vault-perf-2026-11-27.md` | - |
 | skillcapretire | proposed | - | `internal/points`<br>`internal/resource`<br>`internal/env/tuning_resource.go`<br>`cmd/d2bot/pointswire.go`<br>`cmd/d2bot/resource_test.go`<br>`data/darklaunch.json`<br>`docs/points.md`<br>`docs/knobs.md`<br>`docs/process/points-verbs-devp14.md` | - |
+| act2chunks | proposed | - | `data/questspec/act2.json`<br>`internal/bot/stepexec.go`<br>`internal/bot/stepexec_act2_test.go`<br>`internal/bot/stepexec_act2chunks_test.go`<br>`internal/bot/task.go`<br>`internal/questspec/`<br>`tools/provingground/scenarios/stepexec-act2chunks.json`<br>`tools/provingground/scenarios/tiers.json`<br>`docs/design/stepexec-p9.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | returnmock | proposed | - | `docs/research/mocks/return.html`<br>`docs/research/return-screen.md` | - |
@@ -228,7 +229,9 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 9f534dbe4 11-27 14:32 `Merge agent/act2chunks: act2chunks: Radament/cube/shaft/amulet/summoner chunks as step-executor data (TASK-1056)` (act2chunks)
 - d60306160 11-27 14:32 `Merge agent/town7: town7: short-gold priority table as data + town8 stage 5 route stops (TASK-759/761)` (town7)
+- 6992ea23f 11-27 14:30 `Merge branch 'main' into act2chunks` (-)
 - 8cee71e86 11-27 14:30 `Merge branch 'main' into town7` (-)
 - f723f0cac 11-27 14:26 `Merge agent/vaultpoll: vaultpoll: cached vault poll, windowed query (TASK-1054)` (vaultpoll)
 - c6dde6ea4 11-27 14:25 `Merge branch 'main' into vaultpoll` (-)
@@ -236,6 +239,4 @@
 - 3392b8986 11-27 14:19 `Merge agent/bsmchk: bsmchk: questspec rules 12-14 (TASK-982)` (bsmchk)
 - 66f69ba02 11-27 14:19 `Merge agent/closecards2: closecards2: close/annotate stale cards (16 Done, 35 annotated)` (closecards2)
 - d788bfd1c 11-27 14:18 `Merge agent/charmvault: charmvault: charms recorded in the Vault, player Carry/Stow (TASK-1052)` (charmvault)
-- ea804bb3b 11-27 14:16 `Merge branch 'main' into skillcapretire` (-)
-- 49ebc2db4 11-27 14:16 `Merge branch 'main' into bsmchk` (-)
 <!-- statusgen:end -->
