@@ -211,11 +211,13 @@ export function mountVault(d) {
     if (!j || j.schema !== 'watch.vault/1') return null;
     return j;
   }
+  // Every reload carries the type counts (the chips and the Type list): a sale or a reveal changes them, and a reload that skipped
+  // them left the old numbers until a page refresh. They are one pass over the type index on the server.
   async function reload(keep) {
     S.loading = !S.view; S.err = false;
     if (!keep && win && win.scrollTo && main.getBoundingClientRect && main.getBoundingClientRect().top < 0) win.scrollTo(0, win.scrollY + main.getBoundingClientRect().top); // a new query starts at the top of the list
     const limit = keep ? Math.min(Math.max(S.items.length, PAGE), MAX_LOADED) : PAGE;
-    const [j] = await Promise.all([fetchPage(0, Math.min(limit, 200), !S.view || !S.facets.types.length), refreshEther()]);
+    const [j] = await Promise.all([fetchPage(0, Math.min(limit, 200), true), refreshEther()]);
     if (!j) { S.err = true; S.loading = false; draw(); return; }
     let items = j.items;
     if (limit > 200) { // a reload that keeps a long list fetches it in pages of 200
@@ -748,6 +750,13 @@ export function mountVault(d) {
       if (eqv.enabled) eb.addEventListener('click', () => { it._eqAuto = false; openEquip(it, eb); });
       else { eb.setAttribute('aria-disabled', 'true'); why(eb, eqv.why || T.equipNone, dWhys, T.equip); eb.addEventListener('click', () => setMsg('bad', eqv.why || T.equipNone)); }
       row.appendChild(eb);
+      if (eqv.merc) { // Equip on merc: the same instant path, the mercenary's slot; refused with a reason when his kind cannot wear it
+        const mb = btn(T.equipMerc, { key: 'd-equip-merc' });
+        const mc = S.cmpData && S.cmpData.id === it.id && S.cmpData.sh && S.cmpData.sh.merc;
+        if (mc && !mc.can) { mb.setAttribute('aria-disabled', 'true'); why(mb, mc.why || T.equipNone, dWhys, T.equipMerc); }
+        mb.addEventListener('click', () => { if (!(mc && !mc.can)) equipMercPress(it, mb); });
+        row.appendChild(mb);
+      }
     }
     const cv = S.view && S.view.carry; // a charm is carried by the player's choice: it works only in the backpack
     if (cv && it.charm && it.state === 'recorded') {
@@ -1229,6 +1238,17 @@ export function mountVault(d) {
     if (eqTimer && d.clear) d.clear(eqTimer);
     eqTimer = null;
     if (p && p.state === 'active' && d.later) eqTimer = d.later(() => equipLoad(it), 3000);
+  }
+  async function equipMercPress(it, b) {
+    if (b.dataset.busy) return; // one press at a time: the button says so until the answer is back
+    const label = b.textContent;
+    b.dataset.busy = '1'; b.setAttribute('aria-busy', 'true'); b.textContent = T.equipMercBusy;
+    try {
+      const r = await d.post('/api/vault/equip', { ids: [it.id], slot: 'auto', target: 'merc', now: true });
+      const w = equipWornWords(r || {}, { [it.id]: it.name }, T);
+      setMsg(w.text ? w.kind : 'bad', w.text || (r && r.error) || T.noAnswer);
+      await reload(true);
+    } finally { delete b.dataset.busy; b.removeAttribute('aria-busy'); b.textContent = label; }
   }
   async function equipPress(it, slot, now) {
     const r = await d.post('/api/vault/equip', { ids: [it.id], slot, now: !!now });

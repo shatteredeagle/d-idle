@@ -129,7 +129,6 @@ docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-extras.jsonl.gz  gaterun  gate
 backlog/tasks/task-726 - dlv-cast-verbs-input-caps-cast-unit-cast-point-cast-hold.md  credit-runner  inputl3
 cmd/d2bot/acts_test.go  credit-runner  qdmatrix
 cmd/d2bot/adapters.go  credit-runner  cainfix3
-cmd/d2bot/adapters.go  credit-runner  dlv-stance-army
 cmd/d2bot/behaviors.go  credit-runner  campaign1
 cmd/d2bot/boss.go  credit-runner  countess3
 cmd/d2bot/boss.go  credit-runner  countess3b
@@ -139,10 +138,8 @@ cmd/d2bot/d2dbackend.go  credit-runner  maphistory
 cmd/d2bot/d2dbackend.go  credit-runner  maphistoryA
 cmd/d2bot/d2dbackend.go  credit-runner  maphistoryC
 cmd/d2bot/d2dbackend.go  credit-runner  maptrail
-cmd/d2bot/d2dbackend.go  credit-runner  pgclock
 cmd/d2bot/funwire.go  credit-runner  maphistoryA
 cmd/d2bot/glancewire.go  credit-runner  intake
-cmd/d2bot/goalsclock_test.go  credit-runner  pgclock
 cmd/d2bot/goldfarmwire_test.go  credit-runner  repairtrip
 cmd/d2bot/invverbs.go  credit-runner  uib9
 cmd/d2bot/invverbs_test.go  credit-runner  uib9
@@ -172,9 +169,11 @@ cmd/d2bot/task_test.go  credit-runner  qdmatrix
 cmd/d2bot/vaultkeep.go  credit-runner  sellall
 cmd/d2firsthour/  live-agent  firsthour
 cmd/d2scenario/  credit-runner  arbmig
+cmd/d2scenario/herospend_test.go  credit-runner  necroteeth
 cmd/d2scenario/ledger.go  credit-runner  pgpage
 cmd/d2scenario/ledger_test.go  credit-runner  pgpage
 cmd/d2scenario/main.go  credit-runner  pgpage
+cmd/d2scenario/run.go  credit-runner  necroteeth
 cmd/d2scenario/run.go  credit-runner  pgtaps
 cmd/d2scenario/tap.go  credit-runner  handinbtn
 cmd/d2scenario/tap.go  credit-runner  pgtaps
@@ -182,10 +181,10 @@ cmd/d2scenario/tap.go  credit-runner  stage1fix
 cmd/d2scenario/tap_test.go  credit-runner  handinbtn
 cmd/d2scenario/tap_test.go  credit-runner  pgtaps
 cmd/d2scenario/tap_test.go  credit-runner  stage1fix
+cmd/d2scenario/validate.go  credit-runner  necroteeth
+cmd/d2scenario/validate_test.go  credit-runner  necroteeth
 data/capabilities/  credit-runner  dlv-stance-pack
 data/darklaunch.json  credit-runner  arbmig
-data/darklaunch.json  credit-runner  deploy88-ledger
-data/darklaunch.json  credit-runner  deploy94-ledger
 data/darklaunch.json  credit-runner  dlv-upkeep-state
 data/darklaunch.json  credit-runner  ticklog
 data/input/caps/  credit-runner  dlv-cast-verbs
@@ -204,7 +203,6 @@ docs/backlog-howto.md  credit-runner  dietrule
 docs/campaign.md  credit-runner  campaign1
 docs/combat.md  credit-runner  cainfix3
 docs/contracts/decision-queue.md  credit-runner  qqueue
-docs/d2d-determinism.md  credit-runner  pgclock
 docs/design/admission-p4.md  credit-runner  admit1
 docs/design/advisor-r14.md  credit-runner  advisor1
 docs/design/agency-p1b.md  credit-runner  agencyp1b
@@ -220,7 +218,6 @@ docs/design/input-i3.md  credit-runner  inputl3
 docs/design/input-i4.md  credit-runner  inputl4
 docs/design/input-i5-i7.md  credit-runner  inputl5
 docs/design/ticklog-t4.md  credit-runner  ticklog
-docs/design/townflip-p5.md  credit-runner  town6
 docs/design/townflip-p5.md  credit-runner  townflip
 docs/epics/epic-act1.md  live-agent  epic-act1
 docs/epics/epic-act2.md  live-agent  epic-act2
@@ -294,6 +291,7 @@ docs/process/pg-ledger-ops.md  credit-runner  pgledgeron
 docs/process/pg-ops-mgonejob.md  credit-runner  mgonejob
 docs/process/pg-ops-pgnightly.md  credit-runner  pgnightly
 docs/process/proving-ground-status.md  credit-runner  pgpage
+docs/process/proving-ground.md  credit-runner  necroteeth
 docs/pursuers.md  credit-runner  pursuers
 docs/quest-givers.md  credit-runner  campaign1
 docs/quest-hints.md  live-agent  questdrill
@@ -336,7 +334,6 @@ docs/vault.md  credit-runner  sellall
 internal/admit/  credit-runner  admit1
 internal/arbiter  credit-runner  town10
 internal/arbiter/  credit-runner  arbmig
-internal/arbiter/  credit-runner  dlv-stance-army
 internal/arbiter/replay.go  credit-runner  ticklog
 internal/arbiter/replay_ticklog_test.go  credit-runner  ticklog
 internal/boss  credit-runner  countess3
@@ -350,8 +347,6 @@ internal/bot/broke.go  credit-runner  survrecover
 internal/bot/broke.go  credit-runner  town5
 internal/bot/drought.go  credit-runner  freshstart
 internal/bot/earlyroute.go  credit-runner  admit1
-internal/bot/farm.go  credit-runner  pgclock
-internal/bot/farmclock_test.go  credit-runner  pgclock
 internal/bot/goal.go  credit-runner  arbloop
 internal/bot/goal.go  credit-runner  maphistoryA
 internal/bot/goal.go  credit-runner  qdmatrix
@@ -382,7 +377,6 @@ internal/bot/runner.go  credit-runner  campaign1
 internal/bot/runner.go  credit-runner  maphistoryA
 internal/bot/runner.go  credit-runner  repairtrip
 internal/bot/shadow.go  credit-runner  arbmig
-internal/bot/shadow.go  credit-runner  dlv-stance-army
 internal/bot/shadow.go  credit-runner  ticklog
 internal/bot/task.go  credit-runner  boardmoderace
 internal/bot/task.go  credit-runner  wpstep
@@ -403,7 +397,6 @@ internal/combat/  credit-runner  dlv-mark
 internal/combat/  credit-runner  dlv-move-melee
 internal/combat/  credit-runner  dlv-move-tele
 internal/combat/  credit-runner  dlv-press
-internal/combat/  credit-runner  dlv-stance-army
 internal/combat/  credit-runner  dlv-stance-pack
 internal/combat/  credit-runner  dlv-upkeep-minions
 internal/combat/  credit-runner  dlv-upkeep-state
@@ -435,10 +428,7 @@ internal/d2dctl/use_verb_test.go  credit-runner  inputl3
 internal/d2dctl/verbs.go  credit-runner  placefix
 internal/d2dctl/warptriggers.go  credit-runner  warptrigger
 internal/d2dctl/warptriggers_test.go  credit-runner  warptrigger
-internal/d2denv/env.go  credit-runner  pgclock
 internal/d2denv/env.go  credit-runner  warptrigger
-internal/d2denv/reader.go  credit-runner  pgclock
-internal/d2denv/recent_test.go  credit-runner  pgclock
 internal/d2dinput/  credit-runner  dlv-cast-verbs
 internal/d2dinput/controller.go  credit-runner  placefix
 internal/d2dinput/placefix_test.go  credit-runner  placefix
@@ -472,7 +462,6 @@ internal/env/tuning_resource.go  credit-runner  freshstart
 internal/env/tuning_resource.go  live-agent  recoverypace
 internal/env/tuning_town.go  credit-runner  townflip
 internal/fidvendor  live-agent  fidprobe-vendor
-internal/goals/clock_test.go  credit-runner  pgclock
 internal/goldfarm  credit-runner  repairtrip
 internal/input/  credit-runner  dlv-cast-verbs
 internal/input/useitem.go  credit-runner  inputl3
@@ -481,7 +470,6 @@ internal/invdesk/mercverbs.go  credit-runner  uib9
 internal/invdesk/mercverbs_test.go  credit-runner  uib9
 internal/invdesk/sets.go  credit-runner  uib9
 internal/leveler/mainattack_test.go  credit-runner  necroteeth
-internal/loot/  credit-runner  town6
 internal/nav/  credit-runner  dlv-move-tele
 internal/nav/act2hints.go  credit-runner  qdmatrix
 internal/nav/act2hints_test.go  credit-runner  qdmatrix
@@ -539,7 +527,10 @@ internal/scenario/pgpage.go  credit-runner  pgpage
 internal/scenario/pgpage_test.go  credit-runner  pgpage
 internal/scenario/placefix_test.go  credit-runner  placefix
 internal/scenario/result.go  credit-runner  pgtaps
+internal/scenario/scenario.go  credit-runner  necroteeth
 internal/scenario/scenario.go  credit-runner  qdmatrix
+internal/scenario/scenario_test.go  credit-runner  necroteeth
+internal/scenario/setup.go  credit-runner  necroteeth
 internal/scenario/setup.go  credit-runner  qdmatrix
 internal/scenario/setup_test.go  credit-runner  qdmatrix
 internal/scenario/taps.go  credit-runner  pgtaps
@@ -575,7 +566,6 @@ internal/town  credit-runner  town11
 internal/town  credit-runner  town5
 internal/town  credit-runner  town7
 internal/town  credit-runner  town8
-internal/town/  credit-runner  town6
 internal/town/chores.go  credit-runner  repairtrip
 internal/town/chores.go  credit-runner  townflip
 internal/town/portalverb.go  credit-runner  inputl3
@@ -589,9 +579,12 @@ internal/town/shop.go  credit-runner  townflip
 internal/town/town.go  credit-runner  repairtrip
 internal/town/town.go  credit-runner  townflip
 internal/town/trip.go  credit-runner  inputl3
+internal/vault  credit-runner  vaultperf
 internal/vaultkeep  credit-runner  sellall
+internal/vaultkeep  credit-runner  vaultperf
 internal/watch  credit-runner  sellall
 internal/watch  credit-runner  town9
+internal/watch  credit-runner  vaultperf
 internal/watch/areamap_test.go  credit-runner  uis6
 internal/watch/glance.go  credit-runner  intake
 internal/watch/invui.go  credit-runner  nopins
@@ -649,6 +642,7 @@ internal/watch/testdata/senses-failures.json  credit-runner  maphistoryC
 internal/watch/testdata/senses-trail.json  credit-runner  maphistory
 internal/watch/testdata/senses-trail.json  credit-runner  maphistoryA
 internal/watch/testdata/senses-trail.json  credit-runner  maptrail
+internal/watch/web  credit-runner  vaultperf
 internal/watch/web/components.css  credit-runner  uis6
 internal/watch/web/gear.js  credit-runner  repairtrip
 internal/watch/web/inventory-actions.js  credit-runner  nopins

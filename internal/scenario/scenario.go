@@ -98,15 +98,19 @@ type StepDecl struct {
 
 // Pre is the declared precondition. Every field is optional; the builder applies only what is set.
 type Pre struct {
-	Start      string    `json:"start,omitempty"` // town (default) or field
-	Area       int       `json:"area,omitempty"`  // levels.txt id, only for start=field
-	Level      int       `json:"level,omitempty"`
-	Gold       int       `json:"gold,omitempty"`
-	Stash      int       `json:"stash,omitempty"`
-	Difficulty string    `json:"difficulty,omitempty"` // normal (default), nightmare, hell
-	Waypoints  []int     `json:"waypoints,omitempty"`  // waypoint bits to activate (internal/saves waypointTable order)
-	Quests     []QWord   `json:"quests,omitempty"`     // quest records written as the hero's own state
-	Board      *QuestRef `json:"board,omitempty"`      // chunk the player accepted (the plan store)
+	Start string `json:"start,omitempty"` // town (default) or field
+	Area  int    `json:"area,omitempty"`  // levels.txt id, only for start=field
+	Level int    `json:"level,omitempty"`
+	// HeroProfile is the hero library profile of the prepared hero (internal/scenario/hero): "played" (default: the points
+	// are spent as the build table spends them and the main attack is bound, so the hero fights with its class skills) or
+	// "banked" (every point left unspent, for scenarios about spending points). See Scenario.HeroProfile for the default.
+	HeroProfile string    `json:"hero_profile,omitempty"`
+	Gold        int       `json:"gold,omitempty"`
+	Stash       int       `json:"stash,omitempty"`
+	Difficulty  string    `json:"difficulty,omitempty"` // normal (default), nightmare, hell
+	Waypoints   []int     `json:"waypoints,omitempty"`  // waypoint bits to activate (internal/saves waypointTable order)
+	Quests      []QWord   `json:"quests,omitempty"`     // quest records written as the hero's own state
+	Board       *QuestRef `json:"board,omitempty"`      // chunk the player accepted (the plan store)
 	// BoardAlso lists further chunks accepted in the same game (a plan file that holds more than one record).
 	BoardAlso []QuestRef `json:"board_also,omitempty"`
 	Items     []Item     `json:"items,omitempty"`
@@ -434,6 +438,14 @@ func (s Scenario) Validate() error {
 	if s.Pre.Ether < 0 {
 		return fmt.Errorf("%s: pre.ether %d", at, s.Pre.Ether)
 	}
+	switch s.Pre.HeroProfile {
+	case "", HeroPlayed, HeroBanked:
+	default:
+		return fmt.Errorf("%s: pre.hero_profile %q (want %s or %s)", at, s.Pre.HeroProfile, HeroPlayed, HeroBanked)
+	}
+	if s.Pre.HeroProfile == HeroPlayed && s.rawPoints() {
+		return fmt.Errorf("%s: pre.hero_profile played with raw pre.stats of the level or the points (the stats declare the points; use banked or drop them)", at)
+	}
 	if s.Pre.Level < 0 || s.Pre.Level > 99 {
 		return fmt.Errorf("%s: pre.level %d", at, s.Pre.Level)
 	}
@@ -456,4 +468,44 @@ func validID(id string) bool {
 type StatSet struct {
 	Stat  int `json:"stat"`
 	Value int `json:"value"`
+}
+
+// Hero profiles (the same words as internal/scenario/hero).
+const (
+	HeroPlayed = "played"
+	HeroBanked = "banked"
+)
+
+// HeroProfile is the profile the runner prepares the hero with: the declared pre.hero_profile; without one "played"
+// (design 6.2: a Proving Ground hero is not banked), except that a scenario that sets the level or the points with raw
+// pre.stats declares its own points, and a scenario whose every covered behaviour is about spending points needs them
+// unspent: both are "banked".
+func (s Scenario) HeroProfile() string {
+	if s.Pre.HeroProfile != "" {
+		return s.Pre.HeroProfile
+	}
+	if s.rawPoints() || s.PointsScenario() {
+		return HeroBanked
+	}
+	return HeroPlayed
+}
+
+// rawPoints reports a raw write of the level (12), the stat points (4) or the skill points (5) in pre.stats.
+func (s Scenario) rawPoints() bool {
+	for _, st := range s.Pre.Stats {
+		if st.Stat == 4 || st.Stat == 5 || st.Stat == 12 {
+			return true
+		}
+	}
+	return false
+}
+
+// PointsScenario is true when every behaviour the scenario covers is about spending points.
+func (s Scenario) PointsScenario() bool {
+	for _, c := range s.Covers {
+		if !strings.HasPrefix(c, "points.") && !strings.HasPrefix(c, "hook.points") {
+			return false
+		}
+	}
+	return len(s.Covers) > 0
 }

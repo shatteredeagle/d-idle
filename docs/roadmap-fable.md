@@ -12,10 +12,10 @@ Ranked by value toward finishing every recommendation, class order Necromancer f
 
 1. **Necromancer live drill with `combat.deliveryUpkeep` 2** (R10; cards epic-class-necromancer TASK-942, dlv-upkeep-state, dlv-upkeep-minions, dlv-mark, dlv-stance-army). V the upkeep, minion, mark and army-stance drivers, the summon-missing invariant, life floors and the summoner build are merged, offline only; mode 2 is on sandbox Doofer. Needs the lab prep fixed first (item 2). No live Necromancer run exists (U).
 2. **necroteeth (TASK-1033)**: V card result says the soak prep banks every skill point, so no class skill is learned and every class kills with plain Attack; until fixed no soak or drill tells anything about the Necromancer. Small, unblocks item 1 and every class row.
-3. **Flip `quests.stepExec` on one sandbox** (P9; flipwave2 TASK-998). V the Cain scroll and bark scroll scenarios exist and the lab soak read them green (lab only); ledger `criteria_met` no, review due 2026-12-03. Standard rule, first real container run.
+3. **Flip `quests.stepExec` on one sandbox** (P9; flipwave2 TASK-998). V the Cain scroll and bark scroll scenarios exist and the lab soak read them green (lab only); ledger `criteria_met` no, review due 2026-12-03. Standard rule, first real container run. Final list: `docs/probes/dark-queue-final-2026-11-27.md` (flip on Questy, 2 h window; the Duriel/Tyrael step stays blocked and parks safely, V sixth drill run).
 4. **Duriel kill step** (R8; epic-act2 TASK-937, Act 2 for every class). V `act2drill5`: lair entered and Duriel killed 3 of 3, blocked on the kill step; the hand-in, placement and dungeon rows are merged.
 5. **Arbiter default per family** (P6, R4; arbmig TASK-973, arbloop TASK-1034, hostilespin follow-up). V families 255 are on the sandbox and the session verdict exists; the open cause is a 40 min quest-board slice outlasting the 10 min watchdog (V TASK-1048 result) and one recorded night (`bot.tickLogSec`) is still missing (U). Cause class A.
-6. **`town.plan` stage 4 flip** (P5, TOWN6; townflip TASK-972, town6 TASK-758, close town5 TASK-757). V stage 3 window closed clean 2026-11-27; stage 4 sell and pickup merged dark, offline tests only. Cause class C.
+6. **`town.plan` stage 4 flip** (gated on the three stage 4 scenarios, final list G2) (P5, TOWN6; townflip TASK-972, town6 TASK-758, close town5 TASK-757). V stage 3 window closed clean 2026-11-27; stage 4 sell and pickup merged dark, offline tests only. Cause class C.
 7. **bsmdef restart drill, then `quests.boardSM` flip** (BSM; TASK-983). V no board commits since the ledger row; needs one restart drill. Cause class H.
 8. **ckptlive drill (TASK-990) and the 24 h records**: the checkpoint and dodge knobs are on the sandbox without their drills (V ledger). Record the drill and the 24 h watch so the rows close (U on every `criteria_met`).
 
@@ -27,11 +27,11 @@ Standard rule: scenario, drill or replay green, flip on the sandboxes, 24 h watc
 
 | knob | to | evidence that makes it ready | gap before it closes |
 |---|---|---|---|
-| `quests.stepExec` | 1 on one sandbox | V scenarios `cain.scroll.stepexec`, `cain.read.stepexec`; lab soak green on them (TASK-1024, lab only) | first sandbox run and 24 h record (U) |
-| `town.plan` | 4 on Doofer | V stage 3 window closed clean (ledger note, 2026-11-27T14:25Z); stage 4 offline tests on two builds | stage 4 drill, 24 h record (U) |
-| `bot.arbiterShadow`, `bot.tickLogSec` | promote from trial to enabled | V both on the sandbox since 2026-11-27 06:00Z, no revert; ledger says enable after a night of replay evidence | one night replayed with `arbiter-replay -session` (U) |
+| `quests.stepExec` | 1 on one sandbox | V scenarios `cain.scroll.stepexec`, `cain.read.stepexec`; lab soak green on them (TASK-1024, lab only) | first sandbox run, 2 h window (U) |
+| `town.plan` | 4 on Doofer | NOT ready: V stage 3 window closed clean (ledger note, 2026-11-27T14:25Z); stage 4 has offline tests on two builds only, its three scenarios are not run (`docs/design/townflip-p5.md` 4b) | the three stage 4 scenarios green, owner look (ADR 0028); then a 2 h window |
+| `bot.arbiterShadow`, `bot.tickLogSec` | promote from trial to enabled | V both on the sandbox since 2026-11-27 06:00Z, no revert; ledger says enable after a night of replay evidence | one night replayed with `arbiter-replay -session` (U); then a 2 h re-flip closes the rows |
 | `combat.deliveryUpkeep` | keep 2 on Doofer, widen to a second sandbox | V window closed clean; minions and mark shadow runs show zero disagreements on the old Necromancer loop (card result, offline) | live Necromancer drill; `criteria_met` no |
-| `bot.checkpointEnable`, `combat.missileDodge`, `combat.threatDodge`, `combat.standOK`, `combat.deliveryExpect`, `bot.portalGuard`, `bot.arbiterControl` and families 255, `town.plan` 2 | stay on; close the ledger rows | V all on the sandbox since 2026-11-26 or 27, windows of 30 and 45 minutes, no revert | the 24 h record; the checkpoint live drill is not recorded (U) |
+| `bot.checkpointEnable`, `combat.missileDodge`, `combat.threatDodge`, `combat.standOK`, `combat.deliveryExpect`, `bot.portalGuard`, `bot.arbiterControl` and families 255, `town.plan` 2 | stay on; close the ledger rows | V all on the sandbox since 2026-11-26 or 27, windows of 30 and 45 minutes, no revert | nothing to flip (already `enabled`; the 2 h rule needs no 24 h record); the checkpoint live drill is not recorded (U) |
 
 Not ready: `quests.boardSM` (restart drill), `bot.zoneModel` (A/B sets per class), `agency.planner` mode 2 (shadow review and owner go), `items.ladderRunewords` and the other owner rows (owner go).
 

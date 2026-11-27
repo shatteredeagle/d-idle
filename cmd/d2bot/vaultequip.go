@@ -246,6 +246,19 @@ func (h equipHand) mercSide(s *d2.Snapshot, b *data.ItemBase) *vaultkeep.MercSid
 	return m
 }
 
+// MercPreview is the merc rule alone for a vault record (vaultkeep.MercHand): Equip on merc does not need the hero to wear it.
+func (h equipHand) MercPreview(rec vault.Rec) vaultkeep.MercSide {
+	s := h.snap()
+	idx := h.baseIndex(rec.Code)
+	if idx < 0 || h.e.Data == nil {
+		return vaultkeep.MercSide{Why: "this item is not in the game tables"}
+	}
+	if m := h.mercSide(s, h.e.Data.Items[idx]); m != nil {
+		return *m
+	}
+	return vaultkeep.MercSide{Why: "no mercenary is hired"}
+}
+
 func (h equipHand) twoHanded(s *d2.Snapshot, u d2.Unit) bool {
 	if h.e.Data == nil || u.Class < 0 || u.Class >= len(h.e.Data.Items) {
 		return false
@@ -368,8 +381,9 @@ func (h equipHand) Stash(ctx context.Context, unit uint32) error {
 }
 
 var (
-	_ vaultkeep.Hand    = equipHand{}
-	_ vaultkeep.Stasher = equipHand{}
+	_ vaultkeep.MercHand = equipHand{}
+	_ vaultkeep.Hand     = equipHand{}
+	_ vaultkeep.Stasher  = equipHand{}
 )
 
 // equipFace adapts the keeper of a vaultHome to watch.VaultEquipper.
@@ -385,6 +399,25 @@ func (f equipFace) k() *vaultkeep.Keeper {
 func (f equipFace) Direct(ctx context.Context) bool {
 	k := f.k()
 	return k != nil && k.DirectReady(ctx)
+}
+
+// MercDirect says the page may offer Equip on merc (instant path ready and the build has item merc-equip).
+func (f equipFace) MercDirect(ctx context.Context) bool {
+	k := f.k()
+	return k != nil && k.MercReady(ctx)
+}
+
+// EquipMerc is the merc twin of Enqueue: the item is given to the mercenary at once, or refused with a reason.
+func (f equipFace) EquipMerc(ctx context.Context, id string) watch.VaultKeepResult {
+	k := f.k()
+	if k == nil {
+		return watch.VaultKeepResult{ID: id, Code: "off", Why: vaultkeep.ReasonEqNone}
+	}
+	r, ok := k.EquipMerc(ctx, id)
+	if !ok {
+		return watch.VaultKeepResult{ID: id, Code: "off", Why: vaultkeep.ReasonMercOff}
+	}
+	return keepResult(r)
 }
 
 func (f equipFace) Gate(ctx context.Context) (bool, string, string) {

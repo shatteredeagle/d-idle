@@ -70,13 +70,19 @@ func cmdValidate(args []string, w io.Writer) error {
 	return nil
 }
 
-// scenarioHero is the hero a scenario's setup declares for one class (design 6.2): the level BuildSetup writes, its
-// points unspent (the scenario format has no profile yet, so every Proving Ground hero is banked and the bot spends),
-// the purse and the potions it gives. A raw pre.stats write of the level or the points replaces the expectation.
-func scenarioHero(s scenario.Scenario, class string) (hero.Hero, hero.Floors) {
+// scenarioHero is the hero a scenario's setup declares for one class (design 6.2): the played profile resolves through
+// the hero library (points spent as the build table spends them, main attack bound; tabs are the game's tables), the
+// banked one leaves the level's points unspent; then the purse and the potions it gives. A raw pre.stats write of the
+// level or the points replaces the expectation. Without tables the played hero is banked in the expectation only.
+func scenarioHero(s scenario.Scenario, class string, tabs hero.Tables) (hero.Hero, hero.Floors) {
 	lvl := max(s.Pre.Level, 1)
 	h := hero.Hero{Decl: hero.Decl{Profile: hero.Banked, Class: strings.ToLower(class), Build: s.Trigger.Build, Level: lvl},
 		StatPts: 5 * (lvl - 1), SkillPts: lvl - 1, AttackID: -1, AttackIndex: -1}
+	if s.HeroProfile() == scenario.HeroPlayed && lvl > 1 && tabs != nil {
+		if ph, err := hero.Resolve(hero.Decl{Profile: hero.Played, Class: class, Build: s.Trigger.Build, Level: lvl, Weapon: "none"}, tabs); err == nil {
+			h = ph
+		}
+	}
 	for _, st := range s.Pre.Stats {
 		switch st.Stat { // S itemstatcost.txt: 4 statpts, 5 newskills, 12 level
 		case 4:
@@ -130,10 +136,7 @@ func staticCheck(s scenario.Scenario, class string, su scenario.Setup, t hero.Ta
 	if s.Pre.Level < 2 {
 		return nil
 	}
-	profile := hero.Played
-	if pointsScenario(s) {
-		profile = hero.Banked // design 6.2: the banked profile is for the points scenarios; no attack to learn up front
-	}
+	profile := s.HeroProfile() // design 6.2: banked only for the points scenarios and raw point writes; no attack to learn up front
 	cs := hero.Static(hero.Decl{Profile: profile, Class: class, Build: s.Trigger.Build, Level: s.Pre.Level}, t)
 	if bad := hero.Failed(cs); bad != "" {
 		for _, c := range cs {
@@ -161,23 +164,13 @@ func goalMet(s scenario.Scenario) string {
 	return fmt.Sprintf("%s is met at the start (pre.level %d) and nothing else drives the bot", s.Trigger.Goals, s.Pre.Level)
 }
 
-// pointsScenario is true when every behaviour the scenario covers is about spending points.
-func pointsScenario(s scenario.Scenario) bool {
-	for _, c := range s.Covers {
-		if !strings.HasPrefix(c, "points.") && !strings.HasPrefix(c, "hook.points") {
-			return false
-		}
-	}
-	return len(s.Covers) > 0
-}
-
 func isNumber(s string) bool { _, err := strconv.Atoi(s); return err == nil }
 
 // prepSelfCheck reads the prepared hero from the prep d2d and compares it with the scenario's declaration; the failed
 // row names ("" when all pass) end the run as BLOCKED `selfcheck: <names>`. The rows go to the setup ledger as a
 // READ-ONLY line.
-func prepSelfCheck(ctx context.Context, c *d2dctl.Client, s scenario.Scenario, class, ledger string) string {
-	h, f := scenarioHero(s, class)
+func prepSelfCheck(ctx context.Context, c *d2dctl.Client, s scenario.Scenario, class, ledger string, tabs hero.Tables) string {
+	h, f := scenarioHero(s, class, tabs)
 	var o hero.Observed
 	if rep, err := c.Do(ctx, "dump player,stats,skills"); err == nil {
 		line := strings.TrimSpace(rep.Rest)
@@ -210,4 +203,54 @@ func prepSelfCheck(ctx context.Context, c *d2dctl.Client, s scenario.Scenario, c
 		lf.Close()
 	}
 	return failed
+}
+
+// spendPoints is the played profile's second half: after the level verbs the hero spends its points as the build table
+// does and binds the main attack, with player commands (`cmd stat`, `cmd skillpt`, `cmd select`), each ledgered. A banked
+// scenario, or a level 1 hero, sends nothing. A hero the library cannot make is an error (BLOCKED), never a banked one.
+func spendPoints(ctx context.Context, c *d2dctl.Client, s scenario.Scenario, class string, su scenario.Setup, tabs hero.Tables, ledger string) error {
+	if su.HeroProfile != scenario.HeroPlayed || s.Pre.Level < 2 {
+		return nil
+	}
+	h, err := hero.Resolve(hero.Decl{Profile: hero.Played, Class: class, Build: s.Trigger.Build, Level: s.Pre.Level, Weapon: "none"}, tabs)
+	if err != nil {
+		return err
+	}
+	lf, err := os.OpenFile(ledger, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0o644)
+	if err != nil {
+		return err
+	}
+	defer lf.Close()
+	enc := json.NewEncoder(lf)
+	if _, err := c.Step(ctx, 5); err != nil { // a player command checks the level and the points: let the writes land first
+		return err
+	}
+	for _, v := range h.Verbs {
+		if v.Write {
+			continue // the level, experience and point counts are the scenario's own verbs
+		}
+		l := ledgerLine{Time: time.Now().Format(time.RFC3339), Verb: v.Line, Reason: v.Reason}
+		rep, err := c.Do(ctx, v.Line)
+		if rep != nil {
+			l.Reply = strings.Join(append([]string{rep.Rest}, rep.Lines...), " | ")
+		}
+		_ = enc.Encode(l)
+		if err != nil {
+			return fmt.Errorf("%s: %w", v.Line, err)
+		}
+		if _, err := c.Step(ctx, 2); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// heroTables are the game's tables for the played profile (skills.txt, charstats.txt); the validate command can do
+// without them (hero.NameTables).
+func heroTables(gamedata, cache string) (hero.Tables, error) {
+	db, err := data.Open(gamedata, filepath.Join(cache, "tables"))
+	if err != nil {
+		return nil, fmt.Errorf("game tables: %w", err)
+	}
+	return hero.DBTables(db), nil
 }

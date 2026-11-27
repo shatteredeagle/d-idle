@@ -32,9 +32,10 @@ const clear = (t) => { timers = timers.filter((x) => x !== t); };
 const advance = async (ms) => { clock += ms; for (;;) { const due = timers.filter((t) => t.at <= clock).sort((a, b) => a.at - b.at)[0]; if (!due) break; timers = timers.filter((t) => t !== due); await due.f(); } await tick(); };
 const item = (id, extra) => Object.assign({ id, code: 'cap', name: 'Cap ' + id, state: 'recorded', quality: 'magic', q: 4, ilvl: 5, identified: true, kind: 'armor', value: 30, pin: false }, extra);
 const reveal0 = { enabled: false, charges: 0, free: false, balance: 0, queued: 0, working: 0, done: 0, methods: ['gold'], bar: { total: 0, default: '', line: '', options: [] }, gold: { on: false } };
-const view = () => ({ schema: 'watch.vault/1', mode: 'on', hero: 'Sorc', total: items.length, offset: 0, limit: 300, items, kinds: [], types: [], act, marked: null,
+let typeN = 20; // the server's count of one slot; sent only when the page asks for facets=1, as the real route does
+const view = (p) => ({ schema: 'watch.vault/1', mode: 'on', hero: 'Sorc', total: items.length, offset: 0, limit: 300, items, kinds: [], types: /facets=1/.test(p || '') ? [{ id: 'tors', label: 'Body armor', n: typeN }] : undefined, act, marked: null,
   capacity: { count: items.length, capacity: 400, pins: 0, pinLimit: 0, percent: 1, level: 'ok' }, upgrade: { available: false, currency: 'Ether', reason: 'x', max: 2400 } });
-const get = async (p) => (p === '/api/ether' ? { schema: 'watch.ether/1', enabled: false } : view());
+const get = async (p) => (p === '/api/ether' ? { schema: 'watch.ether/1', enabled: false } : view(p));
 const posts = [];
 let quoteReply = null, sellReply = null;
 const post = async (route, body) => {
@@ -100,7 +101,9 @@ await advance(100);
 ok(sells().length === 0, 'still no order');
 
 // ---- the second tap sends once, with the scope and an order id, no ids ----
-sellReply = (b) => ({ ok: true, done: [], sale: { id: 'sa-' + b.orderId, state: 'done', items: 20, done: 20, gold: 412300, stashAfter: 413300, all: true, line: 'Sold 20 for 412,300 gold; 10 skipped: 6 pinned, 4 in an order' } });
+const slotChip = (id) => { const c = all(root).find((n) => n.dataset && n.dataset.slot === id); return c ? c.textContent : undefined; };
+ok(slotChip('tors') === 'Body armor 20', 'the slot chip starts with the count: ' + slotChip('tors'));
+sellReply = (b) => (typeN = 0, { ok: true, done: [], sale: { id: 'sa-' + b.orderId, state: 'done', items: 20, done: 20, gold: 412300, stashAfter: 413300, all: true, line: 'Sold 20 for 412,300 gold; 10 skipped: 6 pinned, 4 in an order' } });
 posts.length = 0;
 await sa().click();
 ok(sells().length === 1, 'the second tap sends one order: ' + sells().length);
@@ -108,6 +111,7 @@ const b0 = sells()[0].body;
 ok(b0.scope === 'all_sellable' && b0.confirm === true && !b0.ids && /^sa[a-z0-9]+$/.test(b0.orderId), 'scope, confirm, an order id and no ids: ' + JSON.stringify(b0));
 ok(/Sold 20 for 412,300 gold/.test(shownText(root)), 'the toast');
 ok(!sa().disabled && sa().dataset.state === 'idle', 'idle after the sale');
+ok(slotChip('tors') === 'Body armor 0' || slotChip('tors') === undefined, 'the type counts moved with the sale, no page refresh needed: ' + slotChip('tors'));
 // double tap while the order is busy sends nothing more
 act.sell.sale = { id: 'sa-x', state: 'done', items: 20, done: 20, gold: 412300, stashAfter: 413300, all: true, line: 'Sold 20 for 412,300 gold; 10 skipped: 6 pinned, 4 in an order' };
 await page.reload(false);

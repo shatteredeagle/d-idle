@@ -1,10 +1,11 @@
 ---
 id: TASK-725
 title: 'dlv-stance-army: stance behindArmy and army facts for the arbiter'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-21T04:42:00Z'
+updated_date: '2026-11-27T18:49:00Z'
 labels:
   - bot
   - feature

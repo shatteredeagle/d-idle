@@ -27,6 +27,9 @@ type Setup struct {
 	Tuning map[string]any `json:"tuning,omitempty"`
 	// Build is trigger.build: the runner writes it as levelerBuild into the bot's config.json.
 	Build string `json:"build,omitempty"`
+	// HeroProfile is the profile the hero is prepared with ("played" or "banked", Scenario.HeroProfile). For "played" the
+	// runner spends the points after Verbs with the hero library (cmd/d2scenario), which needs the game tables.
+	HeroProfile string `json:"hero_profile"`
 	// Tags classify the setup for docs/probes/test-characters.md: CHEATED when the state could not be reached by play
 	// (a warped position, a given quest item, a hand-set quest word), SETUP-only otherwise.
 	Tags []string `json:"tags"`
@@ -57,7 +60,7 @@ func BuildSetup(s Scenario, class string, seed int64) (Setup, error) {
 	reason := func(what string) string {
 		return fmt.Sprintf("SETUP: scenario %s (%s, seed %d): %s", s.ID, class, seed, what)
 	}
-	var su Setup
+	su := Setup{HeroProfile: s.HeroProfile()}
 	add := func(what, line string) { su.Verbs = append(su.Verbs, Verb{Line: line, Reason: reason(what)}) }
 	tags := map[string]bool{}
 

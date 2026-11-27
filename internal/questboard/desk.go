@@ -55,7 +55,10 @@ type DeskConfig struct {
 	Meter func(mode string, st Status) *Meter
 	// Queued says why an accepted chunk is not running yet ("" when it runs); the strip and the running card show it.
 	Queued func() string
-	Now    func() time.Time
+	// HandInWhy says what holds a queued hand-in tap ("" when the loop is serving it or nothing is queued): not in
+	// town, a chore, the goal kind. nil: the generic "on its way" reason.
+	HandInWhy func() string
+	Now       func() time.Time
 	// Refusal is the hero's freshest typed refusal for the "Why not?" row; nil: the row carries the readiness facts only.
 	Refusal func() (RefusalFacts, bool)
 	// Ctx bounds the asynchronous hand-in goroutines (the process); default Background.
@@ -262,7 +265,9 @@ type HandInView struct {
 	Reason  string `json:"reason,omitempty"`
 	Attempt int    `json:"attempts,omitempty"`
 	At      string `json:"at,omitempty"`
-	Awarded []Pay  `json:"awarded,omitempty"` // the Ether this hand-in booked (the payoff toast and the row read it)
+	// Why is the closed-code reason a running hand-in waits for (handin_in_town or handin_waiting); nil once it ended.
+	Why     *ReasonView `json:"why,omitempty"`
+	Awarded []Pay       `json:"awarded,omitempty"` // the Ether this hand-in booked (the payoff toast and the row read it)
 }
 
 // HistoryRow is a chunk the board ran and that is done now.
@@ -509,6 +514,11 @@ func (d *Desk) build() View {
 	v.WhileAway = d.awayCard(x)
 	for _, r := range status.Extra {
 		v.Extra = append(v.Extra, r.String()+" "+WaitsFor(Ref{status.Active.Quest, status.Active.Chunk}))
+	}
+	if last != nil && last.State == "running" {
+		l := *last
+		l.Why = d.handInWaitReason()
+		last = &l
 	}
 	v.HandIn = last
 	v.Needs = d.needs(v)

@@ -46,12 +46,11 @@
 | smeaura | proposed | - | `docs/sme/paladin-auras-2026-11-26.md` | - |
 | necrocorpse | proposed | - | `docs/probes/necrocaps-2026-11-26.md` | - |
 | fid-poison-res-diag | proposed | - | `docs/research/fid-poisonres-trace.md` | - |
-| necroteeth | proposed | - | `internal/combat/classdata/profiles.json`<br>`internal/combat/necro_test.go`<br>`internal/leveler/mainattack_test.go` | - |
+| necroteeth | proposed | - | `internal/combat/classdata/profiles.json`<br>`internal/combat/necro_test.go`<br>`internal/leveler/mainattack_test.go`<br>`internal/scenario/scenario.go`<br>`internal/scenario/scenario_test.go`<br>`internal/scenario/setup.go`<br>`cmd/d2scenario/run.go`<br>`cmd/d2scenario/validate.go`<br>`cmd/d2scenario/validate_test.go`<br>`cmd/d2scenario/herospend_test.go`<br>`docs/process/proving-ground.md` | - |
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
-| deploy88-ledger | proposed | - | `data/darklaunch.json` | - |
 | placefix | proposed | - | `internal/questboard/`<br>`internal/bot/questboard.go`<br>`data/questboard/act2.json`<br>`tools/provingground/scenarios/stepexec-act2.json`<br>`tools/provingground/scenarios/questdrill.json`<br>`internal/scenario/placefix_test.go`<br>`docs/questboard.md`<br>`internal/task/act1.go`<br>`internal/task/act2.go`<br>`internal/task/placefix_test.go`<br>`internal/d2dinput/controller.go`<br>`internal/d2dinput/placefix_test.go`<br>`internal/d2dctl/parse.go`<br>`internal/d2dctl/verbs.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dsrc/items.go`<br>`internal/d2dsrc/source_test.go` | - |
-| deploy94-ledger | in-progress | - | `data/darklaunch.json` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
+| vaultperf | proposed | - | `internal/watch`<br>`internal/watch/web`<br>`internal/vaultkeep`<br>`internal/vault` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | returnmock | proposed | - | `docs/research/mocks/return.html`<br>`docs/research/return-screen.md` | - |
@@ -142,10 +141,9 @@
 | countess3 | proposed | - | `internal/d2dctl`<br>`internal/d2dworld`<br>`internal/boss`<br>`internal/d2map`<br>`cmd/d2bot/boss.go`<br>`docs/process/layout-read.md`<br>`docs/probes/provingground-countess-2026-11-20.md`<br>`internal/env/tuning_quests.go`<br>`docs/knobs.md` | `fork-branch:didle/level-monsters-20261121` |
 | wpstep | proposed | - | `internal/task/executor.go`<br>`internal/task/timeoutpolicy_test.go`<br>`internal/d2map/static.go`<br>`internal/d2map/tracker.go`<br>`internal/d2map/tracker_test.go`<br>`internal/d2dworld/`<br>`internal/bot/task.go`<br>`tools/provingground/scenarios/cain.json` | - |
 | fid-probe-readers | deferred | - | `docs/probes/fid/fid-probe-readers.md` | - |
-| dlv-upkeep-state | proposed | - | `internal/combat/`<br>`internal/data/`<br>`internal/env/tuning_combat.go`<br>`docs/knobs.md`<br>`data/darklaunch.json` | - |
-| dlv-upkeep-minions | proposed | - | `internal/combat/` | - |
-| dlv-mark | proposed | - | `internal/combat/` | - |
-| dlv-stance-army | proposed | - | `internal/combat/`<br>`internal/arbiter/`<br>`internal/bot/shadow.go`<br>`cmd/d2bot/adapters.go` | - |
+| dlv-upkeep-state | in-progress | - | `internal/combat/`<br>`internal/data/`<br>`internal/env/tuning_combat.go`<br>`docs/knobs.md`<br>`data/darklaunch.json` | - |
+| dlv-upkeep-minions | in-progress | - | `internal/combat/` | - |
+| dlv-mark | in-progress | - | `internal/combat/` | - |
 | dlv-cast-verbs | proposed | - | `internal/input/`<br>`internal/d2dcombat/`<br>`internal/d2dinput/`<br>`data/input/caps/`<br>`data/input/caps_test.go`<br>`docs/design/input-cast-verbs.md`<br>`tools/provingground/scenarios/input-scenarios.json`<br>`tools/provingground/scenarios/tiers.json`<br>`tools/provingground/scenarios/behaviours.json` | `fork-branch:didle/cast-verbs` |
 | dlv-aim-point | proposed | - | `internal/combat/` | - |
 | dlv-aim-corpse | proposed | - | `internal/combat/` | - |
@@ -157,14 +155,12 @@
 | dlv-whirl | proposed | - | `internal/combat/` | - |
 | dlv-cleanup | proposed | - | `internal/combat/`<br>`internal/power/`<br>`tools/ci/` | - |
 | pgtaps | in-progress | - | `cmd/d2bot/ladder.go`<br>`cmd/d2scenario/tap.go`<br>`internal/scenario/taps.go`<br>`cmd/d2scenario/run.go`<br>`cmd/d2scenario/tap_test.go`<br>`internal/scenario/result.go` | - |
-| pgclock | proposed | - | `cmd/d2bot/d2dbackend.go`<br>`internal/bot/farm.go`<br>`internal/goals/clock_test.go`<br>`internal/bot/farmclock_test.go`<br>`internal/d2denv/reader.go`<br>`internal/d2denv/recent_test.go`<br>`internal/d2denv/env.go`<br>`cmd/d2bot/goalsclock_test.go`<br>`docs/d2d-determinism.md` | - |
 | fid-probe-regen-speed | deferred | - | `docs/probes/fid/fid-probe-regen-speed.md` | - |
-| pgpage | proposed | - | `docs/process/proving-ground-status.md`<br>`tools/provingground/status_doc.sh`<br>`internal/scenario/pgpage.go`<br>`internal/scenario/pgpage_test.go`<br>`cmd/d2scenario/ledger.go`<br>`cmd/d2scenario/ledger_test.go`<br>`cmd/d2scenario/main.go`<br>`docs/probes/provingground-act1more-2026-11-20.md`<br>`docs/probes/provingground-act1next-2026-11-20.md`<br>`docs/probes/provingground-cain-2026-11-19.md`<br>`docs/probes/provingground-cainchain-2026-11-20.md`<br>`docs/probes/provingground-cainfix3-2026-11-19.md`<br>`docs/probes/provingground-countess-2026-11-20.md`<br>`docs/probes/provingground-pgfix4-2026-11-20.md`<br>`docs/probes/provingground-run-2026-11-19.md` | - |
+| pgpage | in-progress | - | `docs/process/proving-ground-status.md`<br>`tools/provingground/status_doc.sh`<br>`internal/scenario/pgpage.go`<br>`internal/scenario/pgpage_test.go`<br>`cmd/d2scenario/ledger.go`<br>`cmd/d2scenario/ledger_test.go`<br>`cmd/d2scenario/main.go`<br>`docs/probes/provingground-act1more-2026-11-20.md`<br>`docs/probes/provingground-act1next-2026-11-20.md`<br>`docs/probes/provingground-cain-2026-11-19.md`<br>`docs/probes/provingground-cainchain-2026-11-20.md`<br>`docs/probes/provingground-cainfix3-2026-11-19.md`<br>`docs/probes/provingground-countess-2026-11-20.md`<br>`docs/probes/provingground-pgfix4-2026-11-20.md`<br>`docs/probes/provingground-run-2026-11-19.md` | - |
 | mgonejob | proposed | - | `docs/process/pg-ops-mgonejob.md` | - |
 | pgnightly | proposed | - | `docs/process/pg-ops-pgnightly.md`<br>`tools/provingground/nightly.sh` | - |
 | pgearned | proposed | - | `internal/scenario/earned.go`<br>`tools/provingground/earned` | - |
 | town5 | in-progress | - | `internal/town`<br>`internal/resource`<br>`internal/bot/broke.go`<br>`internal/bot/leveling.go`<br>`tools/provingground/scenarios/townplan.json`<br>`docs/probes/town-plan-stage3-2026-11-22.md`<br>`docs/design/fable-review-2026-11-21/town-planner-b-model.md`<br>`town-basics` | - |
-| town6 | proposed | - | `internal/town/`<br>`internal/loot/`<br>`docs/design/townflip-p5.md` | - |
 | town7 | proposed | - | `internal/supply`<br>`internal/town`<br>`internal/resource` | - |
 | town8 | proposed | - | `internal/supply`<br>`internal/town` | - |
 | town9 | proposed | - | `internal/watch`<br>`internal/supply` | - |
@@ -207,15 +203,15 @@
 | fid-death | deferred | - | `docs/probes/fid/fid-death.md` | - |
 | fid-gatea-ab | deferred | - | `docs/probes/fid/fid-gatea-ab.md` | - |
 | admit1 | proposed | - | `docs/design/admission-p4.md`<br>`internal/admit/`<br>`internal/plandata/admission.json`<br>`internal/plandata/earlyroutes.json`<br>`internal/plandata/povertyfarm.json`<br>`docs/plan/data/admission.json`<br>`docs/plan/data/earlyroutes.json`<br>`docs/plan/data/povertyfarm.json`<br>`internal/bot/earlyroute.go`<br>`internal/bot/povertyfarm.go`<br>`internal/bot/admit_need_test.go` | - |
-| townflip | proposed | - | `docs/design/townflip-p5.md`<br>`internal/town/sellplan.go`<br>`internal/town/sellplan_test.go`<br>`internal/town/shop.go`<br>`internal/town/town.go`<br>`internal/town/chores.go`<br>`internal/env/tuning_town.go` | - |
-| arbmig | proposed | - | `docs/design/arbiter-migration-p6.md`<br>`docs/arbiter.md`<br>`internal/arbiter/`<br>`cmd/d2scenario/`<br>`tools/provingground/arbiter-outcomes/`<br>`internal/bot/arbiter_control.go`<br>`internal/bot/arbiter_control_test.go`<br>`internal/bot/shadow.go`<br>`internal/bot/loop.go`<br>`internal/env/tuning_bot.go`<br>`data/darklaunch.json`<br>`docs/knobs.md` | - |
+| townflip | in-progress | - | `docs/design/townflip-p5.md`<br>`internal/town/sellplan.go`<br>`internal/town/sellplan_test.go`<br>`internal/town/shop.go`<br>`internal/town/town.go`<br>`internal/town/chores.go`<br>`internal/env/tuning_town.go` | - |
+| arbmig | in-progress | - | `docs/design/arbiter-migration-p6.md`<br>`docs/arbiter.md`<br>`internal/arbiter/`<br>`cmd/d2scenario/`<br>`tools/provingground/arbiter-outcomes/`<br>`internal/bot/arbiter_control.go`<br>`internal/bot/arbiter_control_test.go`<br>`internal/bot/shadow.go`<br>`internal/bot/loop.go`<br>`internal/env/tuning_bot.go`<br>`data/darklaunch.json`<br>`docs/knobs.md` | - |
 | fid-adapter-rows | deferred | - | `docs/probes/fid/fid-adapter-rows.md` | - |
-| ticklog | proposed | - | `docs/design/ticklog-t4.md`<br>`docs/arbiter.md`<br>`internal/bot/ticklog.go`<br>`internal/bot/ticklog_test.go`<br>`internal/bot/shadow.go`<br>`internal/env/tuning_bot.go`<br>`internal/arbiter/replay.go`<br>`internal/arbiter/replay_ticklog_test.go`<br>`data/darklaunch.json` | - |
+| ticklog | in-progress | - | `docs/design/ticklog-t4.md`<br>`docs/arbiter.md`<br>`internal/bot/ticklog.go`<br>`internal/bot/ticklog_test.go`<br>`internal/bot/shadow.go`<br>`internal/env/tuning_bot.go`<br>`internal/arbiter/replay.go`<br>`internal/arbiter/replay_ticklog_test.go`<br>`data/darklaunch.json` | - |
 | bsmchk | proposed | - | `docs/design/boardsm-checker.md` | - |
 | bsmdef | proposed | - | `docs/design/boardsm-flip.md` | - |
 | agencyp1b | proposed | - | `docs/design/agency-p1b.md` | - |
 | agencyp3 | proposed | - | `docs/design/agency-p3.md` | - |
-| inputl3 | proposed | - | `docs/design/input-i3.md`<br>`internal/input/useitem.go`<br>`internal/input/useitem_test.go`<br>`internal/d2dctl/use_verb.go`<br>`internal/d2dctl/use_verb_test.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dinput/useitem.go`<br>`internal/combat/portalverb.go`<br>`internal/combat/portalverb_test.go`<br>`internal/combat/fighter.go`<br>`internal/town/portalverb.go`<br>`internal/town/portalverb_test.go`<br>`internal/town/portalverb_unit_test.go`<br>`internal/town/portalverb_export_test.go`<br>`internal/town/trip.go`<br>`data/input/caps/`<br>`data/input/caps_test.go`<br>`docs/design/input-cast-verbs.md`<br>`backlog/tasks/task-726 - dlv-cast-verbs-input-caps-cast-unit-cast-point-cast-hold.md` | - |
+| inputl3 | in-progress | - | `docs/design/input-i3.md`<br>`internal/input/useitem.go`<br>`internal/input/useitem_test.go`<br>`internal/d2dctl/use_verb.go`<br>`internal/d2dctl/use_verb_test.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dinput/useitem.go`<br>`internal/combat/portalverb.go`<br>`internal/combat/portalverb_test.go`<br>`internal/combat/fighter.go`<br>`internal/town/portalverb.go`<br>`internal/town/portalverb_test.go`<br>`internal/town/portalverb_unit_test.go`<br>`internal/town/portalverb_export_test.go`<br>`internal/town/trip.go`<br>`data/input/caps/`<br>`data/input/caps_test.go`<br>`docs/design/input-cast-verbs.md`<br>`backlog/tasks/task-726 - dlv-cast-verbs-input-caps-cast-unit-cast-point-cast-hold.md` | - |
 | inputl4 | proposed | - | `docs/design/input-i4.md` | - |
 | inputl5 | proposed | - | `docs/design/input-i5-i7.md` | - |
 | fid-lowvalue | deferred | - | `docs/probes/fid/fid-lowvalue.md` | - |
@@ -245,14 +241,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
-- dd43964ff 11-27 13:29 `Merge agent/charms: charms: charm management design (docs)` (charms)
-- 482daed6e 11-27 13:29 `Merge agent/akarahand: akarahand: hand-in click diagnosis (docs)` (akarahand)
-- 1612e4751 11-27 13:29 `Merge agent/fastflip: fastflip: 2 h default flip window` (fastflip)
-- 2a0dbd60d 11-27 13:29 `Merge agent/pgclock2: pgclock2: scripted taps, tick-based soak stop (TASK-738/739)` (pgclock2)
-- eb644f64e 11-27 13:27 `Merge branch 'main' into charms` (-)
-- 9fd3f41bd 11-27 13:27 `Merge branch 'main' into akarahand` (-)
-- 2d6e8fb89 11-27 13:27 `Merge branch 'main' into fastflip` (-)
-- 07630a935 11-27 13:27 `Merge branch 'main' into pgclock2` (-)
-- d7861fd60 11-27 13:25 `Merge agent/darkqueue: darkqueue: dark queue plan` (darkqueue)
-- 29f1db6c1 11-27 13:25 `Merge agent/act2drill6: act2drill6: docs` (act2drill6)
+- 9058de0a1 11-27 13:59 `Merge agent/necroteeth: necroteeth: scenario hero profile field (played default), spend points` (necroteeth)
+- 43bdb0282 11-27 13:59 `Merge agent/darkflip: darkflip: final dark queue flip list (docs)` (darkflip)
+- 8ef7cc46d 11-27 13:59 `Merge agent/closecards: closecards: close verified merged cards, stale dependency fix` (closecards)
+- f689ff4f1 11-27 13:57 `Merge branch 'main' into necroteeth` (-)
+- 27de5d572 11-27 13:57 `Merge branch 'main' into darkflip` (-)
+- d9999a7d9 11-27 13:57 `Merge branch 'main' into closecards` (-)
+- fc04b3bed 11-27 13:49 `Merge agent/akarafix: akarafix: hand-in queued/served logs, stale request drop, why-waiting reason (TASK-1051)` (akarafix)
+- 27c304655 11-27 13:49 `Merge agent/mercvault: mercvault: Equip on merc from the Vault (TASK-1049)` (mercvault)
+- cb260b911 11-27 13:48 `Merge branch 'main' into akarafix` (-)
+- ad23377bc 11-27 13:48 `Merge branch 'main' into mercvault` (-)
 <!-- statusgen:end -->
