@@ -2,5 +2,5 @@
  "schema": "inputcaps/1",
  "backend": "d2d-fork-cast-verbs",
  "verbs": ["input.select", "input.cast-unit", "input.cast-point"],
- "note": "U until a build of fork branch didle/cast-verbs lists the names in caps after the fused-versus-select-then-cast differential (question Q3) and the point-lands differential pass (docs/design/input-cast-verbs.md section 3). No build has a hold verb, so input.cast-hold is absent and a hold falls back to one cast. The bot adopts the names only with input.planner=1."
+ "note": "Candidate set written before the differential. The branch was built as didle/forkcaps-20261127 instead of didle/cast-verbs: its caps set is d2d-fork-forkcaps.json (V 2026-11-27: the fused-versus-select-then-cast differential (Q3) and the point-lands check passed with 0 differences, and that build also has the hold verb). This file stays as the unit-and-point-only set. The bot adopts the names only with input.planner=1."
 }
