@@ -1582,6 +1582,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - agent/deployplan: deployplan: sandbox deploy runbook (docs) (merged 2026-11-27) <!--sg:agent/deployplan-->
 - agent/smegaps: smegaps: sourced resist floors, merc auras, FCR/FHR/FBR tables (docs/sme) (merged 2026-11-27) <!--sg:agent/smegaps-->
 - agent/miscfix: miscfix: card updates 604/856/880/330 (no Go change) (merged 2026-11-27) <!--sg:agent/miscfix-->
+- agent/classapply: classapply: SME changes for Druid/Barbarian/Amazon/Assassin (War Cry kind, Exploding Arrow, Death Sentry key, Hurricane) (merged 2026-11-27) <!--sg:agent/classapply-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

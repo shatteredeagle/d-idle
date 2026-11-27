@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- classapply: SME changes for Druid/Barbarian/Amazon/Assassin (War Cry kind, Exploding Arrow, Death Sentry key, Hurricane) <!--sg:agent/classapply-->
 - miscfix: card updates 604/856/880/330 (no Go change) <!--sg:agent/miscfix-->
 - smegaps: sourced resist floors, merc auras, FCR/FHR/FBR tables (docs/sme) <!--sg:agent/smegaps-->
 - deployplan: sandbox deploy runbook (docs) <!--sg:agent/deployplan-->
