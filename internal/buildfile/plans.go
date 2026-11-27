@@ -73,6 +73,7 @@ type planRespec struct {
 type planSkill struct {
 	Skill  string `json:"skill"`
 	Points int    `json:"points"`
+	Quest  string `json:"quest,omitempty"`
 }
 
 // ImportPlan validates a build file under rules, expands it and writes the plan table JSON the leveler reads
@@ -97,14 +98,14 @@ func ImportPlan(b *Build, rules Rules) ([]byte, error) {
 		var row planRow
 		row.Clvl, row.Strength, row.Dexterity, row.Vitality, row.Energy = r.Clvl, r.Attr[leveler.Str], r.Attr[leveler.Dex], r.Attr[leveler.Vit], r.Attr[leveler.Ene]
 		for _, s := range r.Skills {
-			row.Skills = append(row.Skills, planSkill{s.Skill, s.Points})
+			row.Skills = append(row.Skills, planSkill{s.Skill, s.Points, s.Quest})
 		}
 		pf.Rows = append(pf.Rows, row)
 	}
 	if lb.Respec > 0 {
 		pf.Respec = &planRespec{AtClvl: lb.Respec}
 		for _, s := range lb.RespecPool {
-			pf.Respec.Pool = append(pf.Respec.Pool, planSkill{s.Skill, s.Points})
+			pf.Respec.Pool = append(pf.Respec.Pool, planSkill{Skill: s.Skill, Points: s.Points})
 		}
 	}
 	return json.MarshalIndent(pf, "", " ")

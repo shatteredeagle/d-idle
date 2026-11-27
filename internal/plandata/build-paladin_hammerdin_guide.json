@@ -82,7 +82,8 @@
     },
     {
      "skill": "Holy Bolt",
-     "points": 1
+     "points": 1,
+     "quest": "den_of_evil"
     }
    ]
   },
@@ -147,7 +148,12 @@
     },
     {
      "skill": "Concentration",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Concentration",
+     "points": 1,
+     "quest": "radament"
     }
    ]
   },
@@ -239,11 +245,13 @@
     },
     {
      "skill": "Charge",
-     "points": 1
+     "points": 1,
+     "quest": "izual"
     },
     {
      "skill": "Holy Shield",
-     "points": 1
+     "points": 1,
+     "quest": "izual"
     }
    ]
   },
@@ -367,7 +375,8 @@
     },
     {
      "skill": "Defiance",
-     "points": 1
+     "points": 1,
+     "quest": "den_of_evil"
     }
    ]
   },
@@ -427,7 +436,12 @@
    "skills": [
     {
      "skill": "Concentration",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Concentration",
+     "points": 1,
+     "quest": "radament"
     }
    ]
   },
@@ -547,7 +561,12 @@
    "skills": [
     {
      "skill": "Vigor",
-     "points": 3
+     "points": 1
+    },
+    {
+     "skill": "Vigor",
+     "points": 2,
+     "quest": "izual"
     }
    ]
   },

@@ -1,8 +1,8 @@
 {
  "build": "necromancer_leveling_normal30",
  "class": "necromancer",
- "schema": "per-clvl allocation, same shape as build-paladin-normal30.json (leveler.ParseBuild). main_attack: extra, for combat: skill to use as main attack per clvl range, weapon says which equipped weapon type it needs ('any' = none). Quest points (Den, Radament, Izual) are folded into the row where the guide spends them; the planner pulls rows forward when more points are unspent than the level grants.",
- "tags": "Skills 2-26: V (Maxroll Necromancer leveling https://maxroll.gg/d2/guides/necromancer-leveling, fetched 2026-10-29; guide says Amplify Damage/Iron Maiden points go into Teeth if you hold a Wand, kept as the guide's default). Quest points folded into rows 5, 15, 21 (Den of Evil, Radament, Izual). Skills 27-30: U (own choice: Corpse Explosion, the guide's main damage after its clvl 27 respec; the respec itself is NOT used). Stats 2-26: V Maxroll (2-3 Energy, 4-11 Vit, 12-13 Str, 14-16 Vit, 17-21 22 Str + 3 Vit, 22-26 Vit); 27-30: U (all Vit, Maxroll says Str only for gear). Prerequisites and reqlevels checked by gen_builds.py against skills.txt (V Patch_D2.mpq). Start values 15 str 25 dex 15 vit 25 ene.",
+ "schema": "per-clvl allocation, same shape as build-paladin-normal30.json (leveler.ParseBuild). main_attack: extra, for combat: skill to use as main attack per clvl range, weapon says which equipped weapon type it needs ('any' = none). Quest points (Den, Radament, Izual) are skill entries with a quest key on the row where the guide spends them: rows count level points only, and a tagged point is bought as soon as its quest point is granted.",
+ "tags": "Skills 2-26: V (Maxroll Necromancer leveling https://maxroll.gg/d2/guides/necromancer-leveling, fetched 2026-10-29; guide says Amplify Damage/Iron Maiden points go into Teeth if you hold a Wand, kept as the guide's default). Quest points tagged (quest key) on rows 5 Den, 15 Radament, 21 Izual. Skills 27-30: U (own choice: Corpse Explosion, the guide's main damage after its clvl 27 respec; the respec itself is NOT used). Stats 2-26: V Maxroll (2-3 Energy, 4-11 Vit, 12-13 Str, 14-16 Vit, 17-21 22 Str + 3 Vit, 22-26 Vit); 27-30: U (all Vit, Maxroll says Str only for gear). Prerequisites and reqlevels checked by gen_builds.py against skills.txt (V Patch_D2.mpq). Start values 15 str 25 dex 15 vit 25 ene.",
  "respec": {
   "at_clvl": 27,
   "enabled": false,
@@ -125,7 +125,12 @@
    "skills": [
     {
      "skill": "Teeth",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Teeth",
+     "points": 1,
+     "quest": "den_of_evil"
     }
    ]
   },
@@ -255,7 +260,12 @@
    "skills": [
     {
      "skill": "Bone Wall",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Bone Wall",
+     "points": 1,
+     "quest": "radament"
     }
    ]
   },
@@ -333,7 +343,12 @@
    "skills": [
     {
      "skill": "Corpse Explosion",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Corpse Explosion",
+     "points": 1,
+     "quest": "izual"
     }
    ]
   },

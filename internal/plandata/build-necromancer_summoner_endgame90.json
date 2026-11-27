@@ -2,7 +2,7 @@
  "build": "necromancer_summoner_endgame90",
  "class": "necromancer",
  "mana_heavy": true,
- "schema": "per-clvl allocation, same shape as internal/gear/builds/*.json (leveler.ParseBuild) plus main_attack; rows clvl 2..90, NO respec. A row with no skills means the point is saved (no unlocked plan skill); the planner spends it in the row where the skill unlocks. Quest points (Den, Radament, Izual in each difficulty) are folded into rows 8, 15, 26, 38, 44, 56, 68, 72, 82 (U timing; planner pulls rows forward).",
+ "schema": "per-clvl allocation, same shape as internal/gear/builds/*.json (leveler.ParseBuild) plus main_attack; rows clvl 2..90, NO respec. A row with no skills means the point is saved (no unlocked plan skill); the planner spends it in the row where the skill unlocks. Quest points (Den, Radament, Izual in each difficulty) are skill entries with a quest key (rows 8 Den, 15 Radament, 26 Izual, 38 Den, 44 Radament, 56 Izual, 68 Den, 72 Radament, 82 Izual; U timing): rows count level points only, and a tagged point is bought as soon as its quest point is granted.",
  "ladder_only": ["Spirit"],
  "tags": "Skills: V end state Maxroll Summoner Necromancer (fetched 2026-10-29): 1 each Iron Golem, Summon Resist, Decrepify, Dim Vision, Lower Resist, Revive; max Raise Skeleton, Skeleton Mastery, Corpse Explosion, Amplify Damage (Standard variant). U: prerequisites pulled in (Teeth, Clay/Blood Golem, Golem Mastery, Raise Skeletal Mage, Weaken, Terror, Iron Maiden, Life Tap per skills.txt V), Skeletal Mage 1 point only because Revive needs it; keeps the early order of necromancer_summoner_normal30 in spirit (warriors first). Stats V Maxroll: Strength for gear, rest Vitality; modelled from internal/gear/milestones.json: Str 43 by clvl 24 (Spirit sword), 55 by 55 (Enigma in a Mage Plate, V armor.txt).",
  "respec": {
@@ -162,7 +162,12 @@
    "skills": [
     {
      "skill": "Skeleton Mastery",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Skeleton Mastery",
+     "points": 1,
+     "quest": "den_of_evil"
     }
    ]
   },
@@ -257,7 +262,8 @@
     },
     {
      "skill": "Bone Armor",
-     "points": 1
+     "points": 1,
+     "quest": "radament"
     }
    ]
   },
@@ -400,7 +406,12 @@
    "skills": [
     {
      "skill": "Raise Skeleton",
-     "points": 3
+     "points": 1
+    },
+    {
+     "skill": "Raise Skeleton",
+     "points": 2,
+     "quest": "izual"
     }
    ]
   },
@@ -556,7 +567,12 @@
    "skills": [
     {
      "skill": "Skeleton Mastery",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Skeleton Mastery",
+     "points": 1,
+     "quest": "den_of_evil"
     }
    ]
   },
@@ -634,7 +650,12 @@
    "skills": [
     {
      "skill": "Skeleton Mastery",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Skeleton Mastery",
+     "points": 1,
+     "quest": "radament"
     }
    ]
   },
@@ -794,11 +815,13 @@
     },
     {
      "skill": "Terror",
-     "points": 1
+     "points": 1,
+     "quest": "izual"
     },
     {
      "skill": "Decrepify",
-     "points": 1
+     "points": 1,
+     "quest": "izual"
     }
    ]
   },
@@ -954,7 +977,12 @@
    "skills": [
     {
      "skill": "Corpse Explosion",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Corpse Explosion",
+     "points": 1,
+     "quest": "den_of_evil"
     }
    ]
   },
@@ -1006,7 +1034,12 @@
    "skills": [
     {
      "skill": "Amplify Damage",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Amplify Damage",
+     "points": 1,
+     "quest": "radament"
     }
    ]
   },
@@ -1136,7 +1169,12 @@
    "skills": [
     {
      "skill": "Amplify Damage",
-     "points": 3
+     "points": 1
+    },
+    {
+     "skill": "Amplify Damage",
+     "points": 2,
+     "quest": "izual"
     }
    ]
   },

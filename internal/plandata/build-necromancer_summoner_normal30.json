@@ -2,8 +2,8 @@
  "build": "necromancer_summoner_normal30",
  "combat": "summoner",
  "class": "necromancer",
- "schema": "per-clvl allocation, same shape as build-paladin-normal30.json (leveler.ParseBuild). main_attack: extra, for combat: skill to use as main attack per clvl range, weapon says which equipped weapon type it needs ('any' = none). Quest points (Den, Radament, Izual) are folded into the row where the guide spends them; the planner pulls rows forward when more points are unspent than the level grants.",
- "tags": "Skills: U (own order for a bot with no weapon swap and no positioning micro: warriors first, Clay Golem at 6, mages from 12, Bone Armor 14 as Maxroll leveling, Corpse Explosion from 15; end state direction V from Maxroll Summoner Necromancer https://maxroll.gg/d2/guides/summoner-necromancer-guide fetched 2026-10-29: maxed Raise Skeleton, Skeleton Mastery, Corpse Explosion; 1-point Iron Golem, Summon Resist, Decrepify, Dim Vision, Lower Resist, Revive come after clvl 30 and are not in these rows). Quest points folded into rows 5, 15, 21. Stats: clvl 2 = 3 Energy + 2 Vit, then Vit (SME answers 2026-11-22 section 5: a summoner needs mana only to re-raise; before 2026-11-23 rows 2-3 put 10 Energy first, copied from the caster leveling table); Str 25 for gear, rest Vit (V Maxroll). Prerequisites and reqlevels checked against skills.txt (V Patch_D2.mpq). Teeth gets one point only (Corpse Explosion prerequisite and the wand attack).",
+ "schema": "per-clvl allocation, same shape as build-paladin-normal30.json (leveler.ParseBuild). main_attack: extra, for combat: skill to use as main attack per clvl range, weapon says which equipped weapon type it needs ('any' = none). Quest points (Den, Radament, Izual) are skill entries with a quest key on the row where the guide spends them: rows count level points only, and a tagged point is bought as soon as its quest point is granted.",
+ "tags": "Skills: U (own order for a bot with no weapon swap and no positioning micro: warriors first, Clay Golem at 6, mages from 12, Bone Armor 14 as Maxroll leveling, Corpse Explosion from 15; end state direction V from Maxroll Summoner Necromancer https://maxroll.gg/d2/guides/summoner-necromancer-guide fetched 2026-10-29: maxed Raise Skeleton, Skeleton Mastery, Corpse Explosion; 1-point Iron Golem, Summon Resist, Decrepify, Dim Vision, Lower Resist, Revive come after clvl 30 and are not in these rows). Quest points tagged (quest key) on rows 5 Den, 15 Radament, 21 Izual. Stats: clvl 2 = 3 Energy + 2 Vit, then Vit (SME answers 2026-11-22 section 5: a summoner needs mana only to re-raise; before 2026-11-23 rows 2-3 put 10 Energy first, copied from the caster leveling table); Str 25 for gear, rest Vit (V Maxroll). Prerequisites and reqlevels checked against skills.txt (V Patch_D2.mpq). Teeth gets one point only (Corpse Explosion prerequisite and the wand attack).",
  "respec": {
   "enabled": false
  },
@@ -120,7 +120,8 @@
     },
     {
      "skill": "Skeleton Mastery",
-     "points": 1
+     "points": 1,
+     "quest": "den_of_evil"
     }
    ]
   },
@@ -254,7 +255,8 @@
     },
     {
      "skill": "Raise Skeletal Mage",
-     "points": 1
+     "points": 1,
+     "quest": "radament"
     }
    ]
   },
@@ -336,7 +338,8 @@
     },
     {
      "skill": "Raise Skeleton",
-     "points": 1
+     "points": 1,
+     "quest": "izual"
     }
    ]
   },
