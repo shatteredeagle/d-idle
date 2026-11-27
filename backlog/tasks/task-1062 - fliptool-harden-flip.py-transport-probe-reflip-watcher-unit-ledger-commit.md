@@ -21,7 +21,7 @@ owns:
   - "docs/process/dark-launch.md"
 exclusive: []
 contracts: []
-result: "offline only, not verified against a real container: docker-inspect probe naming D2_FLIP_RUN, --reflip, heartbeat warning, watch --daemon and --install-unit, --commit-ledger; 34 fake-sandbox tests pass."
+result: "offline only, not verified against a real container or systemd: docker-inspect probe naming D2_FLIP_RUN, --reflip, heartbeat warning, watch --daemon and --install-unit, --commit-ledger; fliptool2 fix: flip.py loads local.env from its own checkout (the unit crash-looped) and the watcher commits the ledger on close/revert; 38 fake-sandbox tests pass."
 ---
 
 ## Description
