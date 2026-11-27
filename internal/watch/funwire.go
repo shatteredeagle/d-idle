@@ -67,8 +67,9 @@ type FunConfig struct {
 	Visit   *Visit  // nil: in memory
 	Speed   float64 // virtual seconds per wall second (Config.Speed)
 	Notes   NotesSink
-	Rules   []string    // visible rules shown on the return screen ("ladder runewords: on"); nil: none
-	Strip   *TallyStrip // nil: /api/tally says tally is off
+	Rules   []string        // visible rules shown on the return screen ("ladder runewords: on"); nil: none
+	Advice  func() []string // runeword and cube advice lines (items.advisor); nil: no advice section
+	Strip   *TallyStrip     // nil: /api/tally says tally is off
 	Codex   *decide.Codex
 	Table   *decide.Firsts
 	Clock   decide.Clock
@@ -231,6 +232,9 @@ func NewFun(c FunConfig) (*Fun, error) {
 		sec.Register(CodexSectionID, CodexReturnSection(f.CodexSource()))
 	}
 	sec.Register("quiet", QuietSection(c.Hub))
+	if c.Advice != nil {
+		sec.Register(AdviceSectionID, AdviceSection(c.Advice))
+	}
 	sec.Register("points", PointsSection(func() PointsDesk {
 		if f.Points == nil {
 			return nil

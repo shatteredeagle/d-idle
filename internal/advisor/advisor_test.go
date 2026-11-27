@@ -129,3 +129,15 @@ func TestMaxAndOrder(t *testing.T) {
 		t.Errorf("%+v", l)
 	}
 }
+
+func TestStockAdd(t *testing.T) {
+	var s Stock
+	s.Add("r07", "", nil, "", 0, 0, "pack")
+	s.Add("gcv", "", nil, "", 0, 0, "pack")
+	s.Add("r40", "", nil, "", 0, 0, "pack") // not a rune
+	s.Add("bsd", "Broad Sword", []string{"swor"}, "normal", 4, 0, "stash")
+	s.Add("cap", "Cap", []string{"helm"}, "normal", 0, 0, "pack") // no sockets: not a base
+	if s.Runes["r07"] != 1 || s.Gems["gcv"] != 1 || len(s.Bases) != 1 || len(s.Runes) != 1 {
+		t.Errorf("%+v", s)
+	}
+}
