@@ -1,10 +1,11 @@
 ---
 id: TASK-1035
 title: 'faultstall: the bot keeps making progress under the fault proxy'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T06:21:00Z'
+updated_date: '2026-11-27T07:02:00Z'
 labels:
   - bot
   - bug
