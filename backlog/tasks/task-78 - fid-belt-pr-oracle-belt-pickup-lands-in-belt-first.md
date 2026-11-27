@@ -23,7 +23,7 @@ owns:
   - "docs/probes/fid/fid-belt-pr.md"
 exclusive: []
 contracts: []
-result: "NO DEVIATION, already upstream (2026-11-08, agent decomp5): belt pickup 390,000 and shift-click 390,000 oracle cases on upstream 1453f853, 0 differ (V run, game.exe functions unhooked); docs/probes/fid/fid-belt-pr.md. AC 3: shim R04 stays until the lab binary carries the fix (needs TASK-92). Offline. Status sync (stays open): AC #3 (shim R04) waits for the lab binary fix (TASK-92)."
+result: "NO DEVIATION, already upstream (2026-11-08, agent decomp5): belt pickup 390,000 and shift-click 390,000 oracle cases on upstream 1453f853, 0 differ (V run, game.exe functions unhooked); docs/probes/fid/fid-belt-pr.md. AC 3: shim R04 stays until the lab binary carries the fix (needs TASK-92). Offline. Status sync (stays open): AC #3 (shim R04) waits for the lab binary fix (TASK-92). closecards3 Remaining (not live): #3 open, waits for the lab binary fix."
 ---
 
 ## Description

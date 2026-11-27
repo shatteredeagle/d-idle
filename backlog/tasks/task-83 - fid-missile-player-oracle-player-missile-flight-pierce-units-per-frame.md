@@ -22,7 +22,7 @@ owns:
   - "docs/probes/fid/fid-missile-player.md"
 exclusive: []
 contracts: []
-result: "2026-11-08 decomp6: flight, range, roll and Nova hits equal (0 differences: 1,500 + 2,500 flights, 168,000 roll cases, 598 nova casts, V run on upstream a5b970d5); Lightning one-unit-a-frame deviation proven (44 of 1,192 casts, 0 after) with local candidate fid/missile-last-unit f45e45c8 (fork remote, not posted); AC 2 open: Chain Lightning hop not compared; doc docs/probes/fid/fid-missile-player.md; not verified live"
+result: "2026-11-08 decomp6: flight, range, roll and Nova hits equal (0 differences: 1,500 + 2,500 flights, 168,000 roll cases, 598 nova casts, V run on upstream a5b970d5); Lightning one-unit-a-frame deviation proven (44 of 1,192 casts, 0 after) with local candidate fid/missile-last-unit f45e45c8 (fork remote, not posted); AC 2 open: Chain Lightning hop not compared; doc docs/probes/fid/fid-missile-player.md; not verified live closecards3 Remaining (not live): #2 open, Chain Lightning hop not compared."
 ---
 
 ## Description
