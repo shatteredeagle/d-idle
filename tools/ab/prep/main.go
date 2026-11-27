@@ -1,6 +1,7 @@
 // Command prep makes the prepared hero of the "late start" A/B variant (docs/ab-design.md, Variants): it starts the
-// lab d2d with --lab-verbs, creates a fresh character, applies the declared setup (level and its experience, unspent points, purse, merc),
-// saves and quits. The A/B arms then load that save with a d2d WITHOUT --lab-verbs, so no setup verb can run after the
+// lab d2d with --lab-verbs, creates a fresh character, applies the declared setup (the hero library's profile: level and
+// its experience, points spent by the build table or banked, weapon; then purse, merc), runs the hero self-check, writes
+// <home>/hero.json, saves and quits. A failed self-check exits non-zero without a save. The A/B arms then load that save with a d2d WITHOUT --lab-verbs, so no setup verb can run after the
 // run start: "writes after start: 0" holds by construction (the fork refuses gated debug verbs; docs/lab-verbs.md).
 // Every verb is appended to a ledger file with its reason before it is sent.
 package main
@@ -15,41 +16,70 @@ import (
 	"strings"
 	"time"
 
+	"d2lod-bot/internal/d2dctl"
 	"d2lod-bot/internal/d2dinput"
-	"d2lod-bot/internal/telemetry"
+	"d2lod-bot/internal/data"
+	"d2lod-bot/internal/scenario"
+	"d2lod-bot/internal/scenario/hero"
 )
 
-// Setup is the declared starting state, identical for both arms.
+// Setup is the declared starting state, identical for both arms. The hero itself (level, points, weapon) comes from the
+// hero library (internal/scenario/hero): profile "played" spends the points as the build table does and binds the main
+// attack, "banked" leaves every point unspent for the bot's own leveler (the old prep behaviour, which strands a hero
+// whose run has resource.pointsDecisions 0).
 type Setup struct {
-	Clvl, Gold, Stash, MercType int
-	// Weapon is the item code worn in the right hand (body slot 4, S: inventory body locations, 8 is the belt of
-	// docs/cheats.md); "" wears none. Without a weapon a melee class has no damage stat and the power model reads its
-	// offence as the default constant (src=default), so the survival A/B hero of a melee class gets one. Declared SETUP.
-	Weapon string
+	Hero                  hero.Decl
+	Gold, Stash, MercType int
 }
 
-// WeaponSlot is the right-hand body slot of `debug equip` (U until the first run reads the weapon damage stat back).
-const WeaponSlot = 4
-
-// Verbs returns the debug verbs for s in the order they are sent: points follow the level like the build drill
-// (5 stat and 1 skill point per level gained, all unspent so the bot's own leveler spends them).
-func Verbs(s Setup) []string {
-	exp, _ := telemetry.DefaultExpForLevel(s.Clvl) // a level without its experience would leave the hero at the start of a long climb
-	v := []string{
-		fmt.Sprintf("debug stat 12 %d", s.Clvl),
-		fmt.Sprintf("debug stat 13 %d", exp),
-		fmt.Sprintf("debug statpts %d", 5*(s.Clvl-1)),
-		fmt.Sprintf("debug skillpts %d", s.Clvl-1),
-		fmt.Sprintf("debug stat 14 %d", s.Gold),
-		fmt.Sprintf("debug stat 15 %d", s.Stash),
+// Verbs returns the hero and the lines for s in the order they are sent: the hero's setup writes and player commands,
+// then purse, stash and merc.
+func Verbs(s Setup, t hero.Tables) (hero.Hero, []hero.Verb, error) {
+	h, err := hero.Resolve(s.Hero, t)
+	if err != nil {
+		return h, nil, err
 	}
-	if s.Weapon != "" {
-		v = append(v, fmt.Sprintf("debug equip %s %d", s.Weapon, WeaponSlot))
-	}
+	why := "SETUP: late-start A/B hero, identical for both arms (docs/ab-design.md Variants): "
+	v := append([]hero.Verb(nil), h.Verbs...)
+	v = append(v, hero.Verb{Line: fmt.Sprintf("debug stat 14 %d", s.Gold), Reason: why + "purse", Write: true},
+		hero.Verb{Line: fmt.Sprintf("debug stat 15 %d", s.Stash), Reason: why + "stash gold", Write: true})
 	if s.MercType >= 0 {
-		v = append(v, fmt.Sprintf("debug merc hire %d", s.MercType))
+		v = append(v, hero.Verb{Line: fmt.Sprintf("debug merc hire %d", s.MercType), Reason: why + "free merc", Write: true})
 	}
-	return v
+	return h, v, nil
+}
+
+// WeaponSlot is the right-hand body slot of `debug equip`.
+const WeaponSlot = hero.WeaponSlot
+
+// ClassName is the class of a d2d UI class index (the inverse of scenario.ClassIndex).
+func ClassName(idx int) (string, error) {
+	for _, n := range []string{"Amazon", "Sorceress", "Necromancer", "Paladin", "Barbarian", "Druid", "Assassin"} {
+		if i, err := scenario.ClassIndex(n); err == nil && i == idx {
+			return n, nil
+		}
+	}
+	return "", fmt.Errorf("no class with d2d index %d", idx)
+}
+
+// Record is <home>/hero.json: what the prep made and what the game showed after it. The run id ties the hero to the
+// A/B result (abrun.sh writes the HeroLine into the arm log).
+type Record struct {
+	Run        string       `json:"run"`
+	Hero       hero.Hero    `json:"hero"`
+	Provenance string       `json:"provenance"`
+	Checks     []hero.Check `json:"checks"`
+	Failed     string       `json:"failed,omitempty"`
+}
+
+// HeroLine is the one-line summary the A/B log carries (abreport reads it).
+func (r Record) HeroLine() string {
+	sc := "ok"
+	if r.Failed != "" {
+		sc = r.Failed
+	}
+	return fmt.Sprintf("hero: run=%s profile=%s class=%s build=%s clvl=%d attack=%s selfcheck=%s tags=%s", r.Run, r.Hero.Profile,
+		r.Hero.Class, r.Hero.Build, r.Hero.Level, strings.ReplaceAll(r.Hero.Attack, " ", "_"), sc, strings.Join(r.Hero.Tags, ","))
 }
 
 type ledgerLine struct {
@@ -68,25 +98,54 @@ func main() {
 
 func run() error {
 	bin := flag.String("bin", os.Getenv("D2D_BIN"), "d2d lab binary (must know --lab-verbs)")
-	data := flag.String("data", os.Getenv("D2D_DATA"), "d2d --data dir (MPQs)")
+	dataDir := flag.String("data", os.Getenv("D2D_DATA"), "d2d --data dir (MPQs); the game tables for the played profile are read from it")
 	sock := flag.String("sock", os.Getenv("D2D_SOCK"), "control socket path")
 	home := flag.String("home", "", "d2d home (XDG config and data go under <home>/config and <home>/data); the arms copy it")
 	name := flag.String("name", "", "character name")
 	class := flag.Int("class", 4, "d2d class index of the new character (4 = Sorceress)")
 	seed := flag.Int64("seed", 0, "map seed")
 	ledger := flag.String("ledger", "", "ledger file (JSON lines), default <home>/prep-ledger.jsonl")
+	runID := flag.String("run", "", "run id written into hero.json and the hero line (default the character name)")
 	var s Setup
-	flag.IntVar(&s.Clvl, "clvl", 11, "start level")
+	flag.StringVar(&s.Hero.Profile, "profile", hero.Banked, "hero profile: played (points spent by the build table, main attack bound) or banked (every point unspent)")
+	flag.StringVar(&s.Hero.Build, "build", "", "build table (default: the table a fresh hero of the class gets)")
+	flag.IntVar(&s.Hero.Level, "clvl", 11, "start level")
+	flag.IntVar(&s.Hero.QuestSkillPts, "quest-skillpts", 1, "skill points of quests done (the Den of Evil gives 1; the build tables fold it in)")
 	flag.IntVar(&s.Gold, "gold", 500, "purse gold")
 	flag.IntVar(&s.Stash, "stash", 0, "stash gold")
 	flag.IntVar(&s.MercType, "merc", 0, "hireling.txt Id to hire for free (the Act 1 Rogue is 0, docs/cheats.md); -1 none")
-	flag.StringVar(&s.Weapon, "weapon", "", "item code worn in the right hand (SETUP), e.g. hax for a melee class; empty = none")
+	weapon := flag.String("weapon", "", "item code worn in the right hand (SETUP), e.g. hax; empty = none, starter = the class's starting weapon")
 	flag.Parse()
 	if *home == "" || *name == "" || *sock == "" || *bin == "" {
 		return fmt.Errorf("needs --home, --name, --sock and --bin (or D2D_BIN, D2D_SOCK)")
 	}
-	if s.Clvl < 2 || s.Clvl > 99 {
-		return fmt.Errorf("clvl %d out of range", s.Clvl)
+	switch *weapon {
+	case "":
+		s.Hero.Weapon = "none"
+	case "starter":
+		s.Hero.Weapon = ""
+	default:
+		s.Hero.Weapon = *weapon
+	}
+	cn, err := ClassName(*class)
+	if err != nil {
+		return err
+	}
+	s.Hero.Class = cn
+	if *runID == "" {
+		*runID = *name
+	}
+	var tabs hero.Tables
+	if s.Hero.Profile != hero.Banked || s.Hero.Weapon == "" {
+		db, err := data.Open(*dataDir, filepath.Join(*home, "tables-cache"))
+		if err != nil {
+			return fmt.Errorf("game tables: %w", err)
+		}
+		tabs = hero.DBTables(db)
+	}
+	h, verbs, err := Verbs(s, tabs)
+	if err != nil {
+		return err // before any game starts: a hero the library cannot make is never made
 	}
 	if *ledger == "" {
 		*ledger = filepath.Join(*home, "prep-ledger.jsonl")
@@ -105,7 +164,7 @@ func run() error {
 	}
 	defer logf.Close()
 
-	p := &d2dinput.Process{Bin: *bin, Data: *data, Sock: *sock, ConfigDir: filepath.Join(*home, "config"), DataDir: filepath.Join(*home, "data"),
+	p := &d2dinput.Process{Bin: *bin, Data: *dataDir, Sock: *sock, ConfigDir: filepath.Join(*home, "config"), DataDir: filepath.Join(*home, "data"),
 		Nice: 10, ExtraArgs: []string{"--lockstep", "--lab-verbs", "--toggle", "autoloot=off,autoparty=off"}, Log: logf}
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
 	defer cancel()
@@ -118,47 +177,108 @@ func run() error {
 	}
 	c := p.Controller().C // d2d takes one control client: reuse the one Start made
 	enc := json.NewEncoder(lf)
-	for _, v := range Verbs(s) {
-		l := ledgerLine{Time: time.Now().Format(time.RFC3339), Verb: v, Reason: "SETUP: late-start A/B hero, identical for both arms (docs/ab-design.md Variants)"}
-		r, err := c.Do(ctx, v)
+	wrote := false
+	for _, v := range verbs {
+		if !v.Write && wrote { // a player command checks the level and the points: let the writes land first
+			if _, err := c.Step(ctx, 5); err != nil {
+				_ = p.Stop()
+				return err
+			}
+			wrote = false
+		}
+		l := ledgerLine{Time: time.Now().Format(time.RFC3339), Verb: v.Line, Reason: v.Reason}
+		r, err := c.Do(ctx, v.Line)
 		if r != nil {
 			l.Reply = strings.Join(append([]string{r.Rest}, r.Lines...), " | ")
 		}
 		_ = enc.Encode(l)
 		if err != nil {
 			_ = p.Stop()
-			return fmt.Errorf("%s: %w", v, err)
+			return fmt.Errorf("%s: %w", v.Line, err)
+		}
+		if v.Write {
+			wrote = true
+		} else if _, err := c.Step(ctx, 2); err != nil { // one command per tick (U whether d2d takes several in one)
+			_ = p.Stop()
+			return err
 		}
 	}
 	if _, err := c.Step(ctx, 50); err != nil { // let the level, points and merc settle before the save
 		_ = p.Stop()
 		return err
 	}
-	// Read the weapon back like the bot does (dump stats "weapons"/"hero"): an equip verb that answered ok but left the
-	// right hand empty would otherwise only show up as src=default hours later. Read-only, so not a write.
-	r, err := c.Do(ctx, "dump stats")
+	rec, err := selfCheck(ctx, c, h, enc)
 	if err != nil {
 		_ = p.Stop()
-		return fmt.Errorf("dump stats: %w", err)
+		return err
 	}
-	line := strings.TrimSpace(r.Rest)
-	for _, l := range r.Lines {
-		if strings.TrimSpace(l) != "" {
-			line = l
-			break
-		}
+	rec.Run = *runID
+	rec.Provenance = h.Provenance(*name)
+	if b, err := json.MarshalIndent(rec, "", " "); err == nil {
+		_ = os.WriteFile(filepath.Join(*home, "hero.json"), append(b, '\n'), 0o644)
 	}
-	rb, rerr := WeaponReadback(line, s.Weapon)
+	fmt.Println(rec.HeroLine())
+	if rec.Failed != "" {
+		_ = p.Stop()
+		return fmt.Errorf("selfcheck: %s (hero.json has the rows)", rec.Failed)
+	}
+	return p.SaveExit(ctx)
+}
+
+// selfCheck reads the hero back (read-only verbs) and compares it with h.
+func selfCheck(ctx context.Context, c *d2dctl.Client, h hero.Hero, enc *json.Encoder) (Record, error) {
+	var o hero.Observed
+	// Read the weapon back like the bot does (dump stats "weapons"/"hero"): an equip verb that answered ok but left the
+	// right hand empty would otherwise only show up as src=default hours later.
+	line, err := firstLine(ctx, c, "dump stats")
+	if err != nil {
+		return Record{}, err
+	}
+	rb, rerr := WeaponReadback(line, h.Weapon)
 	_ = enc.Encode(ledgerLine{Time: time.Now().Format(time.RFC3339), Verb: "dump stats", Reason: "READ-ONLY readback of the SETUP weapon", Reply: rb})
 	if rerr != nil {
 		if len(line) > 3000 {
 			line = line[:3000]
 		}
 		fmt.Fprintln(os.Stderr, "prep: raw dump stats:", line)
-		_ = p.Stop()
-		return rerr
+		return Record{}, rerr
 	}
-	return p.SaveExit(ctx)
+	if h.Weapon != "" {
+		o.Weapon = &h.Weapon // WeaponReadback proved this code in the right hand
+	}
+	if line, err := firstLine(ctx, c, "dump player,stats,skills"); err == nil {
+		if err := hero.ReadPointDump(&o, line); err != nil {
+			fmt.Fprintln(os.Stderr, "prep:", err)
+		}
+	}
+	if sv, _, err := c.State(ctx); err == nil {
+		l := sv.Level
+		o.Level = &l
+		if v, ok := sv.Int("lskill"); ok {
+			o.LeftSkill = &v
+		}
+		if v, ok := sv.Int("rskill"); ok {
+			o.RightSkill = &v
+		}
+	}
+	rec := Record{Hero: h, Checks: h.SelfCheck(o)}
+	rec.Failed = hero.Failed(rec.Checks)
+	_ = enc.Encode(ledgerLine{Time: time.Now().Format(time.RFC3339), Verb: "selfcheck", Reason: "READ-ONLY hero self-check", Reply: "failed: " + rec.Failed})
+	return rec, nil
+}
+
+func firstLine(ctx context.Context, c *d2dctl.Client, verb string) (string, error) {
+	r, err := c.Do(ctx, verb)
+	if err != nil {
+		return "", fmt.Errorf("%s: %w", verb, err)
+	}
+	line := strings.TrimSpace(r.Rest)
+	for _, l := range r.Lines {
+		if strings.TrimSpace(l) != "" {
+			return l, nil
+		}
+	}
+	return line, nil
 }
 
 // WeaponReadback checks the "dump stats" reply for the SETUP weapon and returns a one-line summary for the ledger.
