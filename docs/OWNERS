@@ -130,7 +130,6 @@ backlog/tasks/task-726 - dlv-cast-verbs-input-caps-cast-unit-cast-point-cast-hol
 cmd/d2bot/acts_test.go  credit-runner  qdmatrix
 cmd/d2bot/adapters.go  credit-runner  cainfix3
 cmd/d2bot/adapters.go  credit-runner  dlv-stance-army
-cmd/d2bot/adapters.go  credit-runner  upkeepcmp
 cmd/d2bot/behaviors.go  credit-runner  campaign1
 cmd/d2bot/boss.go  credit-runner  countess3
 cmd/d2bot/boss.go  credit-runner  countess3b
@@ -369,7 +368,6 @@ internal/bot/nokill_test.go  credit-runner  freshstart
 internal/bot/observe.go  credit-runner  freshstart
 internal/bot/observe.go  credit-runner  intake
 internal/bot/observe.go  credit-runner  survrecover
-internal/bot/observe.go  credit-runner  upkeepcmp
 internal/bot/povertyfarm.go  credit-runner  admit1
 internal/bot/questboard.go  credit-runner  qdmatrix
 internal/bot/questboard.go  credit-runner  stage1fix
@@ -387,7 +385,6 @@ internal/bot/task.go  credit-runner  boardmoderace
 internal/bot/task.go  credit-runner  wpstep
 internal/bot/ticklog.go  credit-runner  ticklog
 internal/bot/ticklog_test.go  credit-runner  ticklog
-internal/bot/upkeepkv.go  credit-runner  upkeepcmp
 internal/bot/waypoints.go  credit-runner  boardmoderace
 internal/bot/whyline.go  credit-runner  repairtrip
 internal/bot/zonemodel.go  credit-runner  survrecover
@@ -408,7 +405,6 @@ internal/combat/  credit-runner  dlv-stance-pack
 internal/combat/  credit-runner  dlv-upkeep-minions
 internal/combat/  credit-runner  dlv-upkeep-state
 internal/combat/  credit-runner  dlv-whirl
-internal/combat/aura.go  credit-runner  upkeepcmp
 internal/combat/castfirst.go  credit-runner  maphistoryC
 internal/combat/classdata/profiles.json  credit-runner  necroteeth
 internal/combat/fight.go  credit-runner  maphistory
@@ -418,16 +414,10 @@ internal/combat/fightend.go  credit-runner  maphistoryC
 internal/combat/fighter.go  credit-runner  inputl3
 internal/combat/fighter.go  credit-runner  maphistory
 internal/combat/fighter.go  credit-runner  maphistoryC
-internal/combat/fighter.go  credit-runner  upkeepcmp
-internal/combat/mark.go  credit-runner  upkeepcmp
-internal/combat/minions.go  credit-runner  upkeepcmp
 internal/combat/necro_test.go  credit-runner  necroteeth
 internal/combat/portalverb.go  credit-runner  inputl3
 internal/combat/portalverb_test.go  credit-runner  inputl3
 internal/combat/reach.go  credit-runner  maphistoryC
-internal/combat/stance.go  credit-runner  upkeepcmp
-internal/combat/upkeepcmp.go  credit-runner  upkeepcmp
-internal/combat/upkeepcmp_test.go  credit-runner  upkeepcmp
 internal/d2dcombat/  credit-runner  dlv-cast-verbs
 internal/d2dcombat/  credit-runner  dlv-press
 internal/d2dctl  credit-runner  countess3

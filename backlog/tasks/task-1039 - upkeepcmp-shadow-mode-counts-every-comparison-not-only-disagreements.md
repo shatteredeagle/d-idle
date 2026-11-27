@@ -1,11 +1,11 @@
 ---
 id: TASK-1039
 title: 'upkeepcmp: shadow mode counts every comparison, not only disagreements'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T07:54:00Z'
-updated_date: '2026-11-27T07:54:00Z'
+updated_date: '2026-11-27T08:23:00Z'
 labels:
   - bot
   - feature
