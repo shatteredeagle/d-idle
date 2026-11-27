@@ -1,10 +1,13 @@
 ---
 id: TASK-1057
-title: 'townguard: short-gold hand-over in the guard refusal, route knob text, nav path cost'
-status: Proposed
+title: >-
+  townguard: short-gold hand-over in the guard refusal, route knob text, nav
+  path cost
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T19:22:00Z'
+updated_date: '2026-11-27T20:06:00Z'
 labels:
   - bot
   - feature

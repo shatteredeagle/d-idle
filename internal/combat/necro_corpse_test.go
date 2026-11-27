@@ -97,15 +97,15 @@ func TestPickExplosionCorpse(t *testing.T) {
 	c1, c2 := mon(30, 1, 110, 100), mon(31, 1, 130, 100)
 	c1.Mode, c2.Mode = d2.MonModeDead, d2.MonModeDead
 	hs := []Target{mk(1, 112), mk(2, 113), mk(3, 131)}
-	if c, ok := pickExplosionCorpse([]d2.Unit{c1, c2}, hs, cat, 2); !ok || c.ID != 30 {
+	if c, ok := pickCorpse(corpseRowExplode, []d2.Unit{c1, c2}, hs, cat); !ok || c.ID != 30 {
 		t.Fatalf("pack corpse: %v %v", c.ID, ok)
 	}
-	if _, ok := pickExplosionCorpse([]d2.Unit{c2}, hs, cat, 2); ok {
+	if _, ok := pickCorpse(corpseRowExplode, []d2.Unit{c2}, hs, cat); ok {
 		t.Fatal("one hostile is below minHit")
 	}
 	boss := mk(4, 131)
 	boss.Boss = true
-	if c, ok := pickExplosionCorpse([]d2.Unit{c2}, []Target{boss}, cat, 2); !ok || c.ID != 31 {
+	if c, ok := pickCorpse(corpseRowExplode, []d2.Unit{c2}, []Target{boss}, cat); !ok || c.ID != 31 {
 		t.Fatal("a boss counts as three")
 	}
 }
