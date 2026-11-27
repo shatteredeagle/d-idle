@@ -45,15 +45,15 @@
    "enable_criteria": "Stage 2 scenario set green; scenario/drill green, then flip on the sandboxes with a 24 h invariant-monitor watch and automatic revert on a hard breach; stages 3, 4, 5 the same, one at a time (owner looks before 3 to 5, ADR 0028)",
    "owner": "coordinator",
    "review_by": "2026-12-09",
-   "status": "enabled",
+   "status": "trial",
    "criteria_met": "U",
-   "trial_started": "2026-11-26T23:25:47Z",
+   "trial_started": "2026-11-27T13:40:14Z",
    "trial_instance": "d2play-20261108",
-   "trial_value": 2.0,
+   "trial_value": 3.0,
    "trial_window": "2700s",
-   "trial_why": "accelerated soak: bundle 2",
-   "trial_bundle": "town.plan,bot.portalGuard,combat.deliveryExpect,combat.threatDodge,combat.standOK,combat.missileDodge,bot.checkpointEnable",
-   "enabled_at": "2026-11-27T00:11:21Z"
+   "trial_why": "deploy 94: owner approved 2026-11-27 08:35 EST: upkeep mode 2 + town plan stage 3 (ADR 0028)",
+   "trial_bundle": "combat.deliveryUpkeep,town.plan",
+   "note": "owner approved 2026-11-27, live on sandbox Doofer (stage 3 under ADR 0028; stage 2 was enabled 2026-11-27T00:11:21Z)"
   },
   {
    "name": "quests.boardSM",
@@ -495,13 +495,13 @@
    "review_by": "2026-12-11",
    "status": "trial",
    "criteria_met": "no",
-   "trial_started": "2026-11-27T06:00:09Z",
+   "trial_started": "2026-11-27T13:40:14Z",
    "trial_instance": "d2play-20261108",
-   "trial_value": 1.0,
-   "trial_window": "1200s",
-   "trial_why": "deploy 88: tick log for arbiter replay, upkeep driver shadow (old pass acts)",
-   "trial_bundle": "bot.tickLogSec,combat.deliveryUpkeep",
-   "note": "live on sandbox since 2026-11-27 06:00Z, enable after a night of replay evidence"
+   "trial_value": 2.0,
+   "trial_window": "2700s",
+   "trial_why": "deploy 94: owner approved 2026-11-27 08:35 EST: upkeep mode 2 + town plan stage 3 (ADR 0028)",
+   "trial_bundle": "combat.deliveryUpkeep,town.plan",
+   "note": "owner approved 2026-11-27, live on sandbox Doofer (mode 2)"
   }
  ]
 }
