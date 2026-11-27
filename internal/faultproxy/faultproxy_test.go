@@ -179,3 +179,79 @@ func TestValidate(t *testing.T) {
 		t.Error("Empty")
 	}
 }
+
+// singleGame is d2d's control socket as far as the proxy can tell: one client at a time, a second one gets "err busy" and
+// is hung up on (V docs/d2dctl.md).
+func singleGame(t *testing.T, path string) {
+	t.Helper()
+	ln, err := net.Listen("unix", path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() { ln.Close() })
+	var busy atomic.Bool
+	go func() {
+		for {
+			c, err := ln.Accept()
+			if err != nil {
+				return
+			}
+			if !busy.CompareAndSwap(false, true) {
+				fmt.Fprint(c, "err busy\n")
+				c.Close()
+				continue
+			}
+			go func() {
+				defer busy.Store(false)
+				defer c.Close()
+				rd := bufio.NewReader(c)
+				for {
+					l, err := rd.ReadString('\n')
+					if err != nil {
+						return
+					}
+					fmt.Fprint(c, "ok "+strings.TrimSpace(l)+"\n")
+				}
+			}()
+		}
+	}()
+}
+
+// The soak's stall (docs/probes/feature-soak-2026-11-26.md 3.4): a held reply outlives the bot's command timeout, the bot
+// hangs up and redials, and the proxy must give the game's one control slot back at once instead of keeping it (and its
+// lock) for the rest of the hold. Before the fix every redial got "err busy" or waited out the whole hold.
+func TestHeldReplyReleasedWhenTheBotHangsUp(t *testing.T) {
+	dir := t.TempDir()
+	singleGame(t, filepath.Join(dir, "d2d.sock"))
+	p := &Proxy{Spec: Spec{DelayReplyEvery: 2, DelayReplyMs: 3_600_000}, Listen: filepath.Join(dir, "p.sock"), Upstream: filepath.Join(dir, "d2d.sock")}
+	if err := p.Start(); err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() { p.Stop() })
+	a, err := net.Dial("unix", p.Listen)
+	if err != nil {
+		t.Fatal(err)
+	}
+	send(t, a, bufio.NewReader(a), "state")
+	fmt.Fprintln(a, "state") // the second command: its reply is held for an hour
+	time.Sleep(50 * time.Millisecond)
+	a.Close() // the bot's command timeout
+
+	deadline := time.Now().Add(10 * time.Second) // a ratio: the hold is an hour
+	for {
+		b, err := net.Dial("unix", p.Listen)
+		if err == nil {
+			fmt.Fprintln(b, "state")
+			_ = b.SetReadDeadline(time.Now().Add(time.Second))
+			l, rerr := bufio.NewReader(b).ReadString('\n')
+			b.Close()
+			if rerr == nil && strings.TrimSpace(l) == "ok state" {
+				return
+			}
+		}
+		if time.Now().After(deadline) {
+			t.Fatal("the redialled bot got no reply while the dead connection's reply was held")
+		}
+		time.Sleep(20 * time.Millisecond)
+	}
+}
