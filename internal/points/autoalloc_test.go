@@ -37,6 +37,7 @@ type allocFake struct {
 	busy   bool
 	builds map[string][]string
 	late   string // tier of the endgame tables when set (a test makes them experimental)
+	prereq map[string]bool
 }
 
 func (f *allocFake) lateTier(def string) string {
@@ -106,7 +107,7 @@ func (f *allocFake) desk(t *testing.T, dir string) *Desk {
 							}
 						}
 						if have == 0 {
-							out = append(out, Step{Kind: "skill", Skill: s.ID, Name: n})
+							out = append(out, Step{Kind: "skill", Skill: s.ID, Name: n, Prereq: f.prereq[n]})
 						}
 					}
 				}
@@ -379,5 +380,42 @@ func TestAutoAllocHandoffWhenTableExhausted(t *testing.T) {
 	d.SetBuild("necromancer_summoner_normal30", false)
 	if got := d.AutoAllocOnce(context.Background()); got != "stat vit" || d.store.Get().Plan != "necromancer_summoner_endgame90" {
 		t.Fatalf("got %q plan %q", got, d.store.Get().Plan)
+	}
+}
+
+// prereq (live 2026-11-27, Doofer): the capability table marks Sacrifice unsupported, so the allocator held it for a
+// confirmation and Zeal, which needs it, was never learned. A prerequisite step is spent without the confirmation; the
+// same skill as a plain step is still held, and the hold is logged once. Two builds: Paladin and Sorceress.
+func TestAutoAllocSpendsUnsupportedPrerequisite(t *testing.T) {
+	for _, c := range []struct {
+		class d2.Class
+		build string
+		skill string
+	}{{d2.Paladin, "pal_a", "Blessed Hammer"}, {d2.Sorceress, "sor_a", "Fire Ball"}} {
+		f := newAllocFake(c.class)
+		f.p.Level, f.p.SkillPoints = 18, 1
+		if c.class == d2.Sorceress {
+			f.p.Skills = []d2.Skill{{ID: 36, Level: 1}} // Fire Bolt, the prerequisite of Fire Ball
+		}
+		f.builds[c.build] = []string{c.skill}
+		d := f.desk(t, "")
+		d.SetBuild(c.build, false)
+		if got := d.AutoAllocOnce(context.Background()); got != "" {
+			t.Fatalf("%s: a plain unsupported attack was spent: %q", c.build, got)
+		}
+		d.AutoAllocOnce(context.Background())
+		n := 0
+		for _, l := range f.logs {
+			if strings.HasPrefix(l, "auto-alloc: held "+c.skill) {
+				n++
+			}
+		}
+		if n != 1 {
+			t.Errorf("%s: held lines %d in %v", c.build, n, f.logs)
+		}
+		f.prereq = map[string]bool{c.skill: true}
+		if got := d.AutoAllocOnce(context.Background()); got != "skill "+c.skill {
+			t.Fatalf("%s: prerequisite not spent: %q", c.build, got)
+		}
 	}
 }

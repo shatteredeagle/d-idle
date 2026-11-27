@@ -208,6 +208,7 @@ func (l *Leveler) have(p *d2.Player) Have {
 			}
 		}
 		h.QuestPts = QuestPoints(db, p)
+		h.Req = DBReq(db)
 	}
 	return h
 }
