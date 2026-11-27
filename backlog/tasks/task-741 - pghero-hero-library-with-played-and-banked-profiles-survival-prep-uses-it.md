@@ -1,10 +1,11 @@
 ---
 id: TASK-741
 title: 'pghero: hero library with played and banked profiles; survival prep uses it'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-21T04:47:00Z'
+updated_date: '2026-11-27T07:24:00Z'
 labels:
   - bot
   - feature
