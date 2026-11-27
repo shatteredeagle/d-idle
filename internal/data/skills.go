@@ -63,7 +63,7 @@ type Skill struct {
 	AuraState, AuraTargetState string
 	StateID                    int
 	Curse                      bool
-	Param          [8]int    // Param1..8 values (par1..par8 in formulas)
+	Param                      [8]int // Param1..8 values (par1..par8 in formulas)
 }
 
 var skillCols = []string{
