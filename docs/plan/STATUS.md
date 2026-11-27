@@ -49,6 +49,7 @@
 | necroteeth | proposed | - | `internal/combat/classdata/profiles.json`<br>`internal/combat/necro_test.go`<br>`internal/leveler/mainattack_test.go` | - |
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
 | deploy88-ledger | proposed | - | `data/darklaunch.json` | - |
+| casthold | in-progress | - | `internal/d2dinput/`<br>`internal/d2dcombat/`<br>`internal/d2dctl/fake/`<br>`internal/combat/fighter.go`<br>`internal/combat/castdeliver.go`<br>`internal/combat/castdeliver_test.go`<br>`docs/design/input-cast-verbs.md` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
@@ -244,6 +245,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 9f3e208a6 11-27 03:05 `Merge agent/casthold: casthold: card result and criteria` (casthold)
+- 9b255fdc1 11-27 02:55 `Merge origin/main into casthold` (-)
 - 67d74d66e 11-27 02:47 `Merge agent/forkcaps: Merge branch 'main' into inputl3` (forkcaps)
 - c395306d0 11-27 02:45 `Merge branch 'main' into inputl3` (-)
 - 685f85220 11-27 02:38 `Merge agent/stancearmy: Merge branch 'main' into dlv-stance-army` (stancearmy)
@@ -252,6 +255,4 @@
 - c4464d60b 11-27 02:33 `Merge branch 'main' into pgpage` (-)
 - 7db510622 11-27 02:15 `Merge agent/auraupkeep: Merge branch 'main' into auraupkeep` (auraupkeep)
 - 848edfa61 11-27 02:15 `Merge agent/stepexec2: Merge branch 'main' into stepexec1` (stepexec2)
-- de2461073 11-27 02:13 `Merge branch 'main' into auraupkeep` (-)
-- 0aa47d75a 11-27 02:13 `Merge branch 'main' into stepexec1` (-)
 <!-- statusgen:end -->

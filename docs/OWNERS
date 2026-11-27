@@ -213,6 +213,7 @@ docs/design/boardsm-checker.md  credit-runner  bsmchk
 docs/design/boardsm-flip.md  credit-runner  bsmdef
 docs/design/fable-review-2026-11-21/town-planner-b-model.md  credit-runner  town5
 docs/design/fable-review-2026-11-21/town-profiles-sme.md  credit-runner  town12
+docs/design/input-cast-verbs.md  credit-runner  casthold
 docs/design/input-cast-verbs.md  credit-runner  dlv-cast-verbs
 docs/design/input-cast-verbs.md  credit-runner  inputl3
 docs/design/input-i3.md  credit-runner  inputl3
@@ -405,12 +406,15 @@ internal/combat/  credit-runner  dlv-stance-pack
 internal/combat/  credit-runner  dlv-upkeep-minions
 internal/combat/  credit-runner  dlv-upkeep-state
 internal/combat/  credit-runner  dlv-whirl
+internal/combat/castdeliver.go  credit-runner  casthold
+internal/combat/castdeliver_test.go  credit-runner  casthold
 internal/combat/castfirst.go  credit-runner  maphistoryC
 internal/combat/classdata/profiles.json  credit-runner  necroteeth
 internal/combat/fight.go  credit-runner  maphistory
 internal/combat/fight.go  credit-runner  maphistoryC
 internal/combat/fightend.go  credit-runner  maphistory
 internal/combat/fightend.go  credit-runner  maphistoryC
+internal/combat/fighter.go  credit-runner  casthold
 internal/combat/fighter.go  credit-runner  inputl3
 internal/combat/fighter.go  credit-runner  maphistory
 internal/combat/fighter.go  credit-runner  maphistoryC
@@ -418,9 +422,11 @@ internal/combat/necro_test.go  credit-runner  necroteeth
 internal/combat/portalverb.go  credit-runner  inputl3
 internal/combat/portalverb_test.go  credit-runner  inputl3
 internal/combat/reach.go  credit-runner  maphistoryC
+internal/d2dcombat/  credit-runner  casthold
 internal/d2dcombat/  credit-runner  dlv-cast-verbs
 internal/d2dcombat/  credit-runner  dlv-press
 internal/d2dctl  credit-runner  countess3
+internal/d2dctl/fake/  credit-runner  casthold
 internal/d2dctl/fake/fake.go  credit-runner  inputl3
 internal/d2dctl/fake/fake.go  credit-runner  warptrigger
 internal/d2dctl/item_verbs_merc.go  credit-runner  uib9
@@ -433,6 +439,7 @@ internal/d2denv/env.go  credit-runner  pgclock
 internal/d2denv/env.go  credit-runner  warptrigger
 internal/d2denv/reader.go  credit-runner  pgclock
 internal/d2denv/recent_test.go  credit-runner  pgclock
+internal/d2dinput/  credit-runner  casthold
 internal/d2dinput/  credit-runner  dlv-cast-verbs
 internal/d2dinput/useitem.go  credit-runner  inputl3
 internal/d2dsoakstat/minute.go  credit-runner  intake
