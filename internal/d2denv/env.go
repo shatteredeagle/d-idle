@@ -179,6 +179,8 @@ type LateClock struct {
 	ctx context.Context
 	p   atomic.Pointer[d2dinput.Pacer]
 
+	stop atomic.Pointer[stopRule] // StopAfter: checked on the stepping goroutine after every lockstep sleep
+
 	fmu      sync.Mutex // the frozen Pause (freeze.go): the wall clock stands still between SetFrozen(true) and (false)
 	frozenAt time.Time
 	offset   time.Duration
@@ -242,6 +244,7 @@ func (l *LateClock) Pause(ctx context.Context, d time.Duration) error {
 	}
 	if p := l.p.Load(); p != nil {
 		p.Sleep(d)
+		l.checkStop(p)
 		return ctx.Err()
 	}
 	t := time.NewTimer(d)
@@ -257,6 +260,7 @@ func (l *LateClock) Pause(ctx context.Context, d time.Duration) error {
 func (l *LateClock) Sleep(d time.Duration) {
 	if p := l.p.Load(); p != nil {
 		p.Sleep(d)
+		l.checkStop(p)
 		return
 	}
 	time.Sleep(d)
@@ -277,6 +281,7 @@ const (
 func (l *LateClock) Poll(d time.Duration) {
 	if p := l.p.Load(); p != nil {
 		p.Sleep(min(d, linkPollStep))
+		l.checkStop(p)
 		time.Sleep(linkPollWall)
 		return
 	}
@@ -358,4 +363,33 @@ func wallStacks(ctx context.Context, path string) {
 		f.WriteString("\n=====\n")
 		time.Sleep(50 * time.Millisecond)
 	}
+}
+
+// stopRule is one StopAfter registration: fn runs once, when the Pacer's virtual time passed t0+d.
+type stopRule struct {
+	t0   time.Time
+	d    time.Duration
+	fn   func()
+	once sync.Once
+}
+
+// StopAfter runs fn once, on the goroutine that steps the game, after the first lockstep sleep that ends d of virtual
+// time after this call. The soak stop used to be a ticker goroutine that read the clock on a wall second, so one run
+// cancelled between two commands where the other already sent the next (docs/d2d-determinism.md section 6, B3); here the
+// stop is a function of the stepped ticks. It returns false on a wall clock (not lockstep): the caller keeps a timer.
+func (l *LateClock) StopAfter(d time.Duration, fn func()) bool {
+	p := l.p.Load()
+	if p == nil {
+		return false
+	}
+	l.stop.Store(&stopRule{t0: p.Now(), d: d, fn: fn})
+	return true
+}
+
+func (l *LateClock) checkStop(p *d2dinput.Pacer) {
+	r := l.stop.Load()
+	if r == nil || p.Now().Sub(r.t0) < r.d {
+		return
+	}
+	r.once.Do(r.fn)
 }

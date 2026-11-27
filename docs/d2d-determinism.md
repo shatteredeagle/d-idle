@@ -190,3 +190,8 @@ to 2619). The only difference left is at tick 12056 to 12095: the end of the run
 `debug players` where another already steps 3 more ticks), BOT-SIDE and not the world. 3 of 3 pairs identical for 12000 ticks;
 5 of 5 and the 50000-tick target are not measured. Open: the stop condition of the soak loop is still not tick-based (not
 looked at), and the start-up `state` field is unidentified (`D2DCTL_JOURNAL_RAW`).
+
+Update (card pgclock, B3, V offline `TestStopAfterFiresOnTheSteppingGoroutine`): the `D2DSOAK_HOURS` stop is now
+`LateClock.StopAfter`: the callback runs once on the stepping goroutine after the first lockstep sleep (Sleep, Pause or
+Poll) that reaches the deadline, so the stop is a function of the stepped ticks and no longer of a wall-second ticker.
+It needs no second `Pacer.Watch` slot. U: the 3-run pair on the builder with D2DSOAK_HOURS has not been re-run.
