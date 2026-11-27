@@ -661,8 +661,9 @@ func (a taskActs) Clear(ctx context.Context, ar task.Area) error {
 // aliveHostiles lists the living hostile monsters in the snapshot, nearest first.
 func (r *Runner) aliveHostiles(s *d2.Snapshot) []d2.Unit {
 	var out []d2.Unit
+	hostile := r.hostiles(s)
 	for i := range s.Monsters {
-		if u := s.Monsters[i]; r.hostile(s, &u) {
+		if u := s.Monsters[i]; hostile(&u) {
 			out = append(out, u)
 		}
 	}
