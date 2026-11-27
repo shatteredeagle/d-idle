@@ -86,6 +86,16 @@ Noise: the OFF spread is large at 1 virtual hour with 3 seeds (Paladin xp/h spre
 
 Verdict GREEN. The BLOCKED row (Paladin seed 3) is not the executor: its `take_scroll` step logged `done`, then a `crowd-abandon` safety decision in the Black Marsh left the game (Save and Exit ends a lab run) before the 30 virtual minutes. Every stepexec scroll row logs `take_scroll` `done`; the Necromancer seed 11 row needed 5 `interrupted` and 1 `failed` (3 acts) attempts before `done`, against `retry` lines of the old handler. Hard invariants: 0 in all 24 runs (soft `field-entry-no-kit` and `guard-stall` in both arms alike).
 
+### 3.4 Faultproxy soak rows (report only)
+
+`d2scenario soak -faults mixed -duration 15m -id soak.fault. -class Paladin -seed 11` with `D2SCEN_KNOBS` empty (base), the families 3 arm and the families 255 arm. Result, base and families 3 alike (V soak.json): 2 runs each (cancel-storm, mixed), both BLOCKED, 0 hard and 0 soft invariant hits, injections cancel 138, delay-input 4, delay-reply 55, drop-reply 26. Cause (V bot log): no minute line at all; after 605 s the watchdog logged `runner loop made no progress, exiting for a restart`, with the guard goroutine waiting inside `runAction`. So the fault soak shows a harness or bot hang under these fault sets that is the same with the flags off and on; it is no evidence for or against a feature. The `cancel_line` `cmd stop` is U in cmd/d2scenario/faults.json; whether the hang is the injected stop verb or the delayed replies is the next question for the faultsoak card.
+
+## 4. Limits and what did not run
+
+- 24 virtual hours per row did not run: at the measured ratio (about 2 to 3 under load, section 2) one row would take 8 to 12 wall hours. Pass 1 is 1 virtual hour per row; `economy-stall` (7200 s) cannot fire and `xp-frozen` (1800 s) rarely can. A 24 h pass is `featuresoak.py run CAMPAIGN --hours 24 --features <name>` for one feature at a time.
+- The runs were throttled midway on the owner's request: from 20:51 EST every row ran with `taskset -c 0-7`, nice 19 and at most 4 rows at once (lock files in the row script); the rows before ran 6 at once. Ratios in 3.2 therefore mix two load levels; the A/B pairs of one feature were not always run under the same load (U effect on xp/h, none on the hard invariants).
+- The heroes: one prepared hero per class and seed (`prep.abmerc`: clvl 12, 200 gold, a starter weapon, the free Act 1 Rogue), created fresh in each row's own d2d home and deleted with the row's data dir; CHEATED (SETUP verbs before the start, ledger `<row>.ledger`), never live parity. Every row ends `writes after start: 0`.
+- A chicken or a crowd retreat that leaves the game ends a lab row (Save and Exit closes the lockstep d2d); such rows are counted as short rows in 3.1.
 
 ### 3.2 Per row
 
