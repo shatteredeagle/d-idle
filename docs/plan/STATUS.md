@@ -50,6 +50,7 @@
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
 | deploy88-ledger | proposed | - | `data/darklaunch.json` | - |
 | placefix | proposed | - | `internal/questboard/`<br>`internal/bot/questboard.go`<br>`data/questboard/act2.json`<br>`tools/provingground/scenarios/stepexec-act2.json`<br>`tools/provingground/scenarios/questdrill.json`<br>`internal/scenario/placefix_test.go`<br>`docs/questboard.md`<br>`internal/task/act1.go`<br>`internal/task/act2.go`<br>`internal/task/placefix_test.go`<br>`internal/d2dinput/controller.go`<br>`internal/d2dinput/placefix_test.go`<br>`internal/d2dctl/parse.go`<br>`internal/d2dctl/verbs.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dsrc/items.go`<br>`internal/d2dsrc/source_test.go` | - |
+| deploy94-ledger | in-progress | - | `data/darklaunch.json` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
@@ -244,6 +245,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- c2af036e3 11-27 09:32 `Merge agent/deploy94: Merge branch 'main' into deploy94-ledger` (deploy94)
+- 4ab536c5f 11-27 09:30 `Merge branch 'main' into deploy94-ledger` (-)
 - e1bf805a5 11-27 08:36 `Merge agent/act2handin: Merge remote-tracking branch 'origin/main' into agent/act2handin` (act2handin)
 - 5307199f6 11-27 08:33 `Merge remote-tracking branch 'origin/main' into agent/act2handin` (-)
 - a3b66f2e0 11-27 08:20 `Merge agent/bossdone: Merge branch 'main' into bossdone` (bossdone)
@@ -252,6 +255,4 @@
 - c5a59100e 11-27 07:37 `Merge agent/lairentry: Merge branch 'main' into placefix` (lairentry)
 - 1b1555425 11-27 07:35 `Merge branch 'main' into placefix` (-)
 - 0b82c29ec 11-27 07:32 `Merge agent/pgselfcheck: Merge branch 'main' into pgselfcheck` (pgselfcheck)
-- 18c05eb97 11-27 07:31 `Merge branch 'main' into pgselfcheck` (-)
-- 41692595c 11-27 07:28 `Merge agent/act2drill4: Merge branch 'main' into stepexec1` (act2drill4)
 <!-- statusgen:end -->
