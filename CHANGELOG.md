@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- countessnav: Tower Cellar 5 walk regression on two synthetic maps (TASK-766 AC3) <!--sg:agent/countessnav-->
 - dlvwave3: aim-corpse (TASK-728) + stance-pack, press, move-tele, move-melee (TASK-729..732) <!--sg:agent/dlvwave3-->
 - agencyp3: shared build file reader, kolbot importer, DriveOf (TASK-985, TASK-984 partial) <!--sg:agent/agencyp3-->
 - difftrans: difficulty transition design (docs) <!--sg:agent/difftrans-->

@@ -229,6 +229,7 @@ docs/play-session.md  credit-runner  playsession
 docs/probes/bot-cpu-live-2026-11-16.md  credit-runner  botcpulive
 docs/probes/checkpoint-live-drill.md  live-agent  ckptlive
 docs/probes/classorder1.md  user  classorder1
+docs/probes/countess-nav-fixture.md  credit-runner  countess3b
 docs/probes/exitsread-2026-11-22.md  credit-runner  exitsread
 docs/probes/firsthour.md  live-agent  firsthour
 docs/probes/flipwave2.md  live-agent  flipwave2
@@ -403,6 +404,7 @@ internal/invdesk/sets.go  credit-runner  uib9
 internal/nav/  credit-runner  dlv-move-tele
 internal/nav/act2hints.go  credit-runner  qdmatrix
 internal/nav/act2hints_test.go  credit-runner  qdmatrix
+internal/nav/cellar5walk_test.go  credit-runner  countess3b
 internal/nav/exit.go  credit-runner  qdmatrix
 internal/nav/exit.go  credit-runner  stage1fix
 internal/nav/exit_test.go  credit-runner  qdmatrix
