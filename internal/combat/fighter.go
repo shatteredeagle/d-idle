@@ -44,6 +44,11 @@ type Fighter struct {
 	// used only when the combat.minionRead knob is 1; nil or a failed read leaves the snapshot census.
 	MinionRead func() ([]MinionRow, error)
 
+	// Drive, when set, names the attack and the aura the skill planner wants to play instead of the profile's first pick
+	// (knob agency.planner 2, docs/design/agency-p1b.md). "" keeps the profile's. A named skill the hero cannot use right now
+	// is skipped like any other, so the profile's order still applies behind it. Nil, the default, changes nothing.
+	Drive func() (attack, aura string)
+
 	// OnFight, when set, gets one FightEnd per finished fight that took damage or lasted FightMinSec (passive: the
 	// policy preview's feed, card previewfeed). It runs on the fight goroutine and must not block.
 	OnFight func(FightEnd)
@@ -940,7 +945,7 @@ func (f *Fighter) attackSkills(p *d2.Player) []SkillSpec {
 		reserve = pr.Melee.ManaReserve
 	}
 	var out []SkillSpec
-	for _, name := range pr.Rotation(p.Level, func(n string) bool { _, ok := known[n]; return ok }).Names(delivery.RoleAttack) {
+	for _, name := range f.driveAttack(pr.Rotation(p.Level, func(n string) bool { _, ok := known[n]; return ok }).Names(delivery.RoleAttack)) {
 		sp, ok := known[name]
 		if !ok && name == meleeSpec().Name {
 			// The skill dump may omit the basic attack (live 2026-11-09: known had no Attack), yet it is always usable
@@ -1069,4 +1074,24 @@ func (f *Fighter) noteCastRefused(why string, in SafetyInput) {
 	f.skipWhy, f.skipAt = why, now
 	f.diagMu.Unlock()
 	f.log().Info(fmt.Sprintf("%s life=%d%% mode=%d", why, pct(in.Life, in.Max), in.CastGuard.Mode))
+}
+
+// driveAttack puts the planner's attack (Drive) in front of the profile's attack names; without a Drive the list is
+// returned as it is.
+func (f *Fighter) driveAttack(names []string) []string {
+	if f.Drive == nil {
+		return names
+	}
+	a, _ := f.Drive()
+	if a == "" {
+		return names
+	}
+	out := make([]string, 0, len(names)+1)
+	out = append(out, a)
+	for _, n := range names {
+		if n != a {
+			out = append(out, n)
+		}
+	}
+	return out
 }

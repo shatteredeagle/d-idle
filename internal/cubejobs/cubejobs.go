@@ -127,3 +127,6 @@ func Plan(have map[string]int, o Opts) []Job {
 	}
 	return jobs
 }
+
+// RuneNeed is runeNeed for other packages (the advisor): how many runes of number n-1 make rune n, and the gem code.
+func RuneNeed(n int) (qty int, gemCode string) { return runeNeed(n) }

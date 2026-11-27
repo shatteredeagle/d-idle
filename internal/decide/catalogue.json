@@ -65,6 +65,7 @@
   },
   "classes": {
     "sorceress": {"bands": {"mana": [30, 60]}},
+    "necromancer": {"bands": {"mana": [30, 60]}},
     "paladin":   {"bands": {"mana": [15, 40]}}
   },
   "urgency": {
