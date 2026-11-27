@@ -29,6 +29,7 @@ owns:
   - "docs/vault.md"
 exclusive: []
 contracts: []
+result: "Built offline, unit-tested for two classes (fakes). NOT verified live: needs the fork build with item merc-equip on the sandbox image."
 ---
 
 ## Description
@@ -41,7 +42,7 @@ Why: TODO. Done when: TODO.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Equip on merc: a legal vault item is created in the pack, given to the mercenary through item merc-equip, the old piece becomes a vault record
-- [ ] #2 Illegal merc type, requirements, dead or absent merc, old image: refused with a reason, nothing moved
-- [ ] #3 Unit tests for two classes; fork/live check listed
+- [x] #1 Equip on merc: a legal vault item is created in the pack, given to the mercenary through item merc-equip, the old piece becomes a vault record
+- [x] #2 Illegal merc type, requirements, dead or absent merc, old image: refused with a reason, nothing moved
+- [x] #3 Unit tests for two classes; fork/live check listed
 <!-- AC:END -->

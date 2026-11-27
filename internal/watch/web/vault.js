@@ -746,6 +746,13 @@ export function mountVault(d) {
       if (eqv.enabled) eb.addEventListener('click', () => { it._eqAuto = false; openEquip(it, eb); });
       else { eb.setAttribute('aria-disabled', 'true'); why(eb, eqv.why || T.equipNone, dWhys, T.equip); eb.addEventListener('click', () => setMsg('bad', eqv.why || T.equipNone)); }
       row.appendChild(eb);
+      if (eqv.merc) { // Equip on merc: the same instant path, the mercenary's slot; refused with a reason when his kind cannot wear it
+        const mb = btn(T.equipMerc, { key: 'd-equip-merc' });
+        const mc = S.cmpData && S.cmpData.id === it.id && S.cmpData.sh && S.cmpData.sh.merc;
+        if (mc && !mc.can) { mb.setAttribute('aria-disabled', 'true'); why(mb, mc.why || T.equipNone, dWhys, T.equipMerc); }
+        mb.addEventListener('click', () => { if (!(mc && !mc.can)) equipMercPress(it, mb); });
+        row.appendChild(mb);
+      }
     }
     const ra = S.view && S.view.act && S.view.act.reveal, via = revealMethods(ra);
     const gd = ra && ra.gold || {};
@@ -1198,6 +1205,17 @@ export function mountVault(d) {
     if (eqTimer && d.clear) d.clear(eqTimer);
     eqTimer = null;
     if (p && p.state === 'active' && d.later) eqTimer = d.later(() => equipLoad(it), 3000);
+  }
+  async function equipMercPress(it, b) {
+    if (b.dataset.busy) return; // one press at a time: the button says so until the answer is back
+    const label = b.textContent;
+    b.dataset.busy = '1'; b.setAttribute('aria-busy', 'true'); b.textContent = T.equipMercBusy;
+    try {
+      const r = await d.post('/api/vault/equip', { ids: [it.id], slot: 'auto', target: 'merc', now: true });
+      const w = equipWornWords(r || {}, { [it.id]: it.name }, T);
+      setMsg(w.text ? w.kind : 'bad', w.text || (r && r.error) || T.noAnswer);
+      await reload(true);
+    } finally { delete b.dataset.busy; b.removeAttribute('aria-busy'); b.textContent = label; }
   }
   async function equipPress(it, slot, now) {
     const r = await d.post('/api/vault/equip', { ids: [it.id], slot, now: !!now });
