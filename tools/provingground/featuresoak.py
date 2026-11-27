@@ -201,12 +201,20 @@ def cmd_report(c, a):
             hon, hoff = sum(g(on, "hard")), sum(g(off, "hard"))
             bad = [r for r in on if r["exit"] not in ("0", None) or (r["writes"] or 0) > 0]
             nz = lambda x: 0 if x != x else x
+            def worse(key, sign):  # seeds present in both arms where ON is worse than OFF (sign -1: lower is worse, +1: higher is worse)
+                d = []
+                for (arm, k, sd), r in R.items():
+                    if arm == f["on"] and k == cl and r["minutes"] > 0 and (f["off"], cl, sd) in R and R[(f["off"], cl, sd)]["minutes"] > 0:
+                        d.append(sign * (r[key] - R[(f["off"], cl, sd)][key]))
+                return sum(1 for x in d if x > 0), len(d)
+            wx, wn = worse("xph", -1); wg, _ = worse("goldh", -1); wd, _ = worse("deaths", 1)
+            maj = lambda w: wn >= 2 and w * 2 > wn  # a regression counts only when most paired seeds agree (3 seeds: at least 2)
             red = []
             if hon > hoff: red.append("hard hits %d>%d" % (hon, hoff))
             if bad: red.append("%d failed or written rows" % len(bad))
-            if dx < -max(nz(nx), 0.05 * abs(med(g(off, "xph")))): red.append("xp/h regress %.0f" % dx)
-            if dg < -max(nz(ng), 0.05 * abs(med(g(off, "goldh")))): red.append("gold/h regress %.0f" % dg)
-            if dd > max(nz(nd), 1): red.append("deaths +%.1f" % dd)
+            if dx < -max(nz(nx), 0.05 * abs(med(g(off, "xph")))) and maj(wx): red.append("xp/h regress %.0f" % dx)
+            if dg < -max(nz(ng), 0.05 * abs(med(g(off, "goldh")))) and maj(wg): red.append("gold/h regress %.0f" % dg)
+            if dd > max(nz(nd), 1) and maj(wd): red.append("deaths +%.1f" % dd)
             better = dx > nz(nx) or dg > nz(ng) or dd < -max(nz(nd), 1)
             v = "RED (%s)" % "; ".join(red) if red else ("GREEN" if better else "NEUTRAL")
             L.append("| %s | %s | %d/%d | %.0f vs %.0f (%+.0f) | %.0f vs %.0f (%+.0f) | %.1f vs %.1f | %d/%d | %d/%d | %d/%d | xp %.0f gold %.0f deaths %.1f | %s |" % (
