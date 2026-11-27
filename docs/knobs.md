@@ -87,7 +87,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | combat.potionEmergencyPct | 30 | 10..50 | % | 10 | 2 | Below this life percent a healing potion is drunk even while an earlier one is still working. Above it the bot drinks again only for a higher tier: the game adds a same-tier drink to the running effect (longer, not faster; fid-potions.md Q5). |
 | combat.rejuvGapMs | 300 | 250..1500 | ms | 1500 | 2 | Minimum time between rejuvenation potions. |
 | combat.reactionMs | 120 | 40..700 | ms | 700 | 1 | Delay before the bot acts on a survival event. |
-| combat.pollMs | 60 | 30..400 | ms | 400 | 13 | How often the fight loop looks at the game. |
+| combat.pollMs | 60 | 30..400 | ms | 400 | 14 | How often the fight loop looks at the game. |
 | combat.targetQuality | 100 | 20..100 | % | 20 | 3 | 100 picks the best target; lower picks the nearest more often and loses ticks. |
 | combat.rangeMargin | 3 | 0..8 | subtiles | 0 | 1 | Distance kept inside a skill's maximum range. |
 | combat.clearRadius | 40 | 15..80 | subtiles | 15 | 1 | Radius around the start point cleared when the caller gives none. |

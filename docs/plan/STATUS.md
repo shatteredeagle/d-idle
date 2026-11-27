@@ -245,6 +245,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- d2ce0e875 11-27 04:42 `Merge agent/aimpoint: Merge branch 'main' into dlv-aim-point` (aimpoint)
+- e67faa8f5 11-27 04:41 `Merge branch 'main' into dlv-aim-point` (-)
 - 194b61f57 11-27 04:33 `Merge agent/placefix: placefix: Duriel drills keep the Staff placeable; seven_tombs opens on the Staff made` (placefix)
 - bbde82597 11-27 03:55 `Merge agent/skillhand: Merge branch 'main' into skillhand` (skillhand)
 - c863c1693 11-27 03:53 `Merge branch 'main' into skillhand` (-)
@@ -253,6 +255,4 @@
 - bcee08864 11-27 03:47 `Merge branch 'main' into stepexec1` (-)
 - e74b65753 11-27 03:11 `Merge agent/upkeepcmp: Merge branch 'main' into upkeepcmp` (upkeepcmp)
 - 2f3ae2bd7 11-27 03:10 `Merge branch 'main' into upkeepcmp` (-)
-- 9f3e208a6 11-27 03:05 `Merge agent/casthold: casthold: card result and criteria` (casthold)
-- 9b255fdc1 11-27 02:55 `Merge origin/main into casthold` (-)
 <!-- statusgen:end -->
