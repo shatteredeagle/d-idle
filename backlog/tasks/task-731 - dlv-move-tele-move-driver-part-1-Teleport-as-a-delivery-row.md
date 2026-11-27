@@ -32,7 +32,7 @@ Design: docs/design/fable-review-2026-11-21/combat-engine-d-cards.md (user-appro
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
 - [x] #1 Scenario combat.teleport-reposition
-- [x] #2 Existing teleport drill D22 stays green
+- [ ] #2 Existing teleport drill D22 stays green
 - [ ] #3 Queue row 16 and A5 verdicts consulted
 - [x] #4 Two builds tested (Paladin + Sorceress), no class or skill literal added, literal count reported in result (may only fall)
 - [x] #5 Knob combat.delivery.<driver> 0/1/2 where a driver ships; rollback is the knob

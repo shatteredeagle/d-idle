@@ -94,6 +94,7 @@ const (
 	MoveUnknown  = "skill not known or not bound"
 	MoveDemoted  = "demoted by the expectation ledger"
 	MoveNoMana   = "mana"
+	MoveNoSelect = "left-hand skill on a backend that cannot cast it by id"
 	MoveNotUsing = "row has no such use"
 )
 
@@ -135,7 +136,11 @@ func (f *Fighter) HopInfo(p *d2.Player) HopInfo {
 func (f *Fighter) moveSpec(p *d2.Player, r *MoveRule) (SkillSpec, string) {
 	sp, ok := KnownSkills(p, f.cat, f.keys)[r.Name]
 	switch {
-	case !ok || (sp.Key == "" && !f.castsByID()):
+	case !ok:
+		return sp, MoveUnknown
+	case sp.Hand == HandLeft && !f.swings():
+		return sp, MoveNoSelect // a hotkey selects only the right-hand skill
+	case sp.Hand != HandLeft && sp.Key == "" && !f.castsByID():
 		return sp, MoveUnknown
 	case f.expectDemoted(r.Name):
 		return sp, MoveDemoted
@@ -300,3 +305,5 @@ func (f *Fighter) NavHop(p *d2.Player) nav.TeleportHop {
 	h := f.HopInfo(p)
 	return nav.TeleportHop{Key: h.Key, Range: h.Range, MinHop: h.MinHop, Cost: h.Cost, Refused: h.Refused}
 }
+
+func (f *Fighter) swings() bool { _, ok := f.e.In.(swinger); return ok }

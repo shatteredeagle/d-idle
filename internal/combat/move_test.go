@@ -29,6 +29,7 @@ func moveWorld(t *testing.T, class d2.Class, build string, mode int, ids ...int)
 	}
 	h, w := newClassWorld(t, class, skills, keys, nil)
 	h.f.SetCatalog(cat)
+	h.f.e.In = &moveIn{Controller: h.f.e.In, w: w}
 	h.f.Build = Build(build)
 	h.f.e.Tune.Combat.DeliveryUpkeep = mode
 	w.snap.Player.X, w.snap.Player.Y = 100, 100
@@ -60,8 +61,8 @@ func TestHopInfo(t *testing.T) {
 	if hi := h.f.HopInfo(w.snap.Player); hi.Refused != MoveUnknown {
 		t.Fatalf("unknown: %+v", hi)
 	}
-	if len(ProfileFor(d2.Paladin, "").Moves) != 0 { // a class whose profile has no move row
-		t.Fatal("paladin default profile has a move row")
+	if len(ProfileFor(d2.Necromancer, "").Moves) != 0 { // a class whose profile has no move row
+		t.Fatal("necromancer default profile has a move row")
 	}
 }
 
@@ -128,3 +129,70 @@ func TestValidateMoves(t *testing.T) {
 		}
 	}
 }
+
+// Card dlv-move-melee: a Barbarian's Leap Attack (through the target) and a Paladin's Charge (at the target) close a
+// gap at 2, are logged at 1 and stay silent at 0; a target inside the gap or beyond the range gets no cast; the
+// Barbarian leaps out of a surround. Row added to combat.teleport-reposition for both classes.
+func TestGapClose(t *testing.T) {
+	for _, c := range []struct {
+		class   d2.Class
+		skill   int
+		through bool
+	}{{d2.Barbarian, idLeap, true}, {d2.Paladin, idCharge, false}} {
+		for _, mode := range []int{0, 1, 2} {
+			h, w := moveWorld(t, c.class, "", mode, c.skill)
+			if pr := h.f.profileFor(w.snap.Player); len(pr.Moves) == 0 {
+				t.Fatalf("profile %s has no move row", pr.ProfileID())
+			}
+			tg := Target{Unit: mon(300, 1, 110, 100), Dist: 10, Name: "Fallen"}
+			aimed, err := h.f.gapClose(w.snap, tg)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if aimed != (mode == 2) || (len(w.casts) > 0) != (mode == 2) {
+				t.Fatalf("%v mode %d: aimed %v casts %v", c.class, mode, aimed, w.casts)
+			}
+			if mode == 2 {
+				want := 110
+				if c.through {
+					want = 111
+				}
+				if w.castAt[0].X != want || h.f.MoveGaps() != 1 {
+					t.Fatalf("%v cast at %v, gaps %d", c.class, w.castAt[0], h.f.MoveGaps())
+				}
+			}
+			if mode == 1 && h.f.MoveShadowCasts() != 1 {
+				t.Fatalf("%v shadow %d", c.class, h.f.MoveShadowCasts())
+			}
+		}
+		h, w := moveWorld(t, c.class, "", 2, c.skill)
+		for _, d := range []float64{3, 40} { // inside minGap, beyond the range
+			if aimed, _ := h.f.gapClose(w.snap, Target{Unit: mon(300, 1, 100+int(d), 100), Dist: d}); aimed || len(w.casts) > 0 {
+				t.Fatalf("%v cast at distance %v", c.class, d)
+			}
+		}
+		h, w = moveWorld(t, c.class, "", 2) // skill not learned: refused, counted
+		if aimed, _ := h.f.gapClose(w.snap, Target{Unit: mon(300, 1, 110, 100), Dist: 10}); aimed {
+			t.Fatalf("%v cast an unknown skill", c.class)
+		}
+	}
+	h, w := moveWorld(t, d2.Barbarian, "", 2, idLeap)
+	surround(w, 5)
+	w.snap.Player.Life = 150
+	if acted, _ := h.f.moveTick(w.snap, newFightState()); !acted || len(w.casts) != 1 {
+		t.Fatalf("barbarian did not leap out of the surround: %v", w.casts)
+	}
+}
+
+// moveIn is the d2d-like backend of the move tests: the left hand casts by id (Swing), recorded as a cast.
+type moveIn struct {
+	input.Controller
+	w *nworld
+}
+
+func (m *moveIn) Swing(skill int, at input.Point) error {
+	m.w.casts, m.w.castAt = append(m.w.casts, "swing"), append(m.w.castAt, at)
+	return nil
+}
+
+func (m *moveIn) CastAt(key string, at input.Point) error { return m.w.CastAt(key, at) }

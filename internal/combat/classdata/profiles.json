@@ -313,6 +313,15 @@
     "Resist Fire": "f7",
     "Prayer": "f8"
    },
+   "moves": [
+    {
+     "name": "Charge",
+     "uses": ["gap"],
+     "range": 12,
+     "minGap": 5,
+     "source": "U judgment: range and gap are planning values; Charge targets a unit and the paladin must hold a melee weapon (live look pending)"
+    }
+   ],
    "melee": {
     "reach": 4,
     "holdMs": 600,
@@ -402,6 +411,15 @@
     "Prayer": "f7",
     "Thorns": "f8"
    },
+   "moves": [
+    {
+     "name": "Charge",
+     "uses": ["gap"],
+     "range": 12,
+     "minGap": 5,
+     "source": "U judgment: range and gap are planning values; Charge targets a unit and the paladin must hold a melee weapon (live look pending)"
+    }
+   ],
    "melee": {
     "reach": 4,
     "holdMs": 600,
@@ -741,6 +759,18 @@
     "Iron Skin": "f3",
     "Battle Command": "f4"
    },
+   "moves": [
+    {
+     "name": "Leap Attack",
+     "uses": ["gap", "escape"],
+     "range": 12,
+     "minGap": 6,
+     "through": 1,
+     "escapeSurround": 4,
+     "escapeLifePct": 55,
+     "source": "U judgment: range, gap and escape numbers are planning values; the landing rule of Leap Attack (a point, not a unit) is the live look of the move card"
+    }
+   ],
    "melee": {
     "reach": 4,
     "holdMs": 500,
@@ -927,6 +957,18 @@
     "Berserk": "f7",
     "Concentrate": "f8"
    },
+   "moves": [
+    {
+     "name": "Leap Attack",
+     "uses": ["gap", "escape"],
+     "range": 12,
+     "minGap": 6,
+     "through": 1,
+     "escapeSurround": 4,
+     "escapeLifePct": 55,
+     "source": "U judgment: range, gap and escape numbers are planning values; the landing rule of Leap Attack (a point, not a unit) is the live look of the move card"
+    }
+   ],
    "melee": {
     "reach": 4,
     "holdMs": 500,
