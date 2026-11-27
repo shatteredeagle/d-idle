@@ -75,7 +75,7 @@
 | reconnectux | proposed | - | `docs/onboarding.md`<br>`internal/watch/onboarding.go`<br>`internal/watch/web/panels/onboarding` | - |
 | palprofile | deferred | - | `docs/sme/class-paladin.md`<br>`docs/sme/class-early-game.md`<br>`internal/combat/classdata` | - |
 | testerdocs | deferred | - | `docs/tester-guide.md` | - |
-| testerreport | proposed | - | `deploy/d2d-container/tester-report.sh`<br>`docs/first-session.md` | - |
+| testerreport | proposed | - | `deploy/d2d-container/tester-report.sh`<br>`deploy/d2d-container/tester_report_test.go`<br>`docs/first-session.md` | - |
 | testerlicence | in-progress | - | `docs/tester-licence.md` | - |
 | testerpack | proposed | - | `tools/tester-pack.sh`<br>`docs/tester-guide.md` | - |
 | m3-merc | deferred | m3-merc | `internal/merc/**`<br>`internal/bot/merc_test.go`<br>`docs/merc-d2d.md`<br>`docs/probes/merc/**` | `soak-slot:3` |
@@ -198,14 +198,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 2947d96a6 11-27 15:34 `Merge agent/testerreport: testerreport: scrubbed tester report bundle, first-session doc (TASK-27)` (testerreport)
 - bb0a720a8 11-27 15:34 `Merge agent/closecards3: closecards3: third card cleanup pass` (closecards3)
 - 0dd5a9f51 11-27 15:34 `Merge agent/admit2: admit2: admission function shadow wiring, bot.admission knob (TASK-970 step 2)` (admit2)
+- 25030e532 11-27 15:32 `Merge branch 'main' into testerreport` (-)
 - 175037f1a 11-27 15:32 `Merge branch 'main' into closecards3` (-)
 - 8e0028717 11-27 15:32 `Merge branch 'main' into admit2` (-)
 - 7a5210b1c 11-27 15:21 `Merge agent/fliptool: fliptool: flip.py transport probe, --reflip, watcher heartbeat/unit, --commit-ledger (TASK-1062)` (fliptool)
 - 05db9a45b 11-27 15:21 `Merge agent/statusrefresh: statusrefresh: STATUS.md hand-written part rewritten (TASK-46)` (statusrefresh)
 - 0be1da55f 11-27 15:21 `Merge agent/playsession: playsession: tools/play-session.sh one-command LAN session (TASK-43)` (playsession)
 - 273435517 11-27 15:21 `Merge origin/main into closecards3 (task-766: take main, live AC2 still open)` (-)
-- 2ae395801 11-27 15:20 `Merge origin/main into admit2 (darklaunch.json: both rows kept)` (-)
-- 5f0a3af5a 11-27 15:19 `Merge branch 'main' into fliptool` (-)
 <!-- statusgen:end -->

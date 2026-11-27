@@ -438,7 +438,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [farmfallback.md](farmfallback.md): farmfallback: the gold farm as data, with a fallback
 - [farmloop.md](farmloop.md): The farm loop: reset a mostly cleared leveling zone with a fresh game (status: current (2026-11-15, agent farmloop). Shipped OFF (`bot.farmReset` 0): the simulation shows a small gain...)
 - [first-hour.md](first-hour.md): First hour: the daily table tool
-- [first-session.md](first-session.md): First play session guide (TASK-134) (status: written 2026-11-08 from docs on main only. Nothing here was run for this guide. Tags: V verified live (as...)
+- [first-session.md](first-session.md): First play session guide (TASK-134) (status: written 2026-11-08 from docs on main only; sections D, H and I brought up to date 2026-11-27 (TASK-27)...)
 - [fixbank.md](fixbank.md): FIXBANK: gold deposit and repair gold (card fix-bank) (status: current. Findings of the D3 drills (docs/probes/drills/2026-10-31-d3.txt); live proof is a drill rerun.)
 - [fixbelt.md](fixbelt.md): fixbelt: the Gate 1 rerun belt window
 - [fixbelt2.md](fixbelt2.md): fixbelt2: why potions stayed in the pack (post-fix soak 1) (status: code on branch agent/fixbelt2; live proof pending (drill variants below).)

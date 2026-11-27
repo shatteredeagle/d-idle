@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- testerreport: scrubbed tester report bundle, first-session doc (TASK-27) <!--sg:agent/testerreport-->
 - closecards3: third card cleanup pass <!--sg:agent/closecards3-->
 - admit2: admission function shadow wiring, bot.admission knob (TASK-970 step 2) <!--sg:agent/admit2-->
 - fliptool: flip.py transport probe, --reflip, watcher heartbeat/unit, --commit-ledger (TASK-1062) <!--sg:agent/fliptool-->

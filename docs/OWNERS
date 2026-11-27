@@ -168,6 +168,7 @@ deploy/d2d-container/compose.tester.yml  credit-runner  ghcrpublish
 deploy/d2d-container/context.sh  credit-runner  ghcrpublish
 deploy/d2d-container/tester-report.sh  credit-runner  testerreport
 deploy/d2d-container/tester_image_test.go  credit-runner  ghcrpublish
+deploy/d2d-container/tester_report_test.go  credit-runner  testerreport
 docs/arbiter.md  credit-runner  arbmig
 docs/arbiter.md  credit-runner  ticklog
 docs/archive  credit-runner  dietarchive
