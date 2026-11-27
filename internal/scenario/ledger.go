@@ -48,6 +48,7 @@ type LedgerRecord struct {
 	Lane       string   `json:"lane,omitempty"`
 	Load1      float64  `json:"load1,omitempty"`
 	Pace       float64  `json:"pace,omitempty"`
+	Parallel   int      `json:"parallel,omitempty"` // peak busy slots during the run (Provenance.Parallel)
 	VirtualMin float64  `json:"virtual_min"`
 	WallS      int      `json:"wall_s"`
 	Cut        bool     `json:"cut,omitempty"`
@@ -100,6 +101,7 @@ func NewLedgerRecord(r Result, c LedgerCtx) (LedgerRecord, error) {
 	}
 	if p := r.Prov; p != nil {
 		rec.BotCommit, rec.BotDirty, rec.D2DSHA256, rec.Host, rec.Load1, rec.Pace = p.BotCommit, p.BotDirty, p.D2DSHA256, p.Host, p.Load1, p.Pace
+		rec.Parallel = p.Parallel
 	}
 	if r.State != nil && r.State.Source != "none" {
 		n := r.State.WritesAfterStart

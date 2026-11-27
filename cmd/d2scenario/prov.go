@@ -3,11 +3,13 @@ package main
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"fmt"
 	"io"
 	"os"
 	"os/exec"
 	"strconv"
 	"strings"
+	"time"
 
 	"d2lod-bot/internal/scenario"
 )
@@ -55,4 +57,45 @@ func collectProv(bot string) *scenario.Provenance {
 		}
 	}
 	return p
+}
+
+// The runner logs the start and end of every exec-one in <out>/slots.log and tells the run where the log is and which
+// line is its own, so the run can record its peak slot load (the stability rule's "parallel 2", design section 2.7).
+const (
+	slotLogName = "slots.log"
+	slotLogEnv  = "PG_SLOT_LOG"
+	slotIDEnv   = "PG_SLOT_ID"
+)
+
+// slotParallel is the peak number of busy runs during this run, 0 when the run was not started by the runner.
+func slotParallel() int {
+	path, id := os.Getenv(slotLogEnv), os.Getenv(slotIDEnv)
+	if path == "" || id == "" {
+		return 0
+	}
+	b, err := os.ReadFile(path)
+	if err != nil {
+		return 0
+	}
+	return scenario.PeakParallel(b, id)
+}
+
+// logSlotStart writes this run's start line into the runner's slot log (nothing when not started by the runner).
+func logSlotStart(t time.Time) {
+	if path, id := os.Getenv(slotLogEnv), os.Getenv(slotIDEnv); path != "" && id != "" {
+		if err := appendRaw(path, scenario.SlotLogLine("start", id, t.UnixNano())); err != nil {
+			fmt.Fprintf(os.Stderr, "d2scenario: slot log: %v\n", err)
+		}
+	}
+}
+
+// appendRaw appends text in one O_APPEND write.
+func appendRaw(path, text string) error {
+	f, err := os.OpenFile(path, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0o644)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+	_, err = f.WriteString(text)
+	return err
 }
