@@ -1,10 +1,13 @@
 ---
 id: TASK-972
-title: 'townflip: P5 finish and flip town.plan: stage 2 on sandboxes, then stages 3 to 5'
-status: Proposed
+title: >-
+  townflip: P5 finish and flip town.plan: stage 2 on sandboxes, then stages 3 to
+  5
+status: In Progress
 assignee:
   - credit-runner
 created_date: '2026-11-26T03:54:00Z'
+updated_date: '2026-11-27T18:49:00Z'
 labels:
   - bot
   - chore
@@ -23,7 +26,7 @@ owns:
   - "internal/env/tuning_town.go"
 exclusive: []
 contracts: []
-result: "Not verified live. Stage 4 sell side built behind town.plan 4 (default stays 0): the sell chore keeps the plan line's max(target, min) potions belt plus pack, best tier first, the rest is surplus; tested offline on Sorceress and Paladin. Runbook with the flip sequence, live check list and counts table in the design doc. Stage 2 is on in the dev sandbox after a 45 minute bundle window only; the farm sandbox and the 24 hour window are not recorded, so no criterion is ticked. Stage 3 waits on the owner look and the malus-errand-gold scenario, the pickup side of stage 4 on town6, stage 5 on town8. Build-specific data lives in the supply profiles and the class belt plan, none in Go."
+result: "Not verified live. Stage 4 sell side built behind town.plan 4 (default stays 0): the sell chore keeps the plan line's max(target, min) potions belt plus pack, best tier first, the rest is surplus; tested offline on Sorceress and Paladin. Runbook with the flip sequence, live check list and counts table in the design doc. Stage 2 is on in the dev sandbox after a 45 minute bundle window only; the farm sandbox and the 24 hour window are not recorded, so no criterion is ticked. Stage 3 waits on the owner look and the malus-errand-gold scenario, the pickup side of stage 4 on town6, stage 5 on town8. Build-specific data lives in the supply profiles and the class belt plan, none in Go. Remaining (live): stage 2 on both sandboxes with the 24 h watch, and the per-stage default flips (ACs 1 and 2). Dependencies checked 2026-11-27: town5 (TASK-757) and town6 (TASK-758) stage code is merged."
 ---
 
 ## Description
