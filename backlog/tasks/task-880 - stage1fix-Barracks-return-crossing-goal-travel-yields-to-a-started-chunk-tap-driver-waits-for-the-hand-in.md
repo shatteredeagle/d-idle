@@ -1,10 +1,13 @@
 ---
 id: TASK-880
-title: 'stage1fix: Barracks return crossing, goal travel yields to a started chunk, tap driver waits for the hand-in'
-status: Proposed
+title: >-
+  stage1fix: Barracks return crossing, goal travel yields to a started chunk,
+  tap driver waits for the hand-in
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-23T09:02:00Z'
+updated_date: '2026-11-27T23:46:00Z'
 labels:
   - bot
   - bot-fix

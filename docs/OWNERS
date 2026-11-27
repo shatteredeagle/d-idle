@@ -156,9 +156,7 @@ cmd/d2scenario/ledger_test.go  credit-runner  pgpage
 cmd/d2scenario/main.go  credit-runner  pgpage
 cmd/d2scenario/main_test.go  credit-runner  pgearned
 cmd/d2scenario/run.go  live-agent  pgtaps
-cmd/d2scenario/tap.go  credit-runner  stage1fix
 cmd/d2scenario/tap.go  live-agent  pgtaps
-cmd/d2scenario/tap_test.go  credit-runner  stage1fix
 cmd/d2scenario/tap_test.go  live-agent  pgtaps
 cmd/d2scenario/validate.go  credit-runner  pgearned
 data/capabilities/  live-agent  dlv-stance-pack
@@ -223,7 +221,6 @@ docs/probes/classorder1.md  user  classorder1
 docs/probes/flipwave2.md  live-agent  flipwave2
 docs/probes/h1-baseline.md  user  h1baseline
 docs/probes/h3-verdict.md  user  h3verdict
-docs/probes/necromancer-act1-drill-2026-11-22.md  credit-runner  stage1fix
 docs/probes/provingground-act1more-2026-11-20.md  credit-runner  pgpage
 docs/probes/provingground-act1next-2026-11-20.md  credit-runner  pgpage
 docs/probes/provingground-cain-2026-11-19.md  credit-runner  pgpage
@@ -274,9 +271,7 @@ internal/bot/arbiter_control.go  live-agent  arbmig
 internal/bot/arbiter_control_test.go  live-agent  arbmig
 internal/bot/arbloop_test.go  live-agent  arbloop
 internal/bot/broke.go  live-agent  town5
-internal/bot/denreward_test.go  credit-runner  stage1fix
 internal/bot/goal.go  credit-runner  qdmatrix
-internal/bot/goal.go  credit-runner  stage1fix
 internal/bot/goal.go  live-agent  arbloop
 internal/bot/goal_acts_test.go  credit-runner  qdmatrix
 internal/bot/guided.go  credit-runner  campaign1
@@ -285,11 +280,9 @@ internal/bot/leveling.go  live-agent  town5
 internal/bot/loop.go  live-agent  arbmig
 internal/bot/questboard.go  credit-runner  qdmatrix
 internal/bot/questboard.go  credit-runner  racefix
-internal/bot/questboard.go  credit-runner  stage1fix
 internal/bot/questboard.go  live-agent  bsmdef
 internal/bot/questboard_s7b_test.go  credit-runner  qdmatrix
 internal/bot/questboard_test.go  credit-runner  racefix
-internal/bot/questboard_test.go  credit-runner  stage1fix
 internal/bot/routeguard.go  live-agent  bsmdef
 internal/bot/runner.go  credit-runner  campaign1
 internal/bot/shadow.go  live-agent  arbmig
@@ -368,9 +361,7 @@ internal/nav/  live-agent  dlv-move-tele
 internal/nav/act2hints.go  credit-runner  qdmatrix
 internal/nav/act2hints_test.go  credit-runner  qdmatrix
 internal/nav/exit.go  credit-runner  qdmatrix
-internal/nav/exit.go  credit-runner  stage1fix
 internal/nav/exit_test.go  credit-runner  qdmatrix
-internal/nav/exit_test.go  credit-runner  stage1fix
 internal/nav/exitgoal_test.go  credit-runner  qdmatrix
 internal/nav/gatedoor.go  credit-runner  qdmatrix
 internal/nav/gatedoor_test.go  credit-runner  qdmatrix
@@ -513,10 +504,8 @@ tools/provingground/run.sh  credit-runner  pgledgeron
 tools/provingground/scenarios/board.json  live-agent  bsmdef
 tools/provingground/scenarios/cain.json  credit-runner  cainfix3
 tools/provingground/scenarios/cain.json  credit-runner  pgearned
-tools/provingground/scenarios/navexit.json  credit-runner  stage1fix
 tools/provingground/scenarios/necro-acts.json  live-agent  epic-class-necromancer
 tools/provingground/scenarios/necro-epic.json  live-agent  epic-class-necromancer
-tools/provingground/scenarios/necro.json  credit-runner  stage1fix
 tools/provingground/scenarios/questdrill.json  credit-runner  qdmatrix
 tools/provingground/scenarios/tiers.json  live-agent  epic-class-necromancer
 tools/provingground/scenarios/townplan.json  live-agent  town5
