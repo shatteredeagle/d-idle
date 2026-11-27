@@ -242,14 +242,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- acf7e202c 11-27 01:21 `Merge agent/minions: Merge branch 'main' into dlv-upkeep-minions` (minions)
+- 47d55ac65 11-27 01:19 `Merge branch 'main' into dlv-upkeep-minions` (-)
 - a49fdac79 11-27 01:15 `Merge agent/inputl3: Merge branch 'main' into inputl3` (inputl3)
 - 61bca5cdb 11-27 01:13 `Merge branch 'main' into inputl3` (-)
+- b4f120b15 11-27 01:06 `Merge branch 'main' into dlv-upkeep-minions` (-)
 - 46a2302b0 11-27 01:06 `Merge branch 'main' into inputl3` (-)
 - 4ef40348b 11-27 01:02 `Merge agent/pgstability: Merge branch 'main' into pgstability` (pgstability)
 - e867caffa 11-27 01:00 `Merge branch 'main' into pgstability` (-)
 - 4626dd212 11-27 00:46 `Merge agent/town6: Merge branch 'main' into town6` (town6)
 - 7217351dc 11-27 00:44 `Merge branch 'main' into town6` (-)
-- d3a579824 11-27 00:39 `Merge agent/upkeep: Merge branch 'main' into dlv-upkeep-state` (upkeep)
-- ff87b2ee9 11-27 00:39 `Merge agent/proptest1: Merge branch 'main' into proptest1` (proptest1)
-- d7515ab9a 11-27 00:37 `Merge branch 'main' into dlv-upkeep-state` (-)
 <!-- statusgen:end -->
