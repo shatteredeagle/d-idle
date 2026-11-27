@@ -1467,6 +1467,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - cardsync: card statuses synced with git, stale cards closed (TASK-1029, merged 2026-11-26, acceptance 1 of 1): card statuses synced with git, stale cards closed <!--sg:agent/cardsync-->
 - loophang: the d2bot watchdog counts kills and xp as a heartbeat (TASK-1030, merged 2026-11-26, acceptance 2 of 2): The d2bot watchdog now counts a kill, an xp gain or a level up as a heartbeat, so a long Den of Evil clear no longer gets the bot restarted after ten minutes while it keeps killing; a hung step is still caught <!--sg:agent/loophang-->
 - savefix: a managed d2d loads a saved hero, never creates over it (TASK-1031, merged 2026-11-26, acceptance 2 of 2): a managed d2d loads an existing save instead of creating a new hero over it after a bot restart <!--sg:agent/savefix-->
+- ticklog: T4 recorded sessions: one tick line per second with the facts, d2arbite (TASK-981, merged 2026-11-26, acceptance 1 of 2): Tick line behind a new dark-launch knob, default off; the arbiter replay reads tick lines and skips minute lines then; offline tests only, no sandbox night yet <!--sg:agent/ticklog-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
