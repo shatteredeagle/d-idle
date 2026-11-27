@@ -169,11 +169,9 @@ cmd/d2bot/task_test.go  credit-runner  qdmatrix
 cmd/d2bot/vaultkeep.go  credit-runner  sellall
 cmd/d2firsthour/  live-agent  firsthour
 cmd/d2scenario/  credit-runner  arbmig
-cmd/d2scenario/herospend_test.go  credit-runner  necroteeth
 cmd/d2scenario/ledger.go  credit-runner  pgpage
 cmd/d2scenario/ledger_test.go  credit-runner  pgpage
 cmd/d2scenario/main.go  credit-runner  pgpage
-cmd/d2scenario/run.go  credit-runner  necroteeth
 cmd/d2scenario/run.go  credit-runner  pgtaps
 cmd/d2scenario/tap.go  credit-runner  handinbtn
 cmd/d2scenario/tap.go  credit-runner  pgtaps
@@ -181,8 +179,6 @@ cmd/d2scenario/tap.go  credit-runner  stage1fix
 cmd/d2scenario/tap_test.go  credit-runner  handinbtn
 cmd/d2scenario/tap_test.go  credit-runner  pgtaps
 cmd/d2scenario/tap_test.go  credit-runner  stage1fix
-cmd/d2scenario/validate.go  credit-runner  necroteeth
-cmd/d2scenario/validate_test.go  credit-runner  necroteeth
 data/capabilities/  credit-runner  dlv-stance-pack
 data/darklaunch.json  credit-runner  arbmig
 data/darklaunch.json  credit-runner  dlv-upkeep-state
@@ -258,6 +254,7 @@ docs/plan/data/admission.json  credit-runner  admit1
 docs/plan/data/earlyroutes.json  credit-runner  admit1
 docs/plan/data/povertyfarm.json  credit-runner  admit1
 docs/play-session.md  credit-runner  playsession
+docs/probes/act2-stepexec-drill-2026-11-27.md  credit-runner  tyrael
 docs/probes/bot-cpu-live-2026-11-16.md  credit-runner  botcpulive
 docs/probes/checkpoint-live-drill.md  live-agent  ckptlive
 docs/probes/classorder1.md  user  classorder1
@@ -291,7 +288,6 @@ docs/process/pg-ledger-ops.md  credit-runner  pgledgeron
 docs/process/pg-ops-mgonejob.md  credit-runner  mgonejob
 docs/process/pg-ops-pgnightly.md  credit-runner  pgnightly
 docs/process/proving-ground-status.md  credit-runner  pgpage
-docs/process/proving-ground.md  credit-runner  necroteeth
 docs/pursuers.md  credit-runner  pursuers
 docs/quest-givers.md  credit-runner  campaign1
 docs/quest-hints.md  live-agent  questdrill
@@ -402,7 +398,6 @@ internal/combat/  credit-runner  dlv-upkeep-minions
 internal/combat/  credit-runner  dlv-upkeep-state
 internal/combat/  credit-runner  dlv-whirl
 internal/combat/castfirst.go  credit-runner  maphistoryC
-internal/combat/classdata/profiles.json  credit-runner  necroteeth
 internal/combat/fight.go  credit-runner  maphistory
 internal/combat/fight.go  credit-runner  maphistoryC
 internal/combat/fightend.go  credit-runner  maphistory
@@ -410,7 +405,6 @@ internal/combat/fightend.go  credit-runner  maphistoryC
 internal/combat/fighter.go  credit-runner  inputl3
 internal/combat/fighter.go  credit-runner  maphistory
 internal/combat/fighter.go  credit-runner  maphistoryC
-internal/combat/necro_test.go  credit-runner  necroteeth
 internal/combat/portalverb.go  credit-runner  inputl3
 internal/combat/portalverb_test.go  credit-runner  inputl3
 internal/combat/reach.go  credit-runner  maphistoryC
@@ -469,7 +463,6 @@ internal/input/useitem_test.go  credit-runner  inputl3
 internal/invdesk/mercverbs.go  credit-runner  uib9
 internal/invdesk/mercverbs_test.go  credit-runner  uib9
 internal/invdesk/sets.go  credit-runner  uib9
-internal/leveler/mainattack_test.go  credit-runner  necroteeth
 internal/nav/  credit-runner  dlv-move-tele
 internal/nav/act2hints.go  credit-runner  qdmatrix
 internal/nav/act2hints_test.go  credit-runner  qdmatrix
@@ -527,10 +520,7 @@ internal/scenario/pgpage.go  credit-runner  pgpage
 internal/scenario/pgpage_test.go  credit-runner  pgpage
 internal/scenario/placefix_test.go  credit-runner  placefix
 internal/scenario/result.go  credit-runner  pgtaps
-internal/scenario/scenario.go  credit-runner  necroteeth
 internal/scenario/scenario.go  credit-runner  qdmatrix
-internal/scenario/scenario_test.go  credit-runner  necroteeth
-internal/scenario/setup.go  credit-runner  necroteeth
 internal/scenario/setup.go  credit-runner  qdmatrix
 internal/scenario/setup_test.go  credit-runner  qdmatrix
 internal/scenario/taps.go  credit-runner  pgtaps
@@ -568,6 +558,9 @@ internal/town  credit-runner  town7
 internal/town  credit-runner  town8
 internal/town/chores.go  credit-runner  repairtrip
 internal/town/chores.go  credit-runner  townflip
+internal/town/fieldnpc_int_test.go  credit-runner  tyrael
+internal/town/fieldnpc_test.go  credit-runner  tyrael
+internal/town/npc.go  credit-runner  tyrael
 internal/town/portalverb.go  credit-runner  inputl3
 internal/town/portalverb_export_test.go  credit-runner  inputl3
 internal/town/portalverb_test.go  credit-runner  inputl3
@@ -722,6 +715,7 @@ tools/provingground/scenarios/necro.json  credit-runner  stage1fix
 tools/provingground/scenarios/questdrill.json  credit-runner  placefix
 tools/provingground/scenarios/questdrill.json  credit-runner  qdmatrix
 tools/provingground/scenarios/stepexec-act2.json  credit-runner  placefix
+tools/provingground/scenarios/stepexec-act2.json  credit-runner  tyrael
 tools/provingground/scenarios/tiers.json  credit-runner  dlv-cast-verbs
 tools/provingground/scenarios/townplan.json  credit-runner  town5
 tools/provingground/scenarios/vaultsellall.json  credit-runner  sellall
