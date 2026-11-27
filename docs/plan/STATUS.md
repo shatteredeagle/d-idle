@@ -41,6 +41,7 @@
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | diffbaal | proposed | - | `internal/quest/baaldone.go`<br>`internal/quest/baaldone_test.go` | - |
 | releasenotes-next | proposed | - | `docs/releases/next-draft.md` | - |
+| gearcopy | proposed | - | `internal/gear`<br>`docs/gear.md` | - |
 | flakearb | proposed | - | `internal/bot/arbiter_control_test.go` | - |
 | logsink | proposed | - | `internal/logx`<br>`cmd/d2bot/main.go`<br>`cmd/d2bot/opscmd.go`<br>`cmd/d2bot/logsink_test.go`<br>`docs/ops` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
@@ -197,6 +198,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 2b18a5d96 11-27 17:34 `Merge agent/gearcopy: gearcopy: gear scoring reads plandata tables, drifted copies deleted (TASK-1067)` (gearcopy)
+- 5b3c8c61e 11-27 17:32 `Merge branch 'main' into gearcopy` (-)
 - d06f55ae6 11-27 17:25 `Merge agent/flakearb: flakearb: fix TestArbiterControlGoldFarmAndRecovery race (test starts in wrong area) (TASK-1068)` (flakearb)
 - 72a4592ae 11-27 17:24 `Merge branch 'main' into flakearb` (-)
 - dc31847b9 11-27 17:16 `Merge agent/fieldstate: fieldstate: return-to-field leg hands over to the fighter when hostiles are near (TASK-1070)` (fieldstate)
@@ -205,6 +208,4 @@
 - 12aa8855a 11-27 17:16 `Merge agent/palapply: palapply: SME Paladin/Sorceress data changes (zeal table, Aim/Concentration, bands, mana_heavy)` (palapply)
 - 71d7aa25f 11-27 17:13 `Merge branch 'main' into fieldstate` (-)
 - cec3358c7 11-27 17:13 `Merge branch 'main' into logsink` (-)
-- f032ba048 11-27 17:13 `Merge branch 'main' into sandboxlogs` (-)
-- 4a10332d4 11-27 17:13 `Merge branch 'main' into palapply` (-)
 <!-- statusgen:end -->
