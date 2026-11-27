@@ -9,6 +9,7 @@ labels:
   - bot
   - bug
 dependencies: []
+knob_net: owner-ok
 priority: medium
 ordinal: 515000
 card: "questresume"
