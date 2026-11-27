@@ -175,6 +175,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [sme/README.md](sme/README.md): docs/sme: Diablo II knowledge base (subject-matter notes)
 - [audit-bot-vs-human.md](sme/audit-bot-vs-human.md): Audit: our bot's design against what a veteran Diablo II player does
 - [blood-raven-caster.md](sme/blood-raven-caster.md): Blood Raven for casters (Sorceress, Necromancer, Druid), classic 1.14d Normal
+- [breakpoints-per-class.md](sme/breakpoints-per-class.md): FCR / FHR / FBR / IAS breakpoints per class: cross-check against LoD sources
 - [builds-endgame-amazon-farming.md](sme/builds-endgame-amazon-farming.md): SME: endgame Amazon builds and farming runs/drop knowledge, classic 1.14d softcore single player
 - [builds-endgame-casters.md](sme/builds-endgame-casters.md): SME: endgame builds, caster classes (Sorceress, Necromancer, Druid), classic 1.14d softcore single player
 - [builds-endgame-melee.md](sme/builds-endgame-melee.md): SME: endgame builds, melee classes (Paladin, Barbarian, Assassin), classic 1.14d softcore single player
@@ -197,6 +198,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [mechanics-combat.md](sme/mechanics-combat.md): D2 SME KB: core combat mechanics (classic LoD 1.14d)
 - [mechanics-items-drops.md](sme/mechanics-items-drops.md): D2 SME KB: items, treasure classes, magic find, gold and shops (classic LoD 1.14d)
 - [mechanics-progression.md](sme/mechanics-progression.md): D2 SME KB: progression (XP, levels, areas, difficulty, resists), classic LoD 1.14d
+- [merc-auras.md](sme/merc-auras.md): Mercenary skills and aura levels per act and difficulty (classic LoD 1.14d)
 - [mercenary.md](sme/mercenary.md): Mercenaries in classic LoD 1.14d: SME reference for the hire/keep-alive bot (MERCRESEARCH, 2026-10-30)
 - [pace-and-formulas.md](sme/pace-and-formulas.md): D2 LoD 1.14d pace and formula lookup (Normal Act 1 to Act 2 gate; Paladin and Sorceress)
 - [pace-tables.md](sme/pace-tables.md): Pace tables: human and speedrun reference for soak milestones (classic LoD 1.14d, offline single player)
@@ -206,6 +208,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [play-economy.md](sme/play-economy.md): Play patterns 2: gold, shopping, inventory and town chores
 - [play-safety.md](sme/play-safety.md): Play patterns 3: what kills characters, and what humans do about it
 - [potion-policy.md](sme/potion-policy.md): Potion and belt policy (d2-sme review, 2026-10-29)
+- [resist-floors.md](sme/resist-floors.md): Resist floors per difficulty (classic LoD 1.14d)
 - [snaplib.md](snaplib.md): Snapshot library (d2restore)
 - [spec-skip-audit.md](spec-skip-audit.md): Audit of earlier behavioural skip_specs cards (status: audit of card spec-skip-audit (2026-10-31). Nothing here is a spec; the needs-spec rows are a backlog for...)
 

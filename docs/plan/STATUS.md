@@ -192,6 +192,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 2b0d2f671 11-27 17:48 `Merge agent/smegaps: smegaps: sourced resist floors, merc auras, FCR/FHR/FBR tables (docs/sme)` (smegaps)
+- 9a5cafcba 11-27 17:46 `Merge branch 'main' into smegaps` (-)
 - 6a81a0526 11-27 17:34 `Merge agent/deployplan: deployplan: sandbox deploy runbook (docs)` (deployplan)
 - 8ab80f693 11-27 17:34 `Merge agent/cardfix2: cardfix2: card hygiene redo, live-queue doc` (cardfix2)
 - 594f488a9 11-27 17:34 `Merge agent/questresume: questresume: park resume policy (dark), paused visibility, campaign counter, starved cause (TASK-1071)` (questresume)
@@ -200,6 +202,4 @@
 - 728b2a126 11-27 17:32 `Merge branch 'main' into cardfix2` (-)
 - 0ea8b753c 11-27 17:32 `Merge branch 'main' into questresume` (-)
 - 5b3c8c61e 11-27 17:32 `Merge branch 'main' into gearcopy` (-)
-- d06f55ae6 11-27 17:25 `Merge agent/flakearb: flakearb: fix TestArbiterControlGoldFarmAndRecovery race (test starts in wrong area) (TASK-1068)` (flakearb)
-- 72a4592ae 11-27 17:24 `Merge branch 'main' into flakearb` (-)
 <!-- statusgen:end -->

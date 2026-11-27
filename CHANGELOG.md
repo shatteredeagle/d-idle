@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- smegaps: sourced resist floors, merc auras, FCR/FHR/FBR tables (docs/sme) <!--sg:agent/smegaps-->
 - deployplan: sandbox deploy runbook (docs) <!--sg:agent/deployplan-->
 - cardfix2: card hygiene redo, live-queue doc <!--sg:agent/cardfix2-->
 - questresume: park resume policy (dark), paused visibility, campaign counter, starved cause (TASK-1071) <!--sg:agent/questresume-->
