@@ -21,6 +21,7 @@ owns:
 exclusive:
   - "instance:i4"
 contracts: []
+result: " closecards3: #1, #2 not ticked, superseded by the awaydrill card TASK-248 and the sessions card (card notes)."
 ---
 
 ## Description

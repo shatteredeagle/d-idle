@@ -1,0 +1,546 @@
+{
+ "version": "didle.scenario/1",
+ "scenarios": [
+  {
+   "id": "points.necro-leveling-normal30-lands-at-30",
+   "title": "Necromancer table necromancer_leveling_normal30: at clvl 30 the planned skill points are in the tree",
+   "kind": "behaviour",
+   "tier": "full",
+   "covers": [
+    "points.verb"
+   ],
+   "touches": [
+    "internal/plandata/build-necromancer_leveling_normal30.json",
+    "internal/leveler/",
+    "internal/points/"
+   ],
+   "pre": {
+    "level": 30
+   },
+   "trigger": {
+    "goals": "campaign",
+    "build": "necromancer_leveling_normal30",
+    "knobs": {
+     "resource.pointsDecisions": 1
+    }
+   },
+   "budget": {
+    "virtual_min": 10
+   },
+   "matrix": {
+    "classes": [
+     "Necromancer"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "provenance": "SETUP: level 30 with the points a played level gives (29 level points). Reachable by play. CHEATED setup: mechanics evidence only. Card necroepic.",
+   "notes": "Clone of points.necro-summoner-lands-at-30 for table necromancer_leveling_normal30. Table sums by clvl 30 (rows with clvl <= 30): {\"Teeth\": 10, \"Clay Golem\": 1, \"Amplify Damage\": 1, \"Iron Maiden\": 1, \"Bone Armor\": 1, \"Bone Wall\": 3, \"Corpse Explosion\": 12, \"Bone Spear\": 3}. NOT run yet.",
+   "assert": [
+    {
+     "kind": "stat_between",
+     "code": "skillsspent",
+     "min": 25,
+     "max": 33,
+     "why": "the table's points were spent (29 level points; the quest points are not granted by the setup)"
+    },
+    {
+     "kind": "skill_points",
+     "skill": 74,
+     "min": 8,
+     "at_level": 30,
+     "why": "Corpse Explosion (id 74): table has 12 by clvl 30, 4 quest points are not granted"
+    },
+    {
+     "kind": "skill_points",
+     "skill": 67,
+     "min": 6,
+     "at_level": 30,
+     "why": "Teeth (id 67): table has 10 by clvl 30, 4 quest points are not granted"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "class-aware start.*levelerBuild=necromancer_leveling_normal30",
+     "min": 1,
+     "why": "the bot played the selected table"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "id": "points.necro-summoner-normal30-lands-at-30",
+   "title": "Necromancer table necromancer_summoner_normal30: at clvl 30 the planned skill points are in the tree",
+   "kind": "behaviour",
+   "tier": "full",
+   "covers": [
+    "points.verb"
+   ],
+   "touches": [
+    "internal/plandata/build-necromancer_summoner_normal30.json",
+    "internal/leveler/",
+    "internal/points/"
+   ],
+   "pre": {
+    "level": 30
+   },
+   "trigger": {
+    "goals": "campaign",
+    "build": "necromancer_summoner_normal30",
+    "knobs": {
+     "resource.pointsDecisions": 1
+    }
+   },
+   "budget": {
+    "virtual_min": 10
+   },
+   "matrix": {
+    "classes": [
+     "Necromancer"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "provenance": "SETUP: level 30 with the points a played level gives (29 level points). Reachable by play. CHEATED setup: mechanics evidence only. Card necroepic.",
+   "notes": "Clone of points.necro-summoner-lands-at-30 for table necromancer_summoner_normal30. Table sums by clvl 30 (rows with clvl <= 30): {\"Raise Skeleton\": 8, \"Skeleton Mastery\": 7, \"Teeth\": 1, \"Clay Golem\": 1, \"Amplify Damage\": 1, \"Raise Skeletal Mage\": 8, \"Bone Armor\": 1, \"Corpse Explosion\": 5}. NOT run yet.",
+   "assert": [
+    {
+     "kind": "stat_between",
+     "code": "skillsspent",
+     "min": 25,
+     "max": 33,
+     "why": "the table's points were spent (29 level points; the quest points are not granted by the setup)"
+    },
+    {
+     "kind": "skill_points",
+     "skill": 70,
+     "min": 4,
+     "at_level": 30,
+     "why": "Raise Skeleton (id 70): table has 8 by clvl 30, 4 quest points are not granted"
+    },
+    {
+     "kind": "skill_points",
+     "skill": 80,
+     "min": 4,
+     "at_level": 30,
+     "why": "Raise Skeletal Mage (id 80): table has 8 by clvl 30, 4 quest points are not granted"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "class-aware start.*levelerBuild=necromancer_summoner_normal30",
+     "min": 1,
+     "why": "the bot played the selected table"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "id": "points.necro-summoner-sme-lands-at-30",
+   "title": "Necromancer table necromancer_summoner_sme: at clvl 30 the planned skill points are in the tree",
+   "kind": "behaviour",
+   "tier": "full",
+   "covers": [
+    "points.verb"
+   ],
+   "touches": [
+    "internal/plandata/build-necromancer_summoner_sme.json",
+    "internal/leveler/",
+    "internal/points/"
+   ],
+   "pre": {
+    "level": 30
+   },
+   "trigger": {
+    "goals": "campaign",
+    "build": "necromancer_summoner_sme",
+    "knobs": {
+     "resource.pointsDecisions": 1
+    }
+   },
+   "budget": {
+    "virtual_min": 10
+   },
+   "matrix": {
+    "classes": [
+     "Necromancer"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "provenance": "SETUP: level 30 with the points a played level gives (29 level points). Reachable by play. CHEATED setup: mechanics evidence only. Card necroepic.",
+   "notes": "Clone of points.necro-summoner-lands-at-30 for table necromancer_summoner_sme. Table sums by clvl 30 (rows with clvl <= 30): {\"Raise Skeleton\": 10, \"Skeleton Mastery\": 10, \"Clay Golem\": 1, \"Raise Skeletal Mage\": 5, \"Amplify Damage\": 1, \"Bone Armor\": 3, \"BloodGolem\": 1, \"IronGolem\": 1, \"Revive\": 1}. NOT run yet.",
+   "assert": [
+    {
+     "kind": "stat_between",
+     "code": "skillsspent",
+     "min": 25,
+     "max": 33,
+     "why": "the table's points were spent (29 level points; the quest points are not granted by the setup)"
+    },
+    {
+     "kind": "skill_points",
+     "skill": 69,
+     "min": 6,
+     "at_level": 30,
+     "why": "Skeleton Mastery (id 69): table has 10 by clvl 30, 4 quest points are not granted"
+    },
+    {
+     "kind": "skill_points",
+     "skill": 70,
+     "min": 6,
+     "at_level": 30,
+     "why": "Raise Skeleton (id 70): table has 10 by clvl 30, 4 quest points are not granted"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "class-aware start.*levelerBuild=necromancer_summoner_sme",
+     "min": 1,
+     "why": "the bot played the selected table"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "id": "points.necro-poison-nova-sme-lands-at-30",
+   "title": "Necromancer table necromancer_poison_nova_sme: at clvl 30 the planned skill points are in the tree",
+   "kind": "behaviour",
+   "tier": "full",
+   "covers": [
+    "points.verb"
+   ],
+   "touches": [
+    "internal/plandata/build-necromancer_poison_nova_sme.json",
+    "internal/leveler/",
+    "internal/points/"
+   ],
+   "pre": {
+    "level": 30
+   },
+   "trigger": {
+    "goals": "campaign",
+    "build": "necromancer_poison_nova_sme",
+    "knobs": {
+     "resource.pointsDecisions": 1
+    }
+   },
+   "budget": {
+    "virtual_min": 10
+   },
+   "matrix": {
+    "classes": [
+     "Necromancer"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "provenance": "SETUP: level 30 with the points a played level gives (29 level points). Reachable by play. CHEATED setup: mechanics evidence only. Card necroepic.",
+   "notes": "Clone of points.necro-summoner-lands-at-30 for table necromancer_poison_nova_sme. Table sums by clvl 30 (rows with clvl <= 30): {\"Teeth\": 1, \"Bone Armor\": 1, \"Amplify Damage\": 1, \"Poison Dagger\": 20, \"Corpse Explosion\": 1, \"Poison Explosion\": 1, \"Bone Spear\": 5, \"Clay Golem\": 1, \"Iron Maiden\": 1, \"Poison Nova\": 1}. NOT run yet.",
+   "assert": [
+    {
+     "kind": "stat_between",
+     "code": "skillsspent",
+     "min": 25,
+     "max": 33,
+     "why": "the table's points were spent (29 level points; the quest points are not granted by the setup)"
+    },
+    {
+     "kind": "skill_points",
+     "skill": 73,
+     "min": 16,
+     "at_level": 30,
+     "why": "Poison Dagger (id 73, S: docs/research/nec-skill-trace.md, d2d skills.txt read; class base 66 + 7): table has 20 by clvl 30, 4 quest points are not granted"
+    },
+    {
+     "kind": "skill_points",
+     "skill": 84,
+     "min": 1,
+     "at_level": 30,
+     "why": "Bone Spear (id 84, V: docs/research/nec-skill-trace.md Q4 ran it by id; class base 66 + 18): table has 5 by clvl 30, 4 quest points are not granted"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "class-aware start.*levelerBuild=necromancer_poison_nova_sme",
+     "min": 1,
+     "why": "the bot played the selected table"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "id": "points.necro-summoner-endgame90-lands-at-30",
+   "title": "Necromancer table necromancer_summoner_endgame90: at clvl 30 the planned skill points are in the tree",
+   "kind": "behaviour",
+   "tier": "full",
+   "covers": [
+    "points.verb"
+   ],
+   "touches": [
+    "internal/plandata/build-necromancer_summoner_endgame90.json",
+    "internal/leveler/",
+    "internal/points/"
+   ],
+   "pre": {
+    "level": 30
+   },
+   "trigger": {
+    "goals": "campaign",
+    "build": "necromancer_summoner_endgame90",
+    "knobs": {
+     "resource.pointsDecisions": 1
+    }
+   },
+   "budget": {
+    "virtual_min": 10
+   },
+   "matrix": {
+    "classes": [
+     "Necromancer"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "provenance": "SETUP: level 30 with the points a played level gives (29 level points). Reachable by play. CHEATED setup: mechanics evidence only. Card necroepic.",
+   "notes": "Clone of points.necro-summoner-lands-at-30 for table necromancer_summoner_endgame90. Table sums by clvl 30 (rows with clvl <= 30): {\"Raise Skeleton\": 13, \"Skeleton Mastery\": 6, \"Teeth\": 1, \"Amplify Damage\": 1, \"Clay Golem\": 1, \"Bone Armor\": 1, \"Corpse Explosion\": 10}. NOT run yet.",
+   "assert": [
+    {
+     "kind": "stat_between",
+     "code": "skillsspent",
+     "min": 25,
+     "max": 33,
+     "why": "the table's points were spent (29 level points; the quest points are not granted by the setup)"
+    },
+    {
+     "kind": "skill_points",
+     "skill": 70,
+     "min": 9,
+     "at_level": 30,
+     "why": "Raise Skeleton (id 70): table has 13 by clvl 30, 4 quest points are not granted"
+    },
+    {
+     "kind": "skill_points",
+     "skill": 74,
+     "min": 6,
+     "at_level": 30,
+     "why": "Corpse Explosion (id 74): table has 10 by clvl 30, 4 quest points are not granted"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "class-aware start.*levelerBuild=necromancer_summoner_endgame90",
+     "min": 1,
+     "why": "the bot played the selected table"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "pre": {},
+   "kind": "e2e",
+   "tier": "nightly",
+   "covers": [
+    "combat.fight"
+   ],
+   "touches": [
+    "internal/combat/",
+    "internal/bot/",
+    "internal/leveler/"
+   ],
+   "needs": [
+    "read.minions"
+   ],
+   "matrix": {
+    "classes": [
+     "Necromancer"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "id": "necro.level-1-30",
+   "title": "Fresh Necromancer levels from clvl 1 to 30 on the default table, zero setup writes (AC 2 and 3)",
+   "trigger": {
+    "goals": "reach:30",
+    "knobs": {
+     "combat.minionRead": 1,
+     "quests.board": 1,
+     "resource.pointsDecisions": 1
+    }
+   },
+   "budget": {
+    "virtual_min": 700,
+    "wall_min": 240
+   },
+   "provenance": "No setup write: a fresh level 1 hero, town start. Not CHEATED if no_writes holds.",
+   "notes": "Card necroepic. Default table (necromancer_summoner_normal30). NOT run yet; the ceiling and the budget are guesses (U): the 400 virtual minutes of necro.act1-earned reach clvl 10 to 20 at best.",
+   "assert": [
+    {
+     "kind": "level_at_least",
+     "min": 30,
+     "why": "AC 2: leveling plan clvl 1 to 30"
+    },
+    {
+     "kind": "stat_between",
+     "code": "skillsspent",
+     "min": 25,
+     "max": 33,
+     "why": "AC 3: every skill point spent by the plan"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 6,
+     "why": "survival gate: no death spiral (U ceiling; ADR 0005 judges by streak, the invariant monitor is the verdict)"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "pre": {},
+   "kind": "e2e",
+   "tier": "nightly",
+   "covers": [
+    "combat.fight"
+   ],
+   "touches": [
+    "internal/combat/",
+    "internal/bot/",
+    "internal/leveler/"
+   ],
+   "needs": [
+    "read.minions"
+   ],
+   "matrix": {
+    "classes": [
+     "Necromancer"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "id": "necro.earned-act2",
+   "title": "Earned Acts 1 and 2: a fresh Necromancer through Andariel and the Act 2 quests toward Duriel, zero setup writes (AC 5, 6)",
+   "trigger": {
+    "goals": "campaign:normal_act2",
+    "knobs": {
+     "combat.minionRead": 1,
+     "quests.board": 1,
+     "resource.pointsDecisions": 1
+    }
+   },
+   "budget": {
+    "virtual_min": 1500,
+    "wall_min": 500
+   },
+   "provenance": "No setup write: fresh hero. Not CHEATED if no_writes holds.",
+   "notes": "Card necroepic. Goal string campaign:normal_act2 exists (V: internal/task/act2_campaign.go); normal_act3 to normal_act5 exist the same way, so the Act 3 to 5 earned rows are the same scenario with the goal changed. The Act 2 level floor is a guess (U). NOT run yet.",
+   "assert": [
+    {
+     "kind": "level_at_least",
+     "min": 24,
+     "why": "a played Act 2 reaches clvl 24 at the least (U)"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^Entered Lut Gholein",
+     "min": 1,
+     "why": "Act 2 entered"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "pre": {
+    "level": 14,
+    "gold": 3000,
+    "start": "field",
+    "area": 3,
+    "items": [
+     {
+      "code": "hp1",
+      "count": 8
+     },
+     {
+      "code": "mp1",
+      "count": 8
+     }
+    ],
+    "belt": [
+     "hp1",
+     "hp1",
+     "mp1",
+     "mp1"
+    ]
+   },
+   "kind": "e2e",
+   "tier": "nightly",
+   "covers": [
+    "combat.fight"
+   ],
+   "touches": [
+    "internal/combat/",
+    "internal/bot/",
+    "internal/leveler/"
+   ],
+   "needs": [
+    "read.minions"
+   ],
+   "matrix": {
+    "classes": [
+     "Necromancer"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "id": "necro.soak-3h-kit",
+   "title": "Necromancer 3 virtual hours from clvl 14: kit and economy, no death spiral (AC 4)",
+   "trigger": {
+    "goals": "reach:30",
+    "knobs": {
+     "combat.minionRead": 1,
+     "quests.board": 1,
+     "resource.pointsDecisions": 1
+    }
+   },
+   "budget": {
+    "virtual_min": 180,
+    "wall_min": 70
+   },
+   "provenance": "CHEATED: level 14, gold, potions and the field start by SETUP verbs, mechanics only.",
+   "notes": "Card necroepic. Caster belt (two life, two mana). Report-only soak shape like soak.fault.*. NOT run yet.",
+   "assert": [
+    {
+     "kind": "level_at_least",
+     "min": 14,
+     "why": "alive and not below the start level; the invariant monitor is the verdict"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 3,
+     "why": "no death spiral in three hours (U ceiling)"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  }
+ ]
+}

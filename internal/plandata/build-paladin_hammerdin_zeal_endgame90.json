@@ -1,6 +1,7 @@
 {
  "build": "paladin_hammerdin_zeal_endgame90",
  "class": "paladin",
+ "combat": "hammerdin_zeal",
  "schema": "per-clvl allocation, same shape as internal/gear/builds/*.json (leveler.ParseBuild) plus main_attack; rows clvl 2..90, NO respec. A row with no skills means the point is saved (no unlocked plan skill); the planner spends it in the row where the skill unlocks. Quest points (Den, Radament, Izual in each difficulty) are skill entries with a quest key (rows 8 Den, 15 Radament, 26 Izual, 38 Den, 44 Radament, 56 Izual, 68 Den, 72 Radament, 82 Izual; U timing): rows count level points only, and a tagged point is bought as soon as its quest point is granted.",
  "tags": "Skills: V end state Maxroll Blessed Hammer Paladin (fetched 2026-10-29), same as paladin_hammerdin_endgame90. U variant for a stronger clvl 2-17: Smite to 9 before clvl 12, Sacrifice 1 then Zeal 5 from clvl 12 (Zeal reqlevel 12, needs Sacrifice, V skills.txt); the 14 extra points are taken from the last fillers (Blessed Aim and Defiance) at clvl 65+. U whether this clears Normal Act 1-2 better than 1 Smite point (needs a live run); Smite needs a shield.",
  "respec": {
@@ -14,7 +15,7 @@
    "from_clvl": 2
   },
   {
-   "key": "F7",
+   "key": "F8",
    "skill": "Zeal",
    "hand": "right",
    "from_clvl": 12
@@ -42,12 +43,6 @@
    "skill": "Vigor",
    "hand": "right",
    "from_clvl": 18
-  },
-  {
-   "key": "F6",
-   "skill": "Fanaticism",
-   "hand": "right",
-   "from_clvl": 30
   }
  ],
  "main_attack": [

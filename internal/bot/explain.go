@@ -50,7 +50,9 @@ type ExplainView struct {
 	Arbiter   string            `json:"arbiter,omitempty"` // the shadow's last choice, when the shadow runs
 	// ArbiterDecision is the same choice as a record: intent, family, reason and what it displaced.
 	ArbiterDecision *arbiter.Explained `json:"arbiterDecision,omitempty"`
-	Journey         string             `json:"journey,omitempty"` // why the quest journey is blocked now
+	// Admission is the admission function's line (admission.go): mode, agreement with the old judges, last refusal with its row, need and wake.
+	Admission AdmissionExplain `json:"admission"`
+	Journey   string           `json:"journey,omitempty"` // why the quest journey is blocked now
 	// Difficulty is the readiness line for the next difficulty (bot.diffReadyV2 1): ready and waiting for the owner's go, or what is missing.
 	Difficulty string `json:"difficulty,omitempty"`
 	// DifficultyOffer is the same as fields: target, ready, whether the owner's go is pending, what is missing.
@@ -181,6 +183,7 @@ func (r *Runner) Explain() ExplainView {
 		v.Refusals = v.Refusals[:explainRefMax]
 	}
 	v.Invariants = r.inv.Counters()
+	v.Admission = r.admissionExplain()
 	r.mu.Lock()
 	v.Journey = r.journeyWhy
 	r.mu.Unlock()

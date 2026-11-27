@@ -25,7 +25,7 @@ owns:
   - "docs/probes/fid/fid-stock-oracle.md"
 exclusive: []
 contracts: []
-result: "decomp8 2026-11-09, offline only (not verified live): stock asks 0 differ in 40,800 lines (400 seeds x 17 vendors x 6 jobs) and 14,400 offer lines on upstream 83fc7ba1; AC 1 partly (affix rolls hooked), AC 3 partly (first-open generation read; flag setters +0x23/+0x27 untraced), AC 4 live lists not done; docs/probes/fid/fid-stock-oracle.md"
+result: "decomp8 2026-11-09, offline only (not verified live): stock asks 0 differ in 40,800 lines (400 seeds x 17 vendors x 6 jobs) and 14,400 offer lines on upstream 83fc7ba1; AC 1 partly (affix rolls hooked), AC 3 partly (first-open generation read; flag setters +0x23/+0x27 untraced), AC 4 live lists not done; docs/probes/fid/fid-stock-oracle.md closecards3 Remaining (not live): #1, #3, #4 open, decompile items and per-vendor lists not done."
 ---
 
 ## Description

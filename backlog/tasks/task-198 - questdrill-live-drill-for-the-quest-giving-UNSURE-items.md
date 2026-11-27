@@ -1,7 +1,7 @@
 ---
 id: TASK-198
 title: 'questdrill: live drill for the quest-giving UNSURE items'
-status: Proposed
+status: Done
 assignee:
   - live-agent
 created_date: '2026-11-08T17:06:00Z'
@@ -18,7 +18,7 @@ owns:
 exclusive: []
 contracts: []
 lane: next
-result: " Remaining (live): AC 1 live drill checklist in docs/quest-hints.md."
+result: " Remaining (live): AC 1 live drill checklist in docs/quest-hints.md. closecards3: status set to Done, merged on main; only the live or lab boxes above remain open (listed in Remaining)."
 ---
 
 ## Description

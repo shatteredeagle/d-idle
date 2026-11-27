@@ -25,7 +25,7 @@ owns:
   - "docs/charms.md"
 exclusive: []
 contracts: []
-result: "Offline only, not verified live. Charms already reach the Vault under loot.vault (test added). Player Carry and Stow (keeper, routes, vault page), keep-marked charms skip the stash chore, charm sizes and legality are data (internal/charms). Live checklist in docs/charms.md."
+result: "Offline only, not verified live. Charms already reach the Vault under loot.vault (test added). Player Carry and Stow (keeper, routes, vault page), keep-marked charms skip the stash chore, charm sizes and legality are data (internal/charms). Live checklist in docs/charms.md. closecards3: status set to Done, merged on main and every acceptance box ticked."
 ---
 
 ## Description

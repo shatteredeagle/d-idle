@@ -24,7 +24,7 @@ owns:
   - "docs/farmloop.md"
 exclusive: []
 contracts: []
-result: "Farm loop built, shipped OFF (calibrated model +2.5 percent, prior +8, steep +16, never a loss with the value rule); /api/zoneclear and the opt-in zoneclear panel added; offline tests only, not verified live, fit-check fixtures not run (needs Chromium)"
+result: "Farm loop built, shipped OFF (calibrated model +2.5 percent, prior +8, steep +16, never a loss with the value rule); /api/zoneclear and the opt-in zoneclear panel added; offline tests only, not verified live, fit-check fixtures not run (needs Chromium) closecards3 Remaining (live): #4 need the live game, a browser or a worker-host run; not verified here."
 lane: next
 ---
 

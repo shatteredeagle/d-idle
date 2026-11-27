@@ -570,6 +570,16 @@
    "source": "map",
    "note": "not in the catalogue; tier full mapped"
   },
+  "necro.corpse-ce1": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.corpse-ce5": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
   "necro.curse-unique": {
    "tier": "T3",
    "source": "map",
@@ -1095,6 +1105,141 @@
    "tier": "T3",
    "source": "map",
    "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.drill.act2.radament": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.drill.act2.cube": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.drill.act2.shaft": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.drill.act2.amulet": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.drill.act2.assemble": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.drill.act2.summoner": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.drill.act2.duriel": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.drill.act2.radament.handin": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.drill.act3.lam_esen": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.drill.act3.blade": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.drill.act3.golden_bird": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.drill.act3.council": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.drill.act4.izual": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.drill.act4.hellforge": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.drill.act5.siege": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.drill.act5.prison": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.drill.act5.betrayal": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.drill.act5.ancients": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.drill.act5.baal": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "points.necro-leveling-normal30-lands-at-30": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "points.necro-summoner-normal30-lands-at-30": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "points.necro-summoner-sme-lands-at-30": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "points.necro-poison-nova-sme-lands-at-30": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "points.necro-summoner-endgame90-lands-at-30": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "necro.level-1-30": {
+   "tier": "T4",
+   "source": "map",
+   "note": "not in the catalogue; tier nightly mapped"
+  },
+  "necro.earned-act2": {
+   "tier": "T4",
+   "source": "map",
+   "note": "not in the catalogue; tier nightly mapped"
+  },
+  "necro.soak-3h-kit": {
+   "tier": "T4",
+   "source": "map",
+   "note": "not in the catalogue; tier nightly mapped"
   }
  }
 }

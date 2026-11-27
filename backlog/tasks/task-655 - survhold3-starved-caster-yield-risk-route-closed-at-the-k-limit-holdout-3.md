@@ -18,7 +18,7 @@ owns:
   - "docs/probes/survival-holdout3-2026-11-18.md"
 exclusive: []
 contracts: []
-result: "Risk route closed at the k limit (riskMaxK) and caster yieldMinMinutes/starveValueMul as data, must-fail tests on two builds; Sorceress seeds 101/103 re-run on the builder (103 recovered: margin 22.9k against legacy 16.9k; 101 12.0k against 16.1k; writes after start 0): INCONCLUSIVE with 2 pairs; seed 107 and the Paladin waves not run (builder yielded to merge gates); no default changed"
+result: "Risk route closed at the k limit (riskMaxK) and caster yieldMinMinutes/starveValueMul as data, must-fail tests on two builds; Sorceress seeds 101/103 re-run on the builder (103 recovered: margin 22.9k against legacy 16.9k; 101 12.0k against 16.1k; writes after start 0): INCONCLUSIVE with 2 pairs; seed 107 and the Paladin waves not run (builder yielded to merge gates); no default changed closecards3 Remaining (live): #2 need the live game, a browser or a worker-host run; not verified here."
 lane: next
 ---
 

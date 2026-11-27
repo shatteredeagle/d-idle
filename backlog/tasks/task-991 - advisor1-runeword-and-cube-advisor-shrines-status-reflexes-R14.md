@@ -1,10 +1,11 @@
 ---
 id: TASK-991
 title: 'advisor1: runeword and cube advisor, shrines, status reflexes (R14)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-26T03:59:00Z'
+updated_date: '2026-11-27T20:31:00Z'
 labels:
   - bot
   - feature
@@ -15,8 +16,17 @@ ordinal: 478000
 card: "advisor1"
 owns:
   - "docs/design/advisor-r14.md"
+  - "internal/advisor/"
+  - "internal/watch/advisorsection.go"
+  - "internal/watch/funwire.go"
+  - "internal/watch/returnscreen_test.go"
+  - "internal/cubejobs/cubejobs.go"
+  - "internal/env/tuning_items.go"
+  - "docs/knobs.md"
+  - "data/darklaunch.json"
 exclusive: []
 contracts: []
+result: "Built dark, offline only (not verified live): internal/advisor (runeword table as data, matcher, cube path, class relevance, line formatter, vault adapter), watch.AdviceSection, knob items.advisor (default 0) with ledger row. Bot-side stock gathering and the SME review are open; shrines and status reflexes not in this slice."
 ---
 
 ## Description
@@ -29,5 +39,5 @@ Recommendation R14 of the 2026-11-19 design review (06-roadmap): data and advice
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Advisor lines for runewords and the cube behind a knob with a ledger row
+- [x] #1 Advisor lines for runewords and the cube behind a knob with a ledger row
 <!-- AC:END -->

@@ -22,7 +22,7 @@ owns:
   - "docs/probes/fid/fid-xp-award.md"
 exclusive: []
 contracts: []
-result: "AC1 proven (0 of 219,790 lines, real rules::kill_exp vs FUN_0057e2f0, upstream 7557a54d, V run). AC2 live read not done. Doc docs/probes/fid/fid-xp-award.md. Not verified live."
+result: "AC1 proven (0 of 219,790 lines, real rules::kill_exp vs FUN_0057e2f0, upstream 7557a54d, V run). AC2 live read not done. Doc docs/probes/fid/fid-xp-award.md. Not verified live. closecards3 Remaining (live): #2 need the live game, a browser or a worker-host run; not verified here."
 ---
 
 ## Description

@@ -25,7 +25,7 @@ owns:
   - "docs/design/stepexec-p9.md"
 exclusive: []
 contracts: []
-result: "A boss kill step now reads its postcondition from game state (seen kill, dead unit, or the quest word bit in the data row), so a boss the general fight killed counts as done; Act 2 hand-in rows for Tyrael, Jerhyn and Meshif are data, bits from the d2d port; unit tests on two classes, not verified live."
+result: "A boss kill step now reads its postcondition from game state (seen kill, dead unit, or the quest word bit in the data row), so a boss the general fight killed counts as done; Act 2 hand-in rows for Tyrael, Jerhyn and Meshif are data, bits from the d2d port; unit tests on two classes, not verified live. closecards3 Remaining (live): #4 need the live game, a browser or a worker-host run; not verified here."
 ---
 
 ## Description

@@ -1,6 +1,6 @@
 # Admission function (P4, card admit1, TASK-970)
 
-> status: step 1 built (package, data, tests); step 2 (wiring) waits for the outcomes2 cards TASK-958 and TASK-961.
+> status: step 1 built (package, data, tests); step 2 wired in shadow for the four entry rows and the quest-walk kit (knob `bot.admission`, default 0); control and the other providers not yet.
 
 One pure function decides whether a hero may enter an area or leave town. Package `internal/admit`; floors are rows in
 `internal/plandata/admission.json` (mirrored in `docs/plan/data/`). Source: review `research/fable-logic-review-2026-11-25.md`
@@ -35,7 +35,19 @@ Monastery road and Barracks (`task.RouteWhy`, `BarracksWhy`), Forgotten Tower (`
 (`kitGateActive`), readiness (`questboard`), quest floors (`legacyWall`), area bans, zone model shadow. They plug in today through `View.Legacy`
 (asked last, refusal is `route_closed`); each becomes a row or a typed provider one at a time with the shadow-then-flip habit.
 
-## Step 2 plan (not done)
+## Step 2 as built
+- `internal/bot/admission.go`: `admitEnter` (called last in `areaGuardWhy`, after the route, Barracks and Forgotten Keep guards) runs the old four row judges and
+  `admit.MayEnter`; `admitLeave` (called by `fillEarly`) runs `questWalkCheck` and `admit.MayLeaveTown`. Under `bot.admission` 0 the old words are returned,
+  a disagreement is logged once per case as `admission shadow` (area, purpose, old, new, row, need); under 1 the function's words are returned.
+  The lean life line at the town exit has no old judge: logged as a difference, never acted on yet.
+- `ops status --why` (the explain view) carries `admission`: mode, agree and differ counts, the last refusal with row, need and wake.
+- First shadow finding (offline): the kit-floor words of admit lacked "unless a tier opens more"; aligned so the replay compares equal.
+- Known old/new differences the shadow will show: the old lean judge ignores the owner's try anyway, the function exempts it.
+- Property test `internal/admit/admit_prop_test.go` (T3 style, two archetypes): a reflex (corpse run, trip, try, non-Normal) is never refused, refusals
+  are closed data, deterministic, the town is open, one more potion or a portal never closes a door.
+- Not wired: `povertyFarmArea` and the early-road loop in `fillEarly` still call the old judges directly.
+
+## Step 2 plan (original)
 1. Chokepoint: the travel gate (outcomes2 TASK-958) and `guardedExit`/`routeGuardHop` (TASK-961) call `MayEnter`; the town exit calls `MayLeaveTown`.
 2. Knob `bot.admission` (default 1, 0 = old path for one release). Shadow first: log `admission: old=... new=...` where they differ.
 3. `ops status --why` / explain gets an `admission` line: reason, need, wake, row.

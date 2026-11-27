@@ -24,7 +24,7 @@ owns:
   - "docs/knobs.md"
 exclusive: []
 contracts: []
-result: "Public side done and tested offline (fake server, d2dworld, cmd/d2bot; not verified live): client + fake + d2dworld merge + knob quests.layoutRead (default 0). Fork verb `debug levelmap` is on the private remote, branch didle/level-layout-20261120; its build and tests/levelmap_d2d.py were queued on the builder long lane at merge time (result in docs/live-checks.md). Not built into an image, no cain.chain A/B run."
+result: "Public side done and tested offline (fake server, d2dworld, cmd/d2bot; not verified live): client + fake + d2dworld merge + knob quests.layoutRead (default 0). Fork verb `debug levelmap` is on the private remote, branch didle/level-layout-20261120; its build and tests/levelmap_d2d.py were queued on the builder long lane at merge time (result in docs/live-checks.md). Not built into an image, no cain.chain A/B run. closecards3 Remaining (live): #3 need the live game, a browser or a worker-host run; not verified here."
 lane: next
 ---
 

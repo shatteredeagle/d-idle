@@ -42,7 +42,7 @@ owns:
   - "cmd/d2bot/ladder.go"
 exclusive: []
 contracts: []
-result: "Offline only: desk, routes and wiring tested; table-dependent town and leveler tests compile but skip without game tables (U). Not verified live. Deployed to the preview sandbox, see docs/inventory-ui.md."
+result: "Offline only: desk, routes and wiring tested; table-dependent town and leveler tests compile but skip without game tables (U). Not verified live. Deployed to the preview sandbox, see docs/inventory-ui.md. closecards3: ticked #1, #2, #3 (desk and API tests green: go test ./internal/invdesk (V 2026-11-27)). closecards3: #4 not ticked, superseded by card nopins 2026-11-11, pins deprecated (docs/inventory-ui.md). closecards3 Remaining (live): #5 need the live game, a browser or a worker-host run; not verified here."
 ---
 
 ## Description
@@ -55,9 +55,9 @@ Player inventory control on the watch screen. Done when the page, marks, equip a
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Inventory page at /watch/inventory shows equipped slots, backpack, stash and belt with name, quality, props and a why line
-- [ ] #2 Sell and keep marks persist in the state dir and the town honours them (never-sell items refused)
-- [ ] #3 Equip request is queued, refused with a reason (not in town, class or stat requirements), done at the gear step through the normal click path
+- [x] #1 Inventory page at /watch/inventory shows equipped slots, backpack, stash and belt with name, quality, props and a why line
+- [x] #2 Sell and keep marks persist in the state dir and the town honours them (never-sell items refused)
+- [x] #3 Equip request is queued, refused with a reason (not in town, class or stat requirements), done at the gear step through the normal click path
 - [ ] #4 A player equip pins the slot; the bot never undoes it; only the player's unpin ends a pin
 - [ ] #5 POST routes use the answer listener gates; two-class tests; live drill checklist in docs/inventory-ui.md
 <!-- AC:END -->

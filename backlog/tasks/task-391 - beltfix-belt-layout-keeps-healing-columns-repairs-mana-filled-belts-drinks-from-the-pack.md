@@ -33,7 +33,7 @@ owns:
   - "cmd/d2bot/wiring_test.go"
 exclusive: []
 contracts: []
-result: "root cause V (sandbox log): belt read as 4 slots with 6 boxes in use, free count negative, fill/shop/pickup all idle; fixed by a slot floor, a layout rule in PlaceFor (planned columns per kind from the class band), a town repair that moves surplus mana to the pack, and an emergency pack drink (right click) below combat.drinkRejuvPct. Verified offline only (Paladin and Sorceress); pack drink on d2d not verified live."
+result: "root cause V (sandbox log): belt read as 4 slots with 6 boxes in use, free count negative, fill/shop/pickup all idle; fixed by a slot floor, a layout rule in PlaceFor (planned columns per kind from the class band), a town repair that moves surplus mana to the pack, and an emergency pack drink (right click) below combat.drinkRejuvPct. Verified offline only (Paladin and Sorceress); pack drink on d2d not verified live. closecards3 Remaining (live): #6 need the live game, a browser or a worker-host run; not verified here."
 lane: now
 ---
 

@@ -185,16 +185,7 @@ func (r *Runner) areaGuardWhy(s *d2.Snapshot, a int) string {
 	case task.TowerGuarded(task.Area(a)):
 		return r.towerGuardWhy(s)
 	}
-	if why := r.earlyRouteWhy(s, a); why != "" {
-		return why
-	}
-	if why := r.povertyAreaWhy(s, a); why != "" {
-		return why
-	}
-	if why := r.kitFloorWhy(s, a); why != "" {
-		return why
-	}
-	return r.leanEntryWhy(s, a)
+	return r.admitEnter(s, a)
 }
 
 // areaLeaveWhy is areaGuardWhy for a hero that already stands in area a: the road guard uses its mid-route verdict.
@@ -468,7 +459,8 @@ func (r *Runner) kitPlanOf(s *d2.Snapshot) *task.KitPlan {
 		r.planWarn.Do(func() { r.e.Log.Warn("town plan: " + err.Error()) })
 		return nil
 	}
-	return &task.KitPlan{Healing: pl.MinOf(supply.Healing), Mana: pl.MinOf(supply.Mana), Portals: pl.MinOf(supply.Portal), GoldCarry: pl.MinOf(supply.GoldCarry), Short: pl.Why()}
+	hand := pl.Handover(supply.Gold{Sellable: r.sellableCached() > 0, VaultPrompt: r.e.Tune.Loot.Vault != 0 && r.e.Tune.Loot.VaultSellPrompt != 0})
+	return &task.KitPlan{Healing: pl.MinOf(supply.Healing), Mana: pl.MinOf(supply.Mana), Portals: pl.MinOf(supply.Portal), GoldCarry: pl.MinOf(supply.GoldCarry), Short: pl.Why(), Hand: hand.Reason}
 }
 
 // fillKit counts the kit by the one counter and, at stage 2, attaches the plan.
@@ -515,7 +507,7 @@ func (r *Runner) fillEarly(w *task.World) {
 	if s != nil && s.Player != nil {
 		w.FirstField = task.Area(r.firstFieldArea(s))
 	}
-	if why, kit := r.questWalkCheck(s); why != "" {
+	if why, kit := r.admitLeave(s); why != "" {
 		w.WalkBlocked = task.EarlyBlock{Why: why, KitOnly: kit}
 	}
 	for _, rt := range rs {

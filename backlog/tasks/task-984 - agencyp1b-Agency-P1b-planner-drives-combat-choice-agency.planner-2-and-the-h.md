@@ -14,8 +14,19 @@ ordinal: 472000
 card: "agencyp1b"
 owns:
   - "docs/design/agency-p1b.md"
+  - "internal/agency/drive.go"
+  - "internal/agency/drive_test.go"
+  - "cmd/d2bot/agencywire.go"
+  - "cmd/d2bot/agencydrive_test.go"
+  - "cmd/d2bot/d2dwire.go"
+  - "cmd/d2bot/live.go"
+  - "internal/combat/drive_test.go"
+  - "internal/combat/fighter.go"
+  - "internal/combat/aura.go"
+  - "internal/env/tuning_agency.go"
 exclusive: []
 contracts: []
+result: "Partial, not verified live. agency.DriveOf and the fighter wiring are built (Fighter.Drive seam, agencyWire.Drive, knob agency.planner Max 2, default stays 0, offline mode 0/1/2 test for Paladin and Sorceress). The shipped capability table has no proven attack or aura, so mode 2 changes nothing today; shadow review, owner go, the live drill and the flip are owner/live."
 ---
 
 ## Description
@@ -29,5 +40,5 @@ Recommendation of the 2026-11-19 design review (06-roadmap R7; ADR 0020 item 2):
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
 - [ ] #1 Review of the planner shadow lines (replay) recorded
-- [ ] #2 Mode 2 behind its knob with the viability line
+- [x] #2 Mode 2 behind its knob with the viability line
 <!-- AC:END -->

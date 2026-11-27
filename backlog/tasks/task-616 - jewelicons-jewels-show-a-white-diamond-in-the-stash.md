@@ -24,7 +24,7 @@ owns:
   - "internal/data/invfile_real_test.go"
   - "cmd/d2bot/itemart_test.go"
   - "tools/uishots/fit_char_test.go"
-result: "Cause (S, no install on the build hosts): the icon was already picked by base class; the game jewel art is untinted grey-white, so all jewels looked alike. Fix: status.Item.kind, jewel cells tinted by quality, type-letter fallback for items with no icon, console debug log once per code, fixture, TestRealIconAudit (not run: no install). Pictures viewed on the worker host, not live."
+result: "Cause (S, no install on the build hosts): the icon was already picked by base class; the game jewel art is untinted grey-white, so all jewels looked alike. Fix: status.Item.kind, jewel cells tinted by quality, type-letter fallback for items with no icon, console debug log once per code, fixture, TestRealIconAudit (not run: no install). Pictures viewed on the worker host, not live. closecards3 Remaining (live): #4 need the live game, a browser or a worker-host run; not verified here."
 exclusive: []
 contracts: []
 lane: next

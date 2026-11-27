@@ -22,7 +22,7 @@ owns:
   - "internal/combat/fighter.go"
 exclusive: []
 contracts: []
-result: "Offline only. unitSource.Attacking (fed by combat.Fighter.Attacking) flags the attacked monster; d2d has per-monster HP (cur/max) so lifePct needs no fake. Not verified live: no live lockstep poll showing lifePct falling."
+result: "Offline only. unitSource.Attacking (fed by combat.Fighter.Attacking) flags the attacked monster; d2d has per-monster HP (cur/max) so lifePct needs no fake. Not verified live: no live lockstep poll showing lifePct falling. closecards3 Remaining (live): #2 need the live game, a browser or a worker-host run; not verified here."
 ---
 
 ## Description

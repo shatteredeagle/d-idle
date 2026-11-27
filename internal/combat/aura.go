@@ -88,7 +88,7 @@ func (f *Fighter) auraActive(p *d2.Player, id int) bool {
 func (f *Fighter) wantAura(p *d2.Player, pr *Profile, tg *Target, resting bool) (SkillSpec, bool) {
 	known := KnownSkills(p, f.cat, f.keys)
 	has := func(n string) bool { _, ok := known[n]; return ok }
-	ladder := auraPrefs(pr.Rotation(p.Level, has))
+	ladder := f.driveAura(auraPrefs(pr.Rotation(p.Level, has)))
 	reachable := func(a AuraPref) (SkillSpec, bool) {
 		sp, ok := known[a.Name]
 		return sp, ok && (sp.Key != "" || p.RightSkill == sp.ID)
@@ -283,4 +283,17 @@ func (f *Fighter) repickVia(p *d2.Player, id int) (int, bool) {
 		}
 	}
 	return best, found
+}
+
+// driveAura puts the planner's aura (Drive) first as a plain entry; the profile's ladder stays behind it, so an aura the
+// hero cannot reach falls back to the profile's choice. Without a Drive the ladder is returned as it is.
+func (f *Fighter) driveAura(ladder []AuraPref) []AuraPref {
+	if f.Drive == nil {
+		return ladder
+	}
+	_, a := f.Drive()
+	if a == "" {
+		return ladder
+	}
+	return append([]AuraPref{{Name: a}}, ladder...)
 }

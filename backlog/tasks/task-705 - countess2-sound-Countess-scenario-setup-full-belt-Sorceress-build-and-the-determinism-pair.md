@@ -14,7 +14,7 @@ labels:
 dependencies: []
 priority: medium
 ordinal: 338000
-result: "setup fixed (Light potions, town.spareKeep 30, own Sorceress scenario with the fire build; V builder job 20261120-203007-6700). Paladin RED (reaches Tower Cellar 5; the Spawns walk resolves to one blocked click; Countess not found), Sorceress BLOCKED (mana potions used up, 35 max mana). Determinism pairs NOT run. CHEATED setup, mechanics only."
+result: "setup fixed (Light potions, town.spareKeep 30, own Sorceress scenario with the fire build; V builder job 20261120-203007-6700). Paladin RED (reaches Tower Cellar 5; the Spawns walk resolves to one blocked click; Countess not found), Sorceress BLOCKED (mana potions used up, 35 max mana). Determinism pairs NOT run. CHEATED setup, mechanics only. closecards3 Remaining (live): #2, #3 need the live game, a browser or a worker-host run; not verified here."
 card: "countess2"
 owns:
   - "tools/provingground/scenarios/act1.json"

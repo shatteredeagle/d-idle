@@ -81,7 +81,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 `plan/`
 
 - [QUEUE.md](plan/QUEUE.md): Queue (generated: do not edit)
-- [STATUS.md](plan/STATUS.md): Where we are (hand-written part last edited 2026-11-03 by APPLYREVIEW; the generated block at the bottom... (status: the older 2026-10-30 text (Game.exe soak history, container cards, merged-today lists) is in git history....)
+- [STATUS.md](plan/STATUS.md): Where we are (hand-written part rewritten 2026-11-27 by TASK-46; the generated block at the bottom is current) (status: current. Ranking is the tier ladder of ADR 0016, not the goals G-A to G-F of ADR 0015. Source of every...)
 - [act2-level-plan.md](plan/act2-level-plan.md): Act 2 level plan (Normal): where the hero farms between the Lut Gholein quests (status: DATA ONLY (card act2plan, 2026-11-26). Nothing here ran live. Tags: V verified (named file or test), S...)
 - [bot-requirements.md](plan/bot-requirements.md): Bot requirements implied by docs/plan/leveling.md
 - [code-reality.md](plan/code-reality.md): Code reality map for 8 h / 24 h unattended soaks (CODEREALITY, 2026-10-30)
@@ -280,6 +280,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [assassin.md](classes/assassin.md): Assassin plan (D2 LoD 1.14d, offline softcore, unattended)
 - [barbarian.md](classes/barbarian.md): Barbarian plan (D2 LoD 1.14d, offline softcore, unattended)
 - [druid.md](classes/druid.md): Druid plan (D2 LoD 1.14d, offline softcore, unattended)
+- [necromancer-gap-2026-11-27.md](classes/necromancer-gap-2026-11-27.md): Necromancer gap list against TASK-942 (card necroepic, 2026-11-27) (status: current offline audit. Tags V (verified: a test or a code read this run), S (secondary), U (unverified)....)
 - [necromancer.md](classes/necromancer.md): Necromancer plan (D2 LoD 1.14d, offline softcore, unattended)
 - [paladin-probe.md](classes/paladin-probe.md): Paladin probe (second-class probe, offline part) (status: current. Card `palprobe` (user go 2026-11-01). Offline only: nothing here ran on the game or on d2d....)
 - [paladin.md](classes/paladin.md): Paladin plan (D2 LoD 1.14d, offline softcore, unattended)
@@ -336,11 +337,15 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 `design/`
 
-- [admission-p4.md](design/admission-p4.md): Admission function (P4, card admit1, TASK-970) (status: step 1 built (package, data, tests); step 2 (wiring) waits for the outcomes2 cards TASK-958 and TASK-961.)
+- [admission-p4.md](design/admission-p4.md): Admission function (P4, card admit1, TASK-970) (status: step 1 built (package, data, tests); step 2 wired in shadow for the four entry rows and the quest-walk kit...)
+- [advisor-r14.md](design/advisor-r14.md): Advisor R14: runeword and cube advice (TASK-991) (status: built dark (knob `items.advisor`, default 0). Advice lines only.)
+- [agency-p1b.md](design/agency-p1b.md): Agency P1b: the planner drives (mode 2) (status: partial (TASK-984, 2026-11-27). Offline pieces built; the review and the flip are the owner's. Tags: V =...)
+- [agency-p3.md](design/agency-p3.md): Agency P3: share and import build files (status: current (TASK-985, 2026-11-27). Tags: V = ran in a test of `internal/buildfile`, U = unverified.)
 - [autoalloc-and-currencies-2026-11-21.md](design/autoalloc-and-currencies-2026-11-21.md): Automatic Allocate Skills, the gold respec and the currency consolidation (design, 2026-11-21) (status: DESIGN plus a built first slice (agent autoalloc). Tags: **V** verified (how said), **S** secondary, **U**...)
 - [bulk-identify-2026-11-18.md](design/bulk-identify-2026-11-18.md): Bulk identify: Cain-free, lazy reveal, filter (design, 2026-11-18) (status: BUILT offline (B1-B5 and the town adapters, scroll path and Ether tap payer of slice B6, task bulkid2),...)
 - [charm-management-2026-11-27.md](design/charm-management-2026-11-27.md): Charm management: carry, pack budget, build wants, Vault and Inventory UI (status: design note, docs only (2026-11-27, agent charms). Nothing here is built. Tags: V = read in this tree at...)
 - [danger-protocol-2026-11-25.md](design/danger-protocol-2026-11-25.md): Danger protocol and checkpoint portals (2026-11-25) (status: design proposal, no code. Part 1 reads the code (tags: V = verified in code or a cited live record, S =...)
+- [difficulty-transition-2026-11-27.md](design/difficulty-transition-2026-11-27.md): Difficulty transition design (roadmap R9): when the bot leaves Normal for Nightmare and Hell (status: DESIGN, docs only, 2026-11-27. Consumers: cards epic-normal (TASK-948), epic-nightmare (TASK-949),...)
 
 `design/fable-review-2026-11-19/`
 
@@ -379,9 +384,12 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 - [input-cast-verbs.md](design/input-cast-verbs.md): Input: cast verbs (cast-unit, cast-point, cast-hold) (status: bot side built offline (TASK-726, card dlv-cast-verbs, 2026-11-27), dark behind `input.planner` (0). Fork...)
 - [input-i3.md](design/input-i3.md): Input layer I3: town portal by verb; stat and skill points by verb (status: bot side built offline (TASK-986, card inputl3, 2026-11-27), dark behind `input.planner` (0). Town portal...)
+- [input-i4.md](design/input-i4.md): Input layer I4: fork verbs buy, sell, repair, take-waypoint, menu-choose (status: client side built offline (TASK-988, card inputl4, 2026-11-27), dark behind `input.planner` (0). The fork...)
+- [input-i5-i7.md](design/input-i5-i7.md): Input layer I5 to I7: chores, waypoint and drink on verbs; SemanticInput; hotkey map (status: bot side partly built offline (TASK-989, card inputl5, 2026-11-27); everything stays dark behind...)
 - [item-colour-2026-11-18.md](design/item-colour-2026-11-18.md): Item colour in the inventory art: chain and slice plan (2026-11-18) (status: design, task-634 (card itemcolour). Follow-up to jewelcolor (task-632), which removed the invented wash....)
 - [item-verbs.md](design/item-verbs.md): Item verbs: inventory, stash and equipment actions through d2d's own item handlers (TASK-367) (status: DESIGN plus the built verbs (equip, unequip, move, identify, drop, gold, `caps`), 2026-11-12; stage 2 and...)
 - [loot-vault-2026-11-16.md](design/loot-vault-2026-11-16.md): Ethereal Vault: a database of every drop, created in the game only on Keep (design and feasibility) (status: DESIGN, 2026-11-16. Nothing here was built or run; the fork was read, not changed. "Ethereal Vault" is the...)
+- [merc-aura-by-archetype.md](design/merc-aura-by-archetype.md): Merc aura by class archetype (design note, no code) (status: proposal (card classkeys). Nothing here is built. Tags: V verified in the repo by reading code, S...)
 - [necromancer-sme-answers-2026-11-22.md](design/necromancer-sme-answers-2026-11-22.md): Necromancer build answers for the unattended bot (SME, 2026-11-22) (status: current. Answers the five questions of `docs/probes/necromancer-readiness-2026-11-22.md` section 4 (card...)
 - [proptest-t3.md](design/proptest-t3.md): Property tests on the pure deciders (T3) (status: current (TASK-980, card proptest1). Roadmap row T3, docs/research/fable-logic-review-2026-11-25.md section...)
 - [quest-board-2026-11-16.md](design/quest-board-2026-11-16.md): Quest board: quests as events the player takes part in (status: design proposal (2026-11-16, card questdesign, TASK-575), not built; waits for the user's answers (section...)
@@ -394,6 +402,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [dev-reset.md](dev-reset.md): Reset the play sandbox to a fresh hero (status: CURRENT. Task: TASK-263 (devreset). Dev tooling for a DEV container such as `d2play-20261108`...)
 - [dev-update.md](dev-update.md): Dev-loop update: new bot builds in a running container, no image rebuild (status: CURRENT. Task: TASK-192 (devupdate). Builds on the merged updater (docs/self-update-release.md,...)
 - [difficulty.md](difficulty.md): Difficulty: Normal -> Nightmare -> Hell (levels, resists, immunities, affixes, detection work list)
+- [diffready.md](diffready.md): Difficulty readiness and the opt-in hop (diffready, diffbaal) (status: current 2026-11-27, offline only. Design: design/difficulty-transition-2026-11-27.md section 4. Cards...)
 
 `digest/`
 
@@ -431,7 +440,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [farmfallback.md](farmfallback.md): farmfallback: the gold farm as data, with a fallback
 - [farmloop.md](farmloop.md): The farm loop: reset a mostly cleared leveling zone with a fresh game (status: current (2026-11-15, agent farmloop). Shipped OFF (`bot.farmReset` 0): the simulation shows a small gain...)
 - [first-hour.md](first-hour.md): First hour: the daily table tool
-- [first-session.md](first-session.md): First play session guide (TASK-134) (status: written 2026-11-08 from docs on main only. Nothing here was run for this guide. Tags: V verified live (as...)
+- [first-session.md](first-session.md): First play session guide (TASK-134) (status: written 2026-11-08 from docs on main only; sections D, H and I brought up to date 2026-11-27 (TASK-27)...)
 - [fixbank.md](fixbank.md): FIXBANK: gold deposit and repair gold (card fix-bank) (status: current. Findings of the D3 drills (docs/probes/drills/2026-10-31-d3.txt); live proof is a drill rerun.)
 - [fixbelt.md](fixbelt.md): fixbelt: the Gate 1 rerun belt window
 - [fixbelt2.md](fixbelt2.md): fixbelt2: why potions stayed in the pack (post-fix soak 1) (status: code on branch agent/fixbelt2; live proof pending (drill variants below).)
@@ -560,6 +569,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [paperdoll-art-build.md](paperdoll-art-build.md): Paper doll game art: what is built (status: in progress (TASK-244). Plan and licence reasoning: research/paperdoll-art.md. Tags: V verified (command...)
 - [passagebounce.md](passagebounce.md): Arrival bounce: Underground Passage, Crypt and every cave (TASK passagebounce)
 - [pause.md](pause.md): Pause and resume as player commands (status: current (uib1 2026-11-14; frozen Pause added by card pause, 2026-11-15). Not verified live.)
+- [play-session.md](play-session.md): Play session on the LAN (TASK-43) (status: current. Offline parts verified (V: `sh tools/play-session-test.sh`); the live run is NOT verified (U,...)
 - [points.md](points.md): Points: stat and skill points are the player's (roadmap R3, agency P0) (status: current (card agencyp0, 2026-11-19). Decision: ADR 0020 (path D, user decision): the player spends every...)
 - [policy-preview.md](policy-preview.md): Policy preview (card policydryrun, TASK-205) (status: built and tested offline on fixtures; NOT run against a live bot or in a browser. Source:...)
 - [policy-sheet.md](policy-sheet.md): The chores policy sheet (TASK-128) (status: built and tested offline on fixtures; NOT run against a live bot or in a browser. Design:...)
@@ -1078,6 +1088,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [classpacing.md](probes/classpacing.md): classpacing probe (status: see `docs/soaks/classpacing.md` (the result doc of TASK-147); scripts and per-minute data are in...)
 - [combat-foundation-2026-11-21.md](probes/combat-foundation-2026-11-21.md): Combat engine foundation group, 2026-11-21 (status: record of the foundation group of the approved combat engine plan...)
 - [countess-knobs-2026-11-22.md](probes/countess-knobs-2026-11-22.md): The Countess three ways: nav.fullGrid and nav.warpRead on a lab slot (card mapverify, 2026-11-22) (status: current. Scenario `act1.forgotten.countess` (Paladin) and `act1.forgotten.countess.sorc` (Sorceress),...)
+- [countess-nav-fixture.md](probes/countess-nav-fixture.md): Tower Cellar 5 walk fixture (cards countess3b, countessnav, 2026-11-27) (status: offline regression done with SYNTHETIC maps; the recorded grid is still to be captured (live-only, needs a...)
 - [currency1.md](probes/currency1.md): Probe: currency slice 1, the Raven's Mark rows (TASK-63) (status: UNVERIFIED live, 2026-11-06. Offline checks passed; the live run was not started because Gate 2 seeds were...)
 - [dark-queue-final-2026-11-27.md](probes/dark-queue-final-2026-11-27.md): Dark queue: the final flip list (2026-11-27) (status: current (docs only; nothing was flipped, no lab run was made in this card). Supersedes the verdict column...)
 - [dark-queue-plan-2026-11-27.md](probes/dark-queue-plan-2026-11-27.md): Dark queue: plan to clear it (2026-11-27) (status: current (docs-only plan, nothing run, nothing flipped). Sources: `data/darklaunch.json` (38 rows),...)
@@ -1146,6 +1157,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [incident-scenarios.md](probes/incident-scenarios.md): Incident to scenario (report-only tier) (status: current (card incident1, Fable logic review 2026-11-25 T2 and P8; ADR 0020 amended 2026-11-25). TOOLS...)
 - [itemverbs-live-2026-11-12.md](probes/itemverbs-live-2026-11-12.md): Item verbs: live click-vs-verb comparison (TASK-383, 2026-11-12) (status: result record. Tags: V = run and seen on the worker host. Driver: `tools/itemverbs/live_compare.py`;...)
 - [killdrop-2026-11-13.md](probes/killdrop-2026-11-13.md): Kill drop on the rebased fork: `debug players` gained a column (TASK-396, 2026-11-13) (status: result record. Tags: V = run and seen on the worker host; S = read in source. Follows...)
+- [lab-night-plan-2026-11-27.md](probes/lab-night-plan-2026-11-27.md): Lab night plan, 2026-11-27 (23:00 to 07:00 EST) (status: current (docs only; no game, no lab run made by this card). Tags: V = read in the repo at origin/main...)
 - [mercbr-2026-11-21.md](probes/mercbr-2026-11-21.md): mercbr: Blood Raven hand-in at Kashya and the free Act 1 merc (2026-11-21) (status: current. Tags: V verified (run named), S secondary, U unverified. Setups are CHEATED (quest word, level,...)
 - [navsoak-compare.md](probes/navsoak-compare.md): navsoak vs navsoak2: paired soak comparison (2026-10-31) (status: analysis of two hidden d2d soaks, read-only. Handoffs: branches agent/navsoak, agent/navsoak2...)
 

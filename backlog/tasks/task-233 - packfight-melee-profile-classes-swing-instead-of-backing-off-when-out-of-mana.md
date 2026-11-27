@@ -17,6 +17,7 @@ owns:
   - "internal/resource"
 exclusive: []
 contracts: []
+result: " closecards3 Remaining (live): #1 need the live game, a browser or a worker-host run; not verified here."
 ---
 
 ## Description

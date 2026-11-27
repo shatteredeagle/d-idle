@@ -18,6 +18,7 @@ import (
 	"d2lod-bot/internal/senses"
 	"d2lod-bot/internal/status"
 	"d2lod-bot/internal/unlock"
+	"d2lod-bot/internal/vault"
 	"d2lod-bot/internal/watch"
 )
 
@@ -124,6 +125,9 @@ func newFun(l ladderOptions, stateDir string, hub *watch.Hub, wallet *currency.W
 	var fun *watch.Fun // the risk facts read the proposal desk of the Fun built below
 	if cfg.Risk, err = newRiskConfig(l, func() string { return nextZone(fun) }); err != nil {
 		return nil, err
+	}
+	if l.adviceSnap != nil && l.knobValue != nil {
+		cfg.Advice = newAdviceSource(l, hub).Lines
 	}
 	cfg.OrderQueue = &watch.OrderQueueConfig{Halt: halt}
 	if cfg.Strip != nil {
@@ -310,4 +314,19 @@ func difficultyConfig() *watch.DifficultyConfig {
 			return r.RequestDifficultyGo(target)
 		},
 	}
+}
+
+// newAdviceSource wires the advisor to the runner's snapshot, the hero's vault and the knobs items.advisor and
+// items.ladderRunewords (read when the page is built, so the tuner's edit counts at once).
+func newAdviceSource(l ladderOptions, hub *watch.Hub) *adviceSource {
+	knob := func(key string) func() bool {
+		return func() bool { v, _, err := l.knobValue(key); return err == nil && v != 0 }
+	}
+	a := &adviceSource{on: knob("items.advisor"), ladder: knob("items.ladderRunewords"), snap: l.adviceSnap,
+		sockets: l.adviceSockets, row: rowsFromDB(l.db), class: func() string { return hub.Hero().Class }}
+	if l.vaultRoot != "" {
+		home := vaultHomeFor(l.vaultRoot)
+		a.store = func() *vault.Store { return home.Existing(hub.Hero().Name) }
+	}
+	return a
 }

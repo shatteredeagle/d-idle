@@ -69,6 +69,27 @@
     {"id": "forgotten_cellars", "kind": "farm", "areas": [24, 21, 22, 23], "entry": 15, "exit": 24, "way_in": "walk", "via_wp": 6, "why": "clvl 15 to 24, from the live log of 2026-11-23: a clvl 20 Paladin below the Barracks floor earned about 28 XP/min in Dark Wood, Black Marsh and the caves because every Act 1 window ended at 18; AREAMON per kill at clvl 16: Forgotten Tower Cellar 1 109, 2 99, 3 78, 4 131 XP, 16 to 21 units, about 6 clear minutes each (Cellar 4 about 365 XP/min against 146 in Dark Wood); the Forgotten Tower guard (route.towerMinLevel) keeps a thin kit out"},
     {"id": "andariel", "kind": "quest", "chapter": "andariel", "why": "Act 1 done"}
    ]
+  },
+  "necromancer": {
+   "active": false,
+   "build": "necromancer_summoner_normal30",
+   "tag": "U (card necroepic): the Sorceress rows, because both are casters in internal/d2/classtraits.json and progression-normal.json has one caster row set; the army takes hits, so the survival model may admit earlier, but no seed set exists. Review-only like the other classes: entries are today's caster rows of progression-normal.json (the caster survival model is not traced); only the XP-table changes are applied.",
+   "slices": [
+    {"id": "blood_moor", "kind": "farm", "areas": [2], "entry": 1, "exit": 4, "way_in": "walk", "why": "today's row"},
+    {"id": "cold_plains", "kind": "farm", "areas": [3], "entry": 5, "exit": 8, "kit_clvl": 4, "way_in": "waypoint", "via_wp": 3, "why": "today's caster row"},
+    {"id": "den", "kind": "quest", "chapter": "den_of_evil", "why": "once; the journey's caster row is 5 / 6"},
+    {"id": "caves", "kind": "farm", "areas": [9, 13], "entry": 6, "exit": 9, "way_in": "walk", "via_wp": 3, "why": "today's Cave 1 row"},
+    {"id": "stony_field", "kind": "farm", "areas": [4], "entry": 8, "exit": 12, "way_in": "waypoint", "via_wp": 4, "why": "today's caster row"},
+    {"id": "woods", "kind": "farm", "areas": [5, 6], "entry": 9, "exit": 13, "way_in": "waypoint", "via_wp": 5, "why": "today's Dark Wood row"},
+    {"id": "blood_raven", "kind": "quest", "chapter": "blood_raven", "why": "the free Rogue (journey caster row 9 / 10)"},
+    {"id": "tamoe", "kind": "farm", "areas": [7], "entry": 10, "exit": 14, "way_in": "walk", "via_wp": 6, "why": "today's row, now farmed"},
+    {"id": "find_cain", "kind": "quest", "chapter": "find_cain", "why": "optional"},
+    {"id": "countess", "kind": "quest", "chapter": "countess", "why": "optional"},
+    {"id": "jail", "kind": "farm", "areas": [29], "entry": 13, "exit": 16, "way_in": "waypoint", "via_wp": 29, "why": "today's row"},
+    {"id": "catacombs", "kind": "farm", "areas": [35, 36], "entry": 13, "exit": 18, "way_in": "waypoint", "via_wp": 35, "why": "today's Catacombs 2 row"},
+    {"id": "forgotten_cellars", "kind": "farm", "areas": [24, 21, 22, 23], "entry": 15, "exit": 24, "way_in": "walk", "via_wp": 6, "why": "clvl 15 to 24, from the live log of 2026-11-23: a clvl 20 Paladin below the Barracks floor earned about 28 XP/min in Dark Wood, Black Marsh and the caves because every Act 1 window ended at 18; AREAMON per kill at clvl 16: Forgotten Tower Cellar 1 109, 2 99, 3 78, 4 131 XP, 16 to 21 units, about 6 clear minutes each (Cellar 4 about 365 XP/min against 146 in Dark Wood); the Forgotten Tower guard (route.towerMinLevel) keeps a thin kit out"},
+    {"id": "andariel", "kind": "quest", "chapter": "andariel", "why": "Act 1 done"}
+   ]
   }
  }
 }

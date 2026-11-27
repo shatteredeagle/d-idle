@@ -1,7 +1,7 @@
 ---
 id: TASK-120
 title: 'ghcrpublish: publish the tester image to ghcr.io from the public bot repo'
-status: Done
+status: In Progress
 assignee:
   - credit-runner
 created_date: '2026-11-07T23:28:00Z'
@@ -27,7 +27,7 @@ owns:
   - "deploy/d2d-container/tester_image_test.go"
 exclusive: []
 contracts: []
-result: "PREP only (2026-11-08, agent/ghcrprep): inert workflow_dispatch workflow + environment gate written, compose.tester.yml takes D2_IMAGE, static tests, worker-host dry run (smoke PASS, cold build numbers in docs/tester-registry.md). Nothing pushed or run on GitHub; AC 1 and 3 partly (no live registry, no scan on a hosted runner), AC 2 uses compose.tester.yml instead of compose.friends.yml; task stays open for the first publish. Status sync 2026-11-08 (stays open): PREP only, registry publish not done. closecards2: status Done is PREP only (see result); compose.friends.yml and docs/registry-publish.md do not exist on main."
+result: "PREP only (2026-11-08, agent/ghcrprep): inert workflow_dispatch workflow + environment gate written, compose.tester.yml takes D2_IMAGE, static tests, worker-host dry run (smoke PASS, cold build numbers in docs/tester-registry.md). Nothing pushed or run on GitHub; AC 1 and 3 partly (no live registry, no scan on a hosted runner), AC 2 uses compose.tester.yml instead of compose.friends.yml; task stays open for the first publish. Status sync 2026-11-08 (stays open): PREP only, registry publish not done. closecards2: status Done is PREP only (see result); compose.friends.yml and docs/registry-publish.md do not exist on main. closecards3: reopened as In Progress, PREP only. Missing: deploy/d2d-container/compose.friends.yml and docs/registry-publish.md (not on main; compose.tester.yml and docs/tester-registry.md stand in), the first real publish to ghcr.io, the no-Blizzard-data scan on a hosted runner, and the user go for package visibility. Boxes #1 to #3 stay unticked."
 ---
 
 ## Description

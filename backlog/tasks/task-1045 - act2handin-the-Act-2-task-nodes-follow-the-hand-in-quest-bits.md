@@ -21,7 +21,7 @@ owns:
   - "internal/task/act2handin_test.go"
 exclusive: []
 contracts: []
-result: "The Duriel and Act 2 hand-in nodes now read the Seven Tombs quest bits from the questspec rows: Tyrael is done on his bits, Jerhyn runs after Tyrael and before Meshif, Meshif waits for the Jerhyn bit; without a raw word the old stage checks apply; unit tests on two builds, not verified live."
+result: "The Duriel and Act 2 hand-in nodes now read the Seven Tombs quest bits from the questspec rows: Tyrael is done on his bits, Jerhyn runs after Tyrael and before Meshif, Meshif waits for the Jerhyn bit; without a raw word the old stage checks apply; unit tests on two builds, not verified live. closecards3 Remaining (live): #4 need the live game, a browser or a worker-host run; not verified here."
 ---
 
 ## Description

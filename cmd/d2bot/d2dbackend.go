@@ -414,6 +414,8 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 	o.ladder.characters = charactersDesk(ip, func() string { return charName }, saveRoots, runner, leave)
 	o.ladder.sensesTier = tune.Senses.Tier
 	o.ladder.proposalFacts = runner.ProposalFacts
+	o.ladder.adviceSnap = runner.LastSnapshot
+	o.ladder.adviceSockets = func(id uint32) int { ex, _ := be.Reader.ItemExtra(id); return ex.Sockets }
 	o.ladder.riskFacts = runner.RiskFacts
 	o.ladder.readiness = wireReadiness(runner, db)
 	o.ladder.danger = wireDanger(db)

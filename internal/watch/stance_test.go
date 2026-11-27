@@ -90,7 +90,7 @@ func TestStanceKnobValuesAreInRange(t *testing.T) {
 			t.Errorf("%s has no plain words", o.ID)
 		}
 	}
-	if _, err := row.Options[0].KnobsFor("necromancer"); err == nil || !strings.Contains(err.Error(), `"necromancer"`) {
+	if _, err := row.Options[0].KnobsFor("barbarian"); err == nil || !strings.Contains(err.Error(), `"barbarian"`) {
 		t.Errorf("unknown class: %v", err)
 	}
 }
