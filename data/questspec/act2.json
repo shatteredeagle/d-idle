@@ -1,0 +1,351 @@
+{
+ "schema": "questspec/2",
+ "act": 2,
+ "source": "data/questboard/act2.json (chunk and step names), internal/task/act2.go (nodes, the orifice and Cube steps), internal/quest/act2.go (class ids 152 orifice, 244 Cain V); docs/design/stepexec-p9.md tags every Act 2 fact",
+ "chains": [
+  {
+   "id": "horadric_staff",
+   "quest": "horadric_staff",
+   "initial": [
+    "quest_available(horadric_staff)",
+    "has_item(vip)"
+   ],
+   "areas": {
+    "lut_gholein": {
+     "size": "small"
+    },
+    "halls_of_the_dead": {
+     "size": "medium"
+    },
+    "far_oasis": {
+     "size": "large"
+    },
+    "maggot_lair": {
+     "size": "medium"
+    }
+   },
+   "steps": [
+    {
+     "id": "travel_halls_of_the_dead",
+     "act": "travel",
+     "target": {
+      "kind": "area",
+      "name": "halls_of_the_dead"
+     },
+     "chunk": "cube",
+     "board": [
+      "travel_halls_of_the_dead"
+     ],
+     "pre": [
+      "quest_available(horadric_staff)"
+     ],
+     "post": [
+      "in_area(halls_of_the_dead)"
+     ],
+     "discover": "preset_always",
+     "budget_s": 900,
+     "on_fail": "retry",
+     "tries": 3,
+     "idempotent": true
+    },
+    {
+     "id": "take_cube",
+     "act": "pickup",
+     "target": {
+      "kind": "item",
+      "code": "box"
+     },
+     "chunk": "cube",
+     "board": [
+      "take_cube"
+     ],
+     "pre": [
+      "in_area(halls_of_the_dead)"
+     ],
+     "post": [
+      "has_item(box)"
+     ],
+     "discover": "preset_always",
+     "budget_s": 300,
+     "on_fail": "retry",
+     "tries": 3,
+     "verbs": [
+      "dump items"
+     ]
+    },
+    {
+     "id": "travel_far_oasis",
+     "act": "travel",
+     "target": {
+      "kind": "area",
+      "name": "far_oasis"
+     },
+     "chunk": "shaft",
+     "board": [
+      "travel_far_oasis"
+     ],
+     "pre": [],
+     "post": [
+      "in_area(far_oasis)"
+     ],
+     "discover": "preset_always",
+     "budget_s": 900,
+     "on_fail": "retry",
+     "tries": 3,
+     "idempotent": true
+    },
+    {
+     "id": "travel_maggot_lair",
+     "act": "travel",
+     "target": {
+      "kind": "area",
+      "name": "maggot_lair"
+     },
+     "chunk": "shaft",
+     "board": [
+      "travel_maggot_lair"
+     ],
+     "pre": [
+      "in_area(far_oasis)"
+     ],
+     "post": [
+      "in_area(maggot_lair)"
+     ],
+     "discover": "preset_always",
+     "budget_s": 900,
+     "on_fail": "retry",
+     "tries": 3,
+     "idempotent": true
+    },
+    {
+     "id": "take_shaft",
+     "act": "pickup",
+     "target": {
+      "kind": "item",
+      "code": "msf"
+     },
+     "chunk": "shaft",
+     "board": [
+      "take_shaft"
+     ],
+     "pre": [
+      "in_area(maggot_lair)"
+     ],
+     "post": [
+      "has_item(msf)|has_item(hst)|quest_state(horadric_staff,done)"
+     ],
+     "discover": "preset_always",
+     "budget_s": 300,
+     "on_fail": "retry",
+     "tries": 3,
+     "verbs": [
+      "dump items"
+     ]
+    },
+    {
+     "id": "transmute",
+     "act": "transmute",
+     "target": {
+      "kind": "item",
+      "code": "hst"
+     },
+     "chunk": "assemble",
+     "board": [
+      "open_cube",
+      "transmute"
+     ],
+     "pre": [
+      "in_area(lut_gholein)",
+      "has_item(box)",
+      "has_item(msf)",
+      "has_item(vip)"
+     ],
+     "post": [
+      "has_item(hst)|quest_state(horadric_staff,done)"
+     ],
+     "discover": "preset_always",
+     "budget_s": 180,
+     "on_fail": "retry",
+     "tries": 2,
+     "nodes": [
+      "assemble"
+     ],
+     "consumes": [
+      "has_item(msf)",
+      "has_item(vip)"
+     ],
+     "verbs": [
+      "dump items"
+     ],
+     "exec": {
+      "verb": "transmute",
+      "inputs": [
+       "msf",
+       "vip"
+      ],
+      "wait_polls": 4,
+      "wait_ms": 500,
+      "backoff_ms": 500,
+      "backoff_cap_ms": 2000,
+      "wake": [
+       "pack changes"
+      ]
+     }
+    },
+    {
+     "id": "talk_cain",
+     "act": "talk",
+     "target": {
+      "kind": "npc",
+      "name": "deckard_cain",
+      "class": 244
+     },
+     "chunk": "assemble",
+     "board": [
+      "talk_cain"
+     ],
+     "pre": [
+      "in_area(lut_gholein)",
+      "has_item(hst)"
+     ],
+     "post": [
+      "quest_state(horadric_staff,done)"
+     ],
+     "discover": "preset_always",
+     "budget_s": 120,
+     "on_fail": "retry",
+     "tries": 2,
+     "nodes": [
+      "assemble"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "seven_tombs",
+   "quest": "seven_tombs",
+   "initial": [
+    "has_item(hst)"
+   ],
+   "areas": {
+    "canyon_of_the_magi": {
+     "size": "large"
+    }
+   },
+   "steps": [
+    {
+     "id": "travel_canyon",
+     "act": "travel",
+     "target": {
+      "kind": "area",
+      "name": "canyon_of_the_magi"
+     },
+     "chunk": "duriel",
+     "board": [
+      "travel_canyon"
+     ],
+     "pre": [
+      "has_item(hst)"
+     ],
+     "post": [
+      "in_area(canyon_of_the_magi)"
+     ],
+     "discover": "preset_always",
+     "budget_s": 900,
+     "on_fail": "retry",
+     "tries": 3,
+     "idempotent": true
+    },
+    {
+     "id": "find_tomb",
+     "act": "find_object",
+     "target": {
+      "kind": "object",
+      "name": "orifice",
+      "class": 152
+     },
+     "chunk": "duriel",
+     "board": [
+      "find_tomb"
+     ],
+     "pre": [
+      "in_area(canyon_of_the_magi)",
+      "has_item(hst)"
+     ],
+     "post": [
+      "object_known(orifice)|lacks_item(hst)"
+     ],
+     "discover": "preset_always",
+     "budget_s": 600,
+     "on_fail": "retry",
+     "tries": 3,
+     "verbs": [
+      "debug presets"
+     ]
+    },
+    {
+     "id": "place_staff",
+     "act": "interact",
+     "target": {
+      "kind": "object",
+      "name": "orifice",
+      "class": 152
+     },
+     "chunk": "duriel",
+     "board": [
+      "place_staff"
+     ],
+     "pre": [
+      "object_known(orifice)",
+      "has_item(hst)"
+     ],
+     "post": [
+      "lacks_item(hst)"
+     ],
+     "discover": "preset_always",
+     "budget_s": 600,
+     "on_fail": "retry",
+     "tries": 2,
+     "consumes": [
+      "has_item(hst)"
+     ],
+     "verbs": [
+      "dump items"
+     ],
+     "exec": {
+      "verb": "interact",
+      "tolerance": 4,
+      "wait_polls": 4,
+      "wait_ms": 1000,
+      "backoff_ms": 1000,
+      "backoff_cap_ms": 4000,
+      "wake": [
+       "the staff is in the pack"
+      ]
+     }
+    },
+    {
+     "id": "kill_duriel",
+     "act": "kill",
+     "target": {
+      "kind": "monster",
+      "name": "duriel"
+     },
+     "chunk": "duriel",
+     "board": [
+      "kill_duriel"
+     ],
+     "pre": [
+      "lacks_item(hst)"
+     ],
+     "post": [
+      "killed(duriel)|quest_state(duriel,cleared)"
+     ],
+     "discover": "preset_always",
+     "budget_s": 900,
+     "on_fail": "park"
+    }
+   ]
+  }
+ ]
+}

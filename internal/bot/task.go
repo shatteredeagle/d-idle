@@ -495,6 +495,8 @@ var questItemNames = []string{task.ItemMalus, task.ItemBark, task.ItemCainSc,
 // read as absent in drill.act3s.golden_bird although `debug give j34 pack` had put it in the pack, because the display name
 // of the lab's items table is not the one the steps ask for.
 var questItemCodes = map[string]string{"bks": task.ItemBark, "bkd": task.ItemCainSc,
+	// the Horadric Staff parts (S misc.txt and weapons.txt codes, the set internal/loot/questcodes_test.go keeps)
+	"box": task.ItemCube, "msf": task.ItemShaft, "vip": task.ItemStaffTop, "hst": task.ItemStaff,
 	"j34": task.ItemJade, "g34": task.ItemGolden, "bbb": task.ItemLamTome, "d33": task.ItemGidbinnRaw}
 
 func (r *Runner) scanQuestItems(s *d2.Snapshot, out map[string]int) {
@@ -811,8 +813,11 @@ func (a taskActs) Interact(ctx context.Context, object string) error {
 	if object == CageObject {
 		return a.freeCain(ctx, td)
 	}
-	if object == TreeObject && a.r.e.Tune.Quests.StepExec == 1 {
-		return a.treeViaExecutor(ctx)
+	// Knob quests.stepExec: an object the data gives an interact row (the Cain tree, the orifice) runs on the executor.
+	if a.r.e.Tune.Quests.StepExec == 1 {
+		if ok, err := a.interactViaExecutor(ctx, object); ok {
+			return err
+		}
 	}
 	if err := a.tag(td.Objects.Interact(ctx, object)); err != nil {
 		return err
@@ -901,7 +906,7 @@ func (a taskActs) UseItem(ctx context.Context, item string) error {
 
 // interactPseudo names the pseudo item an object click proves (the world cannot see these effects in the pack).
 var interactPseudo = map[string]string{
-	"tal-orifice":                task.ItemStaffPlaced,
+	OrificeObject:                task.ItemStaffPlaced,
 	"cairn-stones":               task.ItemPortal, // the adapter walks through the portal it opened
 	"item:" + task.ItemBook:      task.ItemBookRead,
 	"item:" + task.ItemResScroll: task.ItemScrollRead,
@@ -920,6 +925,12 @@ func (a taskActs) Transmute(ctx context.Context, inputs []string) error {
 	td := a.r.d.Task
 	if td == nil || td.Cube == nil {
 		return task.Errorf(task.KindPrereq, "the bot has no Horadric Cube capability")
+	}
+	// Knob quests.stepExec: a recipe the data gives a transmute row (the Horadric Staff) runs on the executor.
+	if a.r.e.Tune.Quests.StepExec == 1 {
+		if chain, step, ok := execRow(&execCubes, cubeKey(inputs)); ok {
+			return a.runExecStep(ctx, chain, step)
+		}
 	}
 	return a.tag(td.Cube(ctx, inputs))
 }
