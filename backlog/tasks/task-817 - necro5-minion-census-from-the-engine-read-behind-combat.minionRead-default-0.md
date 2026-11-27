@@ -25,7 +25,7 @@ owns:
   - "docs/knobs.md"
 exclusive: []
 contracts: []
-result: "Fighter.MinionRead + census() behind combat.minionRead (default 0); offline tests only, not verified live; head box root disk hit 100% on 11-22 (go clean -cache freed 21G), builds run on the worker host."
+result: "Fighter.MinionRead + census() behind combat.minionRead (default 0); offline tests only, not verified live; head box root disk hit 100% on 11-22 (go clean -cache freed 21G), builds run on the worker host. closecards3 Remaining (live): #3 need the live game, a browser or a worker-host run; not verified here."
 ---
 
 ## Description

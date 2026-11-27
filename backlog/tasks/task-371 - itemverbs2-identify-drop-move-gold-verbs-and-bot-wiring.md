@@ -33,7 +33,7 @@ owns:
 exclusive:
   - "fork-branch:fork-only/itemverbs"
 contracts: []
-result: "Fork branch fork-only/itemverbs commit 59ae7810 (private forge): item move/identify/drop and gold deposit/withdraw verbs, stash only at the chest; headless differential verb vs manual command sequence matched 3 of 3 runs. Bot: VerbMover/VerbTrasher wired on the d2d backend behind knob invdesk.verbs (default OFF), how=verb|click on every settled request; live click-vs-verb differential prepared (docs/design/item-verbs.md 9a, tools/itemverbs), NOT run live. 0x27 field order settled by disassembly: item first, scroll second."
+result: "Fork branch fork-only/itemverbs commit 59ae7810 (private forge): item move/identify/drop and gold deposit/withdraw verbs, stash only at the chest; headless differential verb vs manual command sequence matched 3 of 3 runs. Bot: VerbMover/VerbTrasher wired on the d2d backend behind knob invdesk.verbs (default OFF), how=verb|click on every settled request; live click-vs-verb differential prepared (docs/design/item-verbs.md 9a, tools/itemverbs), NOT run live. 0x27 field order settled by disassembly: item first, scroll second. closecards3: ticked #4 (merged through the merge gate (merge commit on main))."
 lane: next
 ---
 
@@ -50,5 +50,5 @@ User go 2026-11-12: identify, drop, move (pack/stash/cube) and gold verbs in the
 - [x] #1 Fork: item move/identify/drop and gold verbs with unit and headless differential tests, pushed to the private forge
 - [x] #2 Bot: VerbMover/VerbTrasher wired in cmd/d2bot behind invdesk.verbs (default off), how=verb|click per action, tests with fakes for two classes
 - [x] #3 Differential recipe and tools (docs/design/item-verbs.md 9a, tools/itemverbs) and the offline differential result
-- [ ] #4 Gate: whole-repo labrun, race on touched packages, checks, leakcheck
+- [x] #4 Gate: whole-repo labrun, race on touched packages, checks, leakcheck
 <!-- AC:END -->

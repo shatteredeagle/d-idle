@@ -28,7 +28,7 @@ owns:
   - "tools/videofeed/lumastat/"
 exclusive: []
 contracts: []
-result: "Viewer is not brighter than d2d (lossless luma identical, JPEG -1.2 percent); d2d default gamma 155 is a 1.55x gain (game.exe DirectDraw look, GDI -w has none). Added a per-browser viewer Brightness button; sandbox gamma change left to the user. Not verified live; gamma-100 frame pair not recorded (builder queue)."
+result: "Viewer is not brighter than d2d (lossless luma identical, JPEG -1.2 percent); d2d default gamma 155 is a 1.55x gain (game.exe DirectDraw look, GDI -w has none). Added a per-browser viewer Brightness button; sandbox gamma change left to the user. Not verified live; gamma-100 frame pair not recorded (builder queue). closecards3: ticked #4 (merged through the merge gate (merge commit on main))."
 lane: next
 ---
 
@@ -45,5 +45,5 @@ Size: M. User: viewer overly bright. Done when the cause is measured and the con
 - [x] #1 probe doc with numbers: which component is brighter
 - [x] #2 viewer Brightness control (Dark/Default/Bright), per browser, default 100%
 - [x] #3 regression test: viewer canvas path keeps reference luminance
-- [ ] #4 gates, mergeq
+- [x] #4 gates, mergeq
 <!-- AC:END -->

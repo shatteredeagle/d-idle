@@ -25,7 +25,7 @@ owns:
   - "internal/combat/crowd.go"
 exclusive: []
 contracts: []
-result: "Act 2 quest dungeon road rows now carry life floors (Sewers, Halls of the Dead, Claw Viper Temple, Maggot Lair, Palace Cellar, Ancient Tunnels; SME ballparks, S and U), and an arrival crowd row (14 hostiles within 8 subtiles in the first 60 s in the Halls, Claw Viper Temple and Maggot Lair levels) makes the fighter open a portal at once with no retreat walk. Unit tested, gate green on the builder, not verified live. The drill run on the old code showed 19 to 21 hostiles 12 s into the walk, not a kill 1 s after arrival; the run with the new rule is not done (the worker host stopped answering labrun). Build-specific: none, rows are data keyed by archetype."
+result: "Act 2 quest dungeon road rows now carry life floors (Sewers, Halls of the Dead, Claw Viper Temple, Maggot Lair, Palace Cellar, Ancient Tunnels; SME ballparks, S and U), and an arrival crowd row (14 hostiles within 8 subtiles in the first 60 s in the Halls, Claw Viper Temple and Maggot Lair levels) makes the fighter open a portal at once with no retreat walk. Unit tested, gate green on the builder, not verified live. The drill run on the old code showed 19 to 21 hostiles 12 s into the walk, not a kill 1 s after arrival; the run with the new rule is not done (the worker host stopped answering labrun). Build-specific: none, rows are data keyed by archetype. closecards3 Remaining (live): #3 need the live game, a browser or a worker-host run; not verified here."
 ---
 
 ## Description

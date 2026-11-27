@@ -66,5 +66,5 @@ Why: viewers (and the user) should see the hero's own reason for what it does (d
 Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
 <!-- SECTION:NOTES:END -->
 
-result: built and tested offline (fixtures, race-free tests, golden API for Sorceress and Paladin); NOT verified live or in a browser; see docs/whyline.md.
+result: "built and tested offline (fixtures, race-free tests, golden API for Sorceress and Paladin); NOT verified live or in a browser; see docs/whyline.md. closecards3 Remaining (live): #5 need the live game, a browser or a worker-host run; not verified here."
 Status sync (stays open): AC #5 (live check on the sandbox) is unticked.

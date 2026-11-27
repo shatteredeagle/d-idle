@@ -1,10 +1,11 @@
 ---
 id: TASK-1060
 title: 'advisorwire: bot-side stock and Return screen advice (text only)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T19:55:00Z'
+updated_date: '2026-11-27T20:31:00Z'
 labels:
   - bot
   - feature

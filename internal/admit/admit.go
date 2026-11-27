@@ -159,7 +159,7 @@ func (r Rows) MayEnter(v View, area int, p Purpose) Verdict {
 	}
 	if area != v.Area {
 		if kf := r.KitFloor; kf.PotionsBelow > 0 && v.Level >= kf.FromLevel && v.Healing < kf.PotionsBelow && !kf.Open(v.Healing, v.Level, area, v.fields(), v.MLvl) {
-			return refuse("kit-floor", NeedPotions, fmt.Sprintf("%d healing potions < %d: the first field only (area %d), not area %d", v.Healing, kf.PotionsBelow, v.FirstField, area), false)
+			return refuse("kit-floor", NeedPotions, fmt.Sprintf("%d healing potions < %d: the first field only (area %d) unless a tier opens more, not area %d", v.Healing, kf.PotionsBelow, v.FirstField, area), false)
 		}
 		if why := r.leanWhy(v); why != "" {
 			return refuse("lean", NeedNotReady, why, false)

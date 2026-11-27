@@ -20,6 +20,7 @@ owns:
   - "docs/senses-map.md"
 exclusive: []
 contracts: []
+result: " closecards3 Remaining (not live): #1, #2, #3 open, no result was recorded; offline boxes not individually verified in this pass (U). closecards3 Remaining (live): #4 need the live game, a browser or a worker-host run; not verified here."
 ---
 
 ## Description

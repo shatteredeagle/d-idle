@@ -23,7 +23,7 @@ owns:
   - "internal/watch/onboarding_test.go"
 exclusive: []
 contracts: []
-result: "BUILT offline 2026-11-11 (branch agent/onboarding): panel web/panels/onboarding, /api/onboarding, data/onboarding/en.json, docs/onboarding.md. Tests: Go state/endpoints, node DOM golden, pattern tests, uilint. Not verified live or in a browser."
+result: "BUILT offline 2026-11-11 (branch agent/onboarding): panel web/panels/onboarding, /api/onboarding, data/onboarding/en.json, docs/onboarding.md. Tests: Go state/endpoints, node DOM golden, pattern tests, uilint. Not verified live or in a browser. closecards3 Remaining (live): #4 need the live game, a browser or a worker-host run; not verified here."
 lane: next
 ---
 

@@ -19,7 +19,7 @@ owns:
   - "docs/process/pg-ops-mgcache.md"
 exclusive: []
 contracts: []
-result: "Gate stats per merge (whole-repo seconds, cached packages, count1 flag, race seconds, load) recorded in the queue result and summarised by gate_phases.py; replay measurement of the last 20 code merges without -count=1 on the builder long lane (own cache) scheduled nightly; MERGE_GATE_CACHED=1 switch (default off, -count=1 NOT dropped, AC 2 open until 20 merges are read); nightly uncached whole-repo -race on the second host in the 23:00-07:00 New York window (niced, host-idle check, flake re-run, reproduced red holds the queue). Offline tests pass; replay data not yet collected (first run at 01:30)."
+result: "Gate stats per merge (whole-repo seconds, cached packages, count1 flag, race seconds, load) recorded in the queue result and summarised by gate_phases.py; replay measurement of the last 20 code merges without -count=1 on the builder long lane (own cache) scheduled nightly; MERGE_GATE_CACHED=1 switch (default off, -count=1 NOT dropped, AC 2 open until 20 merges are read); nightly uncached whole-repo -race on the second host in the 23:00-07:00 New York window (niced, host-idle check, flake re-run, reproduced red holds the queue). Offline tests pass; replay data not yet collected (first run at 01:30). closecards3 Remaining (not live): #1, #2 open, needs 20 merges read."
 lane: now
 ---
 

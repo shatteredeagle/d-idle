@@ -23,7 +23,7 @@ owns:
   - "tools/provingground/scenarios/faultsoak.json"
 exclusive: []
 contracts: []
-result: "Runner side built and tested offline: fault proxy (late and dropped replies, delayed input, cancel storm), fault sets as data, soak command with invariant hit and survival report, five soak.fault rows. Not run live; the fork verbs for NPC remove, portal expire and belt clear are proposed in the design note."
+result: "Runner side built and tested offline: fault proxy (late and dropped replies, delayed input, cancel storm), fault sets as data, soak command with invariant hit and survival report, five soak.fault rows. Not run live; the fork verbs for NPC remove, portal expire and belt clear are proposed in the design note. closecards3 Remaining (live): #2 need the live game, a browser or a worker-host run; not verified here."
 ---
 
 ## Description

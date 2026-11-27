@@ -20,7 +20,7 @@ owns:
   - "docs/probes/faultsoak-design-2026-11-26.md"
 exclusive: []
 contracts: []
-result: "Cause: the fault sets counted commands, so a 20 s held reply came every few frames and the bot waited most of the time, one runner step outlived the 10 minute watchdog; the proxy also kept the game slot and its lock during a hold after the bot hung up, so redials met err busy. Fix: rates in time, a hold ends when the bot hangs up, unknown set keys rejected. Verified offline with a single-client fake game, not live. Not build-specific."
+result: "Cause: the fault sets counted commands, so a 20 s held reply came every few frames and the bot waited most of the time, one runner step outlived the 10 minute watchdog; the proxy also kept the game slot and its lock during a hold after the bot hung up, so redials met err busy. Fix: rates in time, a hold ends when the bot hangs up, unknown set keys rejected. Verified offline with a single-client fake game, not live. Not build-specific. closecards3 Remaining (live): #4 need the live game, a browser or a worker-host run; not verified here."
 ---
 
 ## Description

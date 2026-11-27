@@ -25,7 +25,7 @@ owns:
   - "docs/knobs.md"
 exclusive: []
 contracts: []
-result: "Friend (Waterfox, fast PC) reports bad game-view fps. Server was already latest-wins and shares one encode; added /stream?fps=N, duplicate skip, glance stream stats, page low-rate mode + hint + fps line, copy-free parser. Browser fps NOT measured (builder saturated); not verified live."
+result: "Friend (Waterfox, fast PC) reports bad game-view fps. Server was already latest-wins and shares one encode; added /stream?fps=N, duplicate skip, glance stream stats, page low-rate mode + hint + fps line, copy-free parser. Browser fps NOT measured (builder saturated); not verified live. closecards3 Remaining (live): #3 need the live game, a browser or a worker-host run; not verified here."
 lane: next
 ---
 

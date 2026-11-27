@@ -19,7 +19,7 @@ owns:
   - "internal/combat/classdata"
 exclusive: []
 contracts: []
-result: "Superseded by TASK-254 (card palprofile-data, merged as #502): the profile data change landed there. Not verified live."
+result: "Superseded by TASK-254 (card palprofile-data, merged as #502): the profile data change landed there. Not verified live. closecards3: box #1 not ticked, superseded by TASK-254 (palprofile-data), card stays Deferred."
 lane: parked
 lane_note: "status Deferred (Superseded by TASK-254 (card palprofile-data, merged as #502)"
 ---

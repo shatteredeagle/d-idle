@@ -22,7 +22,7 @@ owns:
   - "cmd/d2bot/glancewire_farmoff_test.go"
 exclusive: []
 contracts: []
-result: "Guards added and unit-tested offline (two classes); culprit candidates named from the code (noTarget without forgetGame, stale nav coverage), the real emitter not provable without the log: every leave now logs new game requested from=file:line; not verified live; default stays off"
+result: "Guards added and unit-tested offline (two classes); culprit candidates named from the code (noTarget without forgetGame, stale nav coverage), the real emitter not provable without the log: every leave now logs new game requested from=file:line; not verified live; default stays off closecards3 Remaining (live): #3 need the live game, a browser or a worker-host run; not verified here."
 ---
 
 ## Description

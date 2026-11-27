@@ -190,6 +190,7 @@ type Runner struct {
 	tpBuyMin       int        // scrolls bought this minute, set by tpDiag under obMu for failsafeKV
 	ob             observer
 	cp             checkpointState         // checkpoint portals (checkpoint.go)
+	admit          admitState              // admission wiring state (admission.go)
 	explain        explainState            // decision ring and standing refusals (explain.go)
 	inv            invMon                  // invariant monitor (invariants.go)
 	arb            arbShadow               // intent arbiter in shadow mode (shadow.go); idle unless bot.arbiterShadow is 1

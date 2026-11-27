@@ -24,7 +24,7 @@ owns:
   - "internal/questboard/desk_test.go"
   - "cmd/d2bot/questwire.go"
   - "docs/questboard.md"
-result: "Tap logs queued/served/dropped; stale or timed-out requests leave the mailbox; handin_waiting reason in the API; idle goal serves the tap in town. Offline tests only, not verified live; live drill open."
+result: "Tap logs queued/served/dropped; stale or timed-out requests leave the mailbox; handin_waiting reason in the API; idle goal serves the tap in town. Offline tests only, not verified live; live drill open. closecards3 Remaining (live): #5 need the live game, a browser or a worker-host run; not verified here."
 exclusive: []
 contracts: []
 ---

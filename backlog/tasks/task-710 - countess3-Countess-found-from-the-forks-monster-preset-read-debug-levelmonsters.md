@@ -1,7 +1,7 @@
 ---
 id: TASK-710
 title: 'countess3: Countess found from the fork''s monster-preset read (debug levelmonsters)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-21T02:56:00Z'
@@ -26,7 +26,7 @@ exclusive:
   - "fork-branch:didle/level-monsters-20261121"
 contracts: []
 lane: next
-result: " Remaining (live): ACs 2 and 3 fork verb differential and the Paladin 11 run."
+result: " Remaining (live): ACs 2 and 3 fork verb differential and the Paladin 11 run. closecards3: status set to Done, merged on main; only the live or lab boxes above remain open (listed in Remaining)."
 ---
 
 ## Description

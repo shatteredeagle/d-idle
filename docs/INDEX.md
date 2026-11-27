@@ -337,7 +337,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 `design/`
 
-- [admission-p4.md](design/admission-p4.md): Admission function (P4, card admit1, TASK-970) (status: step 1 built (package, data, tests); step 2 (wiring) waits for the outcomes2 cards TASK-958 and TASK-961.)
+- [admission-p4.md](design/admission-p4.md): Admission function (P4, card admit1, TASK-970) (status: step 1 built (package, data, tests); step 2 wired in shadow for the four entry rows and the quest-walk kit...)
 - [advisor-r14.md](design/advisor-r14.md): Advisor R14: runeword and cube advice (TASK-991) (status: built dark (knob `items.advisor`, default 0). Advice lines only.)
 - [agency-p1b.md](design/agency-p1b.md): Agency P1b: the planner drives (mode 2) (status: partial (TASK-984, 2026-11-27). Offline pieces built; the review and the flip are the owner's. Tags: V =...)
 - [agency-p3.md](design/agency-p3.md): Agency P3: share and import build files (status: current (TASK-985, 2026-11-27). Tags: V = ran in a test of `internal/buildfile`, U = unverified.)
@@ -389,6 +389,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [item-colour-2026-11-18.md](design/item-colour-2026-11-18.md): Item colour in the inventory art: chain and slice plan (2026-11-18) (status: design, task-634 (card itemcolour). Follow-up to jewelcolor (task-632), which removed the invented wash....)
 - [item-verbs.md](design/item-verbs.md): Item verbs: inventory, stash and equipment actions through d2d's own item handlers (TASK-367) (status: DESIGN plus the built verbs (equip, unequip, move, identify, drop, gold, `caps`), 2026-11-12; stage 2 and...)
 - [loot-vault-2026-11-16.md](design/loot-vault-2026-11-16.md): Ethereal Vault: a database of every drop, created in the game only on Keep (design and feasibility) (status: DESIGN, 2026-11-16. Nothing here was built or run; the fork was read, not changed. "Ethereal Vault" is the...)
+- [merc-aura-by-archetype.md](design/merc-aura-by-archetype.md): Merc aura by class archetype (design note, no code) (status: proposal (card classkeys). Nothing here is built. Tags: V verified in the repo by reading code, S...)
 - [necromancer-sme-answers-2026-11-22.md](design/necromancer-sme-answers-2026-11-22.md): Necromancer build answers for the unattended bot (SME, 2026-11-22) (status: current. Answers the five questions of `docs/probes/necromancer-readiness-2026-11-22.md` section 4 (card...)
 - [proptest-t3.md](design/proptest-t3.md): Property tests on the pure deciders (T3) (status: current (TASK-980, card proptest1). Roadmap row T3, docs/research/fable-logic-review-2026-11-25.md section...)
 - [quest-board-2026-11-16.md](design/quest-board-2026-11-16.md): Quest board: quests as events the player takes part in (status: design proposal (2026-11-16, card questdesign, TASK-575), not built; waits for the user's answers (section...)
@@ -438,7 +439,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [farmfallback.md](farmfallback.md): farmfallback: the gold farm as data, with a fallback
 - [farmloop.md](farmloop.md): The farm loop: reset a mostly cleared leveling zone with a fresh game (status: current (2026-11-15, agent farmloop). Shipped OFF (`bot.farmReset` 0): the simulation shows a small gain...)
 - [first-hour.md](first-hour.md): First hour: the daily table tool
-- [first-session.md](first-session.md): First play session guide (TASK-134) (status: written 2026-11-08 from docs on main only. Nothing here was run for this guide. Tags: V verified live (as...)
+- [first-session.md](first-session.md): First play session guide (TASK-134) (status: written 2026-11-08 from docs on main only; sections D, H and I brought up to date 2026-11-27 (TASK-27)...)
 - [fixbank.md](fixbank.md): FIXBANK: gold deposit and repair gold (card fix-bank) (status: current. Findings of the D3 drills (docs/probes/drills/2026-10-31-d3.txt); live proof is a drill rerun.)
 - [fixbelt.md](fixbelt.md): fixbelt: the Gate 1 rerun belt window
 - [fixbelt2.md](fixbelt2.md): fixbelt2: why potions stayed in the pack (post-fix soak 1) (status: code on branch agent/fixbelt2; live proof pending (drill variants below).)

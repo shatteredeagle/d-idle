@@ -18,7 +18,7 @@ owns:
   - "internal/watch/watchlayout_test.go"
 exclusive: []
 contracts: []
-result: "CSS + string test pass; preview deployed to the sandbox, not verified by eye or live"
+result: "CSS + string test pass; preview deployed to the sandbox, not verified by eye or live closecards3 Remaining (live): #1, #2 need the live game, a browser or a worker-host run; not verified here."
 ---
 
 ## Description

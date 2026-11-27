@@ -257,14 +257,14 @@
      "skill": 73,
      "min": 16,
      "at_level": 30,
-     "why": "Poison Dagger (id 73, U: id from memory of skills.txt): table has 20 by clvl 30, 4 quest points are not granted"
+     "why": "Poison Dagger (id 73, S: docs/research/nec-skill-trace.md, d2d skills.txt read; class base 66 + 7): table has 20 by clvl 30, 4 quest points are not granted"
     },
     {
      "kind": "skill_points",
      "skill": 84,
      "min": 1,
      "at_level": 30,
-     "why": "Bone Spear (id 84, U: id from memory of skills.txt): table has 5 by clvl 30, 4 quest points are not granted"
+     "why": "Bone Spear (id 84, V: docs/research/nec-skill-trace.md Q4 ran it by id; class base 66 + 18): table has 5 by clvl 30, 4 quest points are not granted"
     },
     {
      "kind": "log_line",

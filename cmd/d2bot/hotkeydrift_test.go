@@ -13,16 +13,13 @@ import (
 )
 
 // knownHotkeyDrift is the ratchet of card hotkeydrift: per plan table, how many of its `hotkeys` rows name a skill the
-// table's combat profile binds to another key or not at all (S: counted by this test; V by running it, 2026-11-26).
+// table's combat profile binds to another key or not at all (S: counted by this test; V by running it, 2026-11-26). Card classkeys took the Amazon, Barbarian, Druid and hammerdin tables to zero.
 // Nothing reads Build.Hotkeys outside the parser (S: grep), and on d2d every learned skill gets a pseudo key
 // (d2dcombat Rig.BindSkills), so the drift costs nothing today; it would on the game.exe path, where the profile layout is
 // the key map. A table may only lower its number; a new table starts at zero (the profile layout is the one source of truth).
 var knownHotkeyDrift = map[string]int{
-	"amazon_bow_normal30": 1, "amazon_javelin_normal30": 2, "amazon_multishot_endgame90": 3,
-	"assassin_fireblast_normal30": 2, "assassin_sentry_endgame90": 6, "barbarian_warcry_endgame90": 4,
-	"druid_tornado_endgame90": 8,
-	"paladin-normal30":        5, "paladin-normal30-v2": 4, "paladin-zealot-lite": 3, "paladin_hammerdin_endgame90": 6,
-	"paladin_hammerdin_zeal_endgame90": 7, "sorceress_blizzard_endgame90": 6,
+	"assassin_fireblast_normal30": 2, "assassin_sentry_endgame90": 6,
+	"paladin-normal30": 5, "paladin-normal30-v2": 4, "paladin-zealot-lite": 3, "sorceress_blizzard_endgame90": 6,
 }
 
 func classByName(name string) (d2.Class, bool) {

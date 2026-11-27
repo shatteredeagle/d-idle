@@ -24,7 +24,7 @@ owns:
   - "docs/watch-origin.md"
 exclusive: []
 contracts: []
-result: " closecards2: AC 1 verified (internal/access/sameorigin.go, TestSameOrigin, Referrer-Policy set). AC 2 deploy not checked."
+result: " closecards2: AC 1 verified (internal/access/sameorigin.go, TestSameOrigin, Referrer-Policy set). AC 2 deploy not checked. closecards3 Remaining (live): #2 need the live game, a browser or a worker-host run; not verified here."
 ---
 
 ## Description

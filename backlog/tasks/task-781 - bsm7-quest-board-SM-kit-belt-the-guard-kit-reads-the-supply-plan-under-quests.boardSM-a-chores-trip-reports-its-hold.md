@@ -25,7 +25,7 @@ owns:
   - "docs/probes/boardsm-progress-2026-11-21.md"
 exclusive: []
 contracts: []
-result: "With quests.boardSM the guards and the shop read the supply plan; a coded fault that inserts the chores trip reports its hold (Result.Via, log line quest board: hold needs_potions), and a clean trip that leaves the shortage is a hold, not a counted failure. Unit tested (Paladin and Sorceress worlds), bot suite green. Live (second worker, CHEATED setups): hold.restock Paladin 11 shows the hold line, no park and the road onward; restock-stash-gold Paladin 11 withdrew from the stash with no park; Sorceress runs were cut by the lab pace (BLOCKED, not judged); broke, too-weak and timeout not run yet."
+result: "With quests.boardSM the guards and the shop read the supply plan; a coded fault that inserts the chores trip reports its hold (Result.Via, log line quest board: hold needs_potions), and a clean trip that leaves the shortage is a hold, not a counted failure. Unit tested (Paladin and Sorceress worlds), bot suite green. Live (second worker, CHEATED setups): hold.restock Paladin 11 shows the hold line, no park and the road onward; restock-stash-gold Paladin 11 withdrew from the stash with no park; Sorceress runs were cut by the lab pace (BLOCKED, not judged); broke, too-weak and timeout not run yet. closecards3 Remaining (live): #3 need the live game, a browser or a worker-host run; not verified here."
 lane: next
 ---
 

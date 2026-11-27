@@ -22,7 +22,7 @@ owns:
   - "docs/bounce3.md"
 exclusive: []
 contracts: []
-result: "Root cause V: the priming click after a level change landed within d2d's 2-cell warp-take radius of the return warp (walk_to/use_warp); kickSafe places it >= 3 cells from every warp; headless repro 6/12 bounces on main, 0/12 on the branch; breaker skips the deeper side; minute line bouncesPer100. Not yet verified live."
+result: "Root cause V: the priming click after a level change landed within d2d's 2-cell warp-take radius of the return warp (walk_to/use_warp); kickSafe places it >= 3 cells from every warp; headless repro 6/12 bounces on main, 0/12 on the branch; breaker skips the deeper side; minute line bouncesPer100. Not yet verified live. closecards3 Remaining (live): #5 need the live game, a browser or a worker-host run; not verified here."
 lane: now
 ---
 

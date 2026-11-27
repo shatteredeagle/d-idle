@@ -26,7 +26,7 @@ owns:
   - "docs/backlog-howto.md"
 exclusive: []
 contracts: []
-result: "harness and one dry seed pair (0.5 virtual hour, slot 4) verified live on the worker; the full 16-run A/B (criterion 3, second half) not run yet, host busy; prep experience line untested live Status sync 2026-11-07: stays open, AC 3 (the full 16-run A/B) has not run."
+result: "harness and one dry seed pair (0.5 virtual hour, slot 4) verified live on the worker; the full 16-run A/B (criterion 3, second half) not run yet, host busy; prep experience line untested live Status sync 2026-11-07: stays open, AC 3 (the full 16-run A/B) has not run. closecards3 Remaining (live): #3 need the live game, a browser or a worker-host run; not verified here."
 ---
 
 ## Description

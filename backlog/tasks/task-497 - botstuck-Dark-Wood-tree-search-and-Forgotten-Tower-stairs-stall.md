@@ -26,7 +26,7 @@ owns:
   - "docs/knobs.md"
 exclusive: []
 contracts: []
-result: "Offline only, not verified live. nav: the mouth gate skips an unwanted exit within mouthTriggerR of a wanted exit (test TestGateSkipsMouthBesideWantedExit). d2bot objectAdapter.find explores up to 100 s until the object or its preset appears. Park rule: internal/bot/staletarget.go parkStep/unparkDue, test parkstep_test.go (class neutral, reads step ids and knobs only). No unit test for the find explore path: it needs a real nav.Navigator whose simulator lives in package nav (unexported). Knobs are bot.parkAfter and bot.parkMinutes (flat keys like the other bot knobs, not bot.stuck.*)."
+result: "Offline only, not verified live. nav: the mouth gate skips an unwanted exit within mouthTriggerR of a wanted exit (test TestGateSkipsMouthBesideWantedExit). d2bot objectAdapter.find explores up to 100 s until the object or its preset appears. Park rule: internal/bot/staletarget.go parkStep/unparkDue, test parkstep_test.go (class neutral, reads step ids and knobs only). No unit test for the find explore path: it needs a real nav.Navigator whose simulator lives in package nav (unexported). Knobs are bot.parkAfter and bot.parkMinutes (flat keys like the other bot knobs, not bot.stuck.*). closecards3 Remaining (live): #3 need the live game, a browser or a worker-host run; not verified here."
 lane: next
 ---
 
