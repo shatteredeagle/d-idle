@@ -1,10 +1,13 @@
 ---
 id: TASK-1062
-title: 'fliptool: harden flip.py (transport probe, --reflip, watcher unit, ledger commit)'
-status: Proposed
+title: >-
+  fliptool: harden flip.py (transport probe, --reflip, watcher unit, ledger
+  commit)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T20:14:00Z'
+updated_date: '2026-11-27T20:32:00Z'
 labels:
   - ops
   - chore
