@@ -1,10 +1,11 @@
 ---
 id: TASK-1051
 title: 'akarafix: hand-in tap is observable and cannot go stale'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T18:31:00Z'
+updated_date: '2026-11-27T19:03:00Z'
 labels:
   - bot
   - bot-fix
