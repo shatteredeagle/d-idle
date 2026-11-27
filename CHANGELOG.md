@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- tuningwrite: refuse tiny tuning writes, restore warn, flip verify hard-fails on zero bytes (TASK-1077) <!--sg:agent/tuningwrite-->
 - racefix: hand-in rebuilds the cached world before signalling done (TASK-1076) <!--sg:agent/racefix-->
 - denreward: hold every non-emergency trip while a quest reward is pending, nav.barracks-return scenario (TASK-880) <!--sg:agent/denreward-->
 - bsmprep: boardLegacy seam, boardSM removal plan, drill scenarios (TASK-983 prep) <!--sg:agent/bsmprep-->
