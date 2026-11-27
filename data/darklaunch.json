@@ -53,7 +53,7 @@
    "trial_window": "2700s",
    "trial_why": "deploy 94: owner approved 2026-11-27 08:35 EST: upkeep mode 2 + town plan stage 3 (ADR 0028)",
    "trial_bundle": "combat.deliveryUpkeep,town.plan",
-   "note": "owner approved 2026-11-27, live on sandbox Doofer (stage 3 under ADR 0028; stage 2 was enabled 2026-11-27T00:11:21Z)"
+   "note": "owner approved 2026-11-27, live on sandbox Doofer (stage 3 under ADR 0028; stage 2 was enabled 2026-11-27T00:11:21Z); 45 min flip window closed clean 2026-11-27T14:25:40Z (no hard breach), kept on trial"
   },
   {
    "name": "quests.boardSM",
@@ -501,7 +501,7 @@
    "trial_window": "2700s",
    "trial_why": "deploy 94: owner approved 2026-11-27 08:35 EST: upkeep mode 2 + town plan stage 3 (ADR 0028)",
    "trial_bundle": "combat.deliveryUpkeep,town.plan",
-   "note": "owner approved 2026-11-27, live on sandbox Doofer (mode 2)"
+   "note": "owner approved 2026-11-27, live on sandbox Doofer (mode 2); 45 min flip window closed clean 2026-11-27T14:25:40Z (no hard breach), kept on trial"
   }
  ]
 }
