@@ -1517,6 +1517,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - agent/act2drill6: act2drill6: docs (merged 2026-11-27) <!--sg:agent/act2drill6-->
 - agent/darkqueue: darkqueue: dark queue plan (merged 2026-11-27) <!--sg:agent/darkqueue-->
 - pgtaps: scripted taps and API calls on the virtual clock inside the bot (TASK-738, merged 2026-11-27, acceptance 3 of 4): Steps 1 and 2 done. Step 1: board tapper polls the bot virtual clock grid (30 virtual s), taps_at recorded. Step 2: d2bot --scripted-taps FILE (scenario.TapScript JSON: quest, chunks, every_s): scenario.TapEngine decides the Start and Hand in taps on a ... <!--sg:agent/pgclock2-->
+- agent/fastflip: fastflip: 2 h default flip window (merged 2026-11-27) <!--sg:agent/fastflip-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
