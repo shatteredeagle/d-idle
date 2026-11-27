@@ -319,7 +319,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Glacial Spike",
+     "skill": "Ice Blast",
      "points": 1
     }
    ]
@@ -332,7 +332,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Glacial Spike",
+     "skill": "Ice Blast",
      "points": 1
     }
    ]
@@ -345,7 +345,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Glacial Spike",
+     "skill": "Ice Blast",
      "points": 1
     }
    ]
@@ -358,7 +358,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Glacial Spike",
+     "skill": "Ice Blast",
      "points": 1
     }
    ]
@@ -371,7 +371,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Glacial Spike",
+     "skill": "Ice Blast",
      "points": 1
     }
    ]
@@ -389,5 +389,6 @@
     }
    ]
   }
- ]
+ ],
+ "tags": " SME review 2026-11-27, confidence medium-high: Glacial Spike 1 at clvl 24 only (Blizzard prerequisite; the cold band casts Ice Blast first so more points were never used), the five points of 25-29 go to Ice Blast."
 }
