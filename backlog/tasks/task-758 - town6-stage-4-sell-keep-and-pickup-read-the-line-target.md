@@ -34,5 +34,5 @@ Why: at town.plan 4 the sell chore keeps the plan line's target (merged in townf
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
 - [x] #1 sell keeps max(target,min); below-floor sold first; pickup want from the plan line
-- [ ] #2 scenarios belt-refill-from-pack, sell-keeps-need, scroll-hoard
+- [x] #2 scenarios belt-refill-from-pack, sell-keeps-need, scroll-hoard
 <!-- AC:END -->

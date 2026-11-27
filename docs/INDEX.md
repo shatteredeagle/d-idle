@@ -611,7 +611,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 `reviews/`
 
 - [support-bundle-security-2026-11-15.md](reviews/support-bundle-security-2026-11-15.md): Security review: support bundle upload (branch agent/support, tip 88eecae7b) (status: review of task 542 / card `support` before merge (mergeq #811). Reviewer: Opus, single, offline. Nothing...)
-- [roadmap-fable.md](roadmap-fable.md): Fable roadmap: every recommendation, its state, and what flips it (status: current (card fableroadmap, 2026-11-26; refreshed by card roadmap2 the same day against `git log...)
+- [roadmap-fable.md](roadmap-fable.md): Fable roadmap: every recommendation, its state, and what flips it (status: current (card fableroadmap, 2026-11-26; refreshed by card roadmap2 the same day and by card roadmap3 on...)
 - [roamleg.md](roamleg.md): ROAMLEG: a mouth-gate hold is not a failed roam target (status: offline fix, tests pass, verified live in DRILLS23 (docs/probes/drills/README.md): 0 failed legs (was 50),...)
 - [roamspacing.md](roamspacing.md): Roam coverage spacing (TASK-301) (status: CURRENT. Tags: V = measured (log read-only, or the simulator run in this worktree on the worker host), S =...)
 - [running.md](running.md): How to run d.idle (status: current as of 2026-11-01 (card readmedocs; Teleport and `--build` note added by card capdocs). Every...)
@@ -1076,6 +1076,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [combat-foundation-2026-11-21.md](probes/combat-foundation-2026-11-21.md): Combat engine foundation group, 2026-11-21 (status: record of the foundation group of the approved combat engine plan...)
 - [countess-knobs-2026-11-22.md](probes/countess-knobs-2026-11-22.md): The Countess three ways: nav.fullGrid and nav.warpRead on a lab slot (card mapverify, 2026-11-22) (status: current. Scenario `act1.forgotten.countess` (Paladin) and `act1.forgotten.countess.sorc` (Sorceress),...)
 - [currency1.md](probes/currency1.md): Probe: currency slice 1, the Raven's Mark rows (TASK-63) (status: UNVERIFIED live, 2026-11-06. Offline checks passed; the live run was not started because Gate 2 seeds were...)
+- [dark-queue-plan-2026-11-27.md](probes/dark-queue-plan-2026-11-27.md): Dark queue: plan to clear it (2026-11-27) (status: current (docs-only plan, nothing run, nothing flipped). Sources: `data/darklaunch.json` (38 rows),...)
 - [deploy-cockpit-2026-11-15.md](probes/deploy-cockpit-2026-11-15.md): Deploy record: cockpit UI to the sandbox, 2026-11-15 (status: record. Task TASK-490. Tags: V = verified in this run (command named), U = not verified.)
 - [devp8-2026-11-15.md](probes/devp8-2026-11-15.md): Sandbox image devp8: hero stats and merc item verbs (2026-11-15) (status: result record, deployed. Tags: V = run and seen (command named), S = read, U = unverified. Task: TASK-516....)
 - [drill-zip-2026-11-14.md](probes/drill-zip-2026-11-14.md): Friend pack 0.1.1 drilled on the user's original install zip (2026-11-14) (status: RUN 2026-11-14 on the worker host. Tags: V = run and output seen, S = read in the source or docs, U = not...)
