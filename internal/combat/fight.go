@@ -609,6 +609,9 @@ func (f *Fighter) engage(ctx context.Context, snap *d2.Snapshot, tg Target, sp f
 	if acted, err := f.stanceTick(ctx, snap, st); acted || err != nil {
 		return err
 	}
+	if acted, err := f.moveTick(snap, st); acted || err != nil {
+		return err
+	}
 	f.noteGear(snap)
 	f.noteLifePrice(snap)
 	order := f.attackSkills(p)
@@ -736,6 +739,11 @@ func (f *Fighter) engage(ctx context.Context, snap *d2.Snapshot, tg Target, sp f
 	inReach := tg.Dist <= float64(reach)
 	if spec.Kind != KindMelee && spec.Kind != KindSelf {
 		inReach = tg.Dist <= float64(spec.Range) // the margin is for walking, a target inside the range is shot at
+	}
+	if !meleeGo && !inReach {
+		if aimed, err := f.gapClose(snap, tg); aimed || err != nil {
+			return err
+		}
 	}
 	if !meleeGo && (!inReach || !onScreen(snap, target) || !f.los(me, target)) {
 		if f.mv == nil {

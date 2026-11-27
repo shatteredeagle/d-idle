@@ -49,7 +49,18 @@
     "Glacial Spike": "f6",
     "Ice Blast": "f7",
     "Fire Bolt": "f8"
-   }
+   },
+   "moves": [
+    {
+     "name": "Teleport",
+     "uses": ["travel", "escape"],
+     "range": 18,
+     "minHop": 4,
+     "escapeSurround": 4,
+     "escapeLifePct": 65,
+     "source": "V range: a cast moves about 18 subtiles (docs/act2.md live results, nav teleport.go). U escape triggers: four in contact under 65 percent life, the melee profiles' surround numbers"
+    }
+   ]
   },
   {
    "class": "sorceress",
@@ -94,7 +105,18 @@
     "Ice Bolt": "f6",
     "Glacial Spike": "f7",
     "Frost Nova": "f8"
-   }
+   },
+   "moves": [
+    {
+     "name": "Teleport",
+     "uses": ["travel", "escape"],
+     "range": 18,
+     "minHop": 4,
+     "escapeSurround": 4,
+     "escapeLifePct": 65,
+     "source": "V range: a cast moves about 18 subtiles (docs/act2.md live results, nav teleport.go). U escape triggers: four in contact under 65 percent life, the melee profiles' surround numbers"
+    }
+   ]
   },
   {
    "class": "sorceress",
@@ -150,7 +172,18 @@
     "Lightning": "f6",
     "Fire Bolt": "f7",
     "Frost Nova": "f8"
-   }
+   },
+   "moves": [
+    {
+     "name": "Teleport",
+     "uses": ["travel", "escape"],
+     "range": 18,
+     "minHop": 4,
+     "escapeSurround": 4,
+     "escapeLifePct": 65,
+     "source": "V range: a cast moves about 18 subtiles (docs/act2.md live results, nav teleport.go). U escape triggers: four in contact under 65 percent life, the melee profiles' surround numbers"
+    }
+   ]
   },
   {
    "class": "sorceress",
@@ -185,7 +218,18 @@
     "Fire Bolt": "f4",
     "Fire Ball": "f5",
     "Charged Bolt": "f6"
-   }
+   },
+   "moves": [
+    {
+     "name": "Teleport",
+     "uses": ["travel", "escape"],
+     "range": 18,
+     "minHop": 4,
+     "escapeSurround": 4,
+     "escapeLifePct": 65,
+     "source": "V range: a cast moves about 18 subtiles (docs/act2.md live results, nav teleport.go). U escape triggers: four in contact under 65 percent life, the melee profiles' surround numbers"
+    }
+   ]
   },
   {
    "class": "paladin",

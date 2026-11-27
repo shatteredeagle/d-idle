@@ -87,6 +87,7 @@ type Fighter struct {
 	mark          markState   // the mark driver (mark.go)
 	aim           aimState    // the point aim driver (aim.go)
 	stance        stanceState // the army stance (stance.go)
+	moves         moveState   // move driver counters (move.go)
 	press         pressState  // press rows: shadow and gate counters (press.go)
 	lastDodge     time.Time
 	diagMu        sync.Mutex // guards portalCast and casts (read from the bot's autopsy)
