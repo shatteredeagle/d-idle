@@ -43,6 +43,7 @@
 | releasenotes-next | proposed | - | `docs/releases/next-draft.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
+| recoverydeath | proposed | - | `internal/bot/broke.go`<br>`internal/bot/povertyfarm.go`<br>`internal/bot/recoverydeath_test.go`<br>`internal/bot/invariants.go`<br>`internal/admit/rows.go`<br>`internal/plandata/admission.json` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
@@ -191,6 +192,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- e13415294 11-27 18:52 `Merge agent/recoverydeath: recoverydeath: no-potion recovery farm picks the safest area below clvl 8 (TASK-1080)` (recoverydeath)
+- 9d9f28b47 11-27 18:51 `Merge branch 'main' into recoverydeath` (-)
 - 0bf8865a2 11-27 18:39 `Merge agent/zonepace: zonepace: lock lapses by time, zones far below the hero dropped (under bot.zoneModel) (TASK-1078)` (zonepace)
 - c72327077 11-27 18:39 `Merge agent/relaunches: relaunches: relaunch reason log line + minute-line counters, refusal-storm top list (TASK-1079)` (relaunches)
 - 2865b726c 11-27 18:38 `Merge branch 'main' into zonepace` (-)
@@ -199,6 +202,4 @@
 - 20f13e0a4 11-27 18:31 `Merge agent/racefix: racefix: hand-in rebuilds the cached world before signalling done (TASK-1076)` (racefix)
 - b50b24aa8 11-27 18:31 `Merge agent/denreward: denreward: hold every non-emergency trip while a quest reward is pending, nav.barracks-return scenario (TASK-880)` (denreward)
 - 62cd1cf1c 11-27 18:28 `Merge branch 'main' into tuningwrite` (-)
-- 064b9c30b 11-27 18:28 `Merge branch 'main' into racefix` (-)
-- b0ba5397d 11-27 18:28 `Merge branch 'main' into denreward` (-)
 <!-- statusgen:end -->

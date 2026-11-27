@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- recoverydeath: no-potion recovery farm picks the safest area below clvl 8 (TASK-1080) <!--sg:agent/recoverydeath-->
 - zonepace: lock lapses by time, zones far below the hero dropped (under bot.zoneModel) (TASK-1078) <!--sg:agent/zonepace-->
 - relaunches: relaunch reason log line + minute-line counters, refusal-storm top list (TASK-1079) <!--sg:agent/relaunches-->
 - tuningwrite: refuse tiny tuning writes, restore warn, flip verify hard-fails on zero bytes (TASK-1077) <!--sg:agent/tuningwrite-->
