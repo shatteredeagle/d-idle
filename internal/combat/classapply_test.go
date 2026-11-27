@@ -92,3 +92,28 @@ func TestNoPassiveIronSkinInBuffsOrLayout(t *testing.T) {
 		}
 	}
 }
+
+// SME review 2026-11-27: the tornado profile keys and buffs Hurricane (confidence medium; the state id for its recast
+// clock is unverified), and the default druid band leads with Firestorm before Molten Boulder (confidence medium-high).
+func TestDruidProfiles(t *testing.T) {
+	tor, err := LookupProfile(d2.Druid, "tornado")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if tor.Layout["Hurricane"] == "" {
+		t.Error("tornado layout has no Hurricane key")
+	}
+	buffed := false
+	for _, g := range tor.Buffs {
+		for _, n := range g {
+			buffed = buffed || n == "Hurricane"
+		}
+	}
+	if !buffed {
+		t.Error("tornado buffs lack Hurricane")
+	}
+	got := ProfileFor(d2.Druid, "").AttackNames(20, known("Eruption", "Firestorm", "Molten Boulder"))
+	if len(got) < 3 || got[0] != "Eruption" || got[1] != "Firestorm" || got[2] != "Molten Boulder" {
+		t.Errorf("default druid attack order %v", got)
+	}
+}
