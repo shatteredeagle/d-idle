@@ -126,6 +126,7 @@ docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-minutes.jsonl.gz  gaterun  gat
 docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-extras.jsonl.gz  gaterun  gate2multi-20261107-1811-g2h
 
 # BEGIN GENERATED OWNERS (tools/sharedgen/sharedgen.py from the owns: keys of open tasks; do not edit between the markers)
+backlog/tasks/task-726 - dlv-cast-verbs-input-caps-cast-unit-cast-point-cast-hold.md  credit-runner  inputl3
 cmd/d2bot/acts_test.go  credit-runner  qdmatrix
 cmd/d2bot/adapters.go  credit-runner  cainfix3
 cmd/d2bot/adapters.go  credit-runner  dlv-stance-army
@@ -188,7 +189,9 @@ data/darklaunch.json  credit-runner  deploy88-ledger
 data/darklaunch.json  credit-runner  dlv-upkeep-state
 data/darklaunch.json  credit-runner  ticklog
 data/input/caps/  credit-runner  dlv-cast-verbs
+data/input/caps/  credit-runner  inputl3
 data/input/caps_test.go  credit-runner  dlv-cast-verbs
+data/input/caps_test.go  credit-runner  inputl3
 data/questboard/act1.json  credit-runner  cainfix3
 data/questboard/act2.json  credit-runner  qdmatrix
 deploy/d2d-container/tester-report.sh  credit-runner  testerreport
@@ -210,7 +213,9 @@ docs/design/boardsm-checker.md  credit-runner  bsmchk
 docs/design/boardsm-flip.md  credit-runner  bsmdef
 docs/design/fable-review-2026-11-21/town-planner-b-model.md  credit-runner  town5
 docs/design/fable-review-2026-11-21/town-profiles-sme.md  credit-runner  town12
+docs/design/input-cast-verbs.md  credit-runner  casthold
 docs/design/input-cast-verbs.md  credit-runner  dlv-cast-verbs
+docs/design/input-cast-verbs.md  credit-runner  inputl3
 docs/design/input-i3.md  credit-runner  inputl3
 docs/design/input-i4.md  credit-runner  inputl4
 docs/design/input-i5-i7.md  credit-runner  inputl5
@@ -401,12 +406,15 @@ internal/combat/  credit-runner  dlv-stance-pack
 internal/combat/  credit-runner  dlv-upkeep-minions
 internal/combat/  credit-runner  dlv-upkeep-state
 internal/combat/  credit-runner  dlv-whirl
+internal/combat/castdeliver.go  credit-runner  casthold
+internal/combat/castdeliver_test.go  credit-runner  casthold
 internal/combat/castfirst.go  credit-runner  maphistoryC
 internal/combat/classdata/profiles.json  credit-runner  necroteeth
 internal/combat/fight.go  credit-runner  maphistory
 internal/combat/fight.go  credit-runner  maphistoryC
 internal/combat/fightend.go  credit-runner  maphistory
 internal/combat/fightend.go  credit-runner  maphistoryC
+internal/combat/fighter.go  credit-runner  casthold
 internal/combat/fighter.go  credit-runner  inputl3
 internal/combat/fighter.go  credit-runner  maphistory
 internal/combat/fighter.go  credit-runner  maphistoryC
@@ -414,9 +422,11 @@ internal/combat/necro_test.go  credit-runner  necroteeth
 internal/combat/portalverb.go  credit-runner  inputl3
 internal/combat/portalverb_test.go  credit-runner  inputl3
 internal/combat/reach.go  credit-runner  maphistoryC
+internal/d2dcombat/  credit-runner  casthold
 internal/d2dcombat/  credit-runner  dlv-cast-verbs
 internal/d2dcombat/  credit-runner  dlv-press
 internal/d2dctl  credit-runner  countess3
+internal/d2dctl/fake/  credit-runner  casthold
 internal/d2dctl/fake/fake.go  credit-runner  inputl3
 internal/d2dctl/fake/fake.go  credit-runner  warptrigger
 internal/d2dctl/item_verbs_merc.go  credit-runner  uib9
@@ -429,6 +439,7 @@ internal/d2denv/env.go  credit-runner  pgclock
 internal/d2denv/env.go  credit-runner  warptrigger
 internal/d2denv/reader.go  credit-runner  pgclock
 internal/d2denv/recent_test.go  credit-runner  pgclock
+internal/d2dinput/  credit-runner  casthold
 internal/d2dinput/  credit-runner  dlv-cast-verbs
 internal/d2dinput/useitem.go  credit-runner  inputl3
 internal/d2dsoakstat/minute.go  credit-runner  intake

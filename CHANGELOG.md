@@ -8,6 +8,8 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- casthold: card result and criteria <!--sg:agent/casthold-->
+- Merge branch 'main' into inputl3 <!--sg:agent/forkcaps-->
 - Merge branch 'main' into dlv-stance-army <!--sg:agent/stancearmy-->
 - Merge branch 'main' into pgpage <!--sg:agent/pgpage-->
 - Merge branch 'main' into auraupkeep <!--sg:agent/auraupkeep-->
