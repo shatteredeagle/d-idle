@@ -6,6 +6,35 @@
 >
 > Evidence tags: **V** read in this tree at the commit named (grep, `git log`, `docs/knobs.md`, a task file); **S** another doc's claim; **U** not known from the repo. Card status in `backlog/tasks/` lags merges (several cards read Proposed or In Progress while their commits are on main); the evidence column therefore cites `git log origin/main --grep` and the knob table, not the card's status line.
 
+## Next up (2026-11-27, card roadmap3)
+
+Ranked by value toward finishing every recommendation, class order Necromancer first (classorder, 2026-11-26), among work that is unblocked now. Evidence tags as in the rows; no number here is hand-counted.
+
+1. **Necromancer live drill with `combat.deliveryUpkeep` 2** (R10; cards epic-class-necromancer TASK-942, dlv-upkeep-state, dlv-upkeep-minions, dlv-mark, dlv-stance-army). V the upkeep, minion, mark and army-stance drivers, the summon-missing invariant, life floors and the summoner build are merged, offline only; mode 2 is on sandbox Doofer. Needs the lab prep fixed first (item 2). No live Necromancer run exists (U).
+2. **necroteeth (TASK-1033)**: V card result says the soak prep banks every skill point, so no class skill is learned and every class kills with plain Attack; until fixed no soak or drill tells anything about the Necromancer. Small, unblocks item 1 and every class row.
+3. **Flip `quests.stepExec` on one sandbox** (P9; flipwave2 TASK-998). V the Cain scroll and bark scroll scenarios exist and the lab soak read them green (lab only); ledger `criteria_met` no, review due 2026-12-03. Standard rule, first real container run.
+4. **Duriel kill step** (R8; epic-act2 TASK-937, Act 2 for every class). V `act2drill5`: lair entered and Duriel killed 3 of 3, blocked on the kill step; the hand-in, placement and dungeon rows are merged.
+5. **Arbiter default per family** (P6, R4; arbmig TASK-973, arbloop TASK-1034, hostilespin follow-up). V families 255 are on the sandbox and the session verdict exists; the open cause is a 40 min quest-board slice outlasting the 10 min watchdog (V TASK-1048 result) and one recorded night (`bot.tickLogSec`) is still missing (U). Cause class A.
+6. **`town.plan` stage 4 flip** (P5, TOWN6; townflip TASK-972, town6 TASK-758, close town5 TASK-757). V stage 3 window closed clean 2026-11-27; stage 4 sell and pickup merged dark, offline tests only. Cause class C.
+7. **bsmdef restart drill, then `quests.boardSM` flip** (BSM; TASK-983). V no board commits since the ledger row; needs one restart drill. Cause class H.
+8. **ckptlive drill (TASK-990) and the 24 h records**: the checkpoint and dodge knobs are on the sandbox without their drills (V ledger). Record the drill and the 24 h watch so the rows close (U on every `criteria_met`).
+
+Not ranked but waiting on a card close, not on work: inputl3 (TASK-986) and ticklog (TASK-981) are merged yet read Proposed, so plan.py shows inputl4 and arbmig as BLOCKED (V plan snapshot below).
+
+### Flips ready under the standard enable rule
+
+Standard rule: scenario, drill or replay green, flip on the sandboxes, 24 h watch, auto-revert on a hard breach. Ready means the evidence the rule asks for exists in the tree today; none is flipped by this page.
+
+| knob | to | evidence that makes it ready | gap before it closes |
+|---|---|---|---|
+| `quests.stepExec` | 1 on one sandbox | V scenarios `cain.scroll.stepexec`, `cain.read.stepexec`; lab soak green on them (TASK-1024, lab only) | first sandbox run and 24 h record (U) |
+| `town.plan` | 4 on Doofer | V stage 3 window closed clean (ledger note, 2026-11-27T14:25Z); stage 4 offline tests on two builds | stage 4 drill, 24 h record (U) |
+| `bot.arbiterShadow`, `bot.tickLogSec` | promote from trial to enabled | V both on the sandbox since 2026-11-27 06:00Z, no revert; ledger says enable after a night of replay evidence | one night replayed with `arbiter-replay -session` (U) |
+| `combat.deliveryUpkeep` | keep 2 on Doofer, widen to a second sandbox | V window closed clean; minions and mark shadow runs show zero disagreements on the old Necromancer loop (card result, offline) | live Necromancer drill; `criteria_met` no |
+| `bot.checkpointEnable`, `combat.missileDodge`, `combat.threatDodge`, `combat.standOK`, `combat.deliveryExpect`, `bot.portalGuard`, `bot.arbiterControl` and families 255, `town.plan` 2 | stay on; close the ledger rows | V all on the sandbox since 2026-11-26 or 27, windows of 30 and 45 minutes, no revert | the 24 h record; the checkpoint live drill is not recorded (U) |
+
+Not ready: `quests.boardSM` (restart drill), `bot.zoneModel` (A/B sets per class), `agency.planner` mode 2 (shadow review and owner go), `items.ladderRunewords` and the other owner rows (owner go).
+
 ## STATE words
 
 `not started` (no code, maybe a card) | `in flight` (code partly merged or an agent running) | `built-dark` (merged, behind a knob at its default 0 or a mode that does nothing; has a ledger row) | `trial` (switched on in the sandboxes, not default) | `enabled` (default on, or a tool that is simply in use) | `retired` (decided against or deleted).
@@ -36,21 +65,23 @@ Before the coordinator approves a new patch card (a `bug` or `bot-fix` card for 
 
 ## Built but dark
 
-Updated 2026-11-26 (card roadmap2). The ledger rows (`data/darklaunch.json`, V `python3 -I tools/darklaunch/report.py`: 37 rows, all `dark`, 0 overdue, next review due 2026-12-09) with the proposed flip order. Dates are EST, from the ledger; `criteria_met` is U for every row except the two newest (`no`) until a card records evidence. Flip rule: scenario, drill or replay green, then `python3 tools/flip/flip.py <instance> <knob>=<value> --why ... --window 24h` (V merged: `Merge agent/autorevert1`, db6b83314), 24 h watch by `flip.py watch` on the hard invariant counters, automatic revert on a hard breach. U: the tool has not run against a real container yet, so the first flip is also its first live test. No longer dark since 2026-11-25: P1 (`bot.invariants` 1), P2 (`bot.typedOutcome` 1), P3 (`bot.reflexDrink` 1), see the review table.
+Updated 2026-11-27 (card roadmap3). The ledger rows (`data/darklaunch.json`, V `python3 -I tools/darklaunch/report.py`: the report lists the non-enabled rows, 0 overdue, next review due 2026-12-03 for `quests.stepExec`, then 2026-12-09). Dates are EST unless a `Z` is shown, from the ledger. A ledger status `enabled` here means switched on a sandbox by `tools/flip/flip.py`; the code default in `docs/knobs.md` is still 0 (V for the knobs grepped there), so this page calls those rows `trial`. Flip rule: scenario, drill or replay green, then `python3 tools/flip/flip.py <instance> <knob>=<value> --why ... --window 24h` (V `Merge agent/autorevert1` to `autorevert4`, db6b83314 to c04df4f8a). The tool has run: nine knobs were flipped on the sandbox on 2026-11-26 and 2026-11-27 with windows of 30 and 45 minutes, no revert (V `45d0d99b5`, `61feb4de9`), then three more rows went to `trial` (`21f455168`, `6497a9d1b`). The windows were shorter than the 24 h of the standard rule (V ledger notes), so `criteria_met` stays U on every flipped row until the 24 h watch is recorded. Default-on since 2026-11-25: P1 (`bot.invariants` 1), P2 (`bot.typedOutcome` 1), P3 (`bot.reflexDrink` 1), see the review table.
 
 | order | feature | knob (default) | why this position | criteria (measurable) | blocker | cards |
 |---|---|---|---|---|---|---|
 | 0 | invariant monitor, now default on | `bot.invariants` 1 | it is the measuring stick for every flip below; its hard counters are the revert trigger | none: it is the watcher | none | invmon (Done) |
-| 1 | `bot.checkpointEnable` | 0 | smallest scope, an independent safety add; the Dark Wood deaths are its target | live drill green (portal cast healthy, retreat at low life, return after death), then flip on a sandbox, 24 h watch, auto-revert | the live drill has not run (U) | ckptlive (TASK-990) |
-| 2 | `town.plan` stage 2 | 0 (stages 1 to 3 merged) | largest cause class (C); code exists; the P1 counts it waited for now exist | stage 2 scenario set green, flip stage 2, 24 h watch; stages 3 to 5 the same, one at a time, owner looks first (ADR 0028) | scenario set not re-run since 2026-11-21 (U) | townflip (TASK-972), town5 |
+| 1 | `bot.checkpointEnable` | 0 (sandbox 1, ledger `enabled` since 2026-11-26) | smallest scope, an independent safety add; the Dark Wood deaths are its target | live drill green (portal cast healthy, retreat at low life, return after death) and the 24 h watch recorded | the drill has not run: the flip happened without it (U) | ckptlive (TASK-990, Proposed) |
+| 2 | `town.plan` stages 2 to 4 | 0 (sandbox stage 3; stage 2 on since 2026-11-27T00:11Z) | largest cause class (C); stages 1 to 3 on the sandbox, stage 4 (sell, pickup) built | stage 3 24 h watch recorded, stage 4 drill green, flip stage 4, 24 h watch; stage 5 after, owner looks first (ADR 0028) | stage 4 not run on any sandbox (U) | townflip (TASK-972), town5, town6 |
 | 3 | `quests.boardSM` | 0 | removes the per-quest patch treadmill for the board | restart drill green with boardSM 1 (a park survives), flip, 24 h watch | restart drill (U); bsmchk (rules 12 to 14) is not a flip blocker | bsmdef (TASK-983), bsmchk |
-| 4 | `bot.arbiterControl` (families survive, player) with `bot.arbiterShadow` 1 | 0 and 0 | the core; P2 (typed outcomes) and P8 (incident scenarios) now exist and the outcome rule is the criterion | arbiter-replay verdict and incident rows green on lockstep, flip on ONE sandbox, 24 h watch; owner go per family | more families in flight (U); ticklog (T4) is no longer a blocker for stages 1 to 3 (U whether needed later) | arbmig (TASK-973), flipwave2 (TASK-998) |
-| 5 | `quests.stepExec` (Cain scroll chunk) | 0 | P9 first chunk; newest row, `criteria_met` no | scenario `cain.scroll.stepexec` green 2 of 3 runs, flip on one sandbox, 24 h watch | scenario not run since merge (U) | stepexec1 (merged), flipwave2 (TASK-998) |
-| 6 | `bot.zoneModel` | 0 | one margin for zone choice | A/B seed sets per class (offline), flip, 24 h watch | A/B sets per class; P4 step 3 (in flight) | admit1, thrgov (merged) |
+| 4 | `bot.arbiterControl` and `bot.arbiterFamilies` with `bot.arbiterShadow` | 0, 3 and 0 (sandbox 1, 255 and 1) | the core; P2 and P8 now exist, stage 4 session verdict and families chores, claim, goldfarm, recovery, quest and level are merged | `arbiter-replay -session` verdict green on a recorded sandbox night (`bot.tickLogSec`), quest-board slice no longer outlasts the watchdog, 24 h watch recorded; owner go per family | watchdog hang on a quest-board slice (arbloop, hostilespin); no recorded night yet (U) | arbmig (TASK-973), arbfam4 (Done), flipwave2 (TASK-998) |
+| 5 | `quests.stepExec` | 0 | P9; the Cain scroll and bark scroll chunks and the Act 2 Staff chunk are built; ledger `criteria_met` no | scenarios `cain.scroll.stepexec` and `cain.read.stepexec` green 2 of 3 runs on a sandbox (the lab soak read them green, lab only), flip on one sandbox, 24 h watch | first sandbox run (U); Duriel kill step | stepexec1, stepexec2 (merged), flipwave2 (TASK-998) |
+| 6 | `bot.zoneModel` | 0 | one margin for zone choice | A/B seed sets per class (offline), flip, 24 h watch | A/B sets per class; P4 step 3 | admit1, thrgov (merged) |
 | 7 | `agency.planner` mode 2, `agency.autoAlloc` | 0 | the owner's central ask (path D); lower risk because the player decides by default | shadow lines replayed and reviewed, owner go for mode 2, flip, 24 h watch | review of shadow lines (U) | agencyp1b (TASK-984) |
-| 8 | combat dodge and stand knobs (`combat.missileDodge`, `combat.threatDodge`, `combat.standOK`, `combat.deliveryExpect`) | 0 | each has a live drill in its ledger row | per row in the ledger | live drills (U) | none new; ledger rows own them |
+| 8 | combat dodge and stand knobs (`combat.missileDodge`, `combat.threatDodge`, `combat.standOK`, `combat.deliveryExpect`) | 0 (sandbox 1, ledger `enabled` since 2026-11-26) | each has a live drill in its ledger row | per row in the ledger; the 24 h watch | live drills (U) | none new; ledger rows own them |
+| 9 | `combat.deliveryUpkeep` mode 2 (upkeep, minions, mark, stance) | 0 (sandbox mode 2, trial since 2026-11-27) | the Necromancer summoner path (R10) runs on it | Necromancer live drill on 3 seeds, mode 1 disagreements reviewed, 24 h watch | no live Necromancer run (U) | dlv-upkeep-* cards, necro cards |
+| 10 | `bot.tickLogSec` and `bot.arbiterShadow` promotion | 0 (sandbox 1, trial) | feeds row 4; the ledger says enable after a night of replay evidence | one recorded night replayed with `arbiter-replay -session` | the night (U) | ticklog (TASK-981), arbmig |
 
-Ledger rows added since the last version of this page: `quests.stepExec` (stepexec1), `bot.arbiterControl` (arbmig stage 3), `bot.checkpointEnable` (checkpoint1). Each card that adds a knob adds its ledger row in the same PR (rule 1 of `docs/process/dark-launch.md`); admit1 still owes one row per provider when a provider gets a knob.
+Ledger rows added since the previous version of this page: `bot.arbiterFamilies` (autorevert3), `bot.tickLogSec` (ticklog), `combat.deliveryUpkeep` (upkeep, with the Necromancer cards). Each card that adds a knob adds its ledger row in the same PR (rule 1 of `docs/process/dark-launch.md`); admit1 still owes one row per provider when a provider gets a knob.
 
 ## Review of 2026-11-25 (logic review, card fablereview2)
 
@@ -184,15 +215,15 @@ Class order of care (user decision 2026-11-26, after the live Paladin). Dated li
 
 ## Other built-dark rows of the ledger (not from a Fable recommendation)
 
-These are in `data/darklaunch.json` and owned by the ledger, not by this tracker: `resource.gearDecisions`, `resource.skillCapPerLevel`, `agency.autoAlloc`, `combat.missileDodge`, `combat.threatDodge`, `combat.standOK`, `combat.minionRead`, `quests.layoutRead`, `loot.vault`, `loot.rulesEngine`, `bot.portalGuard`, `bot.farmReset`, `bot.mercReviveUnverified`, `bot.cubeJobs`, `town.identifyTome`, `ladder.enabled`, `invdesk.verbs`, `invdesk.instant`, `ui.managementFast`, `watch.paletteFeed`, `input.planner`, `input.hotkeyMap`, `items.ladderRunewords`. The weekly `python3 -I tools/darklaunch/report.py` is their review; do not repeat them here.
+These are in `data/darklaunch.json` and owned by the ledger, not by this tracker: `resource.gearDecisions`, `resource.skillCapPerLevel`, `agency.autoAlloc`, `combat.minionRead`, `quests.layoutRead`, `loot.vault`, `loot.rulesEngine`, `bot.farmReset`, `bot.mercReviveUnverified`, `bot.cubeJobs`, `town.identifyTome`, `ladder.enabled`, `invdesk.verbs`, `invdesk.instant`, `ui.managementFast`, `watch.paletteFeed`, `input.planner`, `input.hotkeyMap`, `items.ladderRunewords`. Flipped on the sandbox since 2026-11-26 (ledger `enabled`, default still 0): `combat.missileDodge`, `combat.threatDodge`, `combat.standOK`, `bot.portalGuard`. The weekly `python3 -I tools/darklaunch/report.py` is their review; do not repeat them here.
 
-## Order of work (the coordinator's reading, updated 2026-11-26)
+## Order of work (the coordinator's reading, updated 2026-11-27)
 
-1. Done since 2026-11-25: P1 invariant monitor, P2 typed outcomes, P3 reflex lane, P7/P11 explain and verbs, P8 incident writer, P10 governance (report-only), P12 fault soak runner, the flip tool. They give every flip its measure and its revert.
-2. Flips, in the order of "Built but dark": `ckptlive` drill, `townflip` stage 2, `bsmdef`, then `flipwave2` (arbiter families, step executor).
-3. In flight to finish: admit1 step 3 (P4), arbmig further families (P6), PG1 to PG5, PG9 and PG12 (commits merged, cards still In Progress).
-4. Next builds: `ticklog` (T4), `proptest1` (T3), `bsmchk`, further `stepexec1` chunks one card each.
-5. Everything else (dlv waves, classes, acts, input I3 to I7) follows the epic cards; blockers map to `epic-act2` (Duriel needs the generic executor), `epic-class-necromancer` (dlv wave 1), `epic-class-paladin` (dlv wave 2); the class order itself is the owner's (classorder1).
+1. Done: P1, P2, P3, P7/P11, P8 (writer and invariant rows), P10, T3 property tests, the flip tool with auto-revert (autorevert1 to autorevert4), the first nine sandbox flips, PG1 to PG3 and PG6 to PG8 (cards Done), the Necromancer data and driver cards (offline).
+2. Watch: stage 3 of `town.plan`, `combat.deliveryUpkeep` mode 2, `bot.tickLogSec`, `bot.arbiterShadow` (the sandbox windows closed clean, none has the 24 h record yet).
+3. Flips next (see "Next up"): `quests.stepExec` through flipwave2, `town.plan` stage 4, the `bsmdef` restart drill, then the arbiter default per family once the watchdog slice is fixed.
+4. In flight to finish: admit1 step 3 (P4), arbloop (TASK-1034), pgtaps, pgclock, pgledgeron, pgpage card close, town5 card close.
+5. Everything else (dlv waves, classes, acts, input I4 to I7) follows the epic cards; the class order is decided (classorder, 2026-11-26): Necromancer first.
 
 ## Triage of the rows still `not started` (card roadmap2, 2026-11-26)
 
@@ -247,77 +278,67 @@ Written 2026-11-26; many of these rows have since moved (see the rows above, the
 
 New cards from this pass (no earlier card covered them): `flipwave2` (TASK-998, lane next, epic fableroadmap): the flips of `bot.arbiterControl` (survive, player families) and `quests.stepExec`, which have ledger rows but no card of their own; `classorder1` (TASK-999, lane waiting-owner): the owner's class order. Rows with U cannot be ticked from this tree.
 
-## First five picks across the tracker (2026-11-26)
+## First five picks (2026-11-26, superseded)
 
-1. `ckptlive` (TASK-990, live drill): the smallest dark safety feature, aimed at the Dark Wood deaths; its green drill is also the first real run of `tools/flip/flip.py` (U), so one job proves the flip chain.
-2. `townflip` (TASK-972): town.plan stage 2 is built, probed (2026-11-21), and the P1 counts it waited for exist; cause class C is the largest.
-3. `flipwave2` (TASK-998): P6 stages 1 to 3 and P9 chunk one are merged dark with `criteria_met` no; the outcome rule and incident scenarios needed to judge them now exist.
-4. `bsmdef` (TASK-983): boardSM needs only a restart drill and a flip; every quest patch card meanwhile lands on the legacy path.
-5. `ticklog` (TASK-981): small (S), no behaviour, gives one real night to replay and clears the stale BLOCKED mark on arbmig.
+Superseded by the "Next up" section at the top of this page (2026-11-27). Of the five: ckptlive was flipped on the sandbox without its drill, townflip stage 2 and 3 are on the sandbox, flipwave2 partly (arbiter control on the sandbox, stepExec not), bsmdef not started, ticklog merged.
 
-## Plan snapshot 2026-11-26 (`python3 -I tools/backlog/plan.py`, top of the output; roadmap2 card included)
+## Plan snapshot 2026-11-27 (`python3 -I tools/backlog/plan.py`, top of the output)
 
 ```
-PLAN 2026-11-26
-NOW (24)
-  TASK-337 campaign1              hig credit-runner In Progress  15d
-  TASK-378 bounce3                hig pro-runner    In Progress  14d
-  TASK-391 beltfix                hig credit-runner In Progress  14d
-  TASK-994 autorevert1            hig credit-runner In Progress  0d
-  TASK-183 recoverypace           med live-agent    In Progress  18d
-  TASK-414 levelplan3             med pro-runner    In Progress  12d
-  TASK-444 verifyp03p05           med credit-runner In Progress  12d
-  TASK-472 uib9                   med credit-runner In Progress  11d
-  TASK-657 forkrebase2            med credit-runner In Progress  7d
-  TASK-733 pgprov                 med credit-runner In Progress  5d
-  TASK-735 pgdigest               med credit-runner In Progress  5d
-  TASK-737 pgjournal              med credit-runner In Progress  5d
-  TASK-738 pgtaps                 med credit-runner In Progress  5d
-  TASK-739 pgclock                med credit-runner In Progress  5d
-  TASK-743 pgledger               med credit-runner In Progress  5d
-  TASK-747 mgcache                med credit-runner In Progress  5d
-  TASK-757 town5                  med credit-runner In Progress  5d
-  TASK-777 pgledgeron             med credit-runner In Progress  5d
-  TASK-1001roadmap2               med credit-runner Proposed    
-  TASK-957 outcome-task-step      low credit-runner In Progress  0d
-  TASK-958 outcome-travel-gate    low credit-runner In Progress  0d
-  TASK-960 outcome-park-step      low credit-runner In Progress  0d
-  TASK-961 outcome-route-guard    low credit-runner In Progress  0d
-  TASK-963 outcome-kit-gate       low credit-runner In Progress  0d
-NEXT (149)
+PLAN 2026-11-27
+NOW (7)
+  TASK-337 campaign1              hig credit-runner Proposed    
+  TASK-183 recoverypace           med live-agent    Proposed    
+  TASK-472 uib9                   med credit-runner Proposed    
+  TASK-738 pgtaps                 med credit-runner In Progress  6d
+  TASK-739 pgclock                med credit-runner Proposed    
+  TASK-757 town5                  med credit-runner In Progress  6d
+  TASK-777 pgledgeron             med credit-runner Proposed    
+NEXT (93)
   TASK-27  testerreport           hig credit-runner Proposed    
   TASK-39  earlydeath13           hig pro-runner    Proposed    
   TASK-245 firsthour              hig live-agent    Proposed    
   TASK-246 sessions               hig live-agent    Proposed    
   TASK-303 repairtrip             hig credit-runner Proposed    
-  TASK-332 prprep                 hig credit-runner Proposed    
-  TASK-349 passagebounce          hig credit-runner Proposed    
-  TASK-351 arrivalsettle          hig credit-runner Proposed    
-  TASK-360 cutfix                 hig credit-runner Proposed    
-  TASK-501 uiphone                hig credit-runner Proposed    
   TASK-609 survrecover            hig credit-runner Proposed    
-  TASK-661 verifycrushd5          hig credit-runner Proposed    
-  ... 137 more (plan.py --lane next)
+  TASK-972 townflip               hig credit-runner Proposed    
+  TASK-981 ticklog                hig credit-runner Proposed    
+  TASK-983 bsmdef                 hig credit-runner Proposed    
+  TASK-998 flipwave2              hig live-agent    Proposed    
+  TASK-1033necroteeth             hig credit-runner Proposed    
+  TASK-40  tpreserve-live         med live-agent    Proposed    
+  ... 81 more (plan.py --lane next)
 WAITING ON OWNER (3)
   TASK-107 h1baseline             hig user          Proposed      assignee user: needs the owner decision
   TASK-112 h3verdict              med user          Proposed      assignee user: needs the owner decision
   TASK-999 classorder1            low user          Proposed      owner decides which class the epics follow first (R10 to R
-BLOCKED (14)
+BLOCKED (10)
   TASK-29  testerpack             hig credit-runner Proposed      waits for TASK-28
   TASK-108 qdensity               hig credit-runner Proposed      waits for TASK-19
-  TASK-352 prpost                 hig credit-runner Proposed      waits for TASK-332
   TASK-973 arbmig                 hig credit-runner Proposed      waits for TASK-981
   TASK-114 designbrief            med credit-runner Proposed      waits for TASK-112
   TASK-115 qqueue                 med credit-runner Proposed      waits for TASK-19
-  TASK-363 prpost2                med credit-runner Proposed      waits for TASK-352
-  TASK-524 lootwireL3             med credit-runner Proposed      waits for TASK-523
-  TASK-525 lootwireL4             med credit-runner Proposed      waits for TASK-524
   TASK-988 inputl4                med credit-runner Proposed      waits for TASK-986
   TASK-103 fid-poison-res-diag    low credit-runner Proposed      waits for TASK-72
   TASK-985 agencyp3               low credit-runner Proposed      waits for TASK-984
   TASK-989 inputl5                low credit-runner Proposed      waits for TASK-988
   TASK-991 advisor1               low credit-runner Proposed      waits for TASK-984
 STALE (no commit on owns) (1)
+  TASK-28  testerlicence          hig credit-runner In Progress  20d  lane parked
+LATER 16, PARKED 53 (plan.py --lane later|parked)
+DARK-LAUNCH
+  age(d)  name                         status  met  owner        due
+      28  bot.mercReviveUnverified     dark    U    coordinator  2026-12-09 (12d)
+      28  bot.cubeJobs                 dark    U    coordinator  2026-12-09 (12d)
+      22  ladder.enabled               dark    U    coordinator  2026-12-09 (12d)
+      17  resource.gearDecisions       dark    U    owner        2026-12-09 (12d)
+      15  invdesk.verbs                dark    U    coordinator  2026-12-09 (12d)
+      13  loot.rulesEngine             dark    U    coordinator  2026-12-09 (12d)
+      13  invdesk.instant              dark    U    coordinator  2026-12-09 (12d)
+      13  bot.zoneModel                dark    U    coordinator  2026-12-09 (12d)
+      12  town.identifyTome            dark    U    coordinator  2026-12-09 (12d)
+      12  bot.farmReset                dark    U    coordinator  2026-12-09 (12d)
+      11  watch.paletteFeed            dark    U    owner        2026-12-09 (12d)
 ```
 
 ## How to keep this file true
