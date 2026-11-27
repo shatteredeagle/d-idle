@@ -42,6 +42,7 @@
 | diffbaal | proposed | - | `internal/quest/baaldone.go`<br>`internal/quest/baaldone_test.go` | - |
 | releasenotes-next | proposed | - | `docs/releases/next-draft.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
+| combatscen2 | proposed | - | `tools/provingground/scenarios/combatdrills.json`<br>`tools/provingground/scenarios/tiers.json`<br>`docs/probes/combat-drills-2026-11-27.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
@@ -192,7 +193,9 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 05cc47c95 11-27 17:55 `Merge agent/combatscen2: combatscen2: eight combat drill scenarios (TASK-1072)` (combatscen2)
 - 83a010d59 11-27 17:54 `Merge agent/classapply: classapply: SME changes for Druid/Barbarian/Amazon/Assassin (War Cry kind, Exploding Arrow, Death Sentry key, Hurricane)` (classapply)
+- 24b3841bc 11-27 17:52 `Merge branch 'main' into combatscen2` (-)
 - 0b847317a 11-27 17:52 `Merge branch 'main' into classapply` (-)
 - 6f93a5890 11-27 17:48 `Merge agent/miscfix: miscfix: card updates 604/856/880/330 (no Go change)` (miscfix)
 - 2b0d2f671 11-27 17:48 `Merge agent/smegaps: smegaps: sourced resist floors, merc auras, FCR/FHR/FBR tables (docs/sme)` (smegaps)
@@ -200,6 +203,4 @@
 - 9a5cafcba 11-27 17:46 `Merge branch 'main' into smegaps` (-)
 - 6a81a0526 11-27 17:34 `Merge agent/deployplan: deployplan: sandbox deploy runbook (docs)` (deployplan)
 - 8ab80f693 11-27 17:34 `Merge agent/cardfix2: cardfix2: card hygiene redo, live-queue doc` (cardfix2)
-- 594f488a9 11-27 17:34 `Merge agent/questresume: questresume: park resume policy (dark), paused visibility, campaign counter, starved cause (TASK-1071)` (questresume)
-- 2b18a5d96 11-27 17:34 `Merge agent/gearcopy: gearcopy: gear scoring reads plandata tables, drifted copies deleted (TASK-1067)` (gearcopy)
 <!-- statusgen:end -->
