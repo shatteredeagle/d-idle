@@ -19,6 +19,7 @@ owns:
   - "docs/probes/faultsoak-design-2026-11-26.md"
 exclusive: []
 contracts: []
+result: "Cause: the fault sets counted commands, so a 20 s held reply came every few frames and the bot waited most of the time, one runner step outlived the 10 minute watchdog; the proxy also kept the game slot and its lock during a hold after the bot hung up, so redials met err busy. Fix: rates in time, a hold ends when the bot hangs up, unknown set keys rejected. Verified offline with a single-client fake game, not live. Not build-specific."
 ---
 
 ## Description
@@ -26,7 +27,7 @@ contracts: []
 <!-- SECTION:DESCRIPTION:BEGIN -->
 Size: M
 
-Why: TODO. Done when: TODO.
+Why: every feature-soak fault row stopped on the d2bot watchdog after about 10 minutes with no minute line (docs/probes/feature-soak-2026-11-26.md 3.4). Done when: the cause is found from the row logs, reproduced offline and fixed with a must-fail test.
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
