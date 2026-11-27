@@ -538,15 +538,17 @@ func (k *Keeper) settleSale(ctx context.Context, o SaleOrder) {
 	k.clearNote("salepay")
 	left := 0
 	var why string
+	var todo []vault.SoldLine
 	for _, l := range o.Lines {
 		rec, ok := st.Get(l.ID)
 		if ok && rec.State == vault.Sold && rec.Reason == o.ID {
 			continue // a first pass of this order took it already
 		}
-		if err := st.SellNow(l.ID, l.Gold, o.ID); err != nil {
-			left++
-			why = err.Error()
-		}
+		todo = append(todo, vault.SoldLine{ID: l.ID, Gold: l.Gold})
+	}
+	// One batch: the per-record fsyncs of a whole-vault sale took seconds, and the page waits for this.
+	if _, failed, err := st.SellNowBatch(todo, o.ID); err != nil {
+		left, why = max(failed, 1), err.Error()
 	}
 	o.Done = 0
 	for _, l := range o.Lines {
