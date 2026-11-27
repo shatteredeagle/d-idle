@@ -44,6 +44,7 @@
 | releasenotes-next | proposed | - | `docs/releases/next-draft.md` | - |
 | logsink | proposed | - | `internal/logx`<br>`cmd/d2bot/main.go`<br>`cmd/d2bot/opscmd.go`<br>`cmd/d2bot/logsink_test.go`<br>`docs/ops` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
+| fieldstate | proposed | - | `internal/bot/loop.go`<br>`internal/bot/goal.go`<br>`internal/bot/state.go`<br>`internal/bot/runner.go`<br>`internal/bot/fieldstate_test.go` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
@@ -196,14 +197,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- dc31847b9 11-27 17:16 `Merge agent/fieldstate: fieldstate: return-to-field leg hands over to the fighter when hostiles are near (TASK-1070)` (fieldstate)
 - 82a3e6e0a 11-27 17:16 `Merge agent/logsink: logsink: bot own rotating log file, ops log verb, docker log NUL root cause (TASK-1069)` (logsink)
 - e431b1d75 11-27 17:16 `Merge agent/sandboxlogs: sandboxlogs: sandbox log analysis (docs)` (sandboxlogs)
 - 12aa8855a 11-27 17:16 `Merge agent/palapply: palapply: SME Paladin/Sorceress data changes (zeal table, Aim/Concentration, bands, mana_heavy)` (palapply)
+- 71d7aa25f 11-27 17:13 `Merge branch 'main' into fieldstate` (-)
 - cec3358c7 11-27 17:13 `Merge branch 'main' into logsink` (-)
 - f032ba048 11-27 17:13 `Merge branch 'main' into sandboxlogs` (-)
 - 4a10332d4 11-27 17:13 `Merge branch 'main' into palapply` (-)
 - b5f78b89a 11-27 17:11 `Merge origin/main into palapply (mana_heavy list: both builds sets kept, count 9)` (-)
 - 5757b6333 11-27 17:06 `Merge agent/townwire: townwire: /api/townplan wired, arbiter upkeep behind chores bit (TASK-1064)` (townwire)
-- 71576c17c 11-27 16:54 `Merge branch 'main' into townwire` (-)
-- 7e55fcd23 11-27 16:52 `Merge agent/smeothers: smeothers: SME review of Druid, Barbarian, Amazon, Assassin (docs)` (smeothers)
 <!-- statusgen:end -->
