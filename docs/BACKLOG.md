@@ -1496,6 +1496,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - placefix: the staff placement sends what the game reads (TASK-1041, merged 2026-11-27, acceptance 3 of 4): Duriel drills no longer mark the Horadric Staff as already placed (d2d then dropped the placement); the Seven Tombs opens once the Staff is made. Offline tests; live rerun pending. <!--sg:agent/placefix-->
 - agent/aimpoint: Merge branch 'main' into dlv-aim-point (merged 2026-11-27): Point aim rows as profile data for Blizzard and Eruption, behind the delivery upkeep knob, offline tests on three classes, not verified live <!--sg:agent/aimpoint-->
 - stepexec1: P9 generic step executor with postconditions (interact, pick up, talk (TASK-976, merged 2026-11-27, acceptance 3 of 4): Duriel stepexec rerun after placefix: BLOCKED 3/3, the board keeps seven_tombs locked (setup record 10 0x0c78 reads back 0x0c08); AC #4 not ticked. <!--sg:agent/act2drill2-->
+- agent/placefix2: Merge branch 'main' into placefix (merged 2026-11-27): The Seven Tombs now opens once the Horadric Staff is made, read from the quest bit the game keeps; the Duriel drills start with that word. Offline tests; live rerun pending. <!--sg:agent/placefix2-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

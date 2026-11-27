@@ -551,6 +551,8 @@ internal/supply  credit-runner  town9
 internal/survival/ledger.go  credit-runner  intake
 internal/talk/talk.go  credit-runner  qdmatrix
 internal/talk/talk_test.go  credit-runner  qdmatrix
+internal/task/act1.go  credit-runner  placefix
+internal/task/act2.go  credit-runner  placefix
 internal/task/act2.go  credit-runner  qdmatrix
 internal/task/act2_test.go  credit-runner  qdmatrix
 internal/task/act4.go  credit-runner  qdmatrix
@@ -560,6 +562,7 @@ internal/task/executor.go  credit-runner  wpstep
 internal/task/gate.go  credit-runner  cainfix3
 internal/task/guided.go  credit-runner  campaign1
 internal/task/guided_test.go  credit-runner  campaign1
+internal/task/placefix_test.go  credit-runner  placefix
 internal/task/timeoutpolicy_test.go  credit-runner  wpstep
 internal/task/world.go  credit-runner  cainfix3
 internal/town  credit-runner  town11
