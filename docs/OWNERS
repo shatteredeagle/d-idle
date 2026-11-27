@@ -557,9 +557,12 @@ internal/survival/ledger.go  credit-runner  intake
 internal/talk/talk.go  credit-runner  qdmatrix
 internal/talk/talk_test.go  credit-runner  qdmatrix
 internal/task/act1.go  credit-runner  placefix
+internal/task/act2.go  credit-runner  act2handin
 internal/task/act2.go  credit-runner  placefix
 internal/task/act2.go  credit-runner  qdmatrix
 internal/task/act2_test.go  credit-runner  qdmatrix
+internal/task/act2handin.go  credit-runner  act2handin
+internal/task/act2handin_test.go  credit-runner  act2handin
 internal/task/act4.go  credit-runner  qdmatrix
 internal/task/banote_test.go  credit-runner  cainfix3
 internal/task/campaign.go  credit-runner  campaign1
