@@ -964,7 +964,7 @@ func (d *Desk) tryAccept(x *Exec, quest, chunk string) ([]Ref, string, error) {
 	}
 	x.mu.Lock()
 	refs := x.lastChanged
-	if !x.o.SM {
+	if x.boardLegacy() {
 		refs = []Ref{{quest, chunk}}
 	}
 	x.mu.Unlock()

@@ -161,7 +161,7 @@
 | arbmig | in-progress | - | `docs/design/arbiter-migration-p6.md`<br>`docs/arbiter.md`<br>`internal/arbiter/`<br>`cmd/d2scenario/`<br>`tools/provingground/arbiter-outcomes/`<br>`internal/bot/arbiter_control.go`<br>`internal/bot/arbiter_control_test.go`<br>`internal/bot/shadow.go`<br>`internal/bot/loop.go`<br>`internal/env/tuning_bot.go`<br>`data/darklaunch.json`<br>`docs/knobs.md` | - |
 | fid-adapter-rows | deferred | - | `docs/probes/fid/fid-adapter-rows.md` | - |
 | ticklog | in-progress | - | `docs/design/ticklog-t4.md`<br>`docs/arbiter.md`<br>`internal/bot/ticklog.go`<br>`internal/bot/ticklog_test.go`<br>`internal/bot/shadow.go`<br>`internal/env/tuning_bot.go`<br>`internal/arbiter/replay.go`<br>`internal/arbiter/replay_ticklog_test.go`<br>`data/darklaunch.json` | - |
-| bsmdef | in-progress | - | `docs/design/boardsm-flip.md` | - |
+| bsmdef | in-progress | - | `docs/design/boardsm-flip.md`<br>`docs/questboard.md`<br>`internal/questboard`<br>`internal/task`<br>`internal/env/tuning_quests.go`<br>`internal/env/tuning_quests_legacy_test.go`<br>`internal/bot/questboard.go`<br>`internal/bot/task.go`<br>`internal/bot/routeguard.go`<br>`tools/provingground/scenarios/board.json` | - |
 | agencyp1b | proposed | - | `docs/design/agency-p1b.md`<br>`internal/agency/drive.go`<br>`internal/agency/drive_test.go`<br>`cmd/d2bot/agencywire.go`<br>`cmd/d2bot/agencydrive_test.go`<br>`cmd/d2bot/d2dwire.go`<br>`cmd/d2bot/live.go`<br>`internal/combat/drive_test.go`<br>`internal/combat/fighter.go`<br>`internal/combat/aura.go`<br>`internal/env/tuning_agency.go` | - |
 | inputl3 | in-progress | - | `docs/design/input-i3.md`<br>`internal/input/useitem.go`<br>`internal/input/useitem_test.go`<br>`internal/d2dctl/use_verb.go`<br>`internal/d2dctl/use_verb_test.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dinput/useitem.go`<br>`internal/combat/portalverb.go`<br>`internal/combat/portalverb_test.go`<br>`internal/combat/fighter.go`<br>`internal/town/portalverb.go`<br>`internal/town/portalverb_test.go`<br>`internal/town/portalverb_unit_test.go`<br>`internal/town/portalverb_export_test.go`<br>`internal/town/trip.go`<br>`data/input/caps/`<br>`data/input/caps_test.go`<br>`docs/design/input-cast-verbs.md`<br>`backlog/tasks/task-726 - dlv-cast-verbs-input-caps-cast-unit-cast-point-cast-hold.md` | - |
 | inputl4 | proposed | - | `docs/design/input-i4.md`<br>`internal/input/repairverbs.go`<br>`internal/d2dctl/repair_verb.go`<br>`internal/d2dctl/use_verb_test.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dinput/repairverbs.go`<br>`internal/town/repairverb.go`<br>`internal/town/repairverb_test.go`<br>`internal/town/chores.go`<br>`internal/town/portalverb_export_test.go`<br>`internal/town/portalverb_unit_test.go` | - |
@@ -192,14 +192,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- d894a57bf 11-27 18:20 `Merge agent/bsmprep: bsmprep: boardLegacy seam, boardSM removal plan, drill scenarios (TASK-983 prep)` (bsmprep)
+- 25c9ee658 11-27 18:18 `Merge branch 'main' into bsmprep` (-)
 - ee98b56f4 11-27 18:15 `Merge agent/docsweep: docsweep: stale citations, roadmap refresh, 2 h wording` (docsweep)
+- 9e7ad03c9 11-27 18:13 `Merge origin/main into bsmprep (card result lines combined, docs sections both kept)` (-)
 - 5da31f09f 11-27 18:13 `Merge origin/main into docsweep (docs/gear.md: take main, the gearcopy wording)` (-)
 - 1d9770f19 11-27 18:04 `Merge agent/combattelem: combattelem: fight-end aim/stance/minion summaries, skill-id test (TASK-1073)` (combattelem)
 - 3b4e20513 11-27 18:03 `Merge branch 'main' into combattelem` (-)
 - 6692346c5 11-27 17:55 `Merge agent/nightcheck: nightcheck: night plan preflight script and corrected launch commands (TASK-1075)` (nightcheck)
 - 84cb68578 11-27 17:55 `Merge agent/mercaura: mercaura: per-class per-difficulty merc aura data, HirePolicy takes the class (TASK-1074)` (mercaura)
 - 05cc47c95 11-27 17:55 `Merge agent/combatscen2: combatscen2: eight combat drill scenarios (TASK-1072)` (combatscen2)
-- 83a010d59 11-27 17:54 `Merge agent/classapply: classapply: SME changes for Druid/Barbarian/Amazon/Assassin (War Cry kind, Exploding Arrow, Death Sentry key, Hurricane)` (classapply)
-- 02cf8a142 11-27 17:52 `Merge branch 'main' into mercaura` (-)
-- 24b3841bc 11-27 17:52 `Merge branch 'main' into combatscen2` (-)
 <!-- statusgen:end -->
