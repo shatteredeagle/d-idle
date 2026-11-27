@@ -1579,6 +1579,13 @@
     "surround": 4,
     "surroundLifePct": 65,
     "manaReserve": 4
+   },
+   "stance": {
+    "kind": "insidePack",
+    "standOff": 2,
+    "leaveSurround": 5,
+    "leaveLifePct": 50,
+    "source": "U judgment, SME review 2026-11-27, confidence medium-low: the hammerdin profile's insidePack numbers (U judgment); knob 2 still waits for the survival model"
    }
   }
  ]

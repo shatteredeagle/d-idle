@@ -4,7 +4,7 @@
  "combat": "hammerdin_zeal",
  "mana_heavy": true,
  "schema": "per-clvl allocation, same shape as internal/gear/builds/*.json (leveler.ParseBuild) plus main_attack; rows clvl 2..90, NO respec. A row with no skills means the point is saved (no unlocked plan skill); the planner spends it in the row where the skill unlocks. Quest points (Den, Radament, Izual in each difficulty) are skill entries with a quest key (rows 8 Den, 15 Radament, 26 Izual, 38 Den, 44 Radament, 56 Izual, 68 Den, 72 Radament, 82 Izual; U timing): rows count level points only, and a tagged point is bought as soon as its quest point is granted.",
- "tags": "Skills: V end state Maxroll Blessed Hammer Paladin (fetched 2026-10-29), same as paladin_hammerdin_endgame90. U variant for a stronger clvl 2-17: Smite to 9 before clvl 12, Sacrifice 1 then Zeal 5 from clvl 12 (Zeal reqlevel 12, needs Sacrifice, V skills.txt); the 14 extra points are taken from the last fillers (Blessed Aim and Defiance) at clvl 65+. U whether this clears Normal Act 1-2 better than 1 Smite point (needs a live run); Smite needs a shield. SME review 2026-11-27, confidence medium-high: Smite stays 1 (Charge prerequisite, adds no damage), Might to 8, Sacrifice 11, Zeal 12 (5 points by clvl 15), Charge at 21. SME review 2026-11-27, confidence high: Blessed Aim 1 at clvl 19 and Concentration 1 at 20 (uninterrupted Blessed Hammer, damage aura); the three Blessed Hammer points they and Charge displace are taken back from the last Blessed Aim fillers (rows 77-79). Row 61 Concentration became Blessed Aim (Concentration is capped at 20 hard points). SME review 2026-11-27, confidence high: mana_heavy true (two mana columns from Nightmare for Blessed Hammer and Holy Shield).",
+ "tags": "Skills: V end state Maxroll Blessed Hammer Paladin (fetched 2026-10-29), same as paladin_hammerdin_endgame90. U variant for a stronger clvl 2-17: Smite to 9 before clvl 12, Sacrifice 1 then Zeal 5 from clvl 12 (Zeal reqlevel 12, needs Sacrifice, V skills.txt); the 14 extra points are taken from the last fillers (Blessed Aim and Defiance) at clvl 65+. U whether this clears Normal Act 1-2 better than 1 Smite point (needs a live run); Smite needs a shield. SME review 2026-11-27, confidence medium-high: Smite stays 1 (Charge prerequisite, adds no damage), Might to 8, Sacrifice 11, Zeal 12 (5 points by clvl 15), Charge at 21. SME review 2026-11-27, confidence high: Blessed Aim 1 at clvl 19 and Concentration 1 at 20 (uninterrupted Blessed Hammer, damage aura); the three Blessed Hammer points they and Charge displace are taken back from the last Blessed Aim fillers (rows 77-79). Row 61 Concentration became Blessed Aim (Concentration is capped at 20 hard points). SME review 2026-11-27, confidence high: mana_heavy true (two mana columns from Nightmare for Blessed Hammer and Holy Shield). SME review 2026-11-27, confidence medium: Holy Shield 1 at the Izual quest point of clvl 26 instead of clvl 36 (needs Charge at 21 and Blessed Hammer); the clvl 36 point went to Blessed Hammer.",
  "respec": {
   "enabled": false
  },
@@ -404,8 +404,13 @@
      "points": 1
     },
     {
+     "skill": "Holy Shield",
+     "points": 1,
+     "quest": "izual"
+    },
+    {
      "skill": "Blessed Hammer",
-     "points": 2,
+     "points": 1,
      "quest": "izual"
     }
    ]
@@ -535,7 +540,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Holy Shield",
+     "skill": "Blessed Hammer",
      "points": 1
     }
    ]

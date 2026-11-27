@@ -170,3 +170,22 @@ func TestSorceressTeleportEscapeEarly(t *testing.T) {
 		}
 	}
 }
+
+// SME review 2026-11-27, confidence medium-low: the zeal hammerdin stands like the plain hammerdin (same insidePack numbers).
+func TestHammerdinZealHasTheHammerdinStance(t *testing.T) {
+	var zeal, plain *ArmyStance
+	for _, p := range Profiles() {
+		if p.Class == "paladin" && p.Build == "hammerdin_zeal" {
+			zeal = p.Stance
+		}
+		if p.Class == "paladin" && p.Build == "hammerdin" {
+			plain = p.Stance
+		}
+	}
+	if zeal == nil || plain == nil {
+		t.Fatalf("stance zeal %v plain %v", zeal, plain)
+	}
+	if zeal.Kind != StanceInsidePack || zeal.StandOff != plain.StandOff || zeal.LeaveSurround != plain.LeaveSurround || zeal.LeaveLifePct != plain.LeaveLifePct {
+		t.Errorf("zeal stance %+v, plain %+v", *zeal, *plain)
+	}
+}

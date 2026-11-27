@@ -176,3 +176,25 @@ func TestPaladinZealAuraEarly(t *testing.T) {
 		}
 	}
 }
+
+// SME review 2026-11-27, confidence medium: Holy Shield comes with the clvl 26 quest point, after Charge and with
+// Blessed Hammer owned (its prerequisites), in the Zeal variant; the plain hammerdin table is not changed by it.
+func TestPaladinZealHolyShieldAt26(t *testing.T) {
+	b := mustBuild(t, "paladin_hammerdin_zeal_endgame90")
+	have := map[string]int{}
+	hs := 0
+	for _, r := range b.Rows {
+		for _, s := range r.Skills {
+			if s.Skill == "Holy Shield" && hs == 0 {
+				hs = r.Clvl
+				if have["Charge"] == 0 || have["Blessed Hammer"] == 0 {
+					t.Errorf("Holy Shield at %d without Charge %d / Blessed Hammer %d", r.Clvl, have["Charge"], have["Blessed Hammer"])
+				}
+			}
+			have[s.Skill] += s.Points
+		}
+	}
+	if hs != 26 {
+		t.Errorf("Holy Shield first at clvl %d, want 26", hs)
+	}
+}
