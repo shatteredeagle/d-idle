@@ -370,3 +370,24 @@ func TestClassIndexMatchesSmokeRulesFile(t *testing.T) {
 		t.Errorf("Druid index %d, want 5", got)
 	}
 }
+
+// pre.hero_profile: the default is played, a typo or a played hero with raw point writes is refused.
+func TestHeroProfileValidate(t *testing.T) {
+	s := baseScenario()
+	if s.HeroProfile() != HeroPlayed {
+		t.Fatalf("default %q", s.HeroProfile())
+	}
+	s.Pre.HeroProfile = "bank"
+	if s.Validate() == nil {
+		t.Error("unknown profile accepted")
+	}
+	s.Pre.HeroProfile = HeroPlayed
+	s.Pre.Stats = []StatSet{{Stat: 4, Value: 10}}
+	if s.Validate() == nil {
+		t.Error("played with a raw statpts write accepted")
+	}
+	s.Pre.HeroProfile = HeroBanked
+	if err := s.Validate(); err != nil {
+		t.Errorf("banked with raw points: %v", err)
+	}
+}

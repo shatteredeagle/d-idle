@@ -14,11 +14,19 @@ priority: high
 ordinal: 500000
 card: "necroteeth"
 lane: next
-result: "Not verified live. Cause is the lab prep: the feature soak rows bank every stat and skill point (resource.pointsDecisions 0, no D2BOT_RUN), so no class skill is ever learned and every class kills with plain Attack; the bot data is fine (the default Necromancer plan learns Teeth at clvl 5 and binds it, test on Necromancer and Druid). Also dropped the Lower Resist on magic resistance curse rows from both Necromancer profiles (Lower Resist never lowers magic), must-fail test. Build-specific data stays in the combat profiles and plan tables."
+result: "Not verified live. Cause is the lab prep: the feature soak rows bank every stat and skill point (resource.pointsDecisions 0, no D2BOT_RUN), so no class skill is ever learned and every class kills with plain Attack; the bot data is fine (the default Necromancer plan learns Teeth at clvl 5 and binds it, test on Necromancer and Druid). Also dropped the Lower Resist on magic resistance curse rows from both Necromancer profiles (Lower Resist never lowers magic), must-fail test. Scenario format: pre.hero_profile (default played; banked for raw point writes and points.* scenarios), the prep spends the points through the hero library, tests on Sorceress and Necromancer. Build-specific data stays in the combat profiles and plan tables."
 owns:
   - "internal/combat/classdata/profiles.json"
   - "internal/combat/necro_test.go"
   - "internal/leveler/mainattack_test.go"
+  - "internal/scenario/scenario.go"
+  - "internal/scenario/scenario_test.go"
+  - "internal/scenario/setup.go"
+  - "cmd/d2scenario/run.go"
+  - "cmd/d2scenario/validate.go"
+  - "cmd/d2scenario/validate_test.go"
+  - "cmd/d2scenario/herospend_test.go"
+  - "docs/process/proving-ground.md"
 exclusive: []
 contracts: []
 ---
