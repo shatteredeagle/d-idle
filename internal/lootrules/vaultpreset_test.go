@@ -86,3 +86,33 @@ func TestVaultPresetUnidentifiedJewelry(t *testing.T) {
 		}
 	}
 }
+
+// Recording a large or grand charm needs no pack cells, so the charmroom need of the Starter does not hold it back.
+func TestVaultPresetBigCharmNeedsNoRoom(t *testing.T) {
+	for _, cls := range []string{"Sorceress", "Paladin"} {
+		c, err := Compile(VaultPreset(false), cls, "")
+		if err != nil {
+			t.Fatal(err)
+		}
+		cx := &Ctx{Class: cls, CLvl: 20, Gold: 5000, Needs: func(string, *Item) bool { return false }}
+		for _, tc := range []struct {
+			label string
+			it    Item
+		}{
+			{"identified grand charm with life", Item{Code: "cm3", Types: []string{"lcha"}, Quality: "magic", Identified: true, Stats: map[string]int{"life": 30}}},
+			{"identified large charm with fire res", Item{Code: "cm2", Types: []string{"mcha"}, Quality: "magic", Identified: true, Stats: map[string]int{"fireres": 12}}},
+			{"unique charm", Item{Code: "cm1", Types: []string{"scha"}, Quality: "unique", Identified: true}},
+		} {
+			tc.it.Place = PlaceGround
+			if d := c.Decide(&tc.it, cx); d.Action != Vault {
+				t.Errorf("%s %s: %+v", cls, tc.label, d)
+			}
+		}
+		// the Starter itself still holds a big charm back while the pack has no room
+		plain, _ := Compile(Starter(), cls, "")
+		it := Item{Place: PlaceGround, Code: "cm3", Types: []string{"lcha"}, Quality: "magic", Identified: true, Stats: map[string]int{"life": 30}}
+		if d := plain.Decide(&it, cx); d.Action == Stash {
+			t.Errorf("%s: the Starter must still need charm room: %+v", cls, d)
+		}
+	}
+}

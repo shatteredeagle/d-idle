@@ -13,6 +13,25 @@ var vaultKeepsOwnRule = map[string]bool{"g-top-gems": true, "g-mid-gems": true, 
 // vaultUnidJewelry are the Starter's ground `keep` rules for unidentified jewelry and charms.
 var vaultUnidJewelry = map[string]bool{"g-jewelry-id": true, "g-small-charm-id": true, "g-big-charm-id": true}
 
+// vaultCharmRule are the Starter rules for large and grand charms, which pick up only while the pack has charm room.
+var vaultCharmRule = map[string]bool{"g-big-charm": true, "g-big-charm-id": true}
+
+// withoutNeed returns c with every `need == kind` leaf removed (an `all` loses the leaf, so it matches without it).
+func withoutNeed(c Cond, kind string) Cond {
+	keep := func(in []Cond) []Cond {
+		var out []Cond
+		for _, x := range in {
+			if x.F == "need" && string(x.V) == `"`+kind+`"` {
+				continue
+			}
+			out = append(out, withoutNeed(x, kind))
+		}
+		return out
+	}
+	c.All, c.Any = keep(c.All), keep(c.Any)
+	return c
+}
+
 // VaultPreset is the Starter with the ground-stage stash rules turned into `vault` (peek and record, no pickup):
 // runes, charms, jewels, jewelry, uniques, sets, runeword bases and the magic, rare and crafted gear that the Starter
 // picks up only to sell. Plain, low and superior gear is left on the floor (today's drop-junk behaviour), chipped
@@ -30,6 +49,10 @@ func VaultPreset(recordAll bool) *RuleSet {
 			case vaultKeepsOwnRule[r.ID] || r.ID == "g-poor-gear":
 			case r.ID == "g-magic-rare" || r.Action == Stash || vaultUnidJewelry[r.ID]:
 				r.Action, r.Pickup = Vault, nil
+				if vaultCharmRule[r.ID] && r.When != nil { // recording takes no pack cells: the charmroom need is a pickup condition
+					w := withoutNeed(*r.When, "charmroom")
+					r.When = &w
+				}
 				r.Reason = "recorded in the vault: " + r.Reason
 			case r.ID == "g-low-gems" || r.ID == "g-junk":
 				if recordAll && r.ID == "g-junk" {
