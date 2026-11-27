@@ -35,5 +35,5 @@ Design: docs/design/fable-review-2026-11-21/combat-engine-d-cards.md (user-appro
 - [x] #3 No tier rise before fidelity A5 and A8 verdicts
 - [x] #4 Two builds tested (Paladin + Sorceress), no class or skill literal added, literal count reported in result (may only fall)
 - [x] #5 Knob combat.delivery.<driver> 0/1/2 where a driver ships; rollback is the knob
-- [ ] #6 go test -race -count=20 on touched packages; tools/ci/check.sh, contracts/backlog checks and leakcheck clean
+- [x] #6 go test -race -count=20 on touched packages; tools/ci/check.sh, contracts/backlog checks and leakcheck clean
 <!-- AC:END -->
