@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- dlvupkeep: TestBuffsStayUp offline uptime test (TASK-722 AC1) <!--sg:agent/dlvupkeep-->
 - town6b: stage 4 scenario live checklist (docs only) <!--sg:agent/town6b-->
 - Merge branch 'main' into hostilespin <!--sg:agent/hostilespin-->
 - Merge remote-tracking branch 'origin/main' into agent/featuresoak2 <!--sg:agent/featuresoak2-->
