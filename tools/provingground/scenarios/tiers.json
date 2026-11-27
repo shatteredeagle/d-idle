@@ -263,12 +263,22 @@
    "source": "map",
    "note": "not in the catalogue; tier full mapped"
   },
+  "drill.act2.assemble.stepexec": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
   "drill.act2.cube": {
    "tier": "T3",
    "source": "map",
    "note": "not in the catalogue; tier full mapped"
   },
   "drill.act2.duriel": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "drill.act2.duriel.stepexec": {
    "tier": "T3",
    "source": "map",
    "note": "not in the catalogue; tier full mapped"
