@@ -438,7 +438,6 @@ internal/questboard/state.go  credit-runner  qdmatrix
 internal/questboard/state_test.go  credit-runner  qdmatrix
 internal/questspec/  credit-runner  act2chunks
 internal/resource  credit-runner  town5
-internal/resource/  credit-runner  town7
 internal/resource/recovery.go  live-agent  recoverypace
 internal/resource/recovery_test.go  live-agent  recoverypace
 internal/resource/tuning.go  credit-runner  freshstart
@@ -455,7 +454,6 @@ internal/scenario/setup_test.go  credit-runner  qdmatrix
 internal/scenario/taps.go  credit-runner  pgtaps
 internal/supply  credit-runner  town10
 internal/supply  credit-runner  town9
-internal/supply/  credit-runner  town7
 internal/supply/  credit-runner  town8
 internal/talk/talk.go  credit-runner  qdmatrix
 internal/talk/talk_test.go  credit-runner  qdmatrix
@@ -475,7 +473,6 @@ internal/task/timeoutpolicy_test.go  credit-runner  wpstep
 internal/task/world.go  credit-runner  cainfix3
 internal/town  credit-runner  town11
 internal/town  credit-runner  town5
-internal/town/  credit-runner  town7
 internal/town/  credit-runner  town8
 internal/town/chores.go  credit-runner  townflip
 internal/town/portalverb.go  credit-runner  inputl3
