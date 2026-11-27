@@ -194,8 +194,8 @@
 | agencyp1b | proposed | - | `docs/design/agency-p1b.md` | - |
 | agencyp3 | proposed | - | `docs/design/agency-p3.md` | - |
 | inputl3 | in-progress | - | `docs/design/input-i3.md`<br>`internal/input/useitem.go`<br>`internal/input/useitem_test.go`<br>`internal/d2dctl/use_verb.go`<br>`internal/d2dctl/use_verb_test.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dinput/useitem.go`<br>`internal/combat/portalverb.go`<br>`internal/combat/portalverb_test.go`<br>`internal/combat/fighter.go`<br>`internal/town/portalverb.go`<br>`internal/town/portalverb_test.go`<br>`internal/town/portalverb_unit_test.go`<br>`internal/town/portalverb_export_test.go`<br>`internal/town/trip.go`<br>`data/input/caps/`<br>`data/input/caps_test.go`<br>`docs/design/input-cast-verbs.md`<br>`backlog/tasks/task-726 - dlv-cast-verbs-input-caps-cast-unit-cast-point-cast-hold.md` | - |
-| inputl4 | proposed | - | `docs/design/input-i4.md` | - |
-| inputl5 | proposed | - | `docs/design/input-i5-i7.md` | - |
+| inputl4 | proposed | - | `docs/design/input-i4.md`<br>`internal/input/repairverbs.go`<br>`internal/d2dctl/repair_verb.go`<br>`internal/d2dctl/use_verb_test.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dinput/repairverbs.go`<br>`internal/town/repairverb.go`<br>`internal/town/repairverb_test.go`<br>`internal/town/chores.go`<br>`internal/town/portalverb_export_test.go`<br>`internal/town/portalverb_unit_test.go` | - |
+| inputl5 | proposed | - | `docs/design/input-i5-i7.md`<br>`tools/ci/pointercount.py`<br>`tools/ci/test_pointercount.py`<br>`tools/ci/pointercount-baseline.json`<br>`tools/ci/check.sh` | - |
 | fid-lowvalue | deferred | - | `docs/probes/fid/fid-lowvalue.md` | - |
 | ckptlive | proposed | - | `docs/probes/checkpoint-live-drill.md` | - |
 | advisor1 | proposed | - | `docs/design/advisor-r14.md` | - |
@@ -223,6 +223,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 51d1cdd1a 11-27 14:45 `Merge agent/inputl4: inputl4: repair and menu-choose client verbs, pointer-call count CI check (TASK-988/989)` (inputl4)
+- f992a90b6 11-27 14:43 `Merge branch 'main' into inputl4` (-)
 - 9f534dbe4 11-27 14:32 `Merge agent/act2chunks: act2chunks: Radament/cube/shaft/amulet/summoner chunks as step-executor data (TASK-1056)` (act2chunks)
 - d60306160 11-27 14:32 `Merge agent/town7: town7: short-gold priority table as data + town8 stage 5 route stops (TASK-759/761)` (town7)
 - 6992ea23f 11-27 14:30 `Merge branch 'main' into act2chunks` (-)
@@ -231,6 +233,4 @@
 - c6dde6ea4 11-27 14:25 `Merge branch 'main' into vaultpoll` (-)
 - ea06a941c 11-27 14:19 `Merge agent/skillcapretire: skillcapretire: retire resource.skillCapPerLevel (TASK-1055)` (skillcapretire)
 - 3392b8986 11-27 14:19 `Merge agent/bsmchk: bsmchk: questspec rules 12-14 (TASK-982)` (bsmchk)
-- 66f69ba02 11-27 14:19 `Merge agent/closecards2: closecards2: close/annotate stale cards (16 Done, 35 annotated)` (closecards2)
-- d788bfd1c 11-27 14:18 `Merge agent/charmvault: charmvault: charms recorded in the Vault, player Carry/Stow (TASK-1052)` (charmvault)
 <!-- statusgen:end -->
