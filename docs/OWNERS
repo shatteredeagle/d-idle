@@ -193,6 +193,7 @@ data/input/caps/  credit-runner  inputl3
 data/input/caps_test.go  credit-runner  dlv-cast-verbs
 data/input/caps_test.go  credit-runner  inputl3
 data/questboard/act1.json  credit-runner  cainfix3
+data/questboard/act2.json  credit-runner  placefix
 data/questboard/act2.json  credit-runner  qdmatrix
 deploy/d2d-container/tester-report.sh  credit-runner  testerreport
 docs/arbiter.md  credit-runner  arbmig
@@ -298,6 +299,7 @@ docs/quest-givers.md  credit-runner  campaign1
 docs/quest-hints.md  live-agent  questdrill
 docs/questboard.md  credit-runner  cainfix3
 docs/questboard.md  credit-runner  handinbtn
+docs/questboard.md  credit-runner  placefix
 docs/releases/0.1.2.md  credit-runner  cut012
 docs/repair.md  credit-runner  repairtrip
 docs/research/README.md  credit-runner  dietarchive
@@ -369,6 +371,7 @@ internal/bot/observe.go  credit-runner  freshstart
 internal/bot/observe.go  credit-runner  intake
 internal/bot/observe.go  credit-runner  survrecover
 internal/bot/povertyfarm.go  credit-runner  admit1
+internal/bot/questboard.go  credit-runner  placefix
 internal/bot/questboard.go  credit-runner  qdmatrix
 internal/bot/questboard.go  credit-runner  stage1fix
 internal/bot/questboard_s7b_test.go  credit-runner  qdmatrix
@@ -509,6 +512,7 @@ internal/plandata/povertyfarm.json  credit-runner  admit1
 internal/power/  credit-runner  dlv-cleanup
 internal/power/archetype.go  credit-runner  qdmatrix
 internal/power/skilldamage_test.go  credit-runner  qdmatrix
+internal/questboard/  credit-runner  placefix
 internal/questboard/def.go  credit-runner  cainfix3
 internal/questboard/desk.go  credit-runner  handinbtn
 internal/questboard/desk_action.go  credit-runner  handinbtn
@@ -527,6 +531,7 @@ internal/scenario/earned.go  credit-runner  pgearned
 internal/scenario/hero/selfcheck.go  credit-runner  pgselfcheck
 internal/scenario/pgpage.go  credit-runner  pgpage
 internal/scenario/pgpage_test.go  credit-runner  pgpage
+internal/scenario/placefix_test.go  credit-runner  placefix
 internal/scenario/result.go  credit-runner  pgtaps
 internal/scenario/scenario.go  credit-runner  qdmatrix
 internal/scenario/setup.go  credit-runner  qdmatrix
@@ -711,7 +716,9 @@ tools/provingground/scenarios/cain.json  credit-runner  wpstep
 tools/provingground/scenarios/input-scenarios.json  credit-runner  dlv-cast-verbs
 tools/provingground/scenarios/navexit.json  credit-runner  stage1fix
 tools/provingground/scenarios/necro.json  credit-runner  stage1fix
+tools/provingground/scenarios/questdrill.json  credit-runner  placefix
 tools/provingground/scenarios/questdrill.json  credit-runner  qdmatrix
+tools/provingground/scenarios/stepexec-act2.json  credit-runner  placefix
 tools/provingground/scenarios/tiers.json  credit-runner  dlv-cast-verbs
 tools/provingground/scenarios/townplan.json  credit-runner  town5
 tools/provingground/scenarios/vaultsellall.json  credit-runner  sellall

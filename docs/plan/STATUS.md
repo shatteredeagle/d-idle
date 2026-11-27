@@ -49,6 +49,7 @@
 | necroteeth | proposed | - | `internal/combat/classdata/profiles.json`<br>`internal/combat/necro_test.go`<br>`internal/leveler/mainattack_test.go` | - |
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
 | deploy88-ledger | proposed | - | `data/darklaunch.json` | - |
+| placefix | proposed | - | `internal/questboard/`<br>`internal/bot/questboard.go`<br>`data/questboard/act2.json`<br>`tools/provingground/scenarios/stepexec-act2.json`<br>`tools/provingground/scenarios/questdrill.json`<br>`internal/scenario/placefix_test.go`<br>`docs/questboard.md` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
@@ -244,6 +245,7 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 194b61f57 11-27 04:33 `Merge agent/placefix: placefix: Duriel drills keep the Staff placeable; seven_tombs opens on the Staff made` (placefix)
 - bbde82597 11-27 03:55 `Merge agent/skillhand: Merge branch 'main' into skillhand` (skillhand)
 - c863c1693 11-27 03:53 `Merge branch 'main' into skillhand` (-)
 - 4b533a795 11-27 03:49 `Merge origin/main into skillhand (keep casthold skillhold and the numeric cmd skill)` (skillhand)
@@ -253,5 +255,4 @@
 - 2f3ae2bd7 11-27 03:10 `Merge branch 'main' into upkeepcmp` (-)
 - 9f3e208a6 11-27 03:05 `Merge agent/casthold: casthold: card result and criteria` (casthold)
 - 9b255fdc1 11-27 02:55 `Merge origin/main into casthold` (-)
-- 67d74d66e 11-27 02:47 `Merge agent/forkcaps: Merge branch 'main' into inputl3` (forkcaps)
 <!-- statusgen:end -->
