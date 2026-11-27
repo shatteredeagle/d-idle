@@ -143,6 +143,9 @@ func (r *Runner) arbView(snap *d2.Snapshot, c control) (v arbiter.View, ok bool)
 	}); ok {
 		maps.Copy(f, af.ArmyFacts(snap)) // army facts (card dlv-stance-army); none for a hero without an army
 	}
+	if r.upkeepOn() {
+		maps.Copy(f, r.planFacts(snap))
+	}
 	obj := ""
 	if l.stepArea > 0 && c.spec.camp != nil {
 		obj = r.areaName(l.stepArea) // U: the area of the quest step the planner picked last
@@ -159,7 +162,7 @@ func (r *Runner) shadowNow() float64 {
 		t := r.e.Tune.Bot
 		cfg := arbiter.DefaultConfig()
 		cfg.MinDwell, cfg.TravelWindow = float64(t.ArbiterDwellSec), float64(t.ArbiterTravelSec)
-		a.sh = arbiter.NewShadow(cfg, arbiter.ShadowConfig{LogGapSec: float64(t.ArbiterLogGapSec)}, arbiter.StdSources()...)
+		a.sh = arbiter.NewShadow(cfg, arbiter.ShadowConfig{LogGapSec: float64(t.ArbiterLogGapSec)}, r.arbSources()...)
 		a.t0 = now
 	}
 	return now.Sub(a.t0).Seconds()
@@ -240,4 +243,34 @@ func chainFamily(code string) string {
 		return "level"
 	}
 	return ""
+}
+
+// upkeepOn: the arbiter controls the chores family, so the one upkeep source (supply plan, town10) replaces the trip and
+// resupply sources. Off by default: bot.arbiterControl 0, or bit 4 of bot.arbiterFamilies unset (the default 3).
+func (r *Runner) upkeepOn() bool {
+	t := r.e.Tune.Bot
+	return t.ArbiterShadow != 0 && t.ArbiterControl != 0 && arbiter.Controlled(t.ArbiterFamilies, "chores")
+}
+
+// arbSources is the source set of the shadow: StdSources, or UpkeepSources when the chores family is controlled.
+func (r *Runner) arbSources() []arbiter.Source {
+	if r.upkeepOn() {
+		return arbiter.UpkeepSources()
+	}
+	return arbiter.StdSources()
+}
+
+// planFacts is the supply plan's facts for the upkeep source (an excursion into the field, the default profile); none
+// when the backend has no planner or it cannot answer.
+func (r *Runner) planFacts(snap *d2.Snapshot) map[string]int {
+	sp, ok := r.d.Town.(supplyPlanner)
+	if !ok {
+		return nil
+	}
+	pl, err := sp.SupplyPlan(snap, "", 0)
+	if err != nil {
+		r.planWarn.Do(func() { r.e.Log.Warn("town plan: " + err.Error()) })
+		return nil
+	}
+	return arbiter.PlanFacts(pl)
 }
