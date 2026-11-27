@@ -37,7 +37,10 @@ type useCase struct {
 	t    *town.Town
 	snap *d2.Snapshot
 	pl   *input.Planner
+	e    *env.Env
 }
+
+func (c *useCase) setIn(in input.Controller) { c.e.In = in }
 
 func useTown(cls d2.Class, on bool, caps ...string) (*useCase, *useStub) {
 	snap := &d2.Snapshot{State: d2.StateInGame, Player: &d2.Player{Class: cls, Level: 12, Area: 2, X: 100, Y: 100}, Inventory: &d2.Inventory{}}
@@ -46,7 +49,7 @@ func useTown(cls d2.Class, on bool, caps ...string) (*useCase, *useStub) {
 	e := &env.Env{ID: "t", Log: slog.New(slog.NewTextHandler(io.Discard, nil)), Tune: &tune, In: u, Read: useReader{stubReader{snap: snap}},
 		Clock: &sim.Clock{T: time.Unix(1000, 0)}}
 	e.Planner = &input.Planner{Enabled: func() bool { return on }, Caps: &input.BackendCaps{Verbs: caps}}
-	return &useCase{t: town.New(e, nil), snap: snap, pl: e.Planner}, u
+	return &useCase{t: town.New(e, nil), snap: snap, pl: e.Planner, e: e}, u
 }
 
 func TestPortalByUseVerb(t *testing.T) {

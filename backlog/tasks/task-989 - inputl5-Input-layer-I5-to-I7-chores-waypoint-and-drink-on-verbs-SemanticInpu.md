@@ -15,8 +15,13 @@ ordinal: 476000
 card: "inputl5"
 owns:
   - "docs/design/input-i5-i7.md"
+  - "tools/ci/pointercount.py"
+  - "tools/ci/test_pointercount.py"
+  - "tools/ci/pointercount-baseline.json"
+  - "tools/ci/check.sh"
 exclusive: []
 contracts: []
+result: 'CI pointer-call ratchet (tools/ci/pointercount.py, baseline 107) wired into check.sh; repair on verbs via TASK-988; hotkey map already existed and is documented. SemanticInput-only refactor NOT done. Offline only, live U.'
 ---
 
 ## Description
@@ -29,6 +34,6 @@ Recommendation R17 of the 2026-11-19 review (07 table I5, I6, I7). Bot side afte
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 CI pointer-call count wired and falling
-- [ ] #2 Hotkey map generated and read back
+- [x] #1 CI pointer-call count wired and falling (ratchet wired, baseline 107; falling is future work)
+- [x] #2 Hotkey map generated and read back (already built, V by cmd/d2bot/hotkeymapwire_test.go; live U)
 <!-- AC:END -->

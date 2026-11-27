@@ -1,6 +1,7 @@
 package town
 
 import (
+	"math"
 	"slices"
 	"testing"
 
@@ -58,7 +59,7 @@ func TestRouteOneVisitOneStashStop(t *testing.T) {
 			} else if i := slices.Index(res.Order, "bank"); i > slices.Index(res.Order, "beltbuy") || i > slices.Index(res.Order, "shop") {
 				t.Errorf("%s: purse cannot pay, the settle must come before the paid chores: %v", lname, res.Order)
 			}
-			_, fixedCost := walkOf(names, pos, input.Point{X: 5, Y: 5})
+			_, fixedCost := walkOf(names, pos, input.Point{X: 5, Y: 5}, defaultRouteCosts)
 			if res.Cost > fixedCost {
 				t.Errorf("%s settleFirst=%v: route %d walks more than the fixed list %d", lname, settleFirst, res.Cost, fixedCost)
 			}
@@ -70,7 +71,7 @@ func TestRouteBeatsFixedListWhereItCan(t *testing.T) {
 	// the fixed list visits the stash for the boss purse, the bank and the final stash; the route does it once
 	pos := layouts["spread"]
 	names := slices.Clone(fixedList)
-	fixedStops, fixedCost := walkOf(names, pos, input.Point{})
+	fixedStops, fixedCost := walkOf(names, pos, input.Point{}, defaultRouteCosts)
 	if count(fixedStops, "stash") < 3 {
 		t.Fatalf("fixture: the fixed list should visit the stash 3 times, got %v", fixedStops)
 	}
@@ -118,5 +119,34 @@ func TestRouteSellBeforeSpendAndIdentifyFirst(t *testing.T) {
 				t.Errorf("%s sf=%v: a precedence rule broke: %v", lname, sf, res.Order)
 			}
 		}
+	}
+}
+
+// A wall between two stops makes the path longer than the straight line, and the order follows the path: with straight
+// lines the repair vendor is nearest to the start, with the detour priced the shop comes first.
+func TestRouteFollowsPathCostNotStraightLine(t *testing.T) {
+	start := input.Point{X: 0, Y: 0}
+	pos := map[string]input.Point{"repair": {X: 10, Y: 0}, "shop": {X: 0, Y: 12}}
+	names := []string{"repair", "shop"} // no edge between them
+	straight := routeOrderWith(names, nil, pos, start, defaultRouteCosts)
+	if !slices.Equal(straight.Order, []string{"repair", "shop"}) {
+		t.Fatalf("straight line: %v", straight.Order)
+	}
+	// the way to the repair vendor winds around a wall: 40 subtiles for 10 in a line
+	rc := defaultRouteCosts
+	rc.Walk = func(a, b input.Point) int {
+		if a == pos["repair"] || b == pos["repair"] {
+			return 40
+		}
+		return int(math.Round(math.Hypot(float64(a.X-b.X), float64(a.Y-b.Y))))
+	}
+	got := routeOrderWith(names, nil, pos, start, rc)
+	if !slices.Equal(got.Order, []string{"shop", "repair"}) {
+		t.Errorf("path cost: %v, want the shop first", got.Order)
+	}
+	// the penalty is data: a huge one makes every order cost the same per stop, a zero one prices the walk alone
+	rc.StopPenalty = 0
+	if c := routeOrderWith(names, nil, pos, start, rc).Cost; c != 12+40 {
+		t.Errorf("penalty 0: cost %d, want the walk alone 52", c)
 	}
 }

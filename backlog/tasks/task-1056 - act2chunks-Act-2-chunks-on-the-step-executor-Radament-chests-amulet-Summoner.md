@@ -1,10 +1,13 @@
 ---
 id: TASK-1056
-title: 'act2chunks: Act 2 chunks on the step executor (Radament, chests, amulet, Summoner)'
-status: Proposed
+title: >-
+  act2chunks: Act 2 chunks on the step executor (Radament, chests, amulet,
+  Summoner)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T19:08:00Z'
+updated_date: '2026-11-27T19:43:00Z'
 labels:
   - bot
   - feature

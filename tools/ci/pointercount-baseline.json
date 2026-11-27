@@ -1,0 +1,13 @@
+{
+ "total": 107,
+ "packages": {
+  "internal/arbiter": 8,
+  "internal/bot": 4,
+  "internal/combat": 25,
+  "internal/launch": 7,
+  "internal/leveler": 6,
+  "internal/nav": 13,
+  "internal/town": 39,
+  "internal/town/hand": 5
+ }
+}

@@ -374,6 +374,9 @@ func (s *Server) handle(line string) (reply string, ignored, quit bool) {
 	case "ground":
 		return payload(s.Fix.Ground) + "ok\n", false, false
 	case "menu":
+		if len(f) > 1 && f[1] == "choose" {
+			return "ok\n", false, false
+		}
 		return payload(s.Fix.Menu) + "ok\n", false, false
 	case "items":
 		return payload(s.Fix.Items) + "ok\n", false, false
@@ -402,7 +405,7 @@ func (s *Server) cmd(f []string) (string, bool, bool) {
 			s.skills = append(s.skills, u)
 		}
 		return "ok\n", false, false
-	case "pickup", "resurrect", "stat", "skillpt", "select", "belt", "use", "hand", "place":
+	case "pickup", "repair", "resurrect", "stat", "skillpt", "select", "belt", "use", "hand", "place":
 		return "ok\n", false, false
 	}
 	return fmt.Sprintf("err unknown cmd '%s'\n", f[1]), false, false

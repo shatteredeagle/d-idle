@@ -59,6 +59,9 @@ func TestFillKitStages(t *testing.T) {
 			if w.ManaPotions != wantMana || (w.KitPlan != nil) != wantPlan {
 				t.Fatalf("%v stage %d: mana %d plan %v, want %d and %v", class, stage, w.ManaPotions, w.KitPlan, wantMana, wantPlan)
 			}
+			if wantPlan && w.KitPlan.Hand != "needs 60 more gold for healing: recovery" {
+				t.Fatalf("%v: hand %q", class, w.KitPlan.Hand)
+			}
 			if wantPlan && (w.KitPlan.Healing != 3 || w.KitPlan.Short != "short of gold: needs 60 more for healing") {
 				t.Fatalf("%v: plan %+v", class, *w.KitPlan)
 			}
