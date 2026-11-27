@@ -16,7 +16,7 @@
 The coordinator runs `python3 -I tools/darklaunch/report.py` weekly (name, age dark, criteria met, owner, due). Every item past due or with `criteria_met: yes` gets one decision: enable (flip the default, status `default-on`), extend (new `review_by` plus a changed `why_off` that says why), or retire (delete the code path or the knob, status `retired`).
 
 ## Standard enable rule (user decision 2026-11-26)
-Flip on the sandboxes once the scenario, drill or replay passes, watch 24 h with the invariant monitor, and revert automatically on a hard breach (a death, a stall, a potion not drunk, a refusal-as-failure storm); otherwise the knob stays on and the row closes. No criterion longer than 24 h of live observation; longer evidence comes from scenarios and replays. The owner of each flip is the coordinator, due next session.
+Flip on the sandboxes once the scenario, drill or replay passes, watch a short window (default 2 h, user decision 2026-11-27: no 24 h waits; the accelerated lab soak is the main evidence) with the invariant monitor, and revert automatically on a hard breach (a death, a stall, a potion not drunk, a refusal-as-failure storm); otherwise the knob stays on and the row closes. No criterion needs more than the short live window; longer evidence comes from scenarios and replays. The owner of each flip is the coordinator, due next session.
 
 ## How to flip (tool `tools/flip/flip.py`, card autorevert1)
 1. Precondition: the knob has a `dark` row in `data/darklaunch.json` and its scenario, drill or replay passed. Never in a measured run (`D2BOT_RUN` set refuses); sandbox containers only; one open window per sandbox.
