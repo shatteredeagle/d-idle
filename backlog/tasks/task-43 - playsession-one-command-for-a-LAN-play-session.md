@@ -1,11 +1,11 @@
 ---
 id: TASK-43
 title: 'playsession: one command for a LAN play session'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-06T16:02:00Z'
-updated_date: '2026-11-11T21:25:00Z'
+updated_date: '2026-11-27T20:31:00Z'
 labels:
   - ops
   - feature
