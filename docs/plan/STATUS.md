@@ -42,6 +42,8 @@
 | diffbaal | proposed | - | `internal/quest/baaldone.go`<br>`internal/quest/baaldone_test.go` | - |
 | releasenotes-next | proposed | - | `docs/releases/next-draft.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
+| racefix | proposed | - | `internal/bot/questboard.go`<br>`internal/bot/questboard_test.go` | - |
+| tuningwrite | proposed | - | `internal/store/`<br>`internal/bot/tuner.go`<br>`internal/bot/tuner_test.go`<br>`tools/flip/` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
@@ -133,7 +135,7 @@
 | qdmatrix | proposed | - | `docs/probes/quest-drill-matrix-2026-11-23.md`<br>`tools/provingground/scenarios/questdrill.json`<br>`internal/power/archetype.go`<br>`internal/power/skilldamage_test.go`<br>`internal/questboard/state.go`<br>`internal/questboard/state_test.go`<br>`internal/d2dsrc/items.go`<br>`internal/d2dsrc/srv_test.go`<br>`internal/nav/nav.go`<br>`internal/task/act2.go`<br>`internal/task/act2_test.go`<br>`data/questboard/act2.json`<br>`internal/nav/act2hints.go`<br>`internal/nav/act2hints_test.go`<br>`internal/nav/exit_test.go`<br>`internal/task/act4.go`<br>`internal/bot/questboard.go`<br>`internal/bot/questboard_s7b_test.go`<br>`tools/probes/presets.py`<br>`tools/emu/am_batch.sh`<br>`tools/emu/am_model.py`<br>`internal/scenario/scenario.go`<br>`internal/scenario/setup.go`<br>`internal/scenario/setup_test.go`<br>`internal/saves/progress.go`<br>`tools/probes/objectlist.py`<br>`cmd/d2bot/task_test.go`<br>`internal/nav/exit.go`<br>`internal/nav/gatedoor.go`<br>`internal/nav/gatedoor_test.go`<br>`internal/nav/exitgoal_test.go`<br>`internal/nav/mouthgate.go`<br>`internal/bot/goal.go`<br>`internal/bot/goal_acts_test.go`<br>`cmd/d2bot/task.go`<br>`cmd/d2bot/acts_test.go`<br>`internal/talk/talk.go`<br>`internal/talk/talk_test.go` | - |
 | fid-boss-skills | deferred | - | `docs/probes/fid/fid-boss-skills.md` | - |
 | fid-sorc-upstream | deferred | - | `docs/probes/fid/fid-sorc-upstream.md` | - |
-| stage1fix | proposed | - | `internal/nav/exit.go`<br>`internal/nav/exit_test.go`<br>`internal/bot/goal.go`<br>`internal/bot/questboard.go`<br>`internal/bot/questboard_test.go`<br>`cmd/d2scenario/tap.go`<br>`cmd/d2scenario/tap_test.go`<br>`tools/provingground/scenarios/navexit.json`<br>`tools/provingground/scenarios/necro.json`<br>`docs/probes/necromancer-act1-drill-2026-11-22.md` | - |
+| stage1fix | proposed | - | `internal/nav/exit.go`<br>`internal/nav/exit_test.go`<br>`internal/bot/goal.go`<br>`internal/bot/questboard.go`<br>`internal/bot/questboard_test.go`<br>`internal/bot/denreward_test.go`<br>`cmd/d2scenario/tap.go`<br>`cmd/d2scenario/tap_test.go`<br>`tools/provingground/scenarios/navexit.json`<br>`tools/provingground/scenarios/necro.json`<br>`docs/probes/necromancer-act1-drill-2026-11-22.md` | - |
 | m1-liveproof | deferred | drills | `docs/basics-audit.md`<br>`docs/basics-live.md`<br>`docs/primitives.md`<br>`docs/probes/basics/**`<br>`cmd/d2drill/**`<br>`internal/drill/**`<br>`docs/probes/drills/**` | `soak-slot:0` |
 | fid-teleport | deferred | - | `docs/probes/fid/fid-teleport.md` | - |
 | fid-lab-rebase | deferred | - | `docs/probes/fid/fid-lab-rebase.md` | - |
@@ -161,7 +163,7 @@
 | arbmig | in-progress | - | `docs/design/arbiter-migration-p6.md`<br>`docs/arbiter.md`<br>`internal/arbiter/`<br>`cmd/d2scenario/`<br>`tools/provingground/arbiter-outcomes/`<br>`internal/bot/arbiter_control.go`<br>`internal/bot/arbiter_control_test.go`<br>`internal/bot/shadow.go`<br>`internal/bot/loop.go`<br>`internal/env/tuning_bot.go`<br>`data/darklaunch.json`<br>`docs/knobs.md` | - |
 | fid-adapter-rows | deferred | - | `docs/probes/fid/fid-adapter-rows.md` | - |
 | ticklog | in-progress | - | `docs/design/ticklog-t4.md`<br>`docs/arbiter.md`<br>`internal/bot/ticklog.go`<br>`internal/bot/ticklog_test.go`<br>`internal/bot/shadow.go`<br>`internal/env/tuning_bot.go`<br>`internal/arbiter/replay.go`<br>`internal/arbiter/replay_ticklog_test.go`<br>`data/darklaunch.json` | - |
-| bsmdef | in-progress | - | `docs/design/boardsm-flip.md` | - |
+| bsmdef | in-progress | - | `docs/design/boardsm-flip.md`<br>`docs/questboard.md`<br>`internal/questboard`<br>`internal/task`<br>`internal/env/tuning_quests.go`<br>`internal/env/tuning_quests_legacy_test.go`<br>`internal/bot/questboard.go`<br>`internal/bot/task.go`<br>`internal/bot/routeguard.go`<br>`tools/provingground/scenarios/board.json` | - |
 | agencyp1b | proposed | - | `docs/design/agency-p1b.md`<br>`internal/agency/drive.go`<br>`internal/agency/drive_test.go`<br>`cmd/d2bot/agencywire.go`<br>`cmd/d2bot/agencydrive_test.go`<br>`cmd/d2bot/d2dwire.go`<br>`cmd/d2bot/live.go`<br>`internal/combat/drive_test.go`<br>`internal/combat/fighter.go`<br>`internal/combat/aura.go`<br>`internal/env/tuning_agency.go` | - |
 | inputl3 | in-progress | - | `docs/design/input-i3.md`<br>`internal/input/useitem.go`<br>`internal/input/useitem_test.go`<br>`internal/d2dctl/use_verb.go`<br>`internal/d2dctl/use_verb_test.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dinput/useitem.go`<br>`internal/combat/portalverb.go`<br>`internal/combat/portalverb_test.go`<br>`internal/combat/fighter.go`<br>`internal/town/portalverb.go`<br>`internal/town/portalverb_test.go`<br>`internal/town/portalverb_unit_test.go`<br>`internal/town/portalverb_export_test.go`<br>`internal/town/trip.go`<br>`data/input/caps/`<br>`data/input/caps_test.go`<br>`docs/design/input-cast-verbs.md`<br>`backlog/tasks/task-726 - dlv-cast-verbs-input-caps-cast-unit-cast-point-cast-hold.md` | - |
 | inputl4 | proposed | - | `docs/design/input-i4.md`<br>`internal/input/repairverbs.go`<br>`internal/d2dctl/repair_verb.go`<br>`internal/d2dctl/use_verb_test.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dinput/repairverbs.go`<br>`internal/town/repairverb.go`<br>`internal/town/repairverb_test.go`<br>`internal/town/chores.go`<br>`internal/town/portalverb_export_test.go`<br>`internal/town/portalverb_unit_test.go` | - |
@@ -192,14 +194,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- dbbe1e8c0 11-27 18:31 `Merge agent/tuningwrite: tuningwrite: refuse tiny tuning writes, restore warn, flip verify hard-fails on zero bytes (TASK-1077)` (tuningwrite)
+- 20f13e0a4 11-27 18:31 `Merge agent/racefix: racefix: hand-in rebuilds the cached world before signalling done (TASK-1076)` (racefix)
+- b50b24aa8 11-27 18:31 `Merge agent/denreward: denreward: hold every non-emergency trip while a quest reward is pending, nav.barracks-return scenario (TASK-880)` (denreward)
+- 62cd1cf1c 11-27 18:28 `Merge branch 'main' into tuningwrite` (-)
+- 064b9c30b 11-27 18:28 `Merge branch 'main' into racefix` (-)
+- b0ba5397d 11-27 18:28 `Merge branch 'main' into denreward` (-)
+- d894a57bf 11-27 18:20 `Merge agent/bsmprep: bsmprep: boardLegacy seam, boardSM removal plan, drill scenarios (TASK-983 prep)` (bsmprep)
+- 25c9ee658 11-27 18:18 `Merge branch 'main' into bsmprep` (-)
 - ee98b56f4 11-27 18:15 `Merge agent/docsweep: docsweep: stale citations, roadmap refresh, 2 h wording` (docsweep)
-- 5da31f09f 11-27 18:13 `Merge origin/main into docsweep (docs/gear.md: take main, the gearcopy wording)` (-)
-- 1d9770f19 11-27 18:04 `Merge agent/combattelem: combattelem: fight-end aim/stance/minion summaries, skill-id test (TASK-1073)` (combattelem)
-- 3b4e20513 11-27 18:03 `Merge branch 'main' into combattelem` (-)
-- 6692346c5 11-27 17:55 `Merge agent/nightcheck: nightcheck: night plan preflight script and corrected launch commands (TASK-1075)` (nightcheck)
-- 84cb68578 11-27 17:55 `Merge agent/mercaura: mercaura: per-class per-difficulty merc aura data, HirePolicy takes the class (TASK-1074)` (mercaura)
-- 05cc47c95 11-27 17:55 `Merge agent/combatscen2: combatscen2: eight combat drill scenarios (TASK-1072)` (combatscen2)
-- 83a010d59 11-27 17:54 `Merge agent/classapply: classapply: SME changes for Druid/Barbarian/Amazon/Assassin (War Cry kind, Exploding Arrow, Death Sentry key, Hurricane)` (classapply)
-- 02cf8a142 11-27 17:52 `Merge branch 'main' into mercaura` (-)
-- 24b3841bc 11-27 17:52 `Merge branch 'main' into combatscen2` (-)
+- cb47f585c 11-27 18:13 `Merge origin/main into denreward (card result lines combined, docs sections both kept)` (-)
 <!-- statusgen:end -->

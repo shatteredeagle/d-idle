@@ -97,7 +97,11 @@
      "hp2",
      "hp2",
      "mp2"
-    ]
+    ],
+    "warp": {
+     "x": 38,
+     "y": 64
+    }
    },
    "trigger": {
     "goals": "farm:Outer Cloister",
@@ -122,8 +126,8 @@
    "needs": [
     "lab-verbs-attach"
    ],
-   "provenance": "SETUP: level 26, gold 3000, potions, field start in the Barracks (area 28) by debug goto 28 (CHEATED position). Mechanics only.",
-   "notes": "The return leg of the stage 1 failure (run 20261123-023115-028d: from the Barracks `nav no usable gate from 28 to 27`, `border not readable from here, walking to its strip`). Goal: leave the Barracks for the Outer Cloister. The forward leg is the toolstrade work (act1.tools.*).",
+   "provenance": "SETUP: level 26, gold 3000, potions, field start in the Barracks (area 28) by debug goto 28, then debug warp 38 64 (subtiles 190,320, the walked-in arrival point of the live capture 2026-11-23: 25 subtiles above the south strip). CHEATED position. Mechanics only.",
+   "notes": "The return leg of the stage 1 failure (run 20261123-023115-028d: from the Barracks `nav no usable gate from 28 to 27`, `border not readable from here, walking to its strip`). Goal: leave the Barracks for the Outer Cloister. The forward leg is the toolstrade work (act1.tools.*). The plain goto start (65,212) stood far from the arrival strip and the planner found no plan (run 20261123-033306); the warp is the second start for the same level (Scenario.Warp). U: the warp cell lands on the walked-in point, the cell size of 5 subtiles is S (the scenario schema comment); the first lab run decides. Pass: 'Entered Outer Cloister' and no 'unwanted exit' refusal line in the bot log (count it next to the verdict as in nav.bloodmoor-coldplains).",
    "assert": [
     {
      "kind": "log_line",
@@ -134,10 +138,14 @@
     {
      "kind": "area_changes_le",
      "max": 30
+    },
+    {
+     "kind": "log_line",
+     "pattern": "crossing .*unwanted exit|mouth gate refus",
+     "max": 0,
+     "why": "the return leg is not refused by the unwanted-exit mouth gate"
     }
-   ],
-   "status": "pending",
-   "pending_reason": "a field start by debug goto puts the hero at (65,212), far from the arrival strip, and the planner finds no plan to the unproven strip from there (RED for Paladin and Necromancer, run 20261123-033306, with and without the fix); the real shape (arrival from the Outer Cloister, the strip reached, d2d still cannot read across) is covered by TestExitToCrossesAnUnprovenStripThatNeverProves. Needs a start that arrives by walking from the Outer Cloister. The real arrival shape is now a unit test on the live Barracks capture (TestExitToCrossesTheLiveBarracksSouthStrip, level 28 grid of 2026-11-23, hero at (191,324), strip x 179..182 of row 349); a scenario from a walked arrival stays open."
+   ]
   },
   {
    "id": "nav.inner-cloister-cathedral",

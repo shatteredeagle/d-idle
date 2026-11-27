@@ -1,8 +1,12 @@
 package bot
 
 import (
+	"bytes"
 	"errors"
+	"log/slog"
+	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"d2lod-bot/internal/api"
@@ -142,5 +146,55 @@ func TestTunerZoneClearLiveSourcePersist(t *testing.T) {
 	}
 	if _, _, err := tn2.Value("bot.nope"); err == nil {
 		t.Fatal("an unknown knob must be an error")
+	}
+}
+
+func TestTunerZeroByteFileRestoresFromBakWithOneWarn(t *testing.T) {
+	for _, prof := range []string{"optimal", Profiles()[len(Profiles())-1].Name} {
+		t.Run(prof, func(t *testing.T) {
+			path := filepath.Join(t.TempDir(), "state", "tuning.json")
+			tune := env.DefaultTuning()
+			tn, err := NewTuner(&tune, Config{Profile: prof}, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			k := env.Knobs()[0]
+			mid := (k.Min + k.Max) / 2
+			for _, v := range []float64{mid, mid} { // two saves so .bak holds a good copy
+				if err := tn.Edit(api.TuneEdit{Overrides: map[string]*float64{k.Key: f64(v)}}); err != nil {
+					t.Fatal(err)
+				}
+			}
+			if err := os.WriteFile(path, nil, 0o644); err != nil { // the Doofer failure
+				t.Fatal(err)
+			}
+			var buf bytes.Buffer
+			log := slog.New(slog.NewTextHandler(&buf, nil))
+			tune2 := env.DefaultTuning()
+			tn2, err := newTuner(log, &tune2, Config{}, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if v, src, err := tn2.Value(k.Key); err != nil || v != mid || src != "dashboard" {
+				t.Fatalf("restored value %v %s %v", v, src, err)
+			}
+			out := buf.String()
+			if strings.Count(out, "level=WARN") != 1 || !strings.Contains(out, "knobsRestored=1") || !strings.Contains(out, "restoredFromBackup=true") {
+				t.Fatalf("log %q", out)
+			}
+		})
+	}
+}
+
+func TestTunerZeroByteFileNoBackupWarnsKnobsLost(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "tuning.json")
+	os.WriteFile(path, nil, 0o644)
+	var buf bytes.Buffer
+	tune := env.DefaultTuning()
+	if _, err := newTuner(slog.New(slog.NewTextHandler(&buf, nil)), &tune, Config{}, path); err != nil {
+		t.Fatal(err)
+	}
+	if strings.Count(buf.String(), "level=WARN") != 1 || !strings.Contains(buf.String(), "knobsRestored=0") {
+		t.Fatalf("log %q", buf.String())
 	}
 }

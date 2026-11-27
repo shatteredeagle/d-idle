@@ -347,22 +347,34 @@ func (r *Runner) needChores(s *d2.Snapshot) (plan ChorePlan, emergency, ok bool)
 		return r.fullChores("forced"), true, true
 	}
 	if plan, ok := r.rebuyDue(s); ok {
+		if r.holdForReward(s, plan) {
+			return plan, false, false
+		}
 		return plan, false, true
 	}
 	plan, emergency, ok = r.choresDue(s)
 	if ok && emergency && r.townLatched(s) {
 		return plan, emergency, false
 	}
-	if ok && !emergency && restockReason(plan.Reason) {
-		pend := r.questRewardPending()
-		hold, since := holdTripForReward(pend, r.loop.rewardSince, r.e.Clock.Now())
-		r.loop.rewardSince = since
-		if hold {
-			r.e.Log.Info("restock trip held: a quest reward is pending, the board walks home first", "reason", plan.Reason)
-			return plan, false, false
-		}
+	if ok && !emergency && r.holdForReward(s, plan) {
+		return plan, false, false
 	}
 	return plan, emergency, ok
+}
+
+// holdForReward applies holdTripForReward to every non-emergency trip, whatever its reason: a full pack, a rebuy or a
+// mercenary errand leave by portal just like a restock (the first fix held restock reasons only). In town only a
+// restock waits, as before; the other chores there do not lose a reward.
+func (r *Runner) holdForReward(s *d2.Snapshot, plan ChorePlan) bool {
+	if s != nil && s.Player != nil && s.Player.InTown() && !restockReason(plan.Reason) {
+		return false
+	}
+	hold, since := holdTripForReward(r.questRewardPending(s), r.loop.rewardSince, r.e.Clock.Now())
+	r.loop.rewardSince = since
+	if hold {
+		r.e.Log.Info("trip held: a quest reward is pending, the board walks home first", "reason", plan.Reason)
+	}
+	return hold
 }
 
 // rewardHoldMax bounds how long a restock trip waits for a pending quest reward (virtual clock).
@@ -384,9 +396,8 @@ func holdTripForReward(pending bool, since, now time.Time) (hold bool, newSince 
 }
 
 // questRewardPending reports whether the live quest reader lists a quest as cleared with its reward not yet taken.
-func (r *Runner) questRewardPending() bool {
+func (r *Runner) questRewardPending(s *d2.Snapshot) bool {
 	td := r.d.Task
-	s := r.latest()
 	if td == nil || td.Quests == nil || !td.QuestsLive || s == nil || s.Player == nil {
 		return false
 	}
@@ -1783,8 +1794,11 @@ func (r *Runner) packFullQuiet() bool {
 
 // tripDue reports whether a town trip is due now, cooldown included.
 func (r *Runner) tripDue(s *d2.Snapshot) bool {
-	_, emergency, ok := r.choresDue(s)
+	plan, emergency, ok := r.choresDue(s)
 	if !ok {
+		return false
+	}
+	if !emergency && r.holdForReward(s, plan) { // the same hold as needChores: no cancel for a trip that will not start
 		return false
 	}
 	// A routine trip (full pack, worn gear) waits until the boss run is over: it cancels the fight and the boss heals while
