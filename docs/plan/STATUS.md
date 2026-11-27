@@ -157,7 +157,7 @@
 | pgtaps | in-progress | - | `cmd/d2bot/ladder.go`<br>`cmd/d2scenario/tap.go`<br>`internal/scenario/taps.go`<br>`cmd/d2scenario/run.go`<br>`cmd/d2scenario/tap_test.go`<br>`internal/scenario/result.go` | - |
 | pgclock | proposed | - | `cmd/d2bot/d2dbackend.go`<br>`internal/bot/farm.go`<br>`internal/goals/clock_test.go`<br>`internal/bot/farmclock_test.go`<br>`internal/d2denv/reader.go`<br>`internal/d2denv/recent_test.go`<br>`internal/d2denv/env.go`<br>`cmd/d2bot/goalsclock_test.go`<br>`docs/d2d-determinism.md` | - |
 | fid-probe-regen-speed | deferred | - | `docs/probes/fid/fid-probe-regen-speed.md` | - |
-| pghero | proposed | - | `internal/scenario/hero`<br>`tools/ab/prep`<br>`tools/survival` | - |
+| pghero | proposed | - | `internal/scenario/hero/`<br>`tools/ab/prep/`<br>`tools/survival/` | - |
 | pgselfcheck | proposed | - | `internal/scenario/hero/selfcheck.go`<br>`cmd/d2scenario/validate.go` | - |
 | pgpage | proposed | - | `docs/process/proving-ground-status.md`<br>`tools/provingground/status_doc.sh` | - |
 | mgonejob | proposed | - | `docs/process/pg-ops-mgonejob.md` | - |
@@ -245,6 +245,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- c99e25214 11-27 02:08 `Merge agent/pghero: Merge branch 'main' into pghero` (pghero)
+- 920dfe59d 11-27 02:05 `Merge branch 'main' into pghero` (-)
 - b7f493e78 11-27 01:57 `Merge agent/mark: Merge branch 'main' into dlv-mark` (mark)
 - d151d522e 11-27 01:54 `Merge branch 'main' into dlv-mark` (-)
 - 973166ee5 11-27 01:50 `Merge origin/main into agent/mark (keep marks and minions fields; Lower Resist rows stay removed)` (dlv-mark)
@@ -253,6 +255,4 @@
 - f1789b6ad 11-27 01:46 `Merge agent/featuresoak: Merge branch 'main' into featuresoak` (featuresoak)
 - 317b4e3c0 11-27 01:46 `Merge agent/deploy88: Merge branch 'main' into deploy88-ledger` (deploy88)
 - 710c84564 11-27 01:41 `Merge branch 'main' into faultstall` (-)
-- 380b833f3 11-27 01:41 `Merge branch 'main' into pgprov` (-)
-- 0ebcf3fc8 11-27 01:41 `Merge branch 'main' into featuresoak` (-)
 <!-- statusgen:end -->

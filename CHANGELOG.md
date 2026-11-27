@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Merge branch 'main' into pghero <!--sg:agent/pghero-->
 - Merge branch 'main' into dlv-mark <!--sg:agent/mark-->
 - Merge branch 'main' into faultstall <!--sg:agent/faultstall-->
 - Merge branch 'main' into pgprov <!--sg:agent/pgprov2-->

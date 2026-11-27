@@ -505,7 +505,7 @@ internal/resource/tuning.go  credit-runner  freshstart
 internal/resource/tuning.go  live-agent  recoverypace
 internal/saves/progress.go  credit-runner  qdmatrix
 internal/scenario/earned.go  credit-runner  pgearned
-internal/scenario/hero  credit-runner  pghero
+internal/scenario/hero/  credit-runner  pghero
 internal/scenario/hero/selfcheck.go  credit-runner  pgselfcheck
 internal/scenario/result.go  credit-runner  pgtaps
 internal/scenario/scenario.go  credit-runner  qdmatrix
@@ -655,7 +655,7 @@ internal/watch/web/tokens.css  credit-runner  uis1
 internal/watch/web/vault.js  credit-runner  vaultphone
 internal/watch/whyline.json  credit-runner  repairtrip
 internal/watch/whyline_test.go  credit-runner  repairtrip
-tools/ab/prep  credit-runner  pghero
+tools/ab/prep/  credit-runner  pghero
 tools/ci/  credit-runner  dlv-cleanup
 tools/emu/am_batch.sh  credit-runner  qdmatrix
 tools/emu/am_model.py  credit-runner  qdmatrix
@@ -694,7 +694,7 @@ tools/provingground/scenarios/questdrill.json  credit-runner  qdmatrix
 tools/provingground/scenarios/townplan.json  credit-runner  town5
 tools/provingground/scenarios/vaultsellall.json  credit-runner  sellall
 tools/provingground/status_doc.sh  credit-runner  pgpage
-tools/survival  credit-runner  pghero
+tools/survival/  credit-runner  pghero
 tools/tester-pack.sh  credit-runner  testerpack
 tools/uilint/  credit-runner  uis1
 tools/uilint/lint.go  credit-runner  uis6
