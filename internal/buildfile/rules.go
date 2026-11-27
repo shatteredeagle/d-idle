@@ -70,6 +70,13 @@ func StdQuests() []QuestPoint {
 	return []QuestPoint{{8, 1, 0}, {15, 1, 0}, {26, 2, 0}, {38, 1, 0}, {44, 1, 0}, {56, 2, 0}, {68, 1, 0}, {72, 1, 0}, {82, 2, 0}}
 }
 
+// questIDs is the order the skill-point quests pay out in each difficulty (data/quest-points.json ids; Izual is two
+// points). questID labels the i-th quest skill point of a build with it; a schedule that is not StdQuests' order gets
+// labels by count only (U), which the leveler does not mind: it only needs to know a point is a quest's.
+var questIDs = [...]string{"den_of_evil", "radament", "izual", "izual"}
+
+func questID(i int) string { return questIDs[i%len(questIDs)] }
+
 func earnedSkill(q []QuestPoint, clvl int) int {
 	n := clvl - 1
 	for _, p := range q {

@@ -186,16 +186,23 @@ func canon(steps []*step, name string) string {
 }
 
 // run spends points for clvl from..to. bank0, when > 0, replaces the normal gain at clvl from (a respec refunds
-// everything earned so far).
+// everything earned so far). Level points are spent before quest points, and a point paid by a quest carries that
+// quest's id (questIDs), so a row never holds more untagged points than the levels grant.
 func (e *engine) run(from, to, bank0 int, stats map[int][4]int) []leveler.Row {
 	var rows []leveler.Row
-	bank := 0
+	bank, issued := 0, 0
+	var quests []string // pending quest points, oldest first
 	for L := from; L <= to; L++ {
 		if L == from && bank0 > 0 {
 			bank += bank0
+			issued = earnedSkill(e.quest, L) - (L - 1)
 		} else {
 			q, _ := questAt(e.quest, L)
-			bank += 1 + q
+			bank++
+			for ; q > 0; q-- {
+				quests = append(quests, questID(issued))
+				issued++
+			}
 		}
 		row := leveler.Row{Clvl: L, Attr: stats[L]}
 		for _, s := range e.steps {
@@ -203,7 +210,7 @@ func (e *engine) run(from, to, bank0 int, stats map[int][4]int) []leveler.Row {
 				s.done = true // dropped, not spent
 			}
 		}
-		for bank > 0 {
+		for bank > 0 || len(quests) > 0 {
 			var pick *step
 			for _, s := range e.steps {
 				if s.done {
@@ -222,11 +229,16 @@ func (e *engine) run(from, to, bank0 int, stats map[int][4]int) []leveler.Row {
 			}
 			pick.done = true
 			e.levels[pick.skill]++
-			bank--
-			if n := len(row.Skills); n > 0 && row.Skills[n-1].Skill == pick.skill {
+			tag := ""
+			if bank > 0 {
+				bank--
+			} else {
+				tag, quests = quests[0], quests[1:]
+			}
+			if n := len(row.Skills); n > 0 && row.Skills[n-1].Skill == pick.skill && row.Skills[n-1].Quest == tag {
 				row.Skills[n-1].Points++
 			} else {
-				row.Skills = append(row.Skills, leveler.SkillPts{Skill: pick.skill, Points: 1})
+				row.Skills = append(row.Skills, leveler.SkillPts{Skill: pick.skill, Points: 1, Quest: tag})
 			}
 		}
 		rows = append(rows, row)

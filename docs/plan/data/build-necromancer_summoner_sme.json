@@ -82,7 +82,12 @@
    "skills": [
     {
      "skill": "Raise Skeleton",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Raise Skeleton",
+     "points": 1,
+     "quest": "den_of_evil"
     }
    ]
   },
@@ -159,7 +164,12 @@
    "skills": [
     {
      "skill": "Bone Armor",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Bone Armor",
+     "points": 1,
+     "quest": "radament"
     }
    ]
   },
@@ -284,11 +294,13 @@
     },
     {
      "skill": "BloodGolem",
-     "points": 1
+     "points": 1,
+     "quest": "izual"
     },
     {
      "skill": "IronGolem",
-     "points": 1
+     "points": 1,
+     "quest": "izual"
     }
    ]
   },
@@ -424,7 +436,8 @@
     },
     {
      "skill": "Raise Skeletal Mage",
-     "points": 1
+     "points": 1,
+     "quest": "den_of_evil"
     }
    ]
   },
@@ -490,7 +503,12 @@
    "skills": [
     {
      "skill": "Raise Skeleton",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Raise Skeleton",
+     "points": 1,
+     "quest": "radament"
     }
    ]
   },
@@ -622,7 +640,12 @@
    "skills": [
     {
      "skill": "Raise Skeleton",
-     "points": 3
+     "points": 1
+    },
+    {
+     "skill": "Raise Skeleton",
+     "points": 2,
+     "quest": "izual"
     }
    ]
   },

@@ -119,7 +119,12 @@
    "skills": [
     {
      "skill": "Might",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Might",
+     "points": 1,
+     "quest": "den_of_evil"
     }
    ]
   },
@@ -266,7 +271,8 @@
     },
     {
      "skill": "Charge",
-     "points": 1
+     "points": 1,
+     "quest": "radament"
     }
    ]
   },

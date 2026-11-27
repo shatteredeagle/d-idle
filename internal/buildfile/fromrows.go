@@ -31,11 +31,17 @@ func FromRows(rows []leveler.Row, class string, rules Rules) (*Build, []string) 
 	lastGoal, lastRow, lastSingle := -1, 0, false
 	for L := 2; L <= lastClvl; L++ {
 		r := byClvl[L]
-		spent := 0
+		spent, tagged := 0, 0
 		for _, s := range r.Skills {
 			spent += s.Points
+			if s.Quest != "" {
+				tagged += s.Points
+			}
 		}
-		avail := bank + 1
+		if tagged > 0 {
+			b.Quest = append(b.Quest, QuestPoint{Clvl: L, Skill: tagged})
+		}
+		avail := bank + 1 + tagged
 		if spent > avail {
 			b.Quest = append(b.Quest, QuestPoint{Clvl: L, Skill: spent - avail})
 			avail = spent

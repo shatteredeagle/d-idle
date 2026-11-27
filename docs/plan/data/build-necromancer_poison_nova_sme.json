@@ -75,7 +75,12 @@
    "skills": [
     {
      "skill": "Poison Dagger",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Poison Dagger",
+     "points": 1,
+     "quest": "den_of_evil"
     }
    ]
   },
@@ -152,7 +157,12 @@
    "skills": [
     {
      "skill": "Poison Dagger",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Poison Dagger",
+     "points": 1,
+     "quest": "radament"
     }
    ]
   },
@@ -277,7 +287,8 @@
     },
     {
      "skill": "Poison Dagger",
-     "points": 2
+     "points": 2,
+     "quest": "izual"
     }
    ]
   },
@@ -409,7 +420,12 @@
    "skills": [
     {
      "skill": "Poison Nova",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Poison Nova",
+     "points": 1,
+     "quest": "den_of_evil"
     }
    ]
   },
@@ -475,7 +491,12 @@
    "skills": [
     {
      "skill": "Poison Nova",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Poison Nova",
+     "points": 1,
+     "quest": "radament"
     }
    ]
   },
@@ -607,7 +628,12 @@
    "skills": [
     {
      "skill": "Bone Spear",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Bone Spear",
+     "points": 1,
+     "quest": "izual"
     }
    ]
   },
