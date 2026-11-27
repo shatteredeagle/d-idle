@@ -15,3 +15,20 @@ func TestCmdUseLine(t *testing.T) {
 		t.Fatalf("got %q", got)
 	}
 }
+
+func TestRepairAndMenuChooseLines(t *testing.T) {
+	srv, c := start(t, fake.Options{})
+	if err := c.CmdRepair(ctx(), -1); err != nil {
+		t.Fatal(err)
+	}
+	if err := c.MenuChoose(ctx(), "Trade"); err != nil {
+		t.Fatal(err)
+	}
+	if err := c.MenuChoose(ctx(), "a\nb"); err == nil {
+		t.Fatal("newline text was sent")
+	}
+	got := srv.Lines()
+	if len(got) != 2 || got[0] != "cmd repair -1" || got[1] != "menu choose Trade" {
+		t.Fatalf("got %q", got)
+	}
+}

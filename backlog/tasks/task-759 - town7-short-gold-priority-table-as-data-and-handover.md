@@ -1,10 +1,11 @@
 ---
 id: TASK-759
 title: 'town7: short-gold priority table as data and handover'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-21T04:52:00Z'
+updated_date: '2026-11-27T19:42:00Z'
 labels:
   - bot
   - feature

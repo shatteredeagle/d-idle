@@ -80,6 +80,10 @@ type Navigator struct {
 	// TeleportKeyFn, if set, supplies the key when TeleportKey is empty. The bot installs the Fighter's verified bind of
 	// the Teleport skill, so the capability follows what the character knows and has bound (telecap.go).
 	TeleportKeyFn func() string
+	// TeleportHopFn, if set, is the combat move driver's answer to "what is a hop now" (telehop.go): the key, range, min
+	// hop and mana cost come from its row and the skill state, and a refusal means no Teleport. It takes the place of
+	// TeleportKeyFn, TeleportRange, TeleportMana and TeleportCost; a fixed TeleportKey still wins (rigs, tests).
+	TeleportHopFn func() TeleportHop
 	// TeleportOK, if set, says whether Teleport may be cast on a level (data.CanTeleportIn); nil allows every level.
 	TeleportOK    func(level int) bool
 	TeleportRange float64 // subtiles per cast, 0: 18
