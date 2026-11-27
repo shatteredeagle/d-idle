@@ -68,6 +68,7 @@ type Options struct {
 	Log         func(msg string, kv ...any)
 	Now         func() time.Time // the clock of the auto-start controller (default time.Now); tests pass a fake
 	Auto        AutoOptions      // the auto-start limits (auto.go); the zero value never starts anything by itself
+	Resume      ResumeOptions    // the pause policy (resume.go); the zero value resumes nothing
 	Ledger      func() Ledger    // the account wallet (ledger.go); nil, or a nil result, makes the Ether hook inert
 }
 

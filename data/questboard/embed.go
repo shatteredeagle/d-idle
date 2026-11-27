@@ -37,3 +37,8 @@ var Act4 []byte
 //
 //go:embed act5.json
 var Act5 []byte
+
+// Resume is resume.json (quests.resume/1: which parks may lift themselves, and when).
+//
+//go:embed resume.json
+var Resume []byte
