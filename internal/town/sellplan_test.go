@@ -63,3 +63,39 @@ func TestPlanKeepEmptyBeltAndRejuv(t *testing.T) {
 		t.Fatalf("equal tiers keep the lowest ids: %v", got)
 	}
 }
+
+// Scenario belt-refill-from-pack in numbers, two builds: a belt with one healing potion raises the pack keep by the
+// empty boxes, and the pickup reads that same keep (pickupKeep returns planKeepOf), so a potion picked is one the sale keeps.
+func TestPlanKeepBeltRefillTwoBuilds(t *testing.T) {
+	lt, rs := env.DefaultLootTuning(), env.DefaultResourceTuning()
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		band := belt.PlanForClass(class, 16)
+		capHP := band.Capacity(belt.HP, belt.Columns)
+		full, one := supply.Count{}, supply.Count{}
+		full.Belt[supply.HP], one.Belt[supply.HP] = capHP, 1
+		var keeps [2]int
+		for i, c := range []supply.Count{full, one} {
+			pl, err := solveShadow(class, band, belt.Columns, c, ChorePlan{}, &lt, &rs)
+			if err != nil {
+				t.Fatalf("%v: %v", class, err)
+			}
+			keeps[i] = planKeepOf(pl, c)[belt.HP]
+		}
+		if keeps[1]-keeps[0] != capHP-1 {
+			t.Errorf("%v: keep %d with a full belt, %d with one potion: want a difference of %d", class, keeps[0], keeps[1], capHP-1)
+		}
+	}
+}
+
+// Below stage 4, or without a snapshot, the pickup has no plan and the looter keeps its buffers.
+func TestPickupKeepOffBelowStage4(t *testing.T) {
+	tune := env.DefaultTuning()
+	tw := &Town{e: &env.Env{Tune: &tune}}
+	if _, ok := tw.pickupKeep(&d2.Snapshot{}); ok {
+		t.Fatal("stage 0 gave a pickup plan")
+	}
+	tune.Town.Plan = 4
+	if _, ok := tw.pickupKeep(nil); ok {
+		t.Fatal("nil snapshot gave a pickup plan")
+	}
+}
