@@ -10,6 +10,9 @@ func TestAutoAllocPlanFollowsRowsTwoClasses(t *testing.T) {
 		var order []string
 		for _, r := range b.Rows {
 			for _, s := range r.Skills {
+				if s.Quest != "" {
+					continue // a quest-tagged point waits for its quest point (Have.QuestPts)
+				}
 				for i := 0; i < s.Points; i++ {
 					order = append(order, s.Skill)
 				}

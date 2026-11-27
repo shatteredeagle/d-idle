@@ -2,7 +2,7 @@
  "build": "sorceress_blizzard_endgame90",
  "class": "sorceress",
  "mana_heavy": true,
- "schema": "per-clvl allocation, same shape as internal/gear/builds/*.json (leveler.ParseBuild) plus main_attack; rows clvl 2..90, NO respec. A row with no skills means the point is saved (no unlocked plan skill); the planner spends it in the row where the skill unlocks. Quest points (Den, Radament, Izual in each difficulty) are folded into rows 8, 15, 26, 38, 44, 56, 68, 72, 82 (U timing; planner pulls rows forward).",
+ "schema": "per-clvl allocation, same shape as internal/gear/builds/*.json (leveler.ParseBuild) plus main_attack; rows clvl 2..90, NO respec. A row with no skills means the point is saved (no unlocked plan skill); the planner spends it in the row where the skill unlocks. Quest points (Den, Radament, Izual in each difficulty) are skill entries with a quest key (rows 8 Den, 15 Radament, 26 Izual, 38 Den, 44 Radament, 56 Izual, 68 Den, 72 Radament, 82 Izual; U timing): rows count level points only, and a tagged point is bought as soon as its quest point is granted.",
  "ladder_only": ["Spirit"],
  "tags": "Skills: V end state from Maxroll Blizzard Sorceress (fetched 2026-10-29). U ordering/no-respec adaptation: Ice Bolt, Ice Blast and Glacial Spike are all maxed in the endgame, so the early attack skills are never wasted; Blizzard from 24 (V skills.txt reqlevel), Cold Mastery from 30, Static Field 1 early for cold immunes (the existing combat fallback). Stats: Str 43 by clvl 24 (Spirit Crystal Sword, V data.json), Str 55 by 55 (Enigma in a Mage Plate, V armor.txt; item choice U), derived from internal/gear/milestones.json, rest Vitality, no Energy. Prerequisites and reqlevels checked against skills.txt (V data.json).",
  "respec": {
@@ -174,7 +174,8 @@
     },
     {
      "skill": "Telekinesis",
-     "points": 1
+     "points": 1,
+     "quest": "den_of_evil"
     }
    ]
   },
@@ -265,7 +266,12 @@
    "skills": [
     {
      "skill": "Ice Blast",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Ice Blast",
+     "points": 1,
+     "quest": "radament"
     }
    ]
   },
@@ -408,7 +414,12 @@
    "skills": [
     {
      "skill": "Glacial Spike",
-     "points": 3
+     "points": 1
+    },
+    {
+     "skill": "Glacial Spike",
+     "points": 2,
+     "quest": "izual"
     }
    ]
   },
@@ -564,7 +575,12 @@
    "skills": [
     {
      "skill": "Blizzard",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Blizzard",
+     "points": 1,
+     "quest": "den_of_evil"
     }
    ]
   },
@@ -642,7 +658,12 @@
    "skills": [
     {
      "skill": "Blizzard",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Blizzard",
+     "points": 1,
+     "quest": "radament"
     }
    ]
   },
@@ -798,7 +819,12 @@
    "skills": [
     {
      "skill": "Cold Mastery",
-     "points": 3
+     "points": 1
+    },
+    {
+     "skill": "Cold Mastery",
+     "points": 2,
+     "quest": "izual"
     }
    ]
   },
@@ -954,7 +980,12 @@
    "skills": [
     {
      "skill": "Glacial Spike",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Glacial Spike",
+     "points": 1,
+     "quest": "den_of_evil"
     }
    ]
   },
@@ -1006,7 +1037,12 @@
    "skills": [
     {
      "skill": "Glacial Spike",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Glacial Spike",
+     "points": 1,
+     "quest": "radament"
     }
    ]
   },
@@ -1136,11 +1172,17 @@
    "skills": [
     {
      "skill": "Ice Blast",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Ice Blast",
+     "points": 1,
+     "quest": "izual"
     },
     {
      "skill": "Ice Bolt",
-     "points": 1
+     "points": 1,
+     "quest": "izual"
     }
    ]
   },

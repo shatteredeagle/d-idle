@@ -92,8 +92,10 @@ func replayUnlocks(t *testing.T, build string, u *Unlocks, p func(lv int) *Progr
 		t.Fatal(err)
 	}
 	cur := map[string]int{}
+	qpts := 0
 	for lv := 2; lv <= to; lv++ {
 		free += 1 + quests[lv]
+		qpts += quests[lv]
 		prog := p(lv)
 		rule := func(name string, level int, lv2 map[string]int) bool {
 			ok := u.WrapRule(v3Rule, prog)(name, level, lv2)
@@ -102,7 +104,7 @@ func replayUnlocks(t *testing.T, build string, u *Unlocks, p func(lv int) *Progr
 			}
 			return ok
 		}
-		for _, a := range u.Plan(b, Have{Skills: cur, Level: lv, SkillPts: free}, rule, nil, prog) {
+		for _, a := range u.Plan(b, Have{Skills: cur, Level: lv, SkillPts: free, QuestPts: qpts}, rule, nil, prog) {
 			if a.Kind == KindSkill {
 				cur[a.Skill]++
 				free--

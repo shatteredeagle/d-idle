@@ -55,12 +55,12 @@
    "skills": [
     {
      "skill": "Charged Bolt",
-     "points": 1
+     "points": 1,
+     "quest": "den_of_evil"
     },
     {
      "skill": "Frozen Armor",
-     "points": 1,
-     "quest": "den_of_evil"
+     "points": 1
     }
    ]
   },
