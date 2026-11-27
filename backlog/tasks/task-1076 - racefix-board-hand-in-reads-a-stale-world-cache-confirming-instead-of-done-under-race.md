@@ -18,6 +18,7 @@ owns:
   - "internal/bot/questboard_test.go"
 exclusive: []
 contracts: []
+result: "Root cause: boardHandIn signals done while the loop still holds stepMu, so the tapper boardRT.world() TryLock fails and reads the pre-talk cached world (quest word not yet Save): chunk Done by the handed proxy, outcome confirming. Fix: drop and rebuild the cache inside boardHandIn. 300/300 under -race -cpu 1,2,4 (not verified live; baseline never reproduced the flake, 1 in 600 originally)."
 ---
 
 ## Description
@@ -30,6 +31,6 @@ Why: TODO. Done when: TODO.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 The hand-in tap rebuilds the world cache before the tapper reads the quest word
-- [ ] #2 TestQuestBoardAcceptRunStopHandIn passes 300/300 under -race -cpu 1,2,4
+- [x] #1 The hand-in tap rebuilds the world cache before the tapper reads the quest word
+- [x] #2 TestQuestBoardAcceptRunStopHandIn passes 300/300 under -race -cpu 1,2,4
 <!-- AC:END -->
