@@ -35,6 +35,11 @@ owns:
   - "cmd/d2bot/hotkeydrift_test.go"
   - "tools/provingground/scenarios/necro-acts.json"
   - "tools/provingground/scenarios/necro-epic.json"
+  - "tools/provingground/scenarios/tiers.json"
+  - "internal/watch/policypreview_test.go"
+  - "internal/watch/policysheet_test.go"
+  - "internal/watch/stance_test.go"
+  - "internal/watch/unlockrisk_test.go"
 exclusive: []
 contracts: []
 lane: later
