@@ -864,6 +864,14 @@ type swinger interface {
 	Swing(skill int, at input.Point) error
 }
 
+// idCaster is implemented by a backend that casts a right-hand skill by its id with no hotkey (the d2d channel): an
+// attack skill learned mid-game is usable at once, before the next hotkey binding (palzeal).
+type idCaster interface {
+	CastSkill(skill int, at input.Point) error
+}
+
+func (f *Fighter) castsByID() bool { _, ok := f.e.In.(idCaster); return ok }
+
 // holdClicker is implemented by input.Game: press the button, keep it down for d, release.
 type holdClicker interface {
 	HoldClick(b input.Button, x, y int, d time.Duration) error
@@ -889,6 +897,8 @@ func (f *Fighter) cast(snap *d2.Snapshot, sp SkillSpec, at input.Point) error {
 	case snap.Player.RightSkill == sp.ID:
 		s := screenOf(snap, at)
 		err = f.e.In.Click(input.Right, s.X, s.Y)
+	case f.castsByID():
+		err = f.e.In.(idCaster).CastSkill(sp.ID, at)
 	default:
 		return ErrNoHotkey
 	}
@@ -948,7 +958,7 @@ func (f *Fighter) attackSkills(p *d2.Player) []SkillSpec {
 					sp.Cost += reserve
 				}
 			}
-		} else if sp.Key == "" && p.RightSkill != sp.ID {
+		} else if sp.Key == "" && p.RightSkill != sp.ID && !f.castsByID() {
 			continue
 		}
 		out = append(out, sp)
