@@ -8,6 +8,11 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Merge branch 'main' into dlv-mark <!--sg:agent/mark-->
+- Merge branch 'main' into faultstall <!--sg:agent/faultstall-->
+- Merge branch 'main' into pgprov <!--sg:agent/pgprov2-->
+- Merge branch 'main' into featuresoak <!--sg:agent/featuresoak-->
+- Merge branch 'main' into deploy88-ledger <!--sg:agent/deploy88-->
 - Merge branch 'main' into arbloop <!--sg:agent/arbloop-->
 - Merge branch 'main' into necroteeth <!--sg:agent/necroteeth-->
 - Merge branch 'main' into dlv-upkeep-minions <!--sg:agent/minions-->

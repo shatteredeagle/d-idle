@@ -1,0 +1,118 @@
+{
+ "_doc": "Feature soak campaign (card featuresoak, docs/probes/feature-soak-2026-11-26.md). Every row is a LAB row: lockstep d2d, headless, fresh prep hero (declared SETUP before the start, none after), the bot plays `hours` virtual hours under the arm's knobs. CHEATED/lab: mechanics and relative A/B only, never live parity. An arm is a knob set (tuning overrides, json); the baseline arm is the shipped defaults. A feature compares its `on` arm with its `off` arm (for a feature that ships ON the off arm switches it off; for a dark feature the on arm switches it on). Run with: python3 tools/provingground/featuresoak.py run tools/provingground/campaigns/features-2026-11-26.json An arm key `_bot` selects a bot binary variant (bin/d2bot.<name>, built from a tree with one commit taken back; see `bots`); every other key is a tuning override. `bot.admission` of the brief does not exist: admission is data (internal/plandata/admission.json) plus route.earlyRoute, so the kit floor and poverty farm arm is a build variant. hours is 1 because the measured lockstep ratio is about 3 virtual minutes per wall minute per row (docs/probes/feature-soak-2026-11-26.md section 2): 24 virtual hours is 8 wall hours per row. The step executor (quests.stepExec) is compared on the Cain scenarios (cain.scroll against cain.scroll.stepexec), not here. base_knobs are written in every arm under the arm's own knobs (resource.pointsDecisions 1: without it the bot banks every stat and skill point and the hero fights with no class skill; pass 1 ran that way).",
+ "hours": 1,
+ "parallel": 6,
+ "hero": {
+  "clvl": 12,
+  "gold": 200,
+  "stash": 0
+ },
+ "lab_binary": "~/d2d-lab/fork/bin/d2d.devp29-b057d7dd-linuxbuild",
+ "classes": {
+  "paladin": {
+   "index": 2,
+   "weapon": "hax"
+  },
+  "necromancer": {
+   "index": 1,
+   "weapon": "wnd"
+  },
+  "sorceress": {
+   "index": 4,
+   "weapon": "wnd"
+  }
+ },
+ "seeds": [
+  201,
+  202,
+  203
+ ],
+ "arms": {
+  "base": {},
+  "arbiter3": {
+   "bot.arbiterShadow": 1,
+   "bot.arbiterControl": 1,
+   "bot.arbiterFamilies": 3
+  },
+  "arbiter255": {
+   "bot.arbiterShadow": 1,
+   "bot.arbiterControl": 1,
+   "bot.arbiterFamilies": 255
+  },
+  "typedoutcome0": {
+   "bot.typedOutcome": 0
+  },
+  "reflexdrink0": {
+   "bot.reflexDrink": 0
+  },
+  "earlyroute0": {
+   "route.earlyRoute": 0
+  },
+  "nokit": {
+   "_bot": "nokit"
+  },
+  "nosac": {
+   "_bot": "nosac"
+  },
+  "nonecro": {
+   "_bot": "nonecro"
+  }
+ },
+ "features": [
+  {
+   "name": "arbiter-control-families-3",
+   "on": "arbiter3",
+   "off": "base"
+  },
+  {
+   "name": "arbiter-control-families-255",
+   "on": "arbiter255",
+   "off": "base"
+  },
+  {
+   "name": "kit-floor-tiers-poverty-farm",
+   "on": "base",
+   "off": "nokit"
+  },
+  {
+   "name": "admission-early-route-guard",
+   "on": "base",
+   "off": "earlyroute0"
+  },
+  {
+   "name": "typed-outcomes",
+   "on": "base",
+   "off": "typedoutcome0"
+  },
+  {
+   "name": "reflex-drink-portal",
+   "on": "base",
+   "off": "reflexdrink0"
+  },
+  {
+   "name": "paladin-without-sacrifice",
+   "on": "base",
+   "off": "nosac",
+   "classes": [
+    "paladin"
+   ]
+  },
+  {
+   "name": "necromancer-summoner-defaults",
+   "on": "base",
+   "off": "nonecro",
+   "classes": [
+    "necromancer"
+   ]
+  }
+ ],
+ "bots": {
+  "base": "origin/main build (the tree this campaign ran from)",
+  "nokit": "origin/main with the kit floor tiers data and the poverty farm of commit d784bc19d taken out (admission.json tiers removed, admit.go and povertyfarm.go from its parent)",
+  "nosac": "origin/main with the aura2b Paladin Sacrifice change (commits 2c16ed211 and 976e94993: profiles, rules, agency derive) reverse-applied",
+  "nonecro": "origin/main with the necro1 default summoner table change (commit 79473a84d: build json) taken back to its parent"
+ },
+ "base_knobs": {
+  "resource.pointsDecisions": 1
+ }
+}

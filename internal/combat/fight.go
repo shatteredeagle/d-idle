@@ -596,6 +596,10 @@ func (f *Fighter) engage(ctx context.Context, snap *d2.Snapshot, tg Target, sp f
 	if _, err := f.KeepAura(ctx, snap, &tg, false); err != nil {
 		return err
 	}
+	if acted, err := f.markTick(ctx, snap); acted || err != nil {
+		f.decision(st, "mark", "mark (curse, cry)")
+		return err
+	}
 	if acted, err := f.classTick(ctx, snap); acted || err != nil {
 		f.decision(st, "class", "upkeep (summon, raise, trap)")
 		return err

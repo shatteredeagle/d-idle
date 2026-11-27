@@ -180,6 +180,7 @@ cmd/d2scenario/tap_test.go  credit-runner  stage1fix
 cmd/d2scenario/validate.go  credit-runner  pgselfcheck
 data/capabilities/  credit-runner  dlv-stance-pack
 data/darklaunch.json  credit-runner  arbmig
+data/darklaunch.json  credit-runner  deploy88-ledger
 data/darklaunch.json  credit-runner  dlv-upkeep-state
 data/darklaunch.json  credit-runner  ticklog
 data/input/caps/  credit-runner  dlv-cast-verbs

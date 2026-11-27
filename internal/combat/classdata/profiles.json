@@ -488,6 +488,9 @@
      },
      {
       "name": "Decrepify"
+     },
+     {
+      "name": "Iron Maiden"
      }
     ],
     "rules": {
@@ -584,7 +587,7 @@
       "name": "Attract"
      },
      {
-      "name": "Decrepify"
+      "name": "Iron Maiden"
      }
     ],
     "rules": {
@@ -1004,6 +1007,9 @@
      {
       "name": "Weaken",
       "state": 19
+     },
+     {
+      "name": "Iron Maiden"
      }
     ],
     "rules": {
