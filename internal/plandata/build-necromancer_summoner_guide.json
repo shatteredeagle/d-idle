@@ -75,7 +75,8 @@
     },
     {
      "skill": "Clay Golem",
-     "points": 1
+     "points": 1,
+     "quest": "den_of_evil"
     }
    ]
   },
@@ -149,7 +150,8 @@
     },
     {
      "skill": "Bone Armor",
-     "points": 1
+     "points": 1,
+     "quest": "radament"
     }
    ]
   },
@@ -259,7 +261,12 @@
    "skills": [
     {
      "skill": "Skeleton Mastery",
-     "points": 3
+     "points": 1
+    },
+    {
+     "skill": "Skeleton Mastery",
+     "points": 2,
+     "quest": "izual"
     }
    ]
   },
@@ -379,7 +386,12 @@
    "skills": [
     {
      "skill": "Raise Skeleton",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Raise Skeleton",
+     "points": 1,
+     "quest": "den_of_evil"
     }
    ]
   },
@@ -439,7 +451,12 @@
    "skills": [
     {
      "skill": "Raise Skeletal Mage",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Raise Skeletal Mage",
+     "points": 1,
+     "quest": "radament"
     }
    ]
   },
@@ -563,7 +580,8 @@
     },
     {
      "skill": "Golem Mastery",
-     "points": 2
+     "points": 2,
+     "quest": "izual"
     }
    ]
   },
@@ -683,7 +701,12 @@
    "skills": [
     {
      "skill": "Skeleton Mastery",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Skeleton Mastery",
+     "points": 1,
+     "quest": "den_of_evil"
     }
    ]
   },
@@ -727,7 +750,8 @@
     },
     {
      "skill": "BloodGolem",
-     "points": 1
+     "points": 1,
+     "quest": "radament"
     }
    ]
   },
@@ -831,11 +855,13 @@
     },
     {
      "skill": "Summon Resist",
-     "points": 1
+     "points": 1,
+     "quest": "izual"
     },
     {
      "skill": "Revive",
-     "points": 1
+     "points": 1,
+     "quest": "izual"
     }
    ]
   },

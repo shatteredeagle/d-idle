@@ -69,7 +69,7 @@ func TestEndgamePaladinBank(t *testing.T) {
 		if r.Clvl == 18 {
 			for _, s := range r.Skills {
 				if s.Skill == "Blessed Hammer" {
-					at18 = s.Points
+					at18 += s.Points // 9 banked level points plus the Den and Radament points (quest-tagged)
 				}
 			}
 		}

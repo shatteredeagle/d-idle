@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- questpts: card owns as directories <!--sg:agent/questpts-->
 - Merge branch 'main' into placefix <!--sg:agent/placefix3-->
 - Merge branch 'main' into stepexec1 <!--sg:agent/act2drill3-->
 - palzeal: owns the leveler directory <!--sg:agent/palzeal-->

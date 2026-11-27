@@ -2,7 +2,7 @@
  "build": "druid_tornado_endgame90",
  "class": "druid",
  "mana_heavy": true,
- "schema": "per-clvl allocation, same shape as internal/gear/builds/*.json (leveler.ParseBuild) plus main_attack; rows clvl 2..90, NO respec. A row with no skills means the point is saved (no unlocked plan skill); the planner spends it in the row where the skill unlocks. Quest points (Den, Radament, Izual in each difficulty) are folded into rows 8, 15, 26, 38, 44, 56, 68, 72, 82 (U timing; planner pulls rows forward).",
+ "schema": "per-clvl allocation, same shape as internal/gear/builds/*.json (leveler.ParseBuild) plus main_attack; rows clvl 2..90, NO respec. A row with no skills means the point is saved (no unlocked plan skill); the planner spends it in the row where the skill unlocks. Quest points (Den, Radament, Izual in each difficulty) are skill entries with a quest key (rows 8 Den, 15 Radament, 26 Izual, 38 Den, 44 Radament, 56 Izual, 68 Den, 72 Radament, 82 Izual; U timing): rows count level points only, and a tagged point is bought as soon as its quest point is granted.",
  "ladder_only": ["Spirit"],
  "tags": "Skills: V end state Maxroll Tornado Hurricane Druid (fetched 2026-10-29): 1 each Oak Sage, Summon Spirit Wolf, Dire Wolf (Fenris), Grizzly; max Tornado, Hurricane, Cyclone Armor, Twister, Oak Sage. U no-respec adaptation: Raven 1 (Spirit Wolf prereq), Arctic Blast 6 as the early attack and Cyclone Armor prerequisite (the only wasted points), Twister as attack 18-23 (a maxed skill anyway), Tornado from 24, Hurricane from 30. Armageddon not taken. Stats: Str 43 by clvl 24 (Spirit sword), 55 by 55 (Enigma in a Mage Plate, V armor.txt), from internal/gear/milestones.json, rest Vitality.",
  "respec": {
@@ -169,7 +169,12 @@
    "skills": [
     {
      "skill": "Arctic Blast",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Arctic Blast",
+     "points": 1,
+     "quest": "den_of_evil"
     }
    ]
   },
@@ -260,7 +265,12 @@
    "skills": [
     {
      "skill": "Cyclone Armor",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Cyclone Armor",
+     "points": 1,
+     "quest": "radament"
     }
    ]
   },
@@ -407,7 +417,8 @@
     },
     {
      "skill": "Tornado",
-     "points": 2
+     "points": 2,
+     "quest": "izual"
     }
    ]
   },
@@ -563,7 +574,12 @@
    "skills": [
     {
      "skill": "Tornado",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Tornado",
+     "points": 1,
+     "quest": "den_of_evil"
     }
    ]
   },
@@ -641,7 +657,12 @@
    "skills": [
     {
      "skill": "Hurricane",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Hurricane",
+     "points": 1,
+     "quest": "radament"
     }
    ]
   },
@@ -797,7 +818,12 @@
    "skills": [
     {
      "skill": "Hurricane",
-     "points": 3
+     "points": 1
+    },
+    {
+     "skill": "Hurricane",
+     "points": 2,
+     "quest": "izual"
     }
    ]
   },
@@ -953,7 +979,12 @@
    "skills": [
     {
      "skill": "Cyclone Armor",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Cyclone Armor",
+     "points": 1,
+     "quest": "den_of_evil"
     }
    ]
   },
@@ -1005,7 +1036,12 @@
    "skills": [
     {
      "skill": "Twister",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Twister",
+     "points": 1,
+     "quest": "radament"
     }
    ]
   },
@@ -1135,7 +1171,12 @@
    "skills": [
     {
      "skill": "Twister",
-     "points": 3
+     "points": 1
+    },
+    {
+     "skill": "Twister",
+     "points": 2,
+     "quest": "izual"
     }
    ]
   },

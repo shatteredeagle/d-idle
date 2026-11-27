@@ -31,7 +31,7 @@ func (f *fakeTables) StarterWeapon(class string) string {
 func played(t *testing.T, class string, level int) (Hero, Observed) {
 	t.Helper()
 	ft := &fakeTables{}
-	h, err := Resolve(Decl{Profile: Played, Class: class, Level: level, QuestSkillPts: 1}, ft) // the Den point the tables fold in
+	h, err := Resolve(Decl{Profile: Played, Class: class, Level: level, QuestSkillPts: 1}, ft) // the Den point the tables tag
 	if err != nil {
 		t.Fatalf("%s clvl %d: %v", class, level, err)
 	}
@@ -137,9 +137,9 @@ func TestResolveErrors(t *testing.T) {
 			t.Errorf("%+v: no error", d)
 		}
 	}
-	// without the Den point the Paladin table has no Zeal at clvl 12: a loud error, never a hero without its attack
-	if _, err := Resolve(Decl{Profile: Played, Class: "paladin", Level: 12}, ft); err == nil || !strings.Contains(err.Error(), "Zeal") {
-		t.Errorf("paladin clvl 12 without the Den point: %v", err)
+	// the Den point is quest-tagged in the Paladin table, so a missing Den no longer delays Zeal at clvl 12 (QUESTPTS)
+	if h, err := Resolve(Decl{Profile: Played, Class: "paladin", Level: 12}, ft); err != nil || h.Skills["Zeal"] == 0 {
+		t.Errorf("paladin clvl 12 without the Den point: %v, skills %v", err, h.Skills)
 	}
 	if _, err := Resolve(Decl{Profile: Played, Class: "paladin", Level: 12}, nil); err == nil {
 		t.Error("played without tables: no error")

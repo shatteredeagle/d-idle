@@ -85,7 +85,12 @@
    "skills": [
     {
      "skill": "Double Swing",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Double Swing",
+     "points": 1,
+     "quest": "den_of_evil"
     }
    ]
   },
@@ -173,7 +178,8 @@
     },
     {
      "skill": "Double Swing",
-     "points": 1
+     "points": 1,
+     "quest": "radament"
     }
    ]
   },
@@ -290,7 +296,12 @@
    "skills": [
     {
      "skill": "Frenzy",
-     "points": 3
+     "points": 1
+    },
+    {
+     "skill": "Frenzy",
+     "points": 2,
+     "quest": "izual"
     }
    ]
   },
@@ -414,7 +425,8 @@
     },
     {
      "skill": "Natural Resistance",
-     "points": 1
+     "points": 1,
+     "quest": "den_of_evil"
     }
    ]
   },
@@ -474,7 +486,12 @@
    "skills": [
     {
      "skill": "Battle Orders",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Battle Orders",
+     "points": 1,
+     "quest": "radament"
     }
    ]
   },
@@ -594,7 +611,12 @@
    "skills": [
     {
      "skill": "Frenzy",
-     "points": 3
+     "points": 1
+    },
+    {
+     "skill": "Frenzy",
+     "points": 2,
+     "quest": "izual"
     }
    ]
   },
@@ -714,7 +736,12 @@
    "skills": [
     {
      "skill": "Iron Skin",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Iron Skin",
+     "points": 1,
+     "quest": "den_of_evil"
     }
    ]
   },
