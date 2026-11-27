@@ -1,10 +1,13 @@
 ---
 id: TASK-1016
-title: 'necrocorpse: Necromancer table: Corpse Explosion points 5 to 1, scenario pair first'
-status: Proposed
+title: >-
+  necrocorpse: Necromancer table: Corpse Explosion points 5 to 1, scenario pair
+  first
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-26T19:13:00Z'
+updated_date: '2026-11-27T21:25:00Z'
 labels:
   - bot
   - feature

@@ -18,6 +18,7 @@ owns:
 exclusive: []
 contracts: []
 lane: next
+result: "NOT DONE (needs a d2-sme run, which is not a worker step): the doc docs/design/fable-review-2026-11-21/town-profiles-sme.md now holds the numbers table of internal/supply/profiles.json (the card names data/supply/, the file is under internal/supply) and the exact d2-sme brief in section 2; section 3 (advice) is empty. Run the agent with that brief, then tick the box. No number changed."
 ---
 
 ## Description
@@ -30,5 +31,5 @@ Why: TODO. Done when: TODO.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 d2-sme reviews data/supply/profiles.json numbers (healing, mana, portal, gold_carry per profile) and records advice in the doc; advice only, no numbers changed
+- [ ] #1 d2-sme reviews internal/supply/profiles.json numbers (healing, mana, portal, gold_carry per profile) and records advice in the doc; advice only, no numbers changed
 <!-- AC:END -->

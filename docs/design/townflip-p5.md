@@ -62,3 +62,22 @@ A scenario that cannot reach its setup state is a scenario fault, not a finding.
 
 - The card owns the flip, not the stage code; stage 4's pickup side and stage 5 stay with town6 and town8 so two agents do not edit `internal/loot` and the route at once.
 - Before town6 the sell keep and the pickup buffer could disagree; both now read `planKeepOf`. Mana in a profile without a mana line is the one remaining split (pickup by buffer, sell by plan), see section 2b.
+
+## 6. Old counter removal (card town11, TASK-764)
+
+Precondition for the deletion: the default of `town.plan` is stage 3 or higher (a coordinator flip of `internal/env/tuning_town.go`, `Plan`), a 24h-equivalent accelerated soak at that default is green, and stage 5 has held one release. Until then nothing below is deleted. Seam built now (S, read by grep on this branch; V offline: `go test -p 1 ./internal/town -run 'LegacySeam|GoldKeep'`, identical to the old expressions at stages 0 to 3, all knob values, two classes): every read of the two knobs goes through `townLegacy()`, `bankFirst()` and `withdrawShop()` in `internal/town/planshadow.go` (`legacyUntilStage` = 3), so default behaviour is unchanged.
+
+| File | Symbol / read site | Replacement once stage 3 is the path |
+|---|---|---|
+| `internal/town/planshadow.go` | `townLegacy`, `bankFirst`, `withdrawShop`, `legacyUntilStage` | delete all four |
+| `internal/town/basicsfix.go` | `needBank` (via `bankFirst`) | drop the `t.bankFirst()` term; the gold test stays |
+| `internal/town/basicsfix.go` | `shopTarget`: `!t.withdrawShop()` early return | delete the return; keep the stage-3 purse line as the only line |
+| `internal/town/basicsfix.go` | `needShopWithdraw`: `!t.withdrawShop()` term and the `stage3` branch | the `stage3` branch becomes unconditional, delete the old empty-belt rule below it |
+| `internal/town/stash.go` | `goldKeep`: `if t.bankFirst()` | always `max(keep, t.kitGold())`, then add `purseSpend` unconditionally |
+| `internal/env/tuning_town.go` | fields `WithdrawShop`, `BankFirst` (lines 57-58), defaults (81), rows `withdrawShop`, `bankFirst` (147-148) | delete; then `go run ./tools/knobdump -write` for `docs/knobs.md` |
+| `cmd/d2drill/stash_lab.go` | `KeepGold` mirror reads `tu.BankFirst` (lines 35-43) | always apply the kit floor; outside this card's `owns:`, needs its own owner |
+| tests | `basicsaudit_test.go:220`, `purserig_test.go:18,37`, `purse_test.go:19`, `basicsfix_test.go` (`TestBankFirstKeepsTheKit`) | drop the knob assignments; the stage-0 audit cases become stage-3 cases or go |
+| `town-basics` contract | "bank before the shop" wording | reword in the same branch (card `contracts:`) |
+| the "duplicate trip knobs" of the card | not found by grep (no other `BankFirst`/`WithdrawShop` reads); `resource.*` knobs retired at stage 5 are listed in section 1 "cleanup" | U: the card text does not name them; re-grep when stage 5 lands |
+
+Also gone with stage 0: the `PlanStage() >= N` guards at `chores.go:386,514,548` and `sellplan.go:64,89` (kept as `>= N` today, they become unconditional at their own stage).

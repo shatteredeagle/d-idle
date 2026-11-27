@@ -104,3 +104,26 @@ func TestNeedsYouListHasNoPhoneHeightCap(t *testing.T) {
 		t.Error("the phone needs-you list is capped again: it must grow")
 	}
 }
+
+// TASK-424 AC 5: the Layout menu switches presets without a request (the choice lives in this browser's storage and the
+// page reloads); only Edit layout saves a copy. A source guard, because shell.js has no stub-DOM lane.
+func TestChoosePresetMakesNoRequest(t *testing.T) {
+	sh, _ := webFS.ReadFile("web/shell.js")
+	src := string(sh)
+	i := strings.Index(src, "function choosePreset(")
+	if i < 0 {
+		t.Fatal("shell.js lost choosePreset")
+	}
+	body := src[i:]
+	if j := strings.Index(body, "\n}\n"); j > 0 {
+		body = body[:j]
+	}
+	for _, bad := range []string{"fetch(", "postJSON", "XMLHttpRequest", "sendBeacon", "method:"} {
+		if strings.Contains(body, bad) {
+			t.Errorf("choosePreset makes a request (%s)", bad)
+		}
+	}
+	if !strings.Contains(body, "pref(PREF, name)") || !strings.Contains(body, "location.reload()") {
+		t.Error("choosePreset no longer stores the choice and reloads")
+	}
+}

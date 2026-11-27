@@ -47,7 +47,7 @@ const (
 
 // Family maps a source name to its hook family: the trip and the belt refill are both "chores".
 func Family(source string) string {
-	if source == SrcTrip || source == SrcResupply {
+	if source == SrcTrip || source == SrcResupply || source == SrcUpkeep {
 		return "chores"
 	}
 	return source

@@ -55,7 +55,9 @@
     "away": "Your hero was away for {duration}: see the Return screen",
     "awayLink": "Return screen",
     "stream": "The video stream is {state}. It retries by itself.",
-    "streamLink": "Retry now"
+    "streamLink": "Retry now",
+    "chickens": "The hero left the game {n} times to stay alive in the last 24 hours.",
+    "chickensOne": "The hero left the game once to stay alive in the last 24 hours."
   },
   "art": {
     "preparing": "Preparing the item pictures from your own game files ({done} of {total}). The inventory shows plain boxes until it is done; nothing to do."
