@@ -110,3 +110,4 @@ Closing rule: a card closes when merged with offline acceptance proven; every op
 | TASK-930 equipv2 | #5 | Live check on the sandbox image (needs the devp29 image) | live drill on the sandbox, fresh hero, per the card result | open |
 | TASK-979 faultsoak | #2 | First soak run recorded with writes ledger (live check: d2scenario soak -id soak.fault. -duration 1h on the worker host in the night window) | live drill on the sandbox, fresh hero, per the card result | open |
 | TASK-1035 faultstall | #4 | Live soak row under the mixed set logs minute lines (live check) | live drill on the sandbox, fresh hero, per the card result | open |
+| TASK-1037 auraupkeep | #3 | Live shadow run on a Paladin shows upkeep shadow lines for auras (knob 1) | live drill on the sandbox, fresh hero, per the card result | open |

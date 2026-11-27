@@ -194,17 +194,17 @@ func TestStepExecUseAdapter(t *testing.T) {
 	for _, cl := range execClasses {
 		a, _, objs := execRig(t, cl, -1)
 		be := &execBackend{a: a}
-		if err := be.Act(context.Background(), "use", questspec.Target{Kind: "item", Code: "bks"}, ""); err != nil {
+		if err := be.Act(context.Background(), "use", questspec.Target{Kind: "item", Code: "bks"}, questspec.ActArgs{}); err != nil {
 			t.Fatalf("class %v: %v", cl, err)
 		}
 		if len(objs.clicked) != 1 || objs.clicked[0] != "item:"+task.ItemBark {
 			t.Fatalf("class %v: clicked %v", cl, objs.clicked)
 		}
 		var fatal *questspec.FatalError
-		if err := be.Act(context.Background(), "use", questspec.Target{Kind: "item", Code: "zzz"}, ""); !errors.As(err, &fatal) {
+		if err := be.Act(context.Background(), "use", questspec.Target{Kind: "item", Code: "zzz"}, questspec.ActArgs{}); !errors.As(err, &fatal) {
 			t.Fatalf("class %v: unknown code: %v", cl, err)
 		}
-		if err := be.Act(context.Background(), "talk", questspec.Target{Kind: "npc", Class: 1}, ""); !errors.As(err, &fatal) {
+		if err := be.Act(context.Background(), "talk", questspec.Target{Kind: "npc", Class: 1}, questspec.ActArgs{}); !errors.As(err, &fatal) {
 			t.Fatalf("class %v: unknown npc: %v", cl, err)
 		}
 	}

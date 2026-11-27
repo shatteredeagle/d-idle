@@ -157,9 +157,8 @@
 | pgtaps | in-progress | - | `cmd/d2bot/ladder.go`<br>`cmd/d2scenario/tap.go`<br>`internal/scenario/taps.go`<br>`cmd/d2scenario/run.go`<br>`cmd/d2scenario/tap_test.go`<br>`internal/scenario/result.go` | - |
 | pgclock | proposed | - | `cmd/d2bot/d2dbackend.go`<br>`internal/bot/farm.go`<br>`internal/goals/clock_test.go`<br>`internal/bot/farmclock_test.go`<br>`internal/d2denv/reader.go`<br>`internal/d2denv/recent_test.go`<br>`internal/d2denv/env.go`<br>`cmd/d2bot/goalsclock_test.go`<br>`docs/d2d-determinism.md` | - |
 | fid-probe-regen-speed | deferred | - | `docs/probes/fid/fid-probe-regen-speed.md` | - |
-| pghero | proposed | - | `internal/scenario/hero/`<br>`tools/ab/prep/`<br>`tools/survival/` | - |
 | pgselfcheck | proposed | - | `internal/scenario/hero/selfcheck.go`<br>`cmd/d2scenario/validate.go` | - |
-| pgpage | proposed | - | `docs/process/proving-ground-status.md`<br>`tools/provingground/status_doc.sh` | - |
+| pgpage | proposed | - | `docs/process/proving-ground-status.md`<br>`tools/provingground/status_doc.sh`<br>`internal/scenario/pgpage.go`<br>`internal/scenario/pgpage_test.go`<br>`cmd/d2scenario/ledger.go`<br>`cmd/d2scenario/ledger_test.go`<br>`cmd/d2scenario/main.go`<br>`docs/probes/provingground-act1more-2026-11-20.md`<br>`docs/probes/provingground-act1next-2026-11-20.md`<br>`docs/probes/provingground-cain-2026-11-19.md`<br>`docs/probes/provingground-cainchain-2026-11-20.md`<br>`docs/probes/provingground-cainfix3-2026-11-19.md`<br>`docs/probes/provingground-countess-2026-11-20.md`<br>`docs/probes/provingground-pgfix4-2026-11-20.md`<br>`docs/probes/provingground-run-2026-11-19.md` | - |
 | mgonejob | proposed | - | `docs/process/pg-ops-mgonejob.md` | - |
 | pgnightly | proposed | - | `docs/process/pg-ops-pgnightly.md`<br>`tools/provingground/nightly.sh` | - |
 | pgearned | proposed | - | `internal/scenario/earned.go`<br>`tools/provingground/earned` | - |
@@ -245,14 +244,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 670290dff 11-27 02:35 `Merge agent/pgpage: Merge branch 'main' into pgpage` (pgpage)
+- c4464d60b 11-27 02:33 `Merge branch 'main' into pgpage` (-)
+- 7db510622 11-27 02:15 `Merge agent/auraupkeep: Merge branch 'main' into auraupkeep` (auraupkeep)
+- 848edfa61 11-27 02:15 `Merge agent/stepexec2: Merge branch 'main' into stepexec1` (stepexec2)
+- de2461073 11-27 02:13 `Merge branch 'main' into auraupkeep` (-)
+- 0aa47d75a 11-27 02:13 `Merge branch 'main' into stepexec1` (-)
 - 1e7ac4599 11-27 02:08 `Merge agent/castverbs: Merge branch 'main' into dlv-cast-verbs` (castverbs)
 - c99e25214 11-27 02:08 `Merge agent/pghero: Merge branch 'main' into pghero` (pghero)
 - c2882fccf 11-27 02:05 `Merge branch 'main' into dlv-cast-verbs` (-)
 - 920dfe59d 11-27 02:05 `Merge branch 'main' into pghero` (-)
-- b7f493e78 11-27 01:57 `Merge agent/mark: Merge branch 'main' into dlv-mark` (mark)
-- d151d522e 11-27 01:54 `Merge branch 'main' into dlv-mark` (-)
-- 973166ee5 11-27 01:50 `Merge origin/main into agent/mark (keep marks and minions fields; Lower Resist rows stay removed)` (dlv-mark)
-- 3835f3995 11-27 01:46 `Merge agent/faultstall: Merge branch 'main' into faultstall` (faultstall)
-- 989af6273 11-27 01:46 `Merge agent/pgprov2: Merge branch 'main' into pgprov` (pgprov2)
-- f1789b6ad 11-27 01:46 `Merge agent/featuresoak: Merge branch 'main' into featuresoak` (featuresoak)
 <!-- statusgen:end -->

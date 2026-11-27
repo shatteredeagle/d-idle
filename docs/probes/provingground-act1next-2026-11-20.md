@@ -2,6 +2,8 @@
 
 > status: current. Tags: V verified (named run or test), S secondary, U unverified. Every scenario setup is CHEATED (see each `provenance`): mechanics evidence only, never balance or play evidence.
 
+> verdicts: current verdicts per scenario and class are in [proving-ground-status.md](../process/proving-ground-status.md) (generated from the results ledger) and on the board page /pg. The tables below record these runs only; new runs are cited by run id, not added here (design 2026-11-21 Q10).
+
 ## 1. Inventory (S: read from `data/questboard/act1.json`, `internal/task/act1.go`, `data/questspec/act1.json`, `tools/provingground/scenarios`)
 
 No chunk carries `unsupported` today (V: grep over `data/questboard`), so the board shows "not supported yet" for none; the real gaps are listed in the last column.

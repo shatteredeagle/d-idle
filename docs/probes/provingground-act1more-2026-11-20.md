@@ -2,6 +2,8 @@
 
 > status: current. Tags: V verified (named run or test), S secondary, U unverified. Every setup is CHEATED (level, gold, waypoints, potions by SETUP verbs): mechanics evidence only, never balance or play evidence.
 
+> verdicts: current verdicts per scenario and class are in [proving-ground-status.md](../process/proving-ground-status.md) (generated from the results ledger) and on the board page /pg. The tables below record these runs only; new runs are cited by run id, not added here (design 2026-11-21 Q10).
+
 ## 1. What was added (V: `go run ./cmd/d2scenario validate`, `go test -race -count=20 ./internal/questspec`)
 
 - `tools/provingground/scenarios/act1more.json`: `act1.burial.blood_raven` (quest record 2), `act1.tools.malus` (record 3, U), `act1.andariel.slaughter` (record 6). Board-taps driver, Paladin and Sorceress, seeds 11 and 3; death and chicken bounds as `log_line` assertions (`min: 0`).

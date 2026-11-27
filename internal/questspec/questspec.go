@@ -20,7 +20,7 @@ const (
 )
 
 var (
-	acts      = set("travel", "find_object", "interact", "pickup", "talk", "kill", "clear", "use_item", "wait")
+	acts      = set("travel", "find_object", "interact", "pickup", "talk", "kill", "clear", "use_item", "transmute", "wait")
 	onFails   = set("retry", "park", "abort")
 	sizes     = set("small", "medium", "large")
 	nameRE    = regexp.MustCompile(`^[a-z0-9_]+$`)
@@ -250,7 +250,7 @@ func (c *Chain) Validate() error {
 		if s.BudgetS <= 0 {
 			w("budget_s must be positive")
 		}
-		want := map[string]string{"travel": "area", "clear": "area", "find_object": "object", "interact": "object", "pickup": "item", "use_item": "item", "talk": "npc", "kill": "monster"}[s.Act]
+		want := map[string]string{"travel": "area", "clear": "area", "find_object": "object", "interact": "object", "pickup": "item", "use_item": "item", "transmute": "item", "talk": "npc", "kill": "monster"}[s.Act]
 		if want != "" && s.Target.Kind != want {
 			w("act %s needs target kind %s, has %q", s.Act, want, s.Target.Kind)
 		}

@@ -2,6 +2,8 @@
 
 > status: current (card pgexpand). Tags: V verified (run named), S secondary, U unverified. Builder long lane job 20261119-135007-52f0, lab d2d slots, bot of branch agent/pgexpand, Paladin seed 11, one run each, `tools/provingground/run.sh -tier fast -parallel 2`; raw `results.json` in `docs/probes/provingground-run-2026-11-19/fast-tier-results.json`. Every setup is CHEATED or SETUP (see each scenario's `provenance`): mechanics evidence, never balance evidence. A RED here is a finding about the bot or the scenario, nothing was fixed in this card.
 
+> verdicts: current verdicts per scenario and class are in [proving-ground-status.md](../process/proving-ground-status.md) (generated from the results ledger) and on the board page /pg. The tables below record these runs only; new runs are cited by run id, not added here (design 2026-11-21 Q10).
+
 ## Fast tier, first run (V)
 
 | scenario | verdict | wall | what the state shows |
