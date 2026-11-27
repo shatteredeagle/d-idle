@@ -162,7 +162,7 @@
 | pgnightly | proposed | - | `docs/process/pg-ops-pgnightly.md`<br>`tools/provingground/nightly.sh` | - |
 | pgearned | proposed | - | `internal/scenario/earned.go`<br>`tools/provingground/earned` | - |
 | town5 | in-progress | - | `internal/town`<br>`internal/resource`<br>`internal/bot/broke.go`<br>`internal/bot/leveling.go`<br>`tools/provingground/scenarios/townplan.json`<br>`docs/probes/town-plan-stage3-2026-11-22.md`<br>`docs/design/fable-review-2026-11-21/town-planner-b-model.md`<br>`town-basics` | - |
-| town6 | proposed | - | `internal/town`<br>`internal/loot` | - |
+| town6 | proposed | - | `internal/town/`<br>`internal/loot/`<br>`docs/design/townflip-p5.md` | - |
 | town7 | proposed | - | `internal/supply`<br>`internal/town`<br>`internal/resource` | - |
 | town8 | proposed | - | `internal/supply`<br>`internal/town` | - |
 | town9 | proposed | - | `internal/watch`<br>`internal/supply` | - |
@@ -244,14 +244,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 4626dd212 11-27 00:46 `Merge agent/town6: Merge branch 'main' into town6` (town6)
+- 7217351dc 11-27 00:44 `Merge branch 'main' into town6` (-)
 - d3a579824 11-27 00:39 `Merge agent/upkeep: Merge branch 'main' into dlv-upkeep-state` (upkeep)
 - ff87b2ee9 11-27 00:39 `Merge agent/proptest1: Merge branch 'main' into proptest1` (proptest1)
 - d7515ab9a 11-27 00:37 `Merge branch 'main' into dlv-upkeep-state` (-)
 - a69afe04b 11-27 00:37 `Merge branch 'main' into proptest1` (-)
+- 17863496b 11-27 00:33 `Merge remote-tracking branch 'origin/main' into agent/town6` (-)
 - 732d38dd9 11-27 00:33 `Merge agent/arbmig2: Merge branch 'main' into arbmig` (arbmig2)
 - ad09964ce 11-27 00:31 `Merge branch 'main' into arbmig` (-)
 - 7f0a43fb1 11-27 00:14 `Merge agent/sellsnap: Merge branch 'main' into sellsnap` (sellsnap)
-- b9ea4cd04 11-27 00:12 `Merge branch 'main' into sellsnap` (-)
-- add24a8d9 11-27 00:07 `Merge agent/townflip: Merge branch 'main' into townflip` (townflip)
-- 2a75046de 11-27 00:05 `Merge branch 'main' into townflip` (-)
 <!-- statusgen:end -->
