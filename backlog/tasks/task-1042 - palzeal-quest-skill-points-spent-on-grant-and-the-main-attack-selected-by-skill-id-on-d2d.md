@@ -14,7 +14,7 @@ ordinal: 504000
 card: "palzeal"
 lane: next
 owns:
-  - "internal/leveler"
+  - "internal/leveler/"
   - "internal/plandata/build-paladin-zealot-lite.json"
   - "docs/plan/data/build-paladin-zealot-lite.json"
   - "internal/combat/palzeal_attack_test.go"
