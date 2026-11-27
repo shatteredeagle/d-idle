@@ -10,7 +10,39 @@ import (
 // run builds a counted ledger line; n orders the lines in time.
 func run(n int, class, verdict, d1, commit string) LedgerRecord {
 	return LedgerRecord{Run: fmt.Sprintf("j%d/heal.town/%s/11", n, class), Scenario: "heal.town", Class: class, Seed: 11,
-		Verdict: verdict, D1: d1, BotCommit: commit, D2DSHA256: "d2d1", Started: fmt.Sprintf("2026-11-27T10:%02d:00Z", n)}
+		Verdict: verdict, D1: d1, BotCommit: commit, D2DSHA256: "d2d1", Started: fmt.Sprintf("2026-11-27T10:%02d:00Z", n), Parallel: 2}
+}
+
+// Five equal runs that all ran alone are not enough: the design wants two of them at parallel 2. Dropping the
+// parallel rule makes this test fail.
+func TestStabilityNeedsTwoParallelRunsMustFail(t *testing.T) {
+	var recs []LedgerRecord
+	for i := 0; i < StableRuns+2; i++ {
+		r := run(i, "Paladin", Green, "aa", "c1")
+		r.Parallel = 1
+		if i == 0 { // an old line without the field counts as alone
+			r.Parallel = 0
+		}
+		recs = append(recs, r)
+	}
+	if s := keyState(t, mustStability(t, recs, nil), "Paladin"); s.State != StabilityCandidate || s.StreakParallel != 0 {
+		t.Fatalf("all alone: %+v, want candidate", s)
+	}
+	recs[2].Parallel = 2
+	if s := keyState(t, mustStability(t, recs, nil), "Paladin"); s.State != StabilityCandidate || s.StreakParallel != 1 {
+		t.Fatalf("one parallel run: %+v, want candidate", s)
+	}
+	recs[5].Parallel = 3
+	s := keyState(t, mustStability(t, recs, nil), "Paladin")
+	if s.State != StabilityStable || s.Since != recs[5].Run || s.StreakParallel != 2 {
+		t.Fatalf("two parallel runs in the streak: %+v, want stable since the sixth", s)
+	}
+	// A binary change resets the parallel count with the streak.
+	recs = recs[:6]
+	recs[3].BotCommit, recs[4].BotCommit, recs[5].BotCommit = "c2", "c2", "c2"
+	if s := keyState(t, mustStability(t, recs, nil), "Paladin"); s.State != StabilityCandidate || s.StreakParallel != 1 {
+		t.Fatalf("parallel runs across a binary change: %+v, want candidate", s)
+	}
 }
 
 func keyState(t *testing.T, ks []KeyStability, class string) KeyStability {

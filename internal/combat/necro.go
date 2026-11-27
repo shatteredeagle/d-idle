@@ -408,7 +408,7 @@ func (f *Fighter) curseUp(nd *NecroParams, u d2.Unit, sp SkillSpec) bool {
 // number is readable. It returns true when a cast was made.
 func (f *Fighter) Curse(ctx context.Context, snap *d2.Snapshot, hs []Target) (bool, error) {
 	p := snap.Player
-	if !isNecro(p) || p.InTown() {
+	if !isNecro(p) || p.InTown() || f.upkeepMode() == 2 { // mode 2: the mark driver (mark.go) curses
 		return false, nil
 	}
 	f.necro.init()

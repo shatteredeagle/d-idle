@@ -99,6 +99,8 @@ type Profile struct {
 	Necro *NecroParams `json:"necro"`
 	// Upkeep is the in-fight upkeep budget of the upkeep driver (upkeep.go); nil takes the defaults.
 	Upkeep *UpkeepParams `json:"upkeep,omitempty"`
+	// Marks are the mark driver's rows (mark.go); a Necromancer profile without them reads its curse rules.
+	Marks []MarkRule `json:"marks,omitempty"`
 	// Minions is the minion driver's groups (minions.go); nil on a Necromancer derives them from the necro block.
 	Minions *MinionParams `json:"minions,omitempty"`
 }
@@ -271,6 +273,9 @@ func loadClassData() *classData {
 		for _, s := range sk.Skills {
 			classDB.skills[s.Name] = skillMeta{Kind: kindOf(s.Kind), Range: s.Range, Hand: handOf(s.Hand), Hold: s.Hold}
 		}
+		if err := validateMarks(pr.Profiles); err != nil {
+			panic("combat: classdata/profiles.json: " + err.Error())
+		}
 		if err := validateNecro(pr.Profiles); err != nil {
 			panic("combat: classdata/profiles.json: " + err.Error())
 		}
@@ -298,6 +303,9 @@ func loadClassData() *classData {
 			}
 			for n := range p.Layout {
 				classDB.names[n] = true
+			}
+			for _, r := range p.Marks {
+				classDB.names[r.Name] = true
 			}
 		}
 	})
