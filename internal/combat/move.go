@@ -18,6 +18,7 @@ import (
 //   - escape: out of a surround, in the fight loop (moveTick): EscapeSurround hostiles within stancePackContact and life
 //     under EscapeLifePct percent hop to the reachable cell inside the row's range that is farthest from the pack.
 //   - gap: close on a target beyond MinGap and inside the range (gapClose); Through aims past the target (Leap Attack).
+//   - whirl: a held spin across the pack (whirl.go, card dlv-whirl): legs between pack positions, each leg one press slice.
 //
 // Knob combat.deliveryUpkeep (the delivery driver knob): 0 nothing here acts (navigation hops through its own key as
 // before), 1 shadow (the hop or gap cast the driver would make is counted and logged, no cast), 2 the driver casts. The
@@ -28,6 +29,7 @@ const (
 	MoveTravel = "travel"
 	MoveEscape = "escape"
 	MoveGap    = "gap"
+	MoveWhirl  = "whirl"
 )
 
 // MoveRule is one move row of a profile.
@@ -41,9 +43,14 @@ type MoveRule struct {
 	EscapeSurround int `json:"escapeSurround,omitempty"`
 	EscapeLifePct  int `json:"escapeLifePct,omitempty"`
 	// Gap: the target must be farther than MinGap (and within Range); Through aims MoveThrough subtiles past it.
-	MinGap  int    `json:"minGap,omitempty"`
-	Through int    `json:"through,omitempty"`
-	Source  string `json:"source"` // V, S or U first: where Range and the triggers come from
+	MinGap  int `json:"minGap,omitempty"`
+	Through int `json:"through,omitempty"`
+	// Whirl (whirl.go): Range is the longest leg, MinHop the shortest; a leg starts only against WhirlPack hostiles within
+	// WhirlRadius subtiles of its aim cell and while life is at or above WhirlAbortLifePct (the life floor).
+	WhirlPack         int    `json:"whirlPack,omitempty"`
+	WhirlRadius       int    `json:"whirlRadius,omitempty"`
+	WhirlAbortLifePct int    `json:"whirlAbortLifePct,omitempty"`
+	Source            string `json:"source"` // V, S or U first: where Range and the triggers come from
 }
 
 func (r *MoveRule) uses(u string) bool {
@@ -72,7 +79,7 @@ func validateMoves(ps []Profile) error {
 				return fmt.Errorf("profile %q: move row %q needs a source tag (V, S or U)", p.ProfileID(), r.Name)
 			}
 			for _, u := range r.Uses {
-				if u != MoveTravel && u != MoveEscape && u != MoveGap {
+				if u != MoveTravel && u != MoveEscape && u != MoveGap && u != MoveWhirl {
 					return fmt.Errorf("profile %q: move row %q: use %q unknown", p.ProfileID(), r.Name, u)
 				}
 			}
@@ -81,6 +88,9 @@ func validateMoves(ps []Profile) error {
 			}
 			if r.uses(MoveGap) && r.MinGap < 1 {
 				return fmt.Errorf("profile %q: move row %q: gap needs minGap >= 1", p.ProfileID(), r.Name)
+			}
+			if r.uses(MoveWhirl) && (r.WhirlPack < 2 || r.WhirlRadius < 1 || r.WhirlAbortLifePct < 1 || r.WhirlAbortLifePct > 100) {
+				return fmt.Errorf("profile %q: move row %q: whirl needs whirlPack >= 2, whirlRadius >= 1 and whirlAbortLifePct 1..100", p.ProfileID(), r.Name)
 			}
 			seen[r.Name] = true
 		}
@@ -222,6 +232,8 @@ type moveState struct {
 	last           string
 	shadow, hops   int
 	gaps, refusals int
+	legs, aborts   int
+	legEnd         *input.Point // where the last whirl leg ended: the next leg prefers another pack
 }
 
 // MoveShadowCasts, MoveHops, MoveGaps and MoveRefusals are the telemetry of the move driver.

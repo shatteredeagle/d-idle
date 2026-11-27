@@ -1240,6 +1240,31 @@
    "tier": "T4",
    "source": "map",
    "note": "not in the catalogue; tier nightly mapped"
+  },
+  "combat.corpse-explodes": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "combat.hold-interruptible": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "combat.teleport-reposition": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "combat.whirlwind-clears": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "combat.whirlwind-clears.control": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
   }
  }
 }

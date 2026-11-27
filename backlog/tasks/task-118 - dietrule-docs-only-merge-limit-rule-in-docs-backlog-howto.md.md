@@ -17,6 +17,7 @@ owns:
   - "docs/backlog-howto.md"
 exclusive: []
 contracts: []
+result: "Docs diet rule added to docs/backlog-howto.md; offline, not live."
 lane: next
 ---
 
@@ -30,6 +31,6 @@ Why: user decision D5. Done when: the rule is in the howto.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 A short rule: how many docs-only merges per day, no new contracts without a consumer, no new research docs without a reader
-- [ ] #2 tools/ci/check.sh passes
+- [x] #1 A short rule: how many docs-only merges per day, no new contracts without a consumer, no new research docs without a reader
+- [x] #2 tools/ci/check.sh passes
 <!-- AC:END -->

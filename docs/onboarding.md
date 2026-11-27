@@ -33,6 +33,10 @@ All in the same panel, most urgent first (`banners()` in `panel.js`, pure, teste
 
 A poll of `/api/onboarding` is not a look (only `/watch` and `/api/thoughts` touch the tracker). The reconnect words are kept in the browser from the last good reply so a page opened while the bot is down still speaks; a first visit with the bot down gets the one built-in line. A 404 (route off) hides the panel without a banner. U: the other panels keep the stale or empty state their own `update(null)` paths give (some hide); the shell's failure path is not changed here, so "no blank panels" is met by the banner explaining it, not by freezing every panel.
 
+## Chicken count (TASK-249 AC 3)
+
+`GET /api/onboarding` carries `chickens`: the fights that ended with the hero leaving the game (`close` away events with `left: chicken`) in the last 24 h (`chickenCount`, V `TestChickenCountWindow`). `banners()` shows one info line below the urgent banners (`texts.reconnect.chickens`, `chickensOne`); 0 shows nothing (V node DOM golden). U: exits that are not chickens (restart, fresh game) have no watch-side counter; U: the fight feed stamps `wall` on every real close event (events without it are not counted).
+
 ## Art preparing
 
 While `GET /api/art` would say `extracting` (docs/paperdoll-art-build.md), the reply carries `art: {state, done, total}` and the guide shows the sentence of `art.preparing` ("Preparing the item pictures ... {done} of {total}"). Read from the art source's progress without decoding (`artProgress`); absent otherwise.

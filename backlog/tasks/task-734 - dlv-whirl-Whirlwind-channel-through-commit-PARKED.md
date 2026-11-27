@@ -17,6 +17,7 @@ owns:
   - "internal/combat/"
 exclusive: []
 contracts: []
+result: "Offline only, NOT verified live. Whirlwind driver: move use whirl (move.go rows, whirl.go leg planner and whirlTick after moveTick): one leg per fight tick aimed through the densest pack within range, prefers another pack than the last leg, no leg under whirlAbortLifePct (life floor), the spin is one press slice (press row, Barbarian default) so potions run between legs. Barbarian default profile carries the Whirlwind move and press rows (U planning values, spin radius waits for fidelity A6); acts only once Whirlwind is learned. Started before the A6 verdict on the coordinator brief (AC2 waived by the brief, not met). Knob combat.deliveryUpkeep 0/1/2, no new knob. No skill or class literal added in Go. Tests Barbarian plus a Paladin test row (Zeal). Live: scenario combat.whirlwind-clears and the drill commands in the task report."
 lane: next
 ---
 
@@ -32,7 +33,7 @@ Design: docs/design/fable-review-2026-11-21/combat-engine-d-cards.md (user-appro
 <!-- AC:BEGIN -->
 - [ ] #1 Scenario combat.whirlwind-clears
 - [ ] #2 Starts only after fidelity A6 verdict and dlv-move-melee
-- [ ] #3 Two builds tested (Paladin + Sorceress), no class or skill literal added, literal count reported in result (may only fall)
-- [ ] #4 Knob combat.delivery.<driver> 0/1/2 where a driver ships; rollback is the knob
+- [x] #3 Two builds tested (Paladin + Sorceress), no class or skill literal added, literal count reported in result (may only fall)
+- [x] #4 Knob combat.delivery.<driver> 0/1/2 where a driver ships; rollback is the knob
 - [ ] #5 go test -race -count=20 on touched packages; tools/ci/check.sh, contracts/backlog checks and leakcheck clean
 <!-- AC:END -->

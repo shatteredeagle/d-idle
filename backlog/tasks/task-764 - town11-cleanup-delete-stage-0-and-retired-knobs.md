@@ -17,10 +17,13 @@ owns:
   - "internal/town"
   - "docs/town.md"
   - "town-basics"
+  - "docs/design/townflip-p5.md"
+  - "backlog/tasks/task-765 - town12-SME-review-of-the-supply-profile-numbers-advice-only.md"
 exclusive: []
 contracts:
   - "town-basics"
 lane: next
+result: "NOT DONE, blocked on a precondition (no code changed): the card deletes stage 0, and stage 0 is today the default path (town.plan default 0, stages 3 to 5 still dark, townflip-p5 section 3 flip sequence not run, no release at stage 5). Deleting bankFirst/withdrawShop (read at internal/town/basicsfix.go:100,257,268 and stash.go:131; defined in internal/env/tuning_town.go:57,58,147,148 and mirrored in cmd/d2drill/stash_lab.go:35-43, both outside owns) would change the live default. Follow-up when stage 5 has held one release: make the stage 3 behaviour unconditional, drop the two knobs plus their rows in tuning_town.go, regenerate docs/knobs.md with go run ./tools/knobdump -write, reword the town-basics contract (bank before the shop) in the same branch, run the B4 set twice per class. Checkboxes left open. Offline slice done (agent/town11): deletion plan in townflip-p5 section 6; every read of bankFirst/withdrawShop now goes through townLegacy()/bankFirst()/withdrawShop() in internal/town/planshadow.go, test TestTownLegacySeamMatchesTheOldExpressions proves identical behaviour at town.plan 0..3 (not live)."
 ---
 
 ## Description
