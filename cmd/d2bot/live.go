@@ -152,11 +152,14 @@ func runLive(ctx context.Context, o options, log *slog.Logger) error {
 		return err
 	}
 	disp.run = runner
+	if err := runner.PersistDifficultyGo(filepath.Join(ip.State(), "diffgo.json")); err != nil {
+		log.Warn("difficulty go state unreadable, starting without it", "err", err)
+	}
 	ref.p.Store(runner)
 	wireGoldFarm(ref, runner)
 	wireQuestBoard(ip.State(), ref, runner, log.Info)
 	wirePoints(ip.State(), charName(), ref, runner, e, nil, db, nil)
-	m, err := goals.New(goals.Options{Runner: runner, Path: ip.Goals(), Chain: taskChain(runner.LastSnapshot),
+	m, err := goals.New(goals.Options{Runner: runner, Path: ip.Goals(), Chain: taskChain(runner.LastSnapshot, runner.DifficultyGate),
 		Logf: func(f string, a ...any) { log.Info("goals", "msg", sprintf(f, a...)) }})
 	if err != nil {
 		return err

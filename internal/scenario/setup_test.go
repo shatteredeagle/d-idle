@@ -129,3 +129,32 @@ func TestRoomsUpFollowsTheGoto(t *testing.T) {
 		}
 	}
 }
+
+// pre.skills puts class skill points after the level verbs (the level write would not undo them) and marks the run CHEATED.
+func TestSkillPointsAfterTheLevel(t *testing.T) {
+	for _, class := range []string{"Barbarian", "Sorceress"} {
+		s := Scenario{ID: "x.skill", Kind: KindBehaviour, Pre: Pre{Level: 30, Skills: []SkillSet{{Skill: 151, Points: 1}}}}
+		su, err := BuildSetup(s, class, 3)
+		if err != nil {
+			t.Fatal(err)
+		}
+		lvl, pts := -1, -1
+		for i, v := range su.Verbs {
+			switch {
+			case v.Line == "debug stat 12 30":
+				lvl = i
+			case v.Line == "debug points 151 1":
+				pts = i
+			}
+		}
+		if lvl < 0 || pts < lvl {
+			t.Errorf("%s: level at %d, points at %d", class, lvl, pts)
+		}
+		if !slices.Contains(su.Tags, "CHEATED") {
+			t.Errorf("%s: tags %v lack CHEATED", class, su.Tags)
+		}
+		if _, err := BuildSetup(Scenario{ID: "x.bad", Pre: Pre{Skills: []SkillSet{{Skill: 151}}}}, class, 3); err == nil {
+			t.Errorf("%s: zero points accepted", class)
+		}
+	}
+}
