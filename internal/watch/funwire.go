@@ -177,6 +177,8 @@ type Fun struct {
 	Ether *EtherAPI
 	// LootShadow mounts GET /api/lootrules/shadow (lootshadowapi.go); nil: no route.
 	LootShadow *LootShadowAPI
+	// TownPlan mounts GET /api/townplan (townplanapi.go); nil: no route.
+	TownPlan *TownPlanAPI
 	// LootRules mounts GET (viewer) and PUT (answer listener) /api/lootrules (lootrulesapi.go); nil: no routes.
 	LootRules *LootRulesAPI
 	// GoldFarm mounts the Farm gold order routes (goldfarmapi.go); set it before Serve, nil: no routes.
@@ -781,6 +783,9 @@ func (f *Fun) mountView(m *http.ServeMux, live http.Handler) {
 	}
 	if f.GoldFarm != nil {
 		m.Handle(GoldFarmRoute, f.GoldFarm.Handler())
+	}
+	if f.TownPlan != nil {
+		m.Handle(TownPlanRoute, f.TownPlan.Handler())
 	}
 	if f.QuestBoard != nil {
 		m.Handle(QuestsRoute, f.QuestBoard.Handler())

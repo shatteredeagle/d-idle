@@ -373,6 +373,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [town-planner-a-current.md](design/fable-review-2026-11-21/town-planner-a-current.md): Town planner, appendix A: the chores today and where their rules disagree (status: current (design review 2026-11-21, docs only). Main doc: town-planner.md. Tree read: `origin/main` at...)
 - [town-planner-b-model.md](design/fable-review-2026-11-21/town-planner-b-model.md): Town planner, appendix B: data model, scenarios, migration (status: current (design review 2026-11-21, docs only; proposals, nothing built). Main doc: town-planner.md;...)
 - [town-planner.md](design/fable-review-2026-11-21/town-planner.md): Town and chores planner: one supply need, one town plan (status: current (Fable design review 2026-11-21, docs only; nothing here is built or decided). Tree read:...)
+- [town-profiles-sme.md](design/fable-review-2026-11-21/town-profiles-sme.md): Town supply profiles: SME review (card town12) (status: brief ready, review not run (2026-11-27). The d2-sme agent fills section 3; advice only, no number in...)
 
 `design/fable-review-2026-11-22/`
 
@@ -402,6 +403,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [dev-reset.md](dev-reset.md): Reset the play sandbox to a fresh hero (status: CURRENT. Task: TASK-263 (devreset). Dev tooling for a DEV container such as `d2play-20261108`...)
 - [dev-update.md](dev-update.md): Dev-loop update: new bot builds in a running container, no image rebuild (status: CURRENT. Task: TASK-192 (devupdate). Builds on the merged updater (docs/self-update-release.md,...)
 - [difficulty.md](difficulty.md): Difficulty: Normal -> Nightmare -> Hell (levels, resists, immunities, affixes, detection work list)
+- [diffready.md](diffready.md): Difficulty readiness and the opt-in hop (diffready, diffbaal) (status: current 2026-11-27, offline only. Design: design/difficulty-transition-2026-11-27.md section 4. Cards...)
 
 `digest/`
 
@@ -1217,6 +1219,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [search-for-cain-l3-2026-11-19.md](probes/search-for-cain-l3-2026-11-19.md): Search for Cain, drill L3: the real bot chain on a d2d lab slot (2026-11-19) (status: result of drill CAIN-L3 (task `cainl3`), follow-up to `search-for-cain-l2-2026-11-18.md`. NOT Game.exe, no...)
 - [shortdrills.md](probes/shortdrills.md): Short live drills for the g2e/g2f fixes (card shortdrills) (status: current (2026-11-06). Tags: V = run live on the worker host, S = secondary, U = unverified.)
 - [skeleton-speed-2026-11-23.md](probes/skeleton-speed-2026-11-23.md): Skeleton minions: speed and pathing on the lab d2d (2026-11-23) (status: probe record, current. Question (user, 2026-11-22): "skeleton minions seem way too fast and their...)
+- [sme-necromancer-review-2026-11-27.md](probes/sme-necromancer-review-2026-11-27.md): SME review: Necromancer data built by card necroepic (2026-11-27) (status: current. Advice only, no code run, no game. Tags: SRC (read in this repo, path given), EXP (veteran...)
 - [stepgrounds-fork-request.md](probes/stepgrounds-fork-request.md): Fork request card: verbs the step proving grounds are missing (card stepgrounds, 2026-11-23) (status: F1 and F2 DONE in devp25 stepverbs (2026-11-23, V proofs in the devp25 doc and docs/probes/stepgrounds.md...)
 - [stepgrounds-stand.md](probes/stepgrounds-stand.md): Smith stand click, why the scenario was RED (toolstrade38, 2026-11-23)
 - [stepgrounds.md](probes/stepgrounds.md): Step-level proving grounds (card stepgrounds, 2026-11-23) (status: current. Tags: V verified by a named run or probe, U unverified. Every setup is CHEATED (lab verbs,...)

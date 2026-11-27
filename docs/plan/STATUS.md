@@ -36,17 +36,16 @@
 |---|---|---|---|---|
 | m3-act1run | deferred | m3-act1run | `docs/act1-run.md`<br>`docs/probes/act1run/**` | `soak-slot:3` |
 | fid-matrix-refresh | deferred | - | `docs/probes/fid/fid-matrix-refresh.md` | - |
-| necrocorpse | proposed | - | `docs/probes/necrocaps-2026-11-26.md` | - |
 | fid-poison-res-diag | proposed | - | `docs/research/fid-poisonres-trace.md` | - |
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
+| diffbaal | proposed | - | `internal/quest/baaldone.go`<br>`internal/quest/baaldone_test.go` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | returnmock | proposed | - | `docs/research/mocks/return.html`<br>`docs/research/return-screen.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
-| dietarchive | proposed | - | `docs/archive`<br>`docs/research/README.md` | - |
 | dietrule | proposed | - | `docs/backlog-howto.md` | - |
 | ghcrpublish | in-progress | - | `.github/workflows/tester-image.yml`<br>`docs/registry-publish.md`<br>`deploy/d2d-container/compose.friends.yml`<br>`docs/tester-registry.md`<br>`deploy/d2d-container/compose.tester.yml`<br>`deploy/d2d-container/context.sh`<br>`deploy/d2d-container/tester_image_test.go` | - |
 | d2d-container-soak | deferred | d2d-container-soak | `docs/d2d-container-soak.md` | `soak-slot:1` |
@@ -196,14 +195,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
-- 69abed554 11-27 15:43 `Merge agent/ledgertrial: ledger: stepExec trial row` (ledgertrial)
-- 1235cddd1 11-27 15:42 `Merge branch 'main' into ledgertrial` (-)
-- 2f9abaad7 11-27 15:34 `Merge agent/classkeys: classkeys: main-attack hotkeys for all classes, profile skill check, merc aura note (TASK-1063)` (classkeys)
-- 2947d96a6 11-27 15:34 `Merge agent/testerreport: testerreport: scrubbed tester report bundle, first-session doc (TASK-27)` (testerreport)
-- bb0a720a8 11-27 15:34 `Merge agent/closecards3: closecards3: third card cleanup pass` (closecards3)
-- 0dd5a9f51 11-27 15:34 `Merge agent/admit2: admit2: admission function shadow wiring, bot.admission knob (TASK-970 step 2)` (admit2)
-- 083e2a95b 11-27 15:32 `Merge branch 'main' into classkeys` (-)
-- 25030e532 11-27 15:32 `Merge branch 'main' into testerreport` (-)
-- 175037f1a 11-27 15:32 `Merge branch 'main' into closecards3` (-)
-- 8e0028717 11-27 15:32 `Merge branch 'main' into admit2` (-)
+- e2e724c59 11-27 16:20 `Merge agent/smenecro: smenecro: SME Necromancer review (docs)` (smenecro)
+- be94247fd 11-27 16:20 `Merge agent/diet: diet: archive 5 finished research reports, docs diet rule (TASK-117/118)` (diet)
+- 27324ad8f 11-27 16:20 `Merge agent/dlvwhirl: dlvwhirl: Whirlwind move row driver (TASK-734)` (dlvwhirl)
+- b197ab183 11-27 16:19 `Merge agent/townrest: townrest: town plan view + /api/townplan (town9), arbiter upkeep source (town10 part), SME brief (town12)` (townrest)
+- 47b6409da 11-27 16:17 `Merge branch 'main' into smenecro` (-)
+- ceee8826a 11-27 16:17 `Merge branch 'main' into diet` (-)
+- 4bdfffc09 11-27 16:17 `Merge branch 'main' into dlvwhirl` (-)
+- 4ebb94611 11-27 16:17 `Merge branch 'main' into townrest` (-)
+- 6009caac8 11-27 16:13 `Merge agent/necrocorpse2: necrocorpse2: opt-in CE1 Necromancer table + scenario pair, ticks (TASK-1016/803/802)` (necrocorpse2)
+- e7e1d2d5b 11-27 16:12 `Merge agent/fliptool2: fliptool2: flip.py loads local.env itself, ledger commits on close/revert, unique branch names` (fliptool2)
 <!-- statusgen:end -->
