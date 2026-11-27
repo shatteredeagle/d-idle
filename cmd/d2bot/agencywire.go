@@ -32,10 +32,12 @@ type agencyWire struct {
 	combo sync.Map                        // table name -> combat line
 	owned func(*d2.Player) map[string]int // hard points by skill name; the leveler's reading of the skill list
 
-	mu    sync.Mutex
-	snap  *d2.Snapshot
-	view  *agency.View
-	viewT time.Time
+	drvLim *agency.Limiter // mode 2: the plan is re-read at most every ten seconds
+	mu     sync.Mutex
+	drive  agency.Drive // mode 2: the last decision, read by the fighter
+	snap   *d2.Snapshot
+	view   *agency.View
+	viewT  time.Time
 }
 
 // wireAgency returns nil without game tables or when the capability table or the model cannot load (one warning).
@@ -62,7 +64,7 @@ func wireAgency(db *data.DB, e *env.Env, hero func() string, now func() time.Tim
 	if now == nil {
 		now = time.Now
 	}
-	w := &agencyWire{pl: p, db: db, hero: hero, log: log, lim: agency.NewLimiter(time.Minute), now: now,
+	w := &agencyWire{pl: p, db: db, hero: hero, log: log, lim: agency.NewLimiter(time.Minute), drvLim: agency.NewLimiter(10 * time.Second), now: now,
 		tune: func() env.AgencyTuning {
 			if e.Tune == nil {
 				return env.DefaultAgencyTuning()
@@ -93,7 +95,11 @@ func (w *agencyWire) OnSnapshot(s *d2.Snapshot) {
 	w.mu.Lock()
 	w.snap = s
 	w.mu.Unlock()
-	if w.tune().Planner != 1 || !w.lim.Allow(w.now()) {
+	mode := w.tune().Planner
+	if mode == agency.ModeDrive && w.drvLim.Allow(w.now()) {
+		w.driveStep(s)
+	}
+	if mode != 1 || !w.lim.Allow(w.now()) {
 		return
 	}
 	v, pl, err := w.eval(s)
@@ -103,6 +109,37 @@ func (w *agencyWire) OnSnapshot(s *d2.Snapshot) {
 	}
 	w.store(v)
 	w.log.Info(agency.ShadowLine(v, pl))
+}
+
+// driveStep (mode 2) re-reads the plan and keeps the decision the fighter asks for; a failed plan keeps the profile.
+func (w *agencyWire) driveStep(s *d2.Snapshot) {
+	v, pl, err := w.eval(s)
+	d := agency.Drive{Why: "keep profile: no plan"}
+	if err != nil {
+		w.log.Warn("planner drive: no plan", "err", err)
+	} else {
+		v.Mode, v.ShadowOnly = "drive", false
+		w.store(v)
+		d = agency.DriveOf(pl)
+	}
+	w.mu.Lock()
+	changed := w.drive.Attack != d.Attack || w.drive.Aura != d.Aura
+	w.drive = d
+	w.mu.Unlock()
+	if changed {
+		w.log.Info("planner drive: " + d.Why)
+	}
+}
+
+// Drive is the fighter's seam (combat.Fighter.Drive): the planner's attack and aura at knob mode 2, "" otherwise (the
+// profile plays, mode 0 and 1 are as before).
+func (w *agencyWire) Drive() (attack, aura string) {
+	if w == nil || w.tune().Planner != agency.ModeDrive {
+		return "", ""
+	}
+	w.mu.Lock()
+	defer w.mu.Unlock()
+	return w.drive.Attack, w.drive.Aura
 }
 
 func (w *agencyWire) store(v agency.View) {
@@ -124,17 +161,27 @@ func (w *agencyWire) View() any {
 	s, v, at := w.snap, w.view, w.viewT
 	w.mu.Unlock()
 	if s == nil {
-		return agency.View{Schema: "didle.plan/1", Enabled: true, Mode: "shadow", Note: "no snapshot yet", Rotation: []agency.ViewSkill{}, Warnings: []agency.ViewWarn{}, ShadowOnly: true}
+		return agency.View{Schema: "didle.plan/1", Enabled: true, Mode: w.modeName(), Note: "no snapshot yet", Rotation: []agency.ViewSkill{}, Warnings: []agency.ViewWarn{}, ShadowOnly: true}
 	}
 	if v != nil && w.now().Sub(at) < 10*time.Second {
 		return *v
 	}
 	nv, _, err := w.eval(s)
 	if err != nil {
-		return agency.View{Schema: "didle.plan/1", Enabled: true, Mode: "shadow", Note: "no plan: " + err.Error(), Rotation: []agency.ViewSkill{}, Warnings: []agency.ViewWarn{}, ShadowOnly: true}
+		return agency.View{Schema: "didle.plan/1", Enabled: true, Mode: w.modeName(), Note: "no plan: " + err.Error(), Rotation: []agency.ViewSkill{}, Warnings: []agency.ViewWarn{}, ShadowOnly: true}
+	}
+	if w.tune().Planner == agency.ModeDrive {
+		nv.Mode, nv.ShadowOnly = "drive", false
 	}
 	w.store(nv)
 	return nv
+}
+
+func (w *agencyWire) modeName() string {
+	if w.tune().Planner == agency.ModeDrive {
+		return "drive"
+	}
+	return "shadow"
 }
 
 // eval reads the hero out of the snapshot and runs the planner.

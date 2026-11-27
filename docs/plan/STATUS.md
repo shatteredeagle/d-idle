@@ -42,6 +42,7 @@
 | placefix | proposed | - | `internal/questboard/`<br>`internal/bot/questboard.go`<br>`data/questboard/act2.json`<br>`tools/provingground/scenarios/stepexec-act2.json`<br>`tools/provingground/scenarios/questdrill.json`<br>`internal/scenario/placefix_test.go`<br>`docs/questboard.md`<br>`internal/task/act1.go`<br>`internal/task/act2.go`<br>`internal/task/placefix_test.go`<br>`internal/d2dinput/controller.go`<br>`internal/d2dinput/placefix_test.go`<br>`internal/d2dctl/parse.go`<br>`internal/d2dctl/verbs.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dsrc/items.go`<br>`internal/d2dsrc/source_test.go` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | vaultperf | proposed | - | `internal/watch`<br>`internal/watch/web`<br>`internal/vaultkeep`<br>`internal/vault` | - |
+| advisorwire | proposed | - | `cmd/d2bot/advisewire.go`<br>`cmd/d2bot/advisewire_test.go`<br>`cmd/d2bot/funwire.go`<br>`cmd/d2bot/ladder.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | returnmock | proposed | - | `docs/research/mocks/return.html`<br>`docs/research/return-screen.md` | - |
@@ -142,7 +143,7 @@
 | town10 | proposed | - | `internal/arbiter`<br>`internal/supply` | - |
 | town11 | proposed | - | `internal/town`<br>`docs/town.md`<br>`town-basics` | - |
 | town12 | proposed | - | `docs/design/fable-review-2026-11-21/town-profiles-sme.md` | - |
-| countess3b | proposed | - | `cmd/d2bot/boss.go`<br>`cmd/d2bot/boss_levelmonsters_test.go`<br>`internal/nav/nav.go`<br>`docs/probes/provingground-countess-2026-11-20.md` | - |
+| countess3b | proposed | - | `cmd/d2bot/boss.go`<br>`cmd/d2bot/boss_levelmonsters_test.go`<br>`internal/nav/nav.go`<br>`docs/probes/provingground-countess-2026-11-20.md`<br>`docs/probes/countess-nav-fixture.md`<br>`internal/nav/cellar5walk_test.go` | - |
 | pgledgeron | proposed | - | `docs/process/pg-ledger-ops.md`<br>`tools/provingground/run.sh`<br>`tools/provingground/pgenv.sh`<br>`tools/provingground/pgenv_test.sh` | - |
 | handinbtn | proposed | - | `internal/questboard/desk_action.go`<br>`internal/questboard/desk_action_test.go`<br>`internal/questboard/desk.go`<br>`internal/watch/web/panels/quest-board/panel.js`<br>`internal/watch/testdata/questui/quest_ui.mjs`<br>`internal/watch/testdata/quests/`<br>`cmd/d2scenario/tap.go`<br>`cmd/d2scenario/tap_test.go`<br>`docs/questboard.md` | - |
 | warptrigger | proposed | - | `docs/probes/warptrigger-2026-11-22.md`<br>`internal/d2dctl/warptriggers.go`<br>`internal/d2dctl/warptriggers_test.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/nav/mouthgate.go`<br>`internal/nav/warpread_test.go`<br>`internal/d2map/static.go`<br>`internal/d2dworld/triggers_test.go`<br>`internal/d2denv/env.go` | `fork-branch:didle/warp-triggers-20261122` |
@@ -165,7 +166,7 @@
 | fid-quest-andariel | deferred | - | `docs/probes/fid/fid-quest-andariel.md` | - |
 | epic-act5 | proposed | - | `docs/epics/epic-act5.md` | - |
 | epic-class-amazon | proposed | - | `docs/epics/epic-class-amazon.md` | - |
-| epic-class-necromancer | proposed | - | `docs/epics/epic-class-necromancer.md` | - |
+| epic-class-necromancer | proposed | - | `docs/epics/epic-class-necromancer.md`<br>`docs/classes/necromancer-gap-2026-11-27.md`<br>`internal/combat/classdata/profiles.json`<br>`internal/plandata/build-necromancer_leveling_normal30.json`<br>`internal/plandata/build-necromancer_summoner_endgame90.json`<br>`internal/plandata/levelplan-normal.json`<br>`internal/plandata/act2plan.json`<br>`internal/decide/catalogue.json`<br>`internal/decide/policy_chores.json`<br>`internal/decide/proposezone.json`<br>`internal/decide/necro_test.go`<br>`internal/decide/build_test.go`<br>`internal/decide/firsts_test.go`<br>`internal/decide/policy_test.go`<br>`internal/decide/preview_test.go`<br>`internal/decide/proposezone_test.go`<br>`internal/levelplan/necro_test.go`<br>`cmd/d2bot/necroplay_test.go`<br>`cmd/d2bot/hotkeydrift_test.go`<br>`tools/provingground/scenarios/necro-acts.json`<br>`tools/provingground/scenarios/necro-epic.json`<br>`tools/provingground/scenarios/tiers.json`<br>`internal/watch/policypreview_test.go`<br>`internal/watch/policysheet_test.go`<br>`internal/watch/stance_test.go`<br>`internal/watch/unlockrisk_test.go` | - |
 | epic-class-barbarian | proposed | - | `docs/epics/epic-class-barbarian.md` | - |
 | epic-class-sorceress | proposed | - | `docs/epics/epic-class-sorceress.md` | - |
 | epic-class-paladin | proposed | - | `docs/epics/epic-class-paladin.md` | - |
@@ -183,13 +184,13 @@
 | fid-adapter-rows | deferred | - | `docs/probes/fid/fid-adapter-rows.md` | - |
 | ticklog | in-progress | - | `docs/design/ticklog-t4.md`<br>`docs/arbiter.md`<br>`internal/bot/ticklog.go`<br>`internal/bot/ticklog_test.go`<br>`internal/bot/shadow.go`<br>`internal/env/tuning_bot.go`<br>`internal/arbiter/replay.go`<br>`internal/arbiter/replay_ticklog_test.go`<br>`data/darklaunch.json` | - |
 | bsmdef | proposed | - | `docs/design/boardsm-flip.md` | - |
-| agencyp1b | proposed | - | `docs/design/agency-p1b.md`<br>`internal/agency/drive.go`<br>`internal/agency/drive_test.go` | - |
+| agencyp1b | proposed | - | `docs/design/agency-p1b.md`<br>`internal/agency/drive.go`<br>`internal/agency/drive_test.go`<br>`cmd/d2bot/agencywire.go`<br>`cmd/d2bot/agencydrive_test.go`<br>`cmd/d2bot/d2dwire.go`<br>`cmd/d2bot/live.go`<br>`internal/combat/drive_test.go`<br>`internal/combat/fighter.go`<br>`internal/combat/aura.go`<br>`internal/env/tuning_agency.go` | - |
 | inputl3 | in-progress | - | `docs/design/input-i3.md`<br>`internal/input/useitem.go`<br>`internal/input/useitem_test.go`<br>`internal/d2dctl/use_verb.go`<br>`internal/d2dctl/use_verb_test.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dinput/useitem.go`<br>`internal/combat/portalverb.go`<br>`internal/combat/portalverb_test.go`<br>`internal/combat/fighter.go`<br>`internal/town/portalverb.go`<br>`internal/town/portalverb_test.go`<br>`internal/town/portalverb_unit_test.go`<br>`internal/town/portalverb_export_test.go`<br>`internal/town/trip.go`<br>`data/input/caps/`<br>`data/input/caps_test.go`<br>`docs/design/input-cast-verbs.md`<br>`backlog/tasks/task-726 - dlv-cast-verbs-input-caps-cast-unit-cast-point-cast-hold.md` | - |
 | inputl4 | proposed | - | `docs/design/input-i4.md`<br>`internal/input/repairverbs.go`<br>`internal/d2dctl/repair_verb.go`<br>`internal/d2dctl/use_verb_test.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dinput/repairverbs.go`<br>`internal/town/repairverb.go`<br>`internal/town/repairverb_test.go`<br>`internal/town/chores.go`<br>`internal/town/portalverb_export_test.go`<br>`internal/town/portalverb_unit_test.go` | - |
 | inputl5 | proposed | - | `docs/design/input-i5-i7.md`<br>`tools/ci/pointercount.py`<br>`tools/ci/test_pointercount.py`<br>`tools/ci/pointercount-baseline.json`<br>`tools/ci/check.sh` | - |
 | fid-lowvalue | deferred | - | `docs/probes/fid/fid-lowvalue.md` | - |
 | ckptlive | proposed | - | `docs/probes/checkpoint-live-drill.md` | - |
-| advisor1 | proposed | - | `docs/design/advisor-r14.md` | - |
+| advisor1 | proposed | - | `docs/design/advisor-r14.md`<br>`internal/advisor/`<br>`internal/watch/advisorsection.go`<br>`internal/watch/funwire.go`<br>`internal/watch/returnscreen_test.go`<br>`internal/cubejobs/cubejobs.go`<br>`internal/env/tuning_items.go`<br>`docs/knobs.md`<br>`data/darklaunch.json` | - |
 | flipwave2 | proposed | - | `docs/probes/flipwave2.md` | - |
 | classorder1 | proposed | - | `docs/probes/classorder1.md` | - |
 
@@ -214,14 +215,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
-- 555650c52 11-27 14:58 `Merge agent/dlvwave3: dlvwave3: aim-corpse (TASK-728) + stance-pack, press, move-tele, move-melee (TASK-729..732)` (dlvwave3)
-- 2d837813f 11-27 14:57 `Merge agent/agencyp3: agencyp3: shared build file reader, kolbot importer, DriveOf (TASK-985, TASK-984 partial)` (agencyp3)
-- c4d3698b0 11-27 14:56 `Merge branch 'main' into dlvwave3` (-)
-- ac877999a 11-27 14:56 `Merge branch 'main' into agencyp3` (-)
-- 1ea6463d4 11-27 14:54 `Merge agent/difftrans: difftrans: difficulty transition design (docs)` (difftrans)
-- 819ef370c 11-27 14:54 `Merge agent/wpstep2: wpstep2: close TASK-716 card (fixed by TASK-770)` (wpstep2)
-- 6d9ce4ddf 11-27 14:53 `Merge branch 'main' into difftrans` (-)
-- 3cb07d622 11-27 14:53 `Merge branch 'main' into wpstep2` (-)
-- 149ba7319 11-27 14:45 `Merge agent/nightplan: nightplan: lab night plan 2026-11-27 (docs)` (nightplan)
-- 412dc797c 11-27 14:45 `Merge agent/townguard: townguard: hand-over in the guard refusal, route path cost (TASK-1057)` (townguard)
+- 68fd626b6 11-27 15:16 `Merge agent/advisorwire: advisorwire: advisor lines on the Return screen (TASK-1060)` (advisorwire)
+- ea036def4 11-27 15:15 `Merge branch 'main' into advisorwire` (-)
+- 5ee52c7a2 11-27 15:09 `Merge agent/necroepic: necroepic: Necromancer profiles/tables/policy rows, 24 scenarios, gap doc (TASK-942 AC1)` (necroepic)
+- cfb83895d 11-27 15:09 `Merge agent/agencydrive: agencydrive: fighter reads agency.DriveOf at planner mode 2 (TASK-984 AC2)` (agencydrive)
+- c7c9c5ec3 11-27 15:09 `Merge agent/advisor1: advisor1: runeword and cube advisor lines, items.advisor dark knob (TASK-991)` (advisor1)
+- 66b4f7f50 11-27 15:09 `Merge agent/countessnav: countessnav: Tower Cellar 5 walk regression on two synthetic maps (TASK-766 AC3)` (countessnav)
+- bd2ab0cb7 11-27 15:06 `Merge branch 'main' into necroepic` (-)
+- 47547cb56 11-27 15:06 `Merge branch 'main' into agencydrive` (-)
+- 3681d5c60 11-27 15:06 `Merge branch 'main' into advisor1` (-)
+- 2e2714e36 11-27 15:06 `Merge branch 'main' into countessnav` (-)
 <!-- statusgen:end -->

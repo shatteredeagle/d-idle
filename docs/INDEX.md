@@ -280,6 +280,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [assassin.md](classes/assassin.md): Assassin plan (D2 LoD 1.14d, offline softcore, unattended)
 - [barbarian.md](classes/barbarian.md): Barbarian plan (D2 LoD 1.14d, offline softcore, unattended)
 - [druid.md](classes/druid.md): Druid plan (D2 LoD 1.14d, offline softcore, unattended)
+- [necromancer-gap-2026-11-27.md](classes/necromancer-gap-2026-11-27.md): Necromancer gap list against TASK-942 (card necroepic, 2026-11-27) (status: current offline audit. Tags V (verified: a test or a code read this run), S (secondary), U (unverified)....)
 - [necromancer.md](classes/necromancer.md): Necromancer plan (D2 LoD 1.14d, offline softcore, unattended)
 - [paladin-probe.md](classes/paladin-probe.md): Paladin probe (second-class probe, offline part) (status: current. Card `palprobe` (user go 2026-11-01). Offline only: nothing here ran on the game or on d2d....)
 - [paladin.md](classes/paladin.md): Paladin plan (D2 LoD 1.14d, offline softcore, unattended)
@@ -337,6 +338,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 `design/`
 
 - [admission-p4.md](design/admission-p4.md): Admission function (P4, card admit1, TASK-970) (status: step 1 built (package, data, tests); step 2 (wiring) waits for the outcomes2 cards TASK-958 and TASK-961.)
+- [advisor-r14.md](design/advisor-r14.md): Advisor R14: runeword and cube advice (TASK-991) (status: built dark (knob `items.advisor`, default 0). Advice lines only.)
 - [agency-p1b.md](design/agency-p1b.md): Agency P1b: the planner drives (mode 2) (status: partial (TASK-984, 2026-11-27). Offline pieces built; the review and the flip are the owner's. Tags: V =...)
 - [agency-p3.md](design/agency-p3.md): Agency P3: share and import build files (status: current (TASK-985, 2026-11-27). Tags: V = ran in a test of `internal/buildfile`, U = unverified.)
 - [autoalloc-and-currencies-2026-11-21.md](design/autoalloc-and-currencies-2026-11-21.md): Automatic Allocate Skills, the gold respec and the currency consolidation (design, 2026-11-21) (status: DESIGN plus a built first slice (agent autoalloc). Tags: **V** verified (how said), **S** secondary, **U**...)
@@ -1083,6 +1085,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [classpacing.md](probes/classpacing.md): classpacing probe (status: see `docs/soaks/classpacing.md` (the result doc of TASK-147); scripts and per-minute data are in...)
 - [combat-foundation-2026-11-21.md](probes/combat-foundation-2026-11-21.md): Combat engine foundation group, 2026-11-21 (status: record of the foundation group of the approved combat engine plan...)
 - [countess-knobs-2026-11-22.md](probes/countess-knobs-2026-11-22.md): The Countess three ways: nav.fullGrid and nav.warpRead on a lab slot (card mapverify, 2026-11-22) (status: current. Scenario `act1.forgotten.countess` (Paladin) and `act1.forgotten.countess.sorc` (Sorceress),...)
+- [countess-nav-fixture.md](probes/countess-nav-fixture.md): Tower Cellar 5 walk fixture (cards countess3b, countessnav, 2026-11-27) (status: offline regression done with SYNTHETIC maps; the recorded grid is still to be captured (live-only, needs a...)
 - [currency1.md](probes/currency1.md): Probe: currency slice 1, the Raven's Mark rows (TASK-63) (status: UNVERIFIED live, 2026-11-06. Offline checks passed; the live run was not started because Gate 2 seeds were...)
 - [dark-queue-final-2026-11-27.md](probes/dark-queue-final-2026-11-27.md): Dark queue: the final flip list (2026-11-27) (status: current (docs only; nothing was flipped, no lab run was made in this card). Supersedes the verdict column...)
 - [dark-queue-plan-2026-11-27.md](probes/dark-queue-plan-2026-11-27.md): Dark queue: plan to clear it (2026-11-27) (status: current (docs-only plan, nothing run, nothing flipped). Sources: `data/darklaunch.json` (38 rows),...)

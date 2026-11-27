@@ -1,0 +1,3385 @@
+{
+ "version": "didle.scenario/1",
+ "scenarios": [
+  {
+   "id": "necro.drill.act2.radament",
+   "title": "Necromancer quest drill: Radament's Lair from Lut Gholein (Atma, sewers, Book of Skill, report)",
+   "kind": "step",
+   "tier": "full",
+   "quest": {
+    "quest": "radament",
+    "chunk": "radament"
+   },
+   "step": {
+    "action": "kill",
+    "target": "Radament",
+    "nodes": [
+     "talk_atma",
+     "travel_sewers",
+     "kill_radament",
+     "use_book",
+     "return_atma"
+    ]
+   },
+   "touches": [
+    "internal/task/",
+    "internal/bot/questboard.go",
+    "internal/questboard/",
+    "data/questboard/",
+    "internal/boss/"
+   ],
+   "covers": [
+    "quest.radament.radament"
+   ],
+   "pre": {
+    "start": "field",
+    "area": 40,
+    "level": 24,
+    "gold": 6000,
+    "waypoints": [
+     1,
+     -1
+    ],
+    "quests": [
+     {
+      "record": 6,
+      "word": 1
+     },
+     {
+      "record": 7,
+      "word": 1
+     },
+     {
+      "record": 4,
+      "word": 8209
+     }
+    ],
+    "items": [
+     {
+      "code": "hp5",
+      "count": 10
+     },
+     {
+      "code": "mp1",
+      "count": 10
+     }
+    ],
+    "belt": [
+     "hp5",
+     "hp5",
+     "mp1",
+     "mp1"
+    ],
+    "merc": 0,
+    "worn": [
+     {
+      "code": "cap",
+      "slot": "head",
+      "quality": 4
+     },
+     {
+      "code": "qui",
+      "slot": "torso",
+      "quality": 4
+     },
+     {
+      "code": "ywn",
+      "slot": "rhand",
+      "quality": 4
+     },
+     {
+      "code": "buc",
+      "slot": "lhand",
+      "quality": 4
+     }
+    ],
+    "stats": [
+     {
+      "stat": 0,
+      "value": 35
+     },
+     {
+      "stat": 2,
+      "value": 30
+     },
+     {
+      "stat": 7,
+      "value": 179200
+     },
+     {
+      "stat": 6,
+      "value": 179200
+     }
+    ]
+   },
+   "trigger": {
+    "goals": "reach:30",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1,
+     "town.bankFirst": 0,
+     "nav.warpRead": 1,
+     "nav.fullGrid": 1,
+     "quests.boardSM": 1,
+     "town.plan": 1,
+     "combat.minionRead": 1
+    },
+    "driver": "board-taps",
+    "tap_chunks": [
+     "radament"
+    ]
+   },
+   "budget": {
+    "virtual_min": 60
+   },
+   "matrix": {
+    "classes": [
+     "Necromancer"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "provenance": "CHEATED: Act 2 start in Lut Gholein by the goto verb, level 24, gold, waypoints, Andariel and act-complete words, a Rogue merc and basic caster gear (yew wand, buckler) by SETUP verbs. Mechanics only. Raw stats: strength 35, dexterity 30, max life 700 (stands for a mid caster with Vitality points; the paladin drills use 1200, which no summoner has before Hell, U). Belt: two healing, two mana.",
+   "notes": "Quest drill matrix (docs/probes/quest-drill-matrix-2026-11-23.md). Card necroepic: the Necromancer clone of drill.act2.radament; same asserts, caster stand-in setup. NOT run yet (needs the lab).",
+   "assert": [
+    {
+     "kind": "quest_bits",
+     "record": 9,
+     "set": 1,
+     "why": "U docs/progression/quests.md: the quest word's done bit"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^Entered Lut Gholein",
+     "min": 1,
+     "why": "the hero stands in the Act 2 town"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 0,
+     "why": "no death"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ],
+   "needs": [
+    "read.minions"
+   ]
+  },
+  {
+   "id": "necro.drill.act2.cube",
+   "title": "Necromancer quest drill: Horadric Cube from the Halls of the Dead",
+   "kind": "step",
+   "tier": "full",
+   "quest": {
+    "quest": "horadric_staff",
+    "chunk": "cube"
+   },
+   "step": {
+    "action": "interact",
+    "target": "Horadric Cube chest",
+    "nodes": [
+     "wp",
+     "to",
+     "object",
+     "home"
+    ]
+   },
+   "touches": [
+    "internal/task/",
+    "internal/bot/questboard.go",
+    "internal/questboard/",
+    "data/questboard/",
+    "internal/boss/"
+   ],
+   "covers": [
+    "quest.horadric_staff.cube"
+   ],
+   "pre": {
+    "start": "field",
+    "area": 40,
+    "level": 22,
+    "gold": 6000,
+    "waypoints": [
+     1,
+     -1
+    ],
+    "quests": [
+     {
+      "record": 6,
+      "word": 1
+     },
+     {
+      "record": 7,
+      "word": 1
+     },
+     {
+      "record": 9,
+      "word": 1
+     },
+     {
+      "record": 4,
+      "word": 8209
+     }
+    ],
+    "items": [
+     {
+      "code": "hp5",
+      "count": 10
+     },
+     {
+      "code": "mp1",
+      "count": 10
+     }
+    ],
+    "belt": [
+     "hp5",
+     "hp5",
+     "mp1",
+     "mp1"
+    ],
+    "merc": 12,
+    "worn": [
+     {
+      "code": "cap",
+      "slot": "head",
+      "quality": 4
+     },
+     {
+      "code": "qui",
+      "slot": "torso",
+      "quality": 4
+     },
+     {
+      "code": "ywn",
+      "slot": "rhand",
+      "quality": 4
+     },
+     {
+      "code": "buc",
+      "slot": "lhand",
+      "quality": 4
+     }
+    ],
+    "stats": [
+     {
+      "stat": 0,
+      "value": 35
+     },
+     {
+      "stat": 2,
+      "value": 30
+     },
+     {
+      "stat": 7,
+      "value": 179200
+     },
+     {
+      "stat": 6,
+      "value": 179200
+     }
+    ],
+    "merc_level": 20
+   },
+   "trigger": {
+    "goals": "reach:30",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1,
+     "town.bankFirst": 0,
+     "nav.warpRead": 1,
+     "nav.fullGrid": 1,
+     "quests.boardSM": 1,
+     "town.plan": 1,
+     "quests.layoutRead": 1,
+     "combat.minionRead": 1
+    },
+    "driver": "board-taps",
+    "tap_chunks": [
+     "cube"
+    ]
+   },
+   "budget": {
+    "virtual_min": 45
+   },
+   "matrix": {
+    "classes": [
+     "Necromancer"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "provenance": "CHEATED: Act 2 start in Lut Gholein by the goto verb, level 24, gold, waypoints, Andariel and act-complete words, a Rogue merc and basic caster gear (yew wand, buckler) by SETUP verbs. Mechanics only. Raw stats: strength 35, dexterity 30, max life 700 (stands for a mid caster with Vitality points; the paladin drills use 1200, which no summoner has before Hell, U). Belt: two healing, two mana.",
+   "notes": "Quest drill matrix (docs/probes/quest-drill-matrix-2026-11-23.md). Card necroepic: the Necromancer clone of drill.act2.cube; same asserts, caster stand-in setup. NOT run yet (needs the lab).",
+   "assert": [
+    {
+     "kind": "item_in_pack",
+     "code": "box",
+     "min": 1,
+     "why": "U items.txt: the Horadric Cube is code box"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^Entered Lut Gholein",
+     "min": 1,
+     "why": "the hero stands in the Act 2 town"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 0,
+     "why": "no death"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ],
+   "needs": [
+    "read.minions"
+   ]
+  },
+  {
+   "id": "necro.drill.act2.shaft",
+   "title": "Necromancer quest drill: Staff of Kings from the Maggot Lair",
+   "kind": "step",
+   "tier": "full",
+   "quest": {
+    "quest": "horadric_staff",
+    "chunk": "shaft"
+   },
+   "step": {
+    "action": "interact",
+    "target": "Staff of Kings chest",
+    "nodes": [
+     "wp",
+     "to",
+     "object",
+     "home"
+    ]
+   },
+   "touches": [
+    "internal/task/",
+    "internal/bot/questboard.go",
+    "internal/questboard/",
+    "data/questboard/",
+    "internal/boss/"
+   ],
+   "covers": [
+    "quest.horadric_staff.shaft"
+   ],
+   "pre": {
+    "start": "field",
+    "area": 40,
+    "level": 30,
+    "gold": 6000,
+    "waypoints": [
+     1,
+     -1
+    ],
+    "quests": [
+     {
+      "record": 6,
+      "word": 1
+     },
+     {
+      "record": 7,
+      "word": 1
+     },
+     {
+      "record": 9,
+      "word": 1
+     },
+     {
+      "record": 4,
+      "word": 8209
+     }
+    ],
+    "items": [
+     {
+      "code": "hp5",
+      "count": 10
+     },
+     {
+      "code": "mp1",
+      "count": 10
+     }
+    ],
+    "belt": [
+     "hp5",
+     "hp5",
+     "mp1",
+     "mp1"
+    ],
+    "merc": 12,
+    "worn": [
+     {
+      "code": "cap",
+      "slot": "head",
+      "quality": 4
+     },
+     {
+      "code": "qui",
+      "slot": "torso",
+      "quality": 4
+     },
+     {
+      "code": "ywn",
+      "slot": "rhand",
+      "quality": 4
+     },
+     {
+      "code": "buc",
+      "slot": "lhand",
+      "quality": 4
+     }
+    ],
+    "stats": [
+     {
+      "stat": 0,
+      "value": 35
+     },
+     {
+      "stat": 2,
+      "value": 30
+     },
+     {
+      "stat": 7,
+      "value": 179200
+     },
+     {
+      "stat": 6,
+      "value": 179200
+     }
+    ],
+    "merc_level": 20
+   },
+   "trigger": {
+    "goals": "reach:45",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1,
+     "town.bankFirst": 0,
+     "nav.warpRead": 1,
+     "nav.fullGrid": 1,
+     "quests.boardSM": 1,
+     "town.plan": 1,
+     "quests.layoutRead": 1,
+     "combat.minionRead": 1
+    },
+    "driver": "board-taps",
+    "tap_chunks": [
+     "shaft"
+    ]
+   },
+   "budget": {
+    "virtual_min": 60
+   },
+   "matrix": {
+    "classes": [
+     "Necromancer"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "provenance": "CHEATED: Act 2 start in Lut Gholein by the goto verb, level 24, gold, waypoints, Andariel and act-complete words, a Rogue merc and basic caster gear (yew wand, buckler) by SETUP verbs. Mechanics only. Raw stats: strength 35, dexterity 30, max life 700 (stands for a mid caster with Vitality points; the paladin drills use 1200, which no summoner has before Hell, U). Belt: two healing, two mana.",
+   "notes": "Quest drill matrix (docs/probes/quest-drill-matrix-2026-11-23.md). Card necroepic: the Necromancer clone of drill.act2.shaft; same asserts, caster stand-in setup. NOT run yet (needs the lab).",
+   "assert": [
+    {
+     "kind": "item_in_pack",
+     "code": "msf",
+     "min": 1,
+     "why": "U items.txt: the shaft of the Horadric Staff is code msf"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^Entered Lut Gholein",
+     "min": 1,
+     "why": "the hero stands in the Act 2 town"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 0,
+     "why": "no death"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ],
+   "needs": [
+    "read.minions"
+   ]
+  },
+  {
+   "id": "necro.drill.act2.amulet",
+   "title": "Necromancer quest drill: Amulet of the Viper from the Claw Viper Temple (Fangskin)",
+   "kind": "step",
+   "tier": "full",
+   "quest": {
+    "quest": "tainted_sun",
+    "chunk": "amulet"
+   },
+   "step": {
+    "action": "interact",
+    "target": "taintedsunaltar",
+    "nodes": [
+     "wp",
+     "to",
+     "guard",
+     "object",
+     "home"
+    ]
+   },
+   "touches": [
+    "internal/task/",
+    "internal/bot/questboard.go",
+    "internal/questboard/",
+    "data/questboard/",
+    "internal/boss/"
+   ],
+   "covers": [
+    "quest.tainted_sun.amulet"
+   ],
+   "pre": {
+    "start": "field",
+    "area": 40,
+    "level": 24,
+    "gold": 6000,
+    "waypoints": [
+     1,
+     -1
+    ],
+    "quests": [
+     {
+      "record": 6,
+      "word": 1
+     },
+     {
+      "record": 7,
+      "word": 1
+     },
+     {
+      "record": 4,
+      "word": 8209
+     }
+    ],
+    "items": [
+     {
+      "code": "hp5",
+      "count": 10
+     },
+     {
+      "code": "mp1",
+      "count": 10
+     }
+    ],
+    "belt": [
+     "hp5",
+     "hp5",
+     "mp1",
+     "mp1"
+    ],
+    "merc": 12,
+    "worn": [
+     {
+      "code": "cap",
+      "slot": "head",
+      "quality": 4
+     },
+     {
+      "code": "qui",
+      "slot": "torso",
+      "quality": 4
+     },
+     {
+      "code": "ywn",
+      "slot": "rhand",
+      "quality": 4
+     },
+     {
+      "code": "buc",
+      "slot": "lhand",
+      "quality": 4
+     }
+    ],
+    "stats": [
+     {
+      "stat": 0,
+      "value": 35
+     },
+     {
+      "stat": 2,
+      "value": 30
+     },
+     {
+      "stat": 7,
+      "value": 179200
+     },
+     {
+      "stat": 6,
+      "value": 179200
+     }
+    ],
+    "merc_level": 20
+   },
+   "trigger": {
+    "goals": "reach:30",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1,
+     "town.bankFirst": 0,
+     "nav.warpRead": 1,
+     "nav.fullGrid": 1,
+     "quests.boardSM": 1,
+     "town.plan": 1,
+     "quests.layoutRead": 1,
+     "combat.minionRead": 1
+    },
+    "driver": "board-taps",
+    "tap_chunks": [
+     "amulet"
+    ]
+   },
+   "budget": {
+    "virtual_min": 60
+   },
+   "matrix": {
+    "classes": [
+     "Necromancer"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "provenance": "CHEATED: Act 2 start in Lut Gholein by the goto verb, level 24, gold, waypoints, Andariel and act-complete words, a Rogue merc and basic caster gear (yew wand, buckler) by SETUP verbs. Mechanics only. Raw stats: strength 35, dexterity 30, max life 700 (stands for a mid caster with Vitality points; the paladin drills use 1200, which no summoner has before Hell, U). Belt: two healing, two mana.",
+   "notes": "Quest drill matrix (docs/probes/quest-drill-matrix-2026-11-23.md). Card necroepic: the Necromancer clone of drill.act2.amulet; same asserts, caster stand-in setup. NOT run yet (needs the lab).",
+   "assert": [
+    {
+     "kind": "item_in_pack",
+     "code": "vip",
+     "min": 1,
+     "why": "U items.txt: the Amulet of the Viper is code vip"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^Entered Lut Gholein",
+     "min": 1,
+     "why": "the hero stands in the Act 2 town"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 0,
+     "why": "no death"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ],
+   "needs": [
+    "read.minions"
+   ]
+  },
+  {
+   "id": "necro.drill.act2.assemble",
+   "title": "Necromancer quest drill: assemble the Horadric Staff and give it to Cain",
+   "kind": "step",
+   "tier": "full",
+   "quest": {
+    "quest": "horadric_staff",
+    "chunk": "assemble"
+   },
+   "step": {
+    "action": "interact",
+    "target": "Horadric Cube",
+    "nodes": [
+     "open_cube",
+     "transmute",
+     "talk_cain"
+    ]
+   },
+   "touches": [
+    "internal/task/",
+    "internal/bot/questboard.go",
+    "internal/questboard/",
+    "data/questboard/",
+    "internal/boss/"
+   ],
+   "covers": [
+    "quest.horadric_staff.assemble"
+   ],
+   "pre": {
+    "start": "field",
+    "area": 40,
+    "level": 22,
+    "gold": 6000,
+    "waypoints": [
+     1,
+     -1
+    ],
+    "quests": [
+     {
+      "record": 6,
+      "word": 1
+     },
+     {
+      "record": 7,
+      "word": 1
+     },
+     {
+      "record": 11,
+      "word": 1
+     },
+     {
+      "record": 9,
+      "word": 1
+     },
+     {
+      "record": 4,
+      "word": 8209
+     },
+     {
+      "record": 9,
+      "word": 1
+     }
+    ],
+    "items": [
+     {
+      "code": "hp5",
+      "count": 10
+     },
+     {
+      "code": "mp1",
+      "count": 10
+     }
+    ],
+    "belt": [
+     "hp5",
+     "hp5",
+     "mp1",
+     "mp1"
+    ],
+    "merc": 12,
+    "worn": [
+     {
+      "code": "cap",
+      "slot": "head",
+      "quality": 4
+     },
+     {
+      "code": "qui",
+      "slot": "torso",
+      "quality": 4
+     },
+     {
+      "code": "ywn",
+      "slot": "rhand",
+      "quality": 4
+     },
+     {
+      "code": "buc",
+      "slot": "lhand",
+      "quality": 4
+     }
+    ],
+    "stats": [
+     {
+      "stat": 0,
+      "value": 35
+     },
+     {
+      "stat": 2,
+      "value": 30
+     },
+     {
+      "stat": 7,
+      "value": 179200
+     },
+     {
+      "stat": 6,
+      "value": 179200
+     }
+    ],
+    "merc_level": 20
+   },
+   "trigger": {
+    "goals": "reach:30",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1,
+     "town.bankFirst": 0,
+     "nav.warpRead": 1,
+     "nav.fullGrid": 1,
+     "quests.boardSM": 1,
+     "town.plan": 1,
+     "quests.layoutRead": 1,
+     "combat.minionRead": 1
+    },
+    "driver": "board-taps",
+    "tap_chunks": [
+     "assemble"
+    ]
+   },
+   "budget": {
+    "virtual_min": 30
+   },
+   "matrix": {
+    "classes": [
+     "Necromancer"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "provenance": "CHEATED: Act 2 start in Lut Gholein by the goto verb, level 24, gold, waypoints, Andariel and act-complete words, a Rogue merc and basic caster gear (yew wand, buckler) by SETUP verbs. Mechanics only. Raw stats: strength 35, dexterity 30, max life 700 (stands for a mid caster with Vitality points; the paladin drills use 1200, which no summoner has before Hell, U). Belt: two healing, two mana. The cube, the shaft and the amulet are given by SETUP verbs (the drill covers the assembly, not the finds).",
+   "notes": "Quest drill matrix (docs/probes/quest-drill-matrix-2026-11-23.md). The quest word after the Cain talk was 0x0c78 in the lab (bit 0 not set): whether the talk completes the quest is U, so the scenario asserts the staff item and the menu, not record 10. Card necroepic: the Necromancer clone of drill.act2.assemble; same asserts, caster stand-in setup. NOT run yet (needs the lab).",
+   "assert": [
+    {
+     "kind": "item_in_pack",
+     "code": "hst",
+     "min": 1,
+     "why": "U items.txt: the Horadric Staff is code hst; the Cube transmute made it"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^npc: menu open",
+     "min": 1,
+     "why": "the hand-in reached Cain's menu in Lut Gholein (before the Cain class fix: npc not found)"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^Entered Lut Gholein",
+     "min": 1,
+     "why": "the hero stands in the Act 2 town"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 0,
+     "why": "no death"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ],
+   "needs": [
+    "read.minions"
+   ]
+  },
+  {
+   "id": "necro.drill.act2.summoner",
+   "title": "Necromancer quest drill: the Summoner (Arcane Sanctuary open)",
+   "kind": "step",
+   "tier": "full",
+   "quest": {
+    "quest": "summoner",
+    "chunk": "kill_summoner"
+   },
+   "step": {
+    "action": "kill",
+    "target": "The Summoner",
+    "nodes": [
+     "travel_arcane",
+     "find_summoner",
+     "kill_summoner"
+    ]
+   },
+   "touches": [
+    "internal/task/",
+    "internal/bot/questboard.go",
+    "internal/questboard/",
+    "data/questboard/",
+    "internal/boss/"
+   ],
+   "covers": [
+    "quest.summoner.kill_summoner"
+   ],
+   "pre": {
+    "start": "field",
+    "area": 40,
+    "level": 30,
+    "gold": 6000,
+    "waypoints": [
+     1,
+     -1
+    ],
+    "quests": [
+     {
+      "record": 6,
+      "word": 1
+     },
+     {
+      "record": 7,
+      "word": 1
+     },
+     {
+      "record": 11,
+      "word": 1
+     },
+     {
+      "record": 12,
+      "word": 1
+     },
+     {
+      "record": 9,
+      "word": 1
+     },
+     {
+      "record": 4,
+      "word": 8209
+     }
+    ],
+    "items": [
+     {
+      "code": "hp5",
+      "count": 10
+     },
+     {
+      "code": "mp1",
+      "count": 10
+     }
+    ],
+    "belt": [
+     "hp5",
+     "hp5",
+     "mp1",
+     "mp1"
+    ],
+    "merc": 12,
+    "worn": [
+     {
+      "code": "cap",
+      "slot": "head",
+      "quality": 4
+     },
+     {
+      "code": "qui",
+      "slot": "torso",
+      "quality": 4
+     },
+     {
+      "code": "ywn",
+      "slot": "rhand",
+      "quality": 4
+     },
+     {
+      "code": "buc",
+      "slot": "lhand",
+      "quality": 4
+     }
+    ],
+    "stats": [
+     {
+      "stat": 0,
+      "value": 35
+     },
+     {
+      "stat": 2,
+      "value": 30
+     },
+     {
+      "stat": 7,
+      "value": 179200
+     },
+     {
+      "stat": 6,
+      "value": 179200
+     }
+    ],
+    "merc_level": 20
+   },
+   "trigger": {
+    "goals": "reach:45",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1,
+     "town.bankFirst": 0,
+     "nav.warpRead": 1,
+     "nav.fullGrid": 1,
+     "quests.boardSM": 1,
+     "town.plan": 1,
+     "quests.layoutRead": 1,
+     "combat.minionRead": 1
+    },
+    "driver": "board-taps",
+    "tap_chunks": [
+     "kill_summoner"
+    ]
+   },
+   "budget": {
+    "virtual_min": 90
+   },
+   "matrix": {
+    "classes": [
+     "Necromancer"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "provenance": "CHEATED: Act 2 start in Lut Gholein by the goto verb, level 24, gold, waypoints, Andariel and act-complete words, a Rogue merc and basic caster gear (yew wand, buckler) by SETUP verbs. Mechanics only. Raw stats: strength 35, dexterity 30, max life 700 (stands for a mid caster with Vitality points; the paladin drills use 1200, which no summoner has before Hell, U). Belt: two healing, two mana. Unused stat points are set to 0 (the raw stats stand for a spent hero; unspent points made the bot cancel its boss run for the point spender).",
+   "notes": "Quest drill matrix (docs/probes/quest-drill-matrix-2026-11-23.md). Card necroepic: the Necromancer clone of drill.act2.summoner; same asserts, caster stand-in setup. NOT run yet (needs the lab).",
+   "assert": [
+    {
+     "kind": "quest_bits",
+     "record": 13,
+     "set": 1,
+     "why": "U docs/progression/quests.md: the Summoner quest word"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^Entered Lut Gholein",
+     "min": 1,
+     "why": "the hero stands in the Act 2 town"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 0,
+     "why": "no death"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ],
+   "needs": [
+    "read.minions"
+   ]
+  },
+  {
+   "id": "necro.drill.act2.duriel",
+   "title": "Necromancer quest drill: the Seven Tombs, Duriel (staff made)",
+   "kind": "step",
+   "tier": "full",
+   "quest": {
+    "quest": "seven_tombs",
+    "chunk": "duriel"
+   },
+   "step": {
+    "action": "kill",
+    "target": "Duriel",
+    "nodes": [
+     "travel_canyon",
+     "find_tomb",
+     "place_staff",
+     "kill_duriel"
+    ]
+   },
+   "touches": [
+    "internal/task/",
+    "internal/bot/questboard.go",
+    "internal/questboard/",
+    "data/questboard/",
+    "internal/boss/"
+   ],
+   "covers": [
+    "quest.seven_tombs.duriel"
+   ],
+   "pre": {
+    "start": "field",
+    "area": 40,
+    "level": 30,
+    "gold": 6000,
+    "waypoints": [
+     1,
+     -1
+    ],
+    "quests": [
+     {
+      "record": 6,
+      "word": 1
+     },
+     {
+      "record": 7,
+      "word": 1
+     },
+     {
+      "record": 10,
+      "word": 3080
+     },
+     {
+      "record": 11,
+      "word": 1
+     },
+     {
+      "record": 13,
+      "word": 1
+     },
+     {
+      "record": 9,
+      "word": 1
+     },
+     {
+      "record": 4,
+      "word": 8209
+     }
+    ],
+    "items": [
+     {
+      "code": "hp5",
+      "count": 10
+     },
+     {
+      "code": "mp1",
+      "count": 10
+     }
+    ],
+    "belt": [
+     "hp5",
+     "hp5",
+     "mp1",
+     "mp1"
+    ],
+    "merc": 0,
+    "worn": [
+     {
+      "code": "cap",
+      "slot": "head",
+      "quality": 4
+     },
+     {
+      "code": "qui",
+      "slot": "torso",
+      "quality": 4
+     },
+     {
+      "code": "ywn",
+      "slot": "rhand",
+      "quality": 4
+     },
+     {
+      "code": "buc",
+      "slot": "lhand",
+      "quality": 4
+     }
+    ],
+    "stats": [
+     {
+      "stat": 0,
+      "value": 35
+     },
+     {
+      "stat": 2,
+      "value": 30
+     },
+     {
+      "stat": 7,
+      "value": 179200
+     },
+     {
+      "stat": 6,
+      "value": 179200
+     }
+    ]
+   },
+   "trigger": {
+    "goals": "reach:45",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1,
+     "town.bankFirst": 0,
+     "nav.warpRead": 1,
+     "nav.fullGrid": 1,
+     "quests.boardSM": 1,
+     "town.plan": 1,
+     "quests.layoutRead": 1,
+     "combat.minionRead": 1
+    },
+    "driver": "board-taps",
+    "tap_chunks": [
+     "duriel"
+    ]
+   },
+   "budget": {
+    "virtual_min": 120
+   },
+   "matrix": {
+    "classes": [
+     "Necromancer"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "provenance": "CHEATED: Act 2 start in Lut Gholein by the goto verb, level 24, gold, waypoints, Andariel and act-complete words, a Rogue merc and basic caster gear (yew wand, buckler) by SETUP verbs. Mechanics only. Raw stats: strength 35, dexterity 30, max life 700 (stands for a mid caster with Vitality points; the paladin drills use 1200, which no summoner has before Hell, U). Belt: two healing, two mana. Unused stat points are set to 0 (the raw stats stand for a spent hero; unspent points made the bot cancel its boss run for the point spender). The assembled Horadric Staff is given by a SETUP verb (the assemble row covers the Cube). qd25: max life 6000 and no merc again (the 2000 life hero dies to the Burning Dead of tomb 66, V run 20261125-192625). Record 10 is 0x0c08 (3080): the word after Cain's talk (0x0c78) as the d2d keeps it after the join (bits 4 to 6 cleared, V rerun 2026-11-27); bit 11 = the Staff made, bit 0 clear (bit 0 reads as the Staff already placed and the orifice drops it; placefix).",
+   "notes": "Quest drill matrix (docs/probes/quest-drill-matrix-2026-11-23.md). Card necroepic: the Necromancer clone of drill.act2.duriel; same asserts, caster stand-in setup. NOT run yet (needs the lab).",
+   "assert": [
+    {
+     "kind": "quest_bits",
+     "record": 14,
+     "set": 1,
+     "why": "U docs/progression/quests.md: the Seven Tombs quest word"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^Entered Lut Gholein",
+     "min": 1,
+     "why": "the hero stands in the Act 2 town"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 0,
+     "why": "no death"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ],
+   "needs": [
+    "read.minions"
+   ]
+  },
+  {
+   "id": "necro.drill.act2.radament.handin",
+   "title": "Necromancer quest drill: Radament killed (word 0x001e), the board offers the hand-in to Atma in Lut Gholein",
+   "kind": "step",
+   "tier": "full",
+   "quest": {
+    "quest": "radament",
+    "chunk": "radament"
+   },
+   "step": {
+    "action": "kill",
+    "target": "Radament",
+    "nodes": [
+     "talk_atma",
+     "travel_sewers",
+     "kill_radament",
+     "use_book",
+     "return_atma"
+    ]
+   },
+   "touches": [
+    "internal/task/",
+    "internal/bot/questboard.go",
+    "internal/questboard/",
+    "data/questboard/",
+    "internal/boss/"
+   ],
+   "covers": [
+    "quest.radament.radament"
+   ],
+   "pre": {
+    "start": "field",
+    "area": 40,
+    "level": 24,
+    "gold": 6000,
+    "waypoints": [
+     1,
+     9,
+     10
+    ],
+    "quests": [
+     {
+      "record": 6,
+      "word": 1
+     },
+     {
+      "record": 7,
+      "word": 1
+     },
+     {
+      "record": 9,
+      "word": 30
+     },
+     {
+      "record": 4,
+      "word": 8209
+     }
+    ],
+    "items": [
+     {
+      "code": "hp5",
+      "count": 10
+     },
+     {
+      "code": "mp1",
+      "count": 10
+     }
+    ],
+    "belt": [
+     "hp5",
+     "hp5",
+     "mp1",
+     "mp1"
+    ],
+    "merc": 0,
+    "worn": [
+     {
+      "code": "cap",
+      "slot": "head",
+      "quality": 4
+     },
+     {
+      "code": "qui",
+      "slot": "torso",
+      "quality": 4
+     },
+     {
+      "code": "ywn",
+      "slot": "rhand",
+      "quality": 4
+     },
+     {
+      "code": "buc",
+      "slot": "lhand",
+      "quality": 4
+     }
+    ],
+    "stats": [
+     {
+      "stat": 0,
+      "value": 35
+     },
+     {
+      "stat": 2,
+      "value": 30
+     },
+     {
+      "stat": 7,
+      "value": 179200
+     },
+     {
+      "stat": 6,
+      "value": 179200
+     }
+    ]
+   },
+   "trigger": {
+    "goals": "reach:30",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1,
+     "town.bankFirst": 0,
+     "nav.warpRead": 1,
+     "nav.fullGrid": 1,
+     "quests.boardSM": 1,
+     "town.plan": 1,
+     "combat.minionRead": 1
+    },
+    "driver": "board-taps",
+    "tap_chunks": [
+     "radament"
+    ]
+   },
+   "budget": {
+    "virtual_min": 30
+   },
+   "matrix": {
+    "classes": [
+     "Necromancer"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "provenance": "CHEATED: Act 2 start, Radament record 9 set to 0x001e (killed, reward pending) by a SETUP verb, level and gold. Mechanics of the board hand-in only.",
+   "notes": "Quest drill matrix (docs/probes/quest-drill-matrix-2026-11-23.md). Card necroepic: the Necromancer clone of drill.act2.radament.handin; same asserts, caster stand-in setup. NOT run yet (needs the lab).",
+   "assert": [
+    {
+     "kind": "quest_bits",
+     "record": 9,
+     "set": 1,
+     "why": "the Atma hand-in sets the done bit"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^Entered Lut Gholein",
+     "min": 1,
+     "why": "the hero stands in the Act 2 town"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 0,
+     "why": "no death"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ],
+   "needs": [
+    "read.minions"
+   ]
+  },
+  {
+   "id": "necro.drill.act3.lam_esen",
+   "title": "Necromancer quest drill: Lam Esen's Tome (Kurast Bazaar altar, Alkor hand-in)",
+   "kind": "step",
+   "tier": "full",
+   "quest": {
+    "quest": "lam_esen",
+    "chunk": "tome"
+   },
+   "step": {
+    "action": "talk",
+    "target": "Alkor",
+    "nodes": [
+     "tome"
+    ]
+   },
+   "touches": [
+    "internal/task/",
+    "internal/bot/questboard.go",
+    "internal/questboard/",
+    "data/questboard/",
+    "internal/boss/"
+   ],
+   "covers": [
+    "quest.lam_esen.tome"
+   ],
+   "pre": {
+    "start": "field",
+    "area": 75,
+    "level": 28,
+    "gold": 6000,
+    "waypoints": [
+     1,
+     -1
+    ],
+    "quests": [
+     {
+      "record": 4,
+      "word": 8209
+     },
+     {
+      "record": 6,
+      "word": 1
+     },
+     {
+      "record": 7,
+      "word": 1
+     },
+     {
+      "record": 15,
+      "word": 1
+     }
+    ],
+    "items": [
+     {
+      "code": "hp5",
+      "count": 10
+     },
+     {
+      "code": "mp1",
+      "count": 10
+     }
+    ],
+    "belt": [
+     "hp5",
+     "hp5",
+     "mp1",
+     "mp1"
+    ],
+    "merc": 0,
+    "worn": [
+     {
+      "code": "cap",
+      "slot": "head",
+      "quality": 4
+     },
+     {
+      "code": "qui",
+      "slot": "torso",
+      "quality": 4
+     },
+     {
+      "code": "ywn",
+      "slot": "rhand",
+      "quality": 4
+     },
+     {
+      "code": "buc",
+      "slot": "lhand",
+      "quality": 4
+     }
+    ],
+    "stats": [
+     {
+      "stat": 0,
+      "value": 35
+     },
+     {
+      "stat": 2,
+      "value": 30
+     },
+     {
+      "stat": 7,
+      "value": 179200
+     },
+     {
+      "stat": 6,
+      "value": 179200
+     }
+    ]
+   },
+   "trigger": {
+    "goals": "reach:30",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1,
+     "town.bankFirst": 0,
+     "nav.warpRead": 1,
+     "nav.fullGrid": 1,
+     "quests.boardSM": 1,
+     "town.plan": 1,
+     "combat.minionRead": 1
+    },
+    "driver": "board-taps",
+    "tap_chunks": [
+     "tome"
+    ]
+   },
+   "budget": {
+    "virtual_min": 60
+   },
+   "matrix": {
+    "classes": [
+     "Necromancer"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "provenance": "CHEATED: Act 3 start in the Kurast Docks by the goto verb, level 24, gold, waypoints, Andariel and act-complete words, a Rogue merc and basic caster gear (yew wand, buckler) by SETUP verbs. Mechanics only. Raw stats: strength 35, dexterity 30, max life 700 (stands for a mid caster with Vitality points; the paladin drills use 1200, which no summoner has before Hell, U). Belt: two healing, two mana.",
+   "notes": "Quest drill matrix (docs/probes/quest-drill-matrix-2026-11-23.md). Card necroepic: the Necromancer clone of drill.act3.lam_esen; same asserts, caster stand-in setup. NOT run yet (needs the lab).",
+   "assert": [
+    {
+     "kind": "quest_bits",
+     "record": 17,
+     "set": 1,
+     "why": "U docs/progression/quests.md: the quest word's done bit"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^Entered Kurast Docktown",
+     "min": 1,
+     "why": "the hero stands in the Act 2 town"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 0,
+     "why": "no death"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ],
+   "needs": [
+    "read.minions"
+   ]
+  },
+  {
+   "id": "necro.drill.act3.blade",
+   "title": "Necromancer quest drill: Blade of the Old Religion (Gidbinn in the Flayer Jungle, Ormus hand-in)",
+   "kind": "step",
+   "tier": "full",
+   "quest": {
+    "quest": "blade_old_religion",
+    "chunk": "gidbinn"
+   },
+   "step": {
+    "action": "talk",
+    "target": "Ormus",
+    "nodes": [
+     "gidbinn"
+    ]
+   },
+   "touches": [
+    "internal/task/",
+    "internal/bot/questboard.go",
+    "internal/questboard/",
+    "data/questboard/",
+    "internal/boss/"
+   ],
+   "covers": [
+    "quest.blade_old_religion.gidbinn"
+   ],
+   "pre": {
+    "start": "field",
+    "area": 75,
+    "level": 28,
+    "gold": 6000,
+    "waypoints": [
+     1,
+     -1
+    ],
+    "quests": [
+     {
+      "record": 4,
+      "word": 8209
+     },
+     {
+      "record": 6,
+      "word": 1
+     },
+     {
+      "record": 7,
+      "word": 1
+     },
+     {
+      "record": 15,
+      "word": 1
+     }
+    ],
+    "items": [
+     {
+      "code": "hp5",
+      "count": 10
+     },
+     {
+      "code": "mp1",
+      "count": 10
+     }
+    ],
+    "belt": [
+     "hp5",
+     "hp5",
+     "mp1",
+     "mp1"
+    ],
+    "merc": 0,
+    "worn": [
+     {
+      "code": "cap",
+      "slot": "head",
+      "quality": 4
+     },
+     {
+      "code": "qui",
+      "slot": "torso",
+      "quality": 4
+     },
+     {
+      "code": "ywn",
+      "slot": "rhand",
+      "quality": 4
+     },
+     {
+      "code": "buc",
+      "slot": "lhand",
+      "quality": 4
+     }
+    ],
+    "stats": [
+     {
+      "stat": 0,
+      "value": 35
+     },
+     {
+      "stat": 2,
+      "value": 30
+     },
+     {
+      "stat": 7,
+      "value": 179200
+     },
+     {
+      "stat": 6,
+      "value": 179200
+     }
+    ]
+   },
+   "trigger": {
+    "goals": "reach:30",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1,
+     "town.bankFirst": 0,
+     "nav.warpRead": 1,
+     "nav.fullGrid": 1,
+     "quests.boardSM": 1,
+     "town.plan": 1,
+     "quests.layoutRead": 1,
+     "combat.minionRead": 1
+    },
+    "driver": "board-taps",
+    "tap_chunks": [
+     "gidbinn"
+    ]
+   },
+   "budget": {
+    "virtual_min": 60
+   },
+   "matrix": {
+    "classes": [
+     "Necromancer"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "provenance": "CHEATED: Act 3 start in the Kurast Docks by the goto verb, level 24, gold, waypoints, Andariel and act-complete words, a Rogue merc and basic caster gear (yew wand, buckler) by SETUP verbs. Mechanics only. Raw stats: strength 35, dexterity 30, max life 700 (stands for a mid caster with Vitality points; the paladin drills use 1200, which no summoner has before Hell, U). Belt: two healing, two mana.",
+   "notes": "Quest drill matrix (docs/probes/quest-drill-matrix-2026-11-23.md). Card necroepic: the Necromancer clone of drill.act3.blade; same asserts, caster stand-in setup. NOT run yet (needs the lab).",
+   "assert": [
+    {
+     "kind": "quest_bits",
+     "record": 19,
+     "set": 1,
+     "why": "U docs/progression/quests.md: the quest word's done bit"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^Entered Kurast Docktown",
+     "min": 1,
+     "why": "the hero stands in the Act 2 town"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 0,
+     "why": "no death"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ],
+   "needs": [
+    "read.minions"
+   ]
+  },
+  {
+   "id": "necro.drill.act3.golden_bird",
+   "title": "Necromancer quest drill: The Golden Bird (Jade Figurine, Alkor)",
+   "kind": "step",
+   "tier": "full",
+   "quest": {
+    "quest": "golden_bird",
+    "chunk": "bird"
+   },
+   "step": {
+    "action": "talk",
+    "target": "Alkor",
+    "nodes": [
+     "bird"
+    ]
+   },
+   "touches": [
+    "internal/task/",
+    "internal/bot/questboard.go",
+    "internal/questboard/",
+    "data/questboard/",
+    "internal/boss/"
+   ],
+   "covers": [
+    "quest.golden_bird.bird"
+   ],
+   "pre": {
+    "start": "field",
+    "area": 75,
+    "level": 28,
+    "gold": 6000,
+    "waypoints": [
+     1,
+     -1
+    ],
+    "quests": [
+     {
+      "record": 4,
+      "word": 8209
+     },
+     {
+      "record": 6,
+      "word": 1
+     },
+     {
+      "record": 7,
+      "word": 1
+     },
+     {
+      "record": 15,
+      "word": 1
+     }
+    ],
+    "items": [
+     {
+      "code": "hp5",
+      "count": 10
+     },
+     {
+      "code": "mp1",
+      "count": 10
+     }
+    ],
+    "belt": [
+     "hp5",
+     "hp5",
+     "mp1",
+     "mp1"
+    ],
+    "merc": 0,
+    "worn": [
+     {
+      "code": "cap",
+      "slot": "head",
+      "quality": 4
+     },
+     {
+      "code": "qui",
+      "slot": "torso",
+      "quality": 4
+     },
+     {
+      "code": "ywn",
+      "slot": "rhand",
+      "quality": 4
+     },
+     {
+      "code": "buc",
+      "slot": "lhand",
+      "quality": 4
+     }
+    ],
+    "stats": [
+     {
+      "stat": 0,
+      "value": 35
+     },
+     {
+      "stat": 2,
+      "value": 30
+     },
+     {
+      "stat": 7,
+      "value": 179200
+     },
+     {
+      "stat": 6,
+      "value": 179200
+     }
+    ]
+   },
+   "trigger": {
+    "goals": "reach:30",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1,
+     "town.bankFirst": 0,
+     "nav.warpRead": 1,
+     "nav.fullGrid": 1,
+     "quests.boardSM": 1,
+     "town.plan": 1,
+     "combat.minionRead": 1
+    },
+    "driver": "board-taps",
+    "tap_chunks": [
+     "bird"
+    ]
+   },
+   "budget": {
+    "virtual_min": 60
+   },
+   "matrix": {
+    "classes": [
+     "Necromancer"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "provenance": "CHEATED: Act 3 start in the Kurast Docks by the goto verb, level 24, gold, waypoints, Andariel and act-complete words, a Rogue merc and basic caster gear (yew wand, buckler) by SETUP verbs. Mechanics only. Raw stats: strength 35, dexterity 30, max life 700 (stands for a mid caster with Vitality points; the paladin drills use 1200, which no summoner has before Hell, U). Belt: two healing, two mana. The Jade Figurine (a random drop) is given by a SETUP verb.",
+   "notes": "Quest drill matrix (docs/probes/quest-drill-matrix-2026-11-23.md). Card necroepic: the Necromancer clone of drill.act3.golden_bird; same asserts, caster stand-in setup. NOT run yet (needs the lab).",
+   "assert": [
+    {
+     "kind": "quest_bits",
+     "record": 20,
+     "set": 1,
+     "why": "U docs/progression/quests.md: the quest word's done bit"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^Entered Kurast Docktown",
+     "min": 1,
+     "why": "the hero stands in the Act 2 town"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 0,
+     "why": "no death"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ],
+   "needs": [
+    "read.minions"
+   ]
+  },
+  {
+   "id": "necro.drill.act3.council",
+   "title": "Necromancer quest drill: The Blackened Temple (Travincal council)",
+   "kind": "step",
+   "tier": "full",
+   "quest": {
+    "quest": "blackened_temple",
+    "chunk": "council"
+   },
+   "step": {
+    "action": "talk",
+    "target": "Council",
+    "nodes": [
+     "council"
+    ]
+   },
+   "touches": [
+    "internal/task/",
+    "internal/bot/questboard.go",
+    "internal/questboard/",
+    "data/questboard/",
+    "internal/boss/"
+   ],
+   "covers": [
+    "quest.blackened_temple.council"
+   ],
+   "pre": {
+    "start": "field",
+    "area": 75,
+    "level": 28,
+    "gold": 6000,
+    "waypoints": [
+     1,
+     -1
+    ],
+    "quests": [
+     {
+      "record": 4,
+      "word": 8209
+     },
+     {
+      "record": 6,
+      "word": 1
+     },
+     {
+      "record": 7,
+      "word": 1
+     },
+     {
+      "record": 15,
+      "word": 1
+     }
+    ],
+    "items": [
+     {
+      "code": "hp5",
+      "count": 10
+     },
+     {
+      "code": "mp1",
+      "count": 10
+     }
+    ],
+    "belt": [
+     "hp5",
+     "hp5",
+     "mp1",
+     "mp1"
+    ],
+    "merc": 0,
+    "worn": [
+     {
+      "code": "cap",
+      "slot": "head",
+      "quality": 4
+     },
+     {
+      "code": "qui",
+      "slot": "torso",
+      "quality": 4
+     },
+     {
+      "code": "ywn",
+      "slot": "rhand",
+      "quality": 4
+     },
+     {
+      "code": "buc",
+      "slot": "lhand",
+      "quality": 4
+     }
+    ],
+    "stats": [
+     {
+      "stat": 0,
+      "value": 35
+     },
+     {
+      "stat": 2,
+      "value": 30
+     },
+     {
+      "stat": 7,
+      "value": 179200
+     },
+     {
+      "stat": 6,
+      "value": 179200
+     }
+    ]
+   },
+   "trigger": {
+    "goals": "reach:30",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1,
+     "town.bankFirst": 0,
+     "nav.warpRead": 1,
+     "nav.fullGrid": 1,
+     "quests.boardSM": 1,
+     "town.plan": 1,
+     "combat.minionRead": 1
+    },
+    "driver": "board-taps",
+    "tap_chunks": [
+     "council"
+    ]
+   },
+   "budget": {
+    "virtual_min": 90
+   },
+   "matrix": {
+    "classes": [
+     "Necromancer"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "provenance": "CHEATED: Act 3 start in the Kurast Docks by the goto verb, level 24, gold, waypoints, Andariel and act-complete words, a Rogue merc and basic caster gear (yew wand, buckler) by SETUP verbs. Mechanics only. Raw stats: strength 35, dexterity 30, max life 700 (stands for a mid caster with Vitality points; the paladin drills use 1200, which no summoner has before Hell, U). Belt: two healing, two mana.",
+   "notes": "Quest drill matrix (docs/probes/quest-drill-matrix-2026-11-23.md). Card necroepic: the Necromancer clone of drill.act3.council; same asserts, caster stand-in setup. NOT run yet (needs the lab).",
+   "assert": [
+    {
+     "kind": "quest_bits",
+     "record": 21,
+     "set": 1,
+     "why": "U docs/progression/quests.md: the quest word's done bit"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^Entered Kurast Docktown",
+     "min": 1,
+     "why": "the hero stands in the Act 2 town"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 0,
+     "why": "no death"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ],
+   "needs": [
+    "read.minions"
+   ]
+  },
+  {
+   "id": "necro.drill.act4.izual",
+   "title": "Necromancer act 4: The Fallen Angel (Izual)",
+   "kind": "step",
+   "tier": "full",
+   "quest": {
+    "quest": "izual",
+    "chunk": "izual"
+   },
+   "step": {
+    "action": "talk",
+    "target": "izual",
+    "nodes": [
+     "izual"
+    ]
+   },
+   "touches": [
+    "internal/task/",
+    "internal/bot/questboard.go",
+    "internal/questboard/",
+    "data/questboard/",
+    "internal/boss/"
+   ],
+   "covers": [
+    "quest.izual.izual"
+   ],
+   "pre": {
+    "start": "field",
+    "area": 103,
+    "level": 60,
+    "gold": 20000,
+    "waypoints": [
+     1,
+     -1
+    ],
+    "quests": [
+     {
+      "record": 4,
+      "word": 8209
+     },
+     {
+      "record": 6,
+      "word": 1
+     },
+     {
+      "record": 7,
+      "word": 1
+     },
+     {
+      "record": 15,
+      "word": 1
+     },
+     {
+      "record": 22,
+      "word": 1
+     },
+     {
+      "record": 23,
+      "word": 1
+     }
+    ],
+    "items": [
+     {
+      "code": "hp5",
+      "count": 10
+     },
+     {
+      "code": "mp1",
+      "count": 10
+     }
+    ],
+    "belt": [
+     "hp5",
+     "hp5",
+     "mp1",
+     "mp1"
+    ],
+    "merc": 12,
+    "worn": [
+     {
+      "code": "cap",
+      "slot": "head",
+      "quality": 4
+     },
+     {
+      "code": "qui",
+      "slot": "torso",
+      "quality": 4
+     },
+     {
+      "code": "ywn",
+      "slot": "rhand",
+      "quality": 4
+     },
+     {
+      "code": "buc",
+      "slot": "lhand",
+      "quality": 4
+     }
+    ],
+    "stats": [
+     {
+      "stat": 0,
+      "value": 35
+     },
+     {
+      "stat": 2,
+      "value": 30
+     },
+     {
+      "stat": 7,
+      "value": 179200
+     },
+     {
+      "stat": 6,
+      "value": 179200
+     }
+    ],
+    "merc_level": 40
+   },
+   "trigger": {
+    "goals": "reach:90",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1,
+     "town.bankFirst": 0,
+     "nav.warpRead": 1,
+     "nav.fullGrid": 1,
+     "quests.boardSM": 1,
+     "town.plan": 1,
+     "combat.minionRead": 1
+    },
+    "driver": "board-taps",
+    "tap_chunks": [
+     "izual"
+    ]
+   },
+   "budget": {
+    "virtual_min": 90
+   },
+   "matrix": {
+    "classes": [
+     "Necromancer"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "provenance": "CHEATED: clvl 60 stand-in (strength 150, dexterity 100, max life 3000, a rare broad sword), gold, waypoints, quest words of the earlier acts and the start area by SETUP verbs. Mechanics only: the evidence is whether the board offers and starts the row and how far it gets. Budget 90 virtual minutes and a level 40 desert merc (fights finish).",
+   "notes": "Quest drill matrix (docs/probes/quest-drill-matrix-2026-11-23.md). Card necroepic: the Necromancer clone of drill.act4.izual; same asserts, caster stand-in setup. NOT run yet (needs the lab).",
+   "assert": [
+    {
+     "kind": "quest_bits",
+     "record": 25,
+     "set": 1,
+     "why": "U docs/progression/quests.md: the quest word's done bit"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^quest board: starting chunk",
+     "min": 1,
+     "why": "board offered and started the chunk (board evidence)"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ],
+   "needs": [
+    "read.minions"
+   ]
+  },
+  {
+   "id": "necro.drill.act4.hellforge",
+   "title": "Necromancer act 4: Hell's Forge, the hammer",
+   "kind": "step",
+   "tier": "full",
+   "quest": {
+    "quest": "hellforge",
+    "chunk": "hammer"
+   },
+   "step": {
+    "action": "talk",
+    "target": "hellforge",
+    "nodes": [
+     "hammer"
+    ]
+   },
+   "touches": [
+    "internal/task/",
+    "internal/bot/questboard.go",
+    "internal/questboard/",
+    "data/questboard/",
+    "internal/boss/"
+   ],
+   "covers": [
+    "quest.hellforge.hammer"
+   ],
+   "pre": {
+    "start": "field",
+    "area": 103,
+    "level": 60,
+    "gold": 20000,
+    "waypoints": [
+     1,
+     -1
+    ],
+    "quests": [
+     {
+      "record": 4,
+      "word": 8209
+     },
+     {
+      "record": 6,
+      "word": 1
+     },
+     {
+      "record": 7,
+      "word": 1
+     },
+     {
+      "record": 15,
+      "word": 1
+     },
+     {
+      "record": 18,
+      "word": 1
+     },
+     {
+      "record": 22,
+      "word": 1
+     },
+     {
+      "record": 23,
+      "word": 1
+     }
+    ],
+    "items": [
+     {
+      "code": "hp5",
+      "count": 10
+     },
+     {
+      "code": "mp1",
+      "count": 10
+     }
+    ],
+    "belt": [
+     "hp5",
+     "hp5",
+     "mp1",
+     "mp1"
+    ],
+    "merc": 12,
+    "worn": [
+     {
+      "code": "cap",
+      "slot": "head",
+      "quality": 4
+     },
+     {
+      "code": "qui",
+      "slot": "torso",
+      "quality": 4
+     },
+     {
+      "code": "ywn",
+      "slot": "rhand",
+      "quality": 4
+     },
+     {
+      "code": "buc",
+      "slot": "lhand",
+      "quality": 4
+     }
+    ],
+    "stats": [
+     {
+      "stat": 0,
+      "value": 35
+     },
+     {
+      "stat": 2,
+      "value": 30
+     },
+     {
+      "stat": 7,
+      "value": 179200
+     },
+     {
+      "stat": 6,
+      "value": 179200
+     }
+    ],
+    "merc_level": 40
+   },
+   "trigger": {
+    "goals": "reach:90",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1,
+     "town.bankFirst": 0,
+     "nav.warpRead": 1,
+     "nav.fullGrid": 1,
+     "quests.boardSM": 1,
+     "town.plan": 1,
+     "combat.minionRead": 1
+    },
+    "driver": "board-taps",
+    "tap_chunks": [
+     "hammer"
+    ]
+   },
+   "budget": {
+    "virtual_min": 90
+   },
+   "matrix": {
+    "classes": [
+     "Necromancer"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "provenance": "CHEATED: clvl 60 stand-in (strength 150, dexterity 100, max life 3000, a rare broad sword), gold, waypoints, quest words of the earlier acts and the start area by SETUP verbs. Mechanics only: the evidence is whether the board offers and starts the row and how far it gets. Budget 90 virtual minutes and a level 40 desert merc (fights finish). The Soulstone is given by a SETUP verb (the chunk has nothing to do without it).",
+   "notes": "Quest drill matrix (docs/probes/quest-drill-matrix-2026-11-23.md). Card necroepic: the Necromancer clone of drill.act4.hellforge; same asserts, caster stand-in setup. NOT run yet (needs the lab).",
+   "assert": [
+    {
+     "kind": "quest_bits",
+     "record": 26,
+     "set": 1,
+     "why": "U docs/progression/quests.md: the quest word's done bit"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^quest board: starting chunk",
+     "min": 1,
+     "why": "board offered and started the chunk (board evidence)"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ],
+   "needs": [
+    "read.minions"
+   ]
+  },
+  {
+   "id": "necro.drill.act5.siege",
+   "title": "Necromancer act 5: Siege on Harrogath (Shenk)",
+   "kind": "step",
+   "tier": "full",
+   "quest": {
+    "quest": "siege_harrogath",
+    "chunk": "shenk"
+   },
+   "step": {
+    "action": "talk",
+    "target": "siege_harrogath",
+    "nodes": [
+     "shenk"
+    ]
+   },
+   "touches": [
+    "internal/task/",
+    "internal/bot/questboard.go",
+    "internal/questboard/",
+    "data/questboard/",
+    "internal/boss/"
+   ],
+   "covers": [
+    "quest.siege_harrogath.shenk"
+   ],
+   "pre": {
+    "start": "field",
+    "area": 109,
+    "level": 60,
+    "gold": 20000,
+    "waypoints": [
+     1,
+     -1
+    ],
+    "quests": [
+     {
+      "record": 4,
+      "word": 8209
+     },
+     {
+      "record": 6,
+      "word": 1
+     },
+     {
+      "record": 7,
+      "word": 1
+     },
+     {
+      "record": 15,
+      "word": 1
+     },
+     {
+      "record": 22,
+      "word": 1
+     },
+     {
+      "record": 23,
+      "word": 1
+     },
+     {
+      "record": 25,
+      "word": 1
+     },
+     {
+      "record": 27,
+      "word": 1
+     },
+     {
+      "record": 28,
+      "word": 1
+     }
+    ],
+    "items": [
+     {
+      "code": "hp5",
+      "count": 10
+     },
+     {
+      "code": "mp1",
+      "count": 10
+     }
+    ],
+    "belt": [
+     "hp5",
+     "hp5",
+     "mp1",
+     "mp1"
+    ],
+    "merc": 0,
+    "worn": [
+     {
+      "code": "cap",
+      "slot": "head",
+      "quality": 4
+     },
+     {
+      "code": "qui",
+      "slot": "torso",
+      "quality": 4
+     },
+     {
+      "code": "ywn",
+      "slot": "rhand",
+      "quality": 4
+     },
+     {
+      "code": "buc",
+      "slot": "lhand",
+      "quality": 4
+     }
+    ],
+    "stats": [
+     {
+      "stat": 0,
+      "value": 35
+     },
+     {
+      "stat": 2,
+      "value": 30
+     },
+     {
+      "stat": 7,
+      "value": 179200
+     },
+     {
+      "stat": 6,
+      "value": 179200
+     }
+    ]
+   },
+   "trigger": {
+    "goals": "reach:90",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1,
+     "town.bankFirst": 0,
+     "nav.warpRead": 1,
+     "nav.fullGrid": 1,
+     "quests.boardSM": 1,
+     "town.plan": 1,
+     "combat.minionRead": 1
+    },
+    "driver": "board-taps",
+    "tap_chunks": [
+     "shenk"
+    ]
+   },
+   "budget": {
+    "virtual_min": 30
+   },
+   "matrix": {
+    "classes": [
+     "Necromancer"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "provenance": "CHEATED: clvl 60 stand-in (strength 150, dexterity 100, max life 3000, a rare broad sword), gold, waypoints, quest words of the earlier acts and the start area by SETUP verbs. Mechanics only: the evidence is whether the board offers and starts the row and how far it gets.",
+   "notes": "Quest drill matrix (docs/probes/quest-drill-matrix-2026-11-23.md). Card necroepic: the Necromancer clone of drill.act5.siege; same asserts, caster stand-in setup. NOT run yet (needs the lab).",
+   "assert": [
+    {
+     "kind": "quest_bits",
+     "record": 35,
+     "set": 1,
+     "why": "U docs/progression/quests.md: the quest word's done bit"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^quest board: starting chunk",
+     "min": 1,
+     "why": "board offered and started the chunk (board evidence)"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ],
+   "needs": [
+    "read.minions"
+   ]
+  },
+  {
+   "id": "necro.drill.act5.prison",
+   "title": "Necromancer act 5: Prison of Ice (Anya, find the prison)",
+   "kind": "step",
+   "tier": "full",
+   "quest": {
+    "quest": "prison_of_ice",
+    "chunk": "find"
+   },
+   "step": {
+    "action": "talk",
+    "target": "prison_of_ice",
+    "nodes": [
+     "find"
+    ]
+   },
+   "touches": [
+    "internal/task/",
+    "internal/bot/questboard.go",
+    "internal/questboard/",
+    "data/questboard/",
+    "internal/boss/"
+   ],
+   "covers": [
+    "quest.prison_of_ice.find"
+   ],
+   "pre": {
+    "start": "field",
+    "area": 109,
+    "level": 60,
+    "gold": 20000,
+    "waypoints": [
+     1,
+     -1
+    ],
+    "quests": [
+     {
+      "record": 4,
+      "word": 8209
+     },
+     {
+      "record": 6,
+      "word": 1
+     },
+     {
+      "record": 7,
+      "word": 1
+     },
+     {
+      "record": 15,
+      "word": 1
+     },
+     {
+      "record": 22,
+      "word": 1
+     },
+     {
+      "record": 23,
+      "word": 1
+     },
+     {
+      "record": 25,
+      "word": 1
+     },
+     {
+      "record": 27,
+      "word": 1
+     },
+     {
+      "record": 28,
+      "word": 1
+     },
+     {
+      "record": 35,
+      "word": 1
+     }
+    ],
+    "items": [
+     {
+      "code": "hp5",
+      "count": 10
+     },
+     {
+      "code": "mp1",
+      "count": 10
+     }
+    ],
+    "belt": [
+     "hp5",
+     "hp5",
+     "mp1",
+     "mp1"
+    ],
+    "merc": 12,
+    "worn": [
+     {
+      "code": "cap",
+      "slot": "head",
+      "quality": 4
+     },
+     {
+      "code": "qui",
+      "slot": "torso",
+      "quality": 4
+     },
+     {
+      "code": "ywn",
+      "slot": "rhand",
+      "quality": 4
+     },
+     {
+      "code": "buc",
+      "slot": "lhand",
+      "quality": 4
+     }
+    ],
+    "stats": [
+     {
+      "stat": 0,
+      "value": 35
+     },
+     {
+      "stat": 2,
+      "value": 30
+     },
+     {
+      "stat": 7,
+      "value": 179200
+     },
+     {
+      "stat": 6,
+      "value": 179200
+     }
+    ],
+    "merc_level": 40
+   },
+   "trigger": {
+    "goals": "reach:90",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1,
+     "town.bankFirst": 0,
+     "nav.warpRead": 1,
+     "nav.fullGrid": 1,
+     "quests.boardSM": 1,
+     "town.plan": 1,
+     "combat.minionRead": 1
+    },
+    "driver": "board-taps",
+    "tap_chunks": [
+     "find"
+    ]
+   },
+   "budget": {
+    "virtual_min": 90
+   },
+   "matrix": {
+    "classes": [
+     "Necromancer"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "provenance": "CHEATED: clvl 60 stand-in (strength 150, dexterity 100, max life 3000, a rare broad sword), gold, waypoints, quest words of the earlier acts and the start area by SETUP verbs. Mechanics only: the evidence is whether the board offers and starts the row and how far it gets. Budget 90 virtual minutes and a level 40 desert merc (fights finish).",
+   "notes": "Quest drill matrix (docs/probes/quest-drill-matrix-2026-11-23.md). Card necroepic: the Necromancer clone of drill.act5.prison; same asserts, caster stand-in setup. NOT run yet (needs the lab).",
+   "assert": [
+    {
+     "kind": "quest_bits",
+     "record": 37,
+     "set": 1,
+     "why": "U docs/progression/quests.md: the quest word's done bit"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^quest board: starting chunk",
+     "min": 1,
+     "why": "board offered and started the chunk (board evidence)"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ],
+   "needs": [
+    "read.minions"
+   ]
+  },
+  {
+   "id": "necro.drill.act5.betrayal",
+   "title": "Necromancer act 5: Betrayal of Harrogath (Nihlathak)",
+   "kind": "step",
+   "tier": "full",
+   "quest": {
+    "quest": "betrayal_harrogath",
+    "chunk": "nihlathak"
+   },
+   "step": {
+    "action": "talk",
+    "target": "betrayal_harrogath",
+    "nodes": [
+     "nihlathak"
+    ]
+   },
+   "touches": [
+    "internal/task/",
+    "internal/bot/questboard.go",
+    "internal/questboard/",
+    "data/questboard/",
+    "internal/boss/"
+   ],
+   "covers": [
+    "quest.betrayal_harrogath.nihlathak"
+   ],
+   "pre": {
+    "start": "field",
+    "area": 109,
+    "level": 60,
+    "gold": 20000,
+    "waypoints": [
+     1,
+     -1
+    ],
+    "quests": [
+     {
+      "record": 4,
+      "word": 8209
+     },
+     {
+      "record": 6,
+      "word": 1
+     },
+     {
+      "record": 7,
+      "word": 1
+     },
+     {
+      "record": 15,
+      "word": 1
+     },
+     {
+      "record": 22,
+      "word": 1
+     },
+     {
+      "record": 23,
+      "word": 1
+     },
+     {
+      "record": 25,
+      "word": 1
+     },
+     {
+      "record": 27,
+      "word": 1
+     },
+     {
+      "record": 28,
+      "word": 1
+     },
+     {
+      "record": 35,
+      "word": 1
+     },
+     {
+      "record": 37,
+      "word": 1
+     }
+    ],
+    "items": [
+     {
+      "code": "hp5",
+      "count": 10
+     },
+     {
+      "code": "mp1",
+      "count": 10
+     }
+    ],
+    "belt": [
+     "hp5",
+     "hp5",
+     "mp1",
+     "mp1"
+    ],
+    "merc": 12,
+    "worn": [
+     {
+      "code": "cap",
+      "slot": "head",
+      "quality": 4
+     },
+     {
+      "code": "qui",
+      "slot": "torso",
+      "quality": 4
+     },
+     {
+      "code": "ywn",
+      "slot": "rhand",
+      "quality": 4
+     },
+     {
+      "code": "buc",
+      "slot": "lhand",
+      "quality": 4
+     }
+    ],
+    "stats": [
+     {
+      "stat": 0,
+      "value": 35
+     },
+     {
+      "stat": 2,
+      "value": 30
+     },
+     {
+      "stat": 7,
+      "value": 179200
+     },
+     {
+      "stat": 6,
+      "value": 179200
+     }
+    ],
+    "merc_level": 40
+   },
+   "trigger": {
+    "goals": "reach:90",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1,
+     "town.bankFirst": 0,
+     "nav.warpRead": 1,
+     "nav.fullGrid": 1,
+     "quests.boardSM": 1,
+     "town.plan": 1,
+     "combat.minionRead": 1
+    },
+    "driver": "board-taps",
+    "tap_chunks": [
+     "nihlathak"
+    ]
+   },
+   "budget": {
+    "virtual_min": 90
+   },
+   "matrix": {
+    "classes": [
+     "Necromancer"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "provenance": "CHEATED: clvl 60 stand-in (strength 150, dexterity 100, max life 3000, a rare broad sword), gold, waypoints, quest words of the earlier acts and the start area by SETUP verbs. Mechanics only: the evidence is whether the board offers and starts the row and how far it gets. Budget 90 virtual minutes and a level 40 desert merc (fights finish).",
+   "notes": "Quest drill matrix (docs/probes/quest-drill-matrix-2026-11-23.md). Card necroepic: the Necromancer clone of drill.act5.betrayal; same asserts, caster stand-in setup. NOT run yet (needs the lab).",
+   "assert": [
+    {
+     "kind": "quest_bits",
+     "record": 38,
+     "set": 1,
+     "why": "U docs/progression/quests.md: the quest word's done bit"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^quest board: starting chunk",
+     "min": 1,
+     "why": "board offered and started the chunk (board evidence)"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ],
+   "needs": [
+    "read.minions"
+   ]
+  },
+  {
+   "id": "necro.drill.act5.ancients",
+   "title": "Necromancer act 5: Rite of Passage (the Ancients)",
+   "kind": "step",
+   "tier": "full",
+   "quest": {
+    "quest": "rite_of_passage",
+    "chunk": "ancients"
+   },
+   "step": {
+    "action": "talk",
+    "target": "rite_of_passage",
+    "nodes": [
+     "ancients"
+    ]
+   },
+   "touches": [
+    "internal/task/",
+    "internal/bot/questboard.go",
+    "internal/questboard/",
+    "data/questboard/",
+    "internal/boss/"
+   ],
+   "covers": [
+    "quest.rite_of_passage.ancients"
+   ],
+   "pre": {
+    "start": "field",
+    "area": 109,
+    "level": 60,
+    "gold": 20000,
+    "waypoints": [
+     1,
+     -1
+    ],
+    "quests": [
+     {
+      "record": 4,
+      "word": 8209
+     },
+     {
+      "record": 6,
+      "word": 1
+     },
+     {
+      "record": 7,
+      "word": 1
+     },
+     {
+      "record": 15,
+      "word": 1
+     },
+     {
+      "record": 22,
+      "word": 1
+     },
+     {
+      "record": 23,
+      "word": 1
+     },
+     {
+      "record": 25,
+      "word": 1
+     },
+     {
+      "record": 27,
+      "word": 1
+     },
+     {
+      "record": 28,
+      "word": 1
+     },
+     {
+      "record": 35,
+      "word": 1
+     },
+     {
+      "record": 37,
+      "word": 1
+     },
+     {
+      "record": 38,
+      "word": 1
+     }
+    ],
+    "items": [
+     {
+      "code": "hp5",
+      "count": 10
+     },
+     {
+      "code": "mp1",
+      "count": 10
+     }
+    ],
+    "belt": [
+     "hp5",
+     "hp5",
+     "mp1",
+     "mp1"
+    ],
+    "merc": 12,
+    "worn": [
+     {
+      "code": "cap",
+      "slot": "head",
+      "quality": 4
+     },
+     {
+      "code": "qui",
+      "slot": "torso",
+      "quality": 4
+     },
+     {
+      "code": "ywn",
+      "slot": "rhand",
+      "quality": 4
+     },
+     {
+      "code": "buc",
+      "slot": "lhand",
+      "quality": 4
+     }
+    ],
+    "stats": [
+     {
+      "stat": 0,
+      "value": 35
+     },
+     {
+      "stat": 2,
+      "value": 30
+     },
+     {
+      "stat": 7,
+      "value": 179200
+     },
+     {
+      "stat": 6,
+      "value": 179200
+     }
+    ],
+    "merc_level": 40
+   },
+   "trigger": {
+    "goals": "reach:90",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1,
+     "town.bankFirst": 0,
+     "nav.warpRead": 1,
+     "nav.fullGrid": 1,
+     "quests.boardSM": 1,
+     "town.plan": 1,
+     "quests.layoutRead": 1,
+     "combat.minionRead": 1
+    },
+    "driver": "board-taps",
+    "tap_chunks": [
+     "ancients"
+    ]
+   },
+   "budget": {
+    "virtual_min": 90
+   },
+   "matrix": {
+    "classes": [
+     "Necromancer"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "provenance": "CHEATED: clvl 60 stand-in (strength 150, dexterity 100, max life 3000, a rare broad sword), gold, waypoints, quest words of the earlier acts and the start area by SETUP verbs. Mechanics only: the evidence is whether the board offers and starts the row and how far it gets. Budget 90 virtual minutes and a level 40 desert merc (fights finish).",
+   "notes": "Quest drill matrix (docs/probes/quest-drill-matrix-2026-11-23.md). Card necroepic: the Necromancer clone of drill.act5.ancients; same asserts, caster stand-in setup. NOT run yet (needs the lab).",
+   "assert": [
+    {
+     "kind": "quest_bits",
+     "record": 39,
+     "set": 1,
+     "why": "U docs/progression/quests.md: the quest word's done bit"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^quest board: starting chunk",
+     "min": 1,
+     "why": "board offered and started the chunk (board evidence)"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ],
+   "needs": [
+    "read.minions"
+   ]
+  },
+  {
+   "id": "necro.drill.act5.baal",
+   "title": "Necromancer act 5: Eve of Destruction (Baal)",
+   "kind": "step",
+   "tier": "full",
+   "quest": {
+    "quest": "eve_of_destruction",
+    "chunk": "baal"
+   },
+   "step": {
+    "action": "talk",
+    "target": "eve_of_destruction",
+    "nodes": [
+     "baal"
+    ]
+   },
+   "touches": [
+    "internal/task/",
+    "internal/bot/questboard.go",
+    "internal/questboard/",
+    "data/questboard/",
+    "internal/boss/"
+   ],
+   "covers": [
+    "quest.eve_of_destruction.baal"
+   ],
+   "pre": {
+    "start": "field",
+    "area": 109,
+    "level": 60,
+    "gold": 20000,
+    "waypoints": [
+     1,
+     -1
+    ],
+    "quests": [
+     {
+      "record": 4,
+      "word": 8209
+     },
+     {
+      "record": 6,
+      "word": 1
+     },
+     {
+      "record": 7,
+      "word": 1
+     },
+     {
+      "record": 15,
+      "word": 1
+     },
+     {
+      "record": 22,
+      "word": 1
+     },
+     {
+      "record": 23,
+      "word": 1
+     },
+     {
+      "record": 25,
+      "word": 1
+     },
+     {
+      "record": 27,
+      "word": 1
+     },
+     {
+      "record": 28,
+      "word": 1
+     },
+     {
+      "record": 35,
+      "word": 1
+     },
+     {
+      "record": 37,
+      "word": 1
+     },
+     {
+      "record": 38,
+      "word": 1
+     },
+     {
+      "record": 39,
+      "word": 1
+     }
+    ],
+    "items": [
+     {
+      "code": "hp5",
+      "count": 10
+     },
+     {
+      "code": "mp1",
+      "count": 10
+     }
+    ],
+    "belt": [
+     "hp5",
+     "hp5",
+     "mp1",
+     "mp1"
+    ],
+    "merc": 0,
+    "worn": [
+     {
+      "code": "cap",
+      "slot": "head",
+      "quality": 4
+     },
+     {
+      "code": "qui",
+      "slot": "torso",
+      "quality": 4
+     },
+     {
+      "code": "ywn",
+      "slot": "rhand",
+      "quality": 4
+     },
+     {
+      "code": "buc",
+      "slot": "lhand",
+      "quality": 4
+     }
+    ],
+    "stats": [
+     {
+      "stat": 0,
+      "value": 35
+     },
+     {
+      "stat": 2,
+      "value": 30
+     },
+     {
+      "stat": 7,
+      "value": 179200
+     },
+     {
+      "stat": 6,
+      "value": 179200
+     }
+    ]
+   },
+   "trigger": {
+    "goals": "reach:90",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1,
+     "town.bankFirst": 0,
+     "nav.warpRead": 1,
+     "nav.fullGrid": 1,
+     "quests.boardSM": 1,
+     "town.plan": 1,
+     "combat.minionRead": 1
+    },
+    "driver": "board-taps",
+    "tap_chunks": [
+     "baal"
+    ]
+   },
+   "budget": {
+    "virtual_min": 30
+   },
+   "matrix": {
+    "classes": [
+     "Necromancer"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "provenance": "CHEATED: clvl 60 stand-in (strength 150, dexterity 100, max life 3000, a rare broad sword), gold, waypoints, quest words of the earlier acts and the start area by SETUP verbs. Mechanics only: the evidence is whether the board offers and starts the row and how far it gets.",
+   "notes": "Quest drill matrix (docs/probes/quest-drill-matrix-2026-11-23.md). Card necroepic: the Necromancer clone of drill.act5.baal; same asserts, caster stand-in setup. NOT run yet (needs the lab).",
+   "assert": [
+    {
+     "kind": "quest_bits",
+     "record": 40,
+     "set": 1,
+     "why": "U docs/progression/quests.md: the quest word's done bit"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^quest board: starting chunk",
+     "min": 1,
+     "why": "board offered and started the chunk (board evidence)"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ],
+   "needs": [
+    "read.minions"
+   ]
+  }
+ ]
+}
