@@ -2,6 +2,7 @@
  "build": "sorceress_normal30",
  "class": "sorceress",
  "combat": "cold",
+ "mana_heavy": true,
  "selector": "sorceress_normal30",
  "schema": "per-clvl allocation applied on level-up (clvl = new level). skills: skill points spent that level. Quest points (see quest_points) are spent immediately on top; unspent quest points follow 'quest_point_policy'.",
  "respec": null,
@@ -390,5 +391,5 @@
    ]
   }
  ],
- "tags": " SME review 2026-11-27, confidence medium-high: Glacial Spike 1 at clvl 24 only (Blizzard prerequisite; the cold band casts Ice Blast first so more points were never used), the five points of 25-29 go to Ice Blast."
+ "tags": " SME review 2026-11-27, confidence medium-high: Glacial Spike 1 at clvl 24 only (Blizzard prerequisite; the cold band casts Ice Blast first so more points were never used), the five points of 25-29 go to Ice Blast. SME review 2026-11-27, confidence medium: mana_heavy true (pool about 80 at clvl 24, 10-25 mana per cast; two mana columns from Nightmare)."
 }
