@@ -16,7 +16,7 @@
 
 ## Not wanted
 
-A fork-side per-level skill cap. d2d's `can_learn` matches the decompiled game.exe icon check and has no such rule; the bot keeps it as the knob `resource.skillCapPerLevel` (default off) until a Game.exe lab check settles it.
+A fork-side per-level skill cap. d2d's `can_learn` matches the decompiled game.exe icon check and has no such rule; the bot enforces nothing (the knob `resource.skillCapPerLevel` was retired 2026-11-27).
 
 ## Rebase routine note
 
