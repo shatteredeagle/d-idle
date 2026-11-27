@@ -135,8 +135,6 @@ cmd/d2bot/agencydrive_test.go  credit-runner  agencyp1b
 cmd/d2bot/agencywire.go  credit-runner  agencyp1b
 cmd/d2bot/behaviors.go  credit-runner  campaign1
 cmd/d2bot/boss.go  credit-runner  countess3
-cmd/d2bot/boss.go  credit-runner  countess3b
-cmd/d2bot/boss_levelmonsters_test.go  credit-runner  countess3b
 cmd/d2bot/d2dbackend.go  credit-runner  advisorwire
 cmd/d2bot/d2dbackend.go  credit-runner  campaign1
 cmd/d2bot/d2dwire.go  credit-runner  agencyp1b
@@ -244,7 +242,6 @@ docs/play-session.md  credit-runner  playsession
 docs/probes/bot-cpu-live-2026-11-16.md  credit-runner  botcpulive
 docs/probes/checkpoint-live-drill.md  live-agent  ckptlive
 docs/probes/classorder1.md  user  classorder1
-docs/probes/countess-nav-fixture.md  credit-runner  countess3b
 docs/probes/exitsread-2026-11-22.md  credit-runner  exitsread
 docs/probes/firsthour.md  live-agent  firsthour
 docs/probes/flipwave2.md  live-agent  flipwave2
@@ -258,7 +255,6 @@ docs/probes/provingground-cain-2026-11-19.md  credit-runner  pgpage
 docs/probes/provingground-cainchain-2026-11-20.md  credit-runner  pgpage
 docs/probes/provingground-cainfix3-2026-11-19.md  credit-runner  pgpage
 docs/probes/provingground-countess-2026-11-20.md  credit-runner  countess3
-docs/probes/provingground-countess-2026-11-20.md  credit-runner  countess3b
 docs/probes/provingground-countess-2026-11-20.md  credit-runner  pgpage
 docs/probes/provingground-pgfix4-2026-11-20.md  credit-runner  pgpage
 docs/probes/provingground-run-2026-11-19.md  credit-runner  pgpage
@@ -438,7 +434,6 @@ internal/levelplan/necro_test.go  live-agent  epic-class-necromancer
 internal/nav/  credit-runner  dlv-move-tele
 internal/nav/act2hints.go  credit-runner  qdmatrix
 internal/nav/act2hints_test.go  credit-runner  qdmatrix
-internal/nav/cellar5walk_test.go  credit-runner  countess3b
 internal/nav/exit.go  credit-runner  qdmatrix
 internal/nav/exit.go  credit-runner  stage1fix
 internal/nav/exit_test.go  credit-runner  qdmatrix
@@ -450,7 +445,6 @@ internal/nav/gatedoor_test.go  credit-runner  qdmatrix
 internal/nav/hints_export.go  credit-runner  exitsread
 internal/nav/mouthgate.go  credit-runner  qdmatrix
 internal/nav/mouthgate.go  credit-runner  warptrigger
-internal/nav/nav.go  credit-runner  countess3b
 internal/nav/nav.go  credit-runner  qdmatrix
 internal/nav/route.go  credit-runner  exitsread
 internal/nav/warpread_test.go  credit-runner  warptrigger
