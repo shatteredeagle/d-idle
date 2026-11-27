@@ -78,7 +78,7 @@ func TestVerbLines(t *testing.T) {
 		{"interact item", func(c *Controller) error { return c.Interact(input.Target{Type: 4, ID: 17}) }, []string{"cmd pickup 17"}},
 		{"interact monster", func(c *Controller) error {
 			return c.Interact(input.Target{Type: 1, ID: 5, Pos: input.Point{X: 65, Y: 147}})
-		}, []string{"cmd skill 0 13.1 29.5 5 left"}},
+		}, []string{"cmd skill 0 13.1 29.5 5 1"}},
 		{"belt", func(c *Controller) error { return c.Belt(1, false) }, []string{"cmd belt 1"}},
 		{"belt merc", func(c *Controller) error { return c.Belt(2, true) }, []string{"cmd belt 2 merc"}},
 		{"pickup", func(c *Controller) error { return c.Pickup(9) }, []string{"cmd pickup 9"}},

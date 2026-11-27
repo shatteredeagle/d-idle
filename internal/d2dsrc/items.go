@@ -276,12 +276,15 @@ func (b *builder) world(ctx context.Context) error {
 				}
 				x, y := b.pos(p.X, p.Y)
 				class := townPortalObj
-				if p.Which >= questPortalWhich {
+				switch {
+				case p.Which == durielLairWhich:
+					class = durielLairObj
+				case p.Which >= questPortalWhich:
 					class = questPortalObj
 				}
 				b.snap.Objects = append(b.snap.Objects, d2.Unit{Type: d2.TypeObject, Class: class, ID: uint32(PortalIDBase + p.Which), Mode: 1, X: x, Y: y})
 			}
-			rp.derived("objects.portals", "debug portals rows on this level, class 59 (objects.txt Town Portal, S); which >= 2 is a quest portal, class 60")
+			rp.derived("objects.portals", "debug portals rows on this level, class 59 (objects.txt Town Portal, S); which 6 is the way down to Duriel, class 100; other which >= 2 a quest portal, class 60")
 		case isCmdErr(err):
 			rp.unknown("objects.portals", "debug portals failed: "+err.Error())
 		default:
@@ -447,6 +450,15 @@ const townPortalObj = 59
 const (
 	questPortalWhich = 2
 	questPortalObj   = 60
+)
+
+// durielLairWhich is the "debug portals" which of the way down to Duriel: the d2d opens it as World::portal[6] by the
+// orifice once the Staff's timer runs out (S d2d World::durielportal_open, its interact -2006 enters level 73 in
+// travel.cpp), where the game has objects.txt 100 "Duriel's Lair". It is reported as class 100 so the step that looks
+// for that object finds it (V lab drill 2026-11-27: "object class 100 not found" after the placement, 3 of 3).
+const (
+	durielLairWhich = 6
+	durielLairObj   = 100
 )
 
 // stateObjClasses are the objects whose lit state matters to a bot step (the five cairn stones, objects.txt 17..21, S

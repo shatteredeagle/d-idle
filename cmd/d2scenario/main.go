@@ -97,7 +97,7 @@ func usage(w io.Writer) {
   arbiter-replay [-strict] [-follow] [-session LOG] FILE.json..  score the arbiter against the chain by outcome: the recorded cases, or every tick of a session log (tools/provingground/arbiter-outcomes, report-only)
   incident    [-class C] [-seed N] [-out DIR] FILE.json..   build replay rows from incident files the bot wrote at a death (report-only tier)
   determinism-run -n N -out DIR [run flags]      run the selection N times (journals on) and compare every run with the first
-  ledger status-doc|check -in L.jsonl           the results ledger: generated status page, line check (lines are written by exec-one)
+  ledger status-doc|page-json|check -in L.jsonl the results ledger: generated status page, board /pg data, line check (lines are written by exec-one)
   determinism a.json b.json                     same seed twice: same verdict (and state digest)
   gate-check  results.json                      exit 3 unless GREEN (no RED, no BLOCKED)
   soak        -faults SET -duration D [-id ID,..] [-class C] [-seed N] [-dry-run] [-strict]   run rows under injected faults, report invariant hits and survival (lab only)

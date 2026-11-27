@@ -9,6 +9,7 @@ import (
 	"net"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -50,6 +51,13 @@ type Fixtures struct {
 	// starting "err " is an error reply, anything else the JSON line before "ok". A verb without an entry is unknown, like
 	// an older build.
 	World map[string]string
+	// Hold answers "cmd skillhold status" in order, one entry per call, the last one repeating (e.g. "held=3 casts=1
+	// frames=15 state=running"); nil: the hold verb is unknown, like a build without it. HoldErr refuses the start.
+	Hold    []string
+	HoldErr string
+	// ObjectList answers "debug objectlist" in order, one entry (its lines) per call, the last one repeating; nil: the
+	// verb is unknown, like a build without it.
+	ObjectList [][]string
 }
 
 // Options model misbehaviour.
@@ -84,6 +92,7 @@ type Server struct {
 	needs   bool // quirk state: a click is required
 	quit    bool
 	cmds    int
+	skills  []UseSkill
 	wg      sync.WaitGroup
 	closing bool
 }
@@ -131,6 +140,56 @@ func (s *Server) Log() []Entry {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	return append([]Entry(nil), s.log...)
+}
+
+// UseSkill is a "cmd skill" line as d2d's devctl reads it: every field after the verb is a number read with C atoi or
+// stof, so a word reads as 0 (V source read: apps/d2d/devctl/verbs.hpp, the same parser on stock upstream and the fork).
+type UseSkill struct {
+	Skill int
+	X, Y  float64
+	Unit  int  // -1 when absent
+	Left  bool // field 6 read as a number, nonzero
+	Item  int  // -1 when absent
+}
+
+// ParseSkill reads the fields of "cmd skill <id> <x> <y> [unit] [hand] [item]" as d2d does; ok is false with fewer
+// than five fields (d2d then answers no cast).
+func ParseSkill(f []string) (u UseSkill, ok bool) {
+	if len(f) < 5 || f[0] != "cmd" || f[1] != "skill" {
+		return u, false
+	}
+	arg := func(i, fallback int) int {
+		if i < len(f) {
+			return atoi(f[i])
+		}
+		return fallback
+	}
+	x, _ := strconv.ParseFloat(f[3], 32)
+	y, _ := strconv.ParseFloat(f[4], 32)
+	return UseSkill{Skill: arg(2, 0), X: x, Y: y, Unit: arg(5, -1), Left: arg(6, 0) != 0, Item: arg(7, -1)}, true
+}
+
+// atoi is C atoi: an optional sign and the leading digits, 0 when there are none.
+func atoi(s string) int {
+	i, neg, n := 0, false, 0
+	if i < len(s) && (s[i] == '-' || s[i] == '+') {
+		neg = s[i] == '-'
+		i++
+	}
+	for ; i < len(s) && s[i] >= '0' && s[i] <= '9'; i++ {
+		n = n*10 + int(s[i]-'0')
+	}
+	if neg {
+		return -n
+	}
+	return n
+}
+
+// Skills returns the "cmd skill" casts received, parsed as d2d parses them.
+func (s *Server) Skills() []UseSkill {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	return append([]UseSkill(nil), s.skills...)
 }
 
 // Lines returns the received command lines only.
@@ -336,10 +395,40 @@ func (s *Server) cmd(f []string) (string, bool, bool) {
 			return "ok\n", true, false
 		}
 		return "ok\n", false, false
-	case "skill", "pickup", "resurrect", "stat", "skillpt", "select", "belt", "use":
+	case "skillhold":
+		return s.skillHold(f), false, false
+	case "skill":
+		if u, ok := ParseSkill(f); ok { // handle holds s.mu
+			s.skills = append(s.skills, u)
+		}
+		return "ok\n", false, false
+	case "pickup", "resurrect", "stat", "skillpt", "select", "belt", "use", "hand", "place":
 		return "ok\n", false, false
 	}
 	return fmt.Sprintf("err unknown cmd '%s'\n", f[1]), false, false
+}
+
+// skillHold is the fork's hold verb: the start answers at once, "status" reads the hold (Fixtures.Hold).
+func (s *Server) skillHold(f []string) string {
+	switch {
+	case s.Fix.Hold == nil:
+		return "err unknown cmd 'skillhold'\n"
+	case len(f) == 3 && f[2] == "status":
+		st := s.Fix.Hold[0]
+		if len(s.Fix.Hold) > 1 {
+			s.Fix.Hold = s.Fix.Hold[1:]
+		}
+		return st + "\nok\n"
+	case len(f) < 7:
+		return "err usage: cmd skillhold <id> <x> <y> <unit> <frames> [left]\n"
+	case s.Fix.HoldErr != "":
+		return "err skillhold: " + s.Fix.HoldErr + "\n"
+	}
+	hand := "right"
+	if len(f) > 7 && f[7] != "0" {
+		hand = "left"
+	}
+	return fmt.Sprintf("ok hold=%s skill=%s %s\n", f[6], f[2], hand)
 }
 
 func (s *Server) debug(f []string) (string, bool, bool) {
@@ -364,6 +453,15 @@ func (s *Server) debug(f []string) (string, bool, bool) {
 		return payload(s.Fix.Presets) + "ok\n", false, false
 	case "objects":
 		return payload(s.Fix.Objects) + "ok\n", false, false
+	case "objectlist":
+		if s.Fix.ObjectList == nil {
+			return "err unknown debug verb\n", false, false
+		}
+		ls := s.Fix.ObjectList[0]
+		if len(s.Fix.ObjectList) > 1 {
+			s.Fix.ObjectList = s.Fix.ObjectList[1:]
+		}
+		return payload(ls) + "ok\n", false, false
 	case "levelmap":
 		if s.Fix.LevelMap == "" {
 			return "err unknown debug verb\n", false, false

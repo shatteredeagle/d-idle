@@ -336,6 +336,10 @@ func execOne(s scenario.Scenario, r scenario.Run, out, bot string) scenario.Resu
 		_ = prep.Stop()
 		return blocked("settle: %v", err)
 	}
+	if failed := prepSelfCheck(ctx, c, s, r.Class, ledger); failed != "" { // design 6.2: refuse a hero that is not the declared one
+		_ = prep.Stop()
+		return blocked("selfcheck: %s (rows in %s)", failed, ledger)
+	}
 	if err := writeBoardAndTuning(state, hero, su); err != nil {
 		_ = prep.Stop()
 		return blocked("board record: %v", err)

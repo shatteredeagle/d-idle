@@ -335,6 +335,9 @@ func (f *Fighter) minionShadow(snap *d2.Snapshot, what string, allowWalk bool) {
 	if pl, ok := f.planMinion(snap, f.profileFor(snap.Player), inFight, allowWalk); ok && !(inFight && pl.walk) {
 		drv = pl.sp.Name
 	}
+	if mp := f.profileFor(snap.Player).minionParams(); old != "" || drv != "" || (mp != nil && len(mp.Groups) > 0) {
+		f.upkCmp.note(cmpMinion, old == drv)
+	}
 	key := what + "|" + old + "|" + drv
 	if old == drv {
 		if f.upk.minionLast[what] != "" {

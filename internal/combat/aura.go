@@ -157,7 +157,21 @@ func (f *Fighter) keepAura(ctx context.Context, snap *d2.Snapshot, tg *Target, f
 	if now.Before(f.auraRetryAt) { // a failed apply backs off even when the area or a death marks the aura dirty
 		return false, nil
 	}
-	if !force && !f.auraDirty && now.Sub(f.auraChecked) < ms(f.tune().AuraCheckMs) {
+	mode := f.upkeepMode()
+	gated := !force && !f.auraDirty && now.Sub(f.auraChecked) < ms(f.tune().AuraCheckMs)
+	if gated && mode > 0 && f.upk.aura.ID != 0 {
+		drvUp := f.upkeepAuraUp(p, f.upk.aura)
+		if mode == 1 {
+			f.upkCmp.note(cmpAura, drvUp)
+		}
+		// The aura kept last went down between checks (a non-aura right pick or cast): the driver re-picks now.
+		if !drvUp && mode == 2 {
+			gated = false
+		} else if !drvUp {
+			f.upkeepShadow(f.upk.aura, "aura recheck", false, true)
+		}
+	}
+	if gated {
 		return false, nil
 	}
 	f.auraChecked = now
@@ -170,7 +184,18 @@ func (f *Fighter) keepAura(ctx context.Context, snap *d2.Snapshot, tg *Target, f
 	if !ok {
 		return false, nil
 	}
-	if f.auraActive(p, want.ID) {
+	up := f.auraActive(p, want.ID)
+	if mode > 0 {
+		if drv := f.upkeepAuraUp(p, want); mode == 2 {
+			up = drv
+		} else if f.upkCmp.note(cmpAura, drv == up); drv != up {
+			f.upkeepShadow(want, "aura", !up, !drv)
+		} else {
+			delete(f.upk.shadowLast, want.ID)
+		}
+	}
+	f.upk.aura = want
+	if up {
 		f.auraDirty = false
 		return false, nil
 	}
@@ -189,7 +214,7 @@ func (f *Fighter) keepAura(ctx context.Context, snap *d2.Snapshot, tg *Target, f
 		f.lastRight = s.Player.RightSkill
 		// Confirmed by the real aura state when the backend reports it; the selected right skill only without one.
 		if cur, ok := f.ActiveAura(s.Player); (ok && cur == want.ID) || (!ok && s.Player.RightSkill == want.ID) {
-			f.auraDirty = false
+			f.auraDirty, f.upk.auraAt = false, f.now()
 			f.info("aura up", "skill", want.Name, "tries", try+1)
 			return true, nil
 		}

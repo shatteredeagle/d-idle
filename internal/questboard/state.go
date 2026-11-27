@@ -51,11 +51,13 @@ const (
 )
 
 // Fact is what the quest reader says about one quest in one difficulty. S3 builds it from quest.Reader
-// (Info.Status, Pending, Evidence); Failed is the game-failed signal of Rescue on Mount Arreat (U).
+// (Info.Status, Pending, Evidence); Failed is the game-failed signal of Rescue on Mount Arreat (U). Cleared is the
+// quest's objective reached at any tier (a proxy such as the made item in the pack counts): what Quest.RequiresCleared
+// asks for.
 type Fact struct {
-	Known                          bool
-	Done, Started, Pending, Failed bool
-	Tier                           Tier
+	Known                                   bool
+	Done, Started, Pending, Failed, Cleared bool
+	Tier                                    Tier
 }
 
 // Facts answers quest facts per difficulty index.
@@ -275,6 +277,11 @@ func memoryDenies(q Quest, f Fact, cf ChunkFact) bool {
 }
 
 func lockedBy(b *Board, q Quest, c Chunk, in Input) string {
+	for _, id := range q.RequiresCleared {
+		if f := in.Facts.Quest(in.Diff, id); !(f.Known && (f.Done || f.Cleared)) {
+			return lockedUntil(b, id)
+		}
+	}
 	for _, id := range append(append([]string{}, q.Requires...), c.Requires...) {
 		f := in.Facts.Quest(in.Diff, id)
 		// An act hop (kind unlock) waits for the boss's objective, not for its hand-in: the Warriv talk that sets the
@@ -282,11 +289,7 @@ func lockedBy(b *Board, q Quest, c Chunk, in Input) string {
 		// "go east" lands in Lut Gholein), so asking for done made Sail east unreachable.
 		hop := q.Kind == "unlock" && f.Pending
 		if !(f.Known && (f.Done || hop) && f.Tier.Exact()) {
-			t := id
-			if p, err := b.Quest(id); err == nil {
-				t = p.Title
-			}
-			return "locked until " + t
+			return lockedUntil(b, id)
 		}
 	}
 	for _, a := range c.After {
@@ -295,6 +298,13 @@ func lockedBy(b *Board, q Quest, c Chunk, in Input) string {
 		}
 	}
 	return ""
+}
+
+func lockedUntil(b *Board, id string) string {
+	if p, err := b.Quest(id); err == nil {
+		return "locked until " + p.Title
+	}
+	return "locked until " + id
 }
 
 func chunkDone(q Quest, id string, in Input, qf Fact) bool {

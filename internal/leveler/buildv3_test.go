@@ -26,9 +26,10 @@ func replaySkills(t *testing.T, build string, to int, quests map[int]int) (spent
 	}
 	cur := map[string]int{}
 	at = map[int]map[string]int{}
-	free := 0
+	free, qpts := 0, 0
 	for lv := 2; lv <= to; lv++ {
 		free += 1 + quests[lv]
+		qpts += quests[lv]
 		rule := func(name string, level int, lv2 map[string]int) bool {
 			s, ok := v3Req[name]
 			okRule := ok && s.lvl <= level && lv2[name] < 20
@@ -42,7 +43,7 @@ func replaySkills(t *testing.T, build string, to int, quests map[int]int) (spent
 			}
 			return okRule
 		}
-		for _, a := range b.Plan(Have{Skills: cur, Level: lv, SkillPts: free}, rule, nil) {
+		for _, a := range b.Plan(Have{Skills: cur, Level: lv, SkillPts: free, QuestPts: qpts}, rule, nil) {
 			if a.Kind == KindSkill {
 				cur[a.Skill]++
 				free--
@@ -65,11 +66,16 @@ func TestBuildV3SpentInTableOrder(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	var order []string
+	// level points follow the rows; a quest-tagged point slots in when its quest point is granted
+	var order, tagged []string
 	for _, r := range b.Rows {
 		for _, s := range r.Skills {
 			for i := 0; i < s.Points; i++ {
-				order = append(order, s.Skill)
+				if s.Quest != "" {
+					tagged = append(tagged, s.Skill)
+				} else {
+					order = append(order, s.Skill)
+				}
 			}
 		}
 	}
@@ -81,10 +87,19 @@ func TestBuildV3SpentInTableOrder(t *testing.T) {
 		if len(refused) > 0 {
 			t.Errorf("%s: rule refused %v", name, refused)
 		}
+		j, k := 0, 0
 		for i, s := range spent {
-			if s != order[i] {
-				t.Fatalf("%s: point %d went to %s, table row says %s", name, i+1, s, order[i])
+			switch {
+			case j < len(order) && s == order[j]:
+				j++
+			case k < len(tagged) && s == tagged[k]:
+				k++
+			default:
+				t.Fatalf("%s: point %d went to %s, table row says %s", name, i+1, s, order[min(j, len(order)-1)])
 			}
+		}
+		if wantK := min(len(tagged), questSum(q)); k != wantK {
+			t.Errorf("%s: %d quest-tagged points bought, want %d", name, k, wantK)
 		}
 		for _, bad := range []string{"Static Field", "Warmth", "Energy Shield"} {
 			if at[60][bad] != 0 {
@@ -140,4 +155,12 @@ func TestBuildV3IsOptIn(t *testing.T) {
 	if TableCombat("fallback") != "" || TableCombat("primary") != "" {
 		t.Errorf("tables without a combat key must report none")
 	}
+}
+
+func questSum(q map[int]int) int {
+	n := 0
+	for _, v := range q {
+		n += v
+	}
+	return n
 }

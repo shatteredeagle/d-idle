@@ -18,6 +18,8 @@ type Fake struct {
 	// pending bit on T2 (otherwise only the T3 objective shows).
 	DoneQuest  map[string]Tier
 	PendingBit bool
+	// ClearedQuest marks quests whose objective is reached (Fact.Cleared, proxy tier).
+	ClearedQuest map[string]bool
 	// Steps done per chunk key: the handler progress that the game itself holds (items, position, kills).
 	Progress  map[string]int
 	ChunkDone map[string]Tier
@@ -56,7 +58,7 @@ func (ff fakeFacts) Quest(diff int, id string) Fact {
 	if t, ok := f.DoneQuest[id]; ok {
 		return Fact{Known: true, Done: true, Tier: t}
 	}
-	fact := Fact{Known: true, Tier: TierMemory}
+	fact := Fact{Known: true, Tier: TierMemory, Cleared: f.ClearedQuest[id]}
 	if f.PendingBit {
 		if q, err := f.board.Quest(id); err == nil && len(q.Chunks) == 1 && f.Progress[ChunkKey(id, q.Chunks[0].ID)] >= len(q.Chunks[0].Steps) {
 			fact.Pending = true

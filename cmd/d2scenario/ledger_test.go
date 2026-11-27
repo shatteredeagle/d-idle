@@ -44,8 +44,18 @@ func TestLedgerCommands(t *testing.T) {
 		t.Fatalf("%v %s", err, sb.String())
 	}
 	sb.Reset()
-	if err := cmdLedger([]string{"status-doc", "-in", f}, &sb); err != nil || !strings.Contains(sb.String(), "| x | P | GREEN | SETUP |") {
+	if err := cmdLedger([]string{"status-doc", "-in", f, "-tiers", ""}, &sb); err != nil || !strings.Contains(sb.String(), "| x | P | ? | candidate | GREEN | SETUP |") {
 		t.Fatalf("%v %s", err, sb.String())
+	}
+	sb.Reset()
+	if err := cmdLedger([]string{"page-json", "-in", f, "-tiers", "", "-commit", "a"}, &sb); err != nil ||
+		!strings.Contains(sb.String(), `"version": "didle.pg-page/1"`) || !strings.Contains(sb.String(), `"release_view": [`) {
+		t.Fatalf("%v %s", err, sb.String())
+	}
+	rel := filepath.Join(t.TempDir(), "rel.json")
+	_ = os.WriteFile(rel, []byte(`[{"scenario":"x","at":"2026-11-22T00:00:00Z"}]`), 0o644)
+	if err := cmdLedger([]string{"status-doc", "-in", f, "-tiers", "", "-releases", rel}, &sb); err == nil {
+		t.Fatal("a release without a person or root cause is refused")
 	}
 	_ = os.WriteFile(f, []byte(strings.Replace(line, `"host":"builder"`, `"host":""`, 1)), 0o644)
 	if err := cmdLedger([]string{"check", "-in", f}, &sb); err == nil {

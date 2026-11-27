@@ -8,6 +8,30 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Merge branch 'main' into prereq <!--sg:agent/prereq-->
+- Merge branch 'main' into deploy94-ledger <!--sg:agent/deploy94-->
+- Merge remote-tracking branch 'origin/main' into agent/act2handin <!--sg:agent/act2handin-->
+- Merge branch 'main' into bossdone <!--sg:agent/bossdone-->
+- act2drill5: fifth Duriel run, lair entered and Duriel killed 3/3, blocked on the kill step <!--sg:agent/act2drill5-->
+- Merge branch 'main' into placefix <!--sg:agent/lairentry-->
+- Merge branch 'main' into pgselfcheck <!--sg:agent/pgselfcheck-->
+- Merge branch 'main' into stepexec1 <!--sg:agent/act2drill4-->
+- questpts: card owns as directories <!--sg:agent/questpts-->
+- Merge branch 'main' into placefix <!--sg:agent/placefix3-->
+- Merge branch 'main' into stepexec1 <!--sg:agent/act2drill3-->
+- palzeal: owns the leveler directory <!--sg:agent/palzeal-->
+- Merge branch 'main' into placefix <!--sg:agent/placefix2-->
+- act2drill2: card result for the Duriel rerun <!--sg:agent/act2drill2-->
+- Merge branch 'main' into dlv-aim-point <!--sg:agent/aimpoint-->
+- placefix: Duriel drills keep the Staff placeable; seven_tombs opens on the Staff made <!--sg:agent/placefix-->
+- Merge branch 'main' into skillhand <!--sg:agent/skillhand-->
+- Merge branch 'main' into stepexec1 <!--sg:agent/act2drill-->
+- Merge branch 'main' into upkeepcmp <!--sg:agent/upkeepcmp-->
+- casthold: card result and criteria <!--sg:agent/casthold-->
+- Merge branch 'main' into inputl3 <!--sg:agent/forkcaps-->
+- Merge branch 'main' into dlv-stance-army <!--sg:agent/stancearmy-->
+- Merge branch 'main' into pgpage <!--sg:agent/pgpage-->
+- Merge branch 'main' into auraupkeep <!--sg:agent/auraupkeep-->
 - Merge branch 'main' into dlv-cast-verbs <!--sg:agent/castverbs-->
 - Merge branch 'main' into pghero <!--sg:agent/pghero-->
 - Merge branch 'main' into dlv-mark <!--sg:agent/mark-->

@@ -52,6 +52,7 @@ func (m moverAdapter) TeleportToArea(ctx context.Context, levelNo int) error {
 type fighterAdapter struct{ f *combat.Fighter }
 
 func (a fighterAdapter) IsIgnored(id uint32, dist float64) bool { return a.f.IsIgnored(id, dist) }
+func (a fighterAdapter) UpkeepCompareField() string             { return a.f.UpkeepCompareField() }
 
 func (a fighterAdapter) Clear(ctx context.Context, o bot.ClearOpts) (bot.ClearResult, error) {
 	res, err := a.f.Clear(ctx, combat.ClearOpts{Radius: o.Radius, Interlude: o.Interlude})
@@ -95,6 +96,9 @@ func (a fighterAdapter) SetDeathWeights(w combat.DeathWeights) { a.f.SetDeathWei
 
 // SetWalking tells the fighter the bot is on a travel or quest walk (the crowd-abandon rule applies to walks).
 func (a fighterAdapter) SetWalking(on bool) { a.f.SetWalking(on) }
+
+// ArmyFacts passes the army facts to the arbiter view (card dlv-stance-army).
+func (a fighterAdapter) ArmyFacts(s *d2.Snapshot) map[string]int { return a.f.ArmyFacts(s) }
 
 // SetQuestCrowd tells the fighter a player-started quest chunk runs (combat.crowdAbandonQuestN applies).
 func (a fighterAdapter) SetQuestCrowd(on bool) { a.f.SetQuestCrowd(on) }

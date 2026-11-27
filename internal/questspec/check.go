@@ -140,7 +140,7 @@ func Check(c *Chain, caps *Caps) []Finding {
 		for _, grp := range [][]Clause{s.PreClauses(), s.PostClauses()} {
 			for _, cl := range grp {
 				for _, p := range cl {
-					if p.Name == "has_item" || p.Name == "ground_item" {
+					if p.Name == "has_item" || p.Name == "lacks_item" || p.Name == "ground_item" {
 						usesItem = true
 						if len(p.Args) != 1 || !itemCode.MatchString(p.Args[0]) {
 							add(5, s.ID, p.String(), "", "%s: item argument is not a code", p)

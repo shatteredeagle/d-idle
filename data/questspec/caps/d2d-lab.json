@@ -32,10 +32,19 @@
    "tier": "memory",
    "note": "S: the reader's stage (task.Stage), T1/T2 evidence; docs/questmem.md"
   },
+  "quest_bits": {
+   "tier": "memory",
+   "note": "S: every bit of the mask set in the reader's raw quest word (the same word as quest_state); the Seven Tombs bit 5 at Duriel's death is V on the lab (docs/probes/act2-stepexec-drill-2026-11-27.md)"
+  },
   "has_item": {
    "tier": "proxy",
    "via": "dump items",
    "note": "V: dump items lists the pack by base code (d2dsrc)"
+  },
+  "lacks_item": {
+   "tier": "proxy",
+   "via": "dump items",
+   "note": "S: the negation of has_item on the same pack listing; as a post it means the step consumed the item (the orifice takes the Staff), pre has_item gives the context"
   },
   "visited": {
    "tier": "proxy",

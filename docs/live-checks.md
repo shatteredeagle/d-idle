@@ -110,3 +110,11 @@ Closing rule: a card closes when merged with offline acceptance proven; every op
 | TASK-930 equipv2 | #5 | Live check on the sandbox image (needs the devp29 image) | live drill on the sandbox, fresh hero, per the card result | open |
 | TASK-979 faultsoak | #2 | First soak run recorded with writes ledger (live check: d2scenario soak -id soak.fault. -duration 1h on the worker host in the night window) | live drill on the sandbox, fresh hero, per the card result | open |
 | TASK-1035 faultstall | #4 | Live soak row under the mixed set logs minute lines (live check) | live drill on the sandbox, fresh hero, per the card result | open |
+| TASK-1037 auraupkeep | #3 | Live shadow run on a Paladin shows upkeep shadow lines for auras (knob 1) | live drill on the sandbox, fresh hero, per the card result | open |
+| TASK-1038 casthold | #5 | Live check: hidden instance with the forkcaps build, input.planner=1, a Paladin holds Zeal and the log shows input path action=cast-hold path=verb | live drill on the sandbox, fresh hero, per the card result | open |
+| TASK-1039 upkeepcmp | #4 | live: sandbox Paladin minute line shows aura comparisons | live drill on the sandbox, fresh hero, per the card result | open |
+| TASK-1040 skillhand | #3 | Live: a Paladin Zeal or Smite with cmd skill <id> x y -1 1 swings at the spot on a sandbox | live drill on the sandbox, fresh hero, per the card result | open |
+| TASK-1042 palzeal | #4 | Live: a fresh zealot-lite Paladin logs last_skill=Zeal at kills from clvl 12 | live drill on the sandbox, fresh hero, per the card result | open |
+| TASK-1044 bossdone | #4 | Live: drill.act2.duriel.stepexec passes the kill step and the hand-in on the lab | live drill on the sandbox, fresh hero, per the card result | open |
+| TASK-1045 act2handin | #4 | Live: a drill hands in kill, Tyrael, Jerhyn, Meshif and ends with bit 0x0001 | live drill on the sandbox, fresh hero, per the card result | open |
+| TASK-1047 prereq | #4 | Live: Doofer learns Sacrifice and Zeal after deploy and logs last_skill=Zeal at kills | live drill on the sandbox, fresh hero, per the card result | open |

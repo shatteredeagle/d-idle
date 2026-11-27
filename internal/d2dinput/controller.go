@@ -59,6 +59,9 @@ type Controller struct {
 	chainStart time.Time // start of the current chain of moves at full stamina
 	lastMoveAt time.Time
 	stam       stamTrack // previous stamina sample for the exact run/walk classification (run.go)
+
+	holdMu   sync.Mutex
+	lastHold HoldResult // end of the last CastHold (casthold.go)
 }
 
 // New returns a Controller with default transform and polling.
@@ -495,10 +498,52 @@ func (c *Controller) Interact(t input.Target) error {
 	return unsupported(fmt.Sprintf("interact with unit type %d (a field object listed by d2dsrc has an id in the NPC range)", t.Type))
 }
 
+// placeOpenWait bounds the wait for an object to operate after "cmd interact" (the walk from beside it plus the
+// operate; I, a few ticks are expected).
+const placeOpenWait = 4 * time.Second
+
+// waitOperated waits until object index is out of its neutral mode NU. A build without "debug objectlist" gets a
+// fixed wait of placeOpenWait/2 instead (U whether that is enough).
+func (c *Controller) waitOperated(index int) error {
+	clk := c.clk()
+	deadline := clk.Now().Add(placeOpenWait)
+	mode := "?"
+	for {
+		l, err := c.C.ObjectList(c.ctx())
+		if err != nil {
+			var refused *d2dctl.CmdError
+			if !errors.As(err, &refused) {
+				return err
+			}
+			clk.Sleep(placeOpenWait / 2)
+			return nil
+		}
+		for _, o := range l.Items {
+			if o.Index == index {
+				mode = o.Mode
+			}
+		}
+		if mode != "NU" && mode != "?" {
+			return nil
+		}
+		if !clk.Now().Before(deadline) {
+			return fmt.Errorf("d2dinput: object %d still %s %v after cmd interact (not operated: no staff, or out of reach)", index, mode, placeOpenWait)
+		}
+		clk.Sleep(c.poll())
+	}
+}
+
 // PlaceItem puts the pack item on the field object with the preset index: open its panel, take the item, place it (the d2d
 // verbs need no hover scan; V devp28 doc card B on the Horadric Staff and the orifice).
+//
+// The interact only walks there; the object operates on arrival, ticks later (V-d2d World::apply cmd::Interact). The
+// placement (C->S 0x44, World::object_item) is dropped without a reply unless the orifice is already operated, so the
+// three verbs sent back to back did nothing (V lab drill 2026-11-27, 3 of 3). Wait until the object leaves NU first.
 func (c *Controller) PlaceItem(index int, item uint32) error {
 	if err := c.InteractNPC(index); err != nil {
+		return err
+	}
+	if err := c.waitOperated(index); err != nil {
 		return err
 	}
 	if err := c.C.CmdHand(c.ctx(), item); err != nil {

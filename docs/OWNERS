@@ -126,8 +126,10 @@ docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-minutes.jsonl.gz  gaterun  gat
 docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-extras.jsonl.gz  gaterun  gate2multi-20261107-1811-g2h
 
 # BEGIN GENERATED OWNERS (tools/sharedgen/sharedgen.py from the owns: keys of open tasks; do not edit between the markers)
+backlog/tasks/task-726 - dlv-cast-verbs-input-caps-cast-unit-cast-point-cast-hold.md  credit-runner  inputl3
 cmd/d2bot/acts_test.go  credit-runner  qdmatrix
 cmd/d2bot/adapters.go  credit-runner  cainfix3
+cmd/d2bot/adapters.go  credit-runner  dlv-stance-army
 cmd/d2bot/behaviors.go  credit-runner  campaign1
 cmd/d2bot/boss.go  credit-runner  countess3
 cmd/d2bot/boss.go  credit-runner  countess3b
@@ -170,6 +172,9 @@ cmd/d2bot/task_test.go  credit-runner  qdmatrix
 cmd/d2bot/vaultkeep.go  credit-runner  sellall
 cmd/d2firsthour/  live-agent  firsthour
 cmd/d2scenario/  credit-runner  arbmig
+cmd/d2scenario/ledger.go  credit-runner  pgpage
+cmd/d2scenario/ledger_test.go  credit-runner  pgpage
+cmd/d2scenario/main.go  credit-runner  pgpage
 cmd/d2scenario/run.go  credit-runner  pgtaps
 cmd/d2scenario/tap.go  credit-runner  handinbtn
 cmd/d2scenario/tap.go  credit-runner  pgtaps
@@ -177,15 +182,18 @@ cmd/d2scenario/tap.go  credit-runner  stage1fix
 cmd/d2scenario/tap_test.go  credit-runner  handinbtn
 cmd/d2scenario/tap_test.go  credit-runner  pgtaps
 cmd/d2scenario/tap_test.go  credit-runner  stage1fix
-cmd/d2scenario/validate.go  credit-runner  pgselfcheck
 data/capabilities/  credit-runner  dlv-stance-pack
 data/darklaunch.json  credit-runner  arbmig
 data/darklaunch.json  credit-runner  deploy88-ledger
+data/darklaunch.json  credit-runner  deploy94-ledger
 data/darklaunch.json  credit-runner  dlv-upkeep-state
 data/darklaunch.json  credit-runner  ticklog
 data/input/caps/  credit-runner  dlv-cast-verbs
+data/input/caps/  credit-runner  inputl3
 data/input/caps_test.go  credit-runner  dlv-cast-verbs
+data/input/caps_test.go  credit-runner  inputl3
 data/questboard/act1.json  credit-runner  cainfix3
+data/questboard/act2.json  credit-runner  placefix
 data/questboard/act2.json  credit-runner  qdmatrix
 deploy/d2d-container/tester-report.sh  credit-runner  testerreport
 docs/arbiter.md  credit-runner  arbmig
@@ -207,6 +215,7 @@ docs/design/boardsm-flip.md  credit-runner  bsmdef
 docs/design/fable-review-2026-11-21/town-planner-b-model.md  credit-runner  town5
 docs/design/fable-review-2026-11-21/town-profiles-sme.md  credit-runner  town12
 docs/design/input-cast-verbs.md  credit-runner  dlv-cast-verbs
+docs/design/input-cast-verbs.md  credit-runner  inputl3
 docs/design/input-i3.md  credit-runner  inputl3
 docs/design/input-i4.md  credit-runner  inputl4
 docs/design/input-i5-i7.md  credit-runner  inputl5
@@ -262,8 +271,16 @@ docs/probes/h1-baseline.md  user  h1baseline
 docs/probes/h3-verdict.md  user  h3verdict
 docs/probes/necrocaps-2026-11-26.md  credit-runner  necrocorpse
 docs/probes/necromancer-act1-drill-2026-11-22.md  credit-runner  stage1fix
+docs/probes/provingground-act1more-2026-11-20.md  credit-runner  pgpage
+docs/probes/provingground-act1next-2026-11-20.md  credit-runner  pgpage
+docs/probes/provingground-cain-2026-11-19.md  credit-runner  pgpage
+docs/probes/provingground-cainchain-2026-11-20.md  credit-runner  pgpage
+docs/probes/provingground-cainfix3-2026-11-19.md  credit-runner  pgpage
 docs/probes/provingground-countess-2026-11-20.md  credit-runner  countess3
 docs/probes/provingground-countess-2026-11-20.md  credit-runner  countess3b
+docs/probes/provingground-countess-2026-11-20.md  credit-runner  pgpage
+docs/probes/provingground-pgfix4-2026-11-20.md  credit-runner  pgpage
+docs/probes/provingground-run-2026-11-19.md  credit-runner  pgpage
 docs/probes/quest-drill-matrix-2026-11-23.md  credit-runner  qdmatrix
 docs/probes/ready-audit.md  live-agent  ready-audit
 docs/probes/recoverypace/  live-agent  recoverypace
@@ -282,6 +299,7 @@ docs/quest-givers.md  credit-runner  campaign1
 docs/quest-hints.md  live-agent  questdrill
 docs/questboard.md  credit-runner  cainfix3
 docs/questboard.md  credit-runner  handinbtn
+docs/questboard.md  credit-runner  placefix
 docs/releases/0.1.2.md  credit-runner  cut012
 docs/repair.md  credit-runner  repairtrip
 docs/research/README.md  credit-runner  dietarchive
@@ -353,6 +371,7 @@ internal/bot/observe.go  credit-runner  freshstart
 internal/bot/observe.go  credit-runner  intake
 internal/bot/observe.go  credit-runner  survrecover
 internal/bot/povertyfarm.go  credit-runner  admit1
+internal/bot/questboard.go  credit-runner  placefix
 internal/bot/questboard.go  credit-runner  qdmatrix
 internal/bot/questboard.go  credit-runner  stage1fix
 internal/bot/questboard_s7b_test.go  credit-runner  qdmatrix
@@ -363,6 +382,7 @@ internal/bot/runner.go  credit-runner  campaign1
 internal/bot/runner.go  credit-runner  maphistoryA
 internal/bot/runner.go  credit-runner  repairtrip
 internal/bot/shadow.go  credit-runner  arbmig
+internal/bot/shadow.go  credit-runner  dlv-stance-army
 internal/bot/shadow.go  credit-runner  ticklog
 internal/bot/task.go  credit-runner  boardmoderace
 internal/bot/task.go  credit-runner  wpstep
@@ -405,11 +425,14 @@ internal/d2dcombat/  credit-runner  dlv-cast-verbs
 internal/d2dcombat/  credit-runner  dlv-press
 internal/d2dctl  credit-runner  countess3
 internal/d2dctl/fake/fake.go  credit-runner  inputl3
+internal/d2dctl/fake/fake.go  credit-runner  placefix
 internal/d2dctl/fake/fake.go  credit-runner  warptrigger
 internal/d2dctl/item_verbs_merc.go  credit-runner  uib9
 internal/d2dctl/item_verbs_merc_test.go  credit-runner  uib9
+internal/d2dctl/parse.go  credit-runner  placefix
 internal/d2dctl/use_verb.go  credit-runner  inputl3
 internal/d2dctl/use_verb_test.go  credit-runner  inputl3
+internal/d2dctl/verbs.go  credit-runner  placefix
 internal/d2dctl/warptriggers.go  credit-runner  warptrigger
 internal/d2dctl/warptriggers_test.go  credit-runner  warptrigger
 internal/d2denv/env.go  credit-runner  pgclock
@@ -417,9 +440,13 @@ internal/d2denv/env.go  credit-runner  warptrigger
 internal/d2denv/reader.go  credit-runner  pgclock
 internal/d2denv/recent_test.go  credit-runner  pgclock
 internal/d2dinput/  credit-runner  dlv-cast-verbs
+internal/d2dinput/controller.go  credit-runner  placefix
+internal/d2dinput/placefix_test.go  credit-runner  placefix
 internal/d2dinput/useitem.go  credit-runner  inputl3
 internal/d2dsoakstat/minute.go  credit-runner  intake
+internal/d2dsrc/items.go  credit-runner  placefix
 internal/d2dsrc/items.go  credit-runner  qdmatrix
+internal/d2dsrc/source_test.go  credit-runner  placefix
 internal/d2dsrc/srv_test.go  credit-runner  qdmatrix
 internal/d2dworld  credit-runner  countess3
 internal/d2dworld/  credit-runner  wpstep
@@ -492,6 +519,7 @@ internal/plandata/povertyfarm.json  credit-runner  admit1
 internal/power/  credit-runner  dlv-cleanup
 internal/power/archetype.go  credit-runner  qdmatrix
 internal/power/skilldamage_test.go  credit-runner  qdmatrix
+internal/questboard/  credit-runner  placefix
 internal/questboard/def.go  credit-runner  cainfix3
 internal/questboard/desk.go  credit-runner  handinbtn
 internal/questboard/desk_action.go  credit-runner  handinbtn
@@ -507,8 +535,9 @@ internal/resource/tuning.go  credit-runner  freshstart
 internal/resource/tuning.go  live-agent  recoverypace
 internal/saves/progress.go  credit-runner  qdmatrix
 internal/scenario/earned.go  credit-runner  pgearned
-internal/scenario/hero/  credit-runner  pghero
-internal/scenario/hero/selfcheck.go  credit-runner  pgselfcheck
+internal/scenario/pgpage.go  credit-runner  pgpage
+internal/scenario/pgpage_test.go  credit-runner  pgpage
+internal/scenario/placefix_test.go  credit-runner  placefix
 internal/scenario/result.go  credit-runner  pgtaps
 internal/scenario/scenario.go  credit-runner  qdmatrix
 internal/scenario/setup.go  credit-runner  qdmatrix
@@ -528,6 +557,8 @@ internal/supply  credit-runner  town9
 internal/survival/ledger.go  credit-runner  intake
 internal/talk/talk.go  credit-runner  qdmatrix
 internal/talk/talk_test.go  credit-runner  qdmatrix
+internal/task/act1.go  credit-runner  placefix
+internal/task/act2.go  credit-runner  placefix
 internal/task/act2.go  credit-runner  qdmatrix
 internal/task/act2_test.go  credit-runner  qdmatrix
 internal/task/act4.go  credit-runner  qdmatrix
@@ -537,6 +568,7 @@ internal/task/executor.go  credit-runner  wpstep
 internal/task/gate.go  credit-runner  cainfix3
 internal/task/guided.go  credit-runner  campaign1
 internal/task/guided_test.go  credit-runner  campaign1
+internal/task/placefix_test.go  credit-runner  placefix
 internal/task/timeoutpolicy_test.go  credit-runner  wpstep
 internal/task/world.go  credit-runner  cainfix3
 internal/town  credit-runner  town11
@@ -657,7 +689,6 @@ internal/watch/web/tokens.css  credit-runner  uis1
 internal/watch/web/vault.js  credit-runner  vaultphone
 internal/watch/whyline.json  credit-runner  repairtrip
 internal/watch/whyline_test.go  credit-runner  repairtrip
-tools/ab/prep/  credit-runner  pghero
 tools/ci/  credit-runner  dlv-cleanup
 tools/emu/am_batch.sh  credit-runner  qdmatrix
 tools/emu/am_model.py  credit-runner  qdmatrix
@@ -694,12 +725,13 @@ tools/provingground/scenarios/cain.json  credit-runner  wpstep
 tools/provingground/scenarios/input-scenarios.json  credit-runner  dlv-cast-verbs
 tools/provingground/scenarios/navexit.json  credit-runner  stage1fix
 tools/provingground/scenarios/necro.json  credit-runner  stage1fix
+tools/provingground/scenarios/questdrill.json  credit-runner  placefix
 tools/provingground/scenarios/questdrill.json  credit-runner  qdmatrix
+tools/provingground/scenarios/stepexec-act2.json  credit-runner  placefix
 tools/provingground/scenarios/tiers.json  credit-runner  dlv-cast-verbs
 tools/provingground/scenarios/townplan.json  credit-runner  town5
 tools/provingground/scenarios/vaultsellall.json  credit-runner  sellall
 tools/provingground/status_doc.sh  credit-runner  pgpage
-tools/survival/  credit-runner  pghero
 tools/tester-pack.sh  credit-runner  testerpack
 tools/uilint/  credit-runner  uis1
 tools/uilint/lint.go  credit-runner  uis6

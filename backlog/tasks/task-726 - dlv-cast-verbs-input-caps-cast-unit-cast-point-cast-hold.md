@@ -27,7 +27,7 @@ exclusive:
   - "fork-branch:didle/cast-verbs"
 contracts: []
 lane: next
-result: "Built offline, not verified live. Input caps cast-unit, cast-point, cast-hold with a cast request and RunCast that sends the verb only with input.planner on and the cap listed, falls back once only when the verb was not sent, never casts twice; d2d controller cast verbs; combat Deliver reads hand, target and press from the capability row and carries the corpse unit; candidate caps file and pending scenario input.cast-point-lands; tests on Sorceress, Paladin and Barbarian rows; class and skill literals added 0 (inventory scope untouched); no combat driver ships here, so no combat.delivery knob (the input knob input.planner is the rollback). Not done: the Fighter cast section still calls CastAt and Click (file not owned), the fork differential and the hold verb (described as a fork patch in docs/design/input-cast-verbs.md)."
+result: "Built offline. Fork differential run 2026-11-27 in two headless d2d, NOT verified live: the fused cast verb equals select then a press with the old hand put back, 0 differences on unit, point, left hand, corpse and four refusals, and the point spell lands within one cell; a hold verb was added to the private fork and equals a held left button. The fork branch lists cast-unit, cast-point and cast-hold. Still open: the Fighter cast section still calls CastAt and Click, the controller has no CastHold yet, and the scenario input.cast-point-lands has not run. Class and skill literals added in Go: 0 (rows from the capability table)."
 ---
 
 ## Description
@@ -41,7 +41,7 @@ Design: docs/design/fable-review-2026-11-21/combat-engine-d-cards.md (user-appro
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
 - [ ] #1 Scenario input.cast-point-lands: a point spell lands at the aimed cell
-- [ ] #2 Differential fused verb vs select-then-cast
+- [x] #2 Differential fused verb vs select-then-cast
 - [x] #3 Knob input.planner (exists, default 0)
 - [x] #4 Two builds tested (Paladin + Sorceress), no class or skill literal added, literal count reported in result (may only fall)
 - [x] #5 Knob combat.delivery.<driver> 0/1/2 where a driver ships; rollback is the knob

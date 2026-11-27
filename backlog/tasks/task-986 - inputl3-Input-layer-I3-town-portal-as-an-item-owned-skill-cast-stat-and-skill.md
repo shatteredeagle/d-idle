@@ -12,6 +12,7 @@ dependencies: []
 priority: medium
 ordinal: 474000
 card: "inputl3"
+branch: "agent/forkcaps"
 owns:
   - "docs/design/input-i3.md"
   - "internal/input/useitem.go"
@@ -28,9 +29,13 @@ owns:
   - "internal/town/portalverb_unit_test.go"
   - "internal/town/portalverb_export_test.go"
   - "internal/town/trip.go"
+  - "data/input/caps/"
+  - "data/input/caps_test.go"
+  - "docs/design/input-cast-verbs.md"
+  - "backlog/tasks/task-726 - dlv-cast-verbs-input-caps-cast-unit-cast-point-cast-hold.md"
 exclusive: []
 contracts: []
-result: "Offline only, NOT verified live. Town portal casts (combat safety portal and the town trip) send the use-item verb, the message the pack right-click sends, when input.planner is on and the build lists input.use-item; verified by the portal object, the scroll gone or the tome charges falling; a sent verb with no effect is never followed by the click. Stat and skill points were already on verbs. Nothing is build-specific; tests on four classes. The two differentials are written as a fork checklist in the design doc, not run; no build lists input.use-item yet, so the change is dark."
+result: "Bot side built offline, NOT verified live. Town portal casts send the use-item verb when input.planner is on and the build lists input.use-item; verified by the portal object, the scroll gone or the tome charges falling; a sent verb with no effect is never followed by the click. Fork differential run 2026-11-27 in two headless d2d: town portal by the verb equals the pack right-click, scroll, tome twice and three refusals, 0 differences; the private fork branch now lists input.use-item and the caps set is in the repo. Stat and skill points were already on verbs; their differential has not run, so criterion one stays open. Nothing is build-specific; tests on four classes."
 ---
 
 ## Description

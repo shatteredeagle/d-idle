@@ -123,7 +123,8 @@
     },
     {
      "skill": "Firestorm",
-     "points": 1
+     "points": 1,
+     "quest": "den_of_evil"
     }
    ]
   },
@@ -193,7 +194,12 @@
    "skills": [
     {
      "skill": "Eruption",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Eruption",
+     "points": 1,
+     "quest": "radament"
     }
    ]
   },
@@ -303,7 +309,12 @@
    "skills": [
     {
      "skill": "Molten Boulder",
-     "points": 3
+     "points": 1
+    },
+    {
+     "skill": "Molten Boulder",
+     "points": 2,
+     "quest": "izual"
     }
    ]
   },
@@ -423,7 +434,12 @@
    "skills": [
     {
      "skill": "Eruption",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Eruption",
+     "points": 1,
+     "quest": "den_of_evil"
     }
    ]
   },

@@ -4,6 +4,7 @@ import (
 	"context"
 	"log/slog"
 	"strings"
+	"sync"
 	"time"
 
 	"d2lod-bot/internal/agency"
@@ -27,6 +28,9 @@ type allocWire struct {
 	db    *data.DB
 	caps  *agency.Caps
 	kinds map[string]string
+	log   *slog.Logger
+	mu    sync.Mutex
+	seen  map[string]bool // blocker lines already logged
 }
 
 func newAllocWire(db *data.DB, log *slog.Logger) *allocWire {
@@ -36,10 +40,10 @@ func newAllocWire(db *data.DB, log *slog.Logger) *allocWire {
 	caps, err := agency.LoadCaps()
 	if err != nil {
 		log.Warn("auto-alloc: no capability table, the picker shows no tiers", "err", err)
-		return &allocWire{db: db}
+		return &allocWire{db: db, log: log}
 	}
 	caps.Overlay(db.SkillByName)
-	w := &allocWire{db: db, caps: caps}
+	w := &allocWire{db: db, caps: caps, log: log}
 	if p, err := power.Load(); err == nil {
 		w.kinds = p.SkillKinds
 	}
@@ -117,7 +121,8 @@ func (w *allocWire) next(build string, p *d2.Player) ([]points.Step, error) {
 		return nil, err
 	}
 	have := leveler.HaveFor(w.db, p, nil)
-	acts := b.Plan(have, leveler.DBRule(w.db, leveler.ClassCode(w.db, p.Class.String())), nil)
+	acts, why := b.PlanWhy(have, leveler.DBRule(w.db, leveler.ClassCode(w.db, p.Class.String())), nil)
+	w.logBlockers(build, p.Level, why)
 	var out []points.Step
 	for _, a := range acts {
 		if a.Kind == leveler.KindStat {
@@ -128,9 +133,30 @@ func (w *allocWire) next(build string, p *d2.Player) ([]points.Step, error) {
 		if sk == nil {
 			continue
 		}
-		out = append(out, points.Step{Kind: "skill", Skill: sk.ID, Name: a.Skill})
+		out = append(out, points.Step{Kind: "skill", Skill: sk.ID, Name: a.Skill, Prereq: a.Prereq})
 	}
 	return skillsFirst(out), nil
+}
+
+// logBlockers writes one line per planned skill the table cannot buy now, naming the blocker, once per build, skill and
+// reason (the allocator asks every few seconds).
+func (w *allocWire) logBlockers(build string, clvl int, why map[string]string) {
+	if w.log == nil || len(why) == 0 {
+		return
+	}
+	w.mu.Lock()
+	defer w.mu.Unlock()
+	if w.seen == nil {
+		w.seen = map[string]bool{}
+	}
+	for skill, reason := range why {
+		k := build + "\x00" + skill + "\x00" + reason
+		if w.seen[k] {
+			continue
+		}
+		w.seen[k] = true
+		w.log.Info("auto-alloc: "+skill+" blocked: "+reason, "build", build, "clvl", clvl, "skill", skill)
+	}
 }
 
 func (w *allocWire) offBuild(build string, p *d2.Player) []string {

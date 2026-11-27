@@ -3,6 +3,7 @@ package questspec
 import (
 	"context"
 	"errors"
+	"strings"
 	"testing"
 	"time"
 )
@@ -26,9 +27,12 @@ func (f *fakeBE) Approach(context.Context, Target, int) error {
 	f.approach = f.approach[1:]
 	return e
 }
-func (f *fakeBE) Act(_ context.Context, verb string, t Target, pick string) error {
-	if pick != "" {
-		verb += "[" + pick + "]"
+func (f *fakeBE) Act(_ context.Context, verb string, t Target, args ActArgs) error {
+	if args.Pick != "" {
+		verb += "[" + args.Pick + "]"
+	}
+	if len(args.Inputs) > 0 {
+		verb += "(" + strings.Join(args.Inputs, "+") + ")"
 	}
 	f.acts = append(f.acts, verb+":"+t.Name+t.Code)
 	f.nAct++
@@ -204,4 +208,40 @@ func TestTalkStepPicksTheLine(t *testing.T) {
 func validateExecForTest(s Step) (hasErr bool) {
 	s.Exec.validate(s, func(string, ...any) { hasErr = true })
 	return
+}
+
+func cubeStep() Step {
+	return Step{ID: "transmute", Act: "transmute", Target: Target{Kind: "item", Code: "hst"}, Tries: 2,
+		Post: []string{"has_item(hst)"}, Exec: &Exec{Verb: "transmute", Inputs: []string{"msf", "vip"}, WaitPolls: 3, WaitMS: 500}}
+}
+
+// The transmute verb passes the row's Cube inputs and waits for the product in the pack; a Cube that answers without the
+// product uses both tries and fails (the post is the pack, not the Cube's answer).
+func TestRunStepTransmute(t *testing.T) {
+	f := &fakeBE{facts: map[string]bool{}}
+	f.onAct = func(string, int) { f.facts["has_item(hst)"] = true }
+	if o := RunStep(context.Background(), cubeStep(), f); o.Kind != Done || len(f.acts) != 1 || f.acts[0] != "transmute(msf+vip):hst" {
+		t.Fatalf("%v acts %v", o, f.acts)
+	}
+	f = &fakeBE{facts: map[string]bool{}}
+	if o := RunStep(context.Background(), cubeStep(), f); o.Kind != Failed || len(f.acts) != 2 {
+		t.Fatalf("must fail: %v acts %v", o, f.acts)
+	}
+	bad := func(mut func(*Step)) bool {
+		x := cubeStep()
+		mut(&x)
+		return validateExecForTest(x)
+	}
+	if !bad(func(x *Step) { x.Exec.Inputs = []string{"msf"} }) {
+		t.Error("one input accepted")
+	}
+	if !bad(func(x *Step) { x.Exec.Inputs = []string{"msf", "Amulet of the Viper"} }) {
+		t.Error("a display name as input accepted")
+	}
+	if !bad(func(x *Step) { x.Exec.Verb = "interact"; x.Exec.On = &Target{Kind: "object", Class: 152} }) {
+		t.Error("inputs on an interact accepted")
+	}
+	if bad(func(x *Step) {}) {
+		t.Error("a good transmute step rejected")
+	}
 }

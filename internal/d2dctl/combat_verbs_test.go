@@ -43,7 +43,7 @@ func TestCombatVerbs(t *testing.T) {
 	if err := c.Drink(ctx, 4); err == nil {
 		t.Fatal("slot 4 must be refused")
 	}
-	want := []string{"monsters", "cmd skill 36 13 29.5 5", "cmd skill 44 1 2.5", "cmd skill 0 13 29.5 5 left", "cmd belt 2", "debug skill left 36"}
+	want := []string{"monsters", "cmd skill 36 13 29.5 5", "cmd skill 44 1 2.5", "cmd skill 0 13 29.5 5 1", "cmd belt 2", "debug skill left 36"}
 	if got := srv.Lines(); !reflect.DeepEqual(got, want) {
 		t.Fatalf("lines\n got %q\nwant %q", got, want)
 	}

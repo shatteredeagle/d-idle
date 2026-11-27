@@ -207,6 +207,8 @@ func (l *Leveler) have(p *d2.Player) Have {
 				h.Skills[sk.Key] = s.Level
 			}
 		}
+		h.QuestPts = QuestPoints(db, p)
+		h.Req = DBReq(db)
 	}
 	return h
 }

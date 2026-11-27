@@ -178,27 +178,33 @@ func (c *Client) CorpseInteract(ctx context.Context, i int) error {
 	return c.CmdInteract(ctx, -3000-i)
 }
 
-// SkillOpts are the optional tail of "cmd skill <id> <x> <y> [unit] [left] [item]".
+// SkillOpts are the optional tail of "cmd skill <id> <x> <y> [unit] [hand] [item]".
 type SkillOpts struct {
-	Unit int  // target unit id; 0 = none (U: we only saw ids >= 1)
-	Left bool // select the skill on the left button (V: "left" was used in the spike)
+	Unit int  // target unit id; 0 = none, sent as -1 (V source read: d2d monster ids start at 1, fight.hpp next_id)
+	Left bool // cast with the left hand, sent as hand 1 (right is 0)
 	Item int  // charged item unit id; 0 = none
 }
 
-// CmdSkill casts skill id at a cell position, optionally at a unit.
+// CmdSkill casts skill id at a cell position, optionally at a unit. d2d reads every tail field as a number (C atoi,
+// apps/d2d/devctl/verbs.hpp, the same on stock upstream and the fork; V source read): the hand is 1 or 0, a word
+// would read as 0 (the right hand), and "no unit" is -1, since only a negative unit takes the at-the-spot paths
+// (world/commands.cpp attack_spot, zeal_spot, none_spot).
 func (c *Client) CmdSkill(ctx context.Context, id int, x, y float64, o SkillOpts) error {
-	if o.Item != 0 && !o.Left {
-		return fmt.Errorf("d2dctl: SkillOpts.Item needs Left (positional tail, right button form unknown, U)")
-	}
 	line := fmt.Sprintf("cmd skill %d %s %s", id, ff(x), ff(y))
-	if o.Unit != 0 || o.Left {
-		line += fmt.Sprintf(" %d", o.Unit)
+	unit, hand := o.Unit, 0
+	if unit == 0 {
+		unit = -1
 	}
 	if o.Left {
-		line += " left"
+		hand = 1
 	}
-	if o.Item != 0 {
-		line += fmt.Sprintf(" %d", o.Item)
+	switch {
+	case o.Item != 0:
+		line += fmt.Sprintf(" %d %d %d", unit, hand, o.Item)
+	case o.Left:
+		line += fmt.Sprintf(" %d %d", unit, hand)
+	case o.Unit != 0:
+		line += fmt.Sprintf(" %d", unit)
 	}
 	return c.ok(ctx, "%s", line)
 }
@@ -417,6 +423,12 @@ func (c *Client) Presets(ctx context.Context) (List[Preset], error) {
 func (c *Client) Objects(ctx context.Context) (List[Object], error) {
 	r, err := c.Debug(ctx, "objects")
 	return parseList(r, err, ParseObject)
+}
+
+// ObjectList lists every object of the level with its mode ("debug objectlist", a read-only fork verb).
+func (c *Client) ObjectList(ctx context.Context) (List[ObjectRow], error) {
+	r, err := c.Debug(ctx, "objectlist")
+	return parseList(r, err, ParseObjectRow)
 }
 
 // Difficulty restarts the game on difficulty d (0 normal, 1 nightmare, 2 hell); takes 5 to 6 s (V), so

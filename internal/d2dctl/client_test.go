@@ -158,13 +158,12 @@ func TestCmdLines(t *testing.T) {
 	c.CmdBelt(ctx(), 1, true)
 	c.CmdBelt(ctx(), 0, false)
 	c.CmdSelect(ctx(), 72, true)
-	if err := c.CmdSkill(ctx(), 1, 1, 1, d2dctl.SkillOpts{Item: 9}); err == nil {
-		t.Fatal("item without left should be rejected")
-	}
+	c.CmdSkill(ctx(), 1, 1, 1, d2dctl.SkillOpts{Item: 9})
 	want := []string{
 		"cmd move 31.5 14", "cmd interact 4", "cmd interact -3000",
-		"cmd skill 72 12.1 28.7 2 left", "cmd skill 72 12.1 28.7", "cmd pickup 1",
+		"cmd skill 72 12.1 28.7 2 1", "cmd skill 72 12.1 28.7", "cmd pickup 1",
 		"cmd belt 1 merc", "cmd belt 0", "cmd select 72 1",
+		"cmd skill 1 1 1 -1 0 9",
 	}
 	got := srv.Lines()
 	if strings.Join(got, "|") != strings.Join(want, "|") {

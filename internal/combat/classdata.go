@@ -103,6 +103,10 @@ type Profile struct {
 	Marks []MarkRule `json:"marks,omitempty"`
 	// Minions is the minion driver's groups (minions.go); nil on a Necromancer derives them from the necro block.
 	Minions *MinionParams `json:"minions,omitempty"`
+	// Stance is the army stance (stance.go); nil keeps the hero where the fight puts it.
+	Stance *ArmyStance `json:"stance,omitempty"`
+	// Aims are the point aim rows (aim.go); a point skill without a row is cast at its target's cell.
+	Aims []AimRule `json:"aims,omitempty"`
 }
 
 // NecroParams is the upkeep data of a Necromancer profile; combat/necro.go holds no skill name.
@@ -280,6 +284,12 @@ func loadClassData() *classData {
 			panic("combat: classdata/profiles.json: " + err.Error())
 		}
 		if err := validateMinions(pr.Profiles); err != nil {
+			panic("combat: classdata/profiles.json: " + err.Error())
+		}
+		if err := validateStance(pr.Profiles); err != nil {
+			panic("combat: classdata/profiles.json: " + err.Error())
+		}
+		if err := validateAims(pr.Profiles, classDB.skills); err != nil {
 			panic("combat: classdata/profiles.json: " + err.Error())
 		}
 		classDB.profiles = pr.Profiles

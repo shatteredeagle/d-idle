@@ -1,7 +1,7 @@
 {
  "build": "paladin_hammerdin_zeal_endgame90",
  "class": "paladin",
- "schema": "per-clvl allocation, same shape as internal/gear/builds/*.json (leveler.ParseBuild) plus main_attack; rows clvl 2..90, NO respec. A row with no skills means the point is saved (no unlocked plan skill); the planner spends it in the row where the skill unlocks. Quest points (Den, Radament, Izual in each difficulty) are folded into rows 8, 15, 26, 38, 44, 56, 68, 72, 82 (U timing; planner pulls rows forward).",
+ "schema": "per-clvl allocation, same shape as internal/gear/builds/*.json (leveler.ParseBuild) plus main_attack; rows clvl 2..90, NO respec. A row with no skills means the point is saved (no unlocked plan skill); the planner spends it in the row where the skill unlocks. Quest points (Den, Radament, Izual in each difficulty) are skill entries with a quest key (rows 8 Den, 15 Radament, 26 Izual, 38 Den, 44 Radament, 56 Izual, 68 Den, 72 Radament, 82 Izual; U timing): rows count level points only, and a tagged point is bought as soon as its quest point is granted.",
  "tags": "Skills: V end state Maxroll Blessed Hammer Paladin (fetched 2026-10-29), same as paladin_hammerdin_endgame90. U variant for a stronger clvl 2-17: Smite to 9 before clvl 12, Sacrifice 1 then Zeal 5 from clvl 12 (Zeal reqlevel 12, needs Sacrifice, V skills.txt); the 14 extra points are taken from the last fillers (Blessed Aim and Defiance) at clvl 65+. U whether this clears Normal Act 1-2 better than 1 Smite point (needs a live run); Smite needs a shield.",
  "respec": {
   "enabled": false
@@ -161,7 +161,12 @@
    "skills": [
     {
      "skill": "Smite",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Smite",
+     "points": 1,
+     "quest": "den_of_evil"
     }
    ]
   },
@@ -252,7 +257,12 @@
    "skills": [
     {
      "skill": "Zeal",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Zeal",
+     "points": 1,
+     "quest": "radament"
     }
    ]
   },
@@ -395,7 +405,12 @@
    "skills": [
     {
      "skill": "Blessed Hammer",
-     "points": 3
+     "points": 1
+    },
+    {
+     "skill": "Blessed Hammer",
+     "points": 2,
+     "quest": "izual"
     }
    ]
   },
@@ -555,7 +570,8 @@
     },
     {
      "skill": "Cleansing",
-     "points": 1
+     "points": 1,
+     "quest": "den_of_evil"
     }
    ]
   },
@@ -637,7 +653,8 @@
     },
     {
      "skill": "Concentration",
-     "points": 1
+     "points": 1,
+     "quest": "radament"
     }
    ]
   },
@@ -793,7 +810,12 @@
    "skills": [
     {
      "skill": "Concentration",
-     "points": 3
+     "points": 1
+    },
+    {
+     "skill": "Concentration",
+     "points": 2,
+     "quest": "izual"
     }
    ]
   },
@@ -949,7 +971,12 @@
    "skills": [
     {
      "skill": "Vigor",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Vigor",
+     "points": 1,
+     "quest": "den_of_evil"
     }
    ]
   },
@@ -1001,7 +1028,12 @@
    "skills": [
     {
      "skill": "Vigor",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Vigor",
+     "points": 1,
+     "quest": "radament"
     }
    ]
   },
@@ -1131,7 +1163,12 @@
    "skills": [
     {
      "skill": "Blessed Aim",
-     "points": 3
+     "points": 1
+    },
+    {
+     "skill": "Blessed Aim",
+     "points": 2,
+     "quest": "izual"
     }
    ]
   },

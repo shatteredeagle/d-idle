@@ -2,8 +2,12 @@
  "build": "barbarian_warcry_endgame90",
  "class": "barbarian",
  "mana_heavy": true,
- "schema": "per-clvl allocation, same shape as internal/gear/builds/*.json (leveler.ParseBuild) plus main_attack; rows clvl 2..90, NO respec. A row with no skills means the point is saved (no unlocked plan skill); the planner spends it in the row where the skill unlocks. Quest points (Den, Radament, Izual in each difficulty) are folded into rows 8, 15, 26, 38, 44, 56, 68, 72, 82 (U timing; planner pulls rows forward).",
- "ladder_only": ["Spirit", "Insight", "Fortitude"],
+ "schema": "per-clvl allocation, same shape as internal/gear/builds/*.json (leveler.ParseBuild) plus main_attack; rows clvl 2..90, NO respec. A row with no skills means the point is saved (no unlocked plan skill); the planner spends it in the row where the skill unlocks. Quest points (Den, Radament, Izual in each difficulty) are skill entries with a quest key (rows 8 Den, 15 Radament, 26 Izual, 38 Den, 44 Radament, 56 Izual, 68 Den, 72 Radament, 82 Izual; U timing): rows count level points only, and a tagged point is bought as soon as its quest point is granted.",
+ "ladder_only": [
+  "Spirit",
+  "Insight",
+  "Fortitude"
+ ],
  "tags": "Skills: V end state Maxroll War Cry Barbarian (fetched 2026-10-29): 1 each Find Item (Find Potion prereq), Grim Ward, Increased Speed, Iron Skin, Natural Resistance, Leap; max War Cry, Battle Cry, Taunt, Battle Orders, Howl. U no-respec adaptation: Bash 8 carries clvl 2-17 (existing barbarian_melee_normal30 used Double Swing/Frenzy, not taken here), Howl/Taunt/Shout and a few Battle Cry/Battle Orders points are prerequisites; Taunt/Howl/Battle Cry/Battle Orders (maxed endgame synergies) absorb the points until War Cry unlocks at 30 (V skills.txt reqlevel, needs Battle Cry + Battle Orders), so there is no bank. Stats: Str 43 by clvl 24 (Spirit swords), 77 by clvl 50 (Fortitude in a Dusk Shroud, V armor.txt; Archon Plate would need 103), from internal/gear/milestones.json, rest Vitality, no Energy.",
  "respec": {
   "enabled": false
@@ -150,7 +154,12 @@
    "skills": [
     {
      "skill": "Bash",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Bash",
+     "points": 1,
+     "quest": "den_of_evil"
     }
    ]
   },
@@ -245,7 +254,8 @@
     },
     {
      "skill": "Taunt",
-     "points": 1
+     "points": 1,
+     "quest": "radament"
     }
    ]
   },
@@ -392,11 +402,13 @@
     },
     {
      "skill": "Increased Speed",
-     "points": 1
+     "points": 1,
+     "quest": "izual"
     },
     {
      "skill": "Grim Ward",
-     "points": 1
+     "points": 1,
+     "quest": "izual"
     }
    ]
   },
@@ -552,7 +564,12 @@
    "skills": [
     {
      "skill": "War Cry",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "War Cry",
+     "points": 1,
+     "quest": "den_of_evil"
     }
    ]
   },
@@ -630,7 +647,12 @@
    "skills": [
     {
      "skill": "War Cry",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "War Cry",
+     "points": 1,
+     "quest": "radament"
     }
    ]
   },
@@ -786,7 +808,12 @@
    "skills": [
     {
      "skill": "Battle Cry",
-     "points": 3
+     "points": 1
+    },
+    {
+     "skill": "Battle Cry",
+     "points": 2,
+     "quest": "izual"
     }
    ]
   },
@@ -942,7 +969,12 @@
    "skills": [
     {
      "skill": "Battle Orders",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Battle Orders",
+     "points": 1,
+     "quest": "den_of_evil"
     }
    ]
   },
@@ -994,7 +1026,12 @@
    "skills": [
     {
      "skill": "Battle Orders",
-     "points": 2
+     "points": 1
+    },
+    {
+     "skill": "Battle Orders",
+     "points": 1,
+     "quest": "radament"
     }
    ]
   },
@@ -1124,7 +1161,12 @@
    "skills": [
     {
      "skill": "Taunt",
-     "points": 3
+     "points": 1
+    },
+    {
+     "skill": "Taunt",
+     "points": 2,
+     "quest": "izual"
     }
    ]
   },

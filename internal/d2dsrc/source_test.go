@@ -699,6 +699,23 @@ func TestStoneStateAndQuestPortal(t *testing.T) {
 	if class[PortalIDBase] != 59 || class[PortalIDBase+2] != 60 {
 		t.Fatalf("portal classes %v", class)
 	}
+
+	// The way down to Duriel (which 6, opened by the orifice after the placement) is objects.txt 100, the object the
+	// door step looks for (V lab drill 2026-11-27: class 100 not found).
+	r["debug portals"] = fmt.Sprintf("6\t%d\t40.4\t31.6\nok\n", area)
+	_, c = startScript(t, r)
+	if res, err = New(c, Options{Logf: quiet}).Read(context.Background()); err != nil {
+		t.Fatal(err)
+	}
+	got := -1
+	for _, u := range res.Snap.Objects {
+		if u.ID == PortalIDBase+6 {
+			got = u.Class
+		}
+	}
+	if got != 100 {
+		t.Fatalf("way down to Duriel: class %d, want 100", got)
+	}
 }
 
 // A preset appears only once its room is built, a few ticks after the player arrived. A player who stands still must

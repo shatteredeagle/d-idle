@@ -37,6 +37,26 @@ func DBRule(db *data.DB, code string) Rule {
 	}
 }
 
+// DBReq is the prerequisite list of a skill by name (skills.txt reqskill1-3), for Have.Req. Nil db: none.
+func DBReq(db *data.DB) func(string) []string {
+	if db == nil {
+		return nil
+	}
+	return func(name string) []string {
+		s := db.SkillByName(name)
+		if s == nil {
+			return nil
+		}
+		var out []string
+		for _, rq := range s.ReqSkills {
+			if rq != "" {
+				out = append(out, rq)
+			}
+		}
+		return out
+	}
+}
+
 // HaveFor is the planner input of a player. base (the item-free attributes) may be nil: the panel values are used then
 // and gear bonuses count as spent points, so the caller should pass it when it can read it.
 func HaveFor(db *data.DB, p *d2.Player, base *[4]int) Have {
@@ -51,8 +71,26 @@ func HaveFor(db *data.DB, p *d2.Player, base *[4]int) Have {
 			h.Start = [numAttr]int{c.Str, c.Dex, c.Vit, c.Int}
 		}
 		h.Skills = OwnedSkills(db, p)
+		h.QuestPts = QuestPoints(db, p)
+		h.Req = DBReq(db)
 	}
 	return h
+}
+
+// QuestPoints is the number of skill points p holds beyond the clvl-1 its levels grant: hard points in skill-tree
+// skills (the class tree, not Attack or the scroll skills) plus unspent ones. That surplus is what quests paid (Den of
+// Evil, Radament, Izual), read from the points themselves so no quest flag or backend is needed.
+func QuestPoints(db *data.DB, p *d2.Player) int {
+	if db == nil || p == nil {
+		return 0
+	}
+	n := p.SkillPoints
+	for _, s := range p.Skills {
+		if sk := db.SkillByID(s.ID); sk != nil && sk.Page > 0 {
+			n += s.Level
+		}
+	}
+	return max(0, n-max(0, p.Level-1))
 }
 
 // ClassCode is the skills.txt class code ("pal") of a class name, "" when unknown.
