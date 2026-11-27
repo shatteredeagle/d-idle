@@ -314,6 +314,7 @@ internal/admit/  credit-runner  admit1
 internal/arbiter  credit-runner  town10
 internal/arbiter/  credit-runner  arbmig
 internal/arbiter/  credit-runner  dlv-stance-army
+internal/arbiter/decide_prop_test.go  credit-runner  proptest1
 internal/arbiter/replay.go  credit-runner  ticklog
 internal/arbiter/replay_ticklog_test.go  credit-runner  ticklog
 internal/boss  credit-runner  countess3
@@ -382,6 +383,7 @@ internal/combat/  credit-runner  dlv-upkeep-minions
 internal/combat/  credit-runner  dlv-upkeep-state
 internal/combat/  credit-runner  dlv-whirl
 internal/combat/castfirst.go  credit-runner  maphistoryC
+internal/combat/decide_prop_test.go  credit-runner  proptest1
 internal/combat/fight.go  credit-runner  maphistory
 internal/combat/fight.go  credit-runner  maphistoryC
 internal/combat/fightend.go  credit-runner  maphistory
@@ -506,6 +508,7 @@ internal/supply  credit-runner  town10
 internal/supply  credit-runner  town7
 internal/supply  credit-runner  town8
 internal/supply  credit-runner  town9
+internal/supply/solve_prop_test.go  credit-runner  proptest1
 internal/survival/ledger.go  credit-runner  intake
 internal/talk/talk.go  credit-runner  qdmatrix
 internal/talk/talk_test.go  credit-runner  qdmatrix
