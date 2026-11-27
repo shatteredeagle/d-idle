@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- fliptool: flip.py transport probe, --reflip, watcher heartbeat/unit, --commit-ledger (TASK-1062) <!--sg:agent/fliptool-->
 - statusrefresh: STATUS.md hand-written part rewritten (TASK-46) <!--sg:agent/statusrefresh-->
 - playsession: tools/play-session.sh one-command LAN session (TASK-43) <!--sg:agent/playsession-->
 - advisorwire: advisor lines on the Return screen (TASK-1060) <!--sg:agent/advisorwire-->

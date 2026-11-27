@@ -270,6 +270,7 @@ docs/probes/test-characters.md  live-agent  fid-fixtures
 docs/probes/town-plan-stage3-2026-11-22.md  credit-runner  town5
 docs/probes/tpreserve.md  live-agent  tpreserve-live
 docs/probes/warptrigger-2026-11-22.md  credit-runner  warptrigger
+docs/process/dark-launch.md  credit-runner  fliptool
 docs/process/layout-read.md  credit-runner  countess3
 docs/process/pg-ledger-ops.md  credit-runner  pgledgeron
 docs/process/pg-ops-mgonejob.md  credit-runner  mgonejob
@@ -584,6 +585,7 @@ tools/emu/mb_mut.py  credit-runner  decomp43
 tools/emu/mb_mut2.py  credit-runner  decomp43
 tools/emu/zd_*  credit-runner  zealdiff
 tools/firsthour.sh  live-agent  firsthour
+tools/flip/  credit-runner  fliptool
 tools/friendpack/README.txt  credit-runner  cut012
 tools/friendpack/compose.yml  credit-runner  cut012
 tools/friendpack/didle  credit-runner  cut012
