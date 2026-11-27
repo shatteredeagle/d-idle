@@ -172,11 +172,9 @@ cmd/d2bot/task_test.go  credit-runner  qdmatrix
 cmd/d2bot/vaultkeep.go  credit-runner  sellall
 cmd/d2firsthour/  live-agent  firsthour
 cmd/d2scenario/  credit-runner  arbmig
-cmd/d2scenario/cmds.go  credit-runner  pgselfcheck
 cmd/d2scenario/ledger.go  credit-runner  pgpage
 cmd/d2scenario/ledger_test.go  credit-runner  pgpage
 cmd/d2scenario/main.go  credit-runner  pgpage
-cmd/d2scenario/run.go  credit-runner  pgselfcheck
 cmd/d2scenario/run.go  credit-runner  pgtaps
 cmd/d2scenario/tap.go  credit-runner  handinbtn
 cmd/d2scenario/tap.go  credit-runner  pgtaps
@@ -184,8 +182,6 @@ cmd/d2scenario/tap.go  credit-runner  stage1fix
 cmd/d2scenario/tap_test.go  credit-runner  handinbtn
 cmd/d2scenario/tap_test.go  credit-runner  pgtaps
 cmd/d2scenario/tap_test.go  credit-runner  stage1fix
-cmd/d2scenario/validate.go  credit-runner  pgselfcheck
-cmd/d2scenario/validate_test.go  credit-runner  pgselfcheck
 data/capabilities/  credit-runner  dlv-stance-pack
 data/darklaunch.json  credit-runner  arbmig
 data/darklaunch.json  credit-runner  deploy88-ledger
@@ -538,8 +534,6 @@ internal/resource/tuning.go  credit-runner  freshstart
 internal/resource/tuning.go  live-agent  recoverypace
 internal/saves/progress.go  credit-runner  qdmatrix
 internal/scenario/earned.go  credit-runner  pgearned
-internal/scenario/hero/selfcheck.go  credit-runner  pgselfcheck
-internal/scenario/hero/selfcheck_test.go  credit-runner  pgselfcheck
 internal/scenario/pgpage.go  credit-runner  pgpage
 internal/scenario/pgpage_test.go  credit-runner  pgpage
 internal/scenario/placefix_test.go  credit-runner  placefix

@@ -1,10 +1,11 @@
 ---
 id: TASK-742
 title: 'pgselfcheck: hero self-check on the prep d2d and its static half in validate'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-21T04:48:00Z'
+updated_date: '2026-11-27T12:41:00Z'
 labels:
   - bot
   - feature
