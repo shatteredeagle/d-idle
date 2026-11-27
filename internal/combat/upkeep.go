@@ -20,6 +20,10 @@ import (
 // Inside a fight a slot not named vital by the profile casts at most once in UpkeepParams.ShareEvery casts of the
 // fight and only while the mana left after it stays above ManaReservePct of the pool. Knob combat.deliveryUpkeep:
 // 0 the old pass (buffDue), 1 shadow (the old pass acts, disagreements are logged and counted), 2 the driver acts.
+//
+// Auras (card auraupkeep) run through the same knob in keepAura (aura.go). Which aura stays the profile's ladder
+// (wantAura); the driver only decides whether that aura is up and re-picks it at once when it went down between
+// checks, instead of waiting for combat.auraCheckMs. Auras ignore the share and the reserve: a pick costs no mana.
 
 // UpkeepParams is the profile's in-fight upkeep budget. Zero values take the defaults of Q7 (user-approved
 // 2026-11-21): one cast in four, a 10 percent mana reserve.
@@ -69,6 +73,8 @@ type upkeepState struct {
 	shadowDiffs  int
 	shadowLast   map[int]string    // per skill: the last disagreement logged, so a lasting one is logged once
 	minionLast   map[string]string // the minion driver's last shadow disagreement per call site (minions.go)
+	aura         SkillSpec         // the aura keepAura chose last (the profile's choice, never the driver's)
+	auraAt       time.Time         // when that aura was last confirmed up after an apply
 }
 
 func (u *upkeepState) fightStart() { u.fightCasts, u.fightUpkeeps, u.inFight = 0, 0, true }
@@ -167,4 +173,33 @@ func (f *Fighter) upkeepAfterFight(ctx context.Context) {
 	if _, err := f.buffPass(ctx, snap); err != nil {
 		f.info("upkeep after fight failed", "err", err)
 	}
+}
+
+// upkeepAuraUp is the driver's view of "aura sp is up", from what the game shows:
+//   - the right hand must hold it: V live on d2d (docs/probes/paladin-aura-live-2026-11-26.md: a non-aura right pick
+//     turns the aura off), S on game.exe (an aura runs only from the right slot).
+//   - the active aura when the backend reports it (d2d state aura=, game.exe stat 350): exact.
+//   - else its Skills.txt aurastate, trusted once learned like a buff's (absent past the grace after an apply = down).
+//     U: on d2d `debug states` stays empty with an aura on, so there the active-aura read is the only signal.
+//   - else nothing contradicts the right hand: up unless a death or area change marked it dirty.
+func (f *Fighter) upkeepAuraUp(p *d2.Player, sp SkillSpec) bool {
+	if p.RightSkill != sp.ID {
+		return false
+	}
+	if cur, ok := f.ActiveAura(p); ok {
+		return cur == sp.ID
+	}
+	if st := f.upkeepStateID(sp); st > 0 {
+		if f.upk.learned == nil {
+			f.upk.learned = map[int]bool{}
+		}
+		if p.States.Has(st) {
+			f.upk.learned[st] = true
+			return true
+		}
+		if f.upk.learned[st] {
+			return f.now().Sub(f.upk.auraAt) < upkeepGrace
+		}
+	}
+	return !f.auraDirty
 }
