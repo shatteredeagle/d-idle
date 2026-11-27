@@ -207,3 +207,28 @@ func TestMinLegDefaultMatchesBreakEven(t *testing.T) {
 		t.Fatalf("default %v, want %v", d, want)
 	}
 }
+
+// The move driver's answer replaces the key, range, min hop and mana constants; a refusal means no Teleport.
+func TestTeleportHopFnReplacesConstants(t *testing.T) {
+	n := &Navigator{}
+	if n.hasTeleport() || n.teleRange() != defaultTeleportRange || n.teleMinHop() != teleportMinHop {
+		t.Fatal("defaults changed")
+	}
+	h := TeleportHop{Key: "f4", Range: 12, MinHop: 6, Cost: 30}
+	n.TeleportHopFn = func() TeleportHop { return h }
+	if n.teleKey() != "f4" || n.teleRange() != 12 || n.teleMinHop() != 6 || n.teleMana() != 30 {
+		t.Fatalf("key %q range %v min %v mana %d", n.teleKey(), n.teleRange(), n.teleMinHop(), n.teleMana())
+	}
+	n.TeleportRange = 9 // an explicit field still wins over the row
+	if n.teleRange() != 9 {
+		t.Fatalf("range %v", n.teleRange())
+	}
+	h.Refused = "mana"
+	if n.hasTeleport() || n.teleMinHop() != teleportMinHop {
+		t.Fatal("a refusal still hops")
+	}
+	n.TeleportKey = "f2" // a fixed key (rigs) wins
+	if n.teleKey() != "f2" {
+		t.Fatal("fixed key lost")
+	}
+}

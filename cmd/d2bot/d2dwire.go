@@ -128,6 +128,9 @@ func buildD2DStack(ctx context.Context, o options, be *d2denv.Backend, nv *nav.N
 	wireVault(lt, be.Client, o.data, charName, log)
 	wireVaultKeep(ref, e, be.Client, o.data, o.ladder.currencyDir, charName, log)
 	wireBulkID(ref, tw, e, o.data, charName, log)
+	if ref.aw != nil && rig.Fighter != nil {
+		rig.Fighter.Drive = ref.aw.Drive // knob agency.planner 2 only; at 0 and 1 it answers "" and the profile plays
+	}
 	hk := d2dHotkeyStep(e, ref.aw, be.Client, rig.Fighter, db, log)
 	s.prepare = func(ctx context.Context) error {
 		applyClass(ctx, e.Snapshot, cb, tw, lt, cfg.LevelerBuild, db, log)

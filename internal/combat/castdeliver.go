@@ -50,7 +50,7 @@ func (f *Fighter) deliverCast(p *d2.Player, sp SkillSpec, at input.Point) (sent 
 	}
 	var hold time.Duration
 	if use.Press != "tap" {
-		hold = f.holdFor(p)
+		hold = f.pressSlice(p, sp)
 	}
 	return true, d.Deliver(sp.ID, use, at, hold)
 }

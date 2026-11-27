@@ -62,3 +62,16 @@ func TestStepChoresNeedFollowsThePlan(t *testing.T) {
 		t.Error("a trip the plan cannot pay must not run just to end 'ran but is still needed'")
 	}
 }
+
+// The refusal of a short-gold plan carries the hand-over (what to do about the gold), not only the shortage.
+func TestKitPlanHandoverIsInTheRefusal(t *testing.T) {
+	for _, caster := range []bool{false, true} { // Paladin and Sorceress
+		w := routeWorld(22, func(w *task.World) { w.Caster, w.Potions, w.BoardSM = caster, 1, true })
+		w.KitPlan = &task.KitPlan{Healing: 4, Short: "short of gold: needs 90 more for healing", Hand: "needs 90 more gold for healing: sell, then recovery"}
+		w.RouteBlocked = task.RouteWhy(w)
+		f := task.StepTravel("t", "travel", 7, func(task.World) bool { return false }).Ready(w)
+		if f == nil || f.Code != "needs_gold_farm" || !f.Hold || !strings.Contains(f.Why, "needs 90 more gold for healing: sell, then recovery") || len(f.Insert) != 0 {
+			t.Errorf("caster %v: fault %+v, want the typed gold hold naming the hand-over", caster, f)
+		}
+	}
+}

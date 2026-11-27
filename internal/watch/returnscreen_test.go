@@ -395,3 +395,16 @@ func TestReturnShowsModeRules(t *testing.T) {
 		}
 	}
 }
+
+func TestAdviceSection(t *testing.T) {
+	var lines []string
+	sec := AdviceSection(func() []string { return lines })
+	if sec.Build(&ReturnData{}) != nil {
+		t.Error("no lines must hide the section")
+	}
+	lines = []string{"You have the runes for Lore (Ort Sol)."}
+	v := sec.Build(&ReturnData{})
+	if v == nil || v.ID != AdviceSectionID || len(v.Lines) != 1 || len(v.Buttons) != 0 {
+		t.Errorf("%+v", v)
+	}
+}

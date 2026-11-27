@@ -1,10 +1,11 @@
 ---
 id: TASK-46
 title: 'statusrefresh: docs/plan/STATUS.md hand-written part is stale (2026-11-03)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-06T16:02:00Z'
+updated_date: '2026-11-27T20:31:00Z'
 labels:
   - docs
   - chore
@@ -17,6 +18,7 @@ owns:
 exclusive: []
 contracts: []
 lane: next
+result: "Hand-written part of docs/plan/STATUS.md rewritten from ADR 0016/0017, the Current truth block and plan.py; every claim links its owner doc, no copied numbers; generated block unchanged; tools/ci/check.sh --hygiene-only passes. Docs only, no live check."
 ---
 
 ## Description
@@ -31,6 +33,6 @@ Done when: Hand-written part rewritten from ADR 0016, docs/decisions.md Current 
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Hand-written part rewritten from ADR 0016, docs/decisions.md Current truth and the backlog; every number links to its owner doc or is omitted
-- [ ] #2 Generated block unchanged; tools/ci/check.sh --hygiene-only passes
+- [x] #1 Hand-written part rewritten from ADR 0016, docs/decisions.md Current truth and the backlog; every number links to its owner doc or is omitted
+- [x] #2 Generated block unchanged; tools/ci/check.sh --hygiene-only passes
 <!-- AC:END -->

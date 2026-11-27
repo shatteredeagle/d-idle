@@ -49,7 +49,18 @@
     "Glacial Spike": "f6",
     "Ice Blast": "f7",
     "Fire Bolt": "f8"
-   }
+   },
+   "moves": [
+    {
+     "name": "Teleport",
+     "uses": ["travel", "escape"],
+     "range": 18,
+     "minHop": 4,
+     "escapeSurround": 4,
+     "escapeLifePct": 65,
+     "source": "V range: a cast moves about 18 subtiles (docs/act2.md live results, nav teleport.go). U escape triggers: four in contact under 65 percent life, the melee profiles' surround numbers"
+    }
+   ]
   },
   {
    "class": "sorceress",
@@ -94,7 +105,18 @@
     "Ice Bolt": "f6",
     "Glacial Spike": "f7",
     "Frost Nova": "f8"
-   }
+   },
+   "moves": [
+    {
+     "name": "Teleport",
+     "uses": ["travel", "escape"],
+     "range": 18,
+     "minHop": 4,
+     "escapeSurround": 4,
+     "escapeLifePct": 65,
+     "source": "V range: a cast moves about 18 subtiles (docs/act2.md live results, nav teleport.go). U escape triggers: four in contact under 65 percent life, the melee profiles' surround numbers"
+    }
+   ]
   },
   {
    "class": "sorceress",
@@ -150,7 +172,18 @@
     "Lightning": "f6",
     "Fire Bolt": "f7",
     "Frost Nova": "f8"
-   }
+   },
+   "moves": [
+    {
+     "name": "Teleport",
+     "uses": ["travel", "escape"],
+     "range": 18,
+     "minHop": 4,
+     "escapeSurround": 4,
+     "escapeLifePct": 65,
+     "source": "V range: a cast moves about 18 subtiles (docs/act2.md live results, nav teleport.go). U escape triggers: four in contact under 65 percent life, the melee profiles' surround numbers"
+    }
+   ]
   },
   {
    "class": "sorceress",
@@ -185,7 +218,18 @@
     "Fire Bolt": "f4",
     "Fire Ball": "f5",
     "Charged Bolt": "f6"
-   }
+   },
+   "moves": [
+    {
+     "name": "Teleport",
+     "uses": ["travel", "escape"],
+     "range": 18,
+     "minHop": 4,
+     "escapeSurround": 4,
+     "escapeLifePct": 65,
+     "source": "V range: a cast moves about 18 subtiles (docs/act2.md live results, nav teleport.go). U escape triggers: four in contact under 65 percent life, the melee profiles' surround numbers"
+    }
+   ]
   },
   {
    "class": "paladin",
@@ -269,6 +313,15 @@
     "Resist Fire": "f7",
     "Prayer": "f8"
    },
+   "moves": [
+    {
+     "name": "Charge",
+     "uses": ["gap"],
+     "range": 12,
+     "minGap": 5,
+     "source": "U judgment: range and gap are planning values; Charge targets a unit and the paladin must hold a melee weapon (live look pending)"
+    }
+   ],
    "melee": {
     "reach": 4,
     "holdMs": 600,
@@ -276,7 +329,14 @@
     "surround": 4,
     "surroundLifePct": 65,
     "manaReserve": 4
-   }
+   },
+   "presses": [
+    {
+     "name": "Zeal",
+     "sliceMs": 600,
+     "source": "S today's melee holdMs, one slice per fight tick; the real attack-sequence rate waits for fidelity A1"
+    }
+   ]
   },
   {
    "class": "paladin",
@@ -351,6 +411,15 @@
     "Prayer": "f7",
     "Thorns": "f8"
    },
+   "moves": [
+    {
+     "name": "Charge",
+     "uses": ["gap"],
+     "range": 12,
+     "minGap": 5,
+     "source": "U judgment: range and gap are planning values; Charge targets a unit and the paladin must hold a melee weapon (live look pending)"
+    }
+   ],
    "melee": {
     "reach": 4,
     "holdMs": 600,
@@ -358,6 +427,13 @@
     "surround": 4,
     "surroundLifePct": 65,
     "manaReserve": 4
+   },
+   "stance": {
+    "kind": "insidePack",
+    "standOff": 2,
+    "leaveSurround": 5,
+    "leaveLifePct": 50,
+    "source": "U judgment: the design's insidePack defaults (combat-engine-b-grammar section 5); the survival model's contact archetype must judge before knob 2"
    }
   },
   {
@@ -445,6 +521,20 @@
     "Lower Resist": "f7",
     "Clay Golem": "f8"
    },
+   "corpseAims": [
+    {
+     "name": "Corpse Explosion",
+     "rule": "corpseNearPack",
+     "radius": 6,
+     "minHit": 2,
+     "source": "U radius 6 is the skills.txt calc column not read (ceRadius), minHit 2 is a planning value"
+    },
+    {
+     "name": "Revive",
+     "rule": "corpseBest",
+     "source": "U a higher level monster is a better minion; the monstats revive restrictions are not read"
+    }
+   ],
    "necro": {
     "golems": [
      "FireGolem",
@@ -649,6 +739,20 @@
     "bossMin": 2,
     "source": "U judgment: four subtiles keeps the skeletons' melee line between hero and pack; under two minions a boss reaches the hero (docs/process/necromancer-support.md S8, S11)"
    },
+   "corpseAims": [
+    {
+     "name": "Corpse Explosion",
+     "rule": "corpseNearPack",
+     "radius": 6,
+     "minHit": 2,
+     "source": "U radius 6 is the skills.txt calc column not read (ceRadius), minHit 2 is a planning value"
+    },
+    {
+     "name": "Revive",
+     "rule": "corpseBest",
+     "source": "U a higher level monster is a better minion; the monstats revive restrictions are not read"
+    }
+   ],
    "necro": {
     "golems": [
      "FireGolem",
@@ -758,6 +862,18 @@
     "Iron Skin": "f3",
     "Battle Command": "f4"
    },
+   "moves": [
+    {
+     "name": "Leap Attack",
+     "uses": ["gap", "escape"],
+     "range": 12,
+     "minGap": 6,
+     "through": 1,
+     "escapeSurround": 4,
+     "escapeLifePct": 55,
+     "source": "U judgment: range, gap and escape numbers are planning values; the landing rule of Leap Attack (a point, not a unit) is the live look of the move card"
+    }
+   ],
    "melee": {
     "reach": 4,
     "holdMs": 500,
@@ -944,6 +1060,18 @@
     "Berserk": "f7",
     "Concentrate": "f8"
    },
+   "moves": [
+    {
+     "name": "Leap Attack",
+     "uses": ["gap", "escape"],
+     "range": 12,
+     "minGap": 6,
+     "through": 1,
+     "escapeSurround": 4,
+     "escapeLifePct": 55,
+     "source": "U judgment: range, gap and escape numbers are planning values; the landing rule of Leap Attack (a point, not a unit) is the live look of the move card"
+    }
+   ],
    "melee": {
     "reach": 4,
     "holdMs": 500,
@@ -1090,6 +1218,27 @@
     "Clay Golem": "f6",
     "Amplify Damage": "f7"
    },
+   "stance": {
+    "kind": "insidePack",
+    "standOff": 3,
+    "leaveSurround": 4,
+    "leaveLifePct": 55,
+    "source": "U judgment: a nova reaches about 8 subtiles, so the hero stands three from the centroid and leaves earlier than a hammer paladin"
+   },
+   "corpseAims": [
+    {
+     "name": "Corpse Explosion",
+     "rule": "corpseNearPack",
+     "radius": 6,
+     "minHit": 2,
+     "source": "U radius 6 is the skills.txt calc column not read (ceRadius), minHit 2 is a planning value"
+    },
+    {
+     "name": "Revive",
+     "rule": "corpseBest",
+     "source": "U a higher level monster is a better minion; the monstats revive restrictions are not read"
+    }
+   ],
    "necro": {
     "golems": [
      "Clay Golem"

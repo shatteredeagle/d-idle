@@ -10,3 +10,5 @@ import (
 func (t *Town) PortalByVerbForTest(ctx context.Context, tool d2.Unit) (d2.Unit, bool, error) {
 	return t.portalByVerb(ctx, tool)
 }
+
+func (t *Town) PressRepairAllForTest() error { return t.pressRepairAll() }
