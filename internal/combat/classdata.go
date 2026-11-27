@@ -97,6 +97,8 @@ type Profile struct {
 	// Necro is the summon, curse and golem data of a Necromancer profile (card necro4): required on every
 	// necromancer profile, rejected on any other class (validateNecro).
 	Necro *NecroParams `json:"necro"`
+	// Upkeep is the in-fight upkeep budget of the upkeep driver (upkeep.go); nil takes the defaults.
+	Upkeep *UpkeepParams `json:"upkeep,omitempty"`
 }
 
 // NecroParams is the upkeep data of a Necromancer profile; combat/necro.go holds no skill name.

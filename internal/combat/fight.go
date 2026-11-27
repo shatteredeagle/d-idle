@@ -135,6 +135,7 @@ func (f *Fighter) Clear(ctx context.Context, o ClearOpts) (ClearResult, error) {
 	res, err := f.fight(ctx, spec, snap)
 	if err == nil {
 		f.classUpkeep(ctx) // raise, summon or re-cast what is missing; failures are not a Clear failure
+		f.upkeepAfterFight(ctx)
 	}
 	return res, err
 }
@@ -184,6 +185,8 @@ const noProgressMax = 40
 func (f *Fighter) fight(ctx context.Context, sp fightSpec, snap *d2.Snapshot) (res ClearResult, err error) {
 	start := f.now()
 	defer f.attacking.Store(0)
+	f.upk.fightStart()
+	defer f.upk.fightEnd()
 	var ft FightTelemetry
 	var st *fightState
 	var endSnap *d2.Snapshot // the last look, for the end-of-fight telemetry

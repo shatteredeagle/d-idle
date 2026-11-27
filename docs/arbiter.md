@@ -84,6 +84,20 @@ Questy 2026-11-26 cases (`tools/provingground/arbiter-outcomes/questy-2026-11-26
 
 `go run ./cmd/d2scenario arbiter-replay [-strict] tools/provingground/arbiter-outcomes/*.json` decides each case with the standard sources and scores BOTH the recorded chain family and the arbiter's family with the same data rules (a rule says: this family, under these facts, hits that invariant row). Hard rows decide, soft rows break ties; a hit the chain did not have is a new kind and fails the family. The rules are a model of the monitor (U until a lockstep run confirms a row); the three Questy incident cases (V, `TestQuestyOutcomes`, two drink lines in `TestSurviveOutcomeTwoBuildsAndMustFail`): survive, chain 1 hard hit (potion-not-drunk) vs arbiter 0; chores, chain 2 soft hits (field-entry-no-kit) vs arbiter 0; the ping-pong first tick scores no hit for either. Limit: one decision point per case, not a whole session; whole sessions go through `d2arbiter -follow`.
 
+## Outcome over a recorded session (stage 4)
+
+The case files score one decision point each; a night of the bot's tick lines (`bot.tickLogSec` above 0, docs/design/ticklog-t4.md) is scored tick by tick with the same rules:
+
+`go run ./cmd/d2scenario arbiter-replay [-strict] [-follow] -session LOG.jsonl tools/provingground/arbiter-outcomes/*.json`
+
+- The log is replayed through the shadow (`arbiter.Replay`, so lease, back-off and travel budget apply); each tick gives the chain's logged family and the arbiter's family on the same logged facts (`ReplayResult.Points`). `-follow` lets the simulated hero obey the arbiter as `d2arbiter -follow` does; the rules read facts only, so it changes the verdict only through the arbiter's own decisions.
+- The rules of all given files are merged by name (`arbiter.MergeRules`); the files' cases are not scored in this mode.
+- A hit counts once per EPISODE: on the tick it starts for that side, not again while it holds (a model of the monitor's once-per-change line, U). A tick counts for the arbiter's family when the two differ and the arbiter chose something, else for the chain's; ticks where neither chose anything are skipped. A new kind is an arbiter hit whose kind the chain never hit in the whole session.
+- Verdicts as for cases (`arbiter.Judge`). A family with no hit on either side is printed as "no evidence" and does not fail `-strict`.
+- V: `TestSessionOutcomeTwoBuilds` (drink lines 50 and 70, refill lines 2 and 6: two stretches under the line are two hard episodes for the chain, 0 for the arbiter), `TestSessionOutcomeMustFailWithoutDrinkLine` (no drink line: no survive verdict, quest does not pass), `TestScoreSessionNewKindAndEpisodes`, `TestArbiterReplaySession`. U: no real night scored yet.
+
+Reading a Doofer night (arbiterControl 1, families 255): with control on, the tick line's `chain` is the family of the hook that ran, which is the arbiter's whenever it acted (U), so a control-on night mostly measures agreement; score a night with `bot.arbiterControl` 0 and `bot.arbiterShadow` 1 (the chain led) and compare the hit counts per family with the night's real monitor lines.
+
 ## Migration plan per family
 
 Order is by risk. Each family moves from the chain to the arbiter behind its own knob only when its exit rule is met; until then the chain's hook stays. The flail guard, ping-pong and border-loop breakers stay until the shadow log shows they never fire for 14 days after the last family moved. Under the project freeze only shadow and scenario-backed work merges.

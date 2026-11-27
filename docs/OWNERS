@@ -180,6 +180,7 @@ cmd/d2scenario/tap_test.go  credit-runner  stage1fix
 cmd/d2scenario/validate.go  credit-runner  pgselfcheck
 data/capabilities/  credit-runner  dlv-stance-pack
 data/darklaunch.json  credit-runner  arbmig
+data/darklaunch.json  credit-runner  dlv-upkeep-state
 data/darklaunch.json  credit-runner  ticklog
 data/input/caps/  credit-runner  dlv-cast-verbs
 data/questboard/act1.json  credit-runner  cainfix3
@@ -236,6 +237,7 @@ docs/inventory-ui.md  credit-runner  nopins
 docs/knobs.md  credit-runner  arbmig
 docs/knobs.md  credit-runner  cainfix3
 docs/knobs.md  credit-runner  countess3
+docs/knobs.md  credit-runner  dlv-upkeep-state
 docs/knobs.md  credit-runner  freshstart
 docs/knobs.md  credit-runner  pursuers
 docs/knobs.md  live-agent  recoverypace
@@ -314,6 +316,7 @@ internal/admit/  credit-runner  admit1
 internal/arbiter  credit-runner  town10
 internal/arbiter/  credit-runner  arbmig
 internal/arbiter/  credit-runner  dlv-stance-army
+internal/arbiter/decide_prop_test.go  credit-runner  proptest1
 internal/arbiter/replay.go  credit-runner  ticklog
 internal/arbiter/replay_ticklog_test.go  credit-runner  ticklog
 internal/boss  credit-runner  countess3
@@ -382,6 +385,7 @@ internal/combat/  credit-runner  dlv-upkeep-minions
 internal/combat/  credit-runner  dlv-upkeep-state
 internal/combat/  credit-runner  dlv-whirl
 internal/combat/castfirst.go  credit-runner  maphistoryC
+internal/combat/decide_prop_test.go  credit-runner  proptest1
 internal/combat/fight.go  credit-runner  maphistory
 internal/combat/fight.go  credit-runner  maphistoryC
 internal/combat/fightend.go  credit-runner  maphistory
@@ -422,6 +426,7 @@ internal/env/tuning_bot.go  credit-runner  arbmig
 internal/env/tuning_bot.go  credit-runner  freshstart
 internal/env/tuning_bot.go  credit-runner  ticklog
 internal/env/tuning_combat.go  credit-runner  cainfix3
+internal/env/tuning_combat.go  credit-runner  dlv-upkeep-state
 internal/env/tuning_nav.go  credit-runner  pursuers
 internal/env/tuning_quests.go  credit-runner  countess3
 internal/env/tuning_resource.go  credit-runner  freshstart
@@ -506,6 +511,7 @@ internal/supply  credit-runner  town10
 internal/supply  credit-runner  town7
 internal/supply  credit-runner  town8
 internal/supply  credit-runner  town9
+internal/supply/solve_prop_test.go  credit-runner  proptest1
 internal/survival/ledger.go  credit-runner  intake
 internal/talk/talk.go  credit-runner  qdmatrix
 internal/talk/talk_test.go  credit-runner  qdmatrix
