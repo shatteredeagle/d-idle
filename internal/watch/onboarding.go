@@ -92,7 +92,9 @@ type OnboardingConfig struct {
 	Away    func() (time.Duration, bool)
 	// Art says how far the item pictures are (internal/art progress); "" state: not known.
 	Art func() (state string, done, total int)
-	Now func() time.Time
+	// Chickens counts the fights that ended in a chicken in the last ChickenWindow (the away log's close events).
+	Chickens func() int
+	Now      func() time.Time
 }
 
 // Onboarding is the state and the routes. Safe for concurrent use.
@@ -213,6 +215,7 @@ type OnboardingView struct {
 	Steps       []OnboardingStepView `json:"steps"`
 	Away        OnboardingAway       `json:"away"`
 	Art         *OnboardingArt       `json:"art,omitempty"` // only while the pictures are being prepared
+	Chickens    int                  `json:"chickens"`      // chicken exits in the last ChickenWindow (0: none or no source)
 	Texts       OnboardingTexts      `json:"texts"`
 }
 
@@ -254,6 +257,9 @@ func (o *Onboarding) View() OnboardingView {
 	}
 	v.AllDone = v.Done == len(v.Steps)
 	v.ShowList = !v.AllDone || h.ListForced
+	if o.cfg.Chickens != nil {
+		v.Chickens = o.cfg.Chickens()
+	}
 	if o.cfg.Away != nil {
 		if d, ok := o.cfg.Away(); ok && d > AwayAfter {
 			v.Away = OnboardingAway{Absent: true, Seconds: d.Seconds()}
@@ -387,6 +393,22 @@ func onboardingSignals(l *AwayLog) map[string]bool {
 		}
 	}
 	return out
+}
+
+// ChickenWindow is the span the chicken count of the onboarding reply covers.
+const ChickenWindow = 24 * time.Hour
+
+// chickenCount counts the close events that ended in a chicken within the window before now. An event without a wall
+// time (a source that does not stamp it) is not counted: the window cannot be placed (U: no counter of Save and Exit
+// that is not a chicken exists on the watch side; docs/onboarding.md).
+func chickenCount(l *AwayLog, now time.Time) int {
+	n := 0
+	for _, e := range l.Events() {
+		if e.Kind == AwayClose && e.Left == "chicken" && e.Wall > 0 && now.Sub(time.Unix(e.Wall, 0)) <= ChickenWindow {
+			n++
+		}
+	}
+	return n
 }
 
 // artProgress reads the extraction state without decoding anything (ArtAPI.reply would probe the panel image).
