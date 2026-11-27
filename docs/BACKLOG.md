@@ -1524,6 +1524,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - akarafix: hand-in tap is observable and cannot go stale (TASK-1051, merged 2026-11-27, acceptance 4 of 5): Tap logs queued/served/dropped; stale or timed-out requests leave the mailbox; handin_waiting reason in the API; idle goal serves the tap in town. Offline tests only, not verified live; live drill open. <!--sg:agent/akarafix-->
 - agent/closecards: closecards: close verified merged cards, stale dependency fix (merged 2026-11-27) <!--sg:agent/closecards-->
 - agent/darkflip: darkflip: final dark queue flip list (docs) (merged 2026-11-27) <!--sg:agent/darkflip-->
+- tyrael: open Tyrael in Duriel''s Lair, drill record 14 assertion (TASK-1053, merged 2026-11-27, acceptance 2 of 3): Offline: town opener allows Tyrael (251) in area 73 via fieldNPCAreas; scenario record 14 asserts 0x20 + 0x2000 (S). Not verified live; rerun listed in the probe doc. <!--sg:agent/tyrael-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
