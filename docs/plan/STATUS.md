@@ -41,7 +41,6 @@
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | diffbaal | proposed | - | `internal/quest/baaldone.go`<br>`internal/quest/baaldone_test.go` | - |
 | releasenotes-next | proposed | - | `docs/releases/next-draft.md` | - |
-| logsink | proposed | - | `internal/logx`<br>`cmd/d2bot/main.go`<br>`cmd/d2bot/opscmd.go`<br>`cmd/d2bot/logsink_test.go`<br>`docs/ops` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | fieldstate | proposed | - | `internal/bot/loop.go`<br>`internal/bot/goal.go`<br>`internal/bot/state.go`<br>`internal/bot/runner.go`<br>`internal/bot/fieldstate_test.go` | - |
 | questresume | proposed | - | `internal/questboard/`<br>`data/questboard/`<br>`internal/bot/questboard.go`<br>`internal/bot/questauto.go`<br>`internal/bot/boardprogress.go`<br>`internal/bot/boardprogress_test.go`<br>`internal/bot/starvedcause.go`<br>`internal/bot/starvedcause_test.go`<br>`internal/bot/goal.go`<br>`internal/bot/arbiter_control.go`<br>`internal/bot/shadow.go`<br>`internal/env/tuning_quests.go`<br>`internal/watch/questsection.go`<br>`internal/watch/questsection_test.go`<br>`internal/watch/funwire.go`<br>`cmd/d2bot/funwire.go`<br>`data/darklaunch.json`<br>`docs/knobs.md`<br>`docs/questboard.md` | - |
