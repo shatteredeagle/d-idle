@@ -21,7 +21,7 @@ exclusive:
   - "fork-branch:fid/warp-arrival-r2"
   - "upstream-pr:warp-arrival"
 contracts: []
-result: "Posted 2026-11-12 after the second verifier pass and the user yes: https://github.com/psi29a/d2decomped/pull/490 (fid/warp-arrival-r2 24e8ac4f, upstream main unchanged). CodeRabbit read once: one naming comment declined with the repo clang-tidy ignore list as evidence. No other posts."
+result: "Posted 2026-11-12 after the second verifier pass and the user yes: https://github.com/psi29a/d2decomped/pull/490 (fid/warp-arrival-r2 24e8ac4f, upstream main unchanged). CodeRabbit read once: one naming comment declined with the repo clang-tidy ignore list as evidence. No other posts. closecards3: ticked #1, #2 (posted, CodeRabbit read, in result)."
 lane: next
 ---
 
@@ -35,6 +35,6 @@ Posting step for TASK-372 after the verifier pass (TASK-376) and the user's yes.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 PR posted with the verified body
-- [ ] #2 CodeRabbit read after ten minutes
+- [x] #1 PR posted with the verified body
+- [x] #2 CodeRabbit read after ten minutes
 <!-- AC:END -->

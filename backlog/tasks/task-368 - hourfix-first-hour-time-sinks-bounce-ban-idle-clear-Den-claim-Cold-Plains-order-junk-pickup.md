@@ -15,7 +15,7 @@ dependencies: []
 priority: medium
 ordinal: 237000
 card: "hourfix"
-result: "Five first-hour fixes (cave-side bounce skip, bot.clearIdleMin 3, claimed Den not re-run, melee Cold Plains at clvl 4 with Den first, loot.poorMinSell 20) with tests; estimated 15+ min of the hour; NOT verified live."
+result: "Five first-hour fixes (cave-side bounce skip, bot.clearIdleMin 3, claimed Den not re-run, melee Cold Plains at clvl 4 with Den first, loot.poorMinSell 20) with tests; estimated 15+ min of the hour; NOT verified live. closecards3: ticked #6 (merged through the merge gate (merge commit on main))."
 owns:
   - "docs/hourfix.md"
   - "internal/bot/loop.go"
@@ -49,5 +49,5 @@ Fixes from docs/probes/hour1-analysis-2026-11-12.md. Done when each fix has a te
 - [x] #3 a claimed Den is no quest run again
 - [x] #4 melee Cold Plains at clvl 4, Den first
 - [x] #5 poorMinSell 20
-- [ ] #6 whole-repo gate, race, checks green
+- [x] #6 whole-repo gate, race, checks green
 <!-- AC:END -->
