@@ -1,0 +1,7 @@
+@layer panels {
+  [data-panel="town-plan"] .tp-head { margin: 0; font-weight: 700; color: var(--d-text); }
+  [data-panel="town-plan"] .tp-head[data-verdict="short-gold"], [data-panel="town-plan"] .tp-head[data-verdict="blocked"] { color: var(--d-warn, var(--d-text)); }
+  [data-panel="town-plan"] .tp-lines { list-style: none; margin: var(--d-sp-1) 0; padding: 0; display: grid; gap: var(--d-sp-1); font-size: var(--d-fs-1); }
+  [data-panel="town-plan"] .tp-line[data-status="dropped"], [data-panel="town-plan"] .tp-line[data-status="short"] { color: var(--d-text-2); }
+  [data-panel="town-plan"] .tp-wait { margin: var(--d-sp-1) 0 0; font-size: var(--d-fs-1); color: var(--d-text); }
+}
