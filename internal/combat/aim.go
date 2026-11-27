@@ -298,6 +298,20 @@ type aimState struct {
 	aimed, refused, fallbacks                 int
 	shadowMoved, shadowRefused                int
 	corpsePicked, corpseRefused, corpseShadow int
+	rows                                      map[string]*aimRowCount // per skill, for the fight-end summary
+}
+
+// aimRowCount is one aim row's counters (telem.go reads them).
+type aimRowCount struct{ aimed, refused, shadow int }
+
+func (a *aimState) row(name string) *aimRowCount {
+	if a.rows == nil {
+		a.rows = map[string]*aimRowCount{}
+	}
+	if a.rows[name] == nil {
+		a.rows[name] = &aimRowCount{}
+	}
+	return a.rows[name]
 }
 
 // observe updates the velocity memory from the hostiles of this tick.
@@ -365,8 +379,10 @@ func (f *Fighter) aimFor(snap *d2.Snapshot, sp SkillSpec, tg Target, hs []Target
 	if mode == 1 {
 		if out.Refused != "" {
 			f.aim.shadowRefused++
+			f.aim.row(sp.Name).shadow++
 		} else if out.At != t {
 			f.aim.shadowMoved++
+			f.aim.row(sp.Name).shadow++
 		}
 		f.log().Debug("aim shadow", "skill", sp.Name, "rule", r.Rule, "at", out.At, "target", t, "hits", out.Hits, "refused", out.Refused)
 		return t, true
@@ -377,9 +393,11 @@ func (f *Fighter) aimFor(snap *d2.Snapshot, sp SkillSpec, tg Target, hs []Target
 	switch {
 	case out.Refused == aimRefusedLOS, out.Refused == aimRefusedCrowd && gate:
 		f.aim.refused++
+		f.aim.row(sp.Name).refused++
 		f.log().Debug("aim refused", "skill", sp.Name, "rule", r.Rule, "why", out.Refused, "hits", out.Hits)
 		return t, out.Refused == aimRefusedLOS && !gate
 	}
 	f.aim.aimed++
+	f.aim.row(sp.Name).aimed++
 	return out.At, true
 }
