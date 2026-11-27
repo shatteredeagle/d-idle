@@ -13,7 +13,7 @@ dependencies: []
 priority: medium
 ordinal: 502000
 card: "skillhand"
-result: "cmd skill now sends the hand as 1 or 0 and no unit as -1, the numbers d2d reads on stock and fork builds; before, the word left read as the right hand, which the single-player world ignores, and unit 0 skipped the at-the-spot swing (only the aura probe sent that today). Offline tests, not verified live."
+result: "cmd skill now sends the hand as 1 or 0 and no unit as -1, the numbers d2d reads on stock and fork builds; before, the word left read as the right hand, which the single-player world ignores, and unit 0 skipped the at-the-spot swing (only the aura probe sent that today). Offline tests, not verified live. closecards3 Remaining (live): #3 need the live game, a browser or a worker-host run; not verified here."
 lane: next
 owns:
   - "internal/d2dctl/verbs.go"

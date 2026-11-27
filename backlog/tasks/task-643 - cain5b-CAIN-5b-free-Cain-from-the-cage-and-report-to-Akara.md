@@ -29,7 +29,7 @@ owns:
   - "docs/questboard.md"
 exclusive: []
 contracts: []
-result: "Offline (not live): the Tristram cage step fights the hostiles near the hero with the normal Fighter first (bounded, Danger fault without a click while they live), then opens the cage and reads success from the quest word (0x2012, bit 1), 3 tries; board chunks free_cain and report are supported; the whole-level Tristram clear is gone. Sandbox build needs no new verb (the word comes from dump quests). Tests: guards alive, freed from the word, no-word failure, no-reader, melee and caster, L2 fixtures. Live drill open. Doc docs/probes/search-for-cain-5b-2026-11-18.md."
+result: "Offline (not live): the Tristram cage step fights the hostiles near the hero with the normal Fighter first (bounded, Danger fault without a click while they live), then opens the cage and reads success from the quest word (0x2012, bit 1), 3 tries; board chunks free_cain and report are supported; the whole-level Tristram clear is gone. Sandbox build needs no new verb (the word comes from dump quests). Tests: guards alive, freed from the word, no-word failure, no-reader, melee and caster, L2 fixtures. Live drill open. Doc docs/probes/search-for-cain-5b-2026-11-18.md. closecards3 Remaining (live): #4 need the live game, a browser or a worker-host run; not verified here."
 lane: next
 ---
 

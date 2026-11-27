@@ -21,7 +21,7 @@ owns:
   - "docs/probes/walksmooth/"
 exclusive: []
 contracts: []
-result: "Offline fix (stop-short waypoint advance, click lookahead, run-belief heal), sim before/after, NOT verified live; see docs/walksmooth.md"
+result: "Offline fix (stop-short waypoint advance, click lookahead, run-belief heal), sim before/after, NOT verified live; see docs/walksmooth.md closecards3: ticked #1 (docs/walksmooth.md records the cause)."
 ---
 
 ## Description
@@ -34,7 +34,7 @@ User feedback 2026-11-08: stop-and-go walk out of the start area. Done when smoo
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 root cause found with evidence (log evidence V, mechanism U: realtime debug run was refused)
+- [x] #1 root cause found with evidence (log evidence V, mechanism U: realtime debug run was refused)
 - [x] #2 fix with regression test (two classes)
 - [x] #3 before/after movement smoothness measured (offline sim only, not live)
 <!-- AC:END -->

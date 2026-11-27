@@ -29,7 +29,7 @@ owns:
   - "tools/uishots/vaultshots.sh"
 exclusive: []
 contracts: []
-result: 'built and tested offline (go test ./internal/watch ./tools/uishots, node harnesses with fake timers, tools/desktopscroll/run.sh green on the builder, fixture-viewer pictures at 1366x768, 1920x1080, 390x844 in docs/ui/vault-cleanup/); not seen on the live page (no deploy by this card). Build-specific: none. Not touched: the API, the bot.'
+result: 'built and tested offline (go test ./internal/watch ./tools/uishots, node harnesses with fake timers, tools/desktopscroll/run.sh green on the builder, fixture-viewer pictures at 1366x768, 1920x1080, 390x844 in docs/ui/vault-cleanup/); not seen on the live page (no deploy by this card). Build-specific: none. Not touched: the API, the bot. closecards3: ticked #4 (merged through the merge gate (merge commit on main)).'
 lane: next
 ---
 
@@ -46,5 +46,5 @@ Why: user feedback 2026-11-21 on the live Vault page ("very confusing/messy"): a
 - [x] #1 No empty fold; one action bar
 - [x] #2 Status chip expires; marked chip; no grid frame; unid badge only
 - [x] #3 Screenshots 3 sizes in docs/ui/vault-cleanup
-- [ ] #4 Gates green and merged
+- [x] #4 Gates green and merged
 <!-- AC:END -->

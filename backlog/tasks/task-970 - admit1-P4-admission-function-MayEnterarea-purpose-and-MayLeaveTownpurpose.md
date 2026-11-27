@@ -24,9 +24,16 @@ owns:
   - "internal/bot/earlyroute.go"
   - "internal/bot/povertyfarm.go"
   - "internal/bot/admit_need_test.go"
+  - "internal/bot/admission.go"
+  - "internal/bot/admission_test.go"
+  - "internal/bot/routeguard.go"
+  - "internal/bot/runner.go"
+  - "internal/bot/explain.go"
+  - "internal/env/tuning_bot.go"
+  - "data/darklaunch.json"
 exclusive: []
 contracts: []
-result: "Step 1: package internal/admit (MayEnter, MayLeaveTown, Refused with need and wake), floors as rows in admission.json, old judges read their numbers from it, table tests for two classes. Not verified live. Step 2 (wiring, knob bot.admission, ops status --why line) waits for TASK-958 and TASK-961. Remaining: AC 2 first provider in shadow (waits for TASK-958 and TASK-961)."
+result: "Step 1: package internal/admit (MayEnter, MayLeaveTown, Refused with need and wake), floors as rows in admission.json, old judges read their numbers from it, table tests for two classes. Not verified live. Step 2: wiring in shadow (internal/bot/admission.go) for early road, poverty, kit floor, lean and the quest-walk kit; knob bot.admission (default 0 = old judges decide, 1 = function decides), dark-launch row, ops status --why admission line, property test. Offline only, not verified live; other providers not wired."
 ---
 
 ## Description
@@ -40,5 +47,5 @@ Cause classes killed: G (thresholds by incident, 20) and C at the edges; the 'le
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
 - [x] #1 Design doc: provider list, row schema keyed by archetype, shadow plan
-- [ ] #2 First provider (town exit) in shadow with a ledger row
+- [x] #2 First provider (town exit) in shadow with a ledger row
 <!-- AC:END -->

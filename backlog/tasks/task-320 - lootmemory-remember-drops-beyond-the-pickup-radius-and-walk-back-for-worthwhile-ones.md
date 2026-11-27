@@ -27,7 +27,7 @@ owns:
   - "docs/lootmemory.md"
   - "docs/knobs.md"
 exclusive: []
-result: "Built and tested offline on Sorceress and Paladin (sim, game tables on the worker host); NOT verified live. Build-specific: nothing (class-generic, knobs loot.mem*)."
+result: "Built and tested offline on Sorceress and Paladin (sim, game tables on the worker host); NOT verified live. Build-specific: nothing (class-generic, knobs loot.mem*). closecards3 Remaining (live): #4 need the live game, a browser or a worker-host run; not verified here."
 contracts: []
 ---
 

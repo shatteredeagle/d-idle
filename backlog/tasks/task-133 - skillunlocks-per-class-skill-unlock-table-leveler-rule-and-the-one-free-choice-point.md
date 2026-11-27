@@ -26,7 +26,7 @@ owns:
   - "docs/plan/data/unlocks-sorceress.json"
 exclusive: []
 contracts: []
-result: "Engine, Sorceress table and tests built and passing offline (two classes; real-table Validate on the worker host). NOT done: Codex icons and the free-choice picker UI, the runner Fire/Options wiring (AC3 icons part open). Not verified live. owns widened: leveler.go (Options + PlanFor) and the docs/plan/data copy that TestMatchesDocs requires. Status sync 2026-11-08 (stays open): AC3 icons part and free-choice picker UI open."
+result: "Engine, Sorceress table and tests built and passing offline (two classes; real-table Validate on the worker host). NOT done: Codex icons and the free-choice picker UI, the runner Fire/Options wiring (AC3 icons part open). Not verified live. owns widened: leveler.go (Options + PlanFor) and the docs/plan/data copy that TestMatchesDocs requires. Status sync 2026-11-08 (stays open): AC3 icons part and free-choice picker UI open. closecards3 Remaining (not live): #3 open, Codex icons and the free-choice picker UI not built."
 ---
 
 ## Description

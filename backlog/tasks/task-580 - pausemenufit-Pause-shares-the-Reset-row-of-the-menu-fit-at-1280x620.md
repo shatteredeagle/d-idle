@@ -18,7 +18,7 @@ owns:
   - "internal/watch/web/shell.css"
 exclusive: []
 contracts: []
-result: "Pause moved into the Reset row of the menu; default-pause* fit pages green on Tower (all sizes incl. 1280x620). Full fit result in the merge report."
+result: "Pause moved into the Reset row of the menu; default-pause* fit pages green on Tower (all sizes incl. 1280x620). Full fit result in the merge report. closecards3 Remaining (live): #2 need the live game, a browser or a worker-host run; not verified here."
 lane: next
 ---
 

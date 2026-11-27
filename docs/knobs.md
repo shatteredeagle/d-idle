@@ -352,6 +352,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | bot.arbiterControl | 0 | 0..1 | bool | 0 | 2 | [dark-launch] 1 lets the intent arbiter act for the families in bot.arbiterFamilies: the goal chain's hooks of such a family defer to its decision, and the old chain is the fallback when the arbiter chooses nothing or fails. Needs bot.arbiterShadow 1. 0 is off: nothing changes (docs/arbiter.md, data/darklaunch.json). |
 | bot.arbiterFamilies | 3 | 0..255 | mask | 3 | 2 | Arbiter control: which families the arbiter controls, one bit each in the order survive 1, player 2, chores 4, claim 8, goldfarm 16, recovery 32, quest 64, level 128. 3 is survive and player, the first family. Every bit is wired (arbfam entries 1 to 4); with bot.arbiterControl 0 none acts (docs/arbiter.md). |
 | bot.tickLogSec | 0 | 0..60 | s | 0 | 2 | [dark-launch] Above 0 writes one `tick` line at most every this many seconds: area, kills, xp, the chain's hook family and the arbiter's world facts, so `d2arbiter -follow` can replay a recorded session. Log only, independent of bot.arbiterShadow. 0 is off (docs/design/ticklog-t4.md, data/darklaunch.json). |
+| bot.admission | 0 | 0..1 | bool | 0 | 5 | [dark-launch] 1 lets the admission function (internal/admit, rows in admission.json) decide the early road, poverty, kit floor and lean entry rows at the travel chokepoint and the quest-walk kit at the town exit. 0 keeps the old judges in control; the function runs beside them and logs one `admission shadow` line per disagreement (docs/design/admission-p4.md, data/darklaunch.json). |
 | bot.arbiterDwellSec | 120 | 10..1800 | s | 120 | 1 | Arbiter shadow: how long a chosen intent holds its lease; only a higher priority class preempts it inside this time. |
 | bot.arbiterTravelSec | 600 | 30..7200 | s | 600 | 1 | Arbiter shadow: an area change that would undo the previous one inside this window is refused unless a kill, XP, gold or belt change happened in between. |
 | bot.arbiterLogGapSec | 60 | 1..3600 | s | 60 | 1 | Arbiter shadow: minimum seconds between two divergence lines of the same (chain, arbiter) pair. |
@@ -438,7 +439,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | route.freshMaxNoGain | 3 | 0..50 | restarts | 3 | 0 | After this many fresh games in a row that each gained under route.freshMinXP, the bot logs 'leveling: blocked: needs input' and only probes one more restart every route.freshBlockedSec, waiting in town in between. A cycle with enough XP resets the count. 0 turns the bound off (the old endless restart loop). |
 | route.freshMinXP | 200 | 0..1e+05 | xp | 200 | 0 | Experience gained between two fresh-game restarts that resets the no-gain count (log field xpGained). U: a starting number, tune from the Gate logs. |
 | route.freshBlockedSec | 1800 | 0..1.44e+04 | s | 1800 | 0 | Once the no-gain bound is reached the bot waits this long in town between restart probes, so the loop never spins; bans expire and the picker is asked again after each wait. |
-| route.earlyRoute | 1 | 0..1 | bool | 1 | 5 | 1 (default): the Underground Passage level 1 and the Dark Wood, the only way to the Tree of Inifuss, stay closed to a hero under the class level in plandata/earlyroutes.json (melee 7, caster 8, U) or short of 2 healing potions and a town portal source; the board says 'level N needed' and the hero levels in the first fields instead. The owner's try anyway opens it. 0: no guard (a clvl 4 Paladin with no potions died there, Questy bed 2026-11-25). |
+| route.earlyRoute | 1 | 0..1 | bool | 1 | 6 | 1 (default): the Underground Passage level 1 and the Dark Wood, the only way to the Tree of Inifuss, stay closed to a hero under the class level in plandata/earlyroutes.json (melee 7, caster 8, U) or short of 2 healing potions and a town portal source; the board says 'level N needed' and the hero levels in the first fields instead. The owner's try anyway opens it. 0: no guard (a clvl 4 Paladin with no potions died there, Questy bed 2026-11-25). |
 
 ### resource.*
 
@@ -470,8 +471,8 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | resource.tripHealPct | 50 | 25..80 | % | 25 | 1 | Life percent below which a character that cannot regenerate goes to town for free healing. |
 | resource.mercDeadPack | 2 | 1..6 | count | 6 | 1 | Hostiles at which a fight is left once the merc is dead. |
 | resource.fleeLifePct | 50 | 30..80 | % | 30 | 1 | Life percent below which a character with no healing potion and no portal breaks away from hostiles instead of trading blows. |
-| resource.kitTPGold | 100 | 50..200 | gold | 50 | 13 | Price of one town portal scroll, for the minimal-kit cost. |
-| resource.kitPotionGold | 30 | 20..100 | gold | 20 | 16 | Price of the cheapest healing potion, for the minimal-kit cost. |
+| resource.kitTPGold | 100 | 50..200 | gold | 50 | 14 | Price of one town portal scroll, for the minimal-kit cost. |
+| resource.kitPotionGold | 30 | 20..100 | gold | 20 | 17 | Price of the cheapest healing potion, for the minimal-kit cost. |
 | resource.povertyMargin | 60 | 0..300 | gold | 0 | 1 | Gold above the minimal kit cost at which poverty mode ends. |
 | resource.retreatBelt | 0 | 0..3 | count | 0 | 2 | In a fight with life under the drink line and at most this many healing potions left, leave (portal, or walk home near town) instead of drinking. 0 = off. |
 | resource.retreatCountPack | 1 | 0..1 | 0/1 | 0 | 1 | 1 = spare healing/rejuvenation potions in the backpack (up to the free belt slots) count towards retreatBelt, so a full pack does not trigger a retreat; 0 = belt only. |
@@ -591,13 +592,14 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | key | default | range | unit | worst (rookie) | readers | what it changes |
 |---|---|---|---|---|---|---|
 | agency.autoAlloc | 0 | 0..1 | 0/1 | 0 | 1 | 0 (default): off, points are banked for the player. 1: a hero whose build is locked (chosen on the Points page) puts every new stat and skill point where that build's table says, at a calm moment, by verb. A skill the hero cannot use yet is skipped with a visible reason and the point stays banked (docs/autoalloc.md). |
-| agency.planner | 0 | 0..1 | mode | 0 | 0 | 0 (default): off. 1: shadow. Once a minute the hero logs a `planner shadow:` line with the attack and aura the planner would pick from the skills the player actually bought, next to what the combat profile picks, and GET /api/hero/plan and the Points page show the derived rotation, the warnings and the viability line. Shadow only: it never changes what the hero does (docs/agency.md). |
+| agency.planner | 0 | 0..2 | mode | 0 | 0 | 0 (default): off. 1: shadow. Once a minute the hero logs a `planner shadow:` line with the attack and aura the planner would pick from the skills the player actually bought, next to what the combat profile picks, and GET /api/hero/plan and the Points page show the derived rotation, the warnings and the viability line. Modes 0 and 1 never change what the hero does (docs/agency.md). 2: drive, gated by the owner go: the fighter plays the planner's attack (and aura) instead of the combat profile's first pick, only when the plan is supported, differs from the profile's pick and the archetype resolved (agency.DriveOf); a `planner drive:` line says why when it changes. [dark-launch] |
 
 ### items.*
 
 | key | default | range | unit | worst (rookie) | readers | what it changes |
 |---|---|---|---|---|---|---|
 | items.ladderRunewords | 0 | 0..1 | bool | 0 | 3 | 1: the planner may socket the ladder-only runewords (Spirit, Insight and the rest of the Runes.txt server rows) and the Return screen shows 'ladder runewords: on'. Set it only together with the fork flag --ladder-runewords (ADR 0024, d.idle mode); read at start. 0 (default, vanilla): they stay unavailable, as in every gate and fidelity run. |
+| items.advisor | 0 | 0..1 | bool | 0 | 0 | [dark-launch] 1: the Return screen shows up to 3 advice lines from what you own (pack, stash, vault): 'you have the runes for Lore; socket base ...', a cube upgrade path, or the one rune you lack. Lines only: it never moves, sockets or cubes an item. Ladder-only runewords follow items.ladderRunewords. 0 (default): no advice section. |
 
 ### respec.*
 

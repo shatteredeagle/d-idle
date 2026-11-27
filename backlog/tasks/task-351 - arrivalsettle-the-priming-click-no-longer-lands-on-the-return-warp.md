@@ -23,7 +23,7 @@ owns:
   - "docs/passagebounce.md"
 exclusive: []
 contracts: []
-result: "Cause (S from code, matches the V log pattern): d2dctl Kick clicked (400,300), the player feet, which on arrival is the return warp unit. Now clicks 110 px toward the move target (primeToward/KickAt). Offline, not verified live; measure bounces/arrivals from the arrival log line."
+result: "Cause (S from code, matches the V log pattern): d2dctl Kick clicked (400,300), the player feet, which on arrival is the return warp unit. Now clicks 110 px toward the move target (primeToward/KickAt). Offline, not verified live; measure bounces/arrivals from the arrival log line. closecards3: ticked #3 (merged through the merge gate (merge commit on main))."
 lane: next
 ---
 
@@ -39,5 +39,5 @@ Why: TODO. Done when: TODO.
 <!-- AC:BEGIN -->
 - [x] #1 Priming click goes toward the move target, not onto the player's feet
 - [x] #2 Arrival log line carries arrivals and bounces counters
-- [ ] #3 Whole-repo gate passes
+- [x] #3 Whole-repo gate passes
 <!-- AC:END -->

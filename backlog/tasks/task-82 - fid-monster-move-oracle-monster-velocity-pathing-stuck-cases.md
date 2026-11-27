@@ -23,7 +23,7 @@ owns:
   - "docs/probes/fid/fid-monster-move.md"
 exclusive: []
 contracts: []
-result: "2026-11-08 decomp6: monster/player velocity equal (122,646 cases x 2 seeds, 0 mismatches), walk rates 0 of 1,203, pathers and chase check ok on 2,000 cases each, 77-point cap read (FUN_00648e70) and run; AC 2 open (63 untouched PATH functions not listed); stuck/crowd cases U; no PR candidate; doc docs/probes/fid/fid-monster-move.md; not verified live"
+result: "2026-11-08 decomp6: monster/player velocity equal (122,646 cases x 2 seeds, 0 mismatches), walk rates 0 of 1,203, pathers and chase check ok on 2,000 cases each, 77-point cap read (FUN_00648e70) and run; AC 2 open (63 untouched PATH functions not listed); stuck/crowd cases U; no PR candidate; doc docs/probes/fid/fid-monster-move.md; not verified live closecards3 Remaining (not live): #2 open, 63 untouched PATH functions not listed."
 ---
 
 ## Description

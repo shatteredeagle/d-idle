@@ -22,7 +22,7 @@ owns:
   - "docs/probes/provingground-countess-2026-11-20.md"
 exclusive: []
 contracts: []
-result: "Unit-tested only (go test -race -count=20 ./internal/boss). Live: NOT verified; act1.forgotten.countess was RED/BLOCKED on the builder (potion guard, record not observed), no determinism pair. level 25 levelmap lists no chest 580. See the probe doc."
+result: "Unit-tested only (go test -race -count=20 ./internal/boss). Live: NOT verified; act1.forgotten.countess was RED/BLOCKED on the builder (potion guard, record not observed), no determinism pair. level 25 levelmap lists no chest 580. See the probe doc. closecards3 Remaining (live): #2 need the live game, a browser or a worker-host run; not verified here."
 lane: next
 ---
 

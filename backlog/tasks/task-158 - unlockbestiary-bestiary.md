@@ -26,7 +26,7 @@ owns:
   - "docs/unlock-bestiary.md"
 exclusive: []
 contracts: []
-result: "Offline proof 2026-11-08: go test ./internal/watch ./internal/unlock and ./cmd/d2bot (-run BestiaryWired|BestiaryWithout) pass; golden payloads at 10 and 50 kills, spoiler rule, replay, restart persistence (TestBestiaryGoldenTwoClasses, TestBestiarySpoilerRule, TestBestiaryReplayAndUnlisted, TestBestiaryWiredWithTableAndRestart). Fixtures only; NOT verified live or in a browser. Stays open: AC #5 (panel in a browser) and #6 (live run) unticked; kind names unchecked against the real monstats (U)."
+result: "Offline proof 2026-11-08: go test ./internal/watch ./internal/unlock and ./cmd/d2bot (-run BestiaryWired|BestiaryWithout) pass; golden payloads at 10 and 50 kills, spoiler rule, replay, restart persistence (TestBestiaryGoldenTwoClasses, TestBestiarySpoilerRule, TestBestiaryReplayAndUnlisted, TestBestiaryWiredWithTableAndRestart). Fixtures only; NOT verified live or in a browser. Stays open: AC #5 (panel in a browser) and #6 (live run) unticked; kind names unchecked against the real monstats (U). closecards3 Remaining (live): #5, #6 need the live game, a browser or a worker-host run; not verified here."
 ---
 
 ## Description

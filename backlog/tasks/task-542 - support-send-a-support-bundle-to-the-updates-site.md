@@ -38,7 +38,7 @@ owns:
   - "docs/support-bundle.md"
 exclusive: []
 contracts: []
-result: "Offline only, NOT verified live: bundle builder + redaction + fail-closed scan (internal/support), receiver cmd/d2supportrecv (auth, rate limits, quota, traversal tests), watch routes, UI sheet (node test), fit pages (browser run not done), docs/support-bundle.md with the threat model. Not deployed; deploy steps in cmd/d2supportrecv/README.md; ops fetch script written in the ops repo, uncommitted."
+result: "Offline only, NOT verified live: bundle builder + redaction + fail-closed scan (internal/support), receiver cmd/d2supportrecv (auth, rate limits, quota, traversal tests), watch routes, UI sheet (node test), fit pages (browser run not done), docs/support-bundle.md with the threat model. Not deployed; deploy steps in cmd/d2supportrecv/README.md; ops fetch script written in the ops repo, uncommitted. closecards3 Remaining (live): #5 need the live game, a browser or a worker-host run; not verified here."
 ---
 
 ## Description

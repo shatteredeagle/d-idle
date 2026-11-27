@@ -23,7 +23,7 @@ owns:
   - "docs/probes/fid/fid-status-effects.md"
 exclusive: []
 contracts: []
-result: "2026-11-08 decomp6: freeze rule (225,748), chill length (2 x 121,312), freeze end, Static Field equal (0 differences, V run); put rule of curses/Taunt/Attract still deviates (54,685 of 100,000, covstates2 D1-D5); poison and stun not re-run, AC 1 open; no PR candidate; doc docs/probes/fid/fid-status-effects.md; not verified live"
+result: "2026-11-08 decomp6: freeze rule (225,748), chill length (2 x 121,312), freeze end, Static Field equal (0 differences, V run); put rule of curses/Taunt/Attract still deviates (54,685 of 100,000, covstates2 D1-D5); poison and stun not re-run, AC 1 open; no PR candidate; doc docs/probes/fid/fid-status-effects.md; not verified live closecards3 Remaining (not live): #1 open, poison and stun not re-run."
 ---
 
 ## Description

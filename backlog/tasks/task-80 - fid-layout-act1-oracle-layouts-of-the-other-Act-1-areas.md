@@ -22,7 +22,7 @@ owns:
   - "docs/probes/fid/fid-layout-act1.md"
 exclusive: []
 contracts: []
-result: "decomp8 2026-11-09, offline only (not verified live): ids 5-7 and 9-39 equal game.exe on upstream 83fc7ba1, tiles/units/seeds/monsters, seeds 1..30 and two 32-bit ranges, 0 differ (170 + 340 comparisons, 13,497 + 9,184 populated rooms); Lut Gholein now equal; AC 3 (same-save first load) open, needs a game; docs/probes/fid/fid-layout-act1.md"
+result: "decomp8 2026-11-09, offline only (not verified live): ids 5-7 and 9-39 equal game.exe on upstream 83fc7ba1, tiles/units/seeds/monsters, seeds 1..30 and two 32-bit ranges, 0 differ (170 + 340 comparisons, 13,497 + 9,184 populated rooms); Lut Gholein now equal; AC 3 (same-save first load) open, needs a game; docs/probes/fid/fid-layout-act1.md closecards3 Remaining (live): #3 need the live game, a browser or a worker-host run; not verified here."
 ---
 
 ## Description

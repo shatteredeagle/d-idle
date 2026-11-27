@@ -19,7 +19,7 @@ owns:
   - ".github/workflows/desktop-app.yml"
 exclusive: []
 contracts: []
-result: "Launcher built (Go, stdlib, Linux+Windows cross-compile ok), unit tests and Xvfb smoke with a fake browser pass on the worker host. NOT verified live: real Chromium/Edge app window, login with persisted cookie, Windows run (no Chromium on the worker host); checklist in docs/desktop-app.md. CI workflow written, never run."
+result: "Launcher built (Go, stdlib, Linux+Windows cross-compile ok), unit tests and Xvfb smoke with a fake browser pass on the worker host. NOT verified live: real Chromium/Edge app window, login with persisted cookie, Windows run (no Chromium on the worker host); checklist in docs/desktop-app.md. CI workflow written, never run. closecards3 Remaining (live): #4 need the live game, a browser or a worker-host run; not verified here."
 ---
 
 ## Description

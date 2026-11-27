@@ -22,7 +22,7 @@ owns:
   - "docs/probes/act2-stepexec-drill-2026-11-27.md"
 exclusive: []
 contracts: []
-result: "Offline: town opener allows Tyrael (251) in area 73 via fieldNPCAreas; scenario record 14 asserts 0x20 + 0x2000 (S). Not verified live; rerun listed in the probe doc."
+result: "Offline: town opener allows Tyrael (251) in area 73 via fieldNPCAreas; scenario record 14 asserts 0x20 + 0x2000 (S). Not verified live; rerun listed in the probe doc. closecards3 Remaining (live): #3 need the live game, a browser or a worker-host run; not verified here."
 ---
 
 ## Description

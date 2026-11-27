@@ -18,6 +18,7 @@ owns:
   - "docs/unlock-upgradeadvisor.md"
 exclusive: []
 contracts: []
+result: " closecards3 Remaining (not live): #1, #2, #3, #4, #5 open, tiers T0 to T3 and docs/unlock-upgradeadvisor.md are not on main, only the Advice hook and GearAdviceFor exist (U): reopen or split if the feature is still wanted."
 ---
 
 ## Description

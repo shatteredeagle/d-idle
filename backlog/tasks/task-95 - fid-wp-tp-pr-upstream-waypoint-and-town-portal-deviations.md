@@ -23,7 +23,7 @@ owns:
   - "docs/probes/fid/fid-wp-tp-pr.md"
 exclusive: []
 contracts: []
-result: "decomp8 2026-11-09, offline only (not verified live): waypoint refusal 0 differ in 2 x 140,002 cases and Town Portal read 0 differ in 2 x 108,000 on upstream 83fc7ba1 (V run); AC 1 (39-bit mask not compared) and AC 2 (portal position, expiry, skill-bar path not run) stay open; AC 3 recorded; docs/probes/fid/fid-wp-tp-pr.md"
+result: "decomp8 2026-11-09, offline only (not verified live): waypoint refusal 0 differ in 2 x 140,002 cases and Town Portal read 0 differ in 2 x 108,000 on upstream 83fc7ba1 (V run); AC 1 (39-bit mask not compared) and AC 2 (portal position, expiry, skill-bar path not run) stay open; AC 3 recorded; docs/probes/fid/fid-wp-tp-pr.md closecards3 Remaining (not live): #1, #2 open, 39-bit mask and portal position not compared."
 ---
 
 ## Description

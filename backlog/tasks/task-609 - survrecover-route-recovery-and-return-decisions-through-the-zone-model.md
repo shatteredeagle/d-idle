@@ -1,7 +1,7 @@
 ---
 id: TASK-609
 title: 'survrecover: route recovery and return decisions through the zone model'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-17T10:32:00Z'
@@ -24,7 +24,7 @@ owns:
 exclusive: []
 contracts: []
 lane: next
-result: " Merged (agent/survrecover): zone-model recovery decisions and tests (zonerecover_test.go). Remaining (live): AC 3 holdout and 8-seed Paladin A/B rerun, Sorceress screen and recommendation doc."
+result: " Merged (agent/survrecover): zone-model recovery decisions and tests (zonerecover_test.go). Remaining (live): AC 3 holdout and 8-seed Paladin A/B rerun, Sorceress screen and recommendation doc. closecards3: status set to Done, merged on main; only the live or lab boxes above remain open (listed in Remaining)."
 ---
 
 ## Description

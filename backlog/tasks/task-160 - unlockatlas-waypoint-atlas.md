@@ -26,7 +26,7 @@ owns:
   - "docs/unlock-atlas.md"
 exclusive: []
 contracts: []
-result: "Offline proof 2026-11-08: go test ./internal/watch ./internal/unlock and ./cmd/d2bot (-run BestiaryWired, which also fetches the atlas) pass; golden payloads for Sorceress and Paladin, dark and lit proposal node, token gates (TestAtlasGoldenTwoClasses, TestAtlasReplayAndGates, TestAtlasTableAndErrors). Fixtures only; NOT verified live or in a browser. Stays open: AC #5 (browser) and #6 (live) unticked."
+result: "Offline proof 2026-11-08: go test ./internal/watch ./internal/unlock and ./cmd/d2bot (-run BestiaryWired, which also fetches the atlas) pass; golden payloads for Sorceress and Paladin, dark and lit proposal node, token gates (TestAtlasGoldenTwoClasses, TestAtlasReplayAndGates, TestAtlasTableAndErrors). Fixtures only; NOT verified live or in a browser. Stays open: AC #5 (browser) and #6 (live) unticked. closecards3 Remaining (live): #5, #6 need the live game, a browser or a worker-host run; not verified here."
 ---
 
 ## Description

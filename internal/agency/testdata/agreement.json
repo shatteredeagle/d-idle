@@ -231,19 +231,21 @@
   "table": "paladin_hammerdin_endgame90",
   "class": "paladin",
   "clvl": 6,
-  "profile": "Attack",
+  "profile": "Smite",
   "plan": "Attack",
   "best": "Attack",
-  "agree": true
+  "agree": false,
+  "why": "estimate Attack 33 dps against the profile's Smite 0 dps: more than the 2.0x margin that overrules the band order; the estimate ignores Sacrifice's life cost, counts Zeal as one strike, and gives a summoner's plain swing the damage the pets do"
  },
  {
   "table": "paladin_hammerdin_endgame90",
   "class": "paladin",
   "clvl": 12,
-  "profile": "Attack",
+  "profile": "Smite",
   "plan": "Attack",
   "best": "Attack",
-  "agree": true
+  "agree": false,
+  "why": "estimate Attack 33 dps against the profile's Smite 0 dps: more than the 2.0x margin that overrules the band order; the estimate ignores Sacrifice's life cost, counts Zeal as one strike, and gives a summoner's plain swing the damage the pets do"
  },
  {
   "table": "paladin_hammerdin_endgame90",

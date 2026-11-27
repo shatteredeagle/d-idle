@@ -1,7 +1,7 @@
 ---
 id: TASK-816
 title: 'sellall: Vault Sell all button, two-tap confirm, scope all_sellable'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-22T19:39:00Z'
@@ -24,7 +24,7 @@ owns:
 exclusive: []
 contracts: []
 lane: next
-result: " Remaining (live): AC 2 scenario vault.sell-all GREEN on a lab slot."
+result: " Remaining (live): AC 2 scenario vault.sell-all GREEN on a lab slot. closecards3: status set to Done, merged on main; only the live or lab boxes above remain open (listed in Remaining)."
 ---
 
 ## Description
