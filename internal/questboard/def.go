@@ -135,26 +135,30 @@ type Meta map[string]int
 
 // Quest is one row of the definitions.
 type Quest struct {
-	ID         string            `json:"id"`     // the save quest id (internal/saves questTable)
-	TaskID     string            `json:"taskId"` // the task-layer id (internal/task/world.go), empty when equal
-	Title      string            `json:"title"`
-	Blurb      string            `json:"blurb"`
-	Act        int               `json:"act"`
-	Diffs      []string          `json:"difficulties"`
-	Kind       string            `json:"kind"`
-	Requires   []string          `json:"requires,omitempty"`
-	SoftAfter  []string          `json:"softAfter,omitempty"`
-	Accept     *Giver            `json:"accept,omitempty"`
-	Chunks     []Chunk           `json:"chunks"`
-	Items      []Item            `json:"items,omitempty"`
-	Boss       string            `json:"boss,omitempty"`
-	Rewards    []Reward          `json:"rewards,omitempty"`
-	Meta       Meta              `json:"meta,omitempty"`
-	Minutes    [2]int            `json:"minutes"`
-	Risk       string            `json:"risk"`
-	AutoStart  string            `json:"autoStart"`
-	LegacyFlor map[string]int    `json:"legacyFloor,omitempty"` // clvl by class family, transitional (design 1.1)
-	Tags       map[string]string `json:"tags,omitempty"`        // field -> V|S|U|SRC|EXP, with the source
+	ID       string   `json:"id"`     // the save quest id (internal/saves questTable)
+	TaskID   string   `json:"taskId"` // the task-layer id (internal/task/world.go), empty when equal
+	Title    string   `json:"title"`
+	Blurb    string   `json:"blurb"`
+	Act      int      `json:"act"`
+	Diffs    []string `json:"difficulties"`
+	Kind     string   `json:"kind"`
+	Requires []string `json:"requires,omitempty"`
+	// RequiresCleared lists quests whose objective (Fact.Cleared, any tier) is enough: the prerequisite that this quest
+	// itself completes. The Seven Tombs needs the Horadric Staff made; only placing it in the orifice sets the Staff's
+	// done bit (S d2d SevenTombsQuest::join, FUN_0059d4f0: record 10 bit 0 means placed), so requires would never open.
+	RequiresCleared []string          `json:"requiresCleared,omitempty"`
+	SoftAfter       []string          `json:"softAfter,omitempty"`
+	Accept          *Giver            `json:"accept,omitempty"`
+	Chunks          []Chunk           `json:"chunks"`
+	Items           []Item            `json:"items,omitempty"`
+	Boss            string            `json:"boss,omitempty"`
+	Rewards         []Reward          `json:"rewards,omitempty"`
+	Meta            Meta              `json:"meta,omitempty"`
+	Minutes         [2]int            `json:"minutes"`
+	Risk            string            `json:"risk"`
+	AutoStart       string            `json:"autoStart"`
+	LegacyFlor      map[string]int    `json:"legacyFloor,omitempty"` // clvl by class family, transitional (design 1.1)
+	Tags            map[string]string `json:"tags,omitempty"`        // field -> V|S|U|SRC|EXP, with the source
 }
 
 // File is one act's definitions file.
@@ -319,7 +323,8 @@ func (b *Board) requiresCycle() error {
 			return nil
 		}
 		state[id] = 1
-		for _, r := range b.quests[b.byID[id]].Requires {
+		q := b.quests[b.byID[id]]
+		for _, r := range append(append([]string{}, q.Requires...), q.RequiresCleared...) {
 			if err := visit(r); err != nil {
 				return err
 			}
@@ -367,7 +372,7 @@ func (b *Board) validateQuest(q Quest) error {
 	if err := b.checkMeta(at, q.Meta); err != nil {
 		return err
 	}
-	for _, id := range append(append([]string{}, q.Requires...), q.SoftAfter...) {
+	for _, id := range append(append(append([]string{}, q.Requires...), q.RequiresCleared...), q.SoftAfter...) {
 		if _, ok := b.byID[id]; !ok {
 			return fmt.Errorf("questboard: %s: requires unknown quest %q", at, id)
 		}
