@@ -36,7 +36,6 @@
 |---|---|---|---|---|
 | m3-act1run | deferred | m3-act1run | `docs/act1-run.md`<br>`docs/probes/act1run/**` | `soak-slot:3` |
 | fid-matrix-refresh | deferred | - | `docs/probes/fid/fid-matrix-refresh.md` | - |
-| necrocorpse | proposed | - | `docs/probes/necrocaps-2026-11-26.md`<br>`internal/plandata/build-necromancer_summoner_ce1.json`<br>`docs/plan/data/build-necromancer_summoner_ce1.json`<br>`internal/plandata/build-catalog.json`<br>`internal/leveler/necrocorpse_test.go`<br>`tools/provingground/scenarios/necro.json`<br>`tools/provingground/scenarios/tiers.json` | - |
 | fid-poison-res-diag | proposed | - | `docs/research/fid-poisonres-trace.md` | - |
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
