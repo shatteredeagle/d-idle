@@ -7,6 +7,7 @@ import (
 	"sort"
 	"strconv"
 
+	"d2lod-bot/internal/charms"
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/input"
 	"d2lod-bot/internal/loot"
@@ -87,6 +88,9 @@ func (t *Town) stashItems(ctx context.Context, rep *ChoreReport, insure bool) er
 	var todo []d2.Unit
 	seen := map[uint32]bool{}
 	for _, u := range s.Inventory.Container(d2.ContInventory) {
+		if t.carriedCharm(u) {
+			continue
+		}
 		if v := t.judge.EvaluateUnit(u); t.wantsStash(s, u, v) {
 			todo = append(todo, u)
 			seen[u.ID] = true
@@ -96,7 +100,7 @@ func (t *Town) stashItems(ctx context.Context, rep *ChoreReport, insure bool) er
 		Valuables(*d2.Snapshot) loot.ValuablesReport
 	}); ok && insure {
 		for _, u := range vj.Valuables(s).Stash {
-			if !seen[u.ID] {
+			if !seen[u.ID] && !t.carriedCharm(u) {
 				todo = append(todo, u)
 			}
 		}
@@ -296,4 +300,14 @@ func (t *Town) wantsStash(s *d2.Snapshot, u d2.Unit, v loot.Verdict) bool {
 	}
 	lay, err := t.layout(s)
 	return err == nil && t.h.Occupancy(s.Inventory, d2.ContInventory, lay.Inventory).UsedPct() >= t.tune().TripPackUsedPct
+}
+
+// carriedCharm is a charm the player keeps in the pack (the keep mark): it works only there, so the stash chore leaves it.
+// Any other kept item may still be banked; the mark only forbids selling and dropping (docs/inventory-ui.md).
+func (t *Town) carriedCharm(u d2.Unit) bool {
+	if u.Item == nil || t.markOf(u) != "keep" {
+		return false
+	}
+	b := t.base(u)
+	return b != nil && charms.Is(b.Code)
 }
