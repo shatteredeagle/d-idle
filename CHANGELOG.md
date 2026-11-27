@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- tyrael: Duriel Tyrael hand-in via field-NPC table (TASK-1053) <!--sg:agent/tyrael-->
 - darkflip: final dark queue flip list (docs) <!--sg:agent/darkflip-->
 - closecards: close verified merged cards, stale dependency fix <!--sg:agent/closecards-->
 - akarafix: hand-in queued/served logs, stale request drop, why-waiting reason (TASK-1051) <!--sg:agent/akarafix-->
