@@ -18,10 +18,12 @@ ordinal: 43000
 card: "playsession"
 owns:
   - "tools/play-session.sh"
+  - "tools/play-session-test.sh"
   - "docs/play-session.md"
 exclusive: []
 contracts: []
 lane: next
+result: "tools/play-session.sh (start, stop, --dry-run; refuses without the ops checkout; prints watch URL and token file path, never the token), tools/play-session-test.sh (dry-run + refusal, passes), docs/play-session.md with stop, cleanup and a ready-to-run live checklist. NOT verified live (offline only). The test is not yet in tools/ci/scripts.sh (not owned)."
 ---
 
 ## Description
@@ -36,9 +38,9 @@ Done when: tools/play-session.sh: one command; prints the watch URL and token fi
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 tools/play-session.sh: one command; prints the watch URL and token file path (never the token); refuses without the ops checkout with a one-line message
-- [ ] #2 A dry-run mode prints the exact commands; a shell test covers dry-run and the refusal; docs/play-session.md has stop and cleanup
-- [ ] #3 Says verified live or not; any live check is a ready-to-run checklist
+- [x] #1 tools/play-session.sh: one command; prints the watch URL and token file path (never the token); refuses without the ops checkout with a one-line message
+- [x] #2 A dry-run mode prints the exact commands; a shell test covers dry-run and the refusal; docs/play-session.md has stop and cleanup
+- [x] #3 Says verified live or not; any live check is a ready-to-run checklist
 <!-- AC:END -->
 
 ## Implementation Notes
