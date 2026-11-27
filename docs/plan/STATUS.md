@@ -193,7 +193,7 @@
 | arbmig | in-progress | - | `docs/design/arbiter-migration-p6.md`<br>`docs/arbiter.md`<br>`internal/arbiter/`<br>`cmd/d2scenario/`<br>`tools/provingground/arbiter-outcomes/`<br>`internal/bot/arbiter_control.go`<br>`internal/bot/arbiter_control_test.go`<br>`internal/bot/shadow.go`<br>`internal/bot/loop.go`<br>`internal/env/tuning_bot.go`<br>`data/darklaunch.json`<br>`docs/knobs.md` | - |
 | fid-adapter-rows | deferred | - | `docs/probes/fid/fid-adapter-rows.md` | - |
 | ticklog | in-progress | - | `docs/design/ticklog-t4.md`<br>`docs/arbiter.md`<br>`internal/bot/ticklog.go`<br>`internal/bot/ticklog_test.go`<br>`internal/bot/shadow.go`<br>`internal/env/tuning_bot.go`<br>`internal/arbiter/replay.go`<br>`internal/arbiter/replay_ticklog_test.go`<br>`data/darklaunch.json` | - |
-| bsmchk | proposed | - | `docs/design/boardsm-checker.md` | - |
+| bsmchk | proposed | - | `docs/design/boardsm-checker.md`<br>`internal/questspec`<br>`internal/task/guardcodes_test.go`<br>`docs/questspec.md` | - |
 | bsmdef | proposed | - | `docs/design/boardsm-flip.md` | - |
 | agencyp1b | proposed | - | `docs/design/agency-p1b.md` | - |
 | agencyp3 | proposed | - | `docs/design/agency-p3.md` | - |
@@ -227,14 +227,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 3392b8986 11-27 14:19 `Merge agent/bsmchk: bsmchk: questspec rules 12-14 (TASK-982)` (bsmchk)
 - 66f69ba02 11-27 14:19 `Merge agent/closecards2: closecards2: close/annotate stale cards (16 Done, 35 annotated)` (closecards2)
 - d788bfd1c 11-27 14:18 `Merge agent/charmvault: charmvault: charms recorded in the Vault, player Carry/Stow (TASK-1052)` (charmvault)
+- 49ebc2db4 11-27 14:16 `Merge branch 'main' into bsmchk` (-)
 - d68dcae2e 11-27 14:16 `Merge branch 'main' into closecards2` (-)
 - 1d83469ec 11-27 14:16 `Merge branch 'main' into charmvault` (-)
 - d8ffd5419 11-27 14:12 `Merge agent/tyrael: tyrael: Duriel Tyrael hand-in via field-NPC table (TASK-1053)` (tyrael)
 - cf6abed60 11-27 14:07 `Merge branch 'main' into tyrael` (-)
 - 2745da282 11-27 14:05 `Merge origin/main into agent/charmvault (vault.json: keep carry/stow and equipMerc strings)` (-)
 - 9058de0a1 11-27 13:59 `Merge agent/necroteeth: necroteeth: scenario hero profile field (played default), spend points` (necroteeth)
-- 43bdb0282 11-27 13:59 `Merge agent/darkflip: darkflip: final dark queue flip list (docs)` (darkflip)
-- 8ef7cc46d 11-27 13:59 `Merge agent/closecards: closecards: close verified merged cards, stale dependency fix` (closecards)
 <!-- statusgen:end -->
