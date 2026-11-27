@@ -64,11 +64,14 @@ def parse_window(s):
     return int(n) * {"s": 1, "m": 60, "h": 3600, "d": 86400}[unit]
 
 
-def load_env():
-    """Host values come from the environment, then local.env through tools/env.sh (the public convention)."""
+def load_env(root=None):
+    """Host values come from the environment, then local.env through tools/env.sh (the public convention). env.sh finds
+    local.env through git or the cwd, which is wrong under systemd (cwd is home), so it is pointed at this checkout."""
+    root = root or ROOT
     env = dict(os.environ)
+    env.setdefault("D2_BOT_DIR", root)
     try:
-        out = subprocess.run(["sh", "-c", '. "$1/tools/env.sh" && env', "sh", ROOT], capture_output=True, text=True, timeout=20, env=env).stdout
+        out = subprocess.run(["sh", "-c", '. "$1/tools/env.sh" && env', "sh", root], capture_output=True, text=True, timeout=20, env=env, cwd=root).stdout
         for line in out.splitlines():
             k, _, v = line.partition("=")
             if k.startswith("D2_"):
@@ -248,6 +251,7 @@ Description=d2lod-bot flip watcher (reverts a flipped knob on a hard invariant b
 
 [Service]
 Type=simple
+WorkingDirectory={root}
 ExecStart={py} {script} watch --daemon --interval {interval}
 Restart=always
 RestartSec=10
@@ -258,14 +262,14 @@ WantedBy=default.target
 
 
 def unit_text(interval=60):
-    return UNIT.format(py=sys.executable or "/usr/bin/python3", script=os.path.abspath(__file__), interval=interval)
+    return UNIT.format(root=ROOT, py=sys.executable or "/usr/bin/python3", script=os.path.abspath(__file__), interval=interval)
 
 
 def unit_path():
     return os.path.expanduser("~/.config/systemd/user/d2flip-watch.service")
 
 
-def commit_ledger(ledger_path, knobs, root=ROOT, today=None, run=None):
+def commit_ledger(ledger_path, knobs, root=ROOT, today=None, run=None, event="flip"):
     """The ledger rows of `knobs` as they are in `ledger_path` go onto a fresh branch agent/ledger-<knob>-<date> in a sibling
     worktree of `root`, committed there (no push, no queue). Returns (branch, worktree, mergeq line)."""
     run = run or (lambda *a, cwd=root: subprocess.run(a, cwd=cwd, capture_output=True, text=True))
@@ -280,7 +284,7 @@ def commit_ledger(ledger_path, knobs, root=ROOT, today=None, run=None):
     src, dst = Ledger(ledger_path), Ledger(os.path.join(wt, "data", "darklaunch.json"))
     for k in knobs:
         dst.update(k, **{a: b for a, b in src.row(k).items() if a != "name"})
-    msg = f"darklaunch ledger: {', '.join(knobs)} after flip\n\nCo-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>\n"
+    msg = f"darklaunch ledger: {', '.join(knobs)} after {event}\n\nCo-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>\n"
     run("git", "add", "data/darklaunch.json", cwd=wt)
     r = run("git", "-c", "user.name=Claude", "-c", "user.email=noreply@anthropic.com", "commit", "-q", "-m", msg, cwd=wt)
     if r.returncode:
@@ -320,11 +324,12 @@ class Ledger:
 
 
 class Flipper:
-    def __init__(self, make_sandbox, store, ledger, clock=now_utc, sleep=time.sleep, out=print, env=None, dry_run=False, reflip=False):
+    def __init__(self, make_sandbox, store, ledger, clock=now_utc, sleep=time.sleep, out=print, env=None, dry_run=False, reflip=False, on_ledger=None):
         self.make, self.store, self.ledger, self.clock, self.sleep, self.out = make_sandbox, store, ledger, clock, sleep, out
         self.env = os.environ if env is None else env
         self.dry = dry_run
         self.reflip = reflip
+        self.on_ledger = on_ledger  # called (event, knobs) after a close or revert changed the ledger; never fails the watcher
         self.verify_s = int(self.env.get("D2_FLIP_VERIFY_S", 240))
 
     def verify(self, sb, knobs):
@@ -416,6 +421,14 @@ class Flipper:
         self.out(f"FLIP {instance} {names} = {list(knobs.values())} (were {list(olds.values())}) window {window_s}s until {w['end']} backup {tag}")
         return w
 
+    def _ledger_commit(self, event, knobs):
+        if not self.on_ledger:
+            return
+        try:
+            self.out(self.on_ledger(event, list(knobs)))
+        except Exception as e:
+            self.out(f"LEDGER COMMIT FAILED after {event} [{','.join(knobs)}]: {e}; rows are changed but uncommitted in the checkout")
+
     # --- restore / revert ---------------------------------------------------------------------------------
     def _restore(self, sb, w):
         """Put the backup back and restart. Sets w['pending'] to the step that failed ('' when done)."""
@@ -450,6 +463,7 @@ class Flipper:
         self.store.last(w["instance"], w)
         self.store.drop(w["instance"])
         self.out(f"REVERT {w['instance']} [{names}]: {w['revert_reason']}; tuning restored from {w['tag']}, child restarted, {len(w['knobs'])} row(s) dark")
+        self._ledger_commit("revert", w["knobs"])
         return True
 
     def close(self, w):
@@ -458,6 +472,7 @@ class Flipper:
         self.store.last(w["instance"], w)
         self.store.drop(w["instance"])  # the backup tag goes with the state file
         self.out(f"CLOSE {w['instance']} [{','.join(w['knobs'])}]: no hard breach for {w['window_s']}s; rows enabled, backup {w['tag']} removed")
+        self._ledger_commit("close", w["knobs"])
 
     # --- watch --------------------------------------------------------------------------------------------
     def poll(self, instance):
@@ -527,7 +542,12 @@ def main(argv=None):
     a = ap.parse_args(argv)
     env = load_env()
     store = Store(env.get("D2_FLIP_STATE") or os.path.expanduser("~/.cache/d2flip"))
-    f = Flipper(lambda inst: Sandbox(inst, env), store, Ledger(), env=env, dry_run=a.dry_run, reflip=a.reflip)
+    def ledger_commit(event, knobs):
+        branch, wt, line = commit_ledger(LEDGER, knobs, event=event)
+        return f"ledger committed on {branch} in {wt} (not pushed, not queued). Queue it with: {line}"
+
+    f = Flipper(lambda inst: Sandbox(inst, env), store, Ledger(), env=env, dry_run=a.dry_run, reflip=a.reflip,
+                on_ledger=None if a.dry_run else ledger_commit)
     try:
         if a.args[0] == "watch":
             if a.install_unit:
