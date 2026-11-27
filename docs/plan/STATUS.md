@@ -42,7 +42,6 @@
 | diffbaal | proposed | - | `internal/quest/baaldone.go`<br>`internal/quest/baaldone_test.go` | - |
 | releasenotes-next | proposed | - | `docs/releases/next-draft.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
-| combatscen2 | proposed | - | `tools/provingground/scenarios/combatdrills.json`<br>`tools/provingground/scenarios/tiers.json`<br>`docs/probes/combat-drills-2026-11-27.md` | - |
 | combattelem | proposed | - | `internal/combat/telem.go`<br>`internal/combat/telem_test.go`<br>`internal/combat/aim.go`<br>`internal/combat/fight.go`<br>`internal/combat/castfirst.go`<br>`internal/combat/stance.go`<br>`internal/scenario/skillid_test.go`<br>`tools/provingground/scenarios/combatdrills.json`<br>`docs/probes/combat-drills-2026-11-27.md` | - |
 | mercaura | proposed | - | `internal/d2/classtraits.go`<br>`internal/d2/classtraits.json`<br>`internal/d2/classtraits_test.go`<br>`docs/design/merc-aura-by-archetype.md`<br>`internal/town/merc.go`<br>`internal/town/merc_test.go`<br>`internal/task/act2.go`<br>`internal/task/act2_test.go`<br>`internal/bot/task.go`<br>`cmd/d2bot/merc_adapter.go` | - |
 | nightcheck | proposed | - | `tools/provingground/nightcheck.sh`<br>`tools/provingground/nightcheck_test.sh`<br>`docs/probes/lab-night-commands-2026-11-27.md` | - |

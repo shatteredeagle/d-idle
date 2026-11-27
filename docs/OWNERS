@@ -219,7 +219,6 @@ docs/onboarding-tour.md  credit-runner  onboardtour
 docs/onboarding.md  credit-runner  reconnectux
 docs/probes/checkpoint-live-drill.md  live-agent  ckptlive
 docs/probes/classorder1.md  user  classorder1
-docs/probes/combat-drills-2026-11-27.md  credit-runner  combatscen2
 docs/probes/combat-drills-2026-11-27.md  credit-runner  combattelem
 docs/probes/flipwave2.md  live-agent  flipwave2
 docs/probes/h1-baseline.md  user  h1baseline
@@ -514,14 +513,12 @@ tools/provingground/pgenv_test.sh  credit-runner  pgledgeron
 tools/provingground/run.sh  credit-runner  pgledgeron
 tools/provingground/scenarios/cain.json  credit-runner  cainfix3
 tools/provingground/scenarios/cain.json  credit-runner  pgearned
-tools/provingground/scenarios/combatdrills.json  credit-runner  combatscen2
 tools/provingground/scenarios/combatdrills.json  credit-runner  combattelem
 tools/provingground/scenarios/navexit.json  credit-runner  stage1fix
 tools/provingground/scenarios/necro-acts.json  live-agent  epic-class-necromancer
 tools/provingground/scenarios/necro-epic.json  live-agent  epic-class-necromancer
 tools/provingground/scenarios/necro.json  credit-runner  stage1fix
 tools/provingground/scenarios/questdrill.json  credit-runner  qdmatrix
-tools/provingground/scenarios/tiers.json  credit-runner  combatscen2
 tools/provingground/scenarios/tiers.json  live-agent  epic-class-necromancer
 tools/provingground/scenarios/townplan.json  live-agent  town5
 tools/provingground/status_doc.sh  credit-runner  pgpage
