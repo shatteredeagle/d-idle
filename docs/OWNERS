@@ -220,6 +220,7 @@ docs/onboarding.md  credit-runner  reconnectux
 docs/probes/checkpoint-live-drill.md  live-agent  ckptlive
 docs/probes/classorder1.md  user  classorder1
 docs/probes/combat-drills-2026-11-27.md  credit-runner  combatscen2
+docs/probes/combat-drills-2026-11-27.md  credit-runner  combattelem
 docs/probes/flipwave2.md  live-agent  flipwave2
 docs/probes/h1-baseline.md  user  h1baseline
 docs/probes/h3-verdict.md  user  h3verdict
@@ -306,13 +307,19 @@ internal/combat/  live-agent  dlv-move-tele
 internal/combat/  live-agent  dlv-press
 internal/combat/  live-agent  dlv-stance-pack
 internal/combat/  live-agent  dlv-upkeep-minions
+internal/combat/aim.go  credit-runner  combattelem
 internal/combat/aura.go  credit-runner  agencyp1b
+internal/combat/castfirst.go  credit-runner  combattelem
 internal/combat/classdata/profiles.json  live-agent  epic-class-necromancer
 internal/combat/drive_test.go  credit-runner  agencyp1b
+internal/combat/fight.go  credit-runner  combattelem
 internal/combat/fighter.go  credit-runner  agencyp1b
 internal/combat/fighter.go  live-agent  inputl3
 internal/combat/portalverb.go  live-agent  inputl3
 internal/combat/portalverb_test.go  live-agent  inputl3
+internal/combat/stance.go  credit-runner  combattelem
+internal/combat/telem.go  credit-runner  combattelem
+internal/combat/telem_test.go  credit-runner  combattelem
 internal/d2/classtraits.go  credit-runner  mercaura
 internal/d2/classtraits.json  credit-runner  mercaura
 internal/d2/classtraits_test.go  credit-runner  mercaura
@@ -396,6 +403,7 @@ internal/scenario/scenario.go  credit-runner  qdmatrix
 internal/scenario/setup.go  credit-runner  pgearned
 internal/scenario/setup.go  credit-runner  qdmatrix
 internal/scenario/setup_test.go  credit-runner  qdmatrix
+internal/scenario/skillid_test.go  credit-runner  combattelem
 internal/scenario/taps.go  live-agent  pgtaps
 internal/supply  credit-runner  town10
 internal/supply  credit-runner  town9
@@ -507,6 +515,7 @@ tools/provingground/run.sh  credit-runner  pgledgeron
 tools/provingground/scenarios/cain.json  credit-runner  cainfix3
 tools/provingground/scenarios/cain.json  credit-runner  pgearned
 tools/provingground/scenarios/combatdrills.json  credit-runner  combatscen2
+tools/provingground/scenarios/combatdrills.json  credit-runner  combattelem
 tools/provingground/scenarios/navexit.json  credit-runner  stage1fix
 tools/provingground/scenarios/necro-acts.json  live-agent  epic-class-necromancer
 tools/provingground/scenarios/necro-epic.json  live-agent  epic-class-necromancer
