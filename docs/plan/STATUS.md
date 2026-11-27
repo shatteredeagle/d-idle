@@ -40,6 +40,7 @@
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | diffbaal | proposed | - | `internal/quest/baaldone.go`<br>`internal/quest/baaldone_test.go` | - |
+| diffgo | proposed | - | `internal/diffready/consent.go`<br>`internal/bot/diffready.go`<br>`internal/bot/diffready_test.go`<br>`internal/bot/explain.go`<br>`internal/ops`<br>`cmd/d2bot/opscmd.go`<br>`cmd/d2bot/opswire.go`<br>`cmd/d2bot/funwire.go`<br>`cmd/d2bot/live.go`<br>`internal/watch/difficultydesk.go`<br>`internal/watch/difficultydesk_test.go`<br>`internal/watch/funwire.go`<br>`internal/watch/returnscreen.go`<br>`docs/diffready.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | returnmock | proposed | - | `docs/research/mocks/return.html`<br>`docs/research/return-screen.md` | - |
@@ -195,14 +196,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 9c6c61d38 11-27 16:30 `Merge agent/diffgo: diffgo: go-difficulty ops verb, persisted go, Return screen button (TASK-1061)` (diffgo)
+- 9eaa2ed43 11-27 16:28 `Merge branch 'main' into diffgo` (-)
 - e2e724c59 11-27 16:20 `Merge agent/smenecro: smenecro: SME Necromancer review (docs)` (smenecro)
 - be94247fd 11-27 16:20 `Merge agent/diet: diet: archive 5 finished research reports, docs diet rule (TASK-117/118)` (diet)
 - 27324ad8f 11-27 16:20 `Merge agent/dlvwhirl: dlvwhirl: Whirlwind move row driver (TASK-734)` (dlvwhirl)
 - b197ab183 11-27 16:19 `Merge agent/townrest: townrest: town plan view + /api/townplan (town9), arbiter upkeep source (town10 part), SME brief (town12)` (townrest)
+- 6b720f96a 11-27 16:18 `Merge origin/main into diffgo (funwire.go: difficulty and advice wiring both kept)` (-)
 - 47b6409da 11-27 16:17 `Merge branch 'main' into smenecro` (-)
 - ceee8826a 11-27 16:17 `Merge branch 'main' into diet` (-)
 - 4bdfffc09 11-27 16:17 `Merge branch 'main' into dlvwhirl` (-)
-- 4ebb94611 11-27 16:17 `Merge branch 'main' into townrest` (-)
-- 6009caac8 11-27 16:13 `Merge agent/necrocorpse2: necrocorpse2: opt-in CE1 Necromancer table + scenario pair, ticks (TASK-1016/803/802)` (necrocorpse2)
-- e7e1d2d5b 11-27 16:12 `Merge agent/fliptool2: fliptool2: flip.py loads local.env itself, ledger commits on close/revert, unique branch names` (fliptool2)
 <!-- statusgen:end -->

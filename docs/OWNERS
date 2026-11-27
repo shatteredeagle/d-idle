@@ -135,6 +135,7 @@ cmd/d2bot/agencywire.go  credit-runner  agencyp1b
 cmd/d2bot/behaviors.go  credit-runner  campaign1
 cmd/d2bot/d2dbackend.go  credit-runner  campaign1
 cmd/d2bot/d2dwire.go  credit-runner  agencyp1b
+cmd/d2bot/funwire.go  credit-runner  diffgo
 cmd/d2bot/hotkeydrift_test.go  live-agent  epic-class-necromancer
 cmd/d2bot/invverbs.go  credit-runner  uib9
 cmd/d2bot/invverbs_test.go  credit-runner  uib9
@@ -142,7 +143,10 @@ cmd/d2bot/journeywire.go  credit-runner  campaign1
 cmd/d2bot/ladder.go  credit-runner  pgtaps
 cmd/d2bot/live.go  credit-runner  agencyp1b
 cmd/d2bot/live.go  credit-runner  campaign1
+cmd/d2bot/live.go  credit-runner  diffgo
 cmd/d2bot/necroplay_test.go  live-agent  epic-class-necromancer
+cmd/d2bot/opscmd.go  credit-runner  diffgo
+cmd/d2bot/opswire.go  credit-runner  diffgo
 cmd/d2bot/task.go  credit-runner  qdmatrix
 cmd/d2bot/task_test.go  credit-runner  qdmatrix
 cmd/d2scenario/  credit-runner  arbmig
@@ -185,6 +189,7 @@ docs/design/input-i4.md  credit-runner  inputl4
 docs/design/input-i5-i7.md  credit-runner  inputl5
 docs/design/ticklog-t4.md  credit-runner  ticklog
 docs/design/townflip-p5.md  credit-runner  townflip
+docs/diffready.md  credit-runner  diffgo
 docs/epics/epic-act1.md  live-agent  epic-act1
 docs/epics/epic-act2.md  live-agent  epic-act2
 docs/epics/epic-act3.md  live-agent  epic-act3
@@ -266,6 +271,9 @@ internal/bot/arbiter_control.go  credit-runner  arbmig
 internal/bot/arbiter_control_test.go  credit-runner  arbmig
 internal/bot/arbloop_test.go  credit-runner  arbloop
 internal/bot/broke.go  credit-runner  town5
+internal/bot/diffready.go  credit-runner  diffgo
+internal/bot/diffready_test.go  credit-runner  diffgo
+internal/bot/explain.go  credit-runner  diffgo
 internal/bot/goal.go  credit-runner  arbloop
 internal/bot/goal.go  credit-runner  qdmatrix
 internal/bot/goal.go  credit-runner  stage1fix
@@ -338,6 +346,7 @@ internal/decide/queue.go  credit-runner  qqueue
 internal/decide/queue_test.go  credit-runner  qqueue
 internal/decide/variants.go  credit-runner  qdensity
 internal/decide/variants_test.go  credit-runner  qdensity
+internal/diffready/consent.go  credit-runner  diffgo
 internal/env/tuning_agency.go  credit-runner  agencyp1b
 internal/env/tuning_bot.go  credit-runner  arbmig
 internal/env/tuning_bot.go  credit-runner  ticklog
@@ -369,6 +378,7 @@ internal/nav/mouthgate.go  credit-runner  warptrigger
 internal/nav/nav.go  credit-runner  qdmatrix
 internal/nav/route.go  credit-runner  exitsread
 internal/nav/warpread_test.go  credit-runner  warptrigger
+internal/ops  credit-runner  diffgo
 internal/plandata/act2plan.json  live-agent  epic-class-necromancer
 internal/plandata/build-necromancer_leveling_normal30.json  live-agent  epic-class-necromancer
 internal/plandata/build-necromancer_summoner_endgame90.json  live-agent  epic-class-necromancer
@@ -423,6 +433,9 @@ internal/town/town.go  credit-runner  townflip
 internal/town/trip.go  credit-runner  inputl3
 internal/watch  credit-runner  town9
 internal/watch/areamap_test.go  credit-runner  uis6
+internal/watch/difficultydesk.go  credit-runner  diffgo
+internal/watch/difficultydesk_test.go  credit-runner  diffgo
+internal/watch/funwire.go  credit-runner  diffgo
 internal/watch/layout.go  credit-runner  uis1
 internal/watch/layout.go  credit-runner  uis6
 internal/watch/layout_test.go  credit-runner  uis1
@@ -432,6 +445,7 @@ internal/watch/onboarding.go  credit-runner  reconnectux
 internal/watch/panels.go  credit-runner  uis6
 internal/watch/policypreview_test.go  live-agent  epic-class-necromancer
 internal/watch/policysheet_test.go  live-agent  epic-class-necromancer
+internal/watch/returnscreen.go  credit-runner  diffgo
 internal/watch/serve.go  credit-runner  uis6
 internal/watch/stance_test.go  live-agent  epic-class-necromancer
 internal/watch/testdata/areamap/  credit-runner  uis6
