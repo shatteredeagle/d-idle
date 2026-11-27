@@ -45,6 +45,7 @@
 | fid-matrix-refresh | deferred | - | `docs/probes/fid/fid-matrix-refresh.md` | - |
 | smeaura | proposed | - | `docs/sme/paladin-auras-2026-11-26.md` | - |
 | necrocorpse | proposed | - | `docs/probes/necrocaps-2026-11-26.md` | - |
+| featuresoak | proposed | - | `tools/provingground/campaigns/`<br>`tools/provingground/featuresoak.py`<br>`tools/provingground/featuresoak-row.sh`<br>`docs/probes/feature-soak-2026-11-26.md` | `d2d-lab-binary` |
 | fid-poison-res-diag | proposed | - | `docs/research/fid-poisonres-trace.md` | - |
 | necroteeth | proposed | - | `internal/combat/classdata/profiles.json`<br>`internal/combat/necro_test.go`<br>`internal/leveler/mainattack_test.go` | - |
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
@@ -245,14 +246,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- f1789b6ad 11-27 01:46 `Merge agent/featuresoak: Merge branch 'main' into featuresoak` (featuresoak)
 - 317b4e3c0 11-27 01:46 `Merge agent/deploy88: Merge branch 'main' into deploy88-ledger` (deploy88)
+- 0ebcf3fc8 11-27 01:41 `Merge branch 'main' into featuresoak` (-)
 - 364447af7 11-27 01:41 `Merge branch 'main' into deploy88-ledger` (-)
 - fce2a0b5d 11-27 01:33 `Merge agent/arbloop: Merge branch 'main' into arbloop` (arbloop)
 - 0abcad620 11-27 01:33 `Merge agent/necroteeth: Merge branch 'main' into necroteeth` (necroteeth)
 - 722fe51c8 11-27 01:30 `Merge branch 'main' into arbloop` (-)
 - 110f0e328 11-27 01:30 `Merge branch 'main' into necroteeth` (-)
+- da351f713 11-27 01:25 `Merge branch 'main' into featuresoak` (-)
 - acf7e202c 11-27 01:21 `Merge agent/minions: Merge branch 'main' into dlv-upkeep-minions` (minions)
-- 47d55ac65 11-27 01:19 `Merge branch 'main' into dlv-upkeep-minions` (-)
-- a49fdac79 11-27 01:15 `Merge agent/inputl3: Merge branch 'main' into inputl3` (inputl3)
-- 61bca5cdb 11-27 01:13 `Merge branch 'main' into inputl3` (-)
 <!-- statusgen:end -->

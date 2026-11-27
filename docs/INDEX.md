@@ -1089,6 +1089,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [farmloop-measure.md](probes/farmloop-measure.md): Recipe: kills per minute against coverage (farm loop decay curve) (status: current. Tool `tools/farmloop/measure.py` (stdlib Python, reads stdin). Tags: V = ran once...)
 - [farmloop-on-20261115.md](probes/farmloop-on-20261115.md): Farm loop switched on in the sandbox, 2026-11-15 (status: record. Task farmloopon. Tags: V = verified in this run, U = not verified.)
 - [faultsoak-design-2026-11-26.md](probes/faultsoak-design-2026-11-26.md): faultsoak (TASK-979, P12) design notes, from the quest drill agent (status: runner side built (2026-11-26, card faultsoak); fork verbs are a proposal for the owner; nothing here was...)
+- [feature-soak-2026-11-26.md](probes/feature-soak-2026-11-26.md): Feature soak campaign, accelerated lab (2026-11-26, card featuresoak) (status: current. Everything here is a CHEATED/lab result: lockstep d2d lab slots, a prepared hero (declared SETUP...)
 
 `probes/fid/`
 
