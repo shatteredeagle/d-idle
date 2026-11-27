@@ -1,10 +1,13 @@
 ---
 id: TASK-1042
-title: 'palzeal: quest skill points spent on grant and the main attack selected by skill id on d2d'
-status: In Progress
+title: >-
+  palzeal: quest skill points spent on grant and the main attack selected by
+  skill id on d2d
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T11:10:00Z'
+updated_date: '2026-11-27T11:32:00Z'
 labels:
   - bot
   - bot-fix
