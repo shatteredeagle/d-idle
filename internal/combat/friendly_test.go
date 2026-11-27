@@ -100,3 +100,28 @@ func TestHostilesDropsAllFriends(t *testing.T) {
 		t.Errorf("hostile missiles = %v, want only the one from unit 1", ms)
 	}
 }
+
+// An owner cycle (a unit owning itself, two units owning each other) must neither hang the chain pass nor make the
+// units friendly; a chain that ends at the player's pet is friendly however deep it is within the pass bound.
+func TestFriendliesOwnerCycleBounded(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		snap := &d2.Snapshot{Player: &d2.Player{ID: 1, Class: class}, Monsters: []d2.Unit{
+			{ID: 7, Class: 1, OwnerID: 7, OwnerType: 1},
+			{ID: 8, Class: 1, OwnerID: 9, OwnerType: 1},
+			{ID: 9, Class: 1, OwnerID: 8, OwnerType: 1},
+			{ID: 5, Class: 1, OwnerID: 1, OwnerType: 0}, // the player's pet
+			{ID: 6, Class: 1, OwnerID: 5, OwnerType: 1}, // the pet's summon
+		}}
+		got := Friendlies(snap, nil)
+		for _, id := range []uint32{7, 8, 9} {
+			if _, ok := got[id]; ok {
+				t.Errorf("%v: unit %d in an owner cycle counted friendly", class, id)
+			}
+		}
+		for _, id := range []uint32{5, 6} {
+			if _, ok := got[id]; !ok {
+				t.Errorf("%v: unit %d owned by the player's chain not friendly", class, id)
+			}
+		}
+	}
+}

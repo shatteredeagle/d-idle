@@ -79,10 +79,10 @@ func (r *Runner) hostileWithin(s *d2.Snapshot, radius int) int {
 	if s == nil || s.Player == nil || s.Player.InTown() {
 		return 0
 	}
-	n := 0
+	n, hostile := 0, r.hostiles(s)
 	for i := range s.Monsters {
 		u := &s.Monsters[i]
-		if r.hostile(s, u) && math.Hypot(float64(u.X-s.Player.X), float64(u.Y-s.Player.Y)) <= float64(radius) {
+		if hostile(u) && math.Hypot(float64(u.X-s.Player.X), float64(u.Y-s.Player.Y)) <= float64(radius) {
 			n++
 		}
 	}
@@ -90,9 +90,10 @@ func (r *Runner) hostileWithin(s *d2.Snapshot, radius int) int {
 }
 
 func (r *Runner) packElite(s *d2.Snapshot) bool {
+	hostile := r.hostiles(s)
 	for i := range s.Monsters {
 		u := &s.Monsters[i]
-		if u.Monster != nil && (u.Monster.IsUnique() || u.Monster.IsChampion()) && r.hostile(s, u) &&
+		if u.Monster != nil && (u.Monster.IsUnique() || u.Monster.IsChampion()) && hostile(u) &&
 			math.Hypot(float64(u.X-s.Player.X), float64(u.Y-s.Player.Y)) <= float64(r.e.Tune.Bot.ClearRadius) {
 			return true
 		}

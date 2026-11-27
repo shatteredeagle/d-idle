@@ -642,12 +642,26 @@ func (friendCat) Item(int) combat.ItemClass      { return combat.ItemClass{} }
 
 // hostile reports whether a monster unit is something to fight: alive, killable, and not friendly by
 // combat.IsFriendly (monstats npc/AI, class table, minion state, owner words).
-func (r *Runner) hostile(s *d2.Snapshot, u *d2.Unit) bool {
-	if !u.Alive() {
-		return false
+func (r *Runner) hostile(s *d2.Snapshot, u *d2.Unit) bool { return r.hostiles(s)(u) }
+
+// hostiles is hostile for a scan over s.Monsters: the friendly set (an owner-chain pass over every unit) is built once,
+// not once per unit. Per unit it made a scan quadratic in the monster count, and the guard runs one every WatchMs on
+// the acting goroutine (a 53-monster Act 1 crowd, featuresoak pass 2 Sorceress 201: the goroutine dump caught it there).
+func (r *Runner) hostiles(s *d2.Snapshot) func(u *d2.Unit) bool {
+	var fr map[uint32]combat.FriendlyWhy
+	return func(u *d2.Unit) bool {
+		if !u.Alive() {
+			return false
+		}
+		if m, _ := r.monsterMeta(u.Class); !m.Killable {
+			return false
+		}
+		if fr == nil {
+			fr = combat.Friendlies(s, friendCat{r.d.Catalog})
+		}
+		_, f := fr[u.ID]
+		return !f
 	}
-	m, _ := r.monsterMeta(u.Class)
-	return m.Killable && !combat.IsFriendly(s, *u, friendCat{r.d.Catalog})
 }
 
 // hostileNear counts hostile living monsters within radius subtiles of the player.
@@ -656,13 +670,14 @@ func (r *Runner) hostileNear(s *d2.Snapshot, radius int) int {
 		return 0
 	}
 	ig, _ := r.d.Fighter.(ignorer)
+	hostile := r.hostiles(s)
 	n := 0
 	for i := range s.Monsters {
 		u := &s.Monsters[i]
 		// Euclidean, like the fighter's scope (combat.inRange): a square test counted a unit in the corner of the
 		// box (25,25 at radius 30) that Clear then refused, so the sweep logged 'clear killed nothing' and walked on
 		// ignoring hostiles for the futile window.
-		if !r.hostile(s, u) || math.Hypot(float64(u.X-s.Player.X), float64(u.Y-s.Player.Y)) > float64(radius) {
+		if !hostile(u) || math.Hypot(float64(u.X-s.Player.X), float64(u.Y-s.Player.Y)) > float64(radius) {
 			continue
 		}
 		// A unit the fighter gave up on (unreachable, too dangerous) is not worth a Clear: it would kill nothing.
@@ -927,9 +942,10 @@ func (r *Runner) trackAlive(s *d2.Snapshot, now time.Time) {
 		a.equipValue = floor
 	}
 	best := 1 << 30
+	hostile := r.hostiles(s)
 	for i := range s.Monsters {
 		u := &s.Monsters[i]
-		if !r.hostile(s, u) {
+		if !hostile(u) {
 			continue
 		}
 		d := max(abs(u.X-p.X), abs(u.Y-p.Y))
