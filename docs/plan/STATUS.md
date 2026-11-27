@@ -193,7 +193,6 @@
 | arbmig | in-progress | - | `docs/design/arbiter-migration-p6.md`<br>`docs/arbiter.md`<br>`internal/arbiter/`<br>`cmd/d2scenario/`<br>`tools/provingground/arbiter-outcomes/`<br>`internal/bot/arbiter_control.go`<br>`internal/bot/arbiter_control_test.go`<br>`internal/bot/shadow.go`<br>`internal/bot/loop.go`<br>`internal/env/tuning_bot.go`<br>`data/darklaunch.json`<br>`docs/knobs.md` | - |
 | fid-adapter-rows | deferred | - | `docs/probes/fid/fid-adapter-rows.md` | - |
 | ticklog | in-progress | - | `docs/design/ticklog-t4.md`<br>`docs/arbiter.md`<br>`internal/bot/ticklog.go`<br>`internal/bot/ticklog_test.go`<br>`internal/bot/shadow.go`<br>`internal/env/tuning_bot.go`<br>`internal/arbiter/replay.go`<br>`internal/arbiter/replay_ticklog_test.go`<br>`data/darklaunch.json` | - |
-| bsmchk | proposed | - | `docs/design/boardsm-checker.md`<br>`internal/questspec`<br>`internal/task/guardcodes_test.go`<br>`docs/questspec.md` | - |
 | bsmdef | proposed | - | `docs/design/boardsm-flip.md` | - |
 | agencyp1b | proposed | - | `docs/design/agency-p1b.md` | - |
 | agencyp3 | proposed | - | `docs/design/agency-p3.md` | - |

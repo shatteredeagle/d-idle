@@ -186,7 +186,6 @@ docs/design/advisor-r14.md  credit-runner  advisor1
 docs/design/agency-p1b.md  credit-runner  agencyp1b
 docs/design/agency-p3.md  credit-runner  agencyp3
 docs/design/arbiter-migration-p6.md  credit-runner  arbmig
-docs/design/boardsm-checker.md  credit-runner  bsmchk
 docs/design/boardsm-flip.md  credit-runner  bsmdef
 docs/design/fable-review-2026-11-21/town-planner-b-model.md  credit-runner  town5
 docs/design/fable-review-2026-11-21/town-profiles-sme.md  credit-runner  town12
@@ -274,7 +273,6 @@ docs/quest-hints.md  live-agent  questdrill
 docs/questboard.md  credit-runner  cainfix3
 docs/questboard.md  credit-runner  handinbtn
 docs/questboard.md  credit-runner  placefix
-docs/questspec.md  credit-runner  bsmchk
 docs/releases/0.1.2.md  credit-runner  cut012
 docs/research/README.md  credit-runner  dietarchive
 docs/research/decomp43-monster-block-trace.md  credit-runner  decomp43
@@ -446,7 +444,6 @@ internal/questboard/desk_action.go  credit-runner  handinbtn
 internal/questboard/desk_action_test.go  credit-runner  handinbtn
 internal/questboard/state.go  credit-runner  qdmatrix
 internal/questboard/state_test.go  credit-runner  qdmatrix
-internal/questspec  credit-runner  bsmchk
 internal/questspec/  credit-runner  act2chunks
 internal/resource  credit-runner  skillcapretire
 internal/resource  credit-runner  town5
@@ -480,7 +477,6 @@ internal/task/banote_test.go  credit-runner  cainfix3
 internal/task/campaign.go  credit-runner  campaign1
 internal/task/executor.go  credit-runner  wpstep
 internal/task/gate.go  credit-runner  cainfix3
-internal/task/guardcodes_test.go  credit-runner  bsmchk
 internal/task/guided.go  credit-runner  campaign1
 internal/task/guided_test.go  credit-runner  campaign1
 internal/task/placefix_test.go  credit-runner  placefix
