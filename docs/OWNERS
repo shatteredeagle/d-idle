@@ -493,12 +493,9 @@ internal/scenario/earned.go  credit-runner  pgearned
 internal/scenario/hero  credit-runner  pghero
 internal/scenario/hero/selfcheck.go  credit-runner  pgselfcheck
 internal/scenario/result.go  credit-runner  pgtaps
-internal/scenario/scenario.go  credit-runner  pgstability
 internal/scenario/scenario.go  credit-runner  qdmatrix
 internal/scenario/setup.go  credit-runner  qdmatrix
 internal/scenario/setup_test.go  credit-runner  qdmatrix
-internal/scenario/stability.go  credit-runner  pgstability
-internal/scenario/stability_test.go  credit-runner  pgstability
 internal/scenario/taps.go  credit-runner  pgtaps
 internal/senses  credit-runner  maphistory
 internal/senses  credit-runner  maphistoryA
@@ -674,7 +671,6 @@ tools/provingground/scenarios/cain.json  credit-runner  wpstep
 tools/provingground/scenarios/navexit.json  credit-runner  stage1fix
 tools/provingground/scenarios/necro.json  credit-runner  stage1fix
 tools/provingground/scenarios/questdrill.json  credit-runner  qdmatrix
-tools/provingground/scenarios/tiers.json  credit-runner  pgstability
 tools/provingground/scenarios/townplan.json  credit-runner  town5
 tools/provingground/scenarios/vaultsellall.json  credit-runner  sellall
 tools/provingground/status_doc.sh  credit-runner  pgpage
