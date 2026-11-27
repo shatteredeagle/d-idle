@@ -82,6 +82,7 @@ type Fighter struct {
 	lastCastSkill map[int]time.Time
 	buffAt        map[int]time.Time
 	buffTries     map[int]int // consecutive casts cut by a hit, per skill (card armorcut)
+	upk           upkeepState // the state-observed upkeep driver (upkeep.go)
 	lastDodge     time.Time
 	diagMu        sync.Mutex // guards portalCast and casts (read from the bot's autopsy)
 	portalCast    PortalCast
@@ -739,20 +740,44 @@ func (f *Fighter) buffPass(ctx context.Context, snap *d2.Snapshot) (cast bool, e
 	known := KnownSkills(p, f.cat, f.keys)
 	mana := p.Mana
 	has := func(n string) bool { _, ok := known[n]; return ok }
+	prof := f.profileFor(p)
+	mode := f.upkeepMode()
 	var curses map[string]bool // a Necromancer's curses are cast at monsters, never as a buff at the own feet
-	if nd := f.profileFor(p).Necro; nd != nil {
+	if nd := prof.Necro; nd != nil {
 		curses = nd.curseSet()
 	}
-	for _, group := range f.profileFor(p).Rotation(p.Level, has).Groups() {
+	for _, group := range prof.Rotation(p.Level, has).Groups() {
 		for _, name := range group {
 			sp, ok := known[name]
-			if !ok || curses[name] || f.expectDemoted(name) || (sp.Key == "" && p.RightSkill != sp.ID) {
+			if !ok || f.expectDemoted(name) || (sp.Key == "" && p.RightSkill != sp.ID) {
 				continue
 			}
-			if !f.buffDue(p, sp) {
+			mark := curses[name]
+			if mode == 2 {
+				mark = f.upkeepIsMark(sp)
+			} else if mode == 1 && mark != f.upkeepIsMark(sp) {
+				f.upkeepShadow(sp, "mark", mark, !mark)
+			}
+			if mark {
+				continue
+			}
+			due := f.buffDue(p, sp)
+			if mode == 2 {
+				due = f.upkeepDue(p, sp)
+			} else if mode == 1 {
+				if d := f.upkeepDue(p, sp); d != due {
+					f.upkeepShadow(sp, "due", due, d)
+				} else {
+					delete(f.upk.shadowLast, sp.ID)
+				}
+			}
+			if !due {
 				break
 			}
 			if sp.Cost > mana {
+				break
+			}
+			if mode == 2 && !f.upkeepBudget(p, prof, sp, mana) {
 				break
 			}
 			prev, hadPrev := f.buffAt[sp.ID]
@@ -762,6 +787,9 @@ func (f *Fighter) buffPass(ctx context.Context, snap *d2.Snapshot) (cast bool, e
 			cast = true
 			f.buffAt[sp.ID] = f.now()
 			mana -= sp.Cost
+			if f.upk.inFight {
+				f.upk.fightUpkeeps++
+			}
 			f.info("buff", "skill", sp.Name)
 			cut, serr := f.watchCast(ctx, ms(f.tune().CastGapMs)+ms(400))
 			if serr != nil {
@@ -856,6 +884,7 @@ func (f *Fighter) cast(snap *d2.Snapshot, sp SkillSpec, at input.Point) error {
 	f.noteCast(sp.ID, f.lastCast)
 	f.castLogStart(snap, sp)
 	f.expectRecord(snap, sp)
+	f.upk.noteCast()
 	return err
 }
 

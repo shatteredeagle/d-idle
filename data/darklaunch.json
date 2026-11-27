@@ -470,6 +470,17 @@
    "review_by": "2026-12-09",
    "status": "dark",
    "criteria_met": "no"
+  },
+  {
+   "name": "combat.deliveryUpkeep",
+   "built_by": "dlv-upkeep-state (TASK-722)",
+   "dark_since": "2026-11-27",
+   "why_off": "Built and tested offline only (simulator, two builds). The buff state ids now come from Skills.txt aurastate; no live or Proving Ground run has read them back for Paladin, Barbarian or Druid.",
+   "enable_criteria": "Mode 1 shadow on a sandbox night shows no disagreement beyond the state learning lines; scenario combat.buffs-stay-up green for Sorceress and Barbarian at mode 2; then 24 h watch with automatic revert on a hard breach",
+   "owner": "coordinator",
+   "review_by": "2026-12-11",
+   "status": "dark",
+   "criteria_met": "no"
   }
  ]
 }
