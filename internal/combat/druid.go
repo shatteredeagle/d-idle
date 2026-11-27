@@ -243,7 +243,7 @@ func (f *Fighter) classTick(ctx context.Context, snap *d2.Snapshot) (bool, error
 			return done, err
 		}
 	}
-	if mode == 2 && !isNecro(snap.Player) {
+	if mode == 2 { // the Necromancer case returned above: its summons go through the driver inside necroTick
 		return f.minionTick(ctx, snap)
 	}
 	return false, nil

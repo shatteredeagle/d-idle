@@ -353,35 +353,30 @@ func (f *Fighter) minionShadow(snap *d2.Snapshot, what string, allowWalk bool) {
 	f.info("minion shadow", "what", what, "old", old, "driver", drv)
 }
 
-// oldMinionPick is the skill the old class loop would summon now ("" none). Shadow only; it goes with the old loops.
+// oldMinionPick is the skill the old class loops would summon now ("" none). Shadow only; it goes with the old loops.
+// Each old planner gates its own class, so no class switch is added here.
 func (f *Fighter) oldMinionPick(snap *d2.Snapshot, inFight, allowWalk bool) string {
 	p := snap.Player
-	switch {
-	case isNecro(p):
-		nd, err := f.necroParams(p)
-		if err != nil {
-			return ""
-		}
+	if nd, err := f.necroParams(p); err == nil {
 		if sp, _, walk, ok := f.planSummon(snap, nd, allowWalk && !inFight); ok && !(inFight && walk) {
 			return sp.Name
 		}
-	case isDruid(p):
+		return ""
+	}
+	if sp, ok := f.planPet(snap); ok {
 		if inFight && p.MaxLife > 0 && p.Life*100 < p.MaxLife*40 {
 			return ""
 		}
-		if sp, ok := f.planPet(snap); ok {
-			return sp.Name
-		}
-	case isAssassin(p):
-		if inFight || CountAssassinPets(snap, f.cat).Shadows > 0 {
-			return ""
-		}
-		known := KnownSkills(p, f.cat, f.keys)
-		for _, g := range f.profileFor(p).minionParams().groupsAfterFight() {
-			for _, name := range g.Skills {
-				if sp, ok := known[name]; ok && (sp.Key != "" || p.RightSkill == sp.ID) && sp.Cost <= p.Mana-p.MaxMana/10 {
-					return sp.Name
-				}
+		return sp.Name
+	}
+	if inFight || CountAssassinPets(snap, f.cat).Shadows > 0 {
+		return ""
+	}
+	known := KnownSkills(p, f.cat, f.keys)
+	for _, g := range f.profileFor(p).minionParams().groupsAfterFight() {
+		for _, name := range g.Skills {
+			if sp, ok := known[name]; ok && (sp.Key != "" || p.RightSkill == sp.ID) && sp.Cost <= p.Mana-p.MaxMana/10 {
+				return sp.Name
 			}
 		}
 	}
