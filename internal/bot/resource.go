@@ -17,7 +17,11 @@ import (
 
 // resInput fills the policy input from a snapshot outside a fight (docs/resource.md: TownTripTrigger every idle tick).
 // Fight-only fields (danger, skills, merc) stay zero: the fighter feeds those itself.
-func (r *Runner) resInput(s *d2.Snapshot) resource.Input {
+func (r *Runner) resInput(s *d2.Snapshot) resource.Input { return r.resInputOpt(s, true) }
+
+// resInputOpt is resInput; judge false takes the sell count from the memo instead of judging the pack (callers off
+// the bot loop, sellableCached).
+func (r *Runner) resInputOpt(s *d2.Snapshot, judge bool) resource.Input {
 	p := s.Player
 	in := resource.Input{
 		Life: p.Life, MaxLife: p.MaxLife, Mana: p.Mana, MaxMana: p.MaxMana, InTown: p.InTown(), Gold: p.Gold,
@@ -32,7 +36,11 @@ func (r *Runner) resInput(s *d2.Snapshot) resource.Input {
 	in.IdleTrips = r.ob.idleTrips
 	in.TripsRecent = r.tripsRecentLocked(r.e.Clock.Now())
 	r.obMu.Unlock()
-	in.Sellable = r.sellable(s)
+	if judge {
+		in.Sellable = r.sellableOnce(s)
+	} else {
+		in.Sellable = r.sellableCached()
+	}
 	in.HasTP = r.hasPortalSource(s)
 	mc := d2.FindMerc(s)
 	in.SetMerc(mc, r.merc.observe(mc, p.InTown(), r.e.Clock.Now()))
