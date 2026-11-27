@@ -872,6 +872,24 @@
      "escapeSurround": 4,
      "escapeLifePct": 55,
      "source": "U judgment: range, gap and escape numbers are planning values; the landing rule of Leap Attack (a point, not a unit) is the live look of the move card"
+    },
+    {
+     "name": "Whirlwind",
+     "uses": ["whirl"],
+     "range": 10,
+     "minHop": 3,
+     "through": 3,
+     "whirlPack": 3,
+     "whirlRadius": 4,
+     "whirlAbortLifePct": 50,
+     "source": "U judgment (card dlv-whirl): leg length, pack size and radius are planning values; the spin radius waits for fidelity A6. The row acts only once Whirlwind is learned"
+    }
+   ],
+   "presses": [
+    {
+     "name": "Whirlwind",
+     "sliceMs": 700,
+     "source": "U judgment: one leg per fight tick; the attack-sequence rate waits for fidelity A1"
     }
    ],
    "melee": {
