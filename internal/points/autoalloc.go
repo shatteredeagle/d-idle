@@ -56,6 +56,9 @@ type Step struct {
 	Stat  string
 	Skill int
 	Name  string
+	// Prereq: the point goes into a prerequisite of a planned skill (Sacrifice before Zeal); it is spent without the
+	// unsupported-attack confirmation, because the hero needs it to learn the skill it will use.
+	Prereq bool
 }
 
 // RespecParams is the price model (env.RespecTuning; placeholders, docs/autoalloc.md section 3).
@@ -132,6 +135,7 @@ type UnspentView struct {
 type autoState struct {
 	mu      sync.Mutex
 	held    []Held
+	logged  map[string]bool // held skill and reason already logged (logHeld)
 	spent   int
 	waiting string
 }
@@ -311,7 +315,7 @@ func (d *Desk) AutoAllocOnce(ctx context.Context) (did string) {
 			if p.SkillPoints <= 0 {
 				continue
 			}
-			r := d.SpendSkill(ctx, st.Skill, false)
+			r := d.SpendSkill(ctx, st.Skill, st.Prereq)
 			if r.OK {
 				d.countSpent()
 				d.logf("auto-alloc: clvl "+fmt.Sprint(p.Level)+" -> skill "+st.Name+" (build "+s.Build+")", "build", s.Build)
@@ -326,9 +330,25 @@ func (d *Desk) AutoAllocOnce(ctx context.Context) (did string) {
 				reason = "Held for you, spend it on the Skills page to confirm: " + r.Reason
 			}
 			held = append(held, Held{Clvl: p.Level, Skill: st.Name, Reason: reason})
+			d.logHeld(st.Name, reason)
 		}
 	}
 	return ""
+}
+
+// logHeld writes one line per skill and reason the allocator holds, not one per tick.
+func (d *Desk) logHeld(skill, reason string) {
+	d.auto.mu.Lock()
+	if d.auto.logged == nil {
+		d.auto.logged = map[string]bool{}
+	}
+	k := skill + "\x00" + reason
+	seen := d.auto.logged[k]
+	d.auto.logged[k] = true
+	d.auto.mu.Unlock()
+	if !seen {
+		d.logf("auto-alloc: held "+skill+": "+reason, "skill", skill)
+	}
 }
 
 func (d *Desk) setHeld(h []Held) {

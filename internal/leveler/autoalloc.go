@@ -37,6 +37,26 @@ func DBRule(db *data.DB, code string) Rule {
 	}
 }
 
+// DBReq is the prerequisite list of a skill by name (skills.txt reqskill1-3), for Have.Req. Nil db: none.
+func DBReq(db *data.DB) func(string) []string {
+	if db == nil {
+		return nil
+	}
+	return func(name string) []string {
+		s := db.SkillByName(name)
+		if s == nil {
+			return nil
+		}
+		var out []string
+		for _, rq := range s.ReqSkills {
+			if rq != "" {
+				out = append(out, rq)
+			}
+		}
+		return out
+	}
+}
+
 // HaveFor is the planner input of a player. base (the item-free attributes) may be nil: the panel values are used then
 // and gear bonuses count as spent points, so the caller should pass it when it can read it.
 func HaveFor(db *data.DB, p *d2.Player, base *[4]int) Have {
@@ -52,6 +72,7 @@ func HaveFor(db *data.DB, p *d2.Player, base *[4]int) Have {
 		}
 		h.Skills = OwnedSkills(db, p)
 		h.QuestPts = QuestPoints(db, p)
+		h.Req = DBReq(db)
 	}
 	return h
 }
