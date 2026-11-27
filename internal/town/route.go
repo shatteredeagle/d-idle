@@ -278,6 +278,7 @@ func (t *Town) reorderChores(s *d2.Snapshot, a *Act, names []string, settleFirst
 	start := input.Point{X: s.Player.X, Y: s.Player.Y}
 	rc := t.routePrices(pos, start)
 	res := routeOrderWith(names, routeEdges(names, settleFirst), pos, start, rc)
+	t.lastStops.Store(&res.Stops)
 	t.e.Log.Info(fmt.Sprintf("town plan: route stops=%s cost=%d settle-first=%v order=%s", strings.Join(res.Stops, ","), res.Cost, settleFirst, strings.Join(res.Order, ",")))
 	return res.Order
 }

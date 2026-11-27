@@ -8,6 +8,12 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- flakearb: fix TestArbiterControlGoldFarmAndRecovery race (test starts in wrong area) (TASK-1068) <!--sg:agent/flakearb-->
+- fieldstate: return-to-field leg hands over to the fighter when hostiles are near (TASK-1070) <!--sg:agent/fieldstate-->
+- logsink: bot own rotating log file, ops log verb, docker log NUL root cause (TASK-1069) <!--sg:agent/logsink-->
+- sandboxlogs: sandbox log analysis (docs) <!--sg:agent/sandboxlogs-->
+- palapply: SME Paladin/Sorceress data changes (zeal table, Aim/Concentration, bands, mana_heavy) <!--sg:agent/palapply-->
+- townwire: /api/townplan wired, arbiter upkeep behind chores bit (TASK-1064) <!--sg:agent/townwire-->
 - smeothers: SME review of Druid, Barbarian, Amazon, Assassin (docs) <!--sg:agent/smeothers-->
 - cainflaky: cain.chain Paladin 11 flake diagnosis (docs) <!--sg:agent/cainflaky-->
 - rel012: unnumbered next-release draft notes (TASK-1066) <!--sg:agent/rel012-->

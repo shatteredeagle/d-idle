@@ -9,9 +9,11 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+	"io"
 	"log/slog"
 	"os"
 	"os/signal"
+	"path/filepath"
 	"syscall"
 	"time"
 
@@ -147,13 +149,20 @@ func parseFlags(args []string) (options, error) {
 // logFlush writes the pending "last line repeated" line; set by newLogger.
 var logFlush = func() {}
 
-func newLogger(level, instance string) (*slog.Logger, error) {
+// newLogger writes the operational log as JSON lines to stdout and, when file is not nil, to the same lines in file.
+// Both are best effort (logx.Tee): docker's json-file driver can stop delivering stdout lines (a NUL-damaged log file
+// made `docker logs` end at an old line for days), so the file is the log a reviewer can rely on (docs/ops/logs.md).
+func newLogger(level, instance string, file io.Writer) (*slog.Logger, error) {
 	var l slog.Level
 	if err := l.UnmarshalText([]byte(level)); err != nil {
 		return nil, fmt.Errorf("log level %q: %w", level, err)
 	}
 	// Tight retry loops log the same line hundreds of times a second: fold identical runs (internal/logx).
-	h := logx.NewDedup(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: l}), 0)
+	var w io.Writer = os.Stdout
+	if file != nil {
+		w = logx.Tee(os.Stdout, file)
+	}
+	h := logx.NewDedup(slog.NewJSONHandler(w, &slog.HandlerOptions{Level: l}), 0)
 	logFlush = h.Flush
 	return slog.New(h).With("inst", instance), nil
 }
@@ -207,7 +216,15 @@ func main() {
 		return
 	}
 	o.ladder.play = playMode
-	log, err := newLogger(o.logLevel, o.instance)
+	var logFile io.Writer
+	if inst, ierr := o.layout.Instance(o.instance); ierr == nil && os.Getenv("D2BOT_LOG_FILE") != "0" {
+		if rf, ferr := logx.OpenRotating(filepath.Join(inst.Logs(), botLogName), 0, 0); ferr == nil {
+			logFile = rf
+		} else {
+			fmt.Fprintln(os.Stderr, "d2bot: log file:", ferr)
+		}
+	}
+	log, err := newLogger(o.logLevel, o.instance, logFile)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "d2bot:", err)
 		os.Exit(2)

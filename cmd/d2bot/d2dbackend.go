@@ -397,6 +397,7 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 	o.ladder.quests = ref.qd
 	o.ladder.points = ref.pd
 	o.ladder.plan = ref.aw
+	o.ladder.townPlan = townPlanSource(ref)
 	o.ladder.pause = pauseDesk(runner, ip.State())
 	o.ladder.recall = recallDesk(runner)
 	if labels != nil {
