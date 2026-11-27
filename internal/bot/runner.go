@@ -16,6 +16,7 @@ import (
 
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/decide"
+	"d2lod-bot/internal/diffready"
 	"d2lod-bot/internal/env"
 	"d2lod-bot/internal/event"
 	"d2lod-bot/internal/goals"
@@ -120,6 +121,11 @@ type control struct {
 type Runner struct {
 	pointsGate atomic.Pointer[func() bool] // who spends points: nil = the bot (pointsgate.go)
 	readiness  *readiness.Evaluator        // nil: no readiness model wired (TASK-218)
+
+	// diffGo is the owner's go for a difficulty hop and diffWhy the last readiness line (diffready.go, bot.diffReadyV2).
+	diffGo  diffready.Consent
+	diffMu  sync.Mutex
+	diffWhy string
 
 	e *env.Env
 	d Deps

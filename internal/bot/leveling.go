@@ -476,6 +476,9 @@ func (r *Runner) claimStep(ctx context.Context, snap *d2.Snapshot, c control) bo
 // cannot read that (UNVERIFIED quest flags), so the switch is an attempt: after the new game it checks the real
 // difficulty and, if it did not change, bans the wish for DifficultyBanMin minutes.
 func (r *Runner) wantedDifficulty(s *d2.Snapshot) string {
+	if r.e.Tune.Bot.DiffReadyV2 != 0 {
+		return r.wantedDifficultyV2(s)
+	}
 	p := s.Player
 	raw := leveler.RawResists(p)
 	want := r.d.Plan.DifficultyFor(p.Level, r.e.Tune.Bot.LevelMargin, &raw) // a failed resist gate keeps farming here
