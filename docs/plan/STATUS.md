@@ -247,6 +247,9 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- b7f493e78 11-27 01:57 `Merge agent/mark: Merge branch 'main' into dlv-mark` (mark)
+- d151d522e 11-27 01:54 `Merge branch 'main' into dlv-mark` (-)
+- 973166ee5 11-27 01:50 `Merge origin/main into agent/mark (keep marks and minions fields; Lower Resist rows stay removed)` (dlv-mark)
 - 3835f3995 11-27 01:46 `Merge agent/faultstall: Merge branch 'main' into faultstall` (faultstall)
 - 989af6273 11-27 01:46 `Merge agent/pgprov2: Merge branch 'main' into pgprov` (pgprov2)
 - f1789b6ad 11-27 01:46 `Merge agent/featuresoak: Merge branch 'main' into featuresoak` (featuresoak)
@@ -254,7 +257,4 @@
 - 710c84564 11-27 01:41 `Merge branch 'main' into faultstall` (-)
 - 380b833f3 11-27 01:41 `Merge branch 'main' into pgprov` (-)
 - 0ebcf3fc8 11-27 01:41 `Merge branch 'main' into featuresoak` (-)
-- 364447af7 11-27 01:41 `Merge branch 'main' into deploy88-ledger` (-)
-- fce2a0b5d 11-27 01:33 `Merge agent/arbloop: Merge branch 'main' into arbloop` (arbloop)
-- 0abcad620 11-27 01:33 `Merge agent/necroteeth: Merge branch 'main' into necroteeth` (necroteeth)
 <!-- statusgen:end -->
