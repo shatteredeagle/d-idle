@@ -2,6 +2,9 @@ package scenario
 
 import (
 	"bytes"
+	"fmt"
+	"math"
+	"strconv"
 	"strings"
 )
 
@@ -17,6 +20,9 @@ type Provenance struct {
 	Load1     float64 `json:"load1,omitempty"`
 	// Pace is virtual seconds per wall second over the whole run (0 when unknown).
 	Pace float64 `json:"pace,omitempty"`
+	// Parallel is the peak number of Proving Ground runs of the same runner that were busy at once during this run,
+	// itself included (1 alone, 0 unknown: a run started without the runner's slot log).
+	Parallel int `json:"parallel,omitempty"`
 }
 
 // RunLengthLine is what the bot logs when its virtual clock reached the budget (cmd/d2bot stopAtVirtual).
@@ -53,4 +59,56 @@ func PaceOf(virtualMin float64, wallSec int) float64 {
 		return 0
 	}
 	return virtualMin * 60 / float64(wallSec)
+}
+
+// SlotLogLine is one line of the runner's slot log: a run id started or ended at a wall time (unix nanoseconds). The
+// runner appends them around every exec-one; the run reads the log at its end to learn its peak slot load.
+func SlotLogLine(ev, id string, t int64) string { return fmt.Sprintf("%s %d %s\n", ev, t, id) }
+
+// PeakParallel is the peak number of runs busy at once during run self, itself included, from the slot log; self is
+// normally still busy when it reads the log (no end line yet: busy until now). 0 when self has no start line.
+// Unparsable lines are skipped.
+func PeakParallel(log []byte, self string) int {
+	type span struct{ start, end int64 }
+	spans := map[string]*span{}
+	for _, l := range strings.Split(string(log), "\n") {
+		f := strings.SplitN(l, " ", 3)
+		if len(f) != 3 {
+			continue
+		}
+		t, err := strconv.ParseInt(f[1], 10, 64)
+		if err != nil {
+			continue
+		}
+		sp := spans[f[2]]
+		if sp == nil {
+			sp = &span{start: math.MinInt64, end: math.MaxInt64}
+			spans[f[2]] = sp
+		}
+		switch f[0] {
+		case "start":
+			sp.start = t
+		case "end":
+			sp.end = t
+		}
+	}
+	me, ok := spans[self]
+	if !ok || me.start == math.MinInt64 {
+		return 0
+	}
+	// The busy count only rises at a start, so the peak inside self's span is at self's start or a later start.
+	peak := 0
+	for _, at := range spans {
+		if at.start < me.start || at.start >= me.end || at.start == math.MinInt64 {
+			continue
+		}
+		n := 0
+		for _, sp := range spans {
+			if sp.start != math.MinInt64 && sp.start <= at.start && at.start < sp.end {
+				n++
+			}
+		}
+		peak = max(peak, n)
+	}
+	return peak
 }

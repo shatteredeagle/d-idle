@@ -170,6 +170,7 @@ cmd/d2bot/task_test.go  credit-runner  qdmatrix
 cmd/d2bot/vaultkeep.go  credit-runner  sellall
 cmd/d2firsthour/  live-agent  firsthour
 cmd/d2scenario/  credit-runner  arbmig
+cmd/d2scenario/faults.json  credit-runner  faultstall
 cmd/d2scenario/run.go  credit-runner  pgtaps
 cmd/d2scenario/tap.go  credit-runner  handinbtn
 cmd/d2scenario/tap.go  credit-runner  pgtaps
@@ -180,6 +181,7 @@ cmd/d2scenario/tap_test.go  credit-runner  stage1fix
 cmd/d2scenario/validate.go  credit-runner  pgselfcheck
 data/capabilities/  credit-runner  dlv-stance-pack
 data/darklaunch.json  credit-runner  arbmig
+data/darklaunch.json  credit-runner  deploy88-ledger
 data/darklaunch.json  credit-runner  dlv-upkeep-state
 data/darklaunch.json  credit-runner  ticklog
 data/input/caps/  credit-runner  dlv-cast-verbs
@@ -253,6 +255,8 @@ docs/probes/bot-cpu-live-2026-11-16.md  credit-runner  botcpulive
 docs/probes/checkpoint-live-drill.md  live-agent  ckptlive
 docs/probes/classorder1.md  user  classorder1
 docs/probes/exitsread-2026-11-22.md  credit-runner  exitsread
+docs/probes/faultsoak-design-2026-11-26.md  credit-runner  faultstall
+docs/probes/feature-soak-2026-11-26.md  credit-runner  featuresoak
 docs/probes/firsthour.md  live-agent  firsthour
 docs/probes/flipwave2.md  live-agent  flipwave2
 docs/probes/h1-baseline.md  user  h1baseline
@@ -441,6 +445,7 @@ internal/env/tuning_quests.go  credit-runner  countess3
 internal/env/tuning_resource.go  credit-runner  freshstart
 internal/env/tuning_resource.go  live-agent  recoverypace
 internal/env/tuning_town.go  credit-runner  townflip
+internal/faultproxy/  credit-runner  faultstall
 internal/fidvendor  live-agent  fidprobe-vendor
 internal/goals/clock_test.go  credit-runner  pgclock
 internal/goldfarm  credit-runner  repairtrip
@@ -680,7 +685,10 @@ tools/probes/exitsread.py  credit-runner  exitsread
 tools/probes/objectlist.py  credit-runner  qdmatrix
 tools/probes/presets.py  credit-runner  qdmatrix
 tools/provingground/arbiter-outcomes/  credit-runner  arbmig
+tools/provingground/campaigns/  credit-runner  featuresoak
 tools/provingground/earned  credit-runner  pgearned
+tools/provingground/featuresoak-row.sh  credit-runner  featuresoak
+tools/provingground/featuresoak.py  credit-runner  featuresoak
 tools/provingground/nightly.sh  credit-runner  pgnightly
 tools/provingground/pgenv.sh  credit-runner  pgledgeron
 tools/provingground/pgenv_test.sh  credit-runner  pgledgeron

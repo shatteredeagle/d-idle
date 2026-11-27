@@ -112,6 +112,14 @@ func cmdRun(args []string, w io.Writer) error {
 		return fmt.Errorf("run needs -bot (or D2BOT_BIN) and D2D_BIN (the lab d2d) in the environment")
 	}
 	var mu sync.Mutex
+	slotLog := filepath.Join(*out, slotLogName)
+	logSlot := func(ev, id string) {
+		mu.Lock()
+		defer mu.Unlock()
+		if err := appendRaw(slotLog, scenario.SlotLogLine(ev, id, time.Now().UnixNano())); err != nil {
+			fmt.Fprintf(os.Stderr, "d2scenario: slot log: %v\n", err)
+		}
+	}
 	sem := make(chan struct{}, *parallel)
 	var wg sync.WaitGroup
 	for _, r := range todo {
@@ -131,7 +139,10 @@ func cmdRun(args []string, w io.Writer) error {
 				a := cmdFor(r, o)
 				c := exec.Command(a[0], a[1:]...)
 				c.Stdout, c.Stderr = os.Stderr, os.Stderr
-				err := c.Run()
+				sid := filepath.Join(o, resultName(r))
+				c.Env = append(os.Environ(), slotLogEnv+"="+slotLog, slotIDEnv+"="+sid)
+				err := c.Run() // exec-one logs its own start once it holds a slot, so a wait for a slot is not busy time
+				logSlot("end", sid)
 				res, rerr := readResult(filepath.Join(o, resultName(r)))
 				if rerr != nil { // the run wrapper died before writing a result: that is a blocked run, never a pass
 					res = scenario.Result{Version: scenario.ResultVersion, Run: r, Status: scenario.Blocked, Reason: fmt.Sprintf("no result written (slot or runner failed: %v)", err), BudgetMin: by[r.ID].Budget.VirtualMin}
@@ -215,6 +226,7 @@ func cmdExecOne(args []string) error {
 	}
 	r := scenario.Run{ID: s.ID, Class: *class, Seed: *seed}
 	start := time.Now()
+	logSlotStart(start)
 	if *journal {
 		os.Setenv(journalEnv, filepath.Join(*out, strings.TrimSuffix(resultName(r), ".json")+".jnl"))
 	}
@@ -236,6 +248,7 @@ func cmdExecOne(args []string) error {
 	res.WallSec = int(time.Since(start).Seconds())
 	res.Prov = collectProv(*bot)
 	res.Prov.Pace = scenario.PaceOf(res.VirtualMin, res.WallSec)
+	res.Prov.Parallel = slotParallel()
 	if res.State != nil {
 		res.Digest = scenario.DigestState(*res.State)
 	}
