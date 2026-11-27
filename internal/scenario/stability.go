@@ -18,9 +18,12 @@ const (
 )
 
 // StableRuns is the number of consecutive equal runs (verdict D0 and assertion digest D1, one class and seed, unchanged
-// bot commit and d2d hash) that makes a candidate stable. The design's extra "two of them at parallel 2" is not
-// checked: the ledger line does not record the slot load yet.
-const StableRuns = 5
+// bot commit and d2d hash) that makes a candidate stable; StableParallelRuns of them must have run while another slot
+// was busy (ledger parallel >= 2), so a scenario that only passes alone never gates (design section 2.7).
+const (
+	StableRuns         = 5
+	StableParallelRuns = 2
+)
 
 // StabilityKey is one class and seed of a scenario: the unit the N-run rule counts.
 type StabilityKey struct {
@@ -71,9 +74,11 @@ type KeyStability struct {
 	Key    StabilityKey `json:"key"`
 	State  string       `json:"state"`
 	Streak int          `json:"streak"` // equal runs on the current binaries since the last reset
-	Runs   int          `json:"runs"`   // counted runs (BLOCKED, cut, dirty and digest-less runs are not counted)
-	Since  string       `json:"since"`  // run id that set the current state ("" for a candidate never stable)
-	Last   string       `json:"last"`   // last counted run id
+	// StreakParallel counts the runs of the streak that had another slot busy (parallel >= 2).
+	StreakParallel int    `json:"streak_parallel"`
+	Runs           int    `json:"runs"`  // counted runs (BLOCKED, cut, dirty and digest-less runs are not counted)
+	Since          string `json:"since"` // run id that set the current state ("" for a candidate never stable)
+	Last           string `json:"last"`  // last counted run id
 	// LastGreen is the last counted GREEN run: the one a T1 state fixture is cut from once the key is stable.
 	LastGreen string       `json:"last_green,omitempty"`
 	Flakes    []FlakeEvent `json:"flakes,omitempty"`
@@ -89,7 +94,8 @@ func counted(r LedgerRecord) bool {
 // of the ledger lines (ordered by start time, ties in ledger order) and the releases, so the tool quarantines and a
 // person only releases. Rules:
 //   - a candidate becomes stable after StableRuns consecutive counted runs with equal verdict and D1 on one bot commit
-//     and d2d hash; a binary change resets the streak and is not a flake;
+//     and d2d hash, StableParallelRuns of them at parallel 2 or more; a binary change resets the streak and is not a
+//     flake;
 //   - a stable key stays stable across binary changes (a new outcome on new binaries is a regression or a fix, which the
 //     verdict reports);
 //   - any verdict or D1 flip between consecutive counted runs on the same bot commit and d2d hash quarantines the key at
@@ -131,7 +137,7 @@ func Stability(recs []LedgerRecord, rels []Release) ([]KeyStability, error) {
 		}
 		p, hasPrev := prev[k]
 		if hasPrev && s.State == StabilityQuarantined && released(k.Scenario, r.Started, p.Started) {
-			s.State, s.Since, s.Streak, hasPrev = StabilityCandidate, "", 0, false
+			s.State, s.Since, s.Streak, s.StreakParallel, hasPrev = StabilityCandidate, "", 0, 0, false
 		}
 		s.Runs++
 		s.Last = r.Run
@@ -141,18 +147,21 @@ func Stability(recs []LedgerRecord, rels []Release) ([]KeyStability, error) {
 		sameBin := hasPrev && p.BotCommit == r.BotCommit && p.D2DSHA256 == r.D2DSHA256
 		switch {
 		case !sameBin:
-			s.Streak = 1
+			s.Streak, s.StreakParallel = 1, 0
 		case p.Verdict != r.Verdict || p.D1 != r.D1:
 			s.Flakes = append(s.Flakes, FlakeEvent{Key: k, Prev: p.Run, Run: r.Run, BotCommit: r.BotCommit, D2DSHA256: r.D2DSHA256,
 				Detail: fmt.Sprintf("verdict %s -> %s, d1 %s -> %s", p.Verdict, r.Verdict, p.D1, r.D1)})
-			s.Streak = 1
+			s.Streak, s.StreakParallel = 1, 0
 			if s.State != StabilityQuarantined {
 				s.State, s.Since = StabilityQuarantined, r.Run
 			}
 		default:
 			s.Streak++
 		}
-		if s.State == StabilityCandidate && s.Streak >= StableRuns {
+		if r.Parallel >= 2 {
+			s.StreakParallel++
+		}
+		if s.State == StabilityCandidate && s.Streak >= StableRuns && s.StreakParallel >= StableParallelRuns {
 			s.State, s.Since = StabilityStable, r.Run
 		}
 		prev[k] = r
