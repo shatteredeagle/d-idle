@@ -49,6 +49,7 @@
 | necroteeth | proposed | - | `internal/combat/classdata/profiles.json`<br>`internal/combat/necro_test.go`<br>`internal/leveler/mainattack_test.go` | - |
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
 | deploy88-ledger | proposed | - | `data/darklaunch.json` | - |
+| skillhand | in-progress | - | `internal/d2dctl/verbs.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dctl/skillhand_test.go`<br>`internal/d2dctl/client_test.go`<br>`internal/d2dctl/combat_verbs_test.go`<br>`internal/d2dinput/castverbs_test.go`<br>`internal/d2dinput/controller_test.go`<br>`internal/d2dcombat/castverbs_test.go`<br>`internal/d2dcombat/input_test.go`<br>`docs/d2dctl.md` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
@@ -244,6 +245,9 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- bbde82597 11-27 03:55 `Merge agent/skillhand: Merge branch 'main' into skillhand` (skillhand)
+- c863c1693 11-27 03:53 `Merge branch 'main' into skillhand` (-)
+- 4b533a795 11-27 03:49 `Merge origin/main into skillhand (keep casthold skillhold and the numeric cmd skill)` (skillhand)
 - 9e8522d83 11-27 03:49 `Merge agent/act2drill: Merge branch 'main' into stepexec1` (act2drill)
 - bcee08864 11-27 03:47 `Merge branch 'main' into stepexec1` (-)
 - e74b65753 11-27 03:11 `Merge agent/upkeepcmp: Merge branch 'main' into upkeepcmp` (upkeepcmp)
@@ -251,7 +255,4 @@
 - 9f3e208a6 11-27 03:05 `Merge agent/casthold: casthold: card result and criteria` (casthold)
 - 9b255fdc1 11-27 02:55 `Merge origin/main into casthold` (-)
 - 67d74d66e 11-27 02:47 `Merge agent/forkcaps: Merge branch 'main' into inputl3` (forkcaps)
-- c395306d0 11-27 02:45 `Merge branch 'main' into inputl3` (-)
-- 685f85220 11-27 02:38 `Merge agent/stancearmy: Merge branch 'main' into dlv-stance-army` (stancearmy)
-- a5ab785fe 11-27 02:36 `Merge branch 'main' into dlv-stance-army` (-)
 <!-- statusgen:end -->
