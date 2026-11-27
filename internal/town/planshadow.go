@@ -25,11 +25,38 @@ func (t *Town) PlanShadow(plan ChorePlan) (supply.Plan, error) {
 }
 
 func (t *Town) planOf(s *d2.Snapshot, plan ChorePlan) (supply.Plan, error) {
+	pl, _, err := t.planCount(s, plan)
+	return pl, err
+}
+
+// planCount is planOf plus the count it solved from (the viewer's budget row reads the purse and stash).
+func (t *Town) planCount(s *d2.Snapshot, plan ChorePlan) (supply.Plan, supply.Count, error) {
 	p := s.Player
 	c := t.supplyCount(s)
 	c.Purse, c.Stash, c.StashKnown = p.Gold, p.StashGold, p.StashGold > 0
 	c.PortalCharges, c.HasTome = t.scrollCount(s, "tsc", "tbk")
-	return solveShadow(p.Class, t.plan(p), belt.Slots(t.e.Data, s.Inventory), c, plan, &t.e.Tune.Loot, &t.e.Tune.Resource)
+	pl, err := solveShadow(p.Class, t.plan(p), belt.Slots(t.e.Data, s.Inventory), c, plan, &t.e.Tune.Loot, &t.e.Tune.Resource)
+	return pl, c, err
+}
+
+// lastPlan is the plan of the last visit that solved one, kept for the viewer (GET /api/townplan).
+type lastPlan struct {
+	plan  supply.Plan
+	count supply.Count
+}
+
+// PlanView is the Town plan card's data: the plan of the last visit that solved one (stage 1 and up of knob town.plan),
+// the route stops of that visit; supply.NoView before any. Safe to call from the watch server.
+func (t *Town) PlanView() supply.View {
+	lp := t.lastPlan.Load()
+	if lp == nil {
+		return supply.NoView()
+	}
+	var stops []string
+	if sp := t.lastStops.Load(); sp != nil {
+		stops = *sp
+	}
+	return supply.ViewOf(lp.plan, lp.count, stops, 0)
 }
 
 // kitPackReserve is the healing potions a kit minimum counts in the pack beyond the belt: pack potions are not drinkable in a fight,
@@ -66,11 +93,13 @@ func (t *Town) logPlanShadow(s *d2.Snapshot, plan ChorePlan) {
 	if t.PlanStage() < 1 {
 		return
 	}
-	pl, err := t.planOf(s, plan)
+	pl, c, err := t.planCount(s, plan)
 	if err != nil {
 		t.e.Log.Warn("town plan (shadow): " + err.Error())
 		return
 	}
+	t.lastPlan.Store(&lastPlan{plan: pl, count: c})
+	t.lastStops.Store(nil) // the stops of the new visit arrive with its route (stage 5)
 	t.e.Log.Info("town plan (shadow): " + pl.Trace())
 }
 
