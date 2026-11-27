@@ -159,11 +159,15 @@ func (f *Fighter) keepAura(ctx context.Context, snap *d2.Snapshot, tg *Target, f
 	}
 	mode := f.upkeepMode()
 	gated := !force && !f.auraDirty && now.Sub(f.auraChecked) < ms(f.tune().AuraCheckMs)
-	if gated && mode > 0 && f.upk.aura.ID != 0 && !f.upkeepAuraUp(p, f.upk.aura) {
+	if gated && mode > 0 && f.upk.aura.ID != 0 {
+		drvUp := f.upkeepAuraUp(p, f.upk.aura)
+		if mode == 1 {
+			f.upkCmp.note(cmpAura, drvUp)
+		}
 		// The aura kept last went down between checks (a non-aura right pick or cast): the driver re-picks now.
-		if mode == 2 {
+		if !drvUp && mode == 2 {
 			gated = false
-		} else {
+		} else if !drvUp {
 			f.upkeepShadow(f.upk.aura, "aura recheck", false, true)
 		}
 	}
@@ -184,7 +188,7 @@ func (f *Fighter) keepAura(ctx context.Context, snap *d2.Snapshot, tg *Target, f
 	if mode > 0 {
 		if drv := f.upkeepAuraUp(p, want); mode == 2 {
 			up = drv
-		} else if drv != up {
+		} else if f.upkCmp.note(cmpAura, drv == up); drv != up {
 			f.upkeepShadow(want, "aura", !up, !drv)
 		} else {
 			delete(f.upk.shadowLast, want.ID)
