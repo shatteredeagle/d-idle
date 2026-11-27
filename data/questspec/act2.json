@@ -1,7 +1,7 @@
 {
  "schema": "questspec/2",
  "act": 2,
- "source": "data/questboard/act2.json (chunk and step names), internal/task/act2.go (nodes, the orifice and Cube steps), internal/quest/act2.go (class ids 152 orifice, 244 Cain V); docs/design/stepexec-p9.md tags every Act 2 fact",
+ "source": "data/questboard/act2.json (chunk and step names), internal/task/act2.go (nodes, the orifice and Cube steps), internal/quest/act2.go (class ids 152 orifice, 244 Cain V); docs/design/stepexec-p9.md tags every Act 2 fact; the Seven Tombs record 14 bits (5 at Duriel's death V lab drill act2drill5, 13 and 3 at Tyrael, 4 at Jerhyn's reward, 0 at Meshif's line) are S from the d2d port's SevenTombsQuest (rules/quests.hpp, traced from game.exe)",
  "chains": [
   {
    "id": "horadric_staff",
@@ -230,6 +230,9 @@
    "areas": {
     "canyon_of_the_magi": {
      "size": "large"
+    },
+    "lut_gholein": {
+     "size": "small"
     }
    },
    "steps": [
@@ -339,11 +342,127 @@
       "lacks_item(hst)"
      ],
      "post": [
-      "killed(duriel)|quest_state(duriel,cleared)"
+      "killed(duriel)|quest_bits(duriel,0x0020)|quest_state(duriel,cleared)"
      ],
      "discover": "preset_always",
      "budget_s": 900,
      "on_fail": "park"
+    },
+    {
+     "id": "talk_tyrael",
+     "act": "talk",
+     "target": {
+      "kind": "npc",
+      "name": "tyrael",
+      "class": 251
+     },
+     "chunk": "duriel",
+     "pre": [
+      "killed(duriel)|quest_bits(duriel,0x0020)|quest_state(duriel,cleared)"
+     ],
+     "post": [
+      "quest_bits(duriel,0x2000)|quest_bits(duriel,0x0010)|quest_state(duriel,done)"
+     ],
+     "discover": "preset_always",
+     "budget_s": 120,
+     "on_fail": "retry",
+     "tries": 2,
+     "exec": {
+      "verb": "talk",
+      "pick": "reward",
+      "wait_polls": 4,
+      "wait_ms": 500,
+      "backoff_ms": 500,
+      "backoff_cap_ms": 2000
+     }
+    },
+    {
+     "id": "talk_jerhyn",
+     "act": "talk",
+     "target": {
+      "kind": "npc",
+      "name": "jerhyn",
+      "class": 201
+     },
+     "chunk": "duriel",
+     "pre": [
+      "in_area(lut_gholein)",
+      "quest_bits(duriel,0x2000)|quest_bits(duriel,0x0010)|quest_state(duriel,done)"
+     ],
+     "post": [
+      "quest_bits(duriel,0x0010)|quest_state(duriel,done)"
+     ],
+     "discover": "preset_always",
+     "budget_s": 120,
+     "on_fail": "retry",
+     "tries": 2,
+     "exec": {
+      "verb": "talk",
+      "pick": "act2",
+      "wait_polls": 4,
+      "wait_ms": 500,
+      "backoff_ms": 500,
+      "backoff_cap_ms": 2000
+     }
+    }
+   ]
+  },
+  {
+   "id": "act2_done",
+   "quest": "act2_done",
+   "initial": [
+    "quest_bits(duriel,0x0010)"
+   ],
+   "areas": {
+    "lut_gholein": {
+     "size": "small"
+    }
+   },
+   "steps": [
+    {
+     "id": "travel_harbor",
+     "act": "travel",
+     "target": {
+      "kind": "area",
+      "name": "lut_gholein"
+     },
+     "chunk": "sail_east",
+     "board": [
+      "travel_harbor"
+     ],
+     "pre": [],
+     "post": [
+      "in_area(lut_gholein)"
+     ],
+     "discover": "preset_always",
+     "budget_s": 300,
+     "on_fail": "retry",
+     "tries": 3,
+     "idempotent": true
+    },
+    {
+     "id": "talk_meshif",
+     "act": "talk",
+     "target": {
+      "kind": "npc",
+      "name": "meshif",
+      "class": 210
+     },
+     "chunk": "sail_east",
+     "board": [
+      "talk_meshif"
+     ],
+     "pre": [
+      "in_area(lut_gholein)",
+      "quest_bits(duriel,0x0010)"
+     ],
+     "post": [
+      "quest_bits(duriel,0x0001)|quest_state(duriel,done)"
+     ],
+     "discover": "preset_always",
+     "budget_s": 120,
+     "on_fail": "retry",
+     "tries": 2
     }
    ]
   }

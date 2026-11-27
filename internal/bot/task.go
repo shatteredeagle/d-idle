@@ -677,9 +677,22 @@ func (r *Runner) aliveHostiles(s *d2.Snapshot) []d2.Unit {
 // bossRestartGap is the least time between two starts of the same boss run.
 const bossRestartGap = 30 * time.Second
 
+// markBossKilled records a boss kill for the campaign (World.Killed) in this game.
+func (a taskActs) markBossKilled(name string) {
+	r := a.r
+	r.noteKill(name)
+	r.syncTaskGame()
+	r.loop.task.killed[name] = true
+}
+
 // KillBoss finds the named unit (exploring until it shows), kills it and picks up what it dropped.
 func (a taskActs) KillBoss(ctx context.Context, name string) (ret error) {
 	r := a.r
+	if a.bossDead(name) {
+		r.e.Log.Info("boss already dead: the kill step is done", "boss", name)
+		a.markBossKilled(name)
+		return nil
+	}
 	if name == boss.NameBloodRaven {
 		worldFn := taskEnv{r}.World
 		if r.loop.brWorldFn != nil {
@@ -718,6 +731,13 @@ func (a taskActs) KillBoss(ctx context.Context, name string) (ret error) {
 		err := td.Boss(ctx, name)
 		r.bossRun.Store(false)
 		if err != nil {
+			if errors.Is(err, boss.ErrBossNotFound) && a.bossDead(name) {
+				// the general fight killed him while the boss run looked for him (V drill act2drill5: Duriel)
+				r.e.Log.Info("boss not found but dead: the kill step is done", "boss", name)
+				delete(r.bossStart, name)
+				a.markBossKilled(name)
+				return nil
+			}
 			if errors.Is(err, boss.ErrBossNotFound) && r.e.Tune.Quests.LayoutRead == 0 && boss.NeedsLayoutRead(name) {
 				err = fmt.Errorf("%w: needs quests.layoutRead 1 (his spawn point is read from the level layout; without it the hero can only explore for him)", err)
 			}
@@ -734,9 +754,7 @@ func (a taskActs) KillBoss(ctx context.Context, name string) (ret error) {
 			return a.tag(err)
 		}
 		delete(r.bossStart, name)
-		r.noteKill(name)
-		r.syncTaskGame()
-		r.loop.task.killed[name] = true
+		a.markBossKilled(name)
 		return nil
 	}
 	want := normName(strings.TrimPrefix(name, "The "))

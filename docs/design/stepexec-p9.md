@@ -60,6 +60,23 @@ lab. Scenarios `drill.act2.assemble.stepexec`, `drill.act2.duriel.stepexec` (too
 Live drill wanted: the two scenarios 2 of 3 each; read record 10 before and after the Cain talk and after the placement, to
 decide the talk row's post.
 
+## Boss steps and the Act 2 hand-in (card bossdone, 2026-11-27)
+- A kill step's post is read from game state (`taskActs.bossDead`, internal/bot/stepexec.go): the data row of the kill
+  step, found by its monster name (`execKills`, no exec row needed), holds when a kill of it was seen this game, its dead
+  unit is in the snapshot, or its quest word bit is set. `KillBoss` checks it before the boss run and again when the run
+  ends in `boss not found` (V drill act2drill5: the general fight killed Duriel, then the boss run found nobody). Every
+  boss: without a row it reads `killed(name)` alone.
+- New fact `quest_bits(q,mask)`: every bit of the hex mask set in the reader's raw word of task quest q (memory reader in
+  both caps files). `kill_duriel` post: `killed(duriel)|quest_bits(duriel,0x0020)|quest_state(duriel,cleared)`; record 14
+  bit 5 at Duriel's death is V on the lab (0x0004 to 0x0024), S in the d2d port's SevenTombsQuest.
+- Hand-in rows (talk kind): `seven_tombs/talk_tyrael` (exec, pick `reward`, post bit 0x2000, Tyrael sets bits 13 and 3),
+  `seven_tombs/talk_jerhyn` (exec, pick `act2`, post bit 0x0010, Jerhyn's reward line), and a new chain `act2_done` with
+  `talk_meshif` (no exec row: the sail changes act; post bit 0x0001, the record 14 completion set by Meshif's line 450).
+  The bit sequence is S (d2d port rules/quests.hpp, traced from game.exe); the lab has only shown bit 5 (U the rest).
+- Open (task layer, internal/task/act2.go, not this card): the Tyrael node's done is `not(stage == Cleared)`, and a kill
+  raises the stage to Cleared until bit 0, so the node stays needed after the talk; the Jerhyn node is skipped once the
+  act 2 word is done, which may let the hero sail before Jerhyn's reward line, so record 14 bit 0 would stay clear.
+
 ## Rule (acceptance criterion 2)
 No new quest chunk may add a hand-written click-wait-pick-up handler: a new step of these four verbs is a questspec row with
 an `exec` block, run by `RunStep`. Old handlers move over one at a time, each behind its scenario and a knob; the old code is
