@@ -8,17 +8,17 @@ import (
 )
 
 // The generic step executor (card stepexec1, review fable-logic-review-2026-11-25 P9, docs/design/stepexec-p9.md).
-// A step of the four verbs interact, pickup, talk and use is: APPROACH the target, ACT, WAIT for the declared fact
+// A step of the five verbs interact, pickup, talk, use and transmute is: APPROACH the target, ACT, WAIT for the declared fact
 // (the step's post clauses, read from the snapshot), retry within a budget. The engine is pure: it knows no game, only
 // a Backend. Its result is the typed step outcome of internal/bot/outcome.go (same five kinds, mapped by the bot
 // adapter; this package cannot import bot).
 
 // Verbs the executor runs.
-var ExecVerbs = set("interact", "pickup", "talk", "use")
+var ExecVerbs = set("interact", "pickup", "talk", "use", "transmute")
 
 // Exec is the executor row of a step (data, ADR 0021): how to run it. Absent: the step is not run by the executor.
 type Exec struct {
-	Verb string `json:"verb"` // interact | pickup | talk | use
+	Verb string `json:"verb"` // interact | pickup | talk | use | transmute
 	// On is what the verb acts on; empty: the step's own target. The Cain scroll interacts with the tree (On) to make
 	// the item (Target) appear.
 	On *Target `json:"on,omitempty"`
@@ -27,19 +27,21 @@ type Exec struct {
 	Then string `json:"then,omitempty"`
 	// Pick is the dialogue option a talk step picks ("bark", "reward"; the bot's dialog table names the lines). Empty: the
 	// NPC's default line.
-	Pick         string `json:"pick,omitempty"`
-	Tolerance    int    `json:"tolerance,omitempty"`  // approach: subtiles from the target that count as arrived
-	WaitPolls    int    `json:"wait_polls"`           // looks at the post after an act
-	WaitMS       int    `json:"wait_ms"`              // between two looks
-	BackoffMS    int    `json:"backoff_ms,omitempty"` // pause before attempt 2; doubles per attempt, capped at BackoffCapMS
-	BackoffCapMS int    `json:"backoff_cap_ms,omitempty"`
+	Pick string `json:"pick,omitempty"`
+	// Inputs are the base codes a transmute step puts in the Horadric Cube (the step's target is the product).
+	Inputs       []string `json:"inputs,omitempty"`
+	Tolerance    int      `json:"tolerance,omitempty"`  // approach: subtiles from the target that count as arrived
+	WaitPolls    int      `json:"wait_polls"`           // looks at the post after an act
+	WaitMS       int      `json:"wait_ms"`              // between two looks
+	BackoffMS    int      `json:"backoff_ms,omitempty"` // pause before attempt 2; doubles per attempt, capped at BackoffCapMS
+	BackoffCapMS int      `json:"backoff_cap_ms,omitempty"`
 	// Wake names the facts that end a refusal (shown in Refused.Wake when the backend gives none).
 	Wake []string `json:"wake,omitempty"`
 }
 
 func (e *Exec) validate(s Step, bad func(string, ...any)) {
 	if !ExecVerbs[e.Verb] {
-		bad("step %s: exec verb %q (want interact, pickup, talk or use)", s.ID, e.Verb)
+		bad("step %s: exec verb %q (want interact, pickup, talk, use or transmute)", s.ID, e.Verb)
 	}
 	if e.Then != "" && !ExecVerbs[e.Then] {
 		bad("step %s: exec then %q", s.ID, e.Then)
@@ -66,16 +68,35 @@ func (e *Exec) validate(s Step, bad func(string, ...any)) {
 	if e.Pick != "" && e.Verb != "talk" {
 		bad("step %s: exec pick %q needs the verb talk", s.ID, e.Pick)
 	}
+	if e.Verb == "transmute" {
+		if on.Kind != "item" || len(e.Inputs) < 2 {
+			bad("step %s: exec transmute makes an item (target kind item) from at least two inputs", s.ID)
+		}
+		for _, c := range e.Inputs {
+			if !itemCode.MatchString(c) {
+				bad("step %s: exec input %q is not an item code", s.ID, c)
+			}
+		}
+	} else if len(e.Inputs) > 0 {
+		bad("step %s: exec inputs need the verb transmute", s.ID)
+	}
 }
+
+// ActArgs are the row's arguments of one act: the dialogue option of a talk, the Cube inputs of a transmute.
+type ActArgs struct {
+	Pick   string
+	Inputs []string
+}
+
+func (e *Exec) args() ActArgs { return ActArgs{Pick: e.Pick, Inputs: e.Inputs} }
 
 // Backend is what the executor needs of the game. Every fact comes from the snapshot, never from the executor's own
 // bookkeeping: a restarted bot reads the same answer.
 type Backend interface {
 	// Approach walks until the target is within tol subtiles. ErrProgress: moved, not there yet.
 	Approach(ctx context.Context, t Target, tol int) error
-	// Act performs the verb on the target (click, pick up, say a line, use an item).
-	// pick is the step's dialogue option (talk only, else empty).
-	Act(ctx context.Context, verb string, t Target, pick string) error
+	// Act performs the verb on the target (click, pick up, say a line, use an item, transmute in the Cube).
+	Act(ctx context.Context, verb string, t Target, args ActArgs) error
 	// Holds reads one post clause from the current snapshot.
 	Holds(c Clause) bool
 	Sleep(d time.Duration)
@@ -162,7 +183,7 @@ func RunStep(ctx context.Context, s Step, be Backend) Outcome {
 			continue
 		}
 		out.Attempts++
-		if o, stop := classify(be.Act(ctx, e.Verb, on, e.Pick), out.Attempts, e); stop {
+		if o, stop := classify(be.Act(ctx, e.Verb, on, e.args()), out.Attempts, e); stop {
 			return o
 		} else if o.Err != nil {
 			last = o.Err
@@ -173,7 +194,7 @@ func RunStep(ctx context.Context, s Step, be Backend) Outcome {
 				return out
 			}
 			if e.Then != "" {
-				if o, stop := classify(be.Act(ctx, e.Then, s.Target, e.Pick), out.Attempts, e); stop {
+				if o, stop := classify(be.Act(ctx, e.Then, s.Target, ActArgs{Pick: e.Pick}), out.Attempts, e); stop {
 					return o
 				}
 				if holds() {
