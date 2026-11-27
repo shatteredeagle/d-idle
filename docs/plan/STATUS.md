@@ -224,14 +224,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 149ba7319 11-27 14:45 `Merge agent/nightplan: nightplan: lab night plan 2026-11-27 (docs)` (nightplan)
 - 412dc797c 11-27 14:45 `Merge agent/townguard: townguard: hand-over in the guard refusal, route path cost (TASK-1057)` (townguard)
 - 51d1cdd1a 11-27 14:45 `Merge agent/inputl4: inputl4: repair and menu-choose client verbs, pointer-call count CI check (TASK-988/989)` (inputl4)
+- cedb40af3 11-27 14:43 `Merge branch 'main' into nightplan` (-)
 - 88ddca6c9 11-27 14:43 `Merge branch 'main' into townguard` (-)
 - f992a90b6 11-27 14:43 `Merge branch 'main' into inputl4` (-)
 - 9f534dbe4 11-27 14:32 `Merge agent/act2chunks: act2chunks: Radament/cube/shaft/amulet/summoner chunks as step-executor data (TASK-1056)` (act2chunks)
 - d60306160 11-27 14:32 `Merge agent/town7: town7: short-gold priority table as data + town8 stage 5 route stops (TASK-759/761)` (town7)
 - 6992ea23f 11-27 14:30 `Merge branch 'main' into act2chunks` (-)
 - 8cee71e86 11-27 14:30 `Merge branch 'main' into town7` (-)
-- f723f0cac 11-27 14:26 `Merge agent/vaultpoll: vaultpoll: cached vault poll, windowed query (TASK-1054)` (vaultpoll)
-- c6dde6ea4 11-27 14:25 `Merge branch 'main' into vaultpoll` (-)
 <!-- statusgen:end -->

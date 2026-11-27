@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- nightplan: lab night plan 2026-11-27 (docs) <!--sg:agent/nightplan-->
 - townguard: hand-over in the guard refusal, route path cost (TASK-1057) <!--sg:agent/townguard-->
 - inputl4: repair and menu-choose client verbs, pointer-call count CI check (TASK-988/989) <!--sg:agent/inputl4-->
 - act2chunks: Radament/cube/shaft/amulet/summoner chunks as step-executor data (TASK-1056) <!--sg:agent/act2chunks-->
