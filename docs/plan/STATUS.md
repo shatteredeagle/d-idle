@@ -243,7 +243,9 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 43bdb0282 11-27 13:59 `Merge agent/darkflip: darkflip: final dark queue flip list (docs)` (darkflip)
 - 8ef7cc46d 11-27 13:59 `Merge agent/closecards: closecards: close verified merged cards, stale dependency fix` (closecards)
+- 27de5d572 11-27 13:57 `Merge branch 'main' into darkflip` (-)
 - d9999a7d9 11-27 13:57 `Merge branch 'main' into closecards` (-)
 - fc04b3bed 11-27 13:49 `Merge agent/akarafix: akarafix: hand-in queued/served logs, stale request drop, why-waiting reason (TASK-1051)` (akarafix)
 - 27c304655 11-27 13:49 `Merge agent/mercvault: mercvault: Equip on merc from the Vault (TASK-1049)` (mercvault)
@@ -251,6 +253,4 @@
 - ad23377bc 11-27 13:48 `Merge branch 'main' into mercvault` (-)
 - 41a339a10 11-27 13:33 `Merge agent/vaultperf: vaultperf: batch sell-all, counts refresh, shared busy-button feedback (TASK-1050)` (vaultperf)
 - 0ff85e305 11-27 13:32 `Merge branch 'main' into vaultperf` (-)
-- dd43964ff 11-27 13:29 `Merge agent/charms: charms: charm management design (docs)` (charms)
-- 482daed6e 11-27 13:29 `Merge agent/akarahand: akarahand: hand-in click diagnosis (docs)` (akarahand)
 <!-- statusgen:end -->
