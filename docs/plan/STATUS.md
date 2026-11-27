@@ -40,7 +40,6 @@
 | fid-poison-res-diag | proposed | - | `docs/research/fid-poisonres-trace.md` | - |
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
-| classkeys | in-progress | - | `internal/combat/classdata`<br>`internal/combat/profileskills_test.go`<br>`internal/plandata`<br>`docs/plan/data`<br>`cmd/d2bot/necroplay_test.go`<br>`cmd/d2bot/hotkeydrift_test.go`<br>`data/capabilities/capabilities.json`<br>`tools/provingground/scenarios/necro-epic.json`<br>`docs/design/merc-aura-by-archetype.md`<br>`internal/agency/testdata/agreement.json` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | returnmock | proposed | - | `docs/research/mocks/return.html`<br>`docs/research/return-screen.md` | - |

@@ -1,10 +1,13 @@
 ---
 id: TASK-1063
-title: 'classkeys: main-attack keys for every class, profile skills by name, merc aura note'
-status: In Progress
+title: >-
+  classkeys: main-attack keys for every class, profile skills by name, merc aura
+  note
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T20:14:00Z'
+updated_date: '2026-11-27T20:57:00Z'
 labels:
   - bot
   - bot-fix
