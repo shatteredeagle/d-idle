@@ -1,10 +1,11 @@
 ---
 id: TASK-46
 title: 'statusrefresh: docs/plan/STATUS.md hand-written part is stale (2026-11-03)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-06T16:02:00Z'
+updated_date: '2026-11-27T20:31:00Z'
 labels:
   - docs
   - chore

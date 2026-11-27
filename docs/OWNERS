@@ -225,7 +225,6 @@ docs/knobs.md  credit-runner  freshstart
 docs/knobs.md  live-agent  recoverypace
 docs/onboarding-tour.md  credit-runner  onboardtour
 docs/onboarding.md  credit-runner  reconnectux
-docs/plan/STATUS.md  credit-runner  statusrefresh
 docs/plan/data/admission.json  credit-runner  admit1
 docs/plan/data/earlyroutes.json  credit-runner  admit1
 docs/plan/data/povertyfarm.json  credit-runner  admit1
