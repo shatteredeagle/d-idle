@@ -1,7 +1,7 @@
 ---
 id: TASK-296
 title: 'maptrail: minimap hero trail and roam coverage layers'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T02:35:00Z'
@@ -33,6 +33,7 @@ owns:
 exclusive: []
 contracts: []
 lane: next
+result: "Merged (agent/maptrail): hero trail ring, coverage accessor and toggle, tests. Not verified live."
 ---
 
 ## Description
@@ -45,7 +46,7 @@ Why: the user cannot see where the hero runs or how the bot explores. Done when:
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Hero trail ring in the senses publisher, additive trail keys in /api/senses, trail layer in the map panel
-- [ ] #2 Roam coverage accessor, additive coverage key, Coverage toggle in the map panel
-- [ ] #3 Tests: Go ring/payload goldens, node panel test; whole-repo gate green
+- [x] #1 Hero trail ring in the senses publisher, additive trail keys in /api/senses, trail layer in the map panel
+- [x] #2 Roam coverage accessor, additive coverage key, Coverage toggle in the map panel
+- [x] #3 Tests: Go ring/payload goldens, node panel test; whole-repo gate green
 <!-- AC:END -->

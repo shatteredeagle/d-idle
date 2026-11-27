@@ -62,7 +62,17 @@ func TestShippedChains(t *testing.T) {
 		backends = append(backends, b)
 	}
 	sort.Strings(backends)
+	var all []*Caps
+	for _, b := range backends {
+		all = append(all, caps[b])
+	}
+	for _, f := range CheckOrder(board) {
+		t.Errorf("board: %s", f)
+	}
 	for _, c := range chains {
+		for _, f := range CheckLatched(c, all) {
+			t.Errorf("chain %s: %s", c.ID, f)
+		}
 		for _, f := range CheckBoard(c, board) {
 			t.Errorf("chain %s: %s", c.ID, f)
 		}

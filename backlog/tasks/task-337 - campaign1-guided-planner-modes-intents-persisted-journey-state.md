@@ -30,7 +30,7 @@ owns:
   - "docs/inventory-actions.md"
   - "docs/quest-givers.md"
 exclusive: []
-result: "Guided planner (task.Campaign.WithGuide), safety walls from the floor planner, level steps name the chapter, Free/Orders modes, campaign.Controller with state/campaign.json, wired in cmd/d2bot (off in named runs). Floor offer is in the API/strip; the return-screen question queue hookup is open (AC3). Build-specific: data only. Not verified live."
+result: "Guided planner (task.Campaign.WithGuide), safety walls from the floor planner, level steps name the chapter, Free/Orders modes, campaign.Controller with state/campaign.json, wired in cmd/d2bot (off in named runs). Floor offer is in the API/strip; the return-screen question queue hookup is open (AC3). Build-specific: data only. Not verified live. Remaining: AC 3 level step names the chapter it unlocks, floor offer through the question queue (not checked)."
 contracts: []
 lane: now
 ---

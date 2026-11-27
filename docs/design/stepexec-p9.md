@@ -77,6 +77,27 @@ decide the talk row's post.
   raises the stage to Cleared until bit 0, so the node stays needed after the talk; the Jerhyn node is skipped once the
   act 2 word is done, which may let the hero sail before Jerhyn's reward line, so record 14 bit 0 would stay clear.
 
+## Act 2 chunks, second batch (card act2chunks, 2026-11-27)
+Rows in `data/questspec/act2.json`, behind `quests.stepExec` (no new knob), all tags U (not run on the lab; scenarios
+`tools/provingground/scenarios/stepexec-act2chunks.json`, `drill.act2.{radament,radament.handin,cube,shaft,amulet,summoner}.stepexec`):
+- Chain `radament`: `talk_atma` (talk, pick `quest`, post bit 0x0004 V lab or stage started), `travel_sewers`, `kill_radament`
+  (kill row, post killed or stage Cleared), `use_book` (verb `use`, routed from `Interact("item:Book of Skill")`; post
+  `lacks_item(ass)`), `take_scroll` (interact on chest 355, then pickup `tr1`), `return_atma` (talk, pick `reward`, post stage Done).
+- Chain `tainted_sun`: travel legs, `kill_fangskin`, `take_amulet` (altar 149, then pickup `vip`). `horadric_staff/take_cube` and
+  `take_shaft` got exec rows (chests 354, 356, then pickup). Chain `summoner`: `travel_arcane`, `find_summoner` (journal 357,
+  preset), `kill_summoner`, `touch_journal` (interact, post stage Done).
+- Adapter: `execObjectNames` holds the five new object names (the names task/act2.go clicks); a `use` row is indexed as
+  `item:<name>` and its backend click goes to the object adapter directly (UseItem routes back into the executor);
+  `taskActs.PickUp` with the knob on is a no-op when the quest item is already in the pack (the chest row picked it up before the
+  task node's own pick-up); `bossDead` strips "The " (the Summoner). Codes `ass` and `tr1` joined `questItemCodes`.
+- Not ported, needs more than a row: the Book pick-up (a `use` post of `lacks_item` already holds with the book on the ground, so
+  the task layer's pick-up node stays; the book read after a restart before the hand-in has no fact), Cain's scroll talk (no hand-in
+  fact), Arcane Sanctuary movement (teleport pads: nav, the fork verbs the design names), the Summoner's portal step
+  (`enter_arcane`, `arcane_sanctuary/portal`). Hand-in bits of Radament other than 0x0004 are U: the post uses the reader's Done stage.
+Live drills (a hidden instance, per scenario): `env D2BOT_RUN=<run> PG_DIR=.. PG_D2D_BIN=.. PG_DATA=.. tools/agentrun.sh <agent> --ttl 7200 -- tools/provingground/run.sh -id drill.act2.<x>.stepexec -class Paladin -seed 11 -repeat 3 -parallel 1`
+(as docs/probes/act2-stepexec-drill-2026-11-27.md) for x in radament, radament.handin, cube, shaft, amulet, summoner; 2 of 3 GREEN; read the quest word before and after each talk to settle
+the U bits.
+
 ## Rule (acceptance criterion 2)
 No new quest chunk may add a hand-written click-wait-pick-up handler: a new step of these four verbs is a questspec row with
 an `exec` block, run by `RunStep`. Old handlers move over one at a time, each behind its scenario and a knob; the old code is

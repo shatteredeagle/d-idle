@@ -1,7 +1,7 @@
 ---
 id: TASK-297
 title: 'maptrail2: coverage grid spans the whole zone, no truncation'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T13:42:00Z'
@@ -24,6 +24,7 @@ owns:
 exclusive: []
 contracts: []
 lane: next
+result: "Merged (agent/maptrail2): coverage grid spans the whole zone, regression test with the 1593-point level (internal/senses/trail_test.go). Not verified live."
 ---
 
 ## Description
@@ -36,5 +37,5 @@ Why: TODO. Done when: TODO.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Coverage cells span the whole zone for a 1593-point level; status line and drawn count agree
+- [x] #1 Coverage cells span the whole zone for a 1593-point level; status line and drawn count agree
 <!-- AC:END -->

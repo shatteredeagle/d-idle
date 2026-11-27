@@ -24,6 +24,7 @@ owns:
   - "docs/watch-origin.md"
 exclusive: []
 contracts: []
+result: " closecards2: AC 1 verified (internal/access/sameorigin.go, TestSameOrigin, Referrer-Policy set). AC 2 deploy not checked."
 ---
 
 ## Description
@@ -36,7 +37,7 @@ Why: TODO. Done when: TODO.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 SameOrigin helper with table tests; login and setup use it; Referrer-Policy same-origin
+- [x] #1 SameOrigin helper with table tests; login and setup use it; Referrer-Policy same-origin
 - [ ] #2 deployed to the dev container and curl-verified
 <!-- AC:END -->
 

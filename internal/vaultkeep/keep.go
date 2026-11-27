@@ -118,6 +118,9 @@ type Keeper struct {
 	dcapsOK  bool
 	dcaps    bool
 
+	CarryPath string // the carried charms file (carry.go); empty: memory only
+	cb        carryBook
+
 	eq         equipBook
 	mu         sync.Mutex
 	promptMute time.Time

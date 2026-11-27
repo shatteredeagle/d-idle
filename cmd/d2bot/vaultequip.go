@@ -498,3 +498,41 @@ func (f equipFace) Cancel(id string) watch.VaultKeepResult {
 func keepResult(r vaultkeep.Result) watch.VaultKeepResult {
 	return watch.VaultKeepResult{ID: r.ID, OK: r.OK, Already: r.Already, Code: r.Code, Why: r.Why, Direct: r.Direct, Slot: r.Slot, Removed: r.Removed, Where: r.Where}
 }
+
+// Carry and Stow of charms (watch.VaultCarrier): the player's own action, see docs/charms.md.
+
+func (f equipFace) CarryReady() (bool, string) {
+	k := f.k()
+	if k == nil {
+		return false, vaultkeep.ReasonCarryOff
+	}
+	return k.CarryReady()
+}
+
+func (f equipFace) Carry(ctx context.Context, id string) watch.VaultKeepResult {
+	k := f.k()
+	if k == nil {
+		return watch.VaultKeepResult{ID: id, Code: "off", Why: vaultkeep.ReasonCarryOff}
+	}
+	return keepResult(k.Carry(ctx, id))
+}
+
+func (f equipFace) Stow(ctx context.Context, id string) watch.VaultKeepResult {
+	k := f.k()
+	if k == nil {
+		return watch.VaultKeepResult{ID: id, Code: "off", Why: vaultkeep.ReasonCarryOff}
+	}
+	return keepResult(k.Stow(ctx, id))
+}
+
+func (f equipFace) Carried() []watch.VaultCarried {
+	k := f.k()
+	if k == nil {
+		return nil
+	}
+	var out []watch.VaultCarried
+	for _, c := range k.CarriedList() {
+		out = append(out, watch.VaultCarried{ID: c.ID, Name: c.Name, Code: c.Code, Cells: c.Cells})
+	}
+	return out
+}

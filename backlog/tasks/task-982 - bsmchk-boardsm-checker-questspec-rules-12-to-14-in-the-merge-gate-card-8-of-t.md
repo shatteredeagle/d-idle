@@ -14,8 +14,12 @@ ordinal: 470000
 card: "bsmchk"
 owns:
   - "docs/design/boardsm-checker.md"
+  - "internal/questspec"
+  - "internal/task/guardcodes_test.go"
+  - "docs/questspec.md"
 exclusive: []
 contracts: []
+result: "Rules 12 (CheckOrder), 13 (CheckLatched, chain field latched), 14 (CheckGuardCodes, task/gate.go scan) with positive and negative tests; 12 and 13 in TestShippedChains, shipped data clean, no allow entries. Offline, not verified live."
 ---
 
 ## Description
@@ -28,5 +32,5 @@ Recommendation of the quest-board review (docs/design/fable-review-2026-11-21/qu
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Rules 12 to 14 in TestShippedChains with an allow-list
+- [x] #1 Rules 12 to 14 in TestShippedChains with an allow-list
 <!-- AC:END -->
