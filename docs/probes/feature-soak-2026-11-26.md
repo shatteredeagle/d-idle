@@ -33,7 +33,7 @@ Determinism (V, minute lines of calib-a, b, b2): the same seed and arm gives ide
 Hero names must be 15 characters or fewer (the first attempt with 18 characters failed the prep save: "the written save didn't read back"). Class indexes of the lab d2d (V: prep and bot started each class): Paladin 2, Necromancer 1, Sorceress 4.
 
 <!-- results -->
-## 3. Results (pass 1: 1 virtual hour per row, 58 of 69 rows complete)
+## 3. Results (pass 1: 1 virtual hour per row, 69 of 69 rows complete)
 
 ### 3.1 Per feature and class
 
@@ -54,11 +54,27 @@ Hero names must be 15 characters or fewer (the first attempt with 18 characters 
 | typed-outcomes | paladin | 3/3 | 4482 vs 4180 (+302) | 3048 vs 3048 (+0) | 0.0 vs 0.0 | 0/0 | 26/26 | 0/0 | xp 8287 gold 2971 deaths 0.0 | NEUTRAL |
 | typed-outcomes | necromancer | 3/3 | 1349 vs 1349 (+0) | 2310 vs 1896 (+414) | 0.0 vs 0.0 | 0/0 | 26/24 | 0/0 | xp 819 gold 2483 deaths 0.0 | NEUTRAL |
 | typed-outcomes | sorceress | 3/3 | 936 vs 527 (+409) | -131 vs -131 (+0) | 0.0 vs 0.0 | 0/0 | 26/25 | 0/0 | xp 409 gold 1433 deaths 1.0 | NEUTRAL |
-| reflex-drink-portal | paladin | 3/2 | 4482 vs 4541 (-59) | 3048 vs 1393 (+1655) | 0.0 vs 0.0 | 0/0 | 26/18 | 0/0 | xp 781 gold 246 deaths 0.0 | GREEN |
+| reflex-drink-portal | paladin | 3/3 | 4482 vs 5323 (-840) | 3048 vs 1147 (+1900) | 0.0 vs 0.0 | 0/0 | 26/27 | 0/0 | xp 4270 gold 669 deaths 0.0 | GREEN |
 | reflex-drink-portal | necromancer | 3/3 | 1349 vs 1164 (+185) | 2310 vs -119 (+2429) | 0.0 vs 0.0 | 0/0 | 26/26 | 0/0 | xp 503 gold 1012 deaths 0.0 | GREEN |
-| reflex-drink-portal | sorceress | 3/3 | 936 vs 2455 (-1519) | -131 vs 464 (-595) | 0.0 vs 0.0 | 0/0 | 26/19 | 0/3 | xp 1330 gold 624 deaths 1.0 | RED (xp/h regress -1519) |
-| paladin-without-sacrifice | paladin | 3/0 | no data | | | | | | | NO-DATA |
-| necromancer-summoner-defaults | necromancer | 3/0 | no data | | | | | | | NO-DATA |
+| reflex-drink-portal | sorceress | 3/3 | 936 vs 1944 (-1008) | -131 vs 33 (-164) | 0.0 vs 0.0 | 0/1 | 26/28 | 0/0 | xp 1198 gold 2966 deaths 1.0 | NEUTRAL |
+| paladin-without-sacrifice | paladin | 3/3 | 4482 vs 4482 (+0) | 3048 vs 2972 (+76) | 0.0 vs 0.0 | 0/0 | 26/26 | 0/0 | xp 7985 gold 2490 deaths 0.0 | NEUTRAL |
+| necromancer-summoner-defaults | necromancer | 3/3 | 1349 vs 1349 (+0) | 2310 vs 2310 (+0) | 0.0 vs 0.0 | 0/0 | 26/26 | 0/0 | xp 819 gold 2069 deaths 0.0 | NEUTRAL |
+
+### 3.2a Verdicts and causes (pass 1, read by hand from the logs)
+
+Noise: the OFF spread is large at 1 virtual hour with 3 seeds (Paladin xp/h spread about 7800 because seed 203 runs 3x the others; gold/h spreads of 1000 to 4800 are common), so only a hard-invariant hit or a paired majority is a signal. Same-seed rows of two arms often stay identical for the whole hour when the feature is never exercised (V: base and nonecro necromancer rows end on identical xp; base and nosac Paladin rows differ by 18 xp).
+
+| feature | verdict | evidence and cause |
+|---|---|---|
+| arbiter control, families 3 (`bot.arbiterControl` 1) | RED | necromancer seed 201: 23 `mode-no-exit` hits (state resupplying, step "Returning to the field" for 606 to 814 virtual s), seed 203: 1; base 0. Cause (V log): a 45-life necromancer with no potions and 105 gold enters a chicken / leave-game / re-enter loop: 172 `Save and Exit requested` and 169 `back to field: no portal in the unit table` in seed 201 against 8 to 14 and 1 to 5 in the base rows; the arbiter shadow line shows the arbiter preferring recovery/farm_gold while the chain runs chores. Paladin gold/h also lower in 2 of 3 seeds. Do not flip. |
+| arbiter control, families 255 | NEUTRAL (sorceress GREEN) | no hard hit in 9 rows; Paladin and necromancer xp and gold lower but within the noise; sorceress better. Not enough to flip while families 3 is RED (255 contains 3). |
+| kit floor tiers and poverty farm (build variant nokit) | NEUTRAL overall; sorceress RED on gold/h | sorceress gold/h -131 vs 656, 2 of 3 seeds worse, xp equal; necromancer GREEN (gold +2234, and the nokit arm had the only hard hit); Paladin mixed. U whether the sorceress gold drop is the poverty farm's area pick: read in pass 2. |
+| admission early route guard (`route.earlyRoute` 1 vs 0) | GREEN | no hard hits; gold/h better for Paladin and necromancer; Paladin xp/h lower (the guard keeps it off the dangerous road). |
+| typed outcomes (`bot.typedOutcome` 1 vs 0) | NEUTRAL | no hard hits, no metric beyond the noise; `refusal-as-failure` 0 in both arms in 1 h. |
+| reflex drink and portal (`bot.reflexDrink` 1 vs 0) | GREEN (sorceress NEUTRAL) | no hard hits ON; the OFF arm has 1 hard hit (sorceress); gold/h better for Paladin and necromancer. |
+| Paladin without Sacrifice (build variant nosac) | NEUTRAL, not exercised | the clvl 12 Paladin never casts Sacrifice in either arm (0 log lines); `aura-off` 0 in both. Needs a hero that has Sacrifice learned. |
+| Necromancer summoner defaults (build variant nonecro) | NEUTRAL, not exercised; a concern | both arms identical; the necromancer kills with plain Attack (311 of 313 kills) and Raise Skeleton twice, never Teeth, although the new default names Teeth the main attack: U whether the clvl 12 prep hero has Teeth learned or bound (prep leaves points unspent for the bot's own leveler). `summon-missing` 0. |
+| step executor (`quests.stepExec`) | see 3.3 | compared on the Cain scenarios, not in the soak |
 
 
 ### 3.2 Per row
@@ -110,14 +126,21 @@ Hero names must be 15 characters or fewer (the first attempt with 18 characters 
 | nokit | sorceress | 201 | 0.97 | 31 | 1.9 | 12>12 | 1 | 947 | 656 | 15 | 23 | 0 | 20 | 9 | 0 | 0 |
 | nokit | sorceress | 202 | 0.97 | 27 | 2.1 | 12>12 | 0 | 818 | 869 | 21 | 28 | 0 | 28 | 9 | 0 | 0 |
 | nokit | sorceress | 203 | 0.98 | 23 | 2.6 | 12>12 | 0 | 1741 | 6 | 28 | 40 | 0 | 26 | 6 | 0 | 0 |
+| nonecro | necromancer | 201 | 0.97 | 14 | 4.1 | 12>12 | 0 | 1349 | 2310 | 47 | 46 | 0 | 33 | 9 | 0 | 0 |
+| nonecro | necromancer | 202 | 0.98 | 27 | 2.2 | 12>12 | 0 | 530 | 4379 | 21 | 27 | 0 | 33 | 8 | 0 | 0 |
+| nonecro | necromancer | 203 | 0.97 | 13 | 4.4 | 12>12 | 0 | 2077 | 251 | 48 | 50 | 0 | 33 | 9 | 0 | 0 |
+| nosac | paladin | 201 | 0.97 | 23 | 2.5 | 12>12 | 0 | 4482 | 482 | 28 | 47 | 0 | 22 | 9 | 0 | 0 |
+| nosac | paladin | 202 | 0.97 | 31 | 1.9 | 12>12 | 0 | 4180 | 2972 | 42 | 47 | 0 | 8 | 8 | 0 | 0 |
+| nosac | paladin | 203 | 0.97 | 28 | 2.1 | 12>12 | 0 | 12468 | 4190 | 26 | 59 | 0 | 29 | 9 | 0 | 0 |
 | reflexdrink0 | necromancer | 201 | 0.98 | 28 | 2.1 | 12>12 | 0 | 1667 | -123 | 26 | 39 | 0 | 38 | 8 | 0 | 0 |
 | reflexdrink0 | necromancer | 202 | 0.97 | 26 | 2.3 | 12>12 | 0 | 1049 | 893 | 37 | 40 | 0 | 29 | 10 | 0 | 0 |
 | reflexdrink0 | necromancer | 203 | 0.97 | 15 | 3.8 | 12>12 | 0 | 1164 | -119 | 14 | 27 | 0 | 23 | 8 | 0 | 0 |
 | reflexdrink0 | paladin | 201 | 0.98 | 26 | 2.2 | 12>12 | 0 | 5323 | 1147 | 28 | 36 | 0 | 17 | 9 | 0 | 0 |
-| reflexdrink0 | paladin | 202 | 0.95 | - | - | 12>12 | 0 | 3760 | 1639 | 37 | 50 | 0 | 21 | 9 | None | None |
-| reflexdrink0 | sorceress | 201 | 0.63 | - | - | 12>12 | 0 | 1124 | 1088 | 15 | 22 | 0 | 22 | 7 | None | None |
-| reflexdrink0 | sorceress | 202 | 0.65 | - | - | 12>12 | 1 | 2797 | -23 | 19 | 25 | 0 | 19 | 7 | None | None |
-| reflexdrink0 | sorceress | 203 | 0.57 | - | - | 12>12 | 0 | 2455 | 464 | 15 | 21 | 0 | 11 | 5 | None | None |
+| reflexdrink0 | paladin | 202 | 0.98 | 35 | 1.7 | 12>12 | 0 | 4654 | 1594 | 37 | 53 | 0 | 23 | 10 | 0 | 0 |
+| reflexdrink0 | paladin | 203 | 0.98 | 30 | 2.0 | 12>12 | 0 | 9593 | 478 | 36 | 53 | 0 | 30 | 8 | 0 | 0 |
+| reflexdrink0 | sorceress | 201 | 0.98 | 17 | 3.5 | 12>12 | 0 | 764 | -132 | 29 | 37 | 0 | 49 | 10 | 0 | 0 |
+| reflexdrink0 | sorceress | 202 | 0.97 | 26 | 2.2 | 12>12 | 1 | 1944 | 33 | 22 | 29 | potion-not-drunk:1 | 38 | 9 | 0 | 0 |
+| reflexdrink0 | sorceress | 203 | 0.98 | 19 | 3.1 | 12>12 | 0 | 3141 | 2999 | 27 | 44 | 0 | 31 | 9 | 0 | 0 |
 | typedoutcome0 | necromancer | 201 | 0.97 | 21 | 2.8 | 12>12 | 0 | 1349 | 1896 | 47 | 46 | 0 | 33 | 9 | 0 | 0 |
 | typedoutcome0 | necromancer | 202 | 0.98 | 33 | 1.8 | 12>12 | 0 | 530 | 4379 | 21 | 27 | 0 | 33 | 8 | 0 | 0 |
 | typedoutcome0 | necromancer | 203 | 0.98 | 19 | 3.1 | 12>12 | 0 | 1454 | -108 | 22 | 33 | 0 | 21 | 7 | 0 | 0 |
