@@ -51,10 +51,9 @@ type VaultGoldActor interface {
 }
 
 // bar quotes the Reveal bar for the filtered records.
-func (d *VaultDesk) bar(ctx context.Context, recs []vault.Rec, r VaultRevealView) *bulkid.Bar {
+func (d *VaultDesk) bar(ctx context.Context, recs []vault.Rec, r VaultRevealView, gi VaultGoldInfo, hasGold bool) *bulkid.Bar {
 	in := bulkid.BarIn{Free: r.Free, Charges: r.Charges, EtherPer: r.EtherPer, EtherBal: r.Balance}
-	if ga, ok := d.Act.(VaultGoldActor); ok {
-		gi := ga.GoldInfo(ctx)
+	if hasGold {
 		in.GoldOn, in.ScrollGold, in.Stash, in.ConfirmAt, in.GoldWhy, in.Decode = gi.On, gi.ScrollGold, gi.Stash, gi.ConfirmAt, gi.Why, gi.Decode
 		if gi.Order != nil && (gi.Order.State == "queued" || gi.Order.State == "paid") {
 			in.ActiveGoldOrderID = gi.Order.ID
