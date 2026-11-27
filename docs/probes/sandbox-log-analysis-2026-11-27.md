@@ -116,7 +116,7 @@ Cause class per the operating rule. "Row" is the roadmap row or card that covers
 ### 6. Doofer: `refusal-storm` (10 refusals with no kill, XP or area change) forced a game restart and the Countess chunk parked as `gave_up`
 
 - Evidence: `13:34:18 refusal-storm: refusals=10 ... hard=true`, state `recovering`, activity "Failsafe: restarting the game"; `quests.json` run `forgotten_tower/countess status parked code gave_up failures 3 at 13:34:21 release e19701a`; a `d2d` relaunch at 13:34:09 (V). The hero walked the tower again at 13:37 and again at 14:47 (Tower Cellar 3 reached 14:46 EST in `level:` lines, V).
-- Cost: one failsafe restart, a parked quest, repeated the NAS host walks (S).
+- Cost: one failsafe restart, a parked quest, repeated long walks (S).
 - Class: B (refusal counted as a failure) and D (Tower Cellar navigation).
 - Row: P2 typed outcomes (enabled), TASK-766 countessnav (Tower Cellar 5 walk regression, merged 15:09 EST, offline). BSM for the park.
 - Fix proposal, none new: attach to TASK-766 and check on the next build whether the Countess chunk completes; if the storm repeats, the refusal that repeated needs naming in the invariant (the incident file lists only the count; ask for the refusal code list). AC: `refusal-storm` incident lists the top three refusal reasons.
