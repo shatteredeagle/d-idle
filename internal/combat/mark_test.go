@@ -204,9 +204,9 @@ func TestMarkModes(t *testing.T) {
 	}
 }
 
-// Every Necromancer profile reads its ten curse rules as rows of one group; the default profile set validates.
+// A Necromancer profile reads its curse rules (all ten in the poison nova profile) as rows of one group; the default profile set validates.
 func TestMarkRowsFromNecroProfile(t *testing.T) {
-	rows := ProfileFor(d2.Necromancer, "").markRows()
+	rows := ProfileFor(d2.Necromancer, "poisonnova").markRows()
 	if len(rows) != 10 {
 		t.Fatalf("%d curse rows, want 10", len(rows))
 	}

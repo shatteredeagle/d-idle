@@ -98,6 +98,8 @@ type Looter struct {
 
 	ignore atomic.Pointer[func(d2.Unit) bool] // ground items the player trashed (SetIgnore)
 
+	potionPlan atomic.Pointer[PotionPlan] // the town plan's pack keep per potion kind (SetPotionPlan); nil = the buffers
+
 	mem lootMem // drops seen beyond the pickup radius (memory.go)
 
 	build string // leveler build name; with the snapshot's difficulty it picks the belt columns (SetBuild)
@@ -572,10 +574,10 @@ func (n needsOf) Want(kind string, b *data.ItemBase) bool {
 		if k == belt.RV {
 			return n.wantRejuv(b, st)
 		}
-		have := belt.PackCount(db, inv, k)
-		want := have < n.l.potionBuffer(b)
+		have, target := n.packTarget(b, k)
+		want := have < target
 		if !want {
-			n.l.logPotionSkip(b, have, st.Free())
+			n.l.logPotionSkip(b, have, target, st.Free())
 		}
 		return want
 	case "scroll":
@@ -675,7 +677,7 @@ func (l *Looter) potionBuffer(b *data.ItemBase) int {
 	return l.e.Tune.Loot.PotionBuffer
 }
 
-func (l *Looter) logPotionSkip(b *data.ItemBase, packHave, beltFree int) {
+func (l *Looter) logPotionSkip(b *data.ItemBase, packHave, buffer, beltFree int) {
 	l.potionSkipMu.Lock()
 	defer l.potionSkipMu.Unlock()
 	now := l.e.Clock.Now()
@@ -686,5 +688,5 @@ func (l *Looter) logPotionSkip(b *data.ItemBase, packHave, beltFree int) {
 		l.potionSkipAt = map[string]time.Time{}
 	}
 	l.potionSkipAt[b.Code] = now
-	l.e.Log.Info(fmt.Sprintf("loot: potion skip code=%s beltWant=0 packHave=%d buffer=%d beltFree=%d", b.Code, packHave, l.potionBuffer(b), beltFree))
+	l.e.Log.Info(fmt.Sprintf("loot: potion skip code=%s beltWant=0 packHave=%d buffer=%d beltFree=%d", b.Code, packHave, buffer, beltFree))
 }

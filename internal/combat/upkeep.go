@@ -67,7 +67,8 @@ type upkeepState struct {
 	fightUpkeeps int // upkeep casts since the fight began
 	inFight      bool
 	shadowDiffs  int
-	shadowLast   map[int]string // per skill: the last disagreement logged, so a lasting one is logged once
+	shadowLast   map[int]string    // per skill: the last disagreement logged, so a lasting one is logged once
+	minionLast   map[string]string // the minion driver's last shadow disagreement per call site (minions.go)
 }
 
 func (u *upkeepState) fightStart() { u.fightCasts, u.fightUpkeeps, u.inFight = 0, 0, true }

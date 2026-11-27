@@ -226,8 +226,21 @@ func TestCurseTargetAndChoice(t *testing.T) {
 	}
 	a.HasRes = true
 	a.Res[data.Magic] = 75
-	if sp, _ := curseFor(nd, known, p, a); sp.Name != "Lower Resist" {
+	// Lower Resist lowers fire, cold, lightning and poison, never magic (S: skills.txt and the D2 expert, card
+	// necroteeth): a magic-resistant target still gets Amplify Damage from the Teeth and summoner profiles.
+	if sp, _ := curseFor(nd, known, p, a); sp.Name != "Amplify Damage" {
 		t.Fatalf("magic resistant: %v", sp.Name)
+	}
+	for _, build := range []Build{"", "summoner"} {
+		pr, err := LookupProfile(d2.Necromancer, build)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, c := range pr.Necro.Curses {
+			if c.Name == "Lower Resist" && c.When == "magicResist" {
+				t.Errorf("profile %q: Lower Resist on magic resistance", build)
+			}
+		}
 	}
 	delete(known, "Amplify Damage")
 	a.HasRes = false

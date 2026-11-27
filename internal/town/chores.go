@@ -382,6 +382,7 @@ func (t *Town) Chores(ctx context.Context, plan ChorePlan) (rep ChoreReport, _ e
 		return rep, err
 	}
 	t.purseSpend, t.visitProfile = 0, plan.Profile
+	t.excursion.Store(&plan.Profile)
 	defer func() { t.purseSpend, t.visitProfile = 0, "" }()
 	if t.PlanStage() >= 3 {
 		if pl, perr := t.planOf(s, plan); perr != nil {

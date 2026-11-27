@@ -8,6 +8,12 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Merge branch 'main' into arbloop <!--sg:agent/arbloop-->
+- Merge branch 'main' into necroteeth <!--sg:agent/necroteeth-->
+- Merge branch 'main' into dlv-upkeep-minions <!--sg:agent/minions-->
+- Merge branch 'main' into inputl3 <!--sg:agent/inputl3-->
+- Merge branch 'main' into pgstability <!--sg:agent/pgstability-->
+- Merge branch 'main' into town6 <!--sg:agent/town6-->
 - Merge branch 'main' into dlv-upkeep-state <!--sg:agent/upkeep-->
 - Merge branch 'main' into proptest1 <!--sg:agent/proptest1-->
 - Merge branch 'main' into sellsnap <!--sg:agent/sellsnap-->

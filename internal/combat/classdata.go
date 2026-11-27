@@ -101,6 +101,8 @@ type Profile struct {
 	Upkeep *UpkeepParams `json:"upkeep,omitempty"`
 	// Marks are the mark driver's rows (mark.go); a Necromancer profile without them reads its curse rules.
 	Marks []MarkRule `json:"marks,omitempty"`
+	// Minions is the minion driver's groups (minions.go); nil on a Necromancer derives them from the necro block.
+	Minions *MinionParams `json:"minions,omitempty"`
 }
 
 // NecroParams is the upkeep data of a Necromancer profile; combat/necro.go holds no skill name.
@@ -275,6 +277,9 @@ func loadClassData() *classData {
 			panic("combat: classdata/profiles.json: " + err.Error())
 		}
 		if err := validateNecro(pr.Profiles); err != nil {
+			panic("combat: classdata/profiles.json: " + err.Error())
+		}
+		if err := validateMinions(pr.Profiles); err != nil {
 			panic("combat: classdata/profiles.json: " + err.Error())
 		}
 		classDB.profiles = pr.Profiles

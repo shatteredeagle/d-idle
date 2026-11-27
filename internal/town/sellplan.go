@@ -4,6 +4,7 @@ import (
 	"sort"
 
 	"d2lod-bot/internal/d2"
+	"d2lod-bot/internal/loot"
 	"d2lod-bot/internal/supply"
 	"d2lod-bot/internal/town/belt"
 )
@@ -79,4 +80,33 @@ func (t *Town) planSellKeep(s *d2.Snapshot) map[uint32]bool {
 		}
 	}
 	return keepByTier(ps, planKeepOf(pl, t.supplyCount(s)))
+}
+
+// pickupKeep is the stage 4 pickup side (town-planner 5.3, installed on the shared Looter by New and SetJudge): the pack
+// keep per kind of the plan of the excursion the last visit supplied, so the pickup fills the pack to the number the
+// sell chore protects. ok false below stage 4 or when the plan cannot be solved (the looter keeps its buffers).
+func (t *Town) pickupKeep(s *d2.Snapshot) (map[belt.Kind]int, bool) {
+	if t.PlanStage() < 4 || s == nil || s.Player == nil || s.Inventory == nil {
+		return nil, false
+	}
+	profile := ""
+	if p := t.excursion.Load(); p != nil {
+		profile = *p
+	}
+	pl, err := t.planOf(s, ChorePlan{Profile: profile})
+	if err != nil {
+		msg := err.Error()
+		if old := t.pickupErr.Swap(&msg); old == nil || *old != msg { // once per distinct error: the looter asks per ground potion
+			t.e.Log.Warn("town plan (pickup): " + msg)
+		}
+		return nil, false
+	}
+	return planKeepOf(pl, t.supplyCount(s)), true
+}
+
+// shareLooter installs the town's stage 4 pickup rule on a Looter the town judges with.
+func (t *Town) shareLooter(j Judge) {
+	if l, ok := j.(*loot.Looter); ok {
+		l.SetPotionPlan(t.pickupKeep)
+	}
 }

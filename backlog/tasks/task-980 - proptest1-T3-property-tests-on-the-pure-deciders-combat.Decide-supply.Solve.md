@@ -1,10 +1,13 @@
 ---
 id: TASK-980
-title: 'proptest1: T3 property tests on the pure deciders (combat.Decide, supply.Solve,'
-status: Proposed
+title: >-
+  proptest1: T3 property tests on the pure deciders (combat.Decide,
+  supply.Solve,
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-26T03:56:00Z'
+updated_date: '2026-11-27T05:58:00Z'
 labels:
   - bot
   - feature
