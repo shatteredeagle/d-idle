@@ -55,6 +55,9 @@ type Fixtures struct {
 	// frames=15 state=running"); nil: the hold verb is unknown, like a build without it. HoldErr refuses the start.
 	Hold    []string
 	HoldErr string
+	// ObjectList answers "debug objectlist" in order, one entry (its lines) per call, the last one repeating; nil: the
+	// verb is unknown, like a build without it.
+	ObjectList [][]string
 }
 
 // Options model misbehaviour.
@@ -399,7 +402,7 @@ func (s *Server) cmd(f []string) (string, bool, bool) {
 			s.skills = append(s.skills, u)
 		}
 		return "ok\n", false, false
-	case "pickup", "resurrect", "stat", "skillpt", "select", "belt", "use":
+	case "pickup", "resurrect", "stat", "skillpt", "select", "belt", "use", "hand", "place":
 		return "ok\n", false, false
 	}
 	return fmt.Sprintf("err unknown cmd '%s'\n", f[1]), false, false
@@ -450,6 +453,15 @@ func (s *Server) debug(f []string) (string, bool, bool) {
 		return payload(s.Fix.Presets) + "ok\n", false, false
 	case "objects":
 		return payload(s.Fix.Objects) + "ok\n", false, false
+	case "objectlist":
+		if s.Fix.ObjectList == nil {
+			return "err unknown debug verb\n", false, false
+		}
+		ls := s.Fix.ObjectList[0]
+		if len(s.Fix.ObjectList) > 1 {
+			s.Fix.ObjectList = s.Fix.ObjectList[1:]
+		}
+		return payload(ls) + "ok\n", false, false
 	case "levelmap":
 		if s.Fix.LevelMap == "" {
 			return "err unknown debug verb\n", false, false
