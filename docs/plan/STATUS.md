@@ -49,6 +49,7 @@
 | fid-poison-res-diag | proposed | - | `docs/research/fid-poisonres-trace.md` | - |
 | necroteeth | proposed | - | `internal/combat/classdata/profiles.json`<br>`internal/combat/necro_test.go`<br>`internal/leveler/mainattack_test.go` | - |
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
+| faultstall | proposed | - | `internal/faultproxy/`<br>`cmd/d2scenario/faults.json`<br>`docs/probes/faultsoak-design-2026-11-26.md` | - |
 | deploy88-ledger | proposed | - | `data/darklaunch.json` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
@@ -246,14 +247,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 3835f3995 11-27 01:46 `Merge agent/faultstall: Merge branch 'main' into faultstall` (faultstall)
 - 989af6273 11-27 01:46 `Merge agent/pgprov2: Merge branch 'main' into pgprov` (pgprov2)
 - f1789b6ad 11-27 01:46 `Merge agent/featuresoak: Merge branch 'main' into featuresoak` (featuresoak)
 - 317b4e3c0 11-27 01:46 `Merge agent/deploy88: Merge branch 'main' into deploy88-ledger` (deploy88)
+- 710c84564 11-27 01:41 `Merge branch 'main' into faultstall` (-)
 - 380b833f3 11-27 01:41 `Merge branch 'main' into pgprov` (-)
 - 0ebcf3fc8 11-27 01:41 `Merge branch 'main' into featuresoak` (-)
 - 364447af7 11-27 01:41 `Merge branch 'main' into deploy88-ledger` (-)
 - fce2a0b5d 11-27 01:33 `Merge agent/arbloop: Merge branch 'main' into arbloop` (arbloop)
 - 0abcad620 11-27 01:33 `Merge agent/necroteeth: Merge branch 'main' into necroteeth` (necroteeth)
-- 722fe51c8 11-27 01:30 `Merge branch 'main' into arbloop` (-)
-- 110f0e328 11-27 01:30 `Merge branch 'main' into necroteeth` (-)
 <!-- statusgen:end -->

@@ -1481,6 +1481,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - agent/deploy88: Merge branch 'main' into deploy88-ledger (merged 2026-11-27): three log-only and shadow knobs on trial on the sandboxes <!--sg:agent/deploy88-->
 - featuresoak: accelerated A/B feature soak campaign on lab slots (TASK-1024, merged 2026-11-27, acceptance 4 of 4): Accelerated lab feature soak harness (campaign file, runner, row script, how to rerun) and pass 1, bannered as mechanics only because its heroes had no class skills; the row script now turns on points decisions so pass 2 heroes learn their skills <!--sg:agent/featuresoak-->
 - agent/pgprov2: Merge branch 'main' into pgprov (merged 2026-11-27): Proving Ground results and ledger lines now carry the slot load (peak runs busy at once), and stability needs two parallel runs in the five-run streak; offline tests only <!--sg:agent/pgprov2-->
+- faultstall: the bot keeps making progress under the fault proxy (TASK-1035, merged 2026-11-27, acceptance 3 of 4): fault soak sets inject by time instead of command count and a held reply ends when the bot hangs up, so the bot keeps playing under faults; verified offline, not live <!--sg:agent/faultstall-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
