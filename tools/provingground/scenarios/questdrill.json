@@ -1489,7 +1489,7 @@
      },
      {
       "record": 10,
-      "word": 3192
+      "word": 3080
      },
      {
       "record": 11,
@@ -1605,7 +1605,7 @@
      11
     ]
    },
-   "provenance": "CHEATED: Act 2 start in Lut Gholein by the goto verb, level 24, gold, waypoints, Andariel and act-complete words, a Rogue merc and basic gear by SETUP verbs. Mechanics only. Raw stats: strength 90, dexterity 60, max life 1200, a rare broad sword (stands for a geared hero). Unused stat points are set to 0 (the raw stats stand for a spent hero; unspent points made the bot cancel its boss run for the point spender). The assembled Horadric Staff is given by a SETUP verb (the assemble row covers the Cube). qd25: max life 6000 and no merc again (the 2000 life hero dies to the Burning Dead of tomb 66, V run 20261125-192625). Record 10 is 0x0c78 (3192, the word after Cain's talk, V drill 2026-11-27), not 1: d2d reads bit 0 as the Staff already placed and the orifice drops it (placefix).",
+   "provenance": "CHEATED: Act 2 start in Lut Gholein by the goto verb, level 24, gold, waypoints, Andariel and act-complete words, a Rogue merc and basic gear by SETUP verbs. Mechanics only. Raw stats: strength 90, dexterity 60, max life 1200, a rare broad sword (stands for a geared hero). Unused stat points are set to 0 (the raw stats stand for a spent hero; unspent points made the bot cancel its boss run for the point spender). The assembled Horadric Staff is given by a SETUP verb (the assemble row covers the Cube). qd25: max life 6000 and no merc again (the 2000 life hero dies to the Burning Dead of tomb 66, V run 20261125-192625). Record 10 is 0x0c08 (3080): the word after Cain's talk (0x0c78) as the d2d keeps it after the join (bits 4 to 6 cleared, V rerun 2026-11-27); bit 11 = the Staff made, bit 0 clear (bit 0 reads as the Staff already placed and the orifice drops it; placefix).",
    "notes": "Quest drill matrix (docs/probes/quest-drill-matrix-2026-11-23.md).",
    "assert": [
     {

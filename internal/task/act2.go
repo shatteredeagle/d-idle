@@ -14,6 +14,11 @@ import (
 // value implements them or the step fails with a Prereq fault.
 
 // Act 2 areas (V levels.txt).
+// StaffMadeBit is bit 11 of the Horadric Staff record: set when the Cube makes the Staff and kept when the player
+// joins (V lab drill 2026-11-27: 0x0000 to 0x0800 at the transmute, 0x0c78 after Cain, read back as 0x0c08 after a
+// rejoin; S d2d World transmute sets bit 11 (FUN_0059e5c0), HoradricStaffQuest::join clears only bits 4 to 6).
+const StaffMadeBit uint16 = 0x0800
+
 const (
 	Sewers2         Area = 48
 	Sewers3         Area = 49

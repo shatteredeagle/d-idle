@@ -20,8 +20,15 @@ func TestStaffDrillsKeepThePlacementOpen(t *testing.T) {
 		}
 		n++
 		for _, q := range s.Pre.Quests {
-			if q.Record == 10 && q.Word&0x0001 != 0 {
+			if q.Record != 10 {
+				continue
+			}
+			if q.Word&0x0001 != 0 {
 				t.Errorf("%s: record 10 = %#04x sets bit 0 (the Staff already placed); the orifice will refuse it", s.ID, q.Word)
+			}
+			// Bits 4 to 6 do not survive the join without the parts (HoradricStaffQuest::join): write what the game keeps.
+			if q.Word&0x0070 != 0 || q.Word&0x0800 == 0 {
+				t.Errorf("%s: record 10 = %#04x; want bit 11 (the Staff made) and bits 4 to 6 clear (0x0c08 is what the d2d keeps)", s.ID, q.Word)
 			}
 		}
 	}
