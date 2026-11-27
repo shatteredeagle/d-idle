@@ -58,6 +58,10 @@ python3 -I tools/ci/test_ownscheck.py >/dev/null 2>&1 || bad "tools/ci/test_owns
 python3 -I tools/ci/knobbudget.py --report || fail=1
 python3 -I tools/ci/test_knobbudget.py >/dev/null 2>&1 || bad "tools/ci/test_knobbudget.py"
 
+# --- input layer I6: pointer call sites outside the adapters may fall, never rise (docs/design/input-i5-i7.md) ---
+python3 -I tools/ci/pointercount.py || fail=1
+python3 -I tools/ci/test_pointercount.py >/dev/null 2>&1 || bad "tools/ci/test_pointercount.py"
+
 # --- no decompiled game code or game data tables (docs/process/gamecode-guard.md) ---
 tools/ci/gamecode_guard.sh || fail=1
 

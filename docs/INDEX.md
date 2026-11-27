@@ -379,6 +379,8 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 - [input-cast-verbs.md](design/input-cast-verbs.md): Input: cast verbs (cast-unit, cast-point, cast-hold) (status: bot side built offline (TASK-726, card dlv-cast-verbs, 2026-11-27), dark behind `input.planner` (0). Fork...)
 - [input-i3.md](design/input-i3.md): Input layer I3: town portal by verb; stat and skill points by verb (status: bot side built offline (TASK-986, card inputl3, 2026-11-27), dark behind `input.planner` (0). Town portal...)
+- [input-i4.md](design/input-i4.md): Input layer I4: fork verbs buy, sell, repair, take-waypoint, menu-choose (status: client side built offline (TASK-988, card inputl4, 2026-11-27), dark behind `input.planner` (0). The fork...)
+- [input-i5-i7.md](design/input-i5-i7.md): Input layer I5 to I7: chores, waypoint and drink on verbs; SemanticInput; hotkey map (status: bot side partly built offline (TASK-989, card inputl5, 2026-11-27); everything stays dark behind...)
 - [item-colour-2026-11-18.md](design/item-colour-2026-11-18.md): Item colour in the inventory art: chain and slice plan (2026-11-18) (status: design, task-634 (card itemcolour). Follow-up to jewelcolor (task-632), which removed the invented wash....)
 - [item-verbs.md](design/item-verbs.md): Item verbs: inventory, stash and equipment actions through d2d's own item handlers (TASK-367) (status: DESIGN plus the built verbs (equip, unequip, move, identify, drop, gold, `caps`), 2026-11-12; stage 2 and...)
 - [loot-vault-2026-11-16.md](design/loot-vault-2026-11-16.md): Ethereal Vault: a database of every drop, created in the game only on Keep (design and feasibility) (status: DESIGN, 2026-11-16. Nothing here was built or run; the fork was read, not changed. "Ethereal Vault" is the...)
@@ -1146,6 +1148,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [incident-scenarios.md](probes/incident-scenarios.md): Incident to scenario (report-only tier) (status: current (card incident1, Fable logic review 2026-11-25 T2 and P8; ADR 0020 amended 2026-11-25). TOOLS...)
 - [itemverbs-live-2026-11-12.md](probes/itemverbs-live-2026-11-12.md): Item verbs: live click-vs-verb comparison (TASK-383, 2026-11-12) (status: result record. Tags: V = run and seen on the worker host. Driver: `tools/itemverbs/live_compare.py`;...)
 - [killdrop-2026-11-13.md](probes/killdrop-2026-11-13.md): Kill drop on the rebased fork: `debug players` gained a column (TASK-396, 2026-11-13) (status: result record. Tags: V = run and seen on the worker host; S = read in source. Follows...)
+- [lab-night-plan-2026-11-27.md](probes/lab-night-plan-2026-11-27.md): Lab night plan, 2026-11-27 (23:00 to 07:00 EST) (status: current (docs only; no game, no lab run made by this card). Tags: V = read in the repo at origin/main...)
 - [mercbr-2026-11-21.md](probes/mercbr-2026-11-21.md): mercbr: Blood Raven hand-in at Kashya and the free Act 1 merc (2026-11-21) (status: current. Tags: V verified (run named), S secondary, U unverified. Setups are CHEATED (quest word, level,...)
 - [navsoak-compare.md](probes/navsoak-compare.md): navsoak vs navsoak2: paired soak comparison (2026-10-31) (status: analysis of two hidden d2d soaks, read-only. Handoffs: branches agent/navsoak, agent/navsoak2...)
 
