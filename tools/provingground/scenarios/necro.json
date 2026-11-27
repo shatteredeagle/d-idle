@@ -1290,6 +1290,130 @@
      "kind": "no_writes"
     }
    ]
+  },
+  {
+   "id": "necro.corpse-ce5",
+   "title": "Corpse Explosion points pair (5 points): a summoner at clvl 30 clears a pack with the army standing",
+   "kind": "behaviour",
+   "tier": "full",
+   "covers": [
+    "combat.fight"
+   ],
+   "touches": [
+    "internal/combat/"
+   ],
+   "pre": {
+    "level": 30,
+    "gold": 3000,
+    "start": "field",
+    "area": 2,
+    "spawn": [
+     {
+      "monster": "fallen1",
+      "n": 10
+     }
+    ]
+   },
+   "trigger": {
+    "goals": "farm:Blood Moor",
+    "knobs": {
+     "combat.minionRead": 1,
+     "resource.pointsDecisions": 1
+    },
+    "build": "necromancer_summoner_normal30"
+   },
+   "budget": {
+    "virtual_min": 8
+   },
+   "matrix": {
+    "classes": [
+     "Necromancer"
+    ],
+    "seeds": [
+     11,
+     12,
+     13
+    ]
+   },
+   "needs": [
+    "lab-verbs-attach",
+    "read.minions"
+   ],
+   "provenance": "SETUP: level 24 with the points a played level gives (spent by the bot's leveler table), purse 3000, field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position and encounter: mechanics only, never evidence about balance).",
+   "notes": "Half of the pair for card necrocorpse: identical setup and seed, only the build differs (necromancer_summoner_normal30 has 5 Corpse Explosion points, necromancer_summoner_ce1 has 1 and the freed points in minions). The pair is read together: the default table moves to 1 point only when the ce1 half is GREEN and its minute-line numbers (minions, life, kills) are equal or better over the same seeds. Thresholds are U (SME numbers U).",
+   "assert": [
+    {
+     "kind": "minions_at_least",
+     "min": 2,
+     "why": "the army stands at the end"
+    },
+    {
+     "kind": "life_pct_at_least",
+     "min": 40
+    }
+   ]
+  },
+  {
+   "id": "necro.corpse-ce1",
+   "title": "Corpse Explosion points pair (1 point): a summoner at clvl 30 clears a pack with the army standing",
+   "kind": "behaviour",
+   "tier": "full",
+   "covers": [
+    "combat.fight"
+   ],
+   "touches": [
+    "internal/combat/"
+   ],
+   "pre": {
+    "level": 30,
+    "gold": 3000,
+    "start": "field",
+    "area": 2,
+    "spawn": [
+     {
+      "monster": "fallen1",
+      "n": 10
+     }
+    ]
+   },
+   "trigger": {
+    "goals": "farm:Blood Moor",
+    "knobs": {
+     "combat.minionRead": 1,
+     "resource.pointsDecisions": 1
+    },
+    "build": "necromancer_summoner_ce1"
+   },
+   "budget": {
+    "virtual_min": 8
+   },
+   "matrix": {
+    "classes": [
+     "Necromancer"
+    ],
+    "seeds": [
+     11,
+     12,
+     13
+    ]
+   },
+   "needs": [
+    "lab-verbs-attach",
+    "read.minions"
+   ],
+   "provenance": "SETUP: level 24 with the points a played level gives (spent by the bot's leveler table), purse 3000, field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position and encounter: mechanics only, never evidence about balance).",
+   "notes": "Half of the pair for card necrocorpse: identical setup and seed, only the build differs (necromancer_summoner_normal30 has 5 Corpse Explosion points, necromancer_summoner_ce1 has 1 and the freed points in minions). The pair is read together: the default table moves to 1 point only when the ce1 half is GREEN and its minute-line numbers (minions, life, kills) are equal or better over the same seeds. Thresholds are U (SME numbers U).",
+   "assert": [
+    {
+     "kind": "minions_at_least",
+     "min": 2,
+     "why": "the army stands at the end"
+    },
+    {
+     "kind": "life_pct_at_least",
+     "min": 40
+    }
+   ]
   }
  ]
 }
