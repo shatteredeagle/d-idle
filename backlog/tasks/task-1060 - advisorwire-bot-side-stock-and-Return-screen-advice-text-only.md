@@ -1,0 +1,39 @@
+---
+id: TASK-1060
+title: 'advisorwire: bot-side stock and Return screen advice (text only)'
+status: Proposed
+assignee:
+  - credit-runner
+created_date: '2026-11-27T19:55:00Z'
+labels:
+  - bot
+  - feature
+dependencies: []
+priority: medium
+ordinal: 512000
+card: "advisorwire"
+lane: next
+owns:
+  - "cmd/d2bot/advisewire.go"
+  - "cmd/d2bot/advisewire_test.go"
+  - "cmd/d2bot/funwire.go"
+  - "cmd/d2bot/ladder.go"
+  - "cmd/d2bot/d2dbackend.go"
+  - "cmd/d2bot/live.go"
+exclusive: []
+contracts: []
+---
+
+## Description
+
+<!-- SECTION:DESCRIPTION:BEGIN -->
+Size: M
+
+Why: TODO. Done when: TODO.
+<!-- SECTION:DESCRIPTION:END -->
+
+## Acceptance Criteria
+<!-- AC:BEGIN -->
+- [x] #1 Return screen shows 'Worth making' from hero pack, stash and vault when items.advisor is 1; nothing at 0
+- [x] #2 Text only: no item is moved, cached by inventory fingerprint
+<!-- AC:END -->
