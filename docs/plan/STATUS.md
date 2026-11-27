@@ -205,7 +205,7 @@
 | fid-death | deferred | - | `docs/probes/fid/fid-death.md` | - |
 | fid-gatea-ab | deferred | - | `docs/probes/fid/fid-gatea-ab.md` | - |
 | admit1 | proposed | - | `docs/design/admission-p4.md`<br>`internal/admit/`<br>`internal/plandata/admission.json`<br>`internal/plandata/earlyroutes.json`<br>`internal/plandata/povertyfarm.json`<br>`docs/plan/data/admission.json`<br>`docs/plan/data/earlyroutes.json`<br>`docs/plan/data/povertyfarm.json`<br>`internal/bot/earlyroute.go`<br>`internal/bot/povertyfarm.go`<br>`internal/bot/admit_need_test.go` | - |
-| townflip | proposed | - | `docs/design/townflip-p5.md` | - |
+| townflip | proposed | - | `docs/design/townflip-p5.md`<br>`internal/town/sellplan.go`<br>`internal/town/sellplan_test.go`<br>`internal/town/shop.go`<br>`internal/town/town.go`<br>`internal/town/chores.go`<br>`internal/env/tuning_town.go` | - |
 | arbmig | proposed | - | `docs/design/arbiter-migration-p6.md`<br>`docs/arbiter.md`<br>`internal/arbiter/`<br>`cmd/d2scenario/`<br>`tools/provingground/arbiter-outcomes/`<br>`internal/bot/arbiter_control.go`<br>`internal/bot/arbiter_control_test.go`<br>`internal/bot/shadow.go`<br>`internal/bot/loop.go`<br>`internal/env/tuning_bot.go`<br>`data/darklaunch.json`<br>`docs/knobs.md` | - |
 | fid-adapter-rows | deferred | - | `docs/probes/fid/fid-adapter-rows.md` | - |
 | proptest1 | proposed | - | `docs/design/proptest-t3.md` | - |
@@ -244,6 +244,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- add24a8d9 11-27 00:07 `Merge agent/townflip: Merge branch 'main' into townflip` (townflip)
+- 2a75046de 11-27 00:05 `Merge branch 'main' into townflip` (-)
 - ee716b023 11-26 23:45 `Merge agent/ticklog: ticklog: tests, ledger row, knob doc, design doc, card` (ticklog)
 - 42d5de6d3 11-26 22:23 `Merge agent/savefix: Merge branch 'main' into savefix` (savefix)
 - e98984c4e 11-26 22:21 `Merge branch 'main' into savefix` (-)
@@ -252,6 +254,4 @@
 - e51210959 11-26 20:56 `Merge agent/actpanel: Merge branch 'main' into actpanel` (actpanel)
 - 7992c3d13 11-26 20:55 `Merge branch 'main' into actpanel` (-)
 - 88745d1a0 11-26 20:39 `Merge agent/ledgerflips: Merge branch 'main' into ledgerflips` (ledgerflips)
-- 8e6c72af5 11-26 20:37 `Merge branch 'main' into ledgerflips` (-)
-- 9fce07038 11-26 20:33 `Merge agent/dedupdata: dedupdata: rule page, card, knobdump write fix` (dedupdata)
 <!-- statusgen:end -->
