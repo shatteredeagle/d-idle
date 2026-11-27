@@ -1,7 +1,7 @@
 ---
 id: TASK-1006
 title: 'smeaura: Paladin auras SME answer'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-26T17:54:00Z'
@@ -17,6 +17,7 @@ owns:
   - "docs/sme/paladin-auras-2026-11-26.md"
 exclusive: []
 contracts: []
+result: "SME doc docs/sme/paladin-auras-2026-11-26.md answers how auras work, what the bot assumes, five recommendations. Doc only."
 ---
 
 ## Description
@@ -29,5 +30,5 @@ Why: TODO. Done when: TODO.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 SME doc answers how auras work, what the bot assumes, five recommendations
+- [x] #1 SME doc answers how auras work, what the bot assumes, five recommendations
 <!-- AC:END -->

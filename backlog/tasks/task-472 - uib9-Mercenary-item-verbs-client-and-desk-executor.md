@@ -24,7 +24,7 @@ owns:
   - "docs/research/merc-gear.md"
 exclusive: []
 contracts: []
-result: "Go half done and tested offline for two hirelings and each refusal; fork half NOT done (no fork checkout here); not verified live."
+result: "Go half done and tested offline for two hirelings and each refusal; fork half NOT done (no fork checkout here); not verified live. Remaining (fork): AC 1 fork tests and fork commit."
 lane: now
 ---
 

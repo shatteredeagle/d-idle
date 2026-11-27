@@ -1,7 +1,7 @@
 ---
 id: TASK-303
 title: 'repairtrip: Repair now becomes a repair trip (safe moment, portal or walk home, smith, back) and Farm until repair'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T15:52:00Z'
@@ -42,6 +42,7 @@ owns:
 exclusive: []
 contracts: []
 lane: next
+result: " Closed by closecards2: merged, ACs verified against the merge diff and tests."
 ---
 
 ## Description
@@ -59,5 +60,5 @@ Why: user decision 2026-11-11, manual repair becomes a trip. Done when: docs/rep
 - [x] #3 Farm until repair: farm order to repairNeed x1.3 + kit + margin, then trip, then ends itself; progress line
 - [x] #4 Guards: cooldown, max 2 trips, auto-cancel, cancel button, persisted, one active request
 - [x] #5 UI: panel and inventory card states, DOM goldens, compat fixture, uilint; Paladin and Sorceress tests
-- [ ] #6 Whole-repo gate on the worker host, merge queued
+- [x] #6 Whole-repo gate on the worker host, merge queued
 <!-- AC:END -->

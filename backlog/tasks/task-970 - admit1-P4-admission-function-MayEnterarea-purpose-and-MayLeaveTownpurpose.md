@@ -26,7 +26,7 @@ owns:
   - "internal/bot/admit_need_test.go"
 exclusive: []
 contracts: []
-result: "Step 1: package internal/admit (MayEnter, MayLeaveTown, Refused with need and wake), floors as rows in admission.json, old judges read their numbers from it, table tests for two classes. Not verified live. Step 2 (wiring, knob bot.admission, ops status --why line) waits for TASK-958 and TASK-961."
+result: "Step 1: package internal/admit (MayEnter, MayLeaveTown, Refused with need and wake), floors as rows in admission.json, old judges read their numbers from it, table tests for two classes. Not verified live. Step 2 (wiring, knob bot.admission, ops status --why line) waits for TASK-958 and TASK-961. Remaining: AC 2 first provider in shadow (waits for TASK-958 and TASK-961)."
 ---
 
 ## Description
