@@ -198,6 +198,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- b49eb8363 11-27 16:12 `Merge agent/ledgerenabled: ledger: stepExec enabled` (ledgerenabled)
+- 2c08cd5c2 11-27 16:10 `Merge branch 'main' into ledgerenabled` (-)
 - 98f9bd0b3 11-27 16:02 `Merge agent/diffready: diffready+diffbaal: readiness predicate, opt-in hop, Baal-dead reader (TASK-1058/1059)` (diffready)
 - 689b57e34 11-27 15:59 `Merge origin/main into diffready (explain.go and darklaunch.json: both sides kept)` (-)
 - 69abed554 11-27 15:43 `Merge agent/ledgertrial: ledger: stepExec trial row` (ledgertrial)
@@ -206,6 +208,4 @@
 - 2947d96a6 11-27 15:34 `Merge agent/testerreport: testerreport: scrubbed tester report bundle, first-session doc (TASK-27)` (testerreport)
 - bb0a720a8 11-27 15:34 `Merge agent/closecards3: closecards3: third card cleanup pass` (closecards3)
 - 0dd5a9f51 11-27 15:34 `Merge agent/admit2: admit2: admission function shadow wiring, bot.admission knob (TASK-970 step 2)` (admit2)
-- 083e2a95b 11-27 15:32 `Merge branch 'main' into classkeys` (-)
-- 25030e532 11-27 15:32 `Merge branch 'main' into testerreport` (-)
 <!-- statusgen:end -->

@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- ledger: stepExec enabled <!--sg:agent/ledgerenabled-->
 - diffready+diffbaal: readiness predicate, opt-in hop, Baal-dead reader (TASK-1058/1059) <!--sg:agent/diffready-->
 - ledger: stepExec trial row <!--sg:agent/ledgertrial-->
 - classkeys: main-attack hotkeys for all classes, profile skill check, merc aura note (TASK-1063) <!--sg:agent/classkeys-->
