@@ -505,6 +505,18 @@
    "note": "owner approved 2026-11-27, live on sandbox Doofer (mode 2); 45 min flip window closed clean 2026-11-27T14:25:40Z (no hard breach), kept on trial"
   },
   {
+   "name": "bot.admission",
+   "built_by": "admit2 (TASK-970 step 2)",
+   "dark_since": "2026-11-27",
+   "why_off": "Shadow wired offline only: internal/admit runs beside the old entry judges (early road, poverty, kit floor, lean) and the quest-walk kit; disagreements are logged as `admission shadow` and counted in ops status --why. Not run live.",
+   "enable_criteria": "Shadow replay equals the old judge or is right in a reviewed sample (a night of `admission shadow` lines, differ count reviewed), then flip on ONE sandbox with a 24 h invariant watch (field-entry-no-kit and field-entry-hurt do not rise) and automatic revert on a hard breach",
+   "owner": "coordinator",
+   "review_by": "2026-12-11",
+   "status": "dark",
+   "criteria_met": "U",
+   "note": "one provider family per flip; Barracks, tower, boss floors and gear gate are not wired yet"
+  },
+  {
    "name": "items.advisor",
    "built_by": "advisor1 (TASK-991, branch agent/advisor1)",
    "dark_since": "2026-11-27",
