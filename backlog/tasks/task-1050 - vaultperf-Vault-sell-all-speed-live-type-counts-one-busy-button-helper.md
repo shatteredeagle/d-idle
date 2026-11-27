@@ -15,6 +15,7 @@ card: "vaultperf"
 lane: next
 owns:
   - "internal/watch"
+  - "internal/watch/web"
   - "internal/vaultkeep"
   - "internal/vault"
 exclusive: []
