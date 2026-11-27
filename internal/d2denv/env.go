@@ -179,6 +179,7 @@ type LateClock struct {
 	ctx context.Context
 	p   atomic.Pointer[d2dinput.Pacer]
 
+	hook atomic.Pointer[stepHook] // OnSleep: the scripted board taps
 	stop atomic.Pointer[stopRule] // StopAfter: checked on the stepping goroutine after every lockstep sleep
 
 	fmu      sync.Mutex // the frozen Pause (freeze.go): the wall clock stands still between SetFrozen(true) and (false)
@@ -244,7 +245,7 @@ func (l *LateClock) Pause(ctx context.Context, d time.Duration) error {
 	}
 	if p := l.p.Load(); p != nil {
 		p.Sleep(d)
-		l.checkStop(p)
+		l.afterSleep(p)
 		return ctx.Err()
 	}
 	t := time.NewTimer(d)
@@ -260,7 +261,7 @@ func (l *LateClock) Pause(ctx context.Context, d time.Duration) error {
 func (l *LateClock) Sleep(d time.Duration) {
 	if p := l.p.Load(); p != nil {
 		p.Sleep(d)
-		l.checkStop(p)
+		l.afterSleep(p)
 		return
 	}
 	time.Sleep(d)
@@ -281,7 +282,7 @@ const (
 func (l *LateClock) Poll(d time.Duration) {
 	if p := l.p.Load(); p != nil {
 		p.Sleep(min(d, linkPollStep))
-		l.checkStop(p)
+		l.afterSleep(p)
 		time.Sleep(linkPollWall)
 		return
 	}
@@ -384,6 +385,32 @@ func (l *LateClock) StopAfter(d time.Duration, fn func()) bool {
 	}
 	l.stop.Store(&stopRule{t0: p.Now(), d: d, fn: fn})
 	return true
+}
+
+type stepHook struct {
+	fn   func()
+	busy atomic.Bool
+}
+
+// OnSleep registers fn to run on the stepping goroutine after every lockstep sleep (Sleep, Pause, Poll): the place where a
+// scripted player may look at the board and press a button without a goroutine of its own. fn is not re-entered by a sleep it
+// makes itself. One hook is kept; false on a wall clock (no stepping goroutine to run on).
+func (l *LateClock) OnSleep(fn func()) bool {
+	if l.p.Load() == nil {
+		return false
+	}
+	l.hook.Store(&stepHook{fn: fn})
+	return true
+}
+
+func (l *LateClock) afterSleep(p *d2dinput.Pacer) {
+	if h := l.hook.Load(); h != nil && h.busy.CompareAndSwap(false, true) {
+		func() {
+			defer h.busy.Store(false)
+			h.fn()
+		}()
+	}
+	l.checkStop(p)
 }
 
 func (l *LateClock) checkStop(p *d2dinput.Pacer) {

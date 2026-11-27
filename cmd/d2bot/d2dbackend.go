@@ -430,6 +430,15 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 		return err
 	}
 	defer lrig.StopRec()
+	if o.ladder.scriptedTaps != "" {
+		var desk tapDesk
+		if o.ladder.quests != nil {
+			desk = o.ladder.quests
+		}
+		if err := installScriptedTaps(be.Clock, desk, o.ladder.scriptedTaps, log); err != nil {
+			return err
+		}
+	}
 	useFun(lrig, runner, runID())
 	useGlance(lrig, runner, db, cfg.LevelerBuild, ref)
 	useFightFeed(lrig, feedFighter, ldir, log)

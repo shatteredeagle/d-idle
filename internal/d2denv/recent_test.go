@@ -88,3 +88,32 @@ func TestStopAfterFiresOnTheSteppingGoroutine(t *testing.T) {
 		}
 	}
 }
+
+// OnSleep (card pgtaps): the hook runs on the stepping goroutine after each lockstep sleep, is not re-entered by a sleep it
+// makes, and is refused on a wall clock.
+func TestOnSleepRunsAfterEachLockstepSleep(t *testing.T) {
+	_, p := startFake(t)
+	c := d2dctl.New(p, d2dctl.Options{})
+	t.Cleanup(func() { c.Close() })
+	clk := NewLateClock(context.Background(), c)
+	if clk.OnSleep(func() {}) {
+		t.Fatal("a wall clock must refuse")
+	}
+	if !clk.Install(context.Background()) {
+		t.Fatal("fake d2d is not lockstep")
+	}
+	n, nested := 0, 0
+	clk.OnSleep(func() {
+		n++
+		if n == 1 {
+			nested++
+			clk.Sleep(80 * time.Millisecond) // steps, must not re-enter
+		}
+	})
+	clk.Sleep(80 * time.Millisecond)
+	_ = clk.Pause(context.Background(), 80*time.Millisecond)
+	clk.Poll(80 * time.Millisecond)
+	if n != 3 || nested != 1 {
+		t.Fatalf("hook ran %d times (nested %d), want 3 and 1", n, nested)
+	}
+}

@@ -560,6 +560,7 @@ func runBot(ctx context.Context, s scenario.Scenario, r scenario.Run, bot, d2dBi
 		args = append(args, "--managed", "--d2d-class", "-1", "--d2d-args", strings.Join(botD2dArgs(s.Needs, vaultVerbs), " "))
 	}
 	var tap *tapper
+	var scriptedTaps string
 	var apiRun, sampler func(context.Context)
 	if s.Trigger.Driver == scenario.DriverBoardTaps || len(s.Trigger.API) > 0 || scenario.NeedsBoardSamples(s) || scenario.NeedsVault(s) {
 		tokFile := filepath.Join(data, "wtoken")
@@ -578,7 +579,17 @@ func runBot(ctx context.Context, s scenario.Scenario, r scenario.Run, bot, d2dBi
 			tlog = os.Stderr
 		}
 		if s.Trigger.Driver == scenario.DriverBoardTaps {
-			tap = newTapper("http://"+view, "http://"+ans, tok, s.TappedQuest(), s.Trigger.TapChunks, tlog)
+			if os.Getenv("D2SCEN_SCRIPTED_TAPS") == "1" {
+				// card pgtaps: the bot taps by itself on its stepping goroutine (lockstep d2d only); the HTTP tapper stays the default
+				scriptedTaps = strings.TrimSuffix(trace, ".bot.log") + ".tapscript.json"
+				b, _ := json.Marshal(scenario.TapScript{Quest: s.TappedQuest(), Chunks: s.Trigger.TapChunks, EveryS: tapEveryVirtual})
+				if err := os.WriteFile(scriptedTaps, b, 0o644); err != nil {
+					return -1, nil, nil, err
+				}
+				args = append(args, "--scripted-taps", scriptedTaps)
+			} else {
+				tap = newTapper("http://"+view, "http://"+ans, tok, s.TappedQuest(), s.Trigger.TapChunks, tlog)
+			}
 		}
 		sp, rp := boardFiles(trace)
 		if len(s.Trigger.API) > 0 {
@@ -664,6 +675,9 @@ func runBot(ctx context.Context, s scenario.Scenario, r scenario.Run, bot, d2dBi
 	var tapsAt []float64
 	if tap != nil {
 		taps, tapsAt = tap.Taps, tap.TapsAt
+	}
+	if scriptedTaps != "" {
+		taps, tapsAt = readScriptedTaps(scriptedTaps + ".taps.json")
 	}
 	return strings.Count(string(b), "err lab verbs off"), taps, tapsAt, err
 }
@@ -1030,4 +1044,20 @@ func envKnobs(base map[string]any, spec string) map[string]any {
 		base[k] = f
 	}
 	return base
+}
+
+// readScriptedTaps reads the taps the bot made itself (d2bot --scripted-taps writes <script>.taps.json); none when the file is missing.
+func readScriptedTaps(path string) (taps []string, at []float64) {
+	b, err := os.ReadFile(path)
+	if err != nil {
+		return nil, nil
+	}
+	var recs []scenario.TapRec
+	if json.Unmarshal(b, &recs) != nil {
+		return nil, nil
+	}
+	for _, r := range recs {
+		taps, at = append(taps, r.Tap), append(at, r.At)
+	}
+	return taps, at
 }
