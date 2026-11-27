@@ -226,15 +226,25 @@ func (f *Fighter) druidTick(ctx context.Context, snap *d2.Snapshot) (bool, error
 	return false, nil
 }
 
-// classTick runs the class hook of the fight loop (necroTick, druidTick, assassinTick).
+// classTick runs the class hook of the fight loop (necroTick, druidTick, assassinTick). combat.deliveryUpkeep 1 also
+// shadows the minion driver; 2 lets it summon (minions.go) where the old hook did.
 func (f *Fighter) classTick(ctx context.Context, snap *d2.Snapshot) (bool, error) {
+	mode := f.upkeepMode()
+	if mode == 1 {
+		f.minionShadow(snap, "tick", false)
+	}
 	switch p := snap.Player; {
 	case isNecro(p):
 		return f.necroTick(ctx, snap)
-	case isDruid(p):
+	case isDruid(p) && mode != 2:
 		return f.druidTick(ctx, snap)
 	case isAssassin(p):
-		return f.assassinTick(ctx, snap)
+		if done, err := f.assassinTick(ctx, snap); done || err != nil {
+			return done, err
+		}
+	}
+	if mode == 2 && !isNecro(snap.Player) {
+		return f.minionTick(ctx, snap)
 	}
 	return false, nil
 }
@@ -242,8 +252,15 @@ func (f *Fighter) classTick(ctx context.Context, snap *d2.Snapshot) (bool, error
 // classUpkeep runs after a Clear: raise, summon or re-cast what is missing.
 func (f *Fighter) classUpkeep(ctx context.Context) {
 	snap, err := f.read(ctx)
-	if err != nil {
+	if err != nil || snap.Player == nil {
 		return
+	}
+	switch mode := f.upkeepMode(); {
+	case mode == 2:
+		_, _ = f.keepMinions(ctx)
+		return
+	case mode == 1:
+		f.minionShadow(snap, "after", f.calm(snap) && f.mv != nil)
 	}
 	switch p := snap.Player; {
 	case isNecro(p):
