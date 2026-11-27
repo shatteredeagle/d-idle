@@ -95,7 +95,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | combat.maxTargetSec | 45 | 20..90 | s | 90 | 1 | Give up on one target after this long. |
 | combat.noProgressSec | 12 | 5..30 | s | 30 | 1 | Give up on a target whose life did not drop for this long. |
 | combat.clearMaxSec | 180 | 30..600 | s | 30 | 2 | Upper bound of one Clear call. |
-| combat.castGapMs | 650 | 250..1200 | ms | 1200 | 10 | Minimum time between two casts. |
+| combat.castGapMs | 650 | 250..1200 | ms | 1200 | 11 | Minimum time between two casts. |
 | combat.castPerSkill | 1 | 0..1 | bool | 0 | 1 | 1 = the gap after a cast is at least that skill's cast length (Lightning and Chain Lightning take 760 ms in Game.exe, longer than the flat gap; d2d casts them as plain SC and keeps 650); 0 = the flat cast gap for every skill. |
 | combat.castMarginMs | 90 | 0..400 | ms | 400 | 1 | Added to the cast length (in 40 ms ticks, plus one dispatch tick) for the per-skill gap; 90 ms keeps the early Sorceress bolts at the old 650. |
 | combat.castFCR | 0 | 0..200 | % | 0 | 3 | Faster cast rate the per-skill gap assumes; 0 is safe for any gear, a real value shortens the gap of the slow skills. |
@@ -113,7 +113,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | combat.kiteRetreat | 12 | 6..20 | subtiles | 6 | 10 | Length of one retreat step. |
 | combat.dodgeRadius | 4 | 0..8 | subtiles | 0 | 7 | Step away from hostile missiles closer than this. |
 | combat.missileDodge | 0 | 0..1 | bool | 0 | 1 | 1 sidesteps fire walls, lightning, hydra and chaos missiles (unverified live, off by default). |
-| combat.minionRead | 0 | 0..1 | bool | 0 | 3 | 1 counts the hero's summons from the fork read `debug minions` (needs --read-combat); a failed read falls back to the snapshot census. Off by default (U until a live drill). |
+| combat.minionRead | 0 | 0..1 | bool | 0 | 6 | 1 counts the hero's summons from the fork read `debug minions` (needs --read-combat); a failed read falls back to the snapshot census. Off by default (U until a live drill). |
 | combat.threatDodge | 0 | 0..1 | bool | 0 | 2 | 1 dodges only hostile missiles the missile threat table says can be dodged in dodgeReactMs and fights the owners of the fast ones first (card botthreat, off until a live drill). |
 | combat.dodgeReactMs | 400 | 100..800 | ms | 100 | 2 | Poll plus click time the threat model assumes before the character moves; a missile reaching us sooner is not dodged (I). |
 | combat.shooterKillMin | 0 | 0..200 | pts | 0 | 4 | Ranged monsters with an elemental-only attack and a peak hit of at least this are fought first; 0 = off (derived from monstats, U). |
