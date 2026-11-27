@@ -196,6 +196,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- ee98b56f4 11-27 18:15 `Merge agent/docsweep: docsweep: stale citations, roadmap refresh, 2 h wording` (docsweep)
+- 5da31f09f 11-27 18:13 `Merge origin/main into docsweep (docs/gear.md: take main, the gearcopy wording)` (-)
 - 1d9770f19 11-27 18:04 `Merge agent/combattelem: combattelem: fight-end aim/stance/minion summaries, skill-id test (TASK-1073)` (combattelem)
 - 3b4e20513 11-27 18:03 `Merge branch 'main' into combattelem` (-)
 - 6692346c5 11-27 17:55 `Merge agent/nightcheck: nightcheck: night plan preflight script and corrected launch commands (TASK-1075)` (nightcheck)
@@ -204,6 +206,4 @@
 - 83a010d59 11-27 17:54 `Merge agent/classapply: classapply: SME changes for Druid/Barbarian/Amazon/Assassin (War Cry kind, Exploding Arrow, Death Sentry key, Hurricane)` (classapply)
 - 02cf8a142 11-27 17:52 `Merge branch 'main' into mercaura` (-)
 - 24b3841bc 11-27 17:52 `Merge branch 'main' into combatscen2` (-)
-- 0b847317a 11-27 17:52 `Merge branch 'main' into classapply` (-)
-- 49e4544c3 11-27 17:50 `Merge origin/main into nightcheck` (-)
 <!-- statusgen:end -->
