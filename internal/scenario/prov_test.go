@@ -28,3 +28,30 @@ func TestPaceOf(t *testing.T) {
 		t.Fatal("pace")
 	}
 }
+
+func TestPeakParallel(t *testing.T) {
+	log := SlotLogLine("start", "a", 10) + SlotLogLine("start", "b", 20) + SlotLogLine("end", "a", 30) +
+		SlotLogLine("start", "c", 40) + SlotLogLine("start", "d", 50) + SlotLogLine("end", "x", 5) + "garbage\n"
+	for _, tc := range []struct {
+		id   string
+		want int
+	}{
+		{"a", 2}, // b started while a ran; c and d started after a's end
+		{"b", 3}, // c and d started while b still ran (a had ended)
+		{"c", 3},
+		{"d", 3},
+		{"x", 0}, // no start line
+		{"nope", 0},
+	} {
+		if got := PeakParallel([]byte(log), tc.id); got != tc.want {
+			t.Errorf("%s: %d, want %d", tc.id, got, tc.want)
+		}
+	}
+	if got := PeakParallel([]byte(SlotLogLine("start", "solo", 1)), "solo"); got != 1 {
+		t.Fatalf("alone: %d, want 1", got)
+	}
+	// A run that ended before self started does not count.
+	if got := PeakParallel([]byte(SlotLogLine("start", "p", 1)+SlotLogLine("end", "p", 2)+SlotLogLine("start", "q", 3)), "q"); got != 1 {
+		t.Fatalf("after an ended run: %d, want 1", got)
+	}
+}

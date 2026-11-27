@@ -36,6 +36,25 @@ type Run struct {
 	XPLine     []float64       // xp gained at every minute line, indexed by minute
 	Intake     map[int]*Intake // area id -> life lost and minutes (only minutes that carry the intake keys)
 	HasIntake  bool
+	// Hero is the prep's hero line ("hero: run=... profile=... selfcheck=..."), "" for a log made before the hero library.
+	Hero string
+}
+
+// HeroProblem says why the run's hero is no survival evidence ("" when it is, or when the log has no hero line): a
+// failed self-check, or a banked hero (every point unspent, featuresoak pass 1).
+func (r Run) HeroProblem() string {
+	if r.Hero == "" {
+		return ""
+	}
+	for _, f := range strings.Fields(r.Hero) {
+		switch {
+		case strings.HasPrefix(f, "selfcheck=") && f != "selfcheck=ok":
+			return "hero " + f
+		case f == "profile=banked":
+			return "hero has every point banked"
+		}
+	}
+	return ""
 }
 
 // Intake accumulates the observed life loss of one zone.
@@ -88,6 +107,8 @@ func Analyse(arm string, seed int, lines []string, mins []d2dsoakstat.Minute) (R
 	}
 	for _, ln := range lines {
 		switch {
+		case r.Hero == "" && strings.HasPrefix(ln, "hero: "):
+			r.Hero = strings.TrimSpace(ln)
 		case isChicken(ln):
 			r.Chickens++
 		case strings.Contains(ln, "merc: died"):
@@ -211,6 +232,8 @@ func Compare(base, test []Run, o Options) Summary {
 			s.Excluded = append(s.Excluded, fmt.Sprintf("seed %d: missing in one arm", k))
 		case b.Minutes < need || t.Minutes < need:
 			s.Excluded = append(s.Excluded, fmt.Sprintf("seed %d: short (%d and %d of %d min)", k, b.Minutes, t.Minutes, o.Horizon))
+		case b.HeroProblem() != "" || t.HeroProblem() != "":
+			s.Excluded = append(s.Excluded, fmt.Sprintf("seed %d: %s", k, strings.TrimSpace(b.HeroProblem()+" "+t.HeroProblem())))
 		default:
 			s.Pairs = append(s.Pairs, Pair{Seed: k, Base: b, Test: t})
 		}

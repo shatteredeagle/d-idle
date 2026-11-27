@@ -441,6 +441,11 @@
    "tier": "T2",
    "source": "catalogue"
   },
+  "input.cast-point-lands": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
   "input.skill-select-verb": {
    "tier": "T3",
    "source": "map",

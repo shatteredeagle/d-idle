@@ -57,6 +57,70 @@
      "kind": "no_writes"
     }
    ]
+  },
+  {
+   "id": "input.cast-point-lands",
+   "title": "Point spell by the cast verb: the spell lands at the aimed cell, the cast goes out once as a verb",
+   "kind": "behaviour",
+   "tier": "full",
+   "status": "pending",
+   "pending_reason": "needs a fork build of didle/cast-verbs that lists input.cast-point in caps after the Q3 differential (docs/design/input-cast-verbs.md section 3), and an assertion kind that reads where a cast landed (the combat events read of dlv-reads carries the cast cell; no assertion kind for it yet); the log line asserts below are the interim check",
+   "covers": [
+    "input.cast-point",
+    "combat.fight"
+   ],
+   "touches": [
+    "internal/input/",
+    "internal/d2dinput/",
+    "internal/d2dcombat/"
+   ],
+   "needs": [
+    "input.cast-point"
+   ],
+   "build": "sandbox",
+   "pre": {
+    "level": 18,
+    "gold": 500,
+    "start": "field",
+    "area": 2
+   },
+   "trigger": {
+    "goals": "reach:19",
+    "knobs": {
+     "input.planner": 1
+    }
+   },
+   "budget": {
+    "virtual_min": 20
+   },
+   "matrix": {
+    "classes": [
+     "Sorceress",
+     "Paladin"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "provenance": "SETUP: level 18 and the field start (Blood Moor) are CHEATED setup writes; mechanics evidence only (does a point cast leave as the verb and land where aimed), never evidence about balance or parity.",
+   "notes": "The point skill is whatever the build's rotation casts with use.target point (Sorceress and Paladin rows of data/capabilities/capabilities.json); the scenario names none. Pass: the bot log has planner lines with action cast-point and path verb, no cast-point line with path key (the verb was never followed by a second cast), and no writes. Planned assertion once the read exists: every cast-point journal entry lands within one cell of the aim.",
+   "assert": [
+    {
+     "kind": "log_line",
+     "pattern": "input path .*action=cast-point.*path=verb",
+     "min": 1,
+     "why": "point casts leave as the cast verb"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "input path failed .*action=cast-point",
+     "max": 0,
+     "why": "no point cast fell back after a send"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
   }
  ]
 }

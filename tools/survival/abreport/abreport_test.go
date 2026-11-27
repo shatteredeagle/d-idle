@@ -228,3 +228,24 @@ func TestPairComparedAtOneMinute(t *testing.T) {
 		t.Fatalf("equal xp per minute must compare equal at minute 116: ratio %v diff %v", s.XPRatio, s.XPDiff.Mean)
 	}
 }
+
+// A pair whose hero failed the prep self-check or was banked is no survival evidence (featuresoak pass 1: every point banked).
+func TestBadHeroDropsThePair(t *testing.T) {
+	dir := t.TempDir()
+	ok := "hero: run=sa-x profile=played class=paladin build=paladin-normal30-v2 clvl=12 attack=Zeal selfcheck=ok tags=CHEATED,played\n"
+	for s := 1; s <= 3; s++ {
+		writeArm(t, dir, "legacy", s, ok+synth(120, 10, 0, 0, 3))
+		writeArm(t, dir, "margin", s, ok+synth(120, 10, 0, 0, 3))
+	}
+	writeArm(t, dir, "legacy", 4, strings.Replace(ok, "selfcheck=ok", "selfcheck=skillpts,attack", 1)+synth(120, 10, 0, 0, 3))
+	writeArm(t, dir, "margin", 4, ok+synth(120, 10, 0, 0, 3))
+	writeArm(t, dir, "legacy", 5, strings.Replace(ok, "profile=played", "profile=banked", 1)+synth(120, 10, 0, 0, 3))
+	writeArm(t, dir, "margin", 5, synth(120, 10, 0, 0, 3)) // a log from before the hero library: no line, no judgement
+	got := run(t, dir, gate)
+	if len(got.Pairs) != 3 || len(got.Excluded) != 2 {
+		t.Fatalf("pairs %d excluded %v", len(got.Pairs), got.Excluded)
+	}
+	if !strings.Contains(got.Excluded[0], "selfcheck=skillpts,attack") || !strings.Contains(got.Excluded[1], "banked") {
+		t.Errorf("excluded %v", got.Excluded)
+	}
+}

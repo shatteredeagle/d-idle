@@ -9,6 +9,8 @@ package faultproxy
 
 import (
 	"bufio"
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"net"
 	"os"
@@ -19,12 +21,15 @@ import (
 
 // Spec is one fault set. Zero fields inject nothing.
 type Spec struct {
-	// DelayReplyEvery and DelayReplyMs: every Nth command's reply is held for this long before it is forwarded (the bot's
-	// client times out when this is above its command timeout, then reads a stale reply).
-	DelayReplyEvery int `json:"delay_reply_every,omitempty"`
-	DelayReplyMs    int `json:"delay_reply_ms,omitempty"`
-	// DropReplyEvery: every Nth command is forwarded to the game but its reply is swallowed (the bot sees only silence).
-	DropReplyEvery int `json:"drop_reply_every,omitempty"`
+	// DelayReplyEveryMs and DelayReplyMs: the first reply after DelayReplyEveryMs since the last held one (or the start) is
+	// held for DelayReplyMs before it is forwarded (above the bot's command timeout, 20 s in internal/d2denv, the bot's
+	// client times out and redials). The rate is in time, not in commands: the bot sends about ten reads per snapshot, so a
+	// fault every N commands came every few frames and left the bot no time to play (the 2026-11-26 soak stall).
+	DelayReplyEveryMs int `json:"delay_reply_every_ms,omitempty"`
+	DelayReplyMs      int `json:"delay_reply_ms,omitempty"`
+	// DropReplyEveryMs: the first command after this long since the last drop is forwarded to the game but its reply is
+	// swallowed (the bot sees only silence).
+	DropReplyEveryMs int `json:"drop_reply_every_ms,omitempty"`
 	// DelayInputMs holds every command whose first word is in InputVerbs before it reaches the game.
 	DelayInputMs int      `json:"delay_input_ms,omitempty"`
 	InputVerbs   []string `json:"input_verbs,omitempty"`
@@ -34,18 +39,28 @@ type Spec struct {
 	CancelLine    string `json:"cancel_line,omitempty"`
 }
 
+// UnmarshalJSON rejects unknown keys, so a set written for the old command-counted keys fails instead of injecting nothing.
+func (s *Spec) UnmarshalJSON(b []byte) error {
+	type plain Spec
+	d := json.NewDecoder(bytes.NewReader(b))
+	d.DisallowUnknownFields()
+	return d.Decode((*plain)(s))
+}
+
 // Empty reports that the set injects nothing.
 func (s Spec) Empty() bool {
-	return s.DelayReplyEvery == 0 && s.DropReplyEvery == 0 && s.DelayInputMs == 0 && s.CancelEveryMs == 0
+	return s.DelayReplyEveryMs == 0 && s.DropReplyEveryMs == 0 && s.DelayInputMs == 0 && s.CancelEveryMs == 0
 }
 
 // Validate rejects a set that cannot work.
 func (s Spec) Validate() error {
 	switch {
-	case s.DelayReplyEvery < 0 || s.DropReplyEvery < 0 || s.DelayInputMs < 0 || s.CancelEveryMs < 0 || s.DelayReplyMs < 0:
+	case s.DelayReplyEveryMs < 0 || s.DropReplyEveryMs < 0 || s.DelayInputMs < 0 || s.CancelEveryMs < 0 || s.DelayReplyMs < 0:
 		return fmt.Errorf("fault set: negative number")
-	case s.DelayReplyEvery > 0 && s.DelayReplyMs == 0:
-		return fmt.Errorf("fault set: delay_reply_every needs delay_reply_ms")
+	case s.DelayReplyEveryMs > 0 && s.DelayReplyMs == 0:
+		return fmt.Errorf("fault set: delay_reply_every_ms needs delay_reply_ms")
+	case s.DelayReplyEveryMs > 0 && s.DelayReplyEveryMs < 2*s.DelayReplyMs:
+		return fmt.Errorf("fault set: delay_reply_every_ms must be at least twice delay_reply_ms, or the bot spends most of its time waiting")
 	case s.DelayInputMs > 0 && len(s.InputVerbs) == 0:
 		return fmt.Errorf("fault set: delay_input_ms needs input_verbs")
 	case s.CancelEveryMs > 0 && strings.TrimSpace(s.CancelLine) == "":
@@ -67,19 +82,21 @@ type Proxy struct {
 	Spec     Spec
 	Listen   string
 	Upstream string
-	// Now and Sleep are the clock; tests replace them.
+	// Now, Sleep and After are the clock; tests replace them.
 	Now   func() time.Time
 	Sleep func(time.Duration)
+	After func(time.Duration) <-chan time.Time
 
-	ln      net.Listener
-	mu      sync.Mutex // one exchange with the game at a time (a command and its reply, or a cancel)
-	evMu    sync.Mutex
-	events  []Event
-	n       int
-	done    chan struct{}
-	conns   map[net.Conn]bool // open bot connections, closed by Stop
-	wg      sync.WaitGroup
-	stopped bool
+	ln                 net.Listener
+	mu                 sync.Mutex // one exchange with the game at a time (a command and its reply, or a cancel)
+	evMu               sync.Mutex
+	events             []Event
+	n                  int
+	lastHold, lastDrop time.Time // when the last reply was held or dropped (the start before the first)
+	done               chan struct{}
+	conns              map[net.Conn]bool // open bot connections, closed by Stop
+	wg                 sync.WaitGroup
+	stopped            bool
 }
 
 // Start listens and serves in the background.
@@ -93,6 +110,10 @@ func (p *Proxy) Start() error {
 	if p.Sleep == nil {
 		p.Sleep = time.Sleep
 	}
+	if p.After == nil {
+		p.After = time.After
+	}
+	p.lastHold, p.lastDrop = p.Now(), p.Now()
 	_ = os.Remove(p.Listen)
 	ln, err := net.Listen("unix", p.Listen)
 	if err != nil {
@@ -170,13 +191,18 @@ func (p *Proxy) serve(client net.Conn) {
 			p.storm(up, urd, stop)
 		}()
 	}
-	crd := bufio.NewReader(client)
+	lines, gone := readLines(client)
 	for {
-		line, err := crd.ReadString('\n')
-		if err != nil {
+		var line string
+		select {
+		case l, ok := <-lines:
+			if !ok {
+				return
+			}
+			line = l
+		case <-p.done:
 			return
 		}
-		line = strings.TrimRight(line, "\r\n")
 		p.mu.Lock()
 		p.n++
 		n := p.n
@@ -189,20 +215,58 @@ func (p *Proxy) serve(client net.Conn) {
 			p.mu.Unlock()
 			return
 		}
+		now := p.Now()
+		var hold time.Duration
 		switch {
-		case p.Spec.DropReplyEvery > 0 && n%p.Spec.DropReplyEvery == 0:
+		case p.Spec.DropReplyEveryMs > 0 && now.Sub(p.lastDrop) >= time.Duration(p.Spec.DropReplyEveryMs)*time.Millisecond:
+			p.lastDrop = now
 			p.note("drop-reply", line, n)
 			p.mu.Unlock()
 			continue
-		case p.Spec.DelayReplyEvery > 0 && n%p.Spec.DelayReplyEvery == 0:
+		case p.Spec.DelayReplyEveryMs > 0 && now.Sub(p.lastHold) >= time.Duration(p.Spec.DelayReplyEveryMs)*time.Millisecond:
+			p.lastHold = now
 			p.note("delay-reply", line, n)
-			p.Sleep(time.Duration(p.Spec.DelayReplyMs) * time.Millisecond)
+			hold = time.Duration(p.Spec.DelayReplyMs) * time.Millisecond
 		}
 		p.mu.Unlock()
+		if hold > 0 {
+			// Held without the lock, and given up as soon as the bot hangs up: d2d takes one control client, so keeping the
+			// dead connection's upstream open would answer the bot's redial with "err busy" for the rest of the hold.
+			select {
+			case <-p.After(hold):
+			case <-gone:
+				return
+			case <-p.done:
+				return
+			}
+		}
 		if _, err := client.Write([]byte(reply)); err != nil {
 			return
 		}
 	}
+}
+
+// readLines reads the bot's command lines in the background, so a hang-up is seen while a reply is held. lines is closed
+// and gone is closed when the connection ends; a pipelined batch (d2dctl Prefetch) waits in the buffer.
+func readLines(c net.Conn) (<-chan string, <-chan struct{}) {
+	lines, gone := make(chan string, 256), make(chan struct{})
+	go func() {
+		defer close(lines)
+		defer close(gone)
+		rd := bufio.NewReader(c)
+		for {
+			l, err := rd.ReadString('\n')
+			if err != nil {
+				return
+			}
+			select {
+			case lines <- strings.TrimRight(l, "\r\n"):
+			default: // more than a batch unread: the stream is out of step, end it like a hang-up
+				return
+			}
+		}
+	}()
+	return lines, gone
 }
 
 // storm sends the cancel line between commands; its reply is swallowed.

@@ -9,7 +9,7 @@ import (
 func provRes() Result {
 	r := Result{Run: Run{ID: "town.resupply", Class: "Paladin", Seed: 11}, Status: Green, Tags: []string{"SETUP-only"},
 		AssertDigest: "d1", Digest: "d2", VirtualMin: 15, WallSec: 40,
-		Prov: &Provenance{BotCommit: "abc1234", D2DSHA256: "ff00", Host: "builder", Load1: 3, Pace: 22}}
+		Prov: &Provenance{BotCommit: "abc1234", D2DSHA256: "ff00", Host: "builder", Load1: 3, Pace: 22, Parallel: 2}}
 	r.State = &State{Source: "d2d-observer-reload"}
 	return r
 }
@@ -52,7 +52,7 @@ func TestLedgerRecordFields(t *testing.T) {
 		t.Fatalf("one line: %v %q", err, b)
 	}
 	back, err := ReadLedger(strings.NewReader(string(b) + "\n\n"))
-	if err != nil || len(back) != 1 || back[0].Run != rec.Run {
+	if err != nil || len(back) != 1 || back[0].Run != rec.Run || back[0].Parallel != 2 || back[0].Pace != 22 || back[0].Host != "builder" {
 		t.Fatalf("%v %+v", err, back)
 	}
 	if _, err := ReadLedger(strings.NewReader("{bad")); err == nil || !strings.Contains(err.Error(), "line 1") {

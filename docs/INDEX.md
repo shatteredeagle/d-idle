@@ -375,6 +375,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 `design/`
 
+- [input-cast-verbs.md](design/input-cast-verbs.md): Input: cast verbs (cast-unit, cast-point, cast-hold) (status: bot side built offline (TASK-726, card dlv-cast-verbs, 2026-11-27), dark behind `input.planner` (0) and...)
 - [input-i3.md](design/input-i3.md): Input layer I3: town portal by verb; stat and skill points by verb (status: bot side built offline (TASK-986, card inputl3, 2026-11-27), dark behind `input.planner` (0) and the...)
 - [item-colour-2026-11-18.md](design/item-colour-2026-11-18.md): Item colour in the inventory art: chain and slice plan (2026-11-18) (status: design, task-634 (card itemcolour). Follow-up to jewelcolor (task-632), which removed the invented wash....)
 - [item-verbs.md](design/item-verbs.md): Item verbs: inventory, stash and equipment actions through d2d's own item handlers (TASK-367) (status: DESIGN plus the built verbs (equip, unequip, move, identify, drop, gold, `caps`), 2026-11-12; stage 2 and...)
@@ -1089,6 +1090,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [farmloop-measure.md](probes/farmloop-measure.md): Recipe: kills per minute against coverage (farm loop decay curve) (status: current. Tool `tools/farmloop/measure.py` (stdlib Python, reads stdin). Tags: V = ran once...)
 - [farmloop-on-20261115.md](probes/farmloop-on-20261115.md): Farm loop switched on in the sandbox, 2026-11-15 (status: record. Task farmloopon. Tags: V = verified in this run, U = not verified.)
 - [faultsoak-design-2026-11-26.md](probes/faultsoak-design-2026-11-26.md): faultsoak (TASK-979, P12) design notes, from the quest drill agent (status: runner side built (2026-11-26, card faultsoak); fork verbs are a proposal for the owner; nothing here was...)
+- [feature-soak-2026-11-26.md](probes/feature-soak-2026-11-26.md): Feature soak campaign, accelerated lab (2026-11-26, card featuresoak) (status: current. Everything here is a CHEATED/lab result: lockstep d2d lab slots, a prepared hero (declared SETUP...)
 
 `probes/fid/`
 
