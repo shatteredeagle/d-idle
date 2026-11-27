@@ -14,8 +14,12 @@ ordinal: 468000
 card: "proptest1"
 owns:
   - "docs/design/proptest-t3.md"
+  - "internal/combat/decide_prop_test.go"
+  - "internal/supply/solve_prop_test.go"
+  - "internal/arbiter/decide_prop_test.go"
 exclusive: []
 contracts: []
+result: "Property tests on combat Decide, supply Solve and the arbiter Decide, two builds each, fixed seeds; every property caught a one-line mutation; no bug found; Solve is gold-monotone only for min-before-target policies (noted). Offline, not live."
 ---
 
 ## Description
@@ -28,5 +32,5 @@ Cause classes: B, C, G at unit-test cost. Roadmap row T3 (docs/research/fable-lo
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Properties for combat.Decide, supply.Solve and arbiter.Decide with two builds
+- [x] #1 Properties for combat.Decide, supply.Solve and arbiter.Decide with two builds
 <!-- AC:END -->
