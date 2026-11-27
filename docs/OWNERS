@@ -216,6 +216,7 @@ docs/knobs.md  credit-runner  diffready
 docs/knobs.md  credit-runner  dlv-upkeep-state
 docs/onboarding-tour.md  credit-runner  onboardtour
 docs/onboarding.md  credit-runner  reconnectux
+docs/plan/data/build-necromancer_summoner_ce1.json  credit-runner  necrocorpse
 docs/probes/checkpoint-live-drill.md  live-agent  ckptlive
 docs/probes/classorder1.md  user  classorder1
 docs/probes/exitsread-2026-11-22.md  credit-runner  exitsread
@@ -367,6 +368,7 @@ internal/input/useitem_test.go  credit-runner  inputl3
 internal/invdesk/mercverbs.go  credit-runner  uib9
 internal/invdesk/mercverbs_test.go  credit-runner  uib9
 internal/invdesk/sets.go  credit-runner  uib9
+internal/leveler/necrocorpse_test.go  credit-runner  necrocorpse
 internal/levelplan/necro_test.go  live-agent  epic-class-necromancer
 internal/nav/  credit-runner  dlv-move-tele
 internal/nav/act2hints.go  credit-runner  qdmatrix
@@ -386,7 +388,9 @@ internal/nav/nav.go  credit-runner  qdmatrix
 internal/nav/route.go  credit-runner  exitsread
 internal/nav/warpread_test.go  credit-runner  warptrigger
 internal/plandata/act2plan.json  live-agent  epic-class-necromancer
+internal/plandata/build-catalog.json  credit-runner  necrocorpse
 internal/plandata/build-necromancer_leveling_normal30.json  live-agent  epic-class-necromancer
+internal/plandata/build-necromancer_summoner_ce1.json  credit-runner  necrocorpse
 internal/plandata/build-necromancer_summoner_endgame90.json  live-agent  epic-class-necromancer
 internal/plandata/levelplan-normal.json  live-agent  epic-class-necromancer
 internal/power/  credit-runner  dlv-cleanup
@@ -507,8 +511,10 @@ tools/provingground/scenarios/cain.json  credit-runner  cainfix3
 tools/provingground/scenarios/navexit.json  credit-runner  stage1fix
 tools/provingground/scenarios/necro-acts.json  live-agent  epic-class-necromancer
 tools/provingground/scenarios/necro-epic.json  live-agent  epic-class-necromancer
+tools/provingground/scenarios/necro.json  credit-runner  necrocorpse
 tools/provingground/scenarios/necro.json  credit-runner  stage1fix
 tools/provingground/scenarios/questdrill.json  credit-runner  qdmatrix
+tools/provingground/scenarios/tiers.json  credit-runner  necrocorpse
 tools/provingground/scenarios/tiers.json  live-agent  epic-class-necromancer
 tools/provingground/scenarios/townplan.json  credit-runner  town5
 tools/provingground/status_doc.sh  credit-runner  pgpage
