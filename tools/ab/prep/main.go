@@ -107,7 +107,7 @@ func run() error {
 	ledger := flag.String("ledger", "", "ledger file (JSON lines), default <home>/prep-ledger.jsonl")
 	runID := flag.String("run", "", "run id written into hero.json and the hero line (default the character name)")
 	var s Setup
-	flag.StringVar(&s.Hero.Profile, "profile", hero.Banked, "hero profile: played (points spent by the build table, main attack bound) or banked (every point unspent)")
+	flag.StringVar(&s.Hero.Profile, "profile", hero.Played, "hero profile: played (points spent by the build table, main attack bound) or banked (every point unspent; only for points scenarios)")
 	flag.StringVar(&s.Hero.Build, "build", "", "build table (default: the table a fresh hero of the class gets)")
 	flag.IntVar(&s.Hero.Level, "clvl", 11, "start level")
 	flag.IntVar(&s.Hero.QuestSkillPts, "quest-skillpts", 1, "skill points of quests done (the Den of Evil gives 1; the build tables fold it in)")
@@ -126,6 +126,9 @@ func run() error {
 		s.Hero.Weapon = ""
 	default:
 		s.Hero.Weapon = *weapon
+	}
+	if s.Hero.Profile == hero.Banked {
+		fmt.Fprintln(os.Stderr, "prep: WARNING profile banked: every point stays unspent; the hero has no class skills unless the bot spends them")
 	}
 	cn, err := ClassName(*class)
 	if err != nil {
