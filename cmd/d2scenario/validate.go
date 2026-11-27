@@ -21,6 +21,7 @@ func cmdValidate(args []string, w io.Writer) error {
 	fs := newFlags("validate")
 	dir := fs.String("dir", defaultDir, "scenario directory")
 	board := fs.String("board", "data/questboard", "quest board data directory")
+	earned := fs.String("milestones", "tools/provingground/earned/milestones.json", "earned-save milestone catalogue")
 	gamedata := fs.String("gamedata", "", "game data directory: the hero check then uses the game's learn rules (default: the plan tables alone)")
 	if _, err := parseArgs(fs, args); err != nil {
 		return err
@@ -45,7 +46,19 @@ func cmdValidate(args []string, w io.Writer) error {
 	if len(problems) > 0 {
 		return fmt.Errorf("%s", strings.Join(problems, "; "))
 	}
+	ms, err := scenario.LoadMilestones(*earned)
+	if err != nil {
+		return err
+	}
 	for _, s := range scs {
+		if err := s.CheckProvenance(); err != nil {
+			return err
+		}
+		if s.Pre.FromSave != "" {
+			if _, ok := ms.Find(s.Pre.FromSave); !ok {
+				return fmt.Errorf("scenario %s: pre.from_save %q is not a milestone of %s", s.ID, s.Pre.FromSave, *earned)
+			}
+		}
 		if s.Faults != "" {
 			if _, err := faultSet(s.Faults); err != nil {
 				return fmt.Errorf("scenario %s: faults: %w", s.ID, err)

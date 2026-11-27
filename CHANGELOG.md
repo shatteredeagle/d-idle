@@ -8,6 +8,34 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- deployplan: sandbox deploy runbook (docs) <!--sg:agent/deployplan-->
+- cardfix2: card hygiene redo, live-queue doc <!--sg:agent/cardfix2-->
+- questresume: park resume policy (dark), paused visibility, campaign counter, starved cause (TASK-1071) <!--sg:agent/questresume-->
+- gearcopy: gear scoring reads plandata tables, drifted copies deleted (TASK-1067) <!--sg:agent/gearcopy-->
+- flakearb: fix TestArbiterControlGoldFarmAndRecovery race (test starts in wrong area) (TASK-1068) <!--sg:agent/flakearb-->
+- fieldstate: return-to-field leg hands over to the fighter when hostiles are near (TASK-1070) <!--sg:agent/fieldstate-->
+- logsink: bot own rotating log file, ops log verb, docker log NUL root cause (TASK-1069) <!--sg:agent/logsink-->
+- sandboxlogs: sandbox log analysis (docs) <!--sg:agent/sandboxlogs-->
+- palapply: SME Paladin/Sorceress data changes (zeal table, Aim/Concentration, bands, mana_heavy) <!--sg:agent/palapply-->
+- townwire: /api/townplan wired, arbiter upkeep behind chores bit (TASK-1064) <!--sg:agent/townwire-->
+- smeothers: SME review of Druid, Barbarian, Amazon, Assassin (docs) <!--sg:agent/smeothers-->
+- cainflaky: cain.chain Paladin 11 flake diagnosis (docs) <!--sg:agent/cainflaky-->
+- rel012: unnumbered next-release draft notes (TASK-1066) <!--sg:agent/rel012-->
+- necroapply: SME Necromancer data changes (bonespear Teeth/Bone Spear points, mana_heavy, merc doc) <!--sg:agent/necroapply-->
+- town11: townLegacy seam for old town counters, deletion plan (TASK-764 partial) <!--sg:agent/town11-->
+- pgcards2: nightly run set, earned-hero tier, release-check (TASK-754/756 repo side) <!--sg:agent/pgcards2-->
+- smepal: SME Paladin and Sorceress review (docs) <!--sg:agent/smepal-->
+- onboardtour2: tour tips, Help sheet, Now line (TASK-48 partial) <!--sg:agent/onboardtour2-->
+- whirlscen: combat drill scenarios, pre.skills setup field (TASK-1065) <!--sg:agent/whirlscen-->
+- diffgo: go-difficulty ops verb, persisted go, Return screen button (TASK-1061) <!--sg:agent/diffgo-->
+- smenecro: SME Necromancer review (docs) <!--sg:agent/smenecro-->
+- diet: archive 5 finished research reports, docs diet rule (TASK-117/118) <!--sg:agent/diet-->
+- dlvwhirl: Whirlwind move row driver (TASK-734) <!--sg:agent/dlvwhirl-->
+- townrest: town plan view + /api/townplan (town9), arbiter upkeep source (town10 part), SME brief (town12) <!--sg:agent/townrest-->
+- necrocorpse2: opt-in CE1 Necromancer table + scenario pair, ticks (TASK-1016/803/802) <!--sg:agent/necrocorpse2-->
+- fliptool2: flip.py loads local.env itself, ledger commits on close/revert, unique branch names <!--sg:agent/fliptool2-->
+- ledger: stepExec enabled <!--sg:agent/ledgerenabled-->
+- diffready+diffbaal: readiness predicate, opt-in hop, Baal-dead reader (TASK-1058/1059) <!--sg:agent/diffready-->
 - ledger: stepExec trial row <!--sg:agent/ledgertrial-->
 - classkeys: main-attack hotkeys for all classes, profile skill check, merc aura note (TASK-1063) <!--sg:agent/classkeys-->
 - testerreport: scrubbed tester report bundle, first-session doc (TASK-27) <!--sg:agent/testerreport-->

@@ -365,7 +365,7 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 		return err
 	}
 	disp.run = runner
-	m, err := goals.New(d2dGoalsOptions(runner, ip.Goals(), taskChain(runner.LastSnapshot), be.Clock,
+	m, err := goals.New(d2dGoalsOptions(runner, ip.Goals(), taskChain(runner.LastSnapshot, runner.DifficultyGate), be.Clock,
 		func(f string, a ...any) { log.Info("goals", "msg", sprintf(f, a...)) }))
 	if err != nil {
 		return err
@@ -397,6 +397,7 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 	o.ladder.quests = ref.qd
 	o.ladder.points = ref.pd
 	o.ladder.plan = ref.aw
+	o.ladder.townPlan = townPlanSource(ref)
 	o.ladder.pause = pauseDesk(runner, ip.State())
 	o.ladder.recall = recallDesk(runner)
 	if labels != nil {

@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"strings"
 	"sync"
+	"time"
 
 	"d2lod-bot/internal/currency"
 	"d2lod-bot/internal/decide"
@@ -68,6 +69,7 @@ type FunConfig struct {
 	Speed   float64 // virtual seconds per wall second (Config.Speed)
 	Notes   NotesSink
 	Rules   []string        // visible rules shown on the return screen ("ladder runewords: on"); nil: none
+	Quests  func() []string // quest board park lines (questboard.Desk.ParkLines); nil: no quests section
 	Advice  func() []string // runeword and cube advice lines (items.advisor); nil: no advice section
 	Strip   *TallyStrip     // nil: /api/tally says tally is off
 	Codex   *decide.Codex
@@ -90,6 +92,8 @@ type FunConfig struct {
 	OrderLoop *OrderLoopConfig
 	// Unlock turns the unlock ladder on (TASK-153): the engine of the profile (unlock.Open). nil: no ladder, no routes.
 	Unlock *unlock.Engine
+	// Difficulty turns the opt-in difficulty hop section and its POST on (difficultydesk.go); nil: no section, no route.
+	Difficulty *DifficultyConfig
 	// Hall turns the Hall of Fame and the retire question on (TASK-135). StatePath "" keeps the state next to the ledger.
 	Hall *HallConfig
 	// Monsters gives the bestiary its type, attack pattern and resists (TASK-158). nil: cards carry the flavour only.
@@ -121,6 +125,8 @@ type Fun struct {
 	Proposals *ProposalDesk
 	// Unlocks is nil when the unlock ladder is off.
 	Unlocks *Unlocks
+	// Difficulty is nil when the difficulty hop is not wired.
+	Difficulty *DifficultyConfig
 	// Hall is nil when the Hall of Fame is off.
 	Hall *HallDesk
 	// Chronicle is nil unless the ladder has the Chronicle rows (TASK-154).
@@ -177,6 +183,8 @@ type Fun struct {
 	Ether *EtherAPI
 	// LootShadow mounts GET /api/lootrules/shadow (lootshadowapi.go); nil: no route.
 	LootShadow *LootShadowAPI
+	// TownPlan mounts GET /api/townplan (townplanapi.go); nil: no route.
+	TownPlan *TownPlanAPI
 	// LootRules mounts GET (viewer) and PUT (answer listener) /api/lootrules (lootrulesapi.go); nil: no routes.
 	LootRules *LootRulesAPI
 	// GoldFarm mounts the Farm gold order routes (goldfarmapi.go); set it before Serve, nil: no routes.
@@ -221,7 +229,8 @@ func NewFun(c FunConfig) (*Fun, error) {
 		c.Visit = NewVisit("", nil)
 	}
 	ob, err := NewOnboarding(OnboardingConfig{Path: c.OnboardingPath, Hero: func() string { return c.Hub.heroNow().Name },
-		Signals: func() map[string]bool { return onboardingSignals(f.Away) }, Away: c.Visit.awayOK, Art: func() (string, int, int) { return artProgress(f.Art) }})
+		Signals: func() map[string]bool { return onboardingSignals(f.Away) }, Away: c.Visit.awayOK, Art: func() (string, int, int) { return artProgress(f.Art) },
+		Chickens: func() int { return chickenCount(f.Away, time.Now()) }})
 	if err != nil {
 		return nil, err
 	}
@@ -232,6 +241,13 @@ func NewFun(c FunConfig) (*Fun, error) {
 		sec.Register(CodexSectionID, CodexReturnSection(f.CodexSource()))
 	}
 	sec.Register("quiet", QuietSection(c.Hub))
+	if c.Difficulty != nil {
+		f.Difficulty = c.Difficulty
+		sec.Register(DifficultySectionID, DifficultySection(c.Difficulty))
+	}
+	if c.Quests != nil {
+		sec.Register(QuestSectionID, QuestSection(c.Quests))
+	}
 	if c.Advice != nil {
 		sec.Register(AdviceSectionID, AdviceSection(c.Advice))
 	}
@@ -782,6 +798,9 @@ func (f *Fun) mountView(m *http.ServeMux, live http.Handler) {
 	if f.GoldFarm != nil {
 		m.Handle(GoldFarmRoute, f.GoldFarm.Handler())
 	}
+	if f.TownPlan != nil {
+		m.Handle(TownPlanRoute, f.TownPlan.Handler())
+	}
 	if f.QuestBoard != nil {
 		m.Handle(QuestsRoute, f.QuestBoard.Handler())
 	}
@@ -841,6 +860,9 @@ func (f *Fun) wrapAnswer(base http.Handler, o AnswerOptions) http.Handler {
 	}
 	if f.Hall != nil {
 		m.Handle(HallPostRoute, f.Hall.PostHandler(o))
+	}
+	if f.Difficulty != nil {
+		m.Handle(DifficultyPostRoute, DifficultyPostHandler(f.Difficulty, o))
 	}
 	if f.Pacts != nil {
 		for _, p := range PactPostRoutes {

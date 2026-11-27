@@ -1,0 +1,9 @@
+{
+ "version": "didle.pg-milestones/1",
+ "milestones": [
+  {"id": "den-done", "title": "Den of Evil handed in (Akara's reward taken)", "min_level": 3},
+  {"id": "clvl-12", "title": "Character level 12 reached by play", "min_level": 12},
+  {"id": "cain-freed", "title": "Deckard Cain rescued from Tristram", "min_level": 10},
+  {"id": "before-andariel", "title": "Standing in town of act 1 with the Catacombs open, before Andariel", "min_level": 18}
+ ]
+}

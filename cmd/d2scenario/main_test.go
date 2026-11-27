@@ -75,7 +75,7 @@ func TestEvalExitCodes(t *testing.T) {
 
 func TestCoverageAndValidateOnShippedData(t *testing.T) {
 	var b bytes.Buffer
-	if err := cmdValidate([]string{"-dir", dir, "-board", "../../data/questboard"}, &b); err != nil {
+	if err := cmdValidate([]string{"-dir", dir, "-board", "../../data/questboard", "-milestones", "../../tools/provingground/earned/milestones.json"}, &b); err != nil {
 		t.Fatal(err)
 	}
 	b.Reset()

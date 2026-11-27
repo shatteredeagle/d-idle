@@ -447,14 +447,15 @@
    "enable_criteria": "Scenarios cain.scroll.stepexec, cain.read.stepexec, drill.act2.assemble.stepexec and drill.act2.duriel.stepexec green 2 of 3 runs each on the lab, then flip on one sandbox with a 24 h watch and auto-revert on a hard breach (docs/process/dark-launch.md); the old handler is deleted after the watch.",
    "owner": "coordinator",
    "review_by": "2026-12-03",
-   "status": "trial",
+   "status": "enabled",
    "criteria_met": "no",
    "trial_started": "2026-11-27T19:02:39Z",
    "trial_instance": "d2play-20261125q",
    "trial_value": 1.0,
    "trial_window": "7200s",
    "trial_why": "dark queue: Cain scroll chunks + Act 2 assemble 3/3 green; Duriel chunk parks safely",
-   "trial_bundle": "quests.stepExec"
+   "trial_bundle": "quests.stepExec",
+   "enabled_at": "2026-11-27T21:03:18Z"
   },
   {
    "name": "bot.arbiterFamilies",
@@ -511,6 +512,17 @@
    "note": "owner approved 2026-11-27, live on sandbox Doofer (mode 2); 45 min flip window closed clean 2026-11-27T14:25:40Z (no hard breach), kept on trial"
   },
   {
+   "name": "bot.diffReadyV2",
+   "built_by": "diffready (TASK-1058)",
+   "dark_since": "2026-11-27",
+   "why_off": "Built and tested offline only. Nightmare rows are SME advice (S), Hell rows are U placeholders, the Baal quest word position is U, no operator verb grants the owner's go yet, and the resist basis (TASK-216) is unsettled.",
+   "enable_criteria": "Live check docs/diffready.md passes on a throwaway Nightmare-eligible hero (Baal word reads Done after the kill, ready line shows in ops why); an owner-go verb exists; then one sandbox for a week with the owner granting the hop by hand",
+   "owner": "coordinator",
+   "review_by": "2026-12-18",
+   "status": "dark",
+   "criteria_met": "no"
+  },
+  {
    "name": "bot.admission",
    "built_by": "admit2 (TASK-970 step 2)",
    "dark_since": "2026-11-27",
@@ -528,6 +540,17 @@
    "dark_since": "2026-11-27",
    "why_off": "Advice section built (internal/advisor, watch.AdviceSection) but the bot does not yet gather the stock and pass FunConfig.Advice; the lines are unreviewed by the d2-sme agent.",
    "enable_criteria": "d2-sme reviews the advice lines for each class on a real stock; the bot-side stock gatherer is wired; advice stays lines only (no item moves) without an owner go.",
+   "owner": "coordinator",
+   "review_by": "2026-12-11",
+   "status": "dark",
+   "criteria_met": "U"
+  },
+  {
+   "name": "quests.resumeAfterDeaths",
+   "built_by": "questresume (branch agent/questresume)",
+   "dark_since": "2026-11-27",
+   "why_off": "A quest chunk parked after two deaths waited for the player's Try again for ever (a sandbox hero did no quest for 42 h). The pause policy lifts such a park after a quiet stretch, once in a row, three times a day; built and tested offline only (fake clock, two classes), never run on a live hero.",
+   "enable_criteria": "Flip on one sandbox whose quests.boardSM is 1 with a 24 h watch: a death park shows reason paused_after_deaths with its clears text in /api/quests, lifts itself after afterMin quiet minutes at the policy life, and a second park on the same chunk stays until Try again; at least one resume seen in the window, no hard breach (docs/process/dark-launch.md).",
    "owner": "coordinator",
    "review_by": "2026-12-11",
    "status": "dark",

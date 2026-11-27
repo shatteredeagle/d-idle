@@ -56,9 +56,9 @@
      "uses": ["travel", "escape"],
      "range": 18,
      "minHop": 4,
-     "escapeSurround": 4,
-     "escapeLifePct": 65,
-     "source": "V range: a cast moves about 18 subtiles (docs/act2.md live results, nav teleport.go). U escape triggers: four in contact under 65 percent life, the melee profiles' surround numbers"
+     "escapeSurround": 3,
+     "escapeLifePct": 75,
+     "source": "V range: a cast moves about 18 subtiles (docs/act2.md live results, nav teleport.go). U escape triggers: three in contact or under 75 percent life (SME review 2026-11-27, confidence medium; was four and 65)"
     }
    ]
   },
@@ -112,9 +112,9 @@
      "uses": ["travel", "escape"],
      "range": 18,
      "minHop": 4,
-     "escapeSurround": 4,
-     "escapeLifePct": 65,
-     "source": "V range: a cast moves about 18 subtiles (docs/act2.md live results, nav teleport.go). U escape triggers: four in contact under 65 percent life, the melee profiles' surround numbers"
+     "escapeSurround": 3,
+     "escapeLifePct": 75,
+     "source": "V range: a cast moves about 18 subtiles (docs/act2.md live results, nav teleport.go). U escape triggers: three in contact or under 75 percent life (SME review 2026-11-27, confidence medium; was four and 65)"
     }
    ]
   },
@@ -179,9 +179,9 @@
      "uses": ["travel", "escape"],
      "range": 18,
      "minHop": 4,
-     "escapeSurround": 4,
-     "escapeLifePct": 65,
-     "source": "V range: a cast moves about 18 subtiles (docs/act2.md live results, nav teleport.go). U escape triggers: four in contact under 65 percent life, the melee profiles' surround numbers"
+     "escapeSurround": 3,
+     "escapeLifePct": 75,
+     "source": "V range: a cast moves about 18 subtiles (docs/act2.md live results, nav teleport.go). U escape triggers: three in contact or under 75 percent life (SME review 2026-11-27, confidence medium; was four and 65)"
     }
    ]
   },
@@ -225,9 +225,9 @@
      "uses": ["travel", "escape"],
      "range": 18,
      "minHop": 4,
-     "escapeSurround": 4,
-     "escapeLifePct": 65,
-     "source": "V range: a cast moves about 18 subtiles (docs/act2.md live results, nav teleport.go). U escape triggers: four in contact under 65 percent life, the melee profiles' surround numbers"
+     "escapeSurround": 3,
+     "escapeLifePct": 75,
+     "source": "V range: a cast moves about 18 subtiles (docs/act2.md live results, nav teleport.go). U escape triggers: three in contact or under 75 percent life (SME review 2026-11-27, confidence medium; was four and 65)"
     }
    ]
   },
@@ -872,6 +872,24 @@
      "escapeSurround": 4,
      "escapeLifePct": 55,
      "source": "U judgment: range, gap and escape numbers are planning values; the landing rule of Leap Attack (a point, not a unit) is the live look of the move card"
+    },
+    {
+     "name": "Whirlwind",
+     "uses": ["whirl"],
+     "range": 10,
+     "minHop": 3,
+     "through": 3,
+     "whirlPack": 3,
+     "whirlRadius": 4,
+     "whirlAbortLifePct": 50,
+     "source": "U judgment (card dlv-whirl): leg length, pack size and radius are planning values; the spin radius waits for fidelity A6. The row acts only once Whirlwind is learned"
+    }
+   ],
+   "presses": [
+    {
+     "name": "Whirlwind",
+     "sliceMs": 700,
+     "source": "U judgment: one leg per fight tick; the attack-sequence rate waits for fidelity A1"
     }
    ],
    "melee": {
@@ -1503,7 +1521,7 @@
      "requires": "Blessed Hammer",
      "attack": [
       "Blessed Hammer",
-      "Smite",
+      "Zeal",
       "Attack"
      ],
      "aura": [
@@ -1526,7 +1544,6 @@
      "requires": "Zeal",
      "attack": [
       "Zeal",
-      "Smite",
       "Attack"
      ]
     },
@@ -1580,6 +1597,13 @@
     "surround": 4,
     "surroundLifePct": 65,
     "manaReserve": 4
+   },
+   "stance": {
+    "kind": "insidePack",
+    "standOff": 2,
+    "leaveSurround": 5,
+    "leaveLifePct": 50,
+    "source": "U judgment, SME review 2026-11-27, confidence medium-low: the hammerdin profile's insidePack numbers (U judgment); knob 2 still waits for the survival model"
    }
   }
  ]

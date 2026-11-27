@@ -7,10 +7,12 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
 
+	"d2lod-bot/internal/logx"
 	"d2lod-bot/internal/ops"
 	"d2lod-bot/internal/questboard"
 )
@@ -23,6 +25,8 @@ const opsUsage = `usage: d2bot ops quest status [--json] [--why]
        d2bot ops hold|home --why "reason"                    (hold: stop and rest in town; home: queue a rest in town)
        d2bot ops go <area> [--minutes N] --why "reason"      (a go order, default 60 minutes)
        d2bot ops park <quest> <hours 1..24> --why "reason"   (stop the quest's chunk, refuse start and retry until then)
+       d2bot ops go-difficulty <nightmare|hell> --why "reason"   (your go for the hop; refused with what is missing unless ready)
+       d2bot ops log [--tail N] [--grep REGEXP] [--file PATH]   (the bot's own log file, read only, no socket; default N 50)
        d2bot ops quest wait <quest> [--chunk ID] [--timeout 600]
 flags: --sock PATH (default $D2BOT_OPERATOR_SOCK, else the sandbox container's state directory)`
 
@@ -32,6 +36,9 @@ const defaultOpsSock = "/data/instances/main/state/" + ops.SockName
 // opsMain is `d2bot ops ...`: the client of the operator socket. It returns the process exit code: 0 done, 1 refused
 // or not finished, 2 usage or timeout of a wait.
 func opsMain(args []string, out io.Writer) (int, error) {
+	if len(args) > 0 && args[0] == "log" {
+		return opsLog(args[1:], out)
+	}
 	if len(args) > 0 && args[0] != "quest" {
 		return opsHero(args, out)
 	}
@@ -204,6 +211,11 @@ func opsHero(args []string, out io.Writer) (int, error) {
 			return 2, errors.New(opsUsage)
 		}
 		rq.Area, rq.Minutes = strings.Join(pos, " "), *minutes
+	case ops.DifficultyVerb:
+		if len(pos) != 1 {
+			return 2, errors.New(opsUsage)
+		}
+		rq.Target = pos[0]
 	case "park":
 		h, err := strconv.Atoi(strings.Join(pos[min(1, len(pos)):], ""))
 		if len(pos) != 2 || err != nil {
@@ -235,5 +247,42 @@ func opsExplain(sock string, out io.Writer) (int, error) {
 	}
 	b, _ := json.MarshalIndent(r.Explain, "", " ")
 	fmt.Fprintf(out, "%s\n", b)
+	return 0, nil
+}
+
+// botLogName is the bot's operational log inside the instance logs directory (docs/ops/logs.md).
+const botLogName = "bot.log"
+
+// defaultBotLog is where the sandbox container keeps it.
+const defaultBotLog = "/data/instances/main/logs/" + botLogName
+
+// opsLog is `d2bot ops log`: the last lines of the bot log file and its rotations, optionally filtered. It reads the
+// file, so it works when the bot is down and when `docker logs` is empty.
+func opsLog(args []string, out io.Writer) (int, error) {
+	fs := flag.NewFlagSet("ops log", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	tail := fs.Int("tail", 50, "last N matching lines (0 = all)")
+	grep := fs.String("grep", "", "only lines matching this regular expression")
+	file := fs.String("file", os.Getenv("D2BOT_LOG"), "log file")
+	if err := fs.Parse(args); err != nil || fs.NArg() != 0 || *tail < 0 {
+		return 2, fmt.Errorf("%v\n%s", err, opsUsage)
+	}
+	if *file == "" {
+		*file = defaultBotLog
+	}
+	var re *regexp.Regexp
+	if *grep != "" {
+		var err error
+		if re, err = regexp.Compile(*grep); err != nil {
+			return 2, fmt.Errorf("--grep: %w", err)
+		}
+	}
+	lines, err := logx.Tail(*file, *tail, re)
+	if err != nil {
+		return 1, err
+	}
+	for _, l := range lines {
+		fmt.Fprintln(out, l)
+	}
 	return 0, nil
 }

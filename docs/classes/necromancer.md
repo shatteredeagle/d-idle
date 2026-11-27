@@ -31,7 +31,7 @@ White Bone Wand (+Skeleton/Bone) from the Countess runes (V), +2/+3 Teeth wand f
 
 ## 5. Mercenary
 
-Act 2 Desert Mercenary: Might for hits on immunes; Infinity polearm later for Conviction (V). Equip resistances and leech; revival never exceeds 50,000 gold (V https://web.archive.org/web/2020id_/http://classic.battle.net/diablo2exp/basics/hirelings.shtml). Same hire rule as the Sorceress. Bramble Sacred Armor gives thorns to summons (V, endgame).
+Act 2 Desert Mercenary: Defiance in Normal and Hell, Might only in Nightmare (Might is not offered in Normal or Hell hires; the aura is shared with the minions; SME review 2026-11-27, confidence high, S docs/sme/mercenary.md); Infinity polearm later for Conviction (V). Equip resistances and leech; revival never exceeds 50,000 gold (V https://web.archive.org/web/2020id_/http://classic.battle.net/diablo2exp/basics/hirelings.shtml). Same hire rule as the Sorceress. Bramble Sacred Armor gives thorns to summons (V, endgame).
 
 ## 6. Dangers
 

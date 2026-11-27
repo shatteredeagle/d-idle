@@ -19,6 +19,7 @@ owns:
 exclusive: []
 contracts: []
 lane: next
+result: "offline only, not verified live: GET /api/townplan (watch.townplan/1, internal/watch/townplanapi.go, 503 until bound, POST refused) from supply.ViewOf (internal/supply/view.go: lines, budget, stops, waiting sentence, minute line); Town plan card as opt-in panel web/panels/town-plan (text helpers tested in node on recorded plans of two builds, Sorceress-like mana need 2 and Paladin-like 0). Left: cmd/d2bot must call TownPlanAPI.Bind with the last plan of Town.SupplyPlan and set Fun.TownPlan (outside owns; not wired, so the route is absent today), and the layout that places the opt-in panel. Build-specific: none in Go."
 ---
 
 ## Description
@@ -31,6 +32,6 @@ Why: TODO. Done when: TODO.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 GET /api/townplan schema watch.townplan/1, additive
-- [ ] #2 Town plan card, waiting sentence, minute line; UI test on recorded plans
+- [x] #1 GET /api/townplan schema watch.townplan/1, additive
+- [x] #2 Town plan card, waiting sentence, minute line; UI test on recorded plans
 <!-- AC:END -->

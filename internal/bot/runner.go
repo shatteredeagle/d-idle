@@ -16,6 +16,7 @@ import (
 
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/decide"
+	"d2lod-bot/internal/diffready"
 	"d2lod-bot/internal/env"
 	"d2lod-bot/internal/event"
 	"d2lod-bot/internal/goals"
@@ -121,6 +122,11 @@ type Runner struct {
 	pointsGate atomic.Pointer[func() bool] // who spends points: nil = the bot (pointsgate.go)
 	readiness  *readiness.Evaluator        // nil: no readiness model wired (TASK-218)
 
+	// diffGo is the owner's go for a difficulty hop and diffWhy the last readiness line (diffready.go, bot.diffReadyV2).
+	diffGo  diffready.Consent
+	diffMu  sync.Mutex
+	diffWhy string
+
 	e *env.Env
 	d Deps
 
@@ -225,6 +231,7 @@ type Runner struct {
 	farmOff        string                       // why the farm loop is off for this session (mu)
 	bossRun        atomic.Bool                  // a boss script is running (Deps.Task.Boss): routine town trips wait, the guard's re-plan cancels are off
 	chores         choreWatch                   // a town chore is running (townguard.go)
+	backField      choreWatch                   // the leg back to the field is running (townguard.go)
 	safetyBusy     atomic.Int32                 // safety actions in flight (carryOut); the item fast lane stays closed meanwhile (SafetyBusy)
 	bossStart      map[string]time.Time         // start of the last unfinished boss run by name (taskActs.KillBoss, loop goroutine only)
 	levelerPaused  bool                         // selfStop came from the leveler (LevelerPause), guarded by mu
