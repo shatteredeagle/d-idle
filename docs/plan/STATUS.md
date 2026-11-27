@@ -49,7 +49,6 @@
 | necroteeth | proposed | - | `internal/combat/classdata/profiles.json`<br>`internal/combat/necro_test.go`<br>`internal/leveler/mainattack_test.go` | - |
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
 | deploy88-ledger | proposed | - | `data/darklaunch.json` | - |
-| auraupkeep | proposed | - | `internal/combat/` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |

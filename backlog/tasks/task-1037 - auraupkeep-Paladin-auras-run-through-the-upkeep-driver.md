@@ -1,10 +1,11 @@
 ---
 id: TASK-1037
 title: 'auraupkeep: Paladin auras run through the upkeep driver'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T07:04:00Z'
+updated_date: '2026-11-27T07:28:00Z'
 labels:
   - bot
   - feature
