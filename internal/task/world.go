@@ -87,7 +87,6 @@ type KitPlan struct {
 	Healing, Mana, Portals int
 	GoldCarry              int    // the purse the excursion wants when the stash has it (profile gold_carry; the boss profiles)
 	Short                  string // "" = the plan closes every min with the gold owned; else "short of gold: needs N more for healing"
-	Hand                   string // with Short: where the gold comes from, in order ("sell, then recovery"); a gold shortage hands over, it is never needs_attention
 }
 
 // EarlyBlock is why an area of the early road is closed now.

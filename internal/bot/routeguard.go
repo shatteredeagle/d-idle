@@ -468,12 +468,7 @@ func (r *Runner) kitPlanOf(s *d2.Snapshot) *task.KitPlan {
 		r.planWarn.Do(func() { r.e.Log.Warn("town plan: " + err.Error()) })
 		return nil
 	}
-	kp := &task.KitPlan{Healing: pl.MinOf(supply.Healing), Mana: pl.MinOf(supply.Mana), Portals: pl.MinOf(supply.Portal), GoldCarry: pl.MinOf(supply.GoldCarry), Short: pl.Why()}
-	if kp.Short != "" && pl.Verdict == supply.ShortGold {
-		// the sell chore and the stash run in the visit anyway; the vault row and recovery are the sources after them
-		kp.Hand = pl.Handover(supply.Gold{Sellable: true, VaultPrompt: r.e.Tune.Loot.Vault != 0 && r.e.Tune.Loot.VaultSellPrompt != 0}).Reason
-	}
-	return kp
+	return &task.KitPlan{Healing: pl.MinOf(supply.Healing), Mana: pl.MinOf(supply.Mana), Portals: pl.MinOf(supply.Portal), GoldCarry: pl.MinOf(supply.GoldCarry), Short: pl.Why()}
 }
 
 // fillKit counts the kit by the one counter and, at stage 2, attaches the plan.
