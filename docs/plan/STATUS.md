@@ -48,7 +48,6 @@
 | fid-poison-res-diag | proposed | - | `docs/research/fid-poisonres-trace.md` | - |
 | necroteeth | proposed | - | `internal/combat/classdata/profiles.json`<br>`internal/combat/necro_test.go`<br>`internal/leveler/mainattack_test.go` | - |
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
-| faultstall | proposed | - | `internal/faultproxy/`<br>`cmd/d2scenario/faults.json`<br>`docs/probes/faultsoak-design-2026-11-26.md` | - |
 | deploy88-ledger | proposed | - | `data/darklaunch.json` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
