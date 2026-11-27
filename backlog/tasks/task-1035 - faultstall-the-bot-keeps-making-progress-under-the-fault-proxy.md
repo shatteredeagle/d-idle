@@ -31,8 +31,8 @@ Why: TODO. Done when: TODO.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Cause of the 10 minute watchdog stops under the fault sets found from the row logs
-- [ ] #2 Must-fail offline test reproduces it with a fake single-client d2d
-- [ ] #3 Fix in the proxy or the bot, tests pass
+- [x] #1 Cause of the 10 minute watchdog stops under the fault sets found from the row logs
+- [x] #2 Must-fail offline test reproduces it with a fake single-client d2d
+- [x] #3 Fix in the proxy or the bot, tests pass
 - [ ] #4 Live soak row under the mixed set logs minute lines (live check)
 <!-- AC:END -->
