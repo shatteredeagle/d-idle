@@ -121,3 +121,21 @@ Record 10 (horadric_staff):
 The talk row's post is not set: the scenario did not pass, and the coordinator's rule ties the post to a pass. The Cain-talk reading (0x0800 to 0x0c78, bit 0x0400) stays above.
 
 Next blocker, for the next card: Duriel's Lair entrance (object class 100) is not found in tomb 66 after the placement. It may need the lair's portal or room to be built after the placement (U).
+
+## Fifth run after lairentry (origin/main c47a6e360, labrun job 20261127-074930-b8cc)
+
+The run used the same command with `-id drill.act2.duriel.stepexec`.
+
+Result: BLOCKED 3/3 on the stall rule. Every run now gets through the placement, the lair and the Duriel kill, and then stalls (V, the same in all three runs).
+
+1. **Place.** One early try fails with `object class 152 not found`. The next try gives `seven_tombs/place_staff outcome=done`, and record 10 goes from 0x0c08 to 0x2c09.
+2. **Door.** `quest.duriel/door` runs once and retries (`ran but is still needed (evidence 2)`). The second try enters Duriel's Lair (area 73).
+   - From placement done to `Entered Duriel's Lair`: 28 s, 24 s and 28 s of wall time. Lockstep virtual time was not taken from the log (U).
+3. **Kill.** The general fight kills Duriel (`combat kill monster=Duriel class=211`, life never under 54 percent, no death).
+   - Record 14 (seven_tombs) goes from 0x0004 to 0x0024. Bit 0x0001 stays clear: the quest is not finished until it is reported in town.
+4. **Stall.** The boss task then reports `boss run ... killed=false phases=locate`, `boss: boss not found in the arena`, because Duriel is already dead.
+   - The board parks the chunk, the hero goes to town (equipment at 0 percent durability), and the stall rule ends the run.
+
+Next blocker, for the next card:
+- The `quest.duriel/kill` step does not count a Duriel killed by the fight that ran before the boss run as a kill (`boss not found` instead of done).
+- The scenario's `quest_bits record 14 set 1` assertion also expects the completion bit. The kill alone gives 0x0024, so a pass also needs the Tyrael/Jerhyn hand-in, or the assertion should check bit 0x0020 (U, a decision for the scenario owner).
