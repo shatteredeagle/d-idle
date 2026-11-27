@@ -1,10 +1,13 @@
 ---
 id: TASK-982
-title: 'bsmchk: boardsm checker: questspec rules 12 to 14 in the merge gate (card 8 of t'
-status: Proposed
+title: >-
+  bsmchk: boardsm checker: questspec rules 12 to 14 in the merge gate (card 8 of
+  t
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-26T03:57:00Z'
+updated_date: '2026-11-27T19:42:00Z'
 labels:
   - bot
   - feature
