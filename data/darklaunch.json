@@ -503,6 +503,17 @@
    "trial_why": "deploy 94: owner approved 2026-11-27 08:35 EST: upkeep mode 2 + town plan stage 3 (ADR 0028)",
    "trial_bundle": "combat.deliveryUpkeep,town.plan",
    "note": "owner approved 2026-11-27, live on sandbox Doofer (mode 2); 45 min flip window closed clean 2026-11-27T14:25:40Z (no hard breach), kept on trial"
+  },
+  {
+   "name": "items.advisor",
+   "built_by": "advisor1 (TASK-991, branch agent/advisor1)",
+   "dark_since": "2026-11-27",
+   "why_off": "Advice section built (internal/advisor, watch.AdviceSection) but the bot does not yet gather the stock and pass FunConfig.Advice; the lines are unreviewed by the d2-sme agent.",
+   "enable_criteria": "d2-sme reviews the advice lines for each class on a real stock; the bot-side stock gatherer is wired; advice stays lines only (no item moves) without an owner go.",
+   "owner": "coordinator",
+   "review_by": "2026-12-11",
+   "status": "dark",
+   "criteria_met": "U"
   }
  ]
 }
