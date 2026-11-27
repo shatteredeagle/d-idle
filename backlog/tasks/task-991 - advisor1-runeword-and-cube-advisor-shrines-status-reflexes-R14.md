@@ -15,7 +15,7 @@ ordinal: 478000
 card: "advisor1"
 owns:
   - "docs/design/advisor-r14.md"
-  - "internal/advisor"
+  - "internal/advisor/"
   - "internal/watch/advisorsection.go"
   - "internal/watch/funwire.go"
   - "internal/watch/returnscreen_test.go"
