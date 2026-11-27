@@ -75,6 +75,16 @@ func (f *Fighter) assassinTick(ctx context.Context, snap *d2.Snapshot) (bool, er
 	if !ok {
 		return false, nil
 	}
+	if pl.tg != nil && f.aimRow(p, pl.sp.Name) != nil {
+		// traps on the point aim path: a row re-aims the pack lay point; a refusal (mode 2) skips the lay this tick
+		at, ok := f.aimFor(snap, pl.sp, *pl.tg, hs, true)
+		if !ok {
+			return false, nil
+		}
+		if f.upkeepMode() == 2 {
+			pl.at = at
+		}
+	}
 	if err := f.cast(snap, pl.sp, pl.at); err != nil {
 		return false, err
 	}

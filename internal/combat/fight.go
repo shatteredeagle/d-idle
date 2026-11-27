@@ -51,8 +51,9 @@ type seenUnit struct {
 }
 
 type fightState struct {
-	fallbackSaid bool   // the melee kill-first fallback was logged this fight
-	endWhy       string // loop exit that ended the fight (noteEnd)
+	aimPool      []Target // the candidates of this tick: the hostiles a point aim scores (aim.go)
+	fallbackSaid bool     // the melee kill-first fallback was logged this fight
+	endWhy       string   // loop exit that ended the fight (noteEnd)
 	tracks       map[uint32]*track
 	seen         map[uint32]seenUnit
 	blacklist    map[uint32]bool
@@ -416,6 +417,7 @@ func (f *Fighter) fight(ctx context.Context, sp fightSpec, snap *d2.Snapshot) (r
 		}
 		tg := ranked[0]
 		f.refineResists(&tg, p.Difficulty)
+		st.aimPool = cand
 		f.attacking.Store(tg.Unit.ID)
 		if err = f.engage(ctx, snap, tg, sp, st); err != nil {
 			return
@@ -814,12 +816,17 @@ func (f *Fighter) engage(ctx context.Context, snap *d2.Snapshot, tg Target, sp f
 		f.decision(st, "wait", "cast gap")
 		return nil
 	}
+	at, ok := f.aimFor(snap, spec, tg, st.aimPool, true)
+	if !ok {
+		f.decision(st, "wait", "aim refused")
+		return f.sleep(ctx, ms(t.PollMs))
+	}
 	tr.casts++
 	st.noteCast(now)
 	tr.noDrop += tr.dt
 	st.book.Add(f.now().Sub(st.t0).Seconds(), spec.Cost)
 	f.log().Debug("combat decision", "act", "cast", "skill", spec.Name, "target", tg.Name, "dist", int(tg.Dist), "hostiles", len(snap.Monsters))
-	return f.cast(snap, spec, target)
+	return f.cast(snap, spec, at)
 }
 
 // castReady keeps the minimum gap between two casts without blocking: the fight loop ticks in between, so
