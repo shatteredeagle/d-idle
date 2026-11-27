@@ -50,6 +50,7 @@
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
 | deploy88-ledger | proposed | - | `data/darklaunch.json` | - |
 | placefix | proposed | - | `internal/questboard/`<br>`internal/bot/questboard.go`<br>`data/questboard/act2.json`<br>`tools/provingground/scenarios/stepexec-act2.json`<br>`tools/provingground/scenarios/questdrill.json`<br>`internal/scenario/placefix_test.go`<br>`docs/questboard.md`<br>`internal/task/act1.go`<br>`internal/task/act2.go`<br>`internal/task/placefix_test.go` | - |
+| palzeal | in-progress | - | `internal/leveler/`<br>`internal/plandata/build-paladin-zealot-lite.json`<br>`docs/plan/data/build-paladin-zealot-lite.json`<br>`internal/combat/palzeal_attack_test.go`<br>`internal/combat/fighter.go`<br>`internal/d2dcombat/input.go` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
@@ -245,6 +246,7 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 65263cf51 11-27 06:22 `Merge agent/palzeal: palzeal: owns the leveler directory` (palzeal)
 - 09f065a32 11-27 05:18 `Merge agent/placefix2: Merge branch 'main' into placefix` (placefix2)
 - 488cf96cc 11-27 05:16 `Merge branch 'main' into placefix` (-)
 - 640cb0c41 11-27 05:06 `Merge agent/act2drill2: act2drill2: card result for the Duriel rerun` (act2drill2)
@@ -254,5 +256,4 @@
 - bbde82597 11-27 03:55 `Merge agent/skillhand: Merge branch 'main' into skillhand` (skillhand)
 - c863c1693 11-27 03:53 `Merge branch 'main' into skillhand` (-)
 - 4b533a795 11-27 03:49 `Merge origin/main into skillhand (keep casthold skillhold and the numeric cmd skill)` (skillhand)
-- 9e8522d83 11-27 03:49 `Merge agent/act2drill: Merge branch 'main' into stepexec1` (act2drill)
 <!-- statusgen:end -->
