@@ -102,8 +102,23 @@ func TestPaladinEarlyPoints(t *testing.T) {
 		t.Errorf("plain table Smite points by 17 = %d, want 1", got)
 	}
 	v := "paladin_hammerdin_zeal_endgame90"
-	if count(v, "Smite") < 8 || count(v, "Zeal") != 5 || count(v, "Sacrifice") != 1 {
-		t.Errorf("variant smite %d zeal %d sacrifice %d", count(v, "Smite"), count(v, "Zeal"), count(v, "Sacrifice"))
+	// SME review 2026-11-27 (confidence medium-high): Smite adds no damage, so the variant keeps 1 point (the Charge
+	// prerequisite) and puts the rest into Might; Zeal is bought from clvl 12.
+	if count(v, "Smite") != 1 || count(v, "Might") < 7 || count(v, "Zeal") != 5 || count(v, "Sacrifice") != 1 {
+		t.Errorf("variant smite %d might %d zeal %d sacrifice %d", count(v, "Smite"), count(v, "Might"), count(v, "Zeal"), count(v, "Sacrifice"))
+	}
+	first := func(skill string) int {
+		for _, r := range mustBuild(t, v).Rows {
+			for _, s := range r.Skills {
+				if s.Skill == skill {
+					return r.Clvl
+				}
+			}
+		}
+		return 0
+	}
+	if first("Sacrifice") != 11 || first("Zeal") != 12 || first("Charge") < 18 {
+		t.Errorf("sacrifice %d zeal %d charge %d", first("Sacrifice"), first("Zeal"), first("Charge"))
 	}
 }
 
