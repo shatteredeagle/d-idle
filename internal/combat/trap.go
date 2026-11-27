@@ -134,6 +134,7 @@ type trapPlan struct {
 	at     input.Point
 	target string
 	dist   float64
+	tg     *Target // the pack target of a pack trap (nil on a corpse): an aim row re-aims the cast (aim.go)
 }
 
 // trapState counts for a skill: standing traps of that skill (not about to expire), the unmatched casts, and the
@@ -207,7 +208,7 @@ func planTrap(me input.Point, known map[string]SkillSpec, mana int, hs []Target,
 			continue
 		}
 		if tg, ok := pickTrapTarget(hs, cover, sp.Elem, sp.Range); ok {
-			return trapPlan{sp: sp, at: packCentre(me, tg, hs, sp.Range), target: tg.Name, dist: tg.Dist}, true
+			return trapPlan{sp: sp, at: packCentre(me, tg, hs, sp.Range), target: tg.Name, dist: tg.Dist, tg: &tg}, true
 		}
 	}
 	return trapPlan{}, false

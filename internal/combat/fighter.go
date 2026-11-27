@@ -85,6 +85,7 @@ type Fighter struct {
 	upk           upkeepState // the state-observed upkeep driver (upkeep.go)
 	upkCmp        upkeepCmp   // shadow comparison counts (upkeepcmp.go)
 	mark          markState   // the mark driver (mark.go)
+	aim           aimState    // the point aim driver (aim.go)
 	stance        stanceState // the army stance (stance.go)
 	lastDodge     time.Time
 	diagMu        sync.Mutex // guards portalCast and casts (read from the bot's autopsy)

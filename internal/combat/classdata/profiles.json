@@ -3,6 +3,15 @@
   {
    "class": "sorceress",
    "build": "blizzard",
+   "aims": [
+    {
+     "name": "Blizzard",
+     "rule": "cluster",
+     "radius": 4,
+     "los": "none",
+     "source": "U radius from the area as seen in play, not read from skills.txt; los none for a spell that falls from the sky"
+    }
+   ],
    "bands": [
     {
      "minLevel": 26,
@@ -657,6 +666,15 @@
   },
   {
    "class": "druid",
+   "aims": [
+    {
+     "name": "Eruption",
+     "rule": "cluster",
+     "radius": 3,
+     "los": "walk",
+     "source": "U radius guessed from the Fissure vent spread; los walk because the vents rise from floor cells"
+    }
+   ],
    "minions": {
     "lifePct": 40,
     "groups": [
@@ -881,6 +899,15 @@
     ]
    },
    "build": "fire",
+   "aims": [
+    {
+     "name": "Eruption",
+     "rule": "cluster",
+     "radius": 3,
+     "los": "walk",
+     "source": "U radius guessed from the Fissure vent spread; los walk because the vents rise from floor cells"
+    }
+   ],
    "bands": [
     {
      "minLevel": 12,
