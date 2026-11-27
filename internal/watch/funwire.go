@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"strings"
 	"sync"
+	"time"
 
 	"d2lod-bot/internal/currency"
 	"d2lod-bot/internal/decide"
@@ -68,6 +69,7 @@ type FunConfig struct {
 	Speed   float64 // virtual seconds per wall second (Config.Speed)
 	Notes   NotesSink
 	Rules   []string        // visible rules shown on the return screen ("ladder runewords: on"); nil: none
+	Quests  func() []string // quest board park lines (questboard.Desk.ParkLines); nil: no quests section
 	Advice  func() []string // runeword and cube advice lines (items.advisor); nil: no advice section
 	Strip   *TallyStrip     // nil: /api/tally says tally is off
 	Codex   *decide.Codex
@@ -227,7 +229,8 @@ func NewFun(c FunConfig) (*Fun, error) {
 		c.Visit = NewVisit("", nil)
 	}
 	ob, err := NewOnboarding(OnboardingConfig{Path: c.OnboardingPath, Hero: func() string { return c.Hub.heroNow().Name },
-		Signals: func() map[string]bool { return onboardingSignals(f.Away) }, Away: c.Visit.awayOK, Art: func() (string, int, int) { return artProgress(f.Art) }})
+		Signals: func() map[string]bool { return onboardingSignals(f.Away) }, Away: c.Visit.awayOK, Art: func() (string, int, int) { return artProgress(f.Art) },
+		Chickens: func() int { return chickenCount(f.Away, time.Now()) }})
 	if err != nil {
 		return nil, err
 	}
@@ -241,6 +244,9 @@ func NewFun(c FunConfig) (*Fun, error) {
 	if c.Difficulty != nil {
 		f.Difficulty = c.Difficulty
 		sec.Register(DifficultySectionID, DifficultySection(c.Difficulty))
+	}
+	if c.Quests != nil {
+		sec.Register(QuestSectionID, QuestSection(c.Quests))
 	}
 	if c.Advice != nil {
 		sec.Register(AdviceSectionID, AdviceSection(c.Advice))

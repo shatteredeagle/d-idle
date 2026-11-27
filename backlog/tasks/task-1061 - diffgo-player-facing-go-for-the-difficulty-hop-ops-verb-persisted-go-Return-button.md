@@ -1,10 +1,13 @@
 ---
 id: TASK-1061
-title: 'diffgo: player-facing go for the difficulty hop (ops verb, persisted go, Return button)'
-status: Proposed
+title: >-
+  diffgo: player-facing go for the difficulty hop (ops verb, persisted go,
+  Return button)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T20:00:00Z'
+updated_date: '2026-11-27T21:46:00Z'
 labels:
   - bot
   - feature

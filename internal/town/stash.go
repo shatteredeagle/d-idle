@@ -128,7 +128,7 @@ func (t *Town) stashItems(ctx context.Context, rep *ChoreReport, insure bool) er
 func (t *Town) goldKeep(level int) int {
 	tu := t.tune()
 	keep := tu.StashGoldBase + level*tu.StashGoldPerLvl
-	if tu.BankFirst != 0 || t.PlanStage() >= 3 {
+	if t.bankFirst() {
 		keep = max(keep, t.kitGold()) // BASICSFIX: banking never cuts into the minimal kit
 	}
 	if t.PlanStage() >= 3 {

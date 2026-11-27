@@ -60,6 +60,7 @@ var reasonTable = []ReasonInfo{
 	{"paused", KindNeeds, RemedyPlayer, 0, "Paused: the hero continues when you resume."},
 	{"gave_up", KindNeeds, RemedyPlayer, 0, "{quest} is stuck: gave up after {n} tries: {why}"},
 	{"died_too_often", KindNeeds, RemedyPlayer, 0, "{quest} is stuck: the hero died {n} times on this part."},
+	{"paused_after_deaths", KindNeeds, RemedyPlayer, 0, "{quest} is paused: the hero died {n} times on this part."},
 	{"handin_failed", KindNeeds, RemedyPlayer, 0, "The hand-in did not go through: {why}"},
 	{"prereq_regressed", KindNeeds, RemedyPlayer, 0, "{part} no longer reads as done, and {quest} needs it."},
 	{"prereq_missing", KindNeeds, RemedyPlayer, 0, "{part} has to be done first and cannot start now: {why}"},

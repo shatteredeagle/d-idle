@@ -236,3 +236,22 @@ func TestOnboardingStepsMatchLatches(t *testing.T) {
 		t.Errorf("steps %s: onboardingSignals, Observe and opened latch these ids", got)
 	}
 }
+
+func TestChickenCountWindow(t *testing.T) {
+	now := time.Unix(2_000_000, 0)
+	l := NewAwayLog(func() float64 { return 0 })
+	at := func(ago time.Duration) int64 { return now.Add(-ago).Unix() }
+	for _, e := range []AwayEvent{
+		{Kind: AwayClose, Left: "chicken", Wall: at(time.Hour)},
+		{Kind: AwayClose, Left: "chicken", Wall: at(23 * time.Hour)},
+		{Kind: AwayClose, Left: "chicken", Wall: at(25 * time.Hour)}, // outside
+		{Kind: AwayClose, Left: "portal", Wall: at(time.Hour)},       // not a chicken
+		{Kind: AwayClose, Left: "chicken"},                           // no wall time
+		{Kind: AwayKill, Wall: at(time.Hour)},
+	} {
+		l.Add(e)
+	}
+	if n := chickenCount(l, now); n != 2 {
+		t.Fatalf("chickens %d, want 2", n)
+	}
+}

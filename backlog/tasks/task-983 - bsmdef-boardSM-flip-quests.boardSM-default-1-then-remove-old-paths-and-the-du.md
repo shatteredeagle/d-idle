@@ -1,9 +1,9 @@
 ---
 id: TASK-983
 title: 'bsmdef: boardSM flip: quests.boardSM default 1, then remove old paths and the du'
-status: Proposed
+status: In Progress
 assignee:
-  - credit-runner
+  - live-agent
 created_date: '2026-11-26T03:57:00Z'
 labels:
   - bot
@@ -17,6 +17,7 @@ owns:
   - "docs/design/boardsm-flip.md"
 exclusive: []
 contracts: []
+result: "Remaining (live): AC 1 boardSM 1 on the quest sandbox with the restart drill (Run 1 board.sm.* feeds it), AC 2 default flip after that."
 ---
 
 ## Description
