@@ -328,7 +328,6 @@ internal/bot/runner.go  credit-runner  campaign1
 internal/bot/shadow.go  credit-runner  arbmig
 internal/bot/shadow.go  credit-runner  ticklog
 internal/bot/task.go  credit-runner  boardmoderace
-internal/bot/task.go  credit-runner  wpstep
 internal/bot/ticklog.go  credit-runner  ticklog
 internal/bot/ticklog_test.go  credit-runner  ticklog
 internal/bot/waypoints.go  credit-runner  boardmoderace
@@ -381,13 +380,9 @@ internal/d2dsrc/items.go  credit-runner  qdmatrix
 internal/d2dsrc/source_test.go  credit-runner  placefix
 internal/d2dsrc/srv_test.go  credit-runner  qdmatrix
 internal/d2dworld  credit-runner  countess3
-internal/d2dworld/  credit-runner  wpstep
 internal/d2dworld/triggers_test.go  credit-runner  warptrigger
 internal/d2map  credit-runner  countess3
 internal/d2map/static.go  credit-runner  warptrigger
-internal/d2map/static.go  credit-runner  wpstep
-internal/d2map/tracker.go  credit-runner  wpstep
-internal/d2map/tracker_test.go  credit-runner  wpstep
 internal/data/  credit-runner  dlv-upkeep-state
 internal/decide/queue.go  credit-runner  qqueue
 internal/decide/queue_test.go  credit-runner  qqueue
@@ -471,12 +466,10 @@ internal/task/act2_test.go  credit-runner  qdmatrix
 internal/task/act4.go  credit-runner  qdmatrix
 internal/task/banote_test.go  credit-runner  cainfix3
 internal/task/campaign.go  credit-runner  campaign1
-internal/task/executor.go  credit-runner  wpstep
 internal/task/gate.go  credit-runner  cainfix3
 internal/task/guided.go  credit-runner  campaign1
 internal/task/guided_test.go  credit-runner  campaign1
 internal/task/placefix_test.go  credit-runner  placefix
-internal/task/timeoutpolicy_test.go  credit-runner  wpstep
 internal/task/world.go  credit-runner  cainfix3
 internal/town  credit-runner  town11
 internal/town  credit-runner  town5
@@ -573,7 +566,6 @@ tools/provingground/pgenv_test.sh  credit-runner  pgledgeron
 tools/provingground/run.sh  credit-runner  pgledgeron
 tools/provingground/scenarios/behaviours.json  credit-runner  dlv-cast-verbs
 tools/provingground/scenarios/cain.json  credit-runner  cainfix3
-tools/provingground/scenarios/cain.json  credit-runner  wpstep
 tools/provingground/scenarios/input-scenarios.json  credit-runner  dlv-cast-verbs
 tools/provingground/scenarios/navexit.json  credit-runner  stage1fix
 tools/provingground/scenarios/necro.json  credit-runner  stage1fix

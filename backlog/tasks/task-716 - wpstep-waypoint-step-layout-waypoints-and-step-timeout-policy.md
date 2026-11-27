@@ -1,10 +1,11 @@
 ---
 id: TASK-716
 title: 'wpstep: waypoint step layout waypoints and step timeout policy'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-21T04:38:00Z'
+updated_date: '2026-11-27T20:02:00Z'
 labels:
   - bot
   - bot-fix
