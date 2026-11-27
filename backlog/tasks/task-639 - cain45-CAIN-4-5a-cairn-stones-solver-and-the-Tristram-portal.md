@@ -29,7 +29,7 @@ owns:
   - "internal/d2dsrc/source_test.go"
 exclusive: []
 contracts: []
-result: "Offline (tests, not live): solveCairn cycles by class with lit verification (15 clicks, 25 blind), tested on all 120 orders; bkd prereq fault; portal entry checks level 38; board chunk stones supported, free_cain still not supported yet. debug portals and presets are read by the sandbox bot already; debug objects (stone NU/ON) is U there, blind fallback built. Doc docs/probes/search-for-cain-45-2026-11-18.md."
+result: "Offline (tests, not live): solveCairn cycles by class with lit verification (15 clicks, 25 blind), tested on all 120 orders; bkd prereq fault; portal entry checks level 38; board chunk stones supported, free_cain still not supported yet. debug portals and presets are read by the sandbox bot already; debug objects (stone NU/ON) is U there, blind fallback built. Doc docs/probes/search-for-cain-45-2026-11-18.md. closecards3 Remaining (live): #5 need the live game, a browser or a worker-host run; not verified here."
 lane: next
 ---
 

@@ -30,7 +30,7 @@ owns:
   - "docs/design/bulk-identify-2026-11-18.md"
 exclusive: []
 contracts: []
-result: "Town adapters (Mover, Lister, CainTalk), the bulkid chore after identify, file journal with recovery under any policy, Cain quest word gate, scroll path (policy 2, buys only with town.identifyTome) and an Ether tap payer built offline with must-fail tests. NOT run live: the Cain drill is design sections 9 and 11. Ether charge semantics (what replaces the identify tool) is U."
+result: "Town adapters (Mover, Lister, CainTalk), the bulkid chore after identify, file journal with recovery under any policy, Cain quest word gate, scroll path (policy 2, buys only with town.identifyTome) and an Ether tap payer built offline with must-fail tests. NOT run live: the Cain drill is design sections 9 and 11. Ether charge semantics (what replaces the identify tool) is U. closecards3 Remaining (live): #3 need the live game, a browser or a worker-host run; not verified here."
 ---
 
 ## Description
