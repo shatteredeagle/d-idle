@@ -134,8 +134,10 @@ cmd/d2bot/adapters.go  credit-runner  cainfix3
 cmd/d2bot/agencydrive_test.go  credit-runner  agencyp1b
 cmd/d2bot/agencywire.go  credit-runner  agencyp1b
 cmd/d2bot/behaviors.go  credit-runner  campaign1
+cmd/d2bot/behaviors.go  credit-runner  relaunches
 cmd/d2bot/d2dbackend.go  credit-runner  campaign1
 cmd/d2bot/d2dwire.go  credit-runner  agencyp1b
+cmd/d2bot/d2dwire.go  credit-runner  relaunches
 cmd/d2bot/hotkeydrift_test.go  live-agent  epic-class-necromancer
 cmd/d2bot/invverbs.go  credit-runner  uib9
 cmd/d2bot/invverbs_test.go  credit-runner  uib9
@@ -265,6 +267,7 @@ internal/arbiter  credit-runner  town10
 internal/arbiter/  live-agent  arbmig
 internal/arbiter/replay.go  live-agent  ticklog
 internal/arbiter/replay_ticklog_test.go  live-agent  ticklog
+internal/bot  credit-runner  relaunches
 internal/bot/  credit-runner  cainfix3
 internal/bot/arbiter_control.go  live-agent  arbmig
 internal/bot/arbiter_control_test.go  live-agent  arbmig

@@ -44,6 +44,7 @@
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | racefix | proposed | - | `internal/bot/questboard.go`<br>`internal/bot/questboard_test.go` | - |
 | tuningwrite | proposed | - | `internal/store/`<br>`internal/bot/tuner.go`<br>`internal/bot/tuner_test.go`<br>`tools/flip/` | - |
+| relaunches | proposed | - | `internal/bot`<br>`cmd/d2bot/behaviors.go`<br>`cmd/d2bot/d2dwire.go` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
@@ -194,6 +195,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- c72327077 11-27 18:39 `Merge agent/relaunches: relaunches: relaunch reason log line + minute-line counters, refusal-storm top list (TASK-1079)` (relaunches)
+- 94912298e 11-27 18:38 `Merge branch 'main' into relaunches` (-)
 - dbbe1e8c0 11-27 18:31 `Merge agent/tuningwrite: tuningwrite: refuse tiny tuning writes, restore warn, flip verify hard-fails on zero bytes (TASK-1077)` (tuningwrite)
 - 20f13e0a4 11-27 18:31 `Merge agent/racefix: racefix: hand-in rebuilds the cached world before signalling done (TASK-1076)` (racefix)
 - b50b24aa8 11-27 18:31 `Merge agent/denreward: denreward: hold every non-emergency trip while a quest reward is pending, nav.barracks-return scenario (TASK-880)` (denreward)
@@ -202,6 +205,4 @@
 - b0ba5397d 11-27 18:28 `Merge branch 'main' into denreward` (-)
 - d894a57bf 11-27 18:20 `Merge agent/bsmprep: bsmprep: boardLegacy seam, boardSM removal plan, drill scenarios (TASK-983 prep)` (bsmprep)
 - 25c9ee658 11-27 18:18 `Merge branch 'main' into bsmprep` (-)
-- ee98b56f4 11-27 18:15 `Merge agent/docsweep: docsweep: stale citations, roadmap refresh, 2 h wording` (docsweep)
-- cb47f585c 11-27 18:13 `Merge origin/main into denreward (card result lines combined, docs sections both kept)` (-)
 <!-- statusgen:end -->
