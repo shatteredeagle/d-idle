@@ -611,7 +611,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 `reviews/`
 
 - [support-bundle-security-2026-11-15.md](reviews/support-bundle-security-2026-11-15.md): Security review: support bundle upload (branch agent/support, tip 88eecae7b) (status: review of task 542 / card `support` before merge (mergeq #811). Reviewer: Opus, single, offline. Nothing...)
-- [roadmap-fable.md](roadmap-fable.md): Fable roadmap: every recommendation, its state, and what flips it (status: current (card fableroadmap, 2026-11-26; refreshed by card roadmap2 the same day against `git log...)
+- [roadmap-fable.md](roadmap-fable.md): Fable roadmap: every recommendation, its state, and what flips it (status: current (card fableroadmap, 2026-11-26; refreshed by card roadmap2 the same day and by card roadmap3 on...)
 - [roamleg.md](roamleg.md): ROAMLEG: a mouth-gate hold is not a failed roam target (status: offline fix, tests pass, verified live in DRILLS23 (docs/probes/drills/README.md): 0 failed legs (was 50),...)
 - [roamspacing.md](roamspacing.md): Roam coverage spacing (TASK-301) (status: CURRENT. Tags: V = measured (log read-only, or the simulator run in this worktree on the worker host), S =...)
 - [running.md](running.md): How to run d.idle (status: current as of 2026-11-01 (card readmedocs; Teleport and `--build` note added by card capdocs). Every...)
