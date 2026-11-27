@@ -14,8 +14,8 @@ priority: medium
 ordinal: 346000
 card: "town6"
 owns:
-  - "internal/town"
-  - "internal/loot"
+  - "internal/town/"
+  - "internal/loot/"
   - "docs/design/townflip-p5.md"
 exclusive: []
 contracts: []
