@@ -244,6 +244,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 9e8522d83 11-27 03:49 `Merge agent/act2drill: Merge branch 'main' into stepexec1` (act2drill)
+- bcee08864 11-27 03:47 `Merge branch 'main' into stepexec1` (-)
 - e74b65753 11-27 03:11 `Merge agent/upkeepcmp: Merge branch 'main' into upkeepcmp` (upkeepcmp)
 - 2f3ae2bd7 11-27 03:10 `Merge branch 'main' into upkeepcmp` (-)
 - 9f3e208a6 11-27 03:05 `Merge agent/casthold: casthold: card result and criteria` (casthold)
@@ -252,6 +254,4 @@
 - c395306d0 11-27 02:45 `Merge branch 'main' into inputl3` (-)
 - 685f85220 11-27 02:38 `Merge agent/stancearmy: Merge branch 'main' into dlv-stance-army` (stancearmy)
 - a5ab785fe 11-27 02:36 `Merge branch 'main' into dlv-stance-army` (-)
-- 670290dff 11-27 02:35 `Merge agent/pgpage: Merge branch 'main' into pgpage` (pgpage)
-- c4464d60b 11-27 02:33 `Merge branch 'main' into pgpage` (-)
 <!-- statusgen:end -->
