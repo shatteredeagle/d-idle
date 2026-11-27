@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"log/slog"
 	"os"
@@ -119,6 +120,7 @@ func newFun(l ladderOptions, stateDir string, hub *watch.Hub, wallet *currency.W
 	if cfg.Hall, err = newHallConfig(wallet, l.storeProfile(), status); err != nil {
 		return nil, err
 	}
+	cfg.Difficulty = difficultyConfig()
 	var fun *watch.Fun // the risk facts read the proposal desk of the Fun built below
 	if cfg.Risk, err = newRiskConfig(l, func() string { return nextZone(fun) }); err != nil {
 		return nil, err
@@ -287,4 +289,25 @@ func newHallConfig(wallet *currency.Wallet, profile string, status func() goals.
 			return f
 		},
 	}, nil
+}
+
+// difficultyConfig reads the runner late (like explainNow): the Return screen section and its POST for the opt-in hop.
+func difficultyConfig() *watch.DifficultyConfig {
+	return &watch.DifficultyConfig{
+		Offer: func() watch.DifficultyOffer {
+			r := opsRunner.Load()
+			if r == nil {
+				return watch.DifficultyOffer{}
+			}
+			o := r.DifficultyOffer()
+			return watch.DifficultyOffer{Target: o.Target, Ready: o.Ready, Pending: o.Pending, Line: o.Line, Missing: o.Missing}
+		},
+		Go: func(target string) (string, error) {
+			r := opsRunner.Load()
+			if r == nil {
+				return "", errors.New("the bot is not running yet")
+			}
+			return r.RequestDifficultyGo(target)
+		},
+	}
 }
