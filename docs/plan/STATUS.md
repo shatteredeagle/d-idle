@@ -245,6 +245,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 848edfa61 11-27 02:15 `Merge agent/stepexec2: Merge branch 'main' into stepexec1` (stepexec2)
+- 0aa47d75a 11-27 02:13 `Merge branch 'main' into stepexec1` (-)
 - 1e7ac4599 11-27 02:08 `Merge agent/castverbs: Merge branch 'main' into dlv-cast-verbs` (castverbs)
 - c99e25214 11-27 02:08 `Merge agent/pghero: Merge branch 'main' into pghero` (pghero)
 - c2882fccf 11-27 02:05 `Merge branch 'main' into dlv-cast-verbs` (-)
@@ -253,6 +255,4 @@
 - d151d522e 11-27 01:54 `Merge branch 'main' into dlv-mark` (-)
 - 973166ee5 11-27 01:50 `Merge origin/main into agent/mark (keep marks and minions fields; Lower Resist rows stay removed)` (dlv-mark)
 - 3835f3995 11-27 01:46 `Merge agent/faultstall: Merge branch 'main' into faultstall` (faultstall)
-- 989af6273 11-27 01:46 `Merge agent/pgprov2: Merge branch 'main' into pgprov` (pgprov2)
-- f1789b6ad 11-27 01:46 `Merge agent/featuresoak: Merge branch 'main' into featuresoak` (featuresoak)
 <!-- statusgen:end -->
