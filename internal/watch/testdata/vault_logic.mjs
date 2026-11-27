@@ -270,3 +270,8 @@ ok('Equip v2 toast: worn pieces, what went to the vault, each refused piece with
   const four = L.equipWornWords({ failed: [1, 2, 3, 4].map((i) => ({ id: 'a', error: 'x' + i })) }, names, TT);
   assert.ok(four.text.endsWith('1 more refused.'));
 });
+ok('Equip on merc toast names the mercenary slot', () => {
+  const TT = { okWornOne: 'Worn in {slot}.', okWornOff: '{old} went to the {where}.', mercSlots: { mhead: "the mercenary's helm" } };
+  const r = L.equipWornWords({ equipped: [{ id: 'a', slot: 'mhead', removed: ['Old Cap'], where: 'vault' }] }, { a: 'Cap' }, TT);
+  assert.equal(r.text, "Worn in the mercenary's helm. Old Cap went to the Vault.");
+});
