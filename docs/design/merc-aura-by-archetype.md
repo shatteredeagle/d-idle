@@ -21,14 +21,14 @@ Put the aura in the class traits, keyed by difficulty, with today's value as the
 ```
 
 - `mercAura` is `map[string]string`, difficulty name (`normal`, `nightmare`, `hell`) to a skills.txt aura name. An absent key falls back to the difficulty default that `HirePolicy` has today. An empty map means "no class preference".
-- The value is validated at load: every name must be a row of the skills table for the Act 2 hireling (`data/capabilities/capabilities.json` lists the auras by class; the Paladin rows are the aura names). A name nobody can hire is a load error that names the class and difficulty (never a silent fallback).
+- The value is checked where the hire step reads the hireling rows (`town.mercAura` names each row's aura from `hireling.txt`): a configured aura that no row of the act and difficulty offers is an error naming the class, difficulty and aura, never a silent fallback to Defiance. A JSON-only check at load is limited to a non-empty string and a known difficulty key.
 - `act2plan.json` `merc.aura` (`melee`/`caster`) is then redundant. Drop it in the same change, or keep it as the table-level override of the class default (a build table may want another aura than its class); prefer dropping it, because nothing reads it.
 
 ## Go change (small)
 1. `internal/d2/classtraits.go`: add `MercAura map[string]string `json:"mercAura"`` to `ClassTraits`; a `MercAuraFor(c Class, diff string) (string, bool)` helper next to `TraitsOf`.
 2. `internal/town/merc.go`: `HirePolicy(diff, merc, gold)` gains the class (`HirePolicy(class d2.Class, diff, merc, gold)`); after the difficulty default it overrides `w.Aura` when `MercAuraFor` has a row. The gold floor stays by difficulty. `cmd/d2bot/merc_adapter.go` passes `s.Player.Class`.
 3. `internal/task/act2.go` `mercNodes` and `quest.Act2Merc` stop hard-coding `Defiance`: the hire step takes the aura from the same helper (the `MercHirer.HireMerc` signature already carries the aura string).
-4. Tests, two classes: a Necromancer row changes the Normal aura and leaves Nightmare at `Might`; a Sorceress (no `mercAura`) keeps today's `Defiance`/`Might`/`Defiance`; a typo in the JSON panics at load with the class and difficulty named.
+4. Tests, two classes: a Necromancer row changes the Normal aura and leaves Nightmare at `Might`; a Sorceress (no `mercAura`) keeps today's `Defiance`/`Might`/`Defiance`; an aura no row offers returns an error that names class, difficulty and aura.
 5. `mercRow` selection (`town.mercAura`, the row to click) already compares by aura name, so no change is needed there (V: `strings.EqualFold(a, w.Aura)`).
 
 ## Not covered
