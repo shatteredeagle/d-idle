@@ -129,26 +129,18 @@ docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-extras.jsonl.gz  gaterun  gate
 backlog/tasks/task-726 - dlv-cast-verbs-input-caps-cast-unit-cast-point-cast-hold.md  credit-runner  inputl3
 cmd/d2bot/acts_test.go  credit-runner  qdmatrix
 cmd/d2bot/adapters.go  credit-runner  cainfix3
-cmd/d2bot/advisewire.go  credit-runner  advisorwire
-cmd/d2bot/advisewire_test.go  credit-runner  advisorwire
 cmd/d2bot/agencydrive_test.go  credit-runner  agencyp1b
 cmd/d2bot/agencywire.go  credit-runner  agencyp1b
 cmd/d2bot/behaviors.go  credit-runner  campaign1
 cmd/d2bot/boss.go  credit-runner  countess3
-cmd/d2bot/boss.go  credit-runner  countess3b
-cmd/d2bot/boss_levelmonsters_test.go  credit-runner  countess3b
-cmd/d2bot/d2dbackend.go  credit-runner  advisorwire
 cmd/d2bot/d2dbackend.go  credit-runner  campaign1
 cmd/d2bot/d2dwire.go  credit-runner  agencyp1b
-cmd/d2bot/funwire.go  credit-runner  advisorwire
 cmd/d2bot/hotkeydrift_test.go  live-agent  epic-class-necromancer
 cmd/d2bot/invverbs.go  credit-runner  uib9
 cmd/d2bot/invverbs_test.go  credit-runner  uib9
 cmd/d2bot/journeywire.go  credit-runner  campaign1
-cmd/d2bot/ladder.go  credit-runner  advisorwire
 cmd/d2bot/ladder.go  credit-runner  pgtaps
 cmd/d2bot/ladder.go  live-agent  recoverypace
-cmd/d2bot/live.go  credit-runner  advisorwire
 cmd/d2bot/live.go  credit-runner  agencyp1b
 cmd/d2bot/live.go  credit-runner  campaign1
 cmd/d2bot/necroplay_test.go  live-agent  epic-class-necromancer
@@ -170,7 +162,6 @@ cmd/d2scenario/tap_test.go  credit-runner  handinbtn
 cmd/d2scenario/tap_test.go  credit-runner  pgtaps
 cmd/d2scenario/tap_test.go  credit-runner  stage1fix
 data/capabilities/  credit-runner  dlv-stance-pack
-data/darklaunch.json  credit-runner  advisor1
 data/darklaunch.json  credit-runner  arbmig
 data/darklaunch.json  credit-runner  dlv-upkeep-state
 data/darklaunch.json  credit-runner  ticklog
@@ -192,7 +183,6 @@ docs/classes/necromancer-gap-2026-11-27.md  live-agent  epic-class-necromancer
 docs/combat.md  credit-runner  cainfix3
 docs/contracts/decision-queue.md  credit-runner  qqueue
 docs/design/admission-p4.md  credit-runner  admit1
-docs/design/advisor-r14.md  credit-runner  advisor1
 docs/design/agency-p1b.md  credit-runner  agencyp1b
 docs/design/arbiter-migration-p6.md  credit-runner  arbmig
 docs/design/boardsm-flip.md  credit-runner  bsmdef
@@ -227,7 +217,6 @@ docs/fresh-start-pace.md  credit-runner  freshstart
 docs/friend-checklist-0.1.2.md  credit-runner  cut012
 docs/friend-guide.md  credit-runner  cut012
 docs/inventory-actions.md  credit-runner  campaign1
-docs/knobs.md  credit-runner  advisor1
 docs/knobs.md  credit-runner  arbmig
 docs/knobs.md  credit-runner  cainfix3
 docs/knobs.md  credit-runner  countess3
@@ -236,15 +225,12 @@ docs/knobs.md  credit-runner  freshstart
 docs/knobs.md  live-agent  recoverypace
 docs/onboarding-tour.md  credit-runner  onboardtour
 docs/onboarding.md  credit-runner  reconnectux
-docs/plan/STATUS.md  credit-runner  statusrefresh
 docs/plan/data/admission.json  credit-runner  admit1
 docs/plan/data/earlyroutes.json  credit-runner  admit1
 docs/plan/data/povertyfarm.json  credit-runner  admit1
-docs/play-session.md  credit-runner  playsession
 docs/probes/bot-cpu-live-2026-11-16.md  credit-runner  botcpulive
 docs/probes/checkpoint-live-drill.md  live-agent  ckptlive
 docs/probes/classorder1.md  user  classorder1
-docs/probes/countess-nav-fixture.md  credit-runner  countess3b
 docs/probes/exitsread-2026-11-22.md  credit-runner  exitsread
 docs/probes/firsthour.md  live-agent  firsthour
 docs/probes/flipwave2.md  live-agent  flipwave2
@@ -258,7 +244,6 @@ docs/probes/provingground-cain-2026-11-19.md  credit-runner  pgpage
 docs/probes/provingground-cainchain-2026-11-20.md  credit-runner  pgpage
 docs/probes/provingground-cainfix3-2026-11-19.md  credit-runner  pgpage
 docs/probes/provingground-countess-2026-11-20.md  credit-runner  countess3
-docs/probes/provingground-countess-2026-11-20.md  credit-runner  countess3b
 docs/probes/provingground-countess-2026-11-20.md  credit-runner  pgpage
 docs/probes/provingground-pgfix4-2026-11-20.md  credit-runner  pgpage
 docs/probes/provingground-run-2026-11-19.md  credit-runner  pgpage
@@ -302,7 +287,6 @@ docs/ui/vault-sell-all  credit-runner  sellall
 docs/upstream/bodies/monster-block-body.md  credit-runner  decomp43
 docs/vault.md  credit-runner  sellall
 internal/admit/  credit-runner  admit1
-internal/advisor/  credit-runner  advisor1
 internal/agency/drive.go  credit-runner  agencyp1b
 internal/agency/drive_test.go  credit-runner  agencyp1b
 internal/arbiter  credit-runner  town10
@@ -368,7 +352,6 @@ internal/combat/fighter.go  credit-runner  agencyp1b
 internal/combat/fighter.go  credit-runner  inputl3
 internal/combat/portalverb.go  credit-runner  inputl3
 internal/combat/portalverb_test.go  credit-runner  inputl3
-internal/cubejobs/cubejobs.go  credit-runner  advisor1
 internal/d2dcombat/  credit-runner  dlv-cast-verbs
 internal/d2dcombat/  credit-runner  dlv-press
 internal/d2dctl  credit-runner  countess3
@@ -420,7 +403,6 @@ internal/env/tuning_bot.go  credit-runner  freshstart
 internal/env/tuning_bot.go  credit-runner  ticklog
 internal/env/tuning_combat.go  credit-runner  cainfix3
 internal/env/tuning_combat.go  credit-runner  dlv-upkeep-state
-internal/env/tuning_items.go  credit-runner  advisor1
 internal/env/tuning_quests.go  credit-runner  countess3
 internal/env/tuning_resource.go  credit-runner  freshstart
 internal/env/tuning_resource.go  live-agent  recoverypace
@@ -437,7 +419,6 @@ internal/levelplan/necro_test.go  live-agent  epic-class-necromancer
 internal/nav/  credit-runner  dlv-move-tele
 internal/nav/act2hints.go  credit-runner  qdmatrix
 internal/nav/act2hints_test.go  credit-runner  qdmatrix
-internal/nav/cellar5walk_test.go  credit-runner  countess3b
 internal/nav/exit.go  credit-runner  qdmatrix
 internal/nav/exit.go  credit-runner  stage1fix
 internal/nav/exit_test.go  credit-runner  qdmatrix
@@ -449,7 +430,6 @@ internal/nav/gatedoor_test.go  credit-runner  qdmatrix
 internal/nav/hints_export.go  credit-runner  exitsread
 internal/nav/mouthgate.go  credit-runner  qdmatrix
 internal/nav/mouthgate.go  credit-runner  warptrigger
-internal/nav/nav.go  credit-runner  countess3b
 internal/nav/nav.go  credit-runner  qdmatrix
 internal/nav/route.go  credit-runner  exitsread
 internal/nav/warpread_test.go  credit-runner  warptrigger
@@ -526,9 +506,7 @@ internal/vaultkeep  credit-runner  vaultperf
 internal/watch  credit-runner  sellall
 internal/watch  credit-runner  town9
 internal/watch  credit-runner  vaultperf
-internal/watch/advisorsection.go  credit-runner  advisor1
 internal/watch/areamap_test.go  credit-runner  uis6
-internal/watch/funwire.go  credit-runner  advisor1
 internal/watch/layout.go  credit-runner  uis1
 internal/watch/layout.go  credit-runner  uis6
 internal/watch/layout_test.go  credit-runner  uis1
@@ -538,7 +516,6 @@ internal/watch/onboarding.go  credit-runner  reconnectux
 internal/watch/panels.go  credit-runner  uis6
 internal/watch/policypreview_test.go  live-agent  epic-class-necromancer
 internal/watch/policysheet_test.go  live-agent  epic-class-necromancer
-internal/watch/returnscreen_test.go  credit-runner  advisor1
 internal/watch/serve.go  credit-runner  uis6
 internal/watch/stance_test.go  live-agent  epic-class-necromancer
 internal/watch/testdata/areamap/  credit-runner  uis6
@@ -589,7 +566,6 @@ tools/friendpack/compose.yml  credit-runner  cut012
 tools/friendpack/didle  credit-runner  cut012
 tools/friendpack/install.sh  credit-runner  cut012
 tools/friendpack/pack_test.go  credit-runner  cut012
-tools/play-session.sh  credit-runner  playsession
 tools/probes/exitscmp  credit-runner  exitsread
 tools/probes/exitsread.py  credit-runner  exitsread
 tools/probes/objectlist.py  credit-runner  qdmatrix

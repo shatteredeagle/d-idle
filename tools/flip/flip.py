@@ -3,12 +3,16 @@
 
   flip.py <instance> <knob>=<value> [<knob>=<value> ...] --why TEXT [--window 24h] [--dry-run]   flip a bundle, open ONE window
   flip.py bisect <instance> --without KNOB                                  the last bundle of the instance minus one knob (a re-flip line)
-  flip.py watch [--interval 60] [--once]                                    poll every open window; revert or close
+  flip.py <instance> <knob>=<value> ... --reflip                            also accept an `enabled` row (sandbox on, code default still 0)
+  flip.py <instance> <knob>=<value> ... --commit-ledger                     after the flip, commit the ledger rows on a branch agent/ledger-<knob>-<date> (no push, no queue)
+  flip.py watch [--interval 60] [--once] [--daemon]                         poll every open window; revert or close (--daemon: never exits, for the unit)
+  flip.py watch --install-unit [--write]                                    print (or write) a systemd user unit for the watcher; never enables it
   flip.py status                                                            list open windows
 
 Stdlib only. Never prints tokens. No host is hard-coded: the transport is a command prefix from the environment or
 local.env (via tools/env.sh):
-  D2_FLIP_RUN      shell prefix that runs a command on the sandbox host (default: labrun $D2_LABRUN_HOST --)
+  D2_FLIP_RUN      shell prefix that runs a command on the sandbox host (default: labrun $D2_LABRUN_HOST --). Sandbox containers live
+                   in the docker of the worker host, so $D2_LABRUN_HOST must name that host (a 20 s `docker inspect` probe checks it)
   D2_FLIP_TUNING   tuning file inside the container (default /data/instances/main/state/tuning.json; {instance} is replaced)
   D2_FLIP_RESTART  container (default: docker restart of the whole container, always works) or bot (TERM to the bot
                    launcher only, the shim starts it again; U: not drilled on a sandbox, try it with a dry knob first)
@@ -32,6 +36,8 @@ from datetime import datetime, timedelta, timezone
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 LEDGER = os.path.join(ROOT, "data", "darklaunch.json")
 MAX_WRITE_B64 = 100000  # the text rides in a command line
+PROBE_S = 20  # `docker inspect` before a flip: fail fast on a wrong transport
+HEARTBEAT_STALE_S = 300  # a watcher older than this counts as dead
 HARD_MISS_LIMIT = 10  # consecutive unreadable polls before the window counts as a breach
 
 
@@ -91,10 +97,21 @@ class Sandbox:
             raise FlipError("D2_FLIP_RESTART must be container or bot")
 
     def _x(self, args, stdin=None, timeout=120):
-        r = subprocess.run(self.run + args, input=stdin, capture_output=True, text=True, timeout=timeout)
+        try:
+            r = subprocess.run(self.run + args, input=stdin, capture_output=True, text=True, timeout=timeout)
+        except subprocess.TimeoutExpired:
+            raise FlipError(f"{' '.join(args[:3])} timed out after {timeout}s: check D2_FLIP_RUN") from None
         if r.returncode != 0:
             raise FlipError(f"{' '.join(args[:3])} failed: {r.stderr.strip()[:200]}")
         return r.stdout
+
+    def probe(self):
+        """The container must be visible through the transport; names D2_FLIP_RUN when it is not (wrong host, no docker)."""
+        try:
+            self._x(["docker", "inspect", "--format", "{{.State.Running}}", self.instance], timeout=PROBE_S)
+        except FlipError as e:
+            raise FlipError(f"container {self.instance} not reachable through `{' '.join(self.run)}` ({e}); "
+                            "set D2_FLIP_RUN (or D2_LABRUN_HOST) to the host whose local docker runs the sandboxes") from None
 
     def read_tuning(self):
         try:
@@ -204,6 +221,10 @@ class Store:
         except FileNotFoundError:
             return None
 
+    def beat(self, t):
+        with open(os.path.join(self.d, "watch.heartbeat"), "w") as f:
+            f.write(iso(t) + "\n")
+
     def drop(self, instance):
         try:
             os.remove(self.path(instance))
@@ -212,6 +233,59 @@ class Store:
 
     def all(self):
         return sorted(n[:-5] for n in os.listdir(self.d) if n.endswith(".json"))
+
+
+def heartbeat_alive(d, now):
+    try:
+        with open(os.path.join(d, "watch.heartbeat")) as f:
+            return (now - parse_iso(f.read().strip())).total_seconds() <= HEARTBEAT_STALE_S
+    except (OSError, ValueError):
+        return False
+
+
+UNIT = """[Unit]
+Description=d2lod-bot flip watcher (reverts a flipped knob on a hard invariant breach)
+
+[Service]
+Type=simple
+ExecStart={py} {script} watch --daemon --interval {interval}
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=default.target
+"""
+
+
+def unit_text(interval=60):
+    return UNIT.format(py=sys.executable or "/usr/bin/python3", script=os.path.abspath(__file__), interval=interval)
+
+
+def unit_path():
+    return os.path.expanduser("~/.config/systemd/user/d2flip-watch.service")
+
+
+def commit_ledger(ledger_path, knobs, root=ROOT, today=None, run=None):
+    """The ledger rows of `knobs` as they are in `ledger_path` go onto a fresh branch agent/ledger-<knob>-<date> in a sibling
+    worktree of `root`, committed there (no push, no queue). Returns (branch, worktree, mergeq line)."""
+    run = run or (lambda *a, cwd=root: subprocess.run(a, cwd=cwd, capture_output=True, text=True))
+    today = today or now_utc().strftime("%Y%m%d")
+    slug = "-".join(k.replace(".", "-") for k in list(knobs)[:3]) + ("-etc" if len(knobs) > 3 else "")
+    branch = f"agent/ledger-{slug}-{today}"
+    wt = os.path.join(os.path.dirname(root), "d2lod-wt", f"ledger-{slug}-{today}")
+    base = "origin/main" if run("git", "rev-parse", "--verify", "-q", "origin/main").returncode == 0 else "HEAD"
+    r = run("git", "worktree", "add", wt, "-b", branch, base)
+    if r.returncode:
+        raise FlipError(f"git worktree add {wt}: {r.stderr.strip()[:200]}")
+    src, dst = Ledger(ledger_path), Ledger(os.path.join(wt, "data", "darklaunch.json"))
+    for k in knobs:
+        dst.update(k, **{a: b for a, b in src.row(k).items() if a != "name"})
+    msg = f"darklaunch ledger: {', '.join(knobs)} after flip\n\nCo-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>\n"
+    run("git", "add", "data/darklaunch.json", cwd=wt)
+    r = run("git", "-c", "user.name=Claude", "-c", "user.email=noreply@anthropic.com", "commit", "-q", "-m", msg, cwd=wt)
+    if r.returncode:
+        raise FlipError(f"git commit in {wt}: {(r.stderr or r.stdout).strip()[:200]}")
+    return branch, wt, f"~/code/d2lod-ops/tools/mergeq.sh add {branch}"
 
 
 class Ledger:
@@ -246,10 +320,11 @@ class Ledger:
 
 
 class Flipper:
-    def __init__(self, make_sandbox, store, ledger, clock=now_utc, sleep=time.sleep, out=print, env=None, dry_run=False):
+    def __init__(self, make_sandbox, store, ledger, clock=now_utc, sleep=time.sleep, out=print, env=None, dry_run=False, reflip=False):
         self.make, self.store, self.ledger, self.clock, self.sleep, self.out = make_sandbox, store, ledger, clock, sleep, out
         self.env = os.environ if env is None else env
         self.dry = dry_run
+        self.reflip = reflip
         self.verify_s = int(self.env.get("D2_FLIP_VERIFY_S", 240))
 
     def verify(self, sb, knobs):
@@ -285,9 +360,16 @@ class Flipper:
             raise FlipError(f"{instance} already has an open flip window (one per sandbox)")
         for knob in knobs:
             row = self.ledger.row(knob)
-            if row is None or row["status"] not in ("dark", "trial"):
-                raise FlipError(f"{knob}: needs a dark row in data/darklaunch.json")
+            ok = ("dark", "trial") + (("enabled",) if self.reflip else ())
+            if row is None or row["status"] not in ok:
+                hint = " (status enabled: pass --reflip to flip it again)" if row and row["status"] == "enabled" else ""
+                raise FlipError(f"{knob}: needs a dark row in data/darklaunch.json{hint}")
         sb = self.make(instance)
+        if hasattr(sb, "probe"):
+            sb.probe()
+        if not self.dry and not heartbeat_alive(self.store.d, self.clock()):
+            self.out("WARNING: no watcher is alive (no fresh heartbeat): this window will not be watched or reverted. "
+                     "Start `flip.py watch --daemon` (see `flip.py watch --install-unit`)")
         before = sb.read_tuning()
         new_text, olds = set_overrides(before, knobs)
         # Baseline: the counters of the running child before the flip. A flip during a breach is refused.
@@ -408,11 +490,12 @@ class Flipper:
         self.store.put(instance, w)
         return "open"
 
-    def watch(self, interval=60, once=False):
+    def watch(self, interval=60, once=False, daemon=False):
         while True:
+            self.store.beat(self.clock())
             names = self.store.all()
             states = [self.poll(n) for n in names]
-            if once or "open" not in states:
+            if once or (not daemon and "open" not in states):
                 return states
             self.sleep(interval)
 
@@ -435,14 +518,30 @@ def main(argv=None):
     ap.add_argument("--interval", type=int, default=60)
     ap.add_argument("--once", action="store_true")
     ap.add_argument("--without", default="", help="bisect: the knob to leave out")
+    ap.add_argument("--daemon", action="store_true", help="watch: keep running with no open window (for the systemd unit)")
+    ap.add_argument("--install-unit", action="store_true", help="watch: print the systemd user unit")
+    ap.add_argument("--write", action="store_true", help="with --install-unit: write the unit file (never enables it)")
+    ap.add_argument("--reflip", action="store_true", help="also accept ledger rows with status enabled")
+    ap.add_argument("--commit-ledger", action="store_true", help="after the flip, commit the ledger rows on agent/ledger-<knob>-<date>")
     ap.add_argument("--dry-run", action="store_true", help="print every step, write and restart nothing")
     a = ap.parse_args(argv)
     env = load_env()
     store = Store(env.get("D2_FLIP_STATE") or os.path.expanduser("~/.cache/d2flip"))
-    f = Flipper(lambda inst: Sandbox(inst, env), store, Ledger(), env=env, dry_run=a.dry_run)
+    f = Flipper(lambda inst: Sandbox(inst, env), store, Ledger(), env=env, dry_run=a.dry_run, reflip=a.reflip)
     try:
         if a.args[0] == "watch":
-            f.watch(a.interval, a.once)
+            if a.install_unit:
+                text = unit_text(a.interval)
+                if a.write:
+                    p = unit_path()
+                    os.makedirs(os.path.dirname(p), exist_ok=True)
+                    with open(p, "w") as fh:
+                        fh.write(text)
+                    print(f"wrote {p}; enable it yourself: systemctl --user daemon-reload && systemctl --user enable --now d2flip-watch")
+                else:
+                    print(text, end="")
+            else:
+                f.watch(a.interval, a.once, a.daemon)
         elif a.args[0] == "status":
             for n in store.all():
                 w = store.get(n)
@@ -465,6 +564,12 @@ def main(argv=None):
                 except ValueError:
                     raise FlipError(f"value {v!r} of {knob} is not a number (tuning overrides are numbers)")
             f.flip(a.args[0], knobs, a.why, parse_window(a.window))
+            if a.commit_ledger and not a.dry_run:
+                branch, wt, line = commit_ledger(LEDGER, knobs)
+                print(f"ledger committed on {branch} in {wt} (not pushed, not queued). Queue it with: {line}")
+            elif not a.dry_run:
+                print("ledger rows changed in data/darklaunch.json of this checkout and are uncommitted: rerun with --commit-ledger "
+                      "or commit them yourself (git add data/darklaunch.json)")
     except FlipError as e:
         print(f"flip: {e}", file=sys.stderr)
         return 1

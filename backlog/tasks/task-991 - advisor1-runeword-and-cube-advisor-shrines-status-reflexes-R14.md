@@ -1,10 +1,11 @@
 ---
 id: TASK-991
 title: 'advisor1: runeword and cube advisor, shrines, status reflexes (R14)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-26T03:59:00Z'
+updated_date: '2026-11-27T20:31:00Z'
 labels:
   - bot
   - feature

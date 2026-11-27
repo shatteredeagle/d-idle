@@ -1,41 +1,34 @@
-# Where we are (hand-written part last edited 2026-11-03 by APPLYREVIEW; the generated block at the bottom is current)
+# Where we are (hand-written part rewritten 2026-11-27 by TASK-46; the generated block at the bottom is current)
 
-> status: the older 2026-10-30 text (Game.exe soak history, container cards, merged-today lists) is in git history. Decisions: [../decisions.md](../decisions.md), [ADR 0015](../adr/0015-goals-acceptance-on-game-exe.md). Plan: [plan-20261103.md](plan-20261103.md). Review: [../research/project-review-20261103.md](../research/project-review-20261103.md). Open cards mapped to goals: [../research/card-triage-20261103.md](../research/card-triage-20261103.md). Counts that change live in `git log` and the generated block. Tags: V verified, S secondary (coordinator fact), U unverified.
+> status: current. Ranking is the tier ladder of [ADR 0016](../adr/0016-automation-ladder.md), not the goals G-A to G-F of ADR 0015. Source of every line: [Current truth in decisions.md](../decisions.md), the ADRs it links, and `python3 tools/backlog/plan.py` (the ranked board; per-task status is in `backlog/tasks/`). Numbers are not copied here: they live in the doc each line links, `git log` or the generated block. Tags: V verified, S secondary, U unverified; a line without a tag is a pointer.
 
-## Goals (ADR 0015)
-- G-A acceptance on game.exe: fresh character, 24 h unattended, Act 1 cleared, `writes after start: 0`. Not started (S).
-- G-B Act 1 clear on d2d, 3 of 3 seeds. Nothing past Act 1 has run live (V, M3 cards have no run).
-- G-C stability on d2d: Gate 2 on 3 seeds, then Gate 3; XP/h is not a per-run criterion.
-- G-D transfer measured: statistical A:B (6 game.exe + 6 d2d lanes), verdict at 20 percent.
-- G-E upstream, one batch at a time, only rules on the bot's path.
-- G-F one page of truth: this page fresh, at most 12 open cards (the triage lists the cuts).
+## Direction
+- d.idle is an incremental Diablo II on d2d: the player gives orders and answers questions, never controls the hero; automation is the progression, tiers T0 Order-taker to T5 Farmer ([ADR 0016](../adr/0016-automation-ladder.md), [ladder](../research/automation-ladder.md)).
+- Work is ranked fun-first for now ([ADR 0017](../adr/0017-direction-fun-first-2026-11-07.md), [direction review](../research/direction-review.md)); tier order T0 to T5 ranks the work, a bot defect is fixed now when it breaks play at the tier being built.
+- Proving Ground first ([ADR 0020](../adr/0020-proving-ground-and-stat-skill-agency.md), gate rules [ADR 0027](../adr/0027-proving-ground-gate-and-night-window.md)): scripted lockstep scenarios are meant as the merge gate. What the merge step really runs today is stated in the Current truth bullet, not here.
+- Decision records since the ladder: quest board lifecycle ([ADR 0025](../adr/0025-quest-board-lifecycle-stored-runs.md), [questboard](../questboard.md)), combat engine ([ADR 0026](../adr/0026-combat-engine-capability-table-and-grammar.md)), one supply need in town ([ADR 0028](../adr/0028-one-supply-need-town-planner.md)), vault gold, sale and equip ([ADR 0029](../adr/0029-vault-gold-payment.md)), operator quest control ([ADR 0030](../adr/0030-operator-quest-control.md)), the logic review ([research](../research/fable-logic-review-2026-11-25.md), [arbiter](../arbiter.md)).
+- Backends: d2d is the product and the development backend; game.exe 1.14d is the fidelity oracle; deviations are fixed upstream or listed as shims in [d2d-deviations.md](../d2d-deviations.md). Fidelity is judged by per-rule differentials ([ADR 0023](../adr/0023-fidelity-by-rule-differentials.md)), not the old A:B verdict.
 
-## Gate state (d2d ladder, one seed 11 so far: V, every record)
-- Gate 0 drills: exist and run offline and live; M1 exit not met (13 of 15 C rows in basics-audit, V).
-- Gate 1: passed once (bot 050a509, V), five re-runs NOT PASSED, one re-judged PASSED under the 2026-11-03 soak-gates deltas (V, specdelta-rejudge). Single-seed re-runs are dropped; next is a 5-seed set with 2 holdouts.
-- Gate 2 (8 h): FAILED 2026-11-02 (S: merc claim and guard, kit trip timing, tome stat collision, judge artefacts); fixes merged offline, not verified live.
-- Gate 3 (24 h): not run (S). Gate A (game.exe 2 h, 8 h, 24 h): not run.
-- Fidelity (A:B): INCONCLUSIVE; seed-for-seed comparison is impossible (V, tierb-design); k=2 pilot -2.9 percent XP/h inside noise.
+## Gates
+- Gate names: Gate 0 to 3 are the d2d ladder (drills, 2 h, 8 h, 24 h); Gate A is the fidelity acceptance. Rules and numbers: [soak-gates](../contracts/soak-gates.md); run records: [g1-log](../g1-log.md).
+- Gate 2 and Gate 3 are kept as the T4 acceptance and run once T4 is reached; Gate 2 re-runs and waves are paused ([ADR 0016](../adr/0016-automation-ladder.md), [ADR 0017](../adr/0017-direction-fun-first-2026-11-07.md)). No gate is a ranking of work.
+- Checks that still need a live game are not ticked on cards; they are rows in [live-checks.md](../live-checks.md).
 
-## Open question that can void gate numbers
-- Records say the gate character is a "Sorceress (class 4)" but class 4 is the Barbarian in `internal/d2/player.go` (V); every committed archive ran the lightning table (V, review). Treated as a Sorceress until the class check (plan S1, worker host, read only, 5 minutes) says otherwise. If it is a Barbarian, all gate numbers since 2026-11-01 are void.
+## What is being built (the ranked list is `python3 tools/backlog/plan.py`)
+- The ladder and the watch screen: the tier slice, the player screen and its video feed ([watch screen design](../research/watch-screen-design.md), [video feed](../video-feed.md)); a LAN play session is one command (`docs/play-session.md`, card TASK-43).
+- Agency and the arbiter migration, the Proving Ground, town planning, the input layer and the first-hour work: each is a Backlog.md task; read its card, not this page, for its state.
+- The tester build is the d2d container with the fork's source, tester brings their own game data ([plan](../research/tester-build-plan.md), card TASK-28 and TASK-29 for licence and pack).
+- Dark-launched features and their review dates: the DARK-LAUNCH table of `plan.py`, rows in `data/darklaunch.json`.
 
-## Upstream (G-E)
-- PR #177 (11 commits) merged (S). Batch 2 (mana floor, Teleport, monster damage roll) is built and independently checked, waiting for the maintainer's #181 (S, openpr-log). Nothing new is prepared while a batch waits. Nothing is posted without the owner's go.
+## Upstream and the fork
+- The d.idle fork of d2d is public as `d2d-didle` (GPL, lab verbs flag-gated, off by default); nothing goes upstream or to GitHub without the user ([ADR 0003](../adr/0003-d2d-fork-private-gpl.md)). PR state: [openpr-log](../research/openpr-log.md), [upstreamsync](../upstreamsync.md), contract [upstream-pr](../contracts/upstream-pr.md).
 
 ## What runs where
-- The worker host: d2d gates and drills (hidden, lockstep fork), hidden game.exe lanes for A:B and Gate A, the lab binary. No gate or A:B run is known to be in flight right now (U; check the board before starting).
-- Public repo: docs, specs, cards, the bot. Private ops repo and the private fork: lab tooling, patches (never in this repo).
-- Credit runner and the Windows build PC: upstream differentials and MSVC parity, only when a batch needs them (S).
+- The worker host runs d2d gates, drills and the heavy lab work; heavy runs stay in the night window and hidden instances only ([ADR 0027](../adr/0027-proving-ground-gate-and-night-window.md), [worker capacity](../process/worker-capacity.md)). Whether anything is in flight now is not known from this page (U): check the board before starting.
+- This public repo holds the bot, docs, contracts and tasks; lab tooling and the fork patches live in the private ops repo and the fork (never here, [public split](../process/public-split.md)).
 
-## Blocked on whom
-- Owner: nothing open that blocks work; Tier B stays held (trigger in tierb-design); container licence route waits for Gate A.
-- Worker host time: the 5-seed Gate 1 (about 3.5 wall h, U), then Gate 2 on 3 seeds, then A:B pilot; they must not overlap.
-- Maintainer of the upstream project: batch 2 (#181).
-- Merger: card archives and the merge of `agent/projreview` and `agent/applyreview` (docs only).
-
-## Next three days
-1. S1 class check. 2. Multi-seed Gate 1 (seeds 11, 12, 13, holdouts 16, 17). 3. Area-choice fix with a paired A/B. 4. Cut the open cards to 12 (triage). See the plan for triggers and model tiers.
+## Waiting on the owner
+- The tasks assigned to the user are listed under "WAITING ON OWNER" in `plan.py`; today that includes the baseline and verdict cards and the class-order choice (S, plan.py 2026-11-27).
 
 <!-- statusgen:begin (generated by `python3 -I tools/backlog/status.py status --write`; do not edit by hand) -->
 ### Active changes
@@ -49,7 +42,6 @@
 | placefix | proposed | - | `internal/questboard/`<br>`internal/bot/questboard.go`<br>`data/questboard/act2.json`<br>`tools/provingground/scenarios/stepexec-act2.json`<br>`tools/provingground/scenarios/questdrill.json`<br>`internal/scenario/placefix_test.go`<br>`docs/questboard.md`<br>`internal/task/act1.go`<br>`internal/task/act2.go`<br>`internal/task/placefix_test.go`<br>`internal/d2dinput/controller.go`<br>`internal/d2dinput/placefix_test.go`<br>`internal/d2dctl/parse.go`<br>`internal/d2dctl/verbs.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dsrc/items.go`<br>`internal/d2dsrc/source_test.go` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | vaultperf | proposed | - | `internal/watch`<br>`internal/watch/web`<br>`internal/vaultkeep`<br>`internal/vault` | - |
-| advisorwire | proposed | - | `cmd/d2bot/advisewire.go`<br>`cmd/d2bot/advisewire_test.go`<br>`cmd/d2bot/funwire.go`<br>`cmd/d2bot/ladder.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | returnmock | proposed | - | `docs/research/mocks/return.html`<br>`docs/research/return-screen.md` | - |
@@ -105,10 +97,8 @@
 | stashany | proposed | - | `docs/ui/redesign-2026-11-14/stash-anywhere.md` | - |
 | uis1 | proposed | - | `internal/watch/web/shell.js`<br>`internal/watch/web/layout.js`<br>`internal/watch/web/shell.json`<br>`internal/watch/web/layout.json`<br>`internal/watch/web/layouts/`<br>`internal/watch/web/tokens.css`<br>`internal/watch/web/shell.css`<br>`internal/watch/layout.go`<br>`internal/watch/layout_test.go`<br>`tools/uilint/`<br>`tools/uishots/layout-rows.json`<br>`tools/uishots/genlayouts.js` | - |
 | cut012 | proposed | - | `docs/releases/0.1.2.md`<br>`docs/friend-checklist-0.1.2.md`<br>`tools/friendpack/install.sh`<br>`tools/friendpack/didle`<br>`tools/friendpack/compose.yml`<br>`tools/friendpack/README.txt`<br>`tools/friendpack/pack_test.go`<br>`docs/friend-guide.md` | - |
-| playsession | proposed | - | `tools/play-session.sh`<br>`docs/play-session.md` | - |
 | upstream-next | proposed | - | `docs/research/upstream-next.md` | - |
 | uis6 | proposed | - | `internal/watch/web/panels/area-map/`<br>`internal/watch/web/panels/log/`<br>`internal/watch/web/panels/map/`<br>`internal/watch/testdata/areamap/`<br>`internal/watch/testdata/logpanel/`<br>`internal/watch/logtab.go`<br>`internal/watch/logtab_test.go`<br>`internal/watch/areamap_test.go`<br>`internal/watch/web/shell.js`<br>`internal/watch/web/shell.css`<br>`internal/watch/web/components.css`<br>`internal/watch/web/layout.js`<br>`internal/watch/web/shell.json`<br>`internal/watch/web/layouts/cockpit.json`<br>`internal/watch/layout.go`<br>`internal/watch/panels.go`<br>`internal/watch/serve.go`<br>`tools/uishots/`<br>`tools/uishots.sh`<br>`tools/uilint/lint.go` | - |
-| statusrefresh | proposed | - | `docs/plan/STATUS.md` | - |
 | ordersux3 | deferred | - | `internal/watch/mapdata.go`<br>`internal/watch/web/**`<br>`docs/orders-slice3.md` | - |
 | uib9 | proposed | - | `internal/d2dctl/item_verbs_merc.go`<br>`internal/d2dctl/item_verbs_merc_test.go`<br>`internal/invdesk/mercverbs.go`<br>`internal/invdesk/mercverbs_test.go`<br>`internal/invdesk/sets.go`<br>`cmd/d2bot/invverbs.go`<br>`cmd/d2bot/invverbs_test.go`<br>`docs/research/merc-gear.md` | - |
 | onboardtour | proposed | - | `internal/watch/web/onboarding.js`<br>`internal/watch/web/onboarding.css`<br>`docs/onboarding-tour.md` | - |
@@ -150,7 +140,6 @@
 | town10 | proposed | - | `internal/arbiter`<br>`internal/supply` | - |
 | town11 | proposed | - | `internal/town`<br>`docs/town.md`<br>`town-basics` | - |
 | town12 | proposed | - | `docs/design/fable-review-2026-11-21/town-profiles-sme.md` | - |
-| countess3b | proposed | - | `cmd/d2bot/boss.go`<br>`cmd/d2bot/boss_levelmonsters_test.go`<br>`internal/nav/nav.go`<br>`docs/probes/provingground-countess-2026-11-20.md`<br>`docs/probes/countess-nav-fixture.md`<br>`internal/nav/cellar5walk_test.go` | - |
 | pgledgeron | proposed | - | `docs/process/pg-ledger-ops.md`<br>`tools/provingground/run.sh`<br>`tools/provingground/pgenv.sh`<br>`tools/provingground/pgenv_test.sh` | - |
 | handinbtn | proposed | - | `internal/questboard/desk_action.go`<br>`internal/questboard/desk_action_test.go`<br>`internal/questboard/desk.go`<br>`internal/watch/web/panels/quest-board/panel.js`<br>`internal/watch/testdata/questui/quest_ui.mjs`<br>`internal/watch/testdata/quests/`<br>`cmd/d2scenario/tap.go`<br>`cmd/d2scenario/tap_test.go`<br>`docs/questboard.md` | - |
 | warptrigger | proposed | - | `docs/probes/warptrigger-2026-11-22.md`<br>`internal/d2dctl/warptriggers.go`<br>`internal/d2dctl/warptriggers_test.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/nav/mouthgate.go`<br>`internal/nav/warpread_test.go`<br>`internal/d2map/static.go`<br>`internal/d2dworld/triggers_test.go`<br>`internal/d2denv/env.go` | `fork-branch:didle/warp-triggers-20261122` |
@@ -197,7 +186,6 @@
 | inputl5 | proposed | - | `docs/design/input-i5-i7.md`<br>`tools/ci/pointercount.py`<br>`tools/ci/test_pointercount.py`<br>`tools/ci/pointercount-baseline.json`<br>`tools/ci/check.sh` | - |
 | fid-lowvalue | deferred | - | `docs/probes/fid/fid-lowvalue.md` | - |
 | ckptlive | proposed | - | `docs/probes/checkpoint-live-drill.md` | - |
-| advisor1 | proposed | - | `docs/design/advisor-r14.md`<br>`internal/advisor/`<br>`internal/watch/advisorsection.go`<br>`internal/watch/funwire.go`<br>`internal/watch/returnscreen_test.go`<br>`internal/cubejobs/cubejobs.go`<br>`internal/env/tuning_items.go`<br>`docs/knobs.md`<br>`data/darklaunch.json` | - |
 | flipwave2 | proposed | - | `docs/probes/flipwave2.md` | - |
 | classorder1 | proposed | - | `docs/probes/classorder1.md` | - |
 
@@ -222,14 +210,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 7a5210b1c 11-27 15:21 `Merge agent/fliptool: fliptool: flip.py transport probe, --reflip, watcher heartbeat/unit, --commit-ledger (TASK-1062)` (fliptool)
+- 05db9a45b 11-27 15:21 `Merge agent/statusrefresh: statusrefresh: STATUS.md hand-written part rewritten (TASK-46)` (statusrefresh)
+- 0be1da55f 11-27 15:21 `Merge agent/playsession: playsession: tools/play-session.sh one-command LAN session (TASK-43)` (playsession)
+- 5f0a3af5a 11-27 15:19 `Merge branch 'main' into fliptool` (-)
+- 4bfa01ad8 11-27 15:19 `Merge branch 'main' into statusrefresh` (-)
+- e2876514c 11-27 15:19 `Merge branch 'main' into playsession` (-)
 - 68fd626b6 11-27 15:16 `Merge agent/advisorwire: advisorwire: advisor lines on the Return screen (TASK-1060)` (advisorwire)
 - ea036def4 11-27 15:15 `Merge branch 'main' into advisorwire` (-)
 - 5ee52c7a2 11-27 15:09 `Merge agent/necroepic: necroepic: Necromancer profiles/tables/policy rows, 24 scenarios, gap doc (TASK-942 AC1)` (necroepic)
 - cfb83895d 11-27 15:09 `Merge agent/agencydrive: agencydrive: fighter reads agency.DriveOf at planner mode 2 (TASK-984 AC2)` (agencydrive)
-- c7c9c5ec3 11-27 15:09 `Merge agent/advisor1: advisor1: runeword and cube advisor lines, items.advisor dark knob (TASK-991)` (advisor1)
-- 66b4f7f50 11-27 15:09 `Merge agent/countessnav: countessnav: Tower Cellar 5 walk regression on two synthetic maps (TASK-766 AC3)` (countessnav)
-- bd2ab0cb7 11-27 15:06 `Merge branch 'main' into necroepic` (-)
-- 47547cb56 11-27 15:06 `Merge branch 'main' into agencydrive` (-)
-- 3681d5c60 11-27 15:06 `Merge branch 'main' into advisor1` (-)
-- 2e2714e36 11-27 15:06 `Merge branch 'main' into countessnav` (-)
 <!-- statusgen:end -->
