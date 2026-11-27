@@ -11,7 +11,6 @@ import (
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/data"
 	"d2lod-bot/internal/gear"
-	"d2lod-bot/internal/input"
 	"d2lod-bot/internal/ladder"
 	"d2lod-bot/internal/loot"
 	"d2lod-bot/internal/repair"
@@ -389,7 +388,7 @@ func (t *Town) Chores(ctx context.Context, plan ChorePlan) (rep ChoreReport, _ e
 			t.e.Log.Warn("town plan (purse): " + perr.Error())
 		} else {
 			t.purseSpend = pl.Spent
-			t.e.Log.Info(fmt.Sprintf("town plan: purse keep=%d spend=%d purse=%d stash=%d verdict=%s", t.goldKeep(s.Player.Level), pl.Spent, s.Player.Gold, s.Player.StashGold, pl.Verdict))
+			t.e.Log.Info(fmt.Sprintf("town plan: purse keep=%d spend=%d purse=%d stash=%d verdict=%s", t.goldKeep(s.Player.Level), pl.Spent, s.Player.Gold, s.Player.StashGold, pl.Verdict) + t.planLineTail(s, pl))
 		}
 	}
 	a := ActOfLevel(s.Player.Area)
@@ -543,6 +542,33 @@ func (t *Town) Chores(ctx context.Context, plan ChorePlan) (rep ChoreReport, _ e
 			copy(steps[si+2:ri+1], steps[si+1:ri])
 			steps[si+1] = rs
 		}
+	}
+	// town.plan >= 5: the fixed list is retired; the enabled chores run in the order of the cheapest walk under the
+	// precedence rules (route.go). Chores that are not enabled keep their place at the end (they only log "not planned").
+	if t.PlanStage() >= 5 {
+		boss := t.needBossPurse(s, plan)
+		var names []string
+		for _, st := range steps {
+			if st.enabled && (st.name != "bosspurse" || boss) { // a boss purse nobody needs would force a stash stop
+				names = append(names, st.name)
+			}
+		}
+		settleFirst := boss || s.Player.Gold < t.purseSpend
+		order := t.reorderChores(s, a, names, settleFirst)
+		at := func(name string) int {
+			if i := slices.Index(order, name); i >= 0 {
+				return i
+			}
+			return len(order)
+		}
+		slices.SortStableFunc(steps, func(x, y struct {
+			name    string
+			enabled bool
+			need    func(*d2.Snapshot) bool
+			run     func() error
+		}) int {
+			return at(x.name) - at(y.name)
+		})
 	}
 	for _, st := range steps {
 		if err := step(st.name, st.enabled, st.need, st.run); err != nil {
@@ -832,7 +858,7 @@ func (t *Town) repair(ctx context.Context, a *Act, rep *ChoreReport) error {
 	if _, err := t.openShop(ctx, a.Repair, t.npcPreset(a.Repair...)); err != nil {
 		return err
 	}
-	if err := t.e.In.Click(input.Left, RepairAll.X, RepairAll.Y); err != nil {
+	if err := t.pressRepairAll(); err != nil {
 		_ = t.h.CloseAll(ctx)
 		return err
 	}

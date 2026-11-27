@@ -33,7 +33,7 @@ owns:
   - "internal/d2dsrc/source_test.go"
 exclusive: []
 contracts: []
-result: "Duriel drills set record 10 to 0x0c08 (bit 11 = Staff made, bit 0 clear, which d2d reads as already placed); horadric_staff reads cleared from bit 11 or hst in the pack, so seven_tombs opens through requiresCleared; PlaceItem waits (debug objectlist) until the orifice has operated before cmd hand / cmd place, since the d2d drops a placement sent before the hero arrives (placefix3).; the way down to Duriel (d2d portal which 6) reads as objects.txt 100 so the lair door step finds it (lairentry). Not build-specific. Offline tests only; NOT verified live."
+result: "Duriel drills set record 10 to 0x0c08 (bit 11 = Staff made, bit 0 clear, which d2d reads as already placed); horadric_staff reads cleared from bit 11 or hst in the pack, so seven_tombs opens through requiresCleared; PlaceItem waits (debug objectlist) until the orifice has operated before cmd hand / cmd place, since the d2d drops a placement sent before the hero arrives (placefix3).; the way down to Duriel (d2d portal which 6) reads as objects.txt 100 so the lair door step finds it (lairentry). Not build-specific. Offline tests only; NOT verified live. Remaining (live): AC 4 drill.act2.duriel.stepexec rerun on the lab."
 ---
 
 ## Description

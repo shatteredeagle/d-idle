@@ -251,3 +251,23 @@ func TestAuditPurchaseOrderOldRuleKnobs(t *testing.T) {
 		}
 	}
 }
+
+// A charm the player carries (the keep mark) stays in the pack through the whole visit: the t-charms stash chore, the
+// valuables insurance and the sell chore all leave it, for a caster and a melee class.
+func TestCarriedCharmStaysInThePack(t *testing.T) {
+	for _, cls := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		r := audit(t, 30, 1, true)
+		r.W.Player.Class = cls
+		life := r.W.Add("cm1", d2.ContInventory, 0, 1)
+		r.W.Items[len(r.W.Items)-1].Item.Quality = 4
+		r.W.Stats[life.Addr] = d2.Stats{7: 20 << 8}
+		plain := r.W.Add("cm1", d2.ContInventory, 1, 1)
+		r.W.Items[len(r.W.Items)-1].Item.Quality = 4
+		r.W.Stats[plain.Addr] = d2.Stats{21: 3}
+		r.T.SetItemMarks(fakeMarks{life.ID: "keep", plain.ID: "keep"})
+		rep := run(t, r)
+		if rep.Sold != 0 || rep.Stashed != 0 || count(r.W, d2.ContStash) != 0 || countIn(r, "cm1", d2.ContInventory) != 2 {
+			t.Fatalf("%v: sold %d stashed %d stash %d pack %d", cls, rep.Sold, rep.Stashed, count(r.W, d2.ContStash), countIn(r, "cm1", d2.ContInventory))
+		}
+	}
+}

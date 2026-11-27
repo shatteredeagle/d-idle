@@ -1,7 +1,7 @@
 ---
 id: TASK-331
 title: 'maphistoryB: map heat layers for kills, time spent and damage'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T19:30:00Z'
@@ -24,6 +24,7 @@ owns:
 exclusive: []
 contracts: []
 lane: next
+result: "Merged (agent/maphistoryB): per-area heat memory (internal/senses/heat.go), history.heat on /api/senses, heat layer; tests. Not verified live."
 ---
 
 ## Description
@@ -36,5 +37,5 @@ Why: TODO. Done when: TODO.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Per-area heat memory (kills, dwell, damage), reset with a new game, history.heat on /api/senses?hist=1&heat=1, panel heat layer with legend
+- [x] #1 Per-area heat memory (kills, dwell, damage), reset with a new game, history.heat on /api/senses?hist=1&heat=1, panel heat layer with legend
 <!-- AC:END -->

@@ -142,6 +142,7 @@ func wireVaultKeep(ref *runnerRef, e *env.Env, c *d2dctl.Client, dataDir, curren
 		}
 	}
 	k.EquipPath = filepath.Join(dataDir, "vaults", hero(), "vault", "equip.json")
+	k.CarryPath = filepath.Join(dataDir, "vaults", hero(), "vault", "carried.json")
 	if e.Data != nil {
 		k.Chain = func(code string) []string {
 			if b := e.Data.ItemByCode(code); b != nil {

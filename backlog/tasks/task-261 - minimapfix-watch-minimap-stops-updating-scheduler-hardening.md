@@ -1,7 +1,7 @@
 ---
 id: TASK-261
 title: 'minimapfix: /watch minimap stops updating, scheduler hardening'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-10T17:34:00Z'
@@ -17,7 +17,7 @@ owns:
   - "internal/watch/minimapfix_test.go"
 exclusive: []
 contracts: []
-result: "scheduler hardened (fetch abort 8 s, safe catch, safe tick); root cause not reproduced offline (headless render dpr 1 and 2 updates fine); not verified live"
+result: "scheduler hardened (fetch abort 8 s, safe catch, safe tick); root cause not reproduced offline (headless render dpr 1 and 2 updates fine); not verified live Closed by closecards2: merged, ACs verified against the merge diff and tests."
 lane: next
 ---
 
@@ -31,5 +31,5 @@ Why: user reports the minimap stale. Done when: a stalled or throwing panel cann
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 shell scheduler cannot wedge a panel (abort, safe catch, safe tick)
+- [x] #1 shell scheduler cannot wedge a panel (abort, safe catch, safe tick)
 <!-- AC:END -->

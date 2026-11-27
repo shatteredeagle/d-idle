@@ -19,7 +19,7 @@ owns:
   - "internal/watch/web/panels/onboarding"
 exclusive: []
 contracts: []
-result: "Reconnect/restart/away/stream banners BUILT offline 2026-11-11 in the onboarding panel (docs/onboarding.md). Exit and chicken counts not built: no counter exists on the watch side. Not verified live."
+result: "Reconnect/restart/away/stream banners BUILT offline 2026-11-11 in the onboarding panel (docs/onboarding.md). Exit and chicken counts not built: no counter exists on the watch side. Not verified live. Remaining: AC 3 exit and chicken counts need a bot-side exit counter."
 lane: next
 ---
 

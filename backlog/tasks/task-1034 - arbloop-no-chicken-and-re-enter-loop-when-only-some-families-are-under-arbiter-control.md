@@ -18,7 +18,7 @@ owns:
   - "internal/bot/arbloop_test.go"
 exclusive: []
 contracts: []
-result: "Cause: a chicken outside the trip's own action (the survive hook fighting mid-leg under families 3) re-entered the game in town with the trip still on its leg back to the field, which walked out at 9 of 45 life and chickened again, 169 times. Fix: in town below the resume line that leg ends the trip and the low-life gate heals and holds; shared by the chain and the arbiter chores hook, no build data. Offline test on Necromancer and Paladin, arbiter off, families 3 and 255; not verified live (lab rerun box open)."
+result: "Cause: a chicken outside the trip's own action (the survive hook fighting mid-leg under families 3) re-entered the game in town with the trip still on its leg back to the field, which walked out at 9 of 45 life and chickened again, 169 times. Fix: in town below the resume line that leg ends the trip and the low-life gate heals and holds; shared by the chain and the arbiter chores hook, no build data. Offline test on Necromancer and Paladin, arbiter off, families 3 and 255; not verified live (lab rerun box open). Remaining (lab): AC 2 featuresoak arbiter3 necromancer seed 201 rerun."
 ---
 
 ## Description

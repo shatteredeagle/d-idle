@@ -8,6 +8,21 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- dlvwave3: aim-corpse (TASK-728) + stance-pack, press, move-tele, move-melee (TASK-729..732) <!--sg:agent/dlvwave3-->
+- agencyp3: shared build file reader, kolbot importer, DriveOf (TASK-985, TASK-984 partial) <!--sg:agent/agencyp3-->
+- difftrans: difficulty transition design (docs) <!--sg:agent/difftrans-->
+- wpstep2: close TASK-716 card (fixed by TASK-770) <!--sg:agent/wpstep2-->
+- nightplan: lab night plan 2026-11-27 (docs) <!--sg:agent/nightplan-->
+- townguard: hand-over in the guard refusal, route path cost (TASK-1057) <!--sg:agent/townguard-->
+- inputl4: repair and menu-choose client verbs, pointer-call count CI check (TASK-988/989) <!--sg:agent/inputl4-->
+- act2chunks: Radament/cube/shaft/amulet/summoner chunks as step-executor data (TASK-1056) <!--sg:agent/act2chunks-->
+- town7: short-gold priority table as data + town8 stage 5 route stops (TASK-759/761) <!--sg:agent/town7-->
+- vaultpoll: cached vault poll, windowed query (TASK-1054) <!--sg:agent/vaultpoll-->
+- skillcapretire: retire resource.skillCapPerLevel (TASK-1055) <!--sg:agent/skillcapretire-->
+- bsmchk: questspec rules 12-14 (TASK-982) <!--sg:agent/bsmchk-->
+- closecards2: close/annotate stale cards (16 Done, 35 annotated) <!--sg:agent/closecards2-->
+- charmvault: charms recorded in the Vault, player Carry/Stow (TASK-1052) <!--sg:agent/charmvault-->
+- tyrael: Duriel Tyrael hand-in via field-NPC table (TASK-1053) <!--sg:agent/tyrael-->
 - darkflip: final dark queue flip list (docs) <!--sg:agent/darkflip-->
 - closecards: close verified merged cards, stale dependency fix <!--sg:agent/closecards-->
 - akarafix: hand-in queued/served logs, stale request drop, why-waiting reason (TASK-1051) <!--sg:agent/akarafix-->
