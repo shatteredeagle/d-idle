@@ -197,14 +197,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 38845a378 11-27 16:41 `Merge agent/necroapply: necroapply: SME Necromancer data changes (bonespear Teeth/Bone Spear points, mana_heavy, merc doc)` (necroapply)
 - 0ae6b91df 11-27 16:41 `Merge agent/town11: town11: townLegacy seam for old town counters, deletion plan (TASK-764 partial)` (town11)
 - a65a48c0a 11-27 16:41 `Merge agent/pgcards2: pgcards2: nightly run set, earned-hero tier, release-check (TASK-754/756 repo side)` (pgcards2)
 - 66d7cee98 11-27 16:41 `Merge agent/uifix: uifix: return mock, onboarding chickens line, layout test (TASK-109/249/424)` (uifix)
+- 3e5d70768 11-27 16:38 `Merge branch 'main' into necroapply` (-)
 - e4986e3c8 11-27 16:38 `Merge branch 'main' into town11` (-)
 - d5e38d0bf 11-27 16:38 `Merge branch 'main' into pgcards2` (-)
 - f0dc78eff 11-27 16:38 `Merge branch 'main' into uifix` (-)
 - 1280a6928 11-27 16:31 `Merge agent/smepal: smepal: SME Paladin and Sorceress review (docs)` (smepal)
 - 719aeae00 11-27 16:31 `Merge agent/onboardtour2: onboardtour2: tour tips, Help sheet, Now line (TASK-48 partial)` (onboardtour2)
-- 881df5215 11-27 16:31 `Merge agent/whirlscen: whirlscen: combat drill scenarios, pre.skills setup field (TASK-1065)` (whirlscen)
-- 9c6c61d38 11-27 16:30 `Merge agent/diffgo: diffgo: go-difficulty ops verb, persisted go, Return screen button (TASK-1061)` (diffgo)
 <!-- statusgen:end -->

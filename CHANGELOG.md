@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- necroapply: SME Necromancer data changes (bonespear Teeth/Bone Spear points, mana_heavy, merc doc) <!--sg:agent/necroapply-->
 - town11: townLegacy seam for old town counters, deletion plan (TASK-764 partial) <!--sg:agent/town11-->
 - pgcards2: nightly run set, earned-hero tier, release-check (TASK-754/756 repo side) <!--sg:agent/pgcards2-->
 - smepal: SME Paladin and Sorceress review (docs) <!--sg:agent/smepal-->
