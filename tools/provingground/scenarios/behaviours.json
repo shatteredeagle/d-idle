@@ -302,6 +302,12 @@
    "where": "internal/combat/bindleft.go setPlanned; internal/input/planner.go"
   },
   {
+   "id": "input.cast-point",
+   "group": "input",
+   "title": "cast a point or unit skill through the cast verbs of the input planner: the verb alone, or the old command alone, never both",
+   "where": "internal/input/castverbs.go RunCast; internal/d2dcombat/castverbs.go"
+  },
+  {
    "id": "town.scroll-hoard",
    "group": "town-chore",
    "title": "loose town portal scrolls beside a tome stay at the cap (pickup rule and sell chore)",
