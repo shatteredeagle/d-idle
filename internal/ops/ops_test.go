@@ -535,3 +535,53 @@ func TestParkCancelsAndHoldsOffStartUntilWake(t *testing.T) {
 		}
 	}
 }
+
+type fakeDiff struct {
+	ready bool
+	got   []string
+}
+
+func (f *fakeDiff) RequestDifficultyGo(t string) (string, error) {
+	f.got = append(f.got, t)
+	if !f.ready {
+		return "", errors.New("not ready for " + t + ": clvl 20, need 38")
+	}
+	return "go recorded for " + t, nil
+}
+
+func diffSrv(d *fakeDesk, g *fakeDiff, env map[string]string) *Server {
+	s, _ := newSrv(d, env)
+	s.cfg.Difficulty = func() DifficultyGo { return g }
+	return s
+}
+
+// go-difficulty: a reason and a known target are needed, a not-ready hero is refused with the reason and audited,
+// a ready one is recorded, a measured run and a missing wire say no.
+func TestGoDifficulty(t *testing.T) {
+	d, g := &fakeDesk{}, &fakeDiff{}
+	s := diffSrv(d, g, nil)
+	if r := s.Handle(Request{Verb: DifficultyVerb, Target: "nightmare"}); r.Code != "why" {
+		t.Fatalf("no reason: %+v", r)
+	}
+	if r := s.Handle(Request{Verb: DifficultyVerb, Target: "normal", Why: "x"}); r.Code != "target" {
+		t.Fatalf("bad target: %+v", r)
+	}
+	r := s.Handle(Request{Verb: DifficultyVerb, Target: "nightmare", Why: "ready by my look"})
+	if r.OK || r.Code != "order_refused" || !strings.Contains(r.Reason, "clvl 20, need 38") {
+		t.Fatalf("not ready: %+v", r)
+	}
+	if len(d.rec) != 1 || d.rec[0].OK || d.rec[0].Remote != "operator" {
+		t.Fatalf("audit %+v", d.rec)
+	}
+	g.ready = true
+	if r := s.Handle(Request{Verb: DifficultyVerb, Target: "hell", Why: "go"}); !r.OK || len(g.got) != 2 {
+		t.Fatalf("ready: %+v %v", r, g.got)
+	}
+	if r := diffSrv(d, g, map[string]string{"D2BOT_RUN": "g1"}).Handle(Request{Verb: DifficultyVerb, Target: "hell", Why: "go"}); r.Code != "measured_run" {
+		t.Fatalf("measured run: %+v", r)
+	}
+	s2, _ := newSrv(d, nil)
+	if r := s2.Handle(Request{Verb: DifficultyVerb, Target: "hell", Why: "go"}); r.Code != "off" {
+		t.Fatalf("unwired: %+v", r)
+	}
+}

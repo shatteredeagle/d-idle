@@ -62,6 +62,12 @@ Creating a card: `python3 -I tools/backlog/new_task.py "<card>: <what>" --card <
 
 A change that claims to be a strategy improvement (not a bug fix) gets a paired A/B (at least 8 seeds, paired mean with a 95 percent interval) before its long gate; a bug fix gets a short drill in its exact failing scenario. Tooling and protocol: `tools/ab/`, docs/ab-design.md (the "Variants" section covers effects that a clvl 1 run does not reach). The task for a strategy change lists the A/B as an acceptance criterion; the task for a bug fix names its drill.
 
+## Standing rule: docs diet (user decision D5, 2026-11-07)
+- At most 3 docs-only merges per day to main; batch small doc fixes into one branch.
+- No new contract (docs/contracts/*.md) without a consumer: a test, a gate or a named task that reads it.
+- No new research doc without a reader: name who reads it (a task, a PR draft, a decision) in its status banner.
+- Finished one-off reports are archived with `git mv` into docs/archive/research/ and a one-line stub stays at the old path.
+
 ## The rule that keeps the board true
 
 Every agent job gets a task. Create it BEFORE launching the agent (`new_task.py`, status Proposed) or name an existing one in the brief; a job with no task is invisible on the board and was the main cause of the mess found on 2026-11-06 (merged work with Proposed tasks, stale statuses, 14 pieces of open work with no task). The agent ticks its boxes and fills `result:`; the coordinator sets the status at merge (Done only when every box is ticked, else In Progress with a note naming the open box). `python3 -I tools/backlog/drift.py` in the coordinator tick shows the misses. The grooming pass of 2026-11-06 is in docs/research/backlog-groom-2026-11-06.md.

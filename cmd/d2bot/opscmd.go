@@ -23,6 +23,7 @@ const opsUsage = `usage: d2bot ops quest status [--json] [--why]
        d2bot ops hold|home --why "reason"                    (hold: stop and rest in town; home: queue a rest in town)
        d2bot ops go <area> [--minutes N] --why "reason"      (a go order, default 60 minutes)
        d2bot ops park <quest> <hours 1..24> --why "reason"   (stop the quest's chunk, refuse start and retry until then)
+       d2bot ops go-difficulty <nightmare|hell> --why "reason"   (your go for the hop; refused with what is missing unless ready)
        d2bot ops quest wait <quest> [--chunk ID] [--timeout 600]
 flags: --sock PATH (default $D2BOT_OPERATOR_SOCK, else the sandbox container's state directory)`
 
@@ -204,6 +205,11 @@ func opsHero(args []string, out io.Writer) (int, error) {
 			return 2, errors.New(opsUsage)
 		}
 		rq.Area, rq.Minutes = strings.Join(pos, " "), *minutes
+	case ops.DifficultyVerb:
+		if len(pos) != 1 {
+			return 2, errors.New(opsUsage)
+		}
+		rq.Target = pos[0]
 	case "park":
 		h, err := strconv.Atoi(strings.Join(pos[min(1, len(pos)):], ""))
 		if len(pos) != 2 || err != nil {
