@@ -33,5 +33,5 @@ Why: live finding on the sandbox Paladin (knob combat.deliveryUpkeep 1): no upke
 - [x] #1 Aura upkeep follows combat.deliveryUpkeep: 1 old code acts and each disagreement is logged once, 2 the driver keeps the profile's aura on and re-picks it at once after a drop
 - [x] #2 Tests on two builds: Paladin with Might and Holy Fire, a non-aura class logs nothing
 - [ ] #3 Live shadow run on a Paladin shows upkeep shadow lines for auras (knob 1)
-- [ ] #4 gofmt, vet, package tests, tools/ci/check.sh, contracts, backlog and leakcheck clean
+- [x] #4 gofmt, vet, package tests, tools/ci/check.sh, contracts, backlog and leakcheck clean
 <!-- AC:END -->
