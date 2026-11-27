@@ -93,7 +93,7 @@ func (r *Runner) newQuestBoard(b *questboard.Board, st *questboard.Store, hero s
 		lastFail: map[string]time.Time{}, noted: map[string]string{}, unpark: map[string]bool{}}
 	rt.exec = questboard.NewExec(b, st, boardEnv{rt}, boardActions{rt}, questboard.Options{
 		Enabled: r.questBoardOn(),
-		SM:      r.e.Tune.Quests.BoardSM != 0,
+		SM:      !r.boardLegacy(),
 		Release: botReleaseID(),
 		Log:     func(msg string, kv ...any) { r.e.Log.Info(msg, kv...) },
 		Now:     r.e.Clock.Now,
@@ -1096,7 +1096,9 @@ func (r *Runner) boardHandIn(ctx context.Context, snap *d2.Snapshot, c control, 
 	}
 	rt.mu.Lock()
 	rt.handed[questboard.ChunkKey(req.q.ID, req.c.ID)] = true
+	rt.snap = nil // the talk changed the quest word: rebuild the cached world before the tapper reads it
 	rt.mu.Unlock()
+	rt.worldLoop() // we hold the loop step here, so this is the loop's own rebuild
 	return nil
 }
 
@@ -1310,3 +1312,7 @@ func botReleaseID() string {
 	}
 	return buildinfo.Current()
 }
+
+// boardLegacy is true while quests.boardSM is 0; every bot-side branch between the old board and the run machine reads
+// it here (docs/questboard.md, "boardSM legacy removal").
+func (r *Runner) boardLegacy() bool { return r.e.Tune.Quests.BoardLegacy() }

@@ -155,6 +155,9 @@ func (r *Runner) betweenGoals(ctx context.Context, snap *d2.Snapshot) bool {
 	defer cancel()
 	r.setState(StateRecovering, "Restarting the game (recycle)")
 	did, why, err := r.d.Recycle(rctx)
+	if did {
+		r.noteRelaunch(RelaunchRecycle, "why="+why)
+	}
 	if !did && err == nil {
 		return false
 	}
@@ -327,6 +330,7 @@ func (r *Runner) carryOut(ctx context.Context, a SafetyAction) error {
 		if s := r.latest(); s != nil && s.Player != nil {
 			r.zoneObserve(ZoneEvent{Kind: ZoneEvChicken, Area: s.Player.Area, Diff: difficultyName(s.Player.Difficulty), At: r.e.Clock.Now()})
 			r.zoneCostAt("chicken", s.Player.Area)
+			r.noteChicken(fmt.Sprintf("life=%d/%d area=%d", s.Player.Life, s.Player.MaxLife, s.Player.Area))
 		}
 	}
 	if a == SafetyDrinkRejuv {
@@ -575,6 +579,7 @@ func (r *Runner) gameLost(ctx context.Context, c control, ev launch.Event) {
 	l.goneRestarts++
 	r.logXPAtRisk("game lost: " + ev.String())
 	r.e.Log.Warn("game lost, restarting it", "event", ev.String(), "attempt", l.goneRestarts)
+	r.noteRelaunch(RelaunchGameLost, "event="+ev.String())
 	l.trip = nil
 	r.setState(StateRecovering, "Game lost: restarting it")
 	var err error
@@ -756,6 +761,7 @@ func (r *Runner) escalate(ctx context.Context, c control, what string, err error
 					break
 				}
 				r.logXPAtRisk("failsafe rung 4")
+				r.noteRelaunch(RelaunchFailsafe, fmt.Sprintf("what=%q restarts=%d", what, l.restarts))
 				r.expectGameExit(true)
 				ok := r.do(ctx, c, StateRecovering, "Failsafe: restarting the game", r.restartTimeout(), "restart", r.oogRun(r.d.Restart))
 				r.expectGameExit(false)

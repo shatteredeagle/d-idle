@@ -306,8 +306,8 @@ func (r *Runner) noteStepRefused(res task.Result) {
 	if res.Err == nil || res.StepID == "" || (res.Outcome != task.OutRetry && res.Outcome != task.OutBlocked && res.Outcome != task.OutSkipped) {
 		return
 	}
-	r.inv.noteRefusal()
 	key := res.StepID + ": " + res.Err.Error()
+	r.inv.noteRefusal(key)
 	l := &r.loop.task
 	if l.refused == nil {
 		l.refused = map[string]bool{}
@@ -369,7 +369,7 @@ func (e taskEnv) World(ctx context.Context) (task.World, error) {
 	w.BRHigh = p.Class == d2.Sorceress || p.Class == d2.Druid || p.Class == d2.Amazon
 	w.BR = task.BRKnobs{CasterLevel: bt.BRCasterLevel, MeleeLevel: bt.BRMeleeLevel, Potions: bt.BRPotions, ManaPotions: bt.BRManaPotions, TPCharges: bt.BRTPCharges, Gold: bt.BRGold}
 	w.BRWaitLevel = l.br.waitLvl
-	w.BoardSM = r.e.Tune.Quests.BoardSM != 0
+	w.BoardSM = !r.boardLegacy()
 	if g := r.gearVerdict(s); g.Gated {
 		w.Gated, w.GatedWhy, w.SafeArea = true, g.Reason, task.Area(r.safeFarmArea(s))
 		if !g.Naked && w.Potions == 0 && w.Gold > 0 {

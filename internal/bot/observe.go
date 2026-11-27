@@ -301,6 +301,7 @@ func (r *Runner) newGameRun(f func(context.Context) error) func(context.Context)
 	from := fmt.Sprintf("%s:%d", filepath.Base(file), line)
 	return func(ctx context.Context) error {
 		r.e.Log.Info("new game requested", "from", from)
+		r.noteRelaunch(RelaunchNewGame, "from="+from)
 		err := run(ctx)
 		if err == nil {
 			r.noteRecycle()
@@ -1136,7 +1137,7 @@ func (r *Runner) minuteLine(s *d2.Snapshot, p *d2.Player, now time.Time) {
 		"potions", kit.BeltHP, "mana", kit.BeltMP, "packHP", packHP, "packMP", packMP, "beltBoxes", beltBoxes, "potionsUsed", int(r.drank.Load()), "tp", tp,
 		"gold", p.Gold, "stashGold", p.StashGold, "restarts", restartCount(o.newGames, o.plannedGames, o.recycles, o.lostRestarts), "xpRisk", o.xpAtRiskLocked(r.d.SavedExp), "xpLost", o.xpLost, "rung", rung, "goal", goal, "step", step,
 		"state", group, "rstate", rstate, "life", p.Life, "maxLife", p.MaxLife, "mp", p.Mana, "maxMana", p.MaxMana, "table", r.buildName(p), "invPct", invPct, "dmgTaken", o.hp.dmg, "hpMinPct", o.takeHPMin(), "lifeLost", lifeLost, "hitsTaken", hitsTaken, "hpPolls", hpPolls, "armor", combat.ArmorState(p), "goldPickup", o.goldPickupMin,
-		"arrivals", o.arrivals, "bounces", o.bounces, "bouncesPer100", bouncesPer100(o.bounces, o.arrivals)}, append(r.failsafeKV(o), append(r.runKV(), append(r.inputKV(), append(r.planKV(), append(r.arb.minuteKV(), append(r.inv.minuteKV(), append(r.stallKV(), append(auraKV(p), append(petsKV(p), r.upkeepKV()...)...)...)...)...)...)...)...)...)...)...)
+		"arrivals", o.arrivals, "bounces", o.bounces, "bouncesPer100", bouncesPer100(o.bounces, o.arrivals)}, append(r.failsafeKV(o), append(r.runKV(), append(r.inputKV(), append(r.planKV(), append(r.arb.minuteKV(), append(r.inv.minuteKV(), append(r.relaunchKV(), append(r.stallKV(), append(auraKV(p), append(petsKV(p), r.upkeepKV()...)...)...)...)...)...)...)...)...)...)...)...)
 	o.goldPickupMin = 0
 	r.noteGoldNextMinute(p.Gold, now)
 }

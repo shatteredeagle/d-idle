@@ -159,6 +159,7 @@ type invMon struct {
 	poorSince             time.Time
 	poorKills             int
 	refusals, refusalBase int
+	refWhy                map[string]int // refusal reason -> count since the last progress (refusal-storm top list)
 	progKey               string
 }
 
@@ -177,10 +178,39 @@ func invSince(t *time.Time, cond bool, now time.Time) time.Duration {
 func (r invRow) dur() time.Duration { return time.Duration(r.Secs) * time.Second }
 
 // noteRefusal counts a refused step (the quest step skipped, an area gate) for the refusal-storm row.
-func (m *invMon) noteRefusal() {
+// why names the refusal (step and reason); the storm line lists the three that repeated most.
+func (m *invMon) noteRefusal(why string) {
 	m.mu.Lock()
 	m.refusals++
+	if m.refWhy == nil {
+		m.refWhy = map[string]int{}
+	}
+	if len(m.refWhy) < 64 || m.refWhy[why] > 0 {
+		m.refWhy[why]++
+	}
 	m.mu.Unlock()
+}
+
+// topRefusals formats the three most repeated refusal reasons since the last progress, and clears the tally. Caller holds mu.
+func (m *invMon) topRefusals() string {
+	type kv struct {
+		k string
+		n int
+	}
+	var all []kv
+	for k, n := range m.refWhy {
+		all = append(all, kv{k, n})
+	}
+	sort.Slice(all, func(i, j int) bool { return all[i].n > all[j].n || all[i].n == all[j].n && all[i].k < all[j].k })
+	var out []string
+	for i, x := range all {
+		if i == 3 {
+			break
+		}
+		out = append(out, fmt.Sprintf("%q x%d", x.k, x.n))
+	}
+	m.refWhy = nil
+	return strings.Join(out, "; ")
 }
 
 // noteRefusalFailure records that a refusal reached the failure counter; the hit is emitted by the next tick.
@@ -347,9 +377,10 @@ func (m *invMon) tick(f invFacts) []invHit {
 	r = invRowOf("refusal-storm")
 	if pk := fmt.Sprintf("%d|%d|%d", f.kills, f.xp, f.area); pk != m.progKey || f.parked || f.paused {
 		m.progKey, m.refusalBase = pk, m.refusals
+		m.refWhy = nil
 	}
 	if n := m.refusals - m.refusalBase; n >= r.Count {
-		hit(r.Name, "refusals=%d since the last kill, xp or area change", n)
+		hit(r.Name, "refusals=%d since the last kill, xp or area change top=[%s]", n, m.topRefusals())
 		m.refusalBase = m.refusals
 	}
 	return m.limit(raw, f.now)

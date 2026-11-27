@@ -193,6 +193,7 @@ type Runner struct {
 	admit          admitState              // admission wiring state (admission.go)
 	explain        explainState            // decision ring and standing refusals (explain.go)
 	inv            invMon                  // invariant monitor (invariants.go)
+	relaunch       relaunchLog             // relaunches by reason (relaunch.go)
 	arb            arbShadow               // intent arbiter in shadow mode (shadow.go); idle unless bot.arbiterShadow is 1
 	zst            zoneState               // the last zone model verdict (zonemodel.go)
 	zmerc          zoneMerc                // merc alive/dead edge detection for ZoneObserve (zoneshadow.go)

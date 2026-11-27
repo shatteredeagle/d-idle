@@ -185,7 +185,7 @@ func (r *Runner) handleRefused(ctx context.Context, ref *Refused) {
 	}
 	st.n++
 	r.noteRefused("step:"+ref.Need, ref)
-	r.inv.noteRefusal()
+	r.inv.noteRefusal(key)
 	r.arbRefused(ref.Need, ref.Wake)
 	row := needTable[ref.Need]
 	pause := time.Duration(row.PauseSec) * time.Second
