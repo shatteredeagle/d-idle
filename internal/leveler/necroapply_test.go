@@ -46,6 +46,9 @@ func TestBonespearTableNoDeadPoints(t *testing.T) {
 	if got["Teeth"] != 14 {
 		t.Errorf("Teeth %d points, want 14", got["Teeth"])
 	}
+	if got["Bone Spear"] != 9 || got["Corpse Explosion"] != 6 { // SME review 2026-11-27, medium: rows 22-27 follow the main attack
+		t.Errorf("Bone Spear %d Corpse Explosion %d, want 9 and 6", got["Bone Spear"], got["Corpse Explosion"])
+	}
 	sum := 0
 	for _, n := range got {
 		sum += n
