@@ -25,7 +25,7 @@ owns:
   - "docs/onboarding-tour.md"
 exclusive: []
 contracts: []
-result: "Built offline 2026-11-27: tour of five state-tied tips, Now line from explain, Help sheet, seen in localStorage; node stub-DOM tests green; not looked at in a browser (checklist in docs/onboarding-tour.md), not verified live."
+result: "Built offline 2026-11-27 (no sample thought, no browser check, so #1 and #3 stay open): tour of five state-tied tips, Now line from explain, Help sheet, seen in localStorage; node stub-DOM tests green; not looked at in a browser (checklist in docs/onboarding-tour.md), not verified live."
 lane: next
 ---
 
@@ -39,8 +39,8 @@ Done when: tour of five steps with a page-only sample thought, Back/Skip/resume,
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [x] #1 Tour of five steps with a page-only sample thought, Back/Skip/resume, phone bottom sheet
+- [ ] #1 Tour of five steps with a page-only sample thought, Back/Skip/resume, phone bottom sheet
 - [x] #2 Help sheet and state banners; tour_seen stored
-- [x] #3 Tests and a 390/1280 px check
+- [ ] #3 Tests and a 390/1280 px check
 - [x] #4 the tour links to the welcome card and first-30-minutes text of TASK-247 (not built here)
 <!-- AC:END -->
