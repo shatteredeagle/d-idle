@@ -4,7 +4,6 @@
   flip.py <instance> <knob>=<value> [<knob>=<value> ...] --why TEXT [--window 24h] [--dry-run]   flip a bundle, open ONE window
   flip.py bisect <instance> --without KNOB                                  the last bundle of the instance minus one knob (a re-flip line)
   flip.py <instance> <knob>=<value> ... --reflip                            also accept an `enabled` row (sandbox on, code default still 0)
-  flip.py <instance> <knob>=<value> ... --commit-ledger                     after the flip, commit the ledger rows on a branch agent/ledger-<knob>-<date> (no push, no queue)
   flip.py watch [--interval 60] [--once] [--daemon]                         poll every open window; revert or close (--daemon: never exits, for the unit)
   flip.py watch --install-unit [--write]                                    print (or write) a systemd user unit for the watcher; never enables it
   flip.py status                                                            list open windows
@@ -18,7 +17,11 @@ local.env (via tools/env.sh):
                    launcher only, the shim starts it again; U: not drilled on a sandbox, try it with a dry knob first)
   D2_FLIP_VERIFY_S seconds to wait for the flipped value to show in `ops status --why` (default 240)
   D2_FLIP_BIN      the bot binary inside the container (default /data/didle/current/bin/d2bot)
-  D2_FLIP_STATE    where open windows are kept (default ~/.cache/d2flip)
+  D2_FLIP_STATE    where open windows are kept (default ~/.cache/d2flip); the ledger's runtime state is
+                   <D2_FLIP_STATE>/ledger/ledger-state.json
+Ledger (card led1): the design rows are read from data/darklaunch/<knob>.json of this checkout and never written; trial,
+enabled and revert state go to the state file only. After a close or revert the tool prints the one-line commit for the
+status word in git when that word must change.
 The container is named like the instance. Refuses while D2BOT_RUN is set (never in a measured run) and when the
 instance already has an open window.
 """
@@ -34,7 +37,9 @@ import time
 from datetime import datetime, timedelta, timezone
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-LEDGER = os.path.join(ROOT, "data", "darklaunch.json")
+sys.path.insert(0, os.path.join(ROOT, "tools", "darklaunch"))
+import ledger as L  # noqa: E402
+
 MAX_WRITE_B64 = 100000  # the text rides in a command line
 PROBE_S = 20  # `docker inspect` before a flip: fail fast on a wrong transport
 HEARTBEAT_STALE_S = 300  # a watcher older than this counts as dead
@@ -276,67 +281,45 @@ def unit_path():
     return os.path.expanduser("~/.config/systemd/user/d2flip-watch.service")
 
 
-def commit_ledger(ledger_path, knobs, root=ROOT, today=None, run=None, event="flip"):
-    """The ledger rows of `knobs` as they are in `ledger_path` go onto a fresh branch agent/ledger-<knob>-<date> in a sibling
-    worktree of `root`, committed there (no push, no queue). Returns (branch, worktree, mergeq line)."""
-    run = run or (lambda *a, cwd=root: subprocess.run(a, cwd=cwd, capture_output=True, text=True))
-    today = today or now_utc().strftime("%Y%m%d-%H%M%S")  # the time keeps a second commit the same day apart
-    slug = "-".join(k.replace(".", "-") for k in list(knobs)[:3]) + ("-etc" if len(knobs) > 3 else "")
-    branch = f"agent/ledger-{slug}-{today}"
-    wt = os.path.join(os.path.dirname(root), "d2lod-wt", f"ledger-{slug}-{today}")
-    base = "origin/main" if run("git", "rev-parse", "--verify", "-q", "origin/main").returncode == 0 else "HEAD"
-    r = run("git", "worktree", "add", wt, "-b", branch, base)
-    if r.returncode:
-        raise FlipError(f"git worktree add {wt}: {r.stderr.strip()[:200]}")
-    src, dst = Ledger(ledger_path), Ledger(os.path.join(wt, "data", "darklaunch.json"))
-    for k in knobs:
-        dst.update(k, **{a: b for a, b in src.row(k).items() if a != "name"})
-    msg = f"darklaunch ledger: {', '.join(knobs)} after {event}\n\nCo-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>\n"
-    run("git", "add", "data/darklaunch.json", cwd=wt)
-    r = run("git", "-c", "user.name=Claude", "-c", "user.email=noreply@anthropic.com", "commit", "-q", "-m", msg, cwd=wt)
-    if r.returncode:
-        raise FlipError(f"git commit in {wt}: {(r.stderr or r.stdout).strip()[:200]}")
-    return branch, wt, f"~/code/d2lod-ops/tools/mergeq.sh add {branch}"
-
-
 class Ledger:
-    """data/darklaunch.json rows. Statuses used here: trial (window open), dark (reverted), enabled (window closed clean)."""
+    """The merged ledger view for the flip tool. Design rows come from `path` (data/darklaunch/ of this checkout, or an old
+    one-file ledger) and are never written. Runtime state (trial: window open, enabled: closed clean, dark: reverted)
+    goes to the state file, the only thing this class writes."""
 
-    def __init__(self, path=LEDGER):
-        self.path = path
+    def __init__(self, path=None, state=None, env=None):
+        self.path = path or L.default_source(ROOT)
+        # An explicit ledger without a state path (tests, a scratch copy) keeps its state next to it, never in the real file.
+        self.state = state or (os.path.join(self.path.rstrip(os.sep) + ".state", "ledger-state.json") if path else L.default_state(env))
+
+    def items(self):
+        return L.rows(self.path, self.state)
 
     def _load(self):
-        with open(self.path) as f:
-            return json.load(f)
+        return {"items": self.items()}
 
     def row(self, name):
-        for it in self._load()["items"]:
-            if it["name"] == name:
-                return dict(it)
-        return None
+        return next((it for it in self.items() if it["name"] == name), None)
+
+    def design_status(self, name):
+        return next((it.get("status") for it in L.load_design(self.path) if it["name"] == name), None)
 
     def update(self, name, **kv):
-        d = self._load()
-        for it in d["items"]:
-            if it["name"] == name:
-                it.update(kv)
-                break
-        else:
-            raise FlipError(f"{name}: no row in {os.path.basename(self.path)}")
-        tmp = self.path + ".new"
-        with open(tmp, "w") as f:
-            json.dump(d, f, indent=1, ensure_ascii=False)
-            f.write("\n")
-        os.replace(tmp, self.path)
+        if self.design_status(name) is None:
+            raise FlipError(f"{name}: no row in {os.path.basename(self.path.rstrip(os.sep))}")
+        if "status" in kv:
+            kv["state"] = kv.pop("status")
+        st = L.load_state(self.state)
+        st["rows"].setdefault(name, {}).update(kv)
+        st["log"].append(dict(kv, name=name, at=iso(now_utc())))
+        L.save_state(self.state, st)
 
 
 class Flipper:
-    def __init__(self, make_sandbox, store, ledger, clock=now_utc, sleep=time.sleep, out=print, env=None, dry_run=False, reflip=False, on_ledger=None):
+    def __init__(self, make_sandbox, store, ledger, clock=now_utc, sleep=time.sleep, out=print, env=None, dry_run=False, reflip=False):
         self.make, self.store, self.ledger, self.clock, self.sleep, self.out = make_sandbox, store, ledger, clock, sleep, out
         self.env = os.environ if env is None else env
         self.dry = dry_run
         self.reflip = reflip
-        self.on_ledger = on_ledger  # called (event, knobs) after a close or revert changed the ledger; never fails the watcher
         self.verify_s = int(self.env.get("D2_FLIP_VERIFY_S", 240))
 
     def verify(self, sb, knobs):
@@ -380,7 +363,7 @@ class Flipper:
             ok = ("dark", "trial") + (("enabled",) if self.reflip else ())
             if row is None or row["status"] not in ok:
                 hint = " (status enabled: pass --reflip to flip it again)" if row and row["status"] == "enabled" else ""
-                raise FlipError(f"{knob}: needs a dark row in data/darklaunch.json{hint}")
+                raise FlipError(f"{knob}: needs a dark row in data/darklaunch/{hint}")
         sb = self.make(instance)
         if hasattr(sb, "probe"):
             sb.probe()
@@ -435,13 +418,18 @@ class Flipper:
         self.out(f"FLIP {instance} {names} = {list(knobs.values())} (were {list(olds.values())}) window {window_s}s until {w['end']} backup {tag}")
         return w
 
-    def _ledger_commit(self, event, knobs):
-        if not self.on_ledger:
-            return
+    def _design_hint(self, word, knobs):
+        """Runtime state is already in the state file. Print the one-line commit for the knobs whose status word in git
+        differs from `word` (enabled after a clean close, dark after the revert of a re-flipped enabled row)."""
         try:
-            self.out(self.on_ledger(event, list(knobs)))
-        except Exception as e:
-            self.out(f"LEDGER COMMIT FAILED after {event} [{','.join(knobs)}]: {e}; rows are changed but uncommitted in the checkout")
+            lag = [k for k in knobs if self.ledger.design_status(k) != word]
+        except Exception as e:  # never fails the watcher
+            self.out(f"LEDGER: design rows unreadable ({e}); state file is written")
+            return
+        if lag:
+            self.out(f"LEDGER git: {len(lag)} row(s) to {word}, commit on a branch: {L.status_line(word, lag)}")
+        else:
+            self.out(f"LEDGER git: nothing to commit (rows already {word})")
 
     # --- restore / revert ---------------------------------------------------------------------------------
     def _restore(self, sb, w):
@@ -477,7 +465,7 @@ class Flipper:
         self.store.last(w["instance"], w)
         self.store.drop(w["instance"])
         self.out(f"REVERT {w['instance']} [{names}]: {w['revert_reason']}; tuning restored from {w['tag']}, child restarted, {len(w['knobs'])} row(s) dark")
-        self._ledger_commit("revert", w["knobs"])
+        self._design_hint("dark", w["knobs"])
         return True
 
     def close(self, w):
@@ -486,7 +474,7 @@ class Flipper:
         self.store.last(w["instance"], w)
         self.store.drop(w["instance"])  # the backup tag goes with the state file
         self.out(f"CLOSE {w['instance']} [{','.join(w['knobs'])}]: no hard breach for {w['window_s']}s; rows enabled, backup {w['tag']} removed")
-        self._ledger_commit("close", w["knobs"])
+        self._design_hint("enabled", w["knobs"])
 
     # --- watch --------------------------------------------------------------------------------------------
     def poll(self, instance):
@@ -551,17 +539,13 @@ def main(argv=None):
     ap.add_argument("--install-unit", action="store_true", help="watch: print the systemd user unit")
     ap.add_argument("--write", action="store_true", help="with --install-unit: write the unit file (never enables it)")
     ap.add_argument("--reflip", action="store_true", help="also accept ledger rows with status enabled")
-    ap.add_argument("--commit-ledger", action="store_true", help="after the flip, commit the ledger rows on agent/ledger-<knob>-<date>")
+    ap.add_argument("--commit-ledger", action="store_true", help=argparse.SUPPRESS)  # retired (led1): old command lines still parse
     ap.add_argument("--dry-run", action="store_true", help="print every step, write and restart nothing")
     a = ap.parse_args(argv)
     env = load_env()
     store = Store(env.get("D2_FLIP_STATE") or os.path.expanduser("~/.cache/d2flip"))
-    def ledger_commit(event, knobs):
-        branch, wt, line = commit_ledger(LEDGER, knobs, event=event)
-        return f"ledger committed on {branch} in {wt} (not pushed, not queued). Queue it with: {line}"
-
-    f = Flipper(lambda inst: Sandbox(inst, env), store, Ledger(), env=env, dry_run=a.dry_run, reflip=a.reflip,
-                on_ledger=None if a.dry_run else ledger_commit)
+    ledger = Ledger(env=env)
+    f = Flipper(lambda inst: Sandbox(inst, env), store, ledger, env=env, dry_run=a.dry_run, reflip=a.reflip)
     try:
         if a.args[0] == "watch":
             if a.install_unit:
@@ -598,12 +582,8 @@ def main(argv=None):
                 except ValueError:
                     raise FlipError(f"value {v!r} of {knob} is not a number (tuning overrides are numbers)")
             f.flip(a.args[0], knobs, a.why, parse_window(a.window))
-            if a.commit_ledger and not a.dry_run:
-                branch, wt, line = commit_ledger(LEDGER, knobs)
-                print(f"ledger committed on {branch} in {wt} (not pushed, not queued). Queue it with: {line}")
-            elif not a.dry_run:
-                print("ledger rows changed in data/darklaunch.json of this checkout and are uncommitted: rerun with --commit-ledger "
-                      "or commit them yourself (git add data/darklaunch.json)")
+            if not a.dry_run:
+                print(f"ledger: trial state written to {ledger.state}; nothing to commit")
     except FlipError as e:
         print(f"flip: {e}", file=sys.stderr)
         return 1
