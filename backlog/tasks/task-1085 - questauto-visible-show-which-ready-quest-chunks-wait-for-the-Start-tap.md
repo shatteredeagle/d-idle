@@ -1,10 +1,11 @@
 ---
 id: TASK-1085
 title: 'questauto-visible: show which ready quest chunks wait for the Start tap'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T00:27:00Z'
+updated_date: '2026-11-28T01:11:00Z'
 labels:
   - bot
   - feature
