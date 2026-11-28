@@ -1,10 +1,11 @@
 ---
 id: TASK-1134
 title: 'forkreq: one prioritized list of tonight''s requests to the private d2d fork'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T10:40:00Z'
+updated_date: '2026-11-28T10:52:00Z'
 labels:
   - docs
   - research

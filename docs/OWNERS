@@ -187,7 +187,6 @@ docs/design/arbiter-migration-p6.md  live-agent  arbmig
 docs/design/boardsm-flip.md  live-agent  bsmdef
 docs/design/fable-review-2026-11-21/town-planner-b-model.md  live-agent  town5
 docs/design/fable-review-2026-11-21/town-profiles-sme.md  live-agent  town12
-docs/design/fork-requests-2026-11-28.md  credit-runner  forkreq
 docs/design/input-cast-verbs.md  live-agent  inputl3
 docs/design/input-i3.md  live-agent  inputl3
 docs/design/input-i4.md  credit-runner  inputl4

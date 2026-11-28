@@ -59,7 +59,6 @@
 | durieltyrael | proposed | - | `internal/questboard/`<br>`internal/task/` | - |
 | drilldrivers | proposed | - | `internal/combat/`<br>`tools/provingground/scenarios/combatdrills.json`<br>`tools/provingground/scenarios/necro.json` | - |
 | fix14 | proposed | - | `internal/admit/`<br>`internal/quest/objective.go`<br>`internal/bot/`<br>`internal/combat/`<br>`internal/vaultkeep/`<br>`internal/arbiter/`<br>`internal/town/` | - |
-| forkreq | proposed | - | `docs/design/fork-requests-2026-11-28.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
 | ghcrpublish | in-progress | - | `.github/workflows/tester-image.yml`<br>`docs/registry-publish.md`<br>`deploy/d2d-container/compose.friends.yml`<br>`docs/tester-registry.md`<br>`deploy/d2d-container/compose.tester.yml`<br>`deploy/d2d-container/context.sh`<br>`deploy/d2d-container/tester_image_test.go` | - |
