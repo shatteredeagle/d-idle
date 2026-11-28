@@ -172,7 +172,9 @@ data/questboard/act1.json  credit-runner  cainfix3
 deploy/d2d-container/compose.friends.yml  credit-runner  ghcrpublish
 deploy/d2d-container/compose.tester.yml  credit-runner  ghcrpublish
 deploy/d2d-container/context.sh  credit-runner  ghcrpublish
+deploy/d2d-container/tester-report.sh  credit-runner  fix4
 deploy/d2d-container/tester_image_test.go  credit-runner  ghcrpublish
+deploy/d2d-container/tester_report_test.go  credit-runner  fix4
 docs/arbiter.md  live-agent  arbmig
 docs/arbiter.md  live-agent  ticklog
 docs/away-drill.md  live-agent  awaydrill
@@ -192,6 +194,7 @@ docs/design/input-i5-i7.md  credit-runner  inputl5
 docs/design/ticklog-t4.md  live-agent  ticklog
 docs/design/townflip-p5.md  live-agent  town11
 docs/design/townflip-p5.md  live-agent  townflip
+docs/diffready.md  credit-runner  fix4
 docs/epics/epic-act1.md  live-agent  epic-act1
 docs/epics/epic-act2.md  live-agent  epic-act2
 docs/epics/epic-act3.md  live-agent  epic-act3
@@ -215,6 +218,7 @@ docs/knobs.md  credit-runner  cainfix3
 docs/knobs.md  credit-runner  dlv-upkeep-state
 docs/knobs.md  live-agent  arbmig
 docs/onboarding-tour.md  credit-runner  onboardtour
+docs/ops/docker-volumes.md  credit-runner  fix4
 docs/probes/cellar3-gate-capture.md  live-agent  cellar3gate
 docs/probes/checkpoint-live-drill.md  live-agent  ckptlive
 docs/probes/classorder1.md  user  classorder1
@@ -273,6 +277,8 @@ internal/bot/arbiter_control.go  live-agent  arbmig
 internal/bot/arbiter_control_test.go  live-agent  arbmig
 internal/bot/arbloop_test.go  live-agent  arbloop
 internal/bot/broke.go  live-agent  town5
+internal/bot/diffready.go  credit-runner  fix4
+internal/bot/diffready_test.go  credit-runner  fix4
 internal/bot/goal.go  live-agent  arbloop
 internal/bot/guided.go  credit-runner  campaign1
 internal/bot/guided_test.go  credit-runner  campaign1
@@ -334,6 +340,7 @@ internal/decide/queue.go  credit-runner  qqueue
 internal/decide/queue_test.go  credit-runner  qqueue
 internal/decide/variants.go  credit-runner  qdensity
 internal/decide/variants_test.go  credit-runner  qdensity
+internal/diffready/  credit-runner  fix4
 internal/env/tuning_agency.go  live-agent  agencyp1b
 internal/env/tuning_bot.go  live-agent  arbmig
 internal/env/tuning_bot.go  live-agent  ticklog
@@ -350,6 +357,8 @@ internal/invdesk/mercverbs.go  credit-runner  uib9
 internal/invdesk/mercverbs_test.go  credit-runner  uib9
 internal/invdesk/sets.go  credit-runner  uib9
 internal/levelplan/necro_test.go  live-agent  epic-class-necromancer
+internal/logx/sink.go  credit-runner  fix4
+internal/logx/sink_test.go  credit-runner  fix4
 internal/nav/  credit-runner  navbarracks
 internal/nav/  credit-runner  summonerstall
 internal/nav/  live-agent  dlv-move-tele
@@ -406,6 +415,9 @@ internal/town/shop.go  live-agent  townflip
 internal/town/town.go  live-agent  townflip
 internal/town/trip.go  live-agent  inputl3
 internal/watch/areamap_test.go  credit-runner  uis6
+internal/watch/difficultydesk.go  credit-runner  fix4
+internal/watch/difficultydesk_test.go  credit-runner  fix4
+internal/watch/gate.go  credit-runner  fix4
 internal/watch/layout.go  credit-runner  uis1
 internal/watch/layout.go  credit-runner  uis6
 internal/watch/layout_test.go  credit-runner  uis1
@@ -415,7 +427,9 @@ internal/watch/onboardingtour_test.go  credit-runner  onboardtour
 internal/watch/panels.go  credit-runner  uis6
 internal/watch/policypreview_test.go  live-agent  epic-class-necromancer
 internal/watch/policysheet_test.go  live-agent  epic-class-necromancer
+internal/watch/serve.go  credit-runner  fix4
 internal/watch/serve.go  credit-runner  uis6
+internal/watch/serve_test.go  credit-runner  fix4
 internal/watch/stance_test.go  live-agent  epic-class-necromancer
 internal/watch/testdata/areamap/  credit-runner  uis6
 internal/watch/testdata/logpanel/  credit-runner  uis6
@@ -435,6 +449,7 @@ internal/watch/web/panels/log/  credit-runner  uis6
 internal/watch/web/panels/map/  credit-runner  uis6
 internal/watch/web/shell.css  credit-runner  uis1
 internal/watch/web/shell.css  credit-runner  uis6
+internal/watch/web/shell.js  credit-runner  fix4
 internal/watch/web/shell.js  credit-runner  uis1
 internal/watch/web/shell.js  credit-runner  uis6
 internal/watch/web/shell.json  credit-runner  uis1
@@ -455,6 +470,8 @@ tools/emu/mb_gate.py  credit-runner  decomp43
 tools/emu/mb_mut.py  credit-runner  decomp43
 tools/emu/mb_mut2.py  credit-runner  decomp43
 tools/emu/zd_*  credit-runner  zealdiff
+tools/flip/flip.py  credit-runner  fix4
+tools/flip/test_flip.py  credit-runner  fix4
 tools/friendpack/README.txt  credit-runner  cut012
 tools/friendpack/compose.yml  credit-runner  cut012
 tools/friendpack/didle  credit-runner  cut012
