@@ -279,10 +279,10 @@ func (t *Town) buyPotions(ctx context.Context, npc d2.Unit, floor int, rep *Chor
 		"beltMP", bs.Count[belt.MP], "packHP", belt.PackCount(t.e.Data, s.Inventory, belt.HP), "packMP", belt.PackCount(t.e.Data, s.Inventory, belt.MP), "beltOther", bs.Other, "slots", bs.Slots, "gold", s.Player.Gold)
 	// A caster buys its first mana potions before the healing fill: the fill alone ate the whole purse for hours (seed 11
 	// of the Gate 2 rerun, belt mp = 0 from clvl 4; docs/research/lvl14plan.md TASK-A). Healing still comes first up to
-	// HPFirst. The classes come from resource.ManaNeed, the belt columns from the plan: a build without a mana column has
+	// HPFirst. The need comes from resource.ManaNeedFor (the build, else the class), the belt columns from the plan: a build without a mana column has
 	// want[MP] == 0 and shops exactly as before.
 	r := t.e.Tune.Resource
-	manaNeed := resource.ManaNeed(s.Player.Class)
+	manaNeed := resource.ManaNeedFor(s.Player.Class, t.build)
 	caster := manaNeed >= 2
 	hpHave := bs.Count[belt.HP] + bs.Count[belt.RV] + belt.PackCount(t.e.Data, s.Inventory, belt.HP)
 	mpHave := bs.Count[belt.MP] + belt.PackCount(t.e.Data, s.Inventory, belt.MP)

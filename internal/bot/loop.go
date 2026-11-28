@@ -95,7 +95,7 @@ func (r *Runner) step(ctx context.Context) bool {
 	if isDead(p) {
 		return r.deathWait(c)
 	}
-	if r.campaignStall(ctx, snap, c.goal != nil && !c.paused && !r.parkedBoard.Load()) {
+	if r.campaignStall(ctx, snap, c.goal != nil && !c.paused && !r.parkedBoard.Load() && !r.noProfile.Load()) {
 		return true
 	}
 	if r.droughtCheck(ctx, snap, c) {
@@ -112,6 +112,9 @@ func (r *Runner) step(ctx context.Context) bool {
 	}
 	if c.goal == nil {
 		return r.noGoal(ctx, snap, c)
+	}
+	if acted, parked := r.noProfilePark(ctx, snap, c); parked {
+		return acted
 	}
 	if r.errorWait(snap) {
 		return false
