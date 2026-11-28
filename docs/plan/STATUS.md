@@ -62,6 +62,7 @@
 | durieltyrael | proposed | - | `internal/questboard/`<br>`internal/task/` | - |
 | drilldrivers | proposed | - | `internal/combat/`<br>`tools/provingground/scenarios/combatdrills.json`<br>`tools/provingground/scenarios/necro.json` | - |
 | fix14 | proposed | - | `internal/admit/`<br>`internal/quest/objective.go`<br>`internal/bot/`<br>`internal/combat/`<br>`internal/vaultkeep/`<br>`internal/arbiter/`<br>`internal/town/` | - |
+| savesafe | in-progress | - | `internal/savesafe/`<br>`cmd/d2bot/savesafewire.go`<br>`cmd/d2bot/savesafewire_test.go`<br>`cmd/d2bot/opscmd.go`<br>`cmd/d2bot/opswire.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/ladder.go`<br>`internal/bot/savepoint.go`<br>`internal/bot/savepoint_test.go`<br>`internal/bot/runner.go`<br>`internal/bot/explain.go`<br>`internal/watch/notices.go`<br>`internal/watch/notices_test.go`<br>`internal/watch/serve.go`<br>`internal/watch/update.go`<br>`docs/design/fork-save-atomic.md`<br>`docs/ops/save-backups.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
 | ghcrpublish | in-progress | - | `.github/workflows/tester-image.yml`<br>`docs/registry-publish.md`<br>`deploy/d2d-container/compose.friends.yml`<br>`docs/tester-registry.md`<br>`deploy/d2d-container/compose.tester.yml`<br>`deploy/d2d-container/context.sh`<br>`deploy/d2d-container/tester_image_test.go` | - |
@@ -204,6 +205,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 010befbd5 11-28 05:02 `Merge agent/savesafe: savesafe: rolling character save backups, zero-byte restore, disk guard (TASK-1132)` (savesafe)
+- 0da230f78 11-28 05:01 `Merge branch 'main' into savesafe` (-)
 - 91cfd35cc 11-28 04:52 `Merge agent/labops2: lab night results 2026-11-28b: reruns and ledger verdicts (docs)` (labops2)
 - dc5419a81 11-28 04:52 `Merge agent/fix14: fix14: round-3 HIGH fixes: boss-level kit, fighter reselect, hole hold, merc journal (TASK-1131)` (fix14)
 - 0d31f7220 11-28 04:51 `Merge branch 'main' into labops2` (-)
@@ -212,6 +215,4 @@
 - 893ee2ab2 11-28 04:50 `Merge branch 'main' into nightlog` (-)
 - 0cdf10521 11-28 04:44 `Merge agent/sec2: sec2: scrub leaks (TASK-1125)` (sec2)
 - 39a32f65f 11-28 04:43 `Merge branch 'main' into sec2` (-)
-- 6a0008aab 11-28 04:35 `Merge agent/evid1: evid1: evidence logs (TASK-1118)` (evid1)
-- 1f8a58ba4 11-28 04:34 `Merge branch 'main' into evid1` (-)
 <!-- statusgen:end -->

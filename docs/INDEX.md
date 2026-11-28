@@ -143,6 +143,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 `design/`
 
 - [fork-order-id-spec.md](design/fork-order-id-spec.md): Fork change spec: order id on the direct item verbs (status: proposal (card fix1, 2026-11-27). Nothing here is built; no fork edit was made. Needs the fork owner and...)
+- [fork-save-atomic.md](design/fork-save-atomic.md): Fork request: write the character file atomically (status: request to the d2d fork, not built (card savesafe). Nothing in the fork was changed by this card. The bot...)
 
 `digest/`
 
@@ -591,6 +592,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 - [docker-volumes.md](ops/docker-volumes.md): Docker volumes on the worker host: safe removal (status: current (fix4, from fable review 4 finding 2, `docs/design/fable-review-2026-11-28/04-security-privacy.md`).)
 - [logs.md](ops/logs.md): Where the logs are (sandbox container and dev) (status: current (card logsink). Code: `internal/logx/sink.go`, `cmd/d2bot/main.go` (newLogger),...)
+- [save-backups.md](ops/save-backups.md): Character file backups, startup repair and the disk guard (status: current (card savesafe). Code: `internal/savesafe/`, `cmd/d2bot/savesafewire.go`. NOT verified live (unit...)
 - [outcomes.md](outcomes.md): Typed step outcome (knob `bot.typedOutcome`) (status: current, stage 1 (card outcome1, 2026-11-25). Source: P2 of...)
 - [overlay.md](overlay.md): Table overlay (d.idle mode): file format and rules (status: implemented, 2026-11-06, TASK-59. Fork side `--overlay-dir` on branch `d2d.lab4-overlay` of the private...)
 - [pact-away.md](pact-away.md): Pact away safety (TASK-169) (status: built and tested offline with fakes and httptest; NOT run against a live bot or a browser. Design:...)
