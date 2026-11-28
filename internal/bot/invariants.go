@@ -50,6 +50,7 @@ var invRows = []invRow{
 	{Name: "arbiter-starved", GapSec: 600, Why: "an arbiter intent was outranked for 600 s or more (docs/arbiter.md); only with the arbiter knobs on"},
 	{Name: "aura-off", Secs: 10, Why: "in the field with an aura skill learned and the state line reading no active aura (aura=0) for Secs; only where the backend reports the aura (d2d)"},
 	{Name: "summon-missing", Secs: 10, Why: "in the field with hostiles near, a summon skill learned and its mana in hand, and the state line reading no own minion (pets=0) for Secs; only where the backend reports the count (d2d); soft: the count rule is unverified live"},
+	{Name: "no-combat-profile", Hard: true, GapSec: 300, Why: "the fighter has no combat profile for the hero's class and build (Fighter.ProfileErr): it refuses to fight instead of using another class's profile"},
 	{Name: "economy-stall", Secs: 7200, Count: 100, Why: "gold in purse and stash under Count for Secs while kills continue"},
 }
 
@@ -233,6 +234,13 @@ func (m *invMon) noteStall(what string) {
 func (m *invMon) noteFightStall(what string) {
 	m.mu.Lock()
 	m.pending = append(m.pending, invHit{"fight-stall", what})
+	m.mu.Unlock()
+}
+
+// noteNoProfile records that the fighter has no combat profile (hard row no-combat-profile).
+func (m *invMon) noteNoProfile(what string) {
+	m.mu.Lock()
+	m.pending = append(m.pending, invHit{"no-combat-profile", what})
 	m.mu.Unlock()
 }
 
@@ -492,6 +500,11 @@ func (r *Runner) invTick(snap *d2.Snapshot, c control) {
 			if k, known := r.kitRead(snap); known {
 				f.kitKnown, f.kitMissing = true, k.missing()
 			}
+		}
+	}
+	if pe, ok := r.d.Fighter.(interface{ ProfileErr() error }); ok {
+		if err := pe.ProfileErr(); err != nil {
+			r.inv.noteNoProfile(err.Error())
 		}
 	}
 	for _, h := range r.inv.tick(f) {

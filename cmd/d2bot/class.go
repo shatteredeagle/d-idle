@@ -66,8 +66,11 @@ func applyClass(ctx context.Context, snap func() (*d2.Snapshot, error), cb *comb
 		return
 	}
 	cp := planForClass(s.Player.Class, cfgBuild, s.Player.Level, leveler.OwnedSkills(db, s.Player))
+	// No profile, no fight: the fighter refuses Clear and Kill while the error is set (it never fights on another
+	// class's or build's profile) and the invariant monitor counts no-combat-profile every tick until it is fixed.
+	cb.SetProfileErr(cp.Err)
 	if cp.Err != nil {
-		log.Error("class-aware start: no combat profile, the fighter keeps its default (fix the table's combat key)", "class", s.Player.Class.String(), "levelerBuild", cp.LevelerBuild, "err", cp.Err)
+		log.Error("class-aware start: NO COMBAT PROFILE, the hero will not fight (fix the table's class and combat keys)", "class", s.Player.Class.String(), "levelerBuild", cp.LevelerBuild, "err", cp.Err)
 	} else if cb.Build != cp.CombatBuild {
 		cb.Build = cp.CombatBuild
 	}

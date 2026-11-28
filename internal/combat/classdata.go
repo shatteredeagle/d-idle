@@ -552,20 +552,23 @@ func SelectProfileChecked(p *d2.Player, cat Catalog, b Build) (*Profile, error) 
 
 var loggedSelectErr sync.Map
 
-// SelectProfile is SelectProfileChecked for callers that need a profile whatever happens: the error is logged
-// loudly and the character gets its class default (or, for an unknown class, the profile that fits its skills).
-func SelectProfile(p *d2.Player, cat Catalog, b Build) *Profile {
+// SelectProfile is SelectProfileChecked with one retry: a profile id the class does not have is logged loudly (once
+// per message) and the character gets the default profile of ITS OWN class. A class with no profile at all is an
+// error that names the class; there is no fallback to another class (builds are data, AGENTS.md).
+func SelectProfile(p *d2.Player, cat Catalog, b Build) (*Profile, error) {
 	pr, err := SelectProfileChecked(p, cat, b)
 	if err == nil {
-		return pr
+		return pr, nil
 	}
 	if _, seen := loggedSelectErr.LoadOrStore(err.Error(), true); !seen { // once per message: this runs every tick
-		slog.Error("combat: profile selection failed, using a fallback", "err", err, "class", int(p.Class), "build", string(b))
+		slog.Error("combat: profile selection failed", "err", err, "class", p.Class.String(), "build", string(b))
 	}
-	if pr, err := SelectProfileChecked(p, cat, ""); err == nil {
-		return pr
+	if b != "" {
+		if pr, err2 := SelectProfileChecked(p, cat, ""); err2 == nil {
+			return pr, nil
+		}
 	}
-	return ProfileFor(d2.Sorceress, "")
+	return nil, fmt.Errorf("no combat profile for class %s (id %d), build %q: %w", p.Class, int(p.Class), string(b), err)
 }
 
 func profileUses(p *Profile, name string) bool {
