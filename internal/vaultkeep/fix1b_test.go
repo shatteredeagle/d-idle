@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"testing"
+	"time"
 
 	"d2lod-bot/internal/d2dctl"
 	"d2lod-bot/internal/vault"
@@ -301,5 +302,40 @@ func TestFix1bOpenOrderBlocksCarryMercAndEquip(t *testing.T) {
 				t.Fatalf("equipped a record under an open mercenary order: %+v %v", res, d.df.Calls)
 			}
 		})
+	}
+}
+
+// N5: the mercenary refuses once (he is dead); after the cause is fixed the same record must be given, not answered
+// "dup" for the life of the game process. After the success a further tap never makes a second copy.
+func TestFix1bMercRetryAfterRefusal(t *testing.T) {
+	ctx := context.Background()
+	for _, class := range classes {
+		for _, kind := range []string{"rogue", "desert"} {
+			t.Run(class+"/"+kind, func(t *testing.T) {
+				d, mf := mercRig(t, class, kind)
+				id := d.add(1, "cap", "new")
+				mf.dead = true
+				if res, ok := d.k.EquipMerc(ctx, id); !ok || res.OK || res.Code != "dead" {
+					t.Fatalf("test setup: want a refusal: %v %+v", ok, res)
+				}
+				if rec, _ := d.st.Get(id); rec.State != vault.Recorded || len(d.api.VaultFake.Carried) != 0 {
+					t.Fatalf("after the refusal: record %s, %d stray items", rec.State, len(d.api.VaultFake.Carried))
+				}
+				mf.dead = false
+				d.now = d.now.Add(time.Second)
+				res, ok := d.k.EquipMerc(ctx, id)
+				if !ok || !res.OK {
+					t.Fatalf("the retry after a refusal failed: %+v", res)
+				}
+				if len(mf.worn) != 1 || !d.retired(id) || len(d.api.VaultFake.Carried) != 0 {
+					t.Fatalf("after the retry: merc wears %d, record retired %v, pack %d", len(mf.worn), d.retired(id), len(d.api.VaultFake.Carried))
+				}
+				d.now = d.now.Add(time.Second)
+				creates := d.api.VaultFake.Stats.Creates
+				if res, _ := d.k.EquipMerc(ctx, id); res.OK || d.api.VaultFake.Stats.Creates != creates {
+					t.Fatalf("a tap after the success made another copy: %+v", res)
+				}
+			})
+		}
 	}
 }
