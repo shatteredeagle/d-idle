@@ -93,7 +93,7 @@ func usage(w io.Writer) {
 	fmt.Fprint(w, `usage: d2scenario COMMAND [flags]
   list        [-dir D] [-tier T]                list scenarios
   validate    [-dir D] [-board B]               check files, ids and coverage references
-  smoke       [-dir D]                          cheap tier, no game: static checks of every scenario and four preps on a fake d2d
+  smoke       [-dir D]                          cheap tier, no game: static checks of every scenario and four preps on a fake game
   setup-golden [-write] [-dir D] [-golden G]    check (or regenerate) the per-profile golden files of every prepared hero and setup
   plan        [-tier fast|full|nightly] [-changed F,F] [-id ID,..] [-class C] [-seed N] [-json]
                                                 DRY RUN: the runs, their setup verbs and a wall estimate; starts nothing
