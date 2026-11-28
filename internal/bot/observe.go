@@ -83,7 +83,7 @@ type observer struct {
 	campaignAt    time.Time // last campaign progress (stall.go): kill or xp, non-town area entered, purchase, quest step
 	rearmAt       time.Time
 	real          uint64       // progress that resets the failsafe ladder
-	realWall      atomic.Int64 // wall-clock unix nanos of the last kill, xp or level (heartbeat for the d2bot watchdog, see LastStep)
+	realWall      atomic.Int64 // wall-clock unix nanos of the last observed progress of any kind (bump; heartbeat for the d2bot watchdog, see LastStep)
 	killXPAt      time.Time    // last kill or xp gain (drought watchdog); fieldSince: entry into the current non-town area
 	fieldSince    time.Time
 	townLeftAt    time.Time   // last departure from a town area (the farm loop measures the walk back from it)
@@ -382,6 +382,11 @@ func (o *observer) bump(now time.Time) {
 	o.lastProgress = now
 	o.progress++
 	o.stuckReason = ""
+	// The slice heartbeat (fable review part 7, A4): actions run up to 40 min, the d2bot watchdog allows 10. The facts
+	// that keep the in-process stuck check quiet (walking, an area change, gold, a potion, a drop, monster life going
+	// down) keep the process watchdog quiet too, so a quiet stretch of a slice that is getting somewhere (a long walk,
+	// town chores) is not judged hung. Observed facts only, never a timer: a step that hangs moves nothing.
+	o.realWall.Store(time.Now().UnixNano())
 }
 
 // bumpReal is progress that counts for the failsafe ladder: experience, kills and levels only. Walking, area changes,
@@ -394,7 +399,6 @@ func (o *observer) bumpReal(now time.Time) {
 	o.nkMech = ""
 	o.fsWhy = "" // the failsafe reason shown in the minute line is the one since the last kill or XP gain
 	o.real++
-	o.realWall.Store(time.Now().UnixNano())
 }
 
 // rearm gives the watchdog a fresh window without counting progress (after a ladder step). Caller holds obMu.
