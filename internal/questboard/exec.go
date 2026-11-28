@@ -34,7 +34,7 @@ const (
 type StepResult struct {
 	Outcome StepOutcome
 	Why     string
-	Code    string // StepHeld: the hold's reason code
+	Code    string // StepHeld: the hold's reason code; StepFailed: the code of a coded refusal (quests.refusalPark)
 }
 
 // Env is the read-only evidence of one tick. Everything is re-read each time; none of it is stored here.
@@ -58,18 +58,19 @@ type Stepper func(ctx context.Context, q Quest, c Chunk) StepResult
 
 // Options are the executor limits. Zero values take the defaults.
 type Options struct {
-	Enabled     bool   // the knob quests.board
-	SM          bool   // the knob quests.boardSM: runs and latches in the plan file drive the board (sm.go, exec_sm.go)
-	MaxFailures int    // consecutive failed slices before the chunk parks (default 3)
-	MaxDeaths   int    // deaths on one chunk before it parks (default 2)
-	MaxHandIn   int    // dialogue attempts per HandIn call before it parks (default 3)
-	Release     string // the bot release id; a gave_up park from another release is retried once (exec_sm.go)
-	Mode        string // recorded on the plan record (train, idle, farm); default train
-	Log         func(msg string, kv ...any)
-	Now         func() time.Time // the clock of the auto-start controller (default time.Now); tests pass a fake
-	Auto        AutoOptions      // the auto-start limits (auto.go); the zero value never starts anything by itself
-	Resume      ResumeOptions    // the pause policy (resume.go); the zero value resumes nothing
-	Ledger      func() Ledger    // the account wallet (ledger.go); nil, or a nil result, makes the Ether hook inert
+	Enabled          bool   // the knob quests.board
+	SM               bool   // the knob quests.boardSM: runs and latches in the plan file drive the board (sm.go, exec_sm.go)
+	MaxFailures      int    // consecutive failed slices before the chunk parks (default 3)
+	MaxDeaths        int    // deaths on one chunk before it parks (default 2)
+	MaxHandIn        int    // dialogue attempts per HandIn call before it parks (default 3)
+	Release          string // the bot release id; a gave_up park from another release is retried once (exec_sm.go)
+	Mode             string // recorded on the plan record (train, idle, farm); default train
+	Log              func(msg string, kv ...any)
+	Now              func() time.Time // the clock of the auto-start controller (default time.Now); tests pass a fake
+	Auto             AutoOptions      // the auto-start limits (auto.go); the zero value never starts anything by itself
+	Resume           ResumeOptions    // the pause policy (resume.go); the zero value resumes nothing
+	RefusalParkAfter int              // quests.refusalPark: identical coded refusals that park a chunk as refused_repeatedly (refusal.go); 0: off
+	Ledger           func() Ledger    // the account wallet (ledger.go); nil, or a nil result, makes the Ether hook inert
 }
 
 func (o Options) norm() Options {
@@ -105,6 +106,9 @@ type runState struct {
 	hold     string    // the code of the hold the head run is under (quests.boardSM), "" when none
 	holdWhy  string    // the guard's words
 	holdFrom time.Time // when the hold began; the budget of its code runs from here
+	refCode  string    // the code of the refusal streak (quests.refusalPark), refN identical ones in a row, refWhy the last text
+	refN     int
+	refWhy   string
 }
 
 // Exec is the board's executor and the API-free interface the S4 API calls: Offers, Accept, HandIn, State
@@ -769,16 +773,22 @@ func (e *Exec) Report(d Decision, res StepResult) {
 		e.holdLocked(d, rs, res)
 	case StepRan:
 		rs.started, rs.failures = true, 0
+		rs.refCode, rs.refN = "", 0
 	case StepFailed:
 		rs.started = true
 		rs.failures++
 		rs.lastWhy = res.Why
-		if rs.failures >= e.o.MaxFailures {
+		if e.refusalCount(rs, res) {
+			rs.blocked = fmt.Sprintf("refused %d times in a row (%s): %s", rs.refN, rs.refCode, nonEmpty(res.Why, "the step was refused"))
+			e.o.Log("quest board: parked "+k, "chunk", k, "why", rs.blocked)
+			e.smPark(d.Quest, d.Chunk, "refused_repeatedly", rs)
+		} else if rs.failures >= e.o.MaxFailures {
 			rs.blocked = fmt.Sprintf("gave up after %d tries: %s", rs.failures, nonEmpty(res.Why, "the step kept failing"))
 			e.o.Log("quest board: parked "+k, "chunk", k, "why", rs.blocked)
 			e.smPark(d.Quest, d.Chunk, "gave_up", rs)
 		}
 	case StepDied:
+		rs.refCode, rs.refN = "", 0
 		if e.try == k {
 			e.try = "" // a death ends the try: the gates hold the chunk again (the death is counted like any other)
 			e.o.Log("override: try anyway ended: the hero died", "chunk", k)

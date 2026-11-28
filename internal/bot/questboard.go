@@ -92,13 +92,14 @@ func (r *Runner) newQuestBoard(b *questboard.Board, st *questboard.Store, hero s
 	rt := &boardRT{r: r, board: b, st: st, hero: hero, reqs: make(chan boardHandInReq, 1), handed: map[string]bool{}, reached: map[string]bool{}, near: map[string]bool{},
 		lastFail: map[string]time.Time{}, noted: map[string]string{}, unpark: map[string]bool{}}
 	rt.exec = questboard.NewExec(b, st, boardEnv{rt}, boardActions{rt}, questboard.Options{
-		Enabled: r.questBoardOn(),
-		SM:      !r.boardLegacy(),
-		Release: botReleaseID(),
-		Log:     func(msg string, kv ...any) { r.e.Log.Info(msg, kv...) },
-		Now:     r.e.Clock.Now,
-		Auto:    r.questAutoOptions(),
-		Resume:  r.questResumeOptions(),
+		Enabled:          r.questBoardOn(),
+		SM:               !r.boardLegacy(),
+		Release:          botReleaseID(),
+		Log:              func(msg string, kv ...any) { r.e.Log.Info(msg, kv...) },
+		Now:              r.e.Clock.Now,
+		Auto:             r.questAutoOptions(),
+		Resume:           r.questResumeOptions(),
+		RefusalParkAfter: r.questRefusalParkAfter(),
 		Ledger: func() questboard.Ledger {
 			r.qbMu.Lock()
 			f := r.qbLedger
@@ -163,6 +164,7 @@ func (r *Runner) boardRTFor() *boardRT {
 		rt.exec.SetEnabled(r.questBoardOn())
 		rt.exec.SetAutoOptions(r.questAutoOptions())
 		rt.exec.SetResume(r.questResumeOptions())
+		rt.exec.SetRefusal(r.questRefusalParkAfter())
 	}
 	return rt
 }
@@ -895,6 +897,9 @@ func (r *Runner) boardRun(ctx context.Context, snap *d2.Snapshot, c control, d q
 		r.boardNote("explore "+questboard.ChunkKey(d.Quest, d.Chunk), "quest board: "+whyOf(res))
 	case res.Outcome == task.OutRetry || res.Outcome == task.OutBlocked:
 		out = questboard.StepResult{Outcome: questboard.StepFailed, Why: nonEmptyStr(whyOf(res), "the step was refused")}
+		if r.e.Tune.Quests.RefusalPark != 0 {
+			out.Code = res.Code // quests.refusalPark: identical coded refusals park as refused_repeatedly (questboard.Exec.Report)
+		}
 		// A refusal by the area ban or a guard ran nothing: under a lockstep clock no time passes, so the failure gap never
 		// elapses and the chunk spins (Proving Ground cain.chain, 2026-11-19: virtual time frozen 20 minutes wall after the
 		// re-entry step met a banned Stony Field). Going to town spends time; three counted failures then park the chunk.

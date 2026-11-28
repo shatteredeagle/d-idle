@@ -79,6 +79,9 @@ type Run struct {
 	Hold    string `json:"hold,omitempty"`
 	HoldWhy string `json:"hold_why,omitempty"`
 	HoldMin int    `json:"hold_min,omitempty"`
+	// RefusalCode and RefusalWhy keep the guard's code and text of a refused_repeatedly park (quests.refusalPark); additive.
+	RefusalCode string `json:"refusal_code,omitempty"`
+	RefusalWhy  string `json:"refusal_why,omitempty"`
 }
 
 // Latch marks a chunk as seen done (3.6). Tier only rises.

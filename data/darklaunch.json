@@ -555,6 +555,17 @@
    "review_by": "2026-12-11",
    "status": "dark",
    "criteria_met": "U"
+  },
+  {
+   "name": "quests.refusalPark",
+   "built_by": "refusalpark (branch agent/refusalpark)",
+   "dark_since": "2026-11-27",
+   "why_off": "A guard that refused the same quest chunk three times counted as StepFailed and parked as gave_up (a vague 'the step kept failing'), and a stall of refusals climbed the failsafe up to the game restart, which fixes nothing. The knob parks identical coded refusals as refused_repeatedly with the code and text and skips rung 4 for refusal-only stalls; built and tested offline only (fake clock, two classes).",
+   "enable_criteria": "Fake-clock tests green (go test ./internal/questboard ./internal/bot), then a 2 h flip window on one sandbox whose quests.boardSM is 1: a repeated coded refusal shows reason refused_repeatedly with its code and text in /api/quests and the Return screen's Quests paused section, no game restart for a refusal-only stall; no hard breach (docs/process/dark-launch.md).",
+   "owner": "coordinator",
+   "review_by": "2026-12-11",
+   "status": "dark",
+   "criteria_met": "U"
   }
  ]
 }
