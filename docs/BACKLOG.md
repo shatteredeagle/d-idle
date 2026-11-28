@@ -1631,6 +1631,11 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - labtriage: classify the lab night 2026-11-28 results, fix scenario-side faults, ledger verdicts (TASK-1101, merged 2026-11-28, acceptance 4 of 4): Not verified live (no game run by this card; evidence is the three lab jobs of the night on bot 2f2e092c3). 37 non-GREEN rows classified in docs/probes/lab-night-results-2026-11-28.md: 12 product bugs, 12 wrong scenario expectations, 11 harness or setup, 2 ... <!--sg:agent/labtriage-->
 - agent/nightlog: nightlog: overnight coordinator log (docs) (merged 2026-11-28) <!--sg:agent/nightlog-->
 - fix4: security fixes from fable review 4 (scrubber, watch token, difficulty go, flip run check, log tail) (TASK-1100, merged 2026-11-28, acceptance 6 of 7): scrubber, watch token redirect and headers, per-hero expiring difficulty go with audit, budget and measured-run refusal, flip container run check, NUL-safe log tail, volume procedure doc; offline tests only, NOT verified live. ... <!--sg:agent/fix4-->
+- agent/rv2: round-2 review B: fix3 and fix7 (docs) (merged 2026-11-28) <!--sg:agent/rv2-->
+- agent/rv1: round-2 review A: fix1 and fix2 (docs) (merged 2026-11-28) <!--sg:agent/rv1-->
+- agent/rv3: round-2 review C: security, PG, data, pipeline (docs) (merged 2026-11-28) <!--sg:agent/rv3-->
+- agent/rv4: review 13: sandbox live log review (docs) (merged 2026-11-28) <!--sg:agent/rv4-->
+- fix8: builds-as-data fixes from fable review 8 (TASK-1097, merged 2026-11-28, acceptance 7 of 7): Offline, not verified live. Consistency test with ratchet (110 cap rows, no other finding), no Sorceress fallback (fighter refuses without a profile, soft invariant no-combat-profile), class and combat keys required by the loader, main-attack test covers all ... <!--sg:agent/fix8-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
