@@ -133,7 +133,7 @@ func TestResolveSave(t *testing.T) {
 
 func fromSaveScenario() Scenario {
 	return Scenario{ID: "earned.step", Title: "t", Kind: KindBehaviour, Tier: TierFull, Build: "lab",
-		Pre:    Pre{Start: StartTown, FromSave: "clvl-12"},
+		Pre:    Pre{HeroProfile: HeroBanked, Start: StartTown, FromSave: "clvl-12"},
 		Budget: Budget{VirtualMin: 10}, Matrix: Matrix{Classes: []string{"Paladin", "Sorceress"}, Seeds: []int64{1}},
 		Assert: []Assert{{Kind: "no_writes"}}}
 }

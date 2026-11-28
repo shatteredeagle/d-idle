@@ -198,7 +198,7 @@ func (r *Runner) areaLeaveWhy(s *d2.Snapshot, a int) string {
 		}
 		return r.barracksGuardWhy(s, a)
 	}
-	if _, early := earlyRouteAt(a); early {
+	if len(earlyRoutesAt(a)) > 0 {
 		return "" // a hero already in the Underground Passage or the Dark Wood walks on or home: the guard is about entering
 	}
 	return r.areaGuardWhy(s, a)

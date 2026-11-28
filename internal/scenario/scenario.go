@@ -105,7 +105,7 @@ type Pre struct {
 	FromSave string `json:"from_save,omitempty"`
 	// HeroProfile is the hero library profile of the prepared hero (internal/scenario/hero): "played" (opt-in: the points
 	// are spent as the build table spends them and the main attack is bound, so the hero fights with its class skills) or
-	// "banked" (default: every point left unspent, as before the profile existed). See Scenario.HeroProfile for the default.
+	// "banked" (every point left unspent, as before the profile existed). Mandatory: Validate refuses a scenario without it.
 	HeroProfile string    `json:"hero_profile,omitempty"`
 	Gold        int       `json:"gold,omitempty"`
 	Stash       int       `json:"stash,omitempty"`
@@ -450,7 +450,9 @@ func (s Scenario) Validate() error {
 		return fmt.Errorf("%s: pre.ether %d", at, s.Pre.Ether)
 	}
 	switch s.Pre.HeroProfile {
-	case "", HeroPlayed, HeroBanked:
+	case HeroPlayed, HeroBanked:
+	case "": // no default: a harness-wide default changed 207 setups in one commit without touching a scenario file
+		return fmt.Errorf("%s: pre.hero_profile is missing (say %s or %s; tools/provingground/migrate_hero_profile.py)", at, HeroBanked, HeroPlayed)
 	default:
 		return fmt.Errorf("%s: pre.hero_profile %q (want %s or %s)", at, s.Pre.HeroProfile, HeroPlayed, HeroBanked)
 	}
@@ -490,15 +492,9 @@ const (
 	HeroBanked = "banked"
 )
 
-// HeroProfile is the profile the runner prepares the hero with: the declared pre.hero_profile; without one "banked"
-// (every point unspent, the behaviour of every scenario authored before the played profile). "played" is opt-in for
-// scenarios that need the hero's real class skills (necro.*, combat drills).
-func (s Scenario) HeroProfile() string {
-	if s.Pre.HeroProfile != "" {
-		return s.Pre.HeroProfile
-	}
-	return HeroBanked
-}
+// HeroProfile is the profile the runner prepares the hero with: the declared pre.hero_profile. There is no default:
+// Validate refuses a scenario without one, so every setup change of this kind is a diff of scenario files.
+func (s Scenario) HeroProfile() string { return s.Pre.HeroProfile }
 
 // rawPoints reports a raw write of the level (12), the stat points (4) or the skill points (5) in pre.stats.
 func (s Scenario) rawPoints() bool {

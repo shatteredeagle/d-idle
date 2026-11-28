@@ -23,6 +23,11 @@ const (
 	SetupSetup      = "SETUP"
 	SetupCheated    = "CHEATED"
 	SetupImpossible = "IMPOSSIBLE"
+	// SetupUnbuilt is the tag of a BLOCKED run whose setup could not even be built (no tags to reduce), and
+	// ProvMissing stands for a binary that was not there to hash. Both are valid on a BLOCKED line only: the
+	// infrastructure failures are exactly the runs the ledger must not lose (review 2026-11-28, fix 1).
+	SetupUnbuilt = "UNBUILT"
+	ProvMissing  = "missing"
 )
 
 // LedgerRecord is one run in the results ledger.
@@ -41,28 +46,31 @@ type LedgerRecord struct {
 	Journal   string `json:"journal,omitempty"`
 	// FromSave, SaveRun and SavePort say which earned save the hero started from (milestone, the ledger run that exported
 	// it, and its portability on this d2d build: same-build, verified); empty for a fresh or verb-built hero.
-	FromSave   string   `json:"from_save,omitempty"`
-	SaveRun    string   `json:"save_run,omitempty"`
-	SavePort   string   `json:"save_portability,omitempty"`
-	Setup      string   `json:"setup"`
-	SetupTags  []string `json:"setup_tags,omitempty"`
-	BotCommit  string   `json:"bot_commit"`
-	BotDirty   bool     `json:"bot_dirty,omitempty"`
-	D2DSHA256  string   `json:"d2d_sha256"`
-	Host       string   `json:"host"` // a role name, never a machine name
-	Lane       string   `json:"lane,omitempty"`
-	Load1      float64  `json:"load1,omitempty"`
-	Pace       float64  `json:"pace,omitempty"`
-	Parallel   int      `json:"parallel,omitempty"` // peak busy slots during the run (Provenance.Parallel)
-	VirtualMin float64  `json:"virtual_min"`
-	WallS      int      `json:"wall_s"`
-	Cut        bool     `json:"cut,omitempty"`
-	WritesN    *int     `json:"writes_after_start,omitempty"`
-	Event      string   `json:"event"` // nightly, merge, manual
-	Branch     string   `json:"branch,omitempty"`
-	Card       string   `json:"card,omitempty"`
-	Job        string   `json:"job,omitempty"`
-	Started    string   `json:"started"`
+	FromSave  string   `json:"from_save,omitempty"`
+	SaveRun   string   `json:"save_run,omitempty"`
+	SavePort  string   `json:"save_portability,omitempty"`
+	Setup     string   `json:"setup"`
+	SetupTags []string `json:"setup_tags,omitempty"`
+	BotCommit string   `json:"bot_commit"`
+	BotDirty  bool     `json:"bot_dirty,omitempty"`
+	// BotSHA256 is the hash of the bot binary: the stability rule keys on it (two commits that build the same binary are
+	// one binary); empty on lines written before fix6, which fall back to the commit.
+	BotSHA256  string  `json:"bot_sha256,omitempty"`
+	D2DSHA256  string  `json:"d2d_sha256"`
+	Host       string  `json:"host"` // a role name, never a machine name
+	Lane       string  `json:"lane,omitempty"`
+	Load1      float64 `json:"load1,omitempty"`
+	Pace       float64 `json:"pace,omitempty"`
+	Parallel   int     `json:"parallel,omitempty"` // peak busy slots during the run (Provenance.Parallel)
+	VirtualMin float64 `json:"virtual_min"`
+	WallS      int     `json:"wall_s"`
+	Cut        bool    `json:"cut,omitempty"`
+	WritesN    *int    `json:"writes_after_start,omitempty"`
+	Event      string  `json:"event"` // nightly, merge, manual
+	Branch     string  `json:"branch,omitempty"`
+	Card       string  `json:"card,omitempty"`
+	Job        string  `json:"job,omitempty"`
+	Started    string  `json:"started"`
 }
 
 // LedgerCtx is what the result itself does not know: which job and event the run belongs to.
@@ -106,7 +114,18 @@ func NewLedgerRecord(r Result, c LedgerCtx) (LedgerRecord, error) {
 	}
 	if p := r.Prov; p != nil {
 		rec.BotCommit, rec.BotDirty, rec.D2DSHA256, rec.Host, rec.Load1, rec.Pace = p.BotCommit, p.BotDirty, p.D2DSHA256, p.Host, p.Load1, p.Pace
-		rec.Parallel = p.Parallel
+		rec.Parallel, rec.BotSHA256 = p.Parallel, p.BotSHA256
+	}
+	if rec.Verdict == Blocked { // a blocked run is a fact whatever was missing: record it with what is known
+		if rec.Setup == "" {
+			rec.Setup = SetupUnbuilt
+		}
+		if rec.BotCommit == "" {
+			rec.BotCommit = ProvMissing
+		}
+		if rec.D2DSHA256 == "" {
+			rec.D2DSHA256 = ProvMissing
+		}
 	}
 	if r.State != nil && r.State.Source != "none" {
 		n := r.State.WritesAfterStart
@@ -118,8 +137,8 @@ func NewLedgerRecord(r Result, c LedgerCtx) (LedgerRecord, error) {
 	return rec, rec.Validate()
 }
 
-// Validate refuses a line without what the ledger exists to keep. A BLOCKED run is recorded too (it is a fact), but it
-// needs the same provenance.
+// Validate refuses a line without what the ledger exists to keep. A BLOCKED run is recorded too (it is a fact): it may
+// say UNBUILT and "missing" where a judged run needs the setup tag and the binaries, but it still names its host role.
 func (l LedgerRecord) Validate() error {
 	var miss []string
 	for _, f := range []struct{ name, v string }{{"scenario", l.Scenario}, {"verdict", l.Verdict}, {"setup tag", l.Setup},
@@ -130,6 +149,9 @@ func (l LedgerRecord) Validate() error {
 	}
 	if len(miss) > 0 {
 		return fmt.Errorf("ledger line refused, missing %s", strings.Join(miss, ", "))
+	}
+	if l.Verdict != Blocked && (l.Setup == SetupUnbuilt || l.BotCommit == ProvMissing || l.D2DSHA256 == ProvMissing) {
+		return fmt.Errorf("ledger line refused: %s with an unbuilt setup or a missing binary (only a BLOCKED run may lack them)", l.Verdict)
 	}
 	if l.Setup == SetupEarned && l.WritesN != nil && *l.WritesN > 0 {
 		return fmt.Errorf("ledger line refused: EARNED with %d writes after the start (a written hero is CHEATED)", *l.WritesN)

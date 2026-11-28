@@ -1615,6 +1615,25 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - darkthrottle: dark ledger guard rails (by_design, cap, flip_plan, sandbox-first policy) (TASK-1091, merged 2026-11-27, acceptance 2 of 2): Offline only, not live. Cap 27; by_design on 3 rows; flip_plan and 3-day review_by for rows from 2026-11-28; tests green. AGENTS.md should link docs/process/dark-launch.md. <!--sg:agent/darkthrottle-->
 - autoflip: plan, run and graduate-list for dark knob flips (TASK-1092, merged 2026-11-27, acceptance 2 of 2): Offline tool plus 10 fake-sandbox tests; not run against a real sandbox (no transport on this box); nothing flipped. <!--sg:agent/autoflip-->
 - agent/fable-fr3: fable review 3: combat, nav, survival (docs) (merged 2026-11-27) <!--sg:agent/fable-fr3-->
+- agent/fable-fr1: fable review 1: item flows (docs) (merged 2026-11-27) <!--sg:agent/fable-fr1-->
+- agent/fable-fr5: fable review 5: dark ledger process (docs) (merged 2026-11-27) <!--sg:agent/fable-fr5-->
+- agent/ledger-bot-diffReadyV2-items-advisor-20261128-034138: ledger: diffReadyV2 + advisor bundles on both sandboxes (re-flip) (merged 2026-11-27) <!--sg:agent/ledger-bot-diffReadyV2-items-advisor-20261128-034138-->
+- agent/fable-fr2: fable review 2 (docs) (merged 2026-11-27) <!--sg:agent/fable-fr2-->
+- agent/fable-fr4: fable review 4 (docs) (merged 2026-11-27) <!--sg:agent/fable-fr4-->
+- agent/fable-fr6: fable review 6 (docs) (merged 2026-11-27) <!--sg:agent/fable-fr6-->
+- agent/fable-fr8: fable review 8 (docs) (merged 2026-11-27) <!--sg:agent/fable-fr8-->
+- agent/fable-fr9: fable review 9 (docs) (merged 2026-11-27) <!--sg:agent/fable-fr9-->
+- fix3: review 3 fixes (pack stance, recovery area, band, aura, corpses) (TASK-1094, merged 2026-11-27, acceptance 5 of 6): Not verified live (unit tests only, fake clock). Five review 3 fixes: insidePack leaves under the life floor at any distance, holds once clear, honours the pin hold, and its rows only shadow at knob 2 until a row carries enabled (stance data in ... <!--sg:agent/fix3-->
+- fix1: vault item flows keep the displaced item, serialise orders, journal carry/stow (TASK-1095, merged 2026-11-27, acceptance 5 of 6): NOT verified live (offline fakes only). Direct Equip and Wear set journal the engine reply before the ledger line and file the displaced item on every failure after the swap ... <!--sg:agent/fix1-->
+- fix7: arbiter A1-A4 fixes, admission differ lines, target and migration doc (TASK-1096, merged 2026-11-27, acceptance 6 of 7): Offline only, NOT verified live. A1: controlled recovery and gold farm pass lowLifeGate. A3: controlled hooks call Report; a declined hook and a recovery or gold farm choice no longer hold the quest step. ... <!--sg:agent/fix7-->
+- fix2: fable review 2 HIGH fixes (stored counters, coded refusals, resume for every goal, difficulty go, live boardSM) (TASK-1099, merged 2026-11-27, acceptance 6 of 7): Review 2 findings 1 to 7 and 10 fixed with must-fail tests on fakes (Paladin and Sorceress); not verified live. Build-specific part: none (board, loop and consent rules are class-free). <!--sg:agent/fix2-->
+- fix6: Proving Ground net from review 6: smoke tier, mandatory hero profile, every run recorded, stability by binary, pack room (TASK-1098, merged 2026-11-27, acceptance 5 of 6): Not verified live (no lab run). Smoke tier (no game) with a CI step, pre.hero_profile mandatory in all scenario files with per-profile setup golden files, every run recorded with results-against-ledger exit 4, stability by bot binary hash with BLOCKED as a ... <!--sg:agent/fix6-->
+- labtriage: classify the lab night 2026-11-28 results, fix scenario-side faults, ledger verdicts (TASK-1101, merged 2026-11-28, acceptance 4 of 4): Not verified live (no game run by this card; evidence is the three lab jobs of the night on bot 2f2e092c3). 37 non-GREEN rows classified in docs/probes/lab-night-results-2026-11-28.md: 12 product bugs, 12 wrong scenario expectations, 11 harness or setup, 2 ... <!--sg:agent/labtriage-->
+- agent/nightlog: nightlog: overnight coordinator log (docs) (merged 2026-11-28) <!--sg:agent/nightlog-->
+- fix4: security fixes from fable review 4 (scrubber, watch token, difficulty go, flip run check, log tail) (TASK-1100, merged 2026-11-28, acceptance 6 of 7): scrubber, watch token redirect and headers, per-hero expiring difficulty go with audit, budget and measured-run refusal, flip container run check, NUL-safe log tail, volume procedure doc; offline tests only, NOT verified live. ... <!--sg:agent/fix4-->
+- agent/rv2: round-2 review B: fix3 and fix7 (docs) (merged 2026-11-28) <!--sg:agent/rv2-->
+- agent/rv1: round-2 review A: fix1 and fix2 (docs) (merged 2026-11-28) <!--sg:agent/rv1-->
+- agent/rv3: round-2 review C: security, PG, data, pipeline (docs) (merged 2026-11-28) <!--sg:agent/rv3-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

@@ -13,6 +13,7 @@
     "cmd/d2scenario/faults.json"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 12,
     "gold": 500,
     "start": "field",
@@ -69,6 +70,7 @@
     "cmd/d2scenario/faults.json"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 12,
     "gold": 500,
     "start": "field",
@@ -125,6 +127,7 @@
     "cmd/d2scenario/faults.json"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 12,
     "gold": 500,
     "start": "field",
@@ -181,6 +184,7 @@
     "cmd/d2scenario/faults.json"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 12,
     "gold": 500,
     "start": "field",
@@ -237,6 +241,7 @@
     "cmd/d2scenario/faults.json"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 12,
     "gold": 500,
     "start": "field",

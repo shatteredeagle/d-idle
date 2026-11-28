@@ -14,6 +14,9 @@ func vaultScenario(pre Pre, as ...Assert) Scenario {
 	if len(as) == 0 {
 		s.Assert = []Assert{{Kind: ANoWrites}}
 	}
+	if s.Pre.HeroProfile == "" {
+		s.Pre.HeroProfile = HeroBanked
+	}
 	s.applyDefaults()
 	return s
 }

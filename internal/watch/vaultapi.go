@@ -304,6 +304,40 @@ type VaultKeepView struct {
 type VaultAPI struct {
 	mu sync.Mutex
 	d  *VaultDesk
+
+	fmu    sync.Mutex
+	flight map[string]bool // record ids an item-moving POST is working on ("*": a whole-vault sale)
+}
+
+// VaultCodeInFlight is the 409 code of a POST for a record another POST is still moving (a double tap, a second tab, a retry).
+const VaultCodeInFlight = "order_in_flight"
+
+// enter reserves the ids for one item-moving request. ok false: one of them (or the whole vault) is already being moved.
+// The page's busy flag is client side only; without this two POSTs for one id both pass the keeper's state check.
+func (a *VaultAPI) enter(ids []string) (leave func(), ok bool) {
+	a.fmu.Lock()
+	defer a.fmu.Unlock()
+	if a.flight["*"] || len(a.flight) > 0 && len(ids) == 1 && ids[0] == "*" {
+		return nil, false
+	}
+	for _, id := range ids {
+		if a.flight[id] {
+			return nil, false
+		}
+	}
+	if a.flight == nil {
+		a.flight = map[string]bool{}
+	}
+	for _, id := range ids {
+		a.flight[id] = true
+	}
+	return func() {
+		a.fmu.Lock()
+		for _, id := range ids {
+			delete(a.flight, id)
+		}
+		a.fmu.Unlock()
+	}, true
 }
 
 func NewVaultAPI() *VaultAPI { return &VaultAPI{} }
@@ -1111,6 +1145,18 @@ func (a *VaultAPI) PostHandler(o AnswerOptions, route string) http.Handler {
 		if route == VaultRevealGoldCancelRoute {
 			a.goldRoute(w, r, d, route, &b)
 			return
+		}
+		if route == VaultEquipRoute || route == VaultCarryRoute || route == VaultStowRoute || route == VaultSellRoute {
+			keys := b.IDs
+			if len(keys) == 0 && b.Scope != "" {
+				keys = []string{"*"}
+			}
+			leave, ok := a.enter(keys)
+			if !ok {
+				writeJSON(w, http.StatusConflict, policyReply{Code: VaultCodeInFlight, Error: "an order for this item is still being settled: wait a moment"})
+				return
+			}
+			defer leave()
 		}
 		if route == VaultMissedRoute {
 			if !b.Dismiss {

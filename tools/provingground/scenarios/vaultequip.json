@@ -17,6 +17,7 @@
         "internal/watch/vaultapi.go"
       ],
       "pre": {
+        "hero_profile": "banked",
         "level": 30,
         "gold": 500,
         "vault_records": {
@@ -128,6 +129,7 @@
         "internal/watch/vaultapi.go"
       ],
       "pre": {
+        "hero_profile": "banked",
         "level": 30,
         "gold": 500,
         "worn": [
@@ -245,6 +247,7 @@
         "internal/watch/vaultapi.go"
       ],
       "pre": {
+        "hero_profile": "banked",
         "level": 30,
         "gold": 500,
         "worn": [
@@ -363,6 +366,7 @@
         "internal/watch/vaultapi.go"
       ],
       "pre": {
+        "hero_profile": "banked",
         "level": 30,
         "gold": 500,
         "worn": [
@@ -481,6 +485,7 @@
         "internal/watch/vaultapi.go"
       ],
       "pre": {
+        "hero_profile": "banked",
         "level": 30,
         "gold": 500,
         "vault_records": {
@@ -632,6 +637,7 @@
         "internal/watch/vaultapi.go"
       ],
       "pre": {
+        "hero_profile": "banked",
         "level": 30,
         "gold": 500,
         "vault_records": {
@@ -730,6 +736,7 @@
         "internal/watch/vaultapi.go"
       ],
       "pre": {
+        "hero_profile": "banked",
         "level": 30,
         "gold": 500,
         "vault_records": {

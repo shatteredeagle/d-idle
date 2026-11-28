@@ -30,6 +30,7 @@
     "quest.horadric_staff.assemble"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "field",
     "area": 40,
     "level": 22,
@@ -229,6 +230,7 @@
     "quest.seven_tombs.duriel"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "field",
     "area": 40,
     "level": 30,

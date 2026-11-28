@@ -57,13 +57,13 @@
    "assert": [
     {
      "kind": "log_line",
-     "pattern": "^combat move use=whirl ",
+     "pattern": "^combat move [a-z_]+=.*\\buse=whirl\\b",
      "min": 1,
      "why": "whirl legs > 0 in mode 2 (V marker: whirl.go whirlTick logs `combat move use=whirl`)"
     },
     {
      "kind": "log_line",
-     "pattern": "^combat move use=whirl .*life ([0-9]|[1-4][0-9])%",
+     "pattern": "^combat move [a-z_]+=.*\\buse=whirl\\b.*life ([0-9]|[1-4][0-9])%",
      "min": 0,
      "why": "no spin under the life floor (whirlAbortLifePct 50 in profiles.json; the leg line carries the life percent)",
      "max": 0
@@ -139,7 +139,7 @@
    "assert": [
     {
      "kind": "log_line",
-     "pattern": "^combat move use=whirl",
+     "pattern": "^combat move [a-z_]+=.*\\buse=whirl\\b",
      "min": 0,
      "why": "knob 0: the driver does not act",
      "max": 0
@@ -210,7 +210,7 @@
    "assert": [
     {
      "kind": "log_line",
-     "pattern": "^combat cast .*skill=Zeal|^combat attack .*Zeal",
+     "pattern": "^combat kill .*\\blast_skill=Zeal\\b",
      "min": 1,
      "why": "Zeal was the attack (U: the exact attack line; widen after the first run)"
     },
@@ -287,7 +287,7 @@
    "assert": [
     {
      "kind": "log_line",
-     "pattern": "^combat move use=escape ",
+     "pattern": "^combat move [a-z_]+=.*\\buse=escape\\b",
      "min": 1,
      "why": "an escape hop was cast (V marker: move.go moveTick)"
     },
@@ -755,7 +755,7 @@
    "assert": [
     {
      "kind": "log_line",
-     "pattern": "^combat trap skill=",
+     "pattern": "^combat trap .*\\bskill=",
      "why": "a sentry was laid (V marker: assassin.go logs `combat trap skill= target= dist= standing=`)",
      "min": 1
     },

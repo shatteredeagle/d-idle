@@ -232,13 +232,13 @@ func (l *Ledger) Choose(in Input) (Decision, error) {
 	if len(in.Cands) == 0 {
 		return Decision{}, fmt.Errorf("survival: no candidate zones")
 	}
-	in.Cands = l.inBand(in)
 	lam := lambda(l.P, in.Purse)
 	vs := make([]verdict, 0, len(in.Cands))
 	disc := l.unvisitedDiscount(in)
 	for _, c := range in.Cands {
 		vs = append(vs, l.judge(in, c, lam, disc))
 	}
+	vs = l.inBand(in, vs)
 	var elig []*verdict
 	var cur *verdict
 	for i := range vs {
@@ -385,21 +385,24 @@ func (l *Ledger) unvisitedDiscount(in Input) float64 {
 	return math.Max(floor, r)
 }
 
-// inBand drops the zones whose monster level is more than BandDrop[diff] below the hero's level, as long as one zone is
-// left: farming monsters that far down pays next to nothing (Questy 2026-11-27: 5k against 22k to 39k XP/h).
-func (l *Ledger) inBand(in Input) []Candidate {
+// inBand drops the zones whose monster level is more than BandDrop[diff] below the hero's level: farming monsters that
+// far down pays next to nothing (Questy 2026-11-27: 5k against 22k to 39k XP/h). It runs on judged zones: the hero's
+// current zone always stays (the stay rule and MarkLeft need it), and nothing is dropped unless a safe zone is left.
+func (l *Ledger) inBand(in Input, vs []verdict) []verdict {
 	if in.Level <= 0 {
-		return in.Cands
+		return vs
 	}
-	var out []Candidate
-	for _, c := range in.Cands {
-		if k := l.P.BandDrop[c.Key.Diff]; k > 0 && c.MLvl > 0 && in.Level-c.MLvl > k {
+	var out []verdict
+	safe := false
+	for _, v := range vs {
+		if k := l.P.BandDrop[v.c.Key.Diff]; k > 0 && v.c.MLvl > 0 && in.Level-v.c.MLvl > k && v.c.Key != in.Current {
 			continue
 		}
-		out = append(out, c)
+		out = append(out, v)
+		safe = safe || v.eligible
 	}
-	if len(out) == 0 {
-		return in.Cands
+	if !safe {
+		return vs
 	}
 	return out
 }

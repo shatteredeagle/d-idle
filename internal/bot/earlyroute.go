@@ -57,17 +57,20 @@ func loadEarlyRoutes() ([]earlyRoute, error) {
 	return earlyRoutes, earlyErr
 }
 
-// earlyRouteAt is the route that holds area a, if any.
-func earlyRouteAt(a int) (earlyRoute, bool) {
+// earlyRoutesAt lists every route that holds area a, in file order. An area may be on two roads (Duriel's Lair is on
+// the tombs road and has its own row with the caster life floor): all of them are asked, as admit.MayEnter does.
+func earlyRoutesAt(a int) []earlyRoute {
 	rs, _ := loadEarlyRoutes()
+	var out []earlyRoute
 	for _, r := range rs {
 		for _, x := range r.Areas {
 			if x == a {
-				return r, true
+				out = append(out, r)
+				break
 			}
 		}
 	}
-	return earlyRoute{}, false
+	return out
 }
 
 // earlyRouteWhy says why area a is closed to the hero now ("" = open). Normal difficulty only.
@@ -81,26 +84,28 @@ func (r *Runner) earlyRouteCheck(s *d2.Snapshot, a int) (why string, kitOnly boo
 	if r.corpseRun.Load() {
 		return "", false // a corpse run is exempt: the corpse is worth more than the kit rule (Questy 2026-11-26: skipped for 1 potion, then lost)
 	}
-	rt, ok := earlyRouteAt(a)
-	if !ok || s == nil || s.Player == nil || r.e.Tune.Route.EarlyRoute == 0 || s.Player.Difficulty != d2.Normal || task.TryActive() {
+	rts := earlyRoutesAt(a)
+	if len(rts) == 0 || s == nil || s.Player == nil || r.e.Tune.Route.EarlyRoute == 0 || s.Player.Difficulty != d2.Normal || task.TryActive() {
 		return "", false
 	}
 	family := "melee"
 	if s.Player.Class.Caster() {
 		family = "caster"
 	}
-	if min := rt.MinLevel[family]; min > 0 && s.Player.Level < min {
-		return fmt.Sprintf("level %d needed for the %s road (clvl %d)", min, rt.Name, s.Player.Level), false
-	}
-	if min := rt.MinLife[family]; min > 0 && s.Player.MaxLife > 0 && s.Player.MaxLife < min {
-		return fmt.Sprintf("life %d needed for the %s road (max life %d)", min, rt.Name, s.Player.MaxLife), false
-	}
 	in := r.resInput(s)
-	if n := healingOf(in); n < rt.Kit.Healing {
-		return fmt.Sprintf("%d healing potions < %d for the %s road", n, rt.Kit.Healing, rt.Name), true
-	}
-	if rt.Kit.Portal > 0 && !in.HasTP {
-		return "no town portal for the " + rt.Name + " road", true
+	for _, rt := range rts {
+		if min := rt.MinLevel[family]; min > 0 && s.Player.Level < min {
+			return fmt.Sprintf("level %d needed for the %s road (clvl %d)", min, rt.Name, s.Player.Level), false
+		}
+		if min := rt.MinLife[family]; min > 0 && s.Player.MaxLife > 0 && s.Player.MaxLife < min {
+			return fmt.Sprintf("life %d needed for the %s road (max life %d)", min, rt.Name, s.Player.MaxLife), false
+		}
+		if n := healingOf(in); n < rt.Kit.Healing {
+			return fmt.Sprintf("%d healing potions < %d for the %s road", n, rt.Kit.Healing, rt.Name), true
+		}
+		if rt.Kit.Portal > 0 && !in.HasTP {
+			return "no town portal for the " + rt.Name + " road", true
+		}
 	}
 	return "", false
 }

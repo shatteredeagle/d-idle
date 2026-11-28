@@ -1,12 +1,17 @@
 package bot
 
 import (
+	"context"
+	"errors"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 
 	"d2lod-bot/internal/d2"
+	"d2lod-bot/internal/diffready"
+	"d2lod-bot/internal/goals"
 )
 
 // Opt-in hop: under bot.diffReadyV2 the hero is told ready but hops only after the owner's go, once.
@@ -25,9 +30,18 @@ func TestDifficultyV2WaitsForOwnerGo(t *testing.T) {
 		t.Fatalf("line %q", line)
 	}
 	g.r.GrantDifficultyGo("nightmare")
+	if got := g.r.wantedDifficulty(s); got != "" {
+		t.Fatalf("a go given before any snapshot names no hero and must not count: %q", got)
+	}
+	s.State = d2.StateInGame
+	g.r.obMu.Lock()
+	g.r.ob.lastSnap = s
+	g.r.obMu.Unlock()
+	g.r.GrantDifficultyGo("nightmare")
 	if got := g.r.wantedDifficulty(s); got != "nightmare" {
 		t.Fatalf("with the go: %q", got)
 	}
+	g.r.diffHopStarted("nightmare", s)
 	if got := g.r.wantedDifficulty(s); got != "" {
 		t.Fatalf("the go is consumed, got %q", got)
 	}
@@ -71,12 +85,12 @@ func readyRig(t *testing.T, level int) (*rig, *d2.Snapshot) {
 
 // The player's go is refused with the reason while the hero is not ready, and nothing is recorded.
 func TestRequestDifficultyGoRefusedWhenNotReady(t *testing.T) {
-	g, _ := readyRig(t, 20)
+	g, s := readyRig(t, 20)
 	msg, err := g.r.RequestDifficultyGo("nightmare")
 	if err == nil || !strings.Contains(err.Error(), "clvl 20, need 38") {
 		t.Fatalf("msg %q err %v", msg, err)
 	}
-	if g.r.diffGo.Granted("nightmare") {
+	if g.r.diffGo.Granted("nightmare", s.Player.Name, g.r.e.Clock.Now()) {
 		t.Fatal("a refused go was recorded")
 	}
 	if o := g.r.DifficultyOffer(); o.Ready || len(o.Missing) == 0 || o.Target != "nightmare" {
@@ -110,6 +124,10 @@ func requestGoConsumedOnce(t *testing.T, c d2.Class) {
 	if got := g.r.wantedDifficulty(s); got != "nightmare" {
 		t.Fatalf("got %q", got)
 	}
+	if !g.r.DifficultyOffer().Pending {
+		t.Fatal("asking consumed the go before the hop started")
+	}
+	g.r.diffHopStarted("nightmare", s)
 	if got := g.r.wantedDifficulty(s); got != "" {
 		t.Fatalf("consumed go hopped again: %q", got)
 	}
@@ -132,23 +150,124 @@ func TestDifficultyGoSurvivesRestart(t *testing.T) {
 	if err := g2.r.PersistDifficultyGo(path); err != nil {
 		t.Fatal(err)
 	}
-	if !g2.r.diffGo.Granted("nightmare") {
+	if !g2.r.diffGo.Granted("nightmare", s2.Player.Name, g2.r.e.Clock.Now()) {
 		t.Fatal("restart lost the go")
 	}
 	if got := g2.r.wantedDifficulty(s2); got != "nightmare" {
 		t.Fatalf("got %q", got)
 	}
+	g2.r.diffHopStarted("nightmare", s2)
 	if _, err := os.Stat(path); err == nil {
 		t.Fatal("consumed go left its file")
 	}
 	// the difficulty moved on (hero now in Nightmare): a stale nightmare go is dropped, not kept for later
-	g.r.diffGo.Grant("nightmare")
+	g.r.GrantDifficultyGo("nightmare")
 	s.Player.Difficulty = d2.Difficulty(1)
 	g.r.wantedDifficultyV2(s)
-	if g.r.diffGo.Granted("nightmare") {
+	if g.r.diffGo.Granted("nightmare", s.Player.Name, g.r.e.Clock.Now()) {
 		t.Fatal("stale go kept")
 	}
 	if b, _ := os.ReadFile(path); len(b) != 0 {
 		t.Fatalf("file %q", b)
 	}
+}
+
+// A go given for one hero is not used by the next hero of the same instance, and an ended go is not used; both for
+// two classes. In a measured run no go is taken at all.
+func TestDifficultyGoIsPerHeroAndEnds(t *testing.T) {
+	for _, c := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		t.Run(c.String(), func(t *testing.T) {
+			g, s := readyRig(t, 60)
+			s.Player.Class = c
+			if _, err := g.r.RequestDifficultyGo("nightmare"); err != nil {
+				t.Fatal(err)
+			}
+			was := s.Player.Name
+			s.Player.Name = was + "Two"
+			if got := g.r.wantedDifficulty(s); got != "" {
+				t.Fatalf("another hero hopped on a foreign go: %q", got)
+			}
+			s.Player.Name = was
+			if g.r.DifficultyOffer().Pending {
+				t.Fatal("the foreign go was kept")
+			}
+			if _, err := g.r.RequestDifficultyGo("nightmare"); err != nil {
+				t.Fatal(err)
+			}
+			ttl := diffready.GoTTL
+			diffready.GoTTL = -time.Second
+			g.r.GrantDifficultyGo("nightmare")
+			diffready.GoTTL = ttl
+			if got := g.r.wantedDifficulty(s); got != "" {
+				t.Fatalf("an ended go hopped: %q", got)
+			}
+			t.Setenv("D2BOT_RUN", "gate-x")
+			if _, err := g.r.RequestDifficultyGo("nightmare"); err == nil || !strings.Contains(err.Error(), "measured run") {
+				t.Fatalf("measured run must refuse: %v", err)
+			}
+		})
+	}
+}
+
+// Fable review 2 finding 4 (card fix2): the owner's go is consumed only when the hop's new game was made. A hero in the
+// field (level goal: "not in town"), or a new game that fails, keeps the go and its file; the hop that starts takes it.
+func TestDifficultyGoKeptUntilTheHopStarts(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		t.Run(class.String(), func(t *testing.T) {
+			path := filepath.Join(t.TempDir(), "diffgo.json")
+			g, s := readyRig(t, 60)
+			s.Player.Class = class
+			fail := false
+			g.r.d.Cycler = hopCycler{fakeCycler{g.w}, &fail}
+			if err := g.r.PersistDifficultyGo(path); err != nil {
+				t.Fatal(err)
+			}
+			if _, err := g.r.RequestDifficultyGo("nightmare"); err != nil {
+				t.Fatal(err)
+			}
+			c := control{spec: goalSpec{kind: goals.ReachLevel}}
+			s.Player.Area = 2 // Blood Moor: the hop is tried from town only
+			if acted, _ := g.r.ensureDifficulty(context.Background(), s, c); acted {
+				t.Fatal("hopped from the field")
+			}
+			if !g.r.diffGo.Granted("nightmare", s.Player.Name, g.r.e.Clock.Now()) {
+				t.Fatal("the go was consumed although the hop could not start (hero in the field)")
+			}
+			if _, err := os.Stat(path); err != nil {
+				t.Fatalf("the go file is gone before the hop: %v", err)
+			}
+			if ok, _, active := g.r.DifficultyGate("nightmare", 60); !ok || !active || !g.r.diffGo.Granted("nightmare", s.Player.Name, g.r.e.Clock.Now()) {
+				t.Fatalf("the chain's gate: ok %v active %v granted %v", ok, active, g.r.diffGo.Granted("nightmare", s.Player.Name, g.r.e.Clock.Now()))
+			}
+			s.Player.Area = 1
+			g.r.loop.diffNext = time.Time{}
+			fail = true
+			if acted, _ := g.r.ensureDifficulty(context.Background(), s, c); acted {
+				t.Fatal("a failed new game counted as a hop")
+			}
+			if !g.r.diffGo.Granted("nightmare", s.Player.Name, g.r.e.Clock.Now()) {
+				t.Fatal("a failed new game consumed the go")
+			}
+			fail = false
+			g.r.loop.diffNext, g.r.loop.diffBan = time.Time{}, nil
+			if acted, _ := g.r.ensureDifficulty(context.Background(), s, c); !acted {
+				t.Fatalf("no hop: %s", g.w.log())
+			}
+			if g.r.diffGo.Granted("nightmare", s.Player.Name, g.r.e.Clock.Now()) {
+				t.Fatal("the hop that started did not consume the go")
+			}
+		})
+	}
+}
+
+type hopCycler struct {
+	fakeCycler
+	fail *bool
+}
+
+func (c hopCycler) NewGame(ctx context.Context, d string) error {
+	if *c.fail {
+		return errors.New("create game timed out")
+	}
+	return c.fakeCycler.NewGame(ctx, d)
 }

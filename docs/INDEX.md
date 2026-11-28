@@ -140,6 +140,10 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 - [map-knowledge.md](design/fable-review-2026-11-22/map-knowledge.md): Map knowledge: would revealing the whole map fix the Countess class of stuck steps? (status: current (2026-11-21, Fable design review, small; docs only, no Go or behaviour change). Card `fablemap`....)
 
+`design/`
+
+- [fork-order-id-spec.md](design/fork-order-id-spec.md): Fork change spec: order id on the direct item verbs (status: proposal (card fix1, 2026-11-27). Nothing here is built; no fork edit was made. Needs the fork owner and...)
+
 `digest/`
 
 - [d2d-fork-lab.md](digest/d2d-fork-lab.md): Digest: d2d fork and lab (status: current (TASK-310 digest; the area doc is the authority).)
@@ -246,7 +250,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [andarielplan.md](andarielplan.md): Plan for card m3-andariel: the throwaway Andariel fight (status: plan, offline, nothing verified live. Tags: V = read in this tree or counted from a recorded log (file...)
 - [andarielsme.md](andarielsme.md): Andariel fight: the SME version and the user decisions (2026-11-04) (status: decisions recorded offline, nothing verified live. Tags: experience = SME judgement from play, V =...)
 - [api.md](api.md): Goal manager, Runner contract and HTTP API
-- [arbiter.md](arbiter.md): The intent arbiter (shadow mode) (status: current. First slice of roadmap R4 (docs/design/fable-review-2026-11-19/06-roadmap.md,...)
+- [arbiter.md](arbiter.md): The intent arbiter (shadow mode) (status: amended 2026-11-27 by card fix7 (TASK-1096): survive reads the fighter's safety verdict (fact `safety`),...)
 - [arch.md](arch.md): Architecture diagrams (Archify) (status: current (TASK-373). One command draws the project as clickable HTML; nothing generated is committed.)
 - [areametrics.md](areametrics.md): Per-area gold and XP log (change areametrics)
 - [areathrash.md](areathrash.md): Area thrash, cave-mouth holds and the Dark Wood exit (fun killer 5) (status: analysis V (sandbox log), fix OFFLINE ONLY (unit tests, not run live). Source:...)
@@ -344,6 +348,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [advisor-r14.md](design/advisor-r14.md): Advisor R14: runeword and cube advice (TASK-991) (status: built dark (knob `items.advisor`, default 0). Advice lines only.)
 - [agency-p1b.md](design/agency-p1b.md): Agency P1b: the planner drives (mode 2) (status: partial (TASK-984, 2026-11-27). Offline pieces built; the review and the flip are the owner's. Tags: V =...)
 - [agency-p3.md](design/agency-p3.md): Agency P3: share and import build files (status: current (TASK-985, 2026-11-27). Tags: V = ran in a test of `internal/buildfile`, U = unverified.)
+- [arbiter-target-and-migration.md](design/arbiter-target-and-migration.md): Arbiter: target architecture and migration order (status: current design note (TASK-1096, card fix7). Source:...)
 - [autoalloc-and-currencies-2026-11-21.md](design/autoalloc-and-currencies-2026-11-21.md): Automatic Allocate Skills, the gold respec and the currency consolidation (design, 2026-11-21) (status: DESIGN plus a built first slice (agent autoalloc). Tags: **V** verified (how said), **S** secondary, **U**...)
 - [bulk-identify-2026-11-18.md](design/bulk-identify-2026-11-18.md): Bulk identify: Cain-free, lazy reveal, filter (design, 2026-11-18) (status: BUILT offline (B1-B5 and the town adapters, scroll path and Ether tap payer of slice B6, task bulkid2),...)
 - [charm-management-2026-11-27.md](design/charm-management-2026-11-27.md): Charm management: carry, pack budget, build wants, Vault and Inventory UI (status: design note, docs only (2026-11-27, agent charms). Nothing here is built. Tags: V = read in this tree at...)
@@ -386,7 +391,18 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 `design/fable-review-2026-11-28/`
 
+- [01-item-flows.md](design/fable-review-2026-11-28/01-item-flows.md): Fable review 2026-11-28, part 1: item flows through the Vault and the fork verbs (status: review, read-only (no code changed). Base: `origin/main` at 415b11f25. Scope: `internal/vaultkeep`,...)
+- [02-quest-board.md](design/fable-review-2026-11-28/02-quest-board.md): Fable review 2 of 8: quest board, step executor, hand-in (changes of 2026-11-27) (status: review, read-only. Base: origin/main at 415b11f25. No code was changed. Tags: V = read in the repo or run...)
 - [03-combat-nav-survival.md](design/fable-review-2026-11-28/03-combat-nav-survival.md): Fable review 3 of 8: combat, navigation and survival merged 2026-11-27 (status: review, read-only. Base `75e4c2f4e` (last commit before 2026-11-27 00:00) against `origin/main` at...)
+- [04-security-privacy.md](design/fable-review-2026-11-28/04-security-privacy.md): Fable review 4 of 8: security and privacy of what changed on 2026-11-27 (status: REVIEW, docs only. No code changed, no sandbox probed, no exploit code. Read at origin/main `415b11f25`.)
+- [05-dark-ledger-process.md](design/fable-review-2026-11-28/05-dark-ledger-process.md): Fable review 5 of 8: the dark ledger, the flip tooling and the merge pipeline (status: review, 2026-11-27 evening (branch agent/fable-fr5, base 415b11f25). Read-only review; nothing here is a...)
+- [06-proving-ground.md](design/fable-review-2026-11-28/06-proving-ground.md): Fable review 6 of 8: the Proving Ground as a safety net and as evidence (status: review, 2026-11-28, read on main 415b11f25. Docs only: no code, no lab run, no game. Tags: V = read in the...)
+- [07-arbiter-and-deciders.md](design/fable-review-2026-11-28/07-arbiter-and-deciders.md): Fable review 2026-11-28, part 7: the arbiter and the deciders (status: review, read-only (no code changed, nothing run against a game). Tree: `415b11f25` (origin/main at the...)
+- [08-builds-as-data.md](design/fable-review-2026-11-28/08-builds-as-data.md): Fable review 8 of 8: builds as data (2026-11-28) (status: review, decides nothing. Read-only pass over `origin/main` at `415b11f25`, "today" = the commits after...)
+- [09-change-pipeline.md](design/fable-review-2026-11-28/09-change-pipeline.md): Fable review 9: how a change travels, and why the dark ledger grows (status: current (reviewer run fr9, 2026-11-27 evening, docs only, nothing changed). Independent second opinion:...)
+- [10-fix-review-items-and-board.md](design/fable-review-2026-11-28/10-fix-review-items-and-board.md): Fable review 2026-11-28, round 2 part A: the fixes for the item flows (fix1) and the quest board (fix2) (status: review, read-only (no code changed). Base: `origin/main` at 7ec65e945. Scope: merge 95520db57 (fix1,...)
+- [11-fix-review-combat-arbiter.md](design/fable-review-2026-11-28/11-fix-review-combat-arbiter.md): Fable review 2026-11-28, round 2 part B: the fixes for reviews 3 and 7 (fix3, fix7) (status: review, read-only. Tree `829337379` (origin/main). Scope: merge `46365bb12` (fix3, TASK-1094) and merge...)
+- [12-fix-review-security-pg-data-pipeline.md](design/fable-review-2026-11-28/12-fix-review-security-pg-data-pipeline.md): Fable round 2, review C: tonight's fixes for security, Proving Ground, builds as data and the pipeline (status: REVIEW, docs only (reviewer run rv3, 2026-11-28 about 00:40 EST). No code changed, no game, no sandbox...)
 
 `design/`
 
@@ -565,6 +581,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 `ops/`
 
+- [docker-volumes.md](ops/docker-volumes.md): Docker volumes on the worker host: safe removal (status: current (fix4, from fable review 4 finding 2, `docs/design/fable-review-2026-11-28/04-security-privacy.md`).)
 - [logs.md](ops/logs.md): Where the logs are (sandbox container and dev) (status: current (card logsink). Code: `internal/logx/sink.go`, `cmd/d2bot/main.go` (newLogger),...)
 - [outcomes.md](outcomes.md): Typed step outcome (knob `bot.typedOutcome`) (status: current, stage 1 (card outcome1, 2026-11-25). Source: P2 of...)
 - [overlay.md](overlay.md): Table overlay (d.idle mode): file format and rules (status: implemented, 2026-11-06, TASK-59. Fork side `--overlay-dir` on branch `d2d.lab4-overlay` of the private...)
@@ -1084,6 +1101,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [act2-stepexec-drill-2026-11-27.md](probes/act2-stepexec-drill-2026-11-27.md): Act 2 step executor drill (card stepexec1, 2026-11-27) (status: current (lab drill of TASK-976 AC #4; docs/design/stepexec-p9.md is the design).)
 - [akara-handin-click-2026-11-27.md](probes/akara-handin-click-2026-11-27.md): Hand in to Akara (Search for Cain): why a click can be a silent no-op (2026-11-27) (status: read-only code diagnosis, nothing run, sandbox untouched. Tags: V = read in the code at main 388dcc3da...)
 - [andariel-gate-recalibration-2026-11-24.md](probes/andariel-gate-recalibration-2026-11-24.md): Andariel gate recalibration: a proposal, nothing applied (2026-11-24)
+- [arbiter-families-note-2026-11-27.md](probes/arbiter-families-note-2026-11-27.md): Arbiter families and admission: data note (2026-11-27) (status: data note for the coordinator (TASK-1096, card fix7). No knob was changed on any sandbox by this card;...)
 - [autoalloc-necro-summoner-default-2026-11-23.md](probes/autoalloc-necro-summoner-default-2026-11-23.md): Necromancer Summoner auto-alloc: what the table says, which default (2026-11-23) (status: recommendation, no data defaults changed here (the build-choice card owns `defaultVariant`).)
 
 `probes/baseline-runs/20261102/`
@@ -1178,6 +1196,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [killdrop-2026-11-13.md](probes/killdrop-2026-11-13.md): Kill drop on the rebased fork: `debug players` gained a column (TASK-396, 2026-11-13) (status: result record. Tags: V = run and seen on the worker host; S = read in source. Follows...)
 - [lab-night-commands-2026-11-27.md](probes/lab-night-commands-2026-11-27.md): Lab night commands, 2026-11-27 (23:00 to 07:00 EST): corrected, paste-ready (status: current (docs only; card nightcheck, no game, no lab run). Corrects and extends...)
 - [lab-night-plan-2026-11-27.md](probes/lab-night-plan-2026-11-27.md): Lab night plan, 2026-11-27 (23:00 to 07:00 EST) (status: current (docs only; no game, no lab run made by this card). Tags: V = read in the repo at origin/main...)
+- [lab-night-results-2026-11-28.md](probes/lab-night-results-2026-11-28.md): Lab night results, 2026-11-28: triage of the three Proving Ground jobs (status: current (card labtriage, TASK-1101; docs and scenario data only, no game run by this card). Consumer:...)
 - [live-queue-2026-11-27.md](probes/live-queue-2026-11-27.md): Live queue, 2026-11-27: cards waiting only on a live run (status: current (docs only; made by card cardfix2 on current main, no game, no lab run). Supersedes the unmerged...)
 - [merc-revive-live-checklist.md](probes/merc-revive-live-checklist.md): Merc revive and hire: what is wired, what is not, live checklist (card mercgold) (status: current 2026-11-27. Tags: V verified (how), S secondary, U unverified. Source:...)
 - [mercbr-2026-11-21.md](probes/mercbr-2026-11-21.md): mercbr: Blood Raven hand-in at Kashya and the free Act 1 merc (2026-11-21) (status: current. Tags: V verified (run named), S secondary, U unverified. Setups are CHEATED (quest word, level,...)
@@ -1207,6 +1226,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [necrokeys-2026-11-26.md](probes/necrokeys-2026-11-26.md): Necromancer keys beyond F8 (card necrokeys, 2026-11-26) (status: current. Closes card necrokeys with evidence: on the d2d backend the F-key limit does not apply. Tags: V...)
 - [necromancer-act1-drill-2026-11-22.md](probes/necromancer-act1-drill-2026-11-22.md): Necromancer earned Act 1 drill (card necrodrill, 2026-11-22) (status: current. Verdict: BLOCKED, NOT ready to play. Tags: V verified in a named run, S read in a log, U...)
 - [necromancer-readiness-2026-11-22.md](probes/necromancer-readiness-2026-11-22.md): Necromancer readiness audit (card necro2, 2026-11-22) (status: current; section 6 (update after the merges of the same day) supersedes sections 1 to 3 where they differ....)
+- [night-log-2026-11-28.md](probes/night-log-2026-11-28.md): Night log 2026-11-28 (coordinator, unattended) (status: living. One line per coordinator tick. Rules: memory 'OVERNIGHT RULES' of 2026-11-28 00:30 (model:...)
 - [pactnative.md](probes/pactnative.md): pactnative: do the native difficulty levers work offline on 1.14d? (TASK-170) (status: probe result of 2026-11-08 (overnight, one hidden instance). Facts for the Pact design note...)
 - [paladin-aura-audit-2026-11-26.md](probes/paladin-aura-audit-2026-11-26.md): Paladin aura audit (2026-11-26) (status: audit, read-only; no fix made. Question (owner): auras only work when selected on an active skill slot...)
 - [paladin-aura-live-2026-11-26.md](probes/paladin-aura-live-2026-11-26.md): Paladin aura state on d2d, measured live (2026-11-26) (status: probe result, read-only on the bot; no fix needed for the pick path. Follows...)
@@ -1216,6 +1236,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [pg-gate-group1-2026-11-21.md](probes/pg-gate-group1-2026-11-21.md): Proving Ground gate, first group (2026-11-21) (status: record of the first rollout group of docs/design/fable-review-2026-11-21/proving-ground-gate.md (owner...)
 - [pg-gate-group2-2026-11-21.md](probes/pg-gate-group2-2026-11-21.md): Proving Ground gate, cost-cut group (2026-11-21) (status: record of the second rollout group of docs/design/fable-review-2026-11-21/proving-ground-gate.md (owner...)
 - [pg-nightly-earned-handoff-2026-11-27.md](probes/pg-nightly-earned-handoff-2026-11-27.md): Handoff: pgnightly and pgearned, what the ops side and the live check still need (2026-11-27) (status: open list. Repo side is done (cards TASK-754 and TASK-756, branch agent/pgcards2); nothing here was run...)
+- [pg-ops-handoff-2026-11-28.md](probes/pg-ops-handoff-2026-11-28.md): Proving Ground: ops-side items after card fix6 (2026-11-28) (status: handoff list, 2026-11-28. Nothing here is installed or run; card fix6 changed the repo only. Source:...)
 - [postfix-soak1.md](probes/postfix-soak1.md): postfix-soak1: first soak on the fixed bot, Gate 1 shape (2026-10-31) (status: current. Read-only analysis of one finished hidden d2d soak (exit 0, 120 wall min, one injected d2d kill)....)
 - [postfix-soak2-analysis.md](probes/postfix-soak2-analysis.md): postfix-soak2 analysis: root causes of F1 to F6, the walking share and a ranked fix-card list (card... (status: current. Offline study of the finished Gate 1 soak 2 (postfix-soak2.md, origin/main 0b0bdb2, one seed, 2 h...)
 - [postfix-soak2.md](probes/postfix-soak2.md): postfix-soak2: Gate 1 of the d2d gate ladder on current main (2026-10-31) (status: current. One finished hidden d2d soak (exit 0, 120 wall min, one injected d2d kill), n=1 seed, not a...)

@@ -151,8 +151,12 @@ func (r *Runner) recoveryArea(s *d2.Snapshot) (int, bool) {
 func (r *Runner) recoveryAreaBase(s *d2.Snapshot, ban map[int]bool) (int, bool) {
 	diff := difficultyName(s.Player.Difficulty)
 	gate := r.kitGateActive(s)
+	// The no-potion rule holds on every way out of this function: without a portal scroll and when it leaves the plan
+	// pick nothing (clvl 1 to 3, or the low areas cleared), the fallback takes the first field, not an own-level area.
+	poor := map[int]bool{}
+	r.recoveryPoorExclude(s, diff, poor)
 	if !r.resInput(s).HasTP {
-		if a, ok := r.starveStep(s, diff); ok && (!gate || kitSafeTier[a]) {
+		if a, ok := r.starveStepEx(s, diff, poor); ok && (!gate || kitSafeTier[a]) {
 			return a, true
 		}
 		return 0, false
@@ -185,7 +189,9 @@ func (r *Runner) recoveryAreaBase(s *d2.Snapshot, ban map[int]bool) (int, bool) 
 	if r.denKitShort(s) {
 		ex[areaDenOfEvil] = true // a dungeon needs a potion buffer
 	}
-	r.recoveryPoorExclude(s, diff, ex)
+	for a := range poor {
+		ex[a] = true
+	}
 	if diff == "normal" && s.Player.Act == 0 && r.e.Tune.Resource.RecoveryXPPick != 0 {
 		if a, ok := r.recoveryXPArea(s, ex); ok {
 			return a, true
@@ -194,7 +200,7 @@ func (r *Runner) recoveryAreaBase(s *d2.Snapshot, ban map[int]bool) (int, bool) 
 	t := r.e.Tune.Bot
 	st, ok := r.d.Plan.Pick(diff, s.Player.Level-r.e.Tune.Resource.PovertyLevels, PickOptions{Margin: t.LevelMargin, Slack: t.LeaveSlack, Acts: r.allowedActs(s), Exclude: ex})
 	if !ok {
-		return r.starveStep(s, diff)
+		return r.starveStepEx(s, diff, poor)
 	}
 	if r.loop.broke.areaNote != st.Area {
 		r.loop.broke.areaNote = st.Area

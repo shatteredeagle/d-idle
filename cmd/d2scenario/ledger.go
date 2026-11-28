@@ -18,27 +18,38 @@ import (
 // scenario, so a lost pull cannot lose the record (design H7), and the source for `ledger add` when shipping failed.
 const ledgerSpool = "ledger.jsonl"
 
+// ledgerRefused is the per-output-directory list of runs the ledger refused: one JSON line each with the run and the
+// reason, so a refusal is a file the runner counts and a person finds, not a line on a stream nobody reads.
+const ledgerRefused = "ledger-refused.jsonl"
+
 // shipLedger records one finished run: always into <out>/ledger.jsonl, and through $PG_LEDGER_CMD when set (a command
 // that reads the JSON line on stdin and appends it to the ledger on the board host; its address is host config, never
-// in the repo). Failures are reported on stderr and never change the run's verdict.
-func shipLedger(res scenario.Result, tier, out string, started time.Time) {
+// in the repo). A refused line goes to <out>/ledger-refused.jsonl and stderr; it never changes the run's verdict, but
+// `run` compares results with ledger lines and exits non-zero when one is missing. It reports whether the line is in
+// the spool.
+func shipLedger(res scenario.Result, tier, out string, started time.Time) bool {
 	job := os.Getenv("PG_JOB")
 	if job == "" {
 		job = filepath.Base(out)
 	}
 	rec, err := scenario.NewLedgerRecord(res, scenario.LedgerCtx{Job: job, Event: os.Getenv("PG_EVENT"), Branch: os.Getenv("PG_BRANCH"),
 		Card: os.Getenv("PG_CARD"), Lane: os.Getenv("PG_LANE"), Tier: tier, Started: started})
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "d2scenario: not recorded in the ledger: %v\n", err)
-		return
+	var line []byte
+	if err == nil {
+		line, err = rec.LedgerLine()
 	}
-	line, err := rec.LedgerLine()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "d2scenario: not recorded in the ledger: %v\n", err)
-		return
+		fmt.Fprintf(os.Stderr, "d2scenario: NOT RECORDED in the ledger: %s: %v\n", res.Key(), err)
+		b, _ := json.Marshal(map[string]any{"run": rec.Run, "scenario": res.ID, "class": res.Class, "seed": res.Seed, "verdict": res.Status,
+			"reason": res.Reason, "refused": err.Error(), "started": started.UTC().Format(time.RFC3339)})
+		if werr := appendLine(filepath.Join(out, ledgerRefused), b); werr != nil {
+			fmt.Fprintf(os.Stderr, "d2scenario: ledger refusal list: %v\n", werr)
+		}
+		return false
 	}
 	if err := appendLine(filepath.Join(out, ledgerSpool), line); err != nil {
 		fmt.Fprintf(os.Stderr, "d2scenario: ledger spool: %v\n", err)
+		return false
 	}
 	if cmd := os.Getenv("PG_LEDGER_CMD"); cmd != "" {
 		c := exec.Command("sh", "-c", cmd)
@@ -48,6 +59,28 @@ func shipLedger(res scenario.Result, tier, out string, started time.Time) {
 			fmt.Fprintf(os.Stderr, "d2scenario: ledger ingest command failed (%v); the line is in %s\n", err, filepath.Join(out, ledgerSpool))
 		}
 	}
+	return true
+}
+
+// spoolLines counts the ledger lines under out (the spool of the directory and of its repN directories).
+func spoolLines(out string) int {
+	paths, _ := filepath.Glob(filepath.Join(out, "rep*", ledgerSpool))
+	n := 0
+	for _, p := range append(paths, filepath.Join(out, ledgerSpool)) {
+		b, _ := os.ReadFile(p)
+		n += bytes.Count(b, []byte("\n"))
+	}
+	return n
+}
+
+// shipUnrun records a run that never reached exec-one (blocked before the start, or the slot wrapper died): the same
+// BLOCKED line a run inside a slot would write, with the provenance the runner can see.
+func shipUnrun(res scenario.Result, s scenario.Scenario, bot, out string, started time.Time) bool {
+	if su, err := scenario.BuildSetup(s, res.Class, res.Seed); err == nil {
+		res.Tags = su.Tags
+	}
+	res.Prov = collectProv(bot)
+	return shipLedger(res, s.Tier, out, started)
 }
 
 // appendLine appends one line with a single O_APPEND write (atomic for lines below the pipe buffer on a local file).

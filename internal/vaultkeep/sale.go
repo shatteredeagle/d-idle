@@ -411,6 +411,10 @@ func (k *Keeper) SellNow(ctx context.Context, ids []string, confirm bool) ([]Res
 		}
 		return failAll(code, why)
 	}
+	// Reservation: the quote, the credit and the retiring of the records run under the action lock, so no Carry, Stow or
+	// direct Equip of the same record can slip between "priced" and "sold" (actMu before smu).
+	k.actMu.Lock()
+	defer k.actMu.Unlock()
 	k.smu.Lock()
 	defer k.smu.Unlock()
 	if o := k.saleOrder(); o.Active() {
@@ -569,13 +573,17 @@ func (k *Keeper) settleSale(ctx context.Context, o SaleOrder) {
 
 // resumeSale settles a sale a restart or a lost reply left unsettled.
 func (k *Keeper) resumeSale(ctx context.Context) []string {
+	k.actMu.Lock()
+	defer k.actMu.Unlock()
 	k.smu.Lock()
 	defer k.smu.Unlock()
 	o := k.saleOrder()
 	if !o.Active() {
 		return nil
 	}
-	if ok, _ := k.SaleOn(ctx); !ok {
+	// A credited order needs no game call any more: its paid-for records leave the vault whatever the knob, the fork flag
+	// or a measured run say now. Only an order that still has to credit waits for the sale to be on.
+	if ok, _ := k.SaleOn(ctx); !ok && o.State != SaleCredited {
 		return nil
 	}
 	k.settleSale(ctx, *o)

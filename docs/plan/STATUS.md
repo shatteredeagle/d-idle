@@ -43,8 +43,15 @@
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | cellar3gate | in-progress | - | `internal/nav/exit.go`<br>`internal/nav/cellar3gate_test.go`<br>`internal/questboard/`<br>`docs/probes/cellar3-gate-capture.md` | - |
 | holereach | proposed | - | `internal/bot/zonemodel.go`<br>`internal/bot/zonemodel_test.go` | - |
-| autoflip | proposed | - | `tools/flip/autoflip.py`<br>`tools/flip/autoflip.json`<br>`tools/flip/test_autoflip.py`<br>`docs/process/autoflip.md`<br>`docs/process/dark-launch.md` | - |
 | pgfix | proposed | - | `cmd/d2scenario`<br>`internal/scenario`<br>`tools/provingground/scenarios`<br>`docs/process/proving-ground.md` | - |
+| fix4 | in-progress | - | `deploy/d2d-container/tester-report.sh`<br>`deploy/d2d-container/tester_report_test.go`<br>`internal/watch/serve.go`<br>`internal/watch/serve_test.go`<br>`internal/watch/gate.go`<br>`internal/watch/web/shell.js`<br>`internal/watch/difficultydesk.go`<br>`internal/watch/difficultydesk_test.go`<br>`internal/diffready/`<br>`internal/bot/diffready.go`<br>`internal/bot/diffready_test.go`<br>`tools/flip/flip.py`<br>`tools/flip/test_flip.py`<br>`internal/logx/sink.go`<br>`internal/logx/sink_test.go`<br>`docs/ops/docker-volumes.md`<br>`docs/diffready.md` | - |
+| navbarracks | proposed | - | `internal/nav/`<br>`internal/d2dworld/` | - |
+| cainspin | proposed | - | `internal/bot/` | - |
+| summonerstall | proposed | - | `internal/bot/`<br>`internal/nav/` | - |
+| drillskills | proposed | - | `internal/scenario/`<br>`cmd/d2scenario/`<br>`tools/provingground/scenarios/combatdrills.json`<br>`tools/provingground/scenarios/necro.json` | - |
+| bsmnight | proposed | - | `tools/provingground/scenarios/board.json`<br>`internal/questboard/` | - |
+| act2night | proposed | - | `internal/bot/`<br>`tools/provingground/scenarios/stepexec-act2chunks.json` | - |
+| townnight | proposed | - | `internal/town/`<br>`internal/supply/`<br>`tools/provingground/scenarios/townplan.json` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
@@ -188,14 +195,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
-- d64efd5c7 11-27 22:36 `Merge agent/fable-fr3: fable review 3: combat, nav, survival (docs)` (fable-fr3)
-- 4b0cdccb4 11-27 22:35 `Merge branch 'main' into fable-fr3` (-)
-- 388fd1316 11-27 22:35 `Merge agent/autoflip: autoflip: plan/run/graduate-list tool (TASK-1092)` (autoflip)
-- 794d66c7c 11-27 22:34 `Merge branch 'main' into autoflip` (-)
-- e340dc50e 11-27 22:25 `Merge agent/darkthrottle: darkthrottle: ledger cap, by_design status, flip_plan, sandbox-first doc (TASK-1091)` (darkthrottle)
-- af5382fe3 11-27 22:24 `Merge branch 'main' into darkthrottle` (-)
-- a9fc9ca8c 11-27 22:13 `Merge agent/pgfix: pgfix: banked default hero profile, setup tags on blocked runs, hand skills in the point dump (TASK-1093)` (pgfix)
-- f8a505433 11-27 22:12 `Merge branch 'main' into pgfix` (-)
-- f4865d49e 11-27 22:04 `Merge agent/farmresetretire: farmresetretire: bot.farmReset graduated to always-on, knob removed (TASK-1090)` (farmresetretire)
-- b540e608c 11-27 22:03 `Merge branch 'main' into farmresetretire` (-)
+- 767f5edba 11-28 00:53 `Merge agent/rv3: round-2 review C: security, PG, data, pipeline (docs)` (rv3)
+- 9da05821e 11-28 00:52 `Merge agent/rv1: round-2 review A: fix1 and fix2 (docs)` (rv1)
+- 9fd88574f 11-28 00:52 `Merge agent/rv2: round-2 review B: fix3 and fix7 (docs)` (rv2)
+- e5c21ff85 11-28 00:48 `Merge branch 'main' into rv3` (-)
+- 4b7a0cd83 11-28 00:48 `Merge branch 'main' into rv1` (-)
+- cc179624e 11-28 00:48 `Merge branch 'main' into rv2` (-)
+- f8daf5458 11-28 00:29 `Merge agent/fix4: fix4: scrubber, watch token redirect, difficulty go hero scope and expiry, flip container env, tail NUL, docker volumes doc (TASK-1100)` (fix4)
+- f9fba8895 11-28 00:28 `Merge branch 'main' into fix4` (-)
+- 7ec65e945 11-28 00:28 `Merge agent/nightlog: nightlog: overnight coordinator log (docs)` (nightlog)
+- 4fdc91a46 11-28 00:25 `Merge agent/labtriage: labtriage: overnight lab triage, scenario marker fixes, 8 cards (TASK-1101..1108)` (labtriage)
 <!-- statusgen:end -->

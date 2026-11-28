@@ -19,7 +19,7 @@ func pgLedger() []LedgerRecord {
 	}
 	recs = append(recs, pgRec("town.resupply", "Necromancer", 11, 1, Green, "a", "c1", SetupCheated, "main"),
 		pgRec("town.resupply", "Necromancer", 11, 2, Red, "b", "c1", SetupCheated, "main"), // same binaries: a flip
-		pgRec("town.resupply", "Necromancer", 11, 3, Blocked, "", "c1", SetupCheated, "agent/x"))
+		pgRec("town.resupply", "Necromancer", 11, 3, Blocked, "", "c1", SetupCheated, "release/x"))
 	return recs
 }
 
@@ -100,7 +100,7 @@ func TestPGStatusDocDeterministic(t *testing.T) {
 	if d != PGStatusDoc(p2) {
 		t.Fatalf("not deterministic:\n%s\n---\n%s", d, PGStatusDoc(p2))
 	}
-	for _, want := range []string{"GENERATED", "Branch filter: `main`", "| town.resupply | Necromancer | T2 | quarantined | RED | CHEATED | 2 | 1 | b | c1 | builder |"} {
+	for _, want := range []string{"GENERATED", "Branch filter: `main`", "| town.resupply | Necromancer | T2 | quarantined | quarantined | RED | CHEATED | 2 | 0 | 1 | b | c1 | main | builder |", "BLOCKED now: 0 of 2 rows"} {
 		if !strings.Contains(d, want) {
 			t.Errorf("missing %q in\n%s", want, d)
 		}
@@ -108,5 +108,59 @@ func TestPGStatusDocDeterministic(t *testing.T) {
 	empty := PGStatusDoc(PGPage{Version: PGPageVersion})
 	if !strings.Contains(empty, "(no runs recorded)") || !strings.Contains(empty, "all branches") {
 		t.Fatalf("%s", empty)
+	}
+}
+
+// The main view counts the hand runs of agent worktrees (before fix6 it dropped them and the page stayed empty), on two
+// classes; any other filter stays exact.
+func TestPGPageMainViewCountsAgentRuns(t *testing.T) {
+	recs := []LedgerRecord{pgRec("town.resupply", "Paladin", 11, 1, Green, "a", "c1", SetupSetup, "agent/pgfix"),
+		pgRec("town.resupply", "Sorceress", 11, 2, Red, "b", "c1", SetupSetup, "agent/fix6"),
+		pgRec("town.resupply", "Sorceress", 11, 3, Red, "b", "c1", SetupSetup, "release/x")}
+	p, err := BuildPGPage(recs, nil, pgTiers, "main")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(p.Cells) != 2 || p.Cells[0].Runs != 1 || p.Cells[1].Runs != 1 || p.Cells[1].Latest.Branch != "agent/fix6" {
+		t.Fatalf("%+v", p.Cells)
+	}
+	if strings.Contains(PGStatusDoc(p), "(no runs recorded)") || !strings.Contains(PGStatusDoc(p), "| agent/pgfix |") {
+		t.Fatal(PGStatusDoc(p))
+	}
+	if p, _ := BuildPGPage(recs, nil, pgTiers, "release/x"); len(p.Cells) != 1 {
+		t.Fatalf("an exact filter: %+v", p.Cells)
+	}
+}
+
+// BLOCKED is a state of the page: `blocked` when the latest run was not judged, `broken` when it was GREEN before
+// (the 2026-11-27 incident: 23 rows went from GREEN to BLOCKED and nothing showed it). The stability word is untouched.
+func TestPGPageBlockedAndBrokenStates(t *testing.T) {
+	recs := []LedgerRecord{pgRec("town.resupply", "Paladin", 11, 1, Green, "a", "c1", SetupSetup, "main"),
+		pgRec("town.resupply", "Paladin", 11, 2, Blocked, "", "c2", SetupSetup, "main"),
+		pgRec("town.resupply", "Sorceress", 11, 3, Blocked, "", "c2", SetupSetup, "main"),
+		pgRec("town.resupply", "Necromancer", 11, 4, Blocked, "", "c1", SetupSetup, "main"),
+		pgRec("town.resupply", "Necromancer", 11, 5, Green, "a", "c1", SetupSetup, "main")}
+	p, err := BuildPGPage(recs, nil, pgTiers, "main")
+	if err != nil {
+		t.Fatal(err)
+	}
+	got := map[string]PGCell{}
+	for _, c := range p.Cells {
+		got[c.Class] = c
+	}
+	if c := got["Paladin"]; c.State != PGBroken || c.Stability != StabilityCandidate || c.Blocked != 1 || c.Runs != 2 {
+		t.Fatalf("GREEN then BLOCKED: %+v", c)
+	}
+	if c := got["Sorceress"]; c.State != PGBlocked || c.Blocked != 1 {
+		t.Fatalf("never judged: %+v", c)
+	}
+	if c := got["Necromancer"]; c.State != StabilityCandidate || c.Blocked != 1 {
+		t.Fatalf("judged again after a BLOCKED run: %+v", c)
+	}
+	d := PGStatusDoc(p)
+	for _, want := range []string{"BLOCKED now: 2 of 3 rows (1 `broken`", "| town.resupply | Paladin | T2 | broken | candidate | BLOCKED |", "| town.resupply | Sorceress | T2 | blocked | candidate | BLOCKED |"} {
+		if !strings.Contains(d, want) {
+			t.Errorf("missing %q in\n%s", want, d)
+		}
 	}
 }

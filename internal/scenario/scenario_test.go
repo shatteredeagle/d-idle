@@ -14,6 +14,7 @@ func ip(n int) *int { return &n }
 func baseScenario() Scenario {
 	s := Scenario{ID: "t.one", Title: "t", Kind: KindBehaviour, Tier: TierFast,
 		Budget: Budget{VirtualMin: 10}, Matrix: Matrix{Classes: []string{"Paladin", "Sorceress"}, Seeds: []int64{1, 2}},
+		Pre:    Pre{HeroProfile: HeroBanked},
 		Assert: []Assert{{Kind: AItemInPack, Code: "bks"}}}
 	s.applyDefaults()
 	return s
@@ -371,11 +372,15 @@ func TestClassIndexMatchesSmokeRulesFile(t *testing.T) {
 	}
 }
 
-// pre.hero_profile: the default is banked (legacy), a typo or a played hero with raw point writes is refused.
+// pre.hero_profile: there is no default (a missing one is refused), a typo or a played hero with raw point writes is refused.
 func TestHeroProfileValidate(t *testing.T) {
 	s := baseScenario()
-	if s.HeroProfile() != HeroBanked {
-		t.Fatalf("default %q", s.HeroProfile())
+	s.Pre.HeroProfile = ""
+	if err := s.Validate(); err == nil || !strings.Contains(err.Error(), "pre.hero_profile is missing") {
+		t.Fatalf("missing profile: %v", err)
+	}
+	if s.HeroProfile() != "" {
+		t.Fatalf("a default crept back: %q", s.HeroProfile())
 	}
 	s.Pre.HeroProfile = "bank"
 	if s.Validate() == nil {

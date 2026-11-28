@@ -27,6 +27,8 @@ type MercHand interface {
 // mercSlotKey maps the fork's body slot numbers to the page's merc slot keys.
 var mercSlotKey = map[int]string{1: "mhead", 3: "mtorso", 4: "mrhand", 5: "mlhand"}
 
+const mercKey = keyPrefix + "eqm-"
+
 const ReasonMercOff = "equipping the mercenary from the Vault needs the fork build with item merc-equip (and the instant equip switched on)"
 
 func (k *Keeper) mercDirect() (d2dctl.DirectMercer, bool) {
@@ -83,6 +85,8 @@ func (k *Keeper) EquipMerc(ctx context.Context, id string) (Result, bool) {
 		res.Code, res.Why = "missing", "there is no vault for this hero yet"
 		return res, true
 	}
+	k.actMu.Lock()
+	defer k.actMu.Unlock()
 	rec, ok := st.Get(id)
 	switch {
 	case !ok:
@@ -104,13 +108,32 @@ func (k *Keeper) EquipMerc(ctx context.Context, id string) (Result, bool) {
 		return res, true
 	}
 
-	cr, err := k.API.ItemCreate(ctx, createHex(rec), d2dctl.CreateOpts{Pack: true})
+	// The key makes a repeated create of the same record answer "dup" instead of a second copy (per d2d process: U live).
+	cr, err := k.API.ItemCreate(ctx, createHex(rec), d2dctl.CreateOpts{Pack: true, Key: mercKey + id})
+	if errors.Is(err, d2dctl.ErrVaultDup) {
+		res.Code, res.Why = "dup", "an earlier order already took this item out of the vault: check your backpack and the mercenary"
+		k.note("eqm-dup-"+id, "Equip on mercenary: "+rec.Name+" was created by an earlier order that did not finish: check your backpack and the mercenary.")
+		return res, true
+	}
 	if err != nil {
 		res.Code, res.Why = "room", "the item could not be put in your backpack ("+err.Error()+"): make room first"
 		return res, true
 	}
 	order := "eqm-" + orderTag(id) + fmt.Sprintf("-%d", k.now().UnixMilli())
 	ir, err := dm.MercEquipDirect(ctx, uint32(cr.ID), order)
+	if _, refused := d2dctl.IsItemRefusal(err); err != nil && !refused && !answered(err) && !errors.Is(err, d2dctl.ErrDirectOff) {
+		// No answer: the give may have run. The copy gone from the backpack means the mercenary wears it.
+		if have, ferr := k.API.ItemFull(ctx, cr.ID); ferr != nil || len(have) == 0 {
+			if ferr == nil {
+				if derr := st.Discard(id, "equipped on the mercenary (vault equip, unanswered)"); derr != nil {
+					k.note("eqm-rec-"+id, "Equip on mercenary: the vault record of "+rec.Name+" could not be retired ("+derr.Error()+").")
+				}
+			}
+			k.note("eqm-open-"+order, "Equip on mercenary: the game did not answer for "+rec.Name+". If he wears it, the piece he took off is in your backpack: move it yourself, the bot did not see it.")
+			res.Code, res.Why = "unknown", "the game did not answer: check the mercenary and your backpack"
+			return res, true
+		}
+	}
 	if err != nil {
 		res.Code, res.Why = mercCode(err)
 		if errors.Is(err, d2dctl.ErrDirectOff) {
@@ -127,7 +150,9 @@ func (k *Keeper) EquipMerc(ctx context.Context, id string) (Result, bool) {
 	}
 
 	if r, ok := st.Get(id); ok && r.State == vault.Recorded {
-		_ = st.Discard(id, "equipped on the mercenary (vault equip)")
+		if derr := st.Discard(id, "equipped on the mercenary (vault equip)"); derr != nil {
+			k.note("eqm-rec-"+id, "Equip on mercenary: the vault record of "+rec.Name+" could not be retired ("+derr.Error()+").")
+		}
 	}
 	slot := mercSlotKey[ir.Slot]
 	if slot == "" {
@@ -143,7 +168,11 @@ func (k *Keeper) EquipMerc(ctx context.Context, id string) (Result, bool) {
 			k.Hand.Protect(uint32(ir.Displaced))
 			k.note("eqm-off-"+id, "The piece the mercenary took off is in your backpack: the vault could not take it ("+verr.Error()+").")
 		} else {
-			n, w := k.recordItem(ctx, st, rr, "")
+			n, w, filed := k.recordItem(ctx, st, rr, "", order, false)
+			if !filed { // off the hero and no home: its bytes go to the player's notes, never silently away
+				k.note("eqm-lost-"+order, "The piece the mercenary took off could not be filed or put back; its data: "+rr.Norm)
+				w = "nowhere (see the note)"
+			}
 			names, where = append(names, n), w
 		}
 	}
