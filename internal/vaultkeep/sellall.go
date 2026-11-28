@@ -63,6 +63,34 @@ func (k *Keeper) managed() map[string]bool {
 	return m
 }
 
+// heldBy names the open order or intent that holds record id ("" when none): an equip order (queued or direct), a carry
+// or stow intent, a mercenary intent. One rule for Sell, Carry, Equip and Equip on mercenary (card fix1b, review N3): a
+// record under an open order may already be worn or carried, so nothing else may take it until the order is settled.
+func (k *Keeper) heldBy(id string) string {
+	k.mu.Lock()
+	for _, o := range k.bookLocked().orders {
+		if o.ID == id && o.active() {
+			k.mu.Unlock()
+			return "an Equip order"
+		}
+	}
+	k.mu.Unlock()
+	for _, c := range k.CarriedList() {
+		if c.ID == id && c.State != "" {
+			return "a Carry or Stow"
+		}
+	}
+	if k.mercOpen(id) {
+		return "an Equip on mercenary order"
+	}
+	return ""
+}
+
+// ReasonHeld is the refusal for a record another open order holds.
+func ReasonHeld(by string) string {
+	return by + " for this item is still being settled: wait a moment"
+}
+
 // heldByOrder says why a live record may not be sold now (true: an order holds it). Pinned records are left to the plan
 // function, which names them.
 func heldByOrder(r vault.Rec, managed map[string]bool) bool {

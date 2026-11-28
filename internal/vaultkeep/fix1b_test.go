@@ -242,3 +242,64 @@ func TestFix1bCarryRepairIgnoresATwin(t *testing.T) {
 		})
 	}
 }
+
+// N3: an open direct Equip order (the item may be worn already) or an open carry intent holds the record: Sell does not
+// pay for it, Carry and Equip on mercenary do not take it.
+func TestFix1bOpenOrderBlocksSell(t *testing.T) {
+	holds := map[string]func(k *Keeper, id string){
+		"equip order": func(k *Keeper, id string) {
+			k.putEq(&EquipOrder{ID: id, State: EqEquipping, Direct: true, Order: "eq-x-1", Group: []string{"rhand"}})
+		},
+		"carry intent": func(k *Keeper, id string) { _ = k.carryPut(id, &Carried{ID: id, State: carryIntent}) },
+		"merc intent":  func(k *Keeper, id string) { _ = k.mercPut(id, &mercIntent{ID: id, Order: "eqm-x-1", Step: mercCreate}) },
+	}
+	for _, class := range classes {
+		for name, hold := range holds {
+			t.Run(class+"/"+name, func(t *testing.T) {
+				r := newSaleRig(t, class, 1000)
+				a, b := r.item(1, 2, 7, 100), r.item(2, 3, 9, 200)
+				hold(r.k, a)
+				res, _ := r.sellNow(false, a, b)
+				if res[0].OK || res[0].Code != "busy" || !res[1].OK {
+					t.Fatalf("want the held record skipped as busy and the other sold: %+v", res)
+				}
+				if rec := r.state(a); rec.State != vault.Recorded || soldGold(r, a, b) != r.pay.Stash-1000 || len(r.pay.Calls) != 1 {
+					t.Fatalf("a record under an open order was paid for: state %s, stash %d, calls %v", rec.State, r.pay.Stash, r.pay.Calls)
+				}
+				if res, _ = r.sellNow(false, a); res[0].Code != "busy" || len(r.pay.Calls) != 1 {
+					t.Fatalf("selling only the held record reached the credit: %+v %v", res, r.pay.Calls)
+				}
+			})
+		}
+	}
+}
+
+func TestFix1bOpenOrderBlocksCarryMercAndEquip(t *testing.T) {
+	ctx := context.Background()
+	for _, class := range classes {
+		t.Run(class+"/carry under an equip order", func(t *testing.T) {
+			r, _ := carryRig(t, class)
+			id := r.charm(1, "cm1", 4, true)
+			r.k.putEq(&EquipOrder{ID: id, State: EqEquipping, Direct: true, Order: "eq-x-1", Group: []string{"head"}})
+			if res := r.k.Carry(ctx, id); res.Code != CodeInFlight || r.carried(d2dctl.FakePack) != 0 {
+				t.Fatalf("carried a record under an open Equip order: %+v", res)
+			}
+		})
+		t.Run(class+"/merc under an equip order", func(t *testing.T) {
+			d, mf := mercRig(t, class, "rogue")
+			id := d.add(1, "cap", "new")
+			d.k.putEq(&EquipOrder{ID: id, State: EqEquipping, Direct: true, Order: "eq-x-1", Group: []string{"head"}, Reply: "kept"})
+			if res, ok := d.k.EquipMerc(ctx, id); !ok || res.Code != CodeInFlight || mf.calls != 0 || len(d.api.VaultFake.Carried) != 0 {
+				t.Fatalf("gave the mercenary a record under an open Equip order: %+v calls %d", res, mf.calls)
+			}
+		})
+		t.Run(class+"/equip under a merc intent", func(t *testing.T) {
+			d, _ := mercRig(t, class, "rogue")
+			id := d.add(1, "cap", "new")
+			_ = d.k.mercPut(id, &mercIntent{ID: id, Order: "eqm-x-1", Step: mercCreate})
+			if res := d.k.EquipEnqueue(ctx, id, "", false); res.Code != CodeInFlight || len(d.df.Calls) != 0 {
+				t.Fatalf("equipped a record under an open mercenary order: %+v %v", res, d.df.Calls)
+			}
+		})
+	}
+}

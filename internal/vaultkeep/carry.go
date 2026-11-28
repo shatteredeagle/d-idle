@@ -304,6 +304,10 @@ func (k *Keeper) Carry(ctx context.Context, id string) Result {
 			return res
 		}
 	}
+	if by := k.heldBy(id); by != "" {
+		res.Code, res.Why = CodeInFlight, ReasonHeld(by)
+		return res
+	}
 	// The intent is on disk before the game is touched: a stop after the create is settled at the next start by looking.
 	c := Carried{ID: id, Name: rec.Name, Code: base.Code, Cells: base.Cells(), At: k.now(), State: carryIntent, Hex: createHex(rec)}
 	have, err := k.API.ItemFull(ctx, -1)

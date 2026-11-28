@@ -111,8 +111,8 @@ func (k *Keeper) EquipMerc(ctx context.Context, id string) (Result, bool) {
 	}
 
 	k.repairMerc(ctx) // an order a stop left half done is settled before a new give can displace its piece
-	if k.mercOpen(id) {
-		res.Code, res.Why = CodeInFlight, ReasonInFlight
+	if by := k.heldBy(id); by != "" {
+		res.Code, res.Why = CodeInFlight, ReasonHeld(by)
 		return res, true
 	}
 	if r, ok := st.Get(id); !ok || r.State != vault.Recorded { // the repair finished an earlier give of this record

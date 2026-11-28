@@ -130,6 +130,9 @@ func (k *Keeper) precheck(st *vault.Store, id, slotWord string, taken map[string
 	case !rec.Identified:
 		return c, "reveal", ReasonEqReveal
 	}
+	if by := k.heldBy(id); by != "" {
+		return c, CodeInFlight, ReasonHeld(by)
+	}
 	pv := k.Hand.Preview(rec)
 	pv.Wearable = pv.Wearable || pv.Reveal // Preview counts an unrevealed record as wearable; ours is revealed here
 	group, w, cd := orderGroup(pv, slotWord)
