@@ -14,10 +14,10 @@ ordinal: 534000
 card: "live1"
 lane: next
 owns:
-  - "internal/bot"
-  - "internal/survival"
-  - "internal/questboard"
-  - "internal/arbiter"
+  - "internal/bot/"
+  - "internal/survival/"
+  - "internal/questboard/"
+  - "internal/arbiter/"
   - "cmd/d2bot/survivalwire.go"
   - "docs/live1.md"
 exclusive: []
