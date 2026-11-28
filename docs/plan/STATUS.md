@@ -197,6 +197,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- ab797f0cc 11-28 03:51 `Merge agent/rv5: review 14: round-3 review of merged work (docs)` (rv5)
+- 90ad67495 11-28 03:50 `Merge branch 'main' into rv5` (-)
 - d318b165a 11-28 03:50 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
 - 910df4846 11-28 03:48 `Merge branch 'main' into nightlog` (-)
 - 5bfdc8aa4 11-28 03:36 `Merge agent/zone5: zone5: zone prior capped by monster supply (supplyMinutes), caster archetype rows (TASK-1129)` (zone5)
@@ -205,6 +207,4 @@
 - 7bbd7ee07 11-28 03:25 `Merge branch 'main' into sweep2` (-)
 - 9fe7dbb41 11-28 03:18 `Merge agent/ops2: ops2: watch cookie, smoke wiring (TASK-1116)` (ops2)
 - 808f920da 11-28 03:18 `Merge agent/cls1: cls1: Druid and Barbarian (TASK-1111)` (cls1)
-- 0a686de8e 11-28 03:16 `Merge branch 'main' into ops2` (-)
-- c31d6dfaf 11-28 03:16 `Merge branch 'main' into cls1` (-)
 <!-- statusgen:end -->

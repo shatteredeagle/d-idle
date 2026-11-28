@@ -409,6 +409,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [11-fix-review-combat-arbiter.md](design/fable-review-2026-11-28/11-fix-review-combat-arbiter.md): Fable review 2026-11-28, round 2 part B: the fixes for reviews 3 and 7 (fix3, fix7) (status: review, read-only. Tree `829337379` (origin/main). Scope: merge `46365bb12` (fix3, TASK-1094) and merge...)
 - [12-fix-review-security-pg-data-pipeline.md](design/fable-review-2026-11-28/12-fix-review-security-pg-data-pipeline.md): Fable round 2, review C: tonight's fixes for security, Proving Ground, builds as data and the pipeline (status: REVIEW, docs only (reviewer run rv3, 2026-11-28 about 00:40 EST). No code changed, no game, no sandbox...)
 - [13-sandbox-live-review.md](design/fable-review-2026-11-28/13-sandbox-live-review.md): Fable review 2026-11-28, part 13: both sandbox heroes after the fix7 deploy (live logs, read-only) (status: review, read-only. Window: 2026-11-28 05:19:03 to 05:54:28 UTC (00:19 to 00:54 EST, about 35 minutes),...)
+- [14-round3-merged-since-midnight.md](design/fable-review-2026-11-28/14-round3-merged-since-midnight.md): Review 14: round 3, code merged since 00:30 EST (2026-11-28) (status: current. Reviewer run rv5, read-only. Base `27fe88d59` (first-parent tip before 00:30 EST) to...)
 
 `design/`
 
