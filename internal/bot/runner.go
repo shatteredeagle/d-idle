@@ -220,6 +220,7 @@ type Runner struct {
 	stepMu         sync.Mutex                   // held for a whole loop step: the loop state is only touched under it or from the step itself (questboard.go world)
 	noProfile      atomic.Bool                  // parked in town without a combat profile (noprofile.go)
 	noProfileWhat  string                       // the park line last logged; loop goroutine only
+	boardTraining  atomic.Bool                  // the board's last slice was its training slice: the leveling filler's own work (starvedcause.go)
 	parkedBoard    atomic.Bool                  // quest board Idle mode: standing in town on purpose, the stall watchdog stays quiet (boardmode.go)
 	noTP           atomic.Bool                  // the running task step has Constraints.NoTownPortal: no safety portal, no trip
 	farmMu         sync.Mutex                   // guards farm
@@ -265,6 +266,8 @@ type loopState struct {
 	gen              uint64 // generation the fields below belong to
 	failures         int    // consecutive failed actions
 	stuckStage       int
+	legFail          legFault // the last travel leg that failed (L1: one cause is charged once)
+	legFailAt        time.Time
 	inLadder         bool // escalate is running: a stall inside a rung is that rung failing, not a new ladder
 	ladderProgress   uint64
 	rung3Cycles      int         // leave/re-enter cycles of rung 3 since the last real progress
@@ -795,8 +798,9 @@ func (r *Runner) Beat() { r.lastStep.Store(time.Now().UnixNano()) }
 
 // LastStep is the wall-clock time of the last finished Run loop iteration (zero before Run started). The loop keeps
 // iterating while paused, self-paused or in an error wait, so a stale value means a step is stuck or the loop died.
-// Observed progress inside a running action counts as a finished step too (observer.bump: a kill, xp, a level, and
-// since review part 7 A4 also walking, an area change, gold, a potion, a drop, monster life going down): one action
+// Observed progress inside a running action counts as a finished step too (observer.beat: a kill, xp, a level, and
+// since review part 7 A4 also an area change, walking beatMove away, gold gained or spent, an item picked up; since
+// review 11 N2 never a fact the guard goroutine or the monsters produce while the action hangs): one action
 // legitimately runs longer than the watchdog limit (the Den of Evil sweep, Doofer 2026-11-27, restart after 613 s with
 // 52 kills; a 40 min board slice with ten quiet minutes of walking and chores, TASK-1048).
 // The value is atomic on purpose: the watchdog must never wait on a lock a hung step holds.

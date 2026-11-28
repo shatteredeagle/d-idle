@@ -24,7 +24,7 @@ import (
 // A tick that carries no "facts" inherits the last facts seen. Time comes from "vtMs" (the bot clock in Unix
 // milliseconds, which is the game clock under lockstep) when present, else from the "time" field (RFC 3339).
 //
-// The bot's own tick lines (knob bot.tickLogSec, docs/design/ticklog-t4.md) carry the full fact set once a second; when a
+// The bot's own tick lines (docs/design/ticklog-t4.md) carry the full fact set at most once a second; when a
 // log has any tick line its minute lines are skipped, because their area is a number and their counters lag a minute.
 type ReplayResult struct {
 	Ticks        int

@@ -60,18 +60,22 @@ type boardRT struct {
 	class    string
 	ready    map[string]questboard.Word
 	explain  map[string]questboard.Readiness // the full answers behind ready, when the margin query ran
-	assessed time.Time                       // when ready was last computed (the margin query is throttled)
-	assessOn string                          // the inputs it was computed for (level, difficulty)
-	th       *questboard.Thresholds
-	handed   map[string]bool      // hand-in dialogue ran this process (T3 proxy until the save or memory agrees)
-	reached  map[string]bool      // an auto or item chunk read done once this process (its evidence can vanish: key used, Tristram left)
-	near     map[string]bool      // walked to the giver once this process
-	lastFail map[string]time.Time // chunk key: last failure that was counted
-	noted    map[string]string    // visible-reason log lines already written
-	unpark   map[string]bool      // task groups the executor must lift the block of (Retry, knob quests.boardSM): the loop goroutine applies it
-	applied  string               // the between-chunks mode the hero acts on (boardmode.go); "" before the first tick
-	farming  bool                 // inside a farm-mode slice: the area choice farms
-	queued   string               // why an accepted chunk is not running yet ("" when it runs or none is accepted)
+	bossArea map[string]int                  // chunk key: the area of the chunk's own boss, from the margin query
+	// parkedBoss is the cached answer of parkedBossAreas, read at parkedAt.
+	parkedBoss []int
+	parkedAt   time.Time
+	assessed   time.Time // when ready was last computed (the margin query is throttled)
+	assessOn   string    // the inputs it was computed for (level, difficulty)
+	th         *questboard.Thresholds
+	handed     map[string]bool      // hand-in dialogue ran this process (T3 proxy until the save or memory agrees)
+	reached    map[string]bool      // an auto or item chunk read done once this process (its evidence can vanish: key used, Tristram left)
+	near       map[string]bool      // walked to the giver once this process
+	lastFail   map[string]time.Time // chunk key: last failure that was counted
+	noted      map[string]string    // visible-reason log lines already written
+	unpark     map[string]bool      // task groups the executor must lift the block of (Retry, knob quests.boardSM): the loop goroutine applies it
+	applied    string               // the between-chunks mode the hero acts on (boardmode.go); "" before the first tick
+	farming    bool                 // inside a farm-mode slice: the area choice farms
+	queued     string               // why an accepted chunk is not running yet ("" when it runs or none is accepted)
 	// queuedSince is when the chunk first met a fight in the clear radius (zero when it is not waiting): past
 	// boardQueueGrace the chunk starts anyway, see boardPreemptsWhy.
 	holdFight   bool // the chunk is queued behind a fight in the clear radius: the level goal stays and fights here
@@ -200,6 +204,40 @@ func (r *Runner) QuestReadiness(q questboard.Quest, c questboard.Chunk) (questbo
 	return rd, ok
 }
 
+// parkedBossAreas adds the boss area of every parked boss chunk to ex: the leveling family does not walk to the boss the
+// quest family gave up on (live 2026-11-28, review 13 L2: Tower Cellar Level 4 picked 24 minutes after the Countess
+// chunk was parked). Run machine only; the player's Try again or the pause policy lifts it with the park.
+func (r *Runner) parkedBossAreas(ex map[int]bool) {
+	rt := r.qbRT()
+	if rt == nil || !r.questBoardOn() {
+		return
+	}
+	now := r.e.Clock.Now()
+	rt.mu.Lock()
+	fresh := !rt.parkedAt.IsZero() && now.Sub(rt.parkedAt) < parkedBossEvery
+	rt.mu.Unlock()
+	var runs map[string]questboard.Run
+	if !fresh {
+		runs = rt.exec.SMRuns() // reads the plan file and asks the evidence (which takes rt.mu): never under rt.mu
+	}
+	rt.mu.Lock()
+	defer rt.mu.Unlock()
+	if !fresh {
+		rt.parkedAt, rt.parkedBoss = now, rt.parkedBoss[:0]
+		for k, run := range runs {
+			if a := rt.bossArea[k]; a != 0 && run.Status == questboard.RunParked {
+				rt.parkedBoss = append(rt.parkedBoss, a)
+			}
+		}
+	}
+	for _, a := range rt.parkedBoss {
+		ex[a] = true
+	}
+}
+
+// parkedBossEvery spaces the plan file reads of parkedBossAreas (some pickers ask every tick). U: judgment.
+const parkedBossEvery = 10 * time.Second
+
 // QuestClass is the loaded hero's class in lower case ("" before a snapshot).
 func (r *Runner) QuestClass() string {
 	if rt := r.qbRT(); rt != nil {
@@ -298,7 +336,7 @@ func (rt *boardRT) assess(s *d2.Snapshot) {
 		hero.Potions = 1 << 20 // the belt was not read: never claim a shortage
 	}
 	bosses := map[string]*questboard.Encounter{}
-	rt.explain = map[string]questboard.Readiness{}
+	rt.explain, rt.bossArea = map[string]questboard.Readiness{}, map[string]int{}
 	for _, q := range rt.board.Quests() {
 		floor, hasFloor, _ := rt.board.Floor(q, rt.class)
 		for _, c := range q.Chunks {
@@ -315,6 +353,9 @@ func (rt *boardRT) assess(s *d2.Snapshot) {
 				}
 				if enc != nil {
 					in.Encounters = []questboard.Encounter{*enc}
+					if c.Boss != "" {
+						rt.bossArea[questboard.ChunkKey(q.ID, c.ID)] = enc.Area
+					}
 				}
 			}
 			rd, err := rt.th.Assess(in)
@@ -824,6 +865,9 @@ func (r *Runner) boardStep(ctx context.Context, snap *d2.Snapshot, c control) bo
 	if d.Kind != questboard.DecRun {
 		r.setQuestCrowd(false)
 	}
+	if d.Kind == questboard.DecRun || d.Kind == questboard.DecAwait {
+		r.boardTraining.Store(false)
+	}
 	switch d.Kind {
 	case questboard.DecRun:
 		rt.setQueued("")
@@ -859,6 +903,7 @@ func (r *Runner) boardNote(key, line string) {
 
 func (r *Runner) boardTrain(ctx context.Context, snap *d2.Snapshot, c control) bool {
 	r.noteTrain(snap)
+	r.boardTraining.Store(true)
 	_, ok := r.boardSlice(ctx, snap, c, boardPlan{train: true}, "Quest board: training")
 	return ok
 }

@@ -19,6 +19,8 @@ type Candidate struct {
 	TravelMin float64
 	Depleted  bool // the zone is cleared (the levelsim supply term)
 	MLvl      int  // the zone's monster level (0 = unknown: never dropped by the band rule)
+	// Units is what the zone holds per clear (danger Density.Units; 0 = unknown: the supply cap leaves the zone alone).
+	Units float64
 }
 
 // Purse is the gold side of lambda: what the kit and the next purchase need against what the hero holds.
@@ -67,9 +69,12 @@ type Decision struct {
 	// FreshRefused is the reason a fresh game was not taken although the numbers asked for it ("" = not refused).
 	FreshRefused string
 	Hole         bool // nothing is safe: first field, the hero needs help
-	Alts         []Alt
-	Lambda       float64
-	NeedsYou     bool
+	// Hold: the hole's best zone has no margin at all (it prints as 0.0). Walking there is not a fallback; the caller
+	// keeps the hero in town or in the act's first field (live 2026-11-28, L2: Catacombs Level 3 at margin 0.0).
+	Hold     bool
+	Alts     []Alt
+	Lambda   float64
+	NeedsYou bool
 	// CurK is k_zone x k_hero of the current zone (the picked zone when the hero is in none), for the bot's re-ask line.
 	CurK float64
 	line string
@@ -87,17 +92,20 @@ func PowerOf(h power.Hero) float64 {
 
 // verdict is a candidate judged against the dial and the ledger.
 type verdict struct {
-	c        Candidate
-	best     float64 // margin of the bad pack after the ledger correction
-	low      float64
-	k        float64 // k_zone x k_hero
-	eligible bool
-	word     string
-	why      Why
-	value    float64
-	xp       float64 // xp/min the value rests on (model prior, or the blend with the realized one)
-	realized float64 // the realized xp/min behind the blend, 0 = the prior stands
-	starving bool
+	c    Candidate
+	best float64 // margin of the bad pack after the ledger correction
+	low  float64
+	k    float64 // k_zone x k_hero
+	// kZone and kHero are the two factors before the pooled-k rule, for the log: which of them holds k at the clamp
+	kZone, kHero float64
+	eligible     bool
+	word         string
+	why          Why
+	value        float64
+	xp           float64 // xp/min the value rests on (model prior, or the blend with the realized one)
+	realized     float64 // the realized xp/min behind the blend, 0 = the prior stands
+	prior        float64 // the model's xp/min after the supply cap
+	starving     bool
 	// yieldStarved: realized yield stayed below the dial's share of the prior (card survhold7); yieldMul is its value factor
 	yieldStarved bool
 	yieldMul     float64
@@ -126,7 +134,8 @@ func lambda(p *Params, pu Purse) float64 {
 func (l *Ledger) judge(in Input, c Candidate, lam float64, disc float64) verdict {
 	l.Refresh(c.Key, in.Power)
 	v := verdict{c: c}
-	v.k = l.KZoneFor(c.Key, in.Now, in.OffenceUnread) * l.KHeroFor(in.OffenceUnread)
+	v.kZone, v.kHero = l.KZoneFor(c.Key, in.Now, in.OffenceUnread), l.KHeroFor(in.OffenceUnread)
+	v.k = v.kZone * v.kHero
 	if row, err := l.P.stepDown(in.Dial.ID); err == nil && row.PoolUnvisitedK {
 		if s := l.peek(c.Key); s == nil || s.Kills <= 0 {
 			if pk, ok := l.pooledK(in); ok && pk < v.k {
@@ -179,9 +188,10 @@ func (l *Ledger) judge(in Input, c Candidate, lam float64, disc float64) verdict
 		}
 	}
 	stayMin := l.P.StayMinutes
-	v.xp = c.Eco.XPPerMin
+	prior := l.prior(in, c)
+	v.xp, v.prior = prior, prior
 	if in.Active {
-		v.xp, v.realized = l.BlendYield(c.Key, c.Eco.XPPerMin, in.Archetype)
+		v.xp, v.realized = l.BlendYield(c.Key, prior, in.Archetype)
 		v.starving = l.Starving(c.Key, in.Archetype)
 		if v.starving && v.realized > 0 && v.realized < v.xp {
 			v.xp = v.realized // a starved zone is worth what it paid, not what the model's kill speed promised
@@ -190,7 +200,7 @@ func (l *Ledger) judge(in Input, c Candidate, lam float64, disc float64) verdict
 			v.xp *= disc // no data here: the prior is discounted by how the hero fared in the zones that have data
 		}
 		if ratio, minutes, mul := l.P.yieldStarve(in.Archetype); ratio > 0 {
-			if obs, sec := l.RealizedXPPerMin(c.Key); sec/60 >= minutes && obs < ratio*c.Eco.XPPerMin {
+			if obs, sec := l.RealizedXPPerMin(c.Key); sec/60 >= minutes && obs < ratio*prior {
 				v.xp, v.realized, v.yieldStarved = math.Min(obs, v.xp), obs, true
 				v.yieldMul = mul
 			}
@@ -208,6 +218,18 @@ func (l *Ledger) judge(in Input, c Candidate, lam float64, disc float64) verdict
 		v.value *= l.P.starveMul(in.Archetype) // the hero cannot cast here for want of mana: the model's kill speed is a fiction
 	}
 	return v
+}
+
+// prior is the model's xp/min of a candidate for this decision. With the controller deciding and the archetype's
+// supplyMinutes set, the kill rate behind it is capped at the zone's units spread over that stay: the model's kill speed
+// assumes the next monster is always four seconds away, which a 38-unit graveyard cannot keep up for a 20-minute stay
+// (card zone5: Burial Grounds modelled at 150 to 160 xp/min, realized 4 to 11).
+func (l *Ledger) prior(in Input, c Candidate) float64 {
+	m := l.P.supplyMinutes(in.Archetype)
+	if !in.Active || m <= 0 || c.Units <= 0 || c.Eco.KillsPerMin <= 0 {
+		return c.Eco.XPPerMin
+	}
+	return c.Eco.XPPerMin * math.Min(1, c.Units/m/c.Eco.KillsPerMin)
 }
 
 // pooledK is the kill-weighted mean of k (zone x hero) over the candidate zones with kills in the ledger; false when none.
@@ -263,6 +285,7 @@ func (l *Ledger) Choose(in Input) (Decision, error) {
 		}
 		pick = best
 		d.Hole, d.NeedsYou = true, true
+		d.Hold = best.best < 0.05 && best.c.Key != in.Current
 		d.Why = Why{WhyHole, "nothing is safe enough: the easiest field, and the hero needs help"}
 	default:
 		pick = elig[0]
@@ -341,10 +364,13 @@ func decisionLine(d Decision, p *verdict, in Input) string {
 	fmt.Fprintf(&b, "zone choice: %s  margin %.1f (need %.1f; low %.1f)  k %.2f  xp/min %.0f  gold/min %+.0f  dial %s  why: %s (%s)",
 		d.Name, p.best, in.Dial.Enter, p.low, p.k, p.xp, p.c.Eco.Net(), in.Dial.ID, d.Why.Code, d.Why.Text)
 	if p.realized > 0 {
-		fmt.Fprintf(&b, "  realized %.0f (model %.0f)", p.realized, p.c.Eco.XPPerMin)
+		fmt.Fprintf(&b, "  realized %.0f (model %.0f)", p.realized, p.prior)
 	}
 	if p.starving {
 		b.WriteString("  mana-starved")
+	}
+	if in.Active && p.k != 1 {
+		fmt.Fprintf(&b, "  k parts: zone %.2f hero %.2f", p.kZone, p.kHero)
 	}
 	if d.Fresh {
 		b.WriteString("  fresh game")
@@ -373,7 +399,7 @@ func (l *Ledger) unvisitedDiscount(in Input) float64 {
 			continue
 		}
 		num += obs * m
-		den += c.Eco.XPPerMin * m
+		den += l.prior(in, c) * m
 	}
 	if den <= 0 {
 		return 1
@@ -387,7 +413,8 @@ func (l *Ledger) unvisitedDiscount(in Input) float64 {
 
 // inBand drops the zones whose monster level is more than BandDrop[diff] below the hero's level: farming monsters that
 // far down pays next to nothing (Questy 2026-11-27: 5k against 22k to 39k XP/h). It runs on judged zones: the hero's
-// current zone always stays (the stay rule and MarkLeft need it), and nothing is dropped unless a safe zone is left.
+// current zone always stays (the stay rule and MarkLeft need it), and nothing is dropped unless a safe zone inside the
+// band is left (a current zone below the band would otherwise be the only choice: the hero pinned in the lowest zone).
 func (l *Ledger) inBand(in Input, vs []verdict) []verdict {
 	if in.Level <= 0 {
 		return vs
@@ -395,11 +422,13 @@ func (l *Ledger) inBand(in Input, vs []verdict) []verdict {
 	var out []verdict
 	safe := false
 	for _, v := range vs {
-		if k := l.P.BandDrop[v.c.Key.Diff]; k > 0 && v.c.MLvl > 0 && in.Level-v.c.MLvl > k && v.c.Key != in.Current {
+		k := l.P.BandDrop[v.c.Key.Diff]
+		below := k > 0 && v.c.MLvl > 0 && in.Level-v.c.MLvl > k
+		if below && v.c.Key != in.Current {
 			continue
 		}
 		out = append(out, v)
-		safe = safe || v.eligible
+		safe = safe || v.eligible && !below // the current zone below the band does not justify dropping its betters
 	}
 	if !safe {
 		return vs

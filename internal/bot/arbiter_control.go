@@ -27,8 +27,13 @@ func (r *Runner) runGoalControlled(ctx context.Context, snap *d2.Snapshot, c con
 	if ok && d.Chosen != nil {
 		acted, took = r.arbAct(ctx, snap, c, d, t.ArbiterFamilies)
 		if arbHooked(t.ArbiterFamilies, arbiter.Family(d.Chosen.Source)) {
-			// Close the loop (review part 7, A3): a hook that did nothing backs its intent off, one that acted clears it.
-			sh.Report(*d.Chosen, v.Now, took)
+			// Close the loop (review part 7, A3): a hook that did nothing backs its intent off (a decline, capped at
+			// arbiter.DeclineMax), one that acted clears it.
+			if took {
+				sh.Report(*d.Chosen, v.Now, true)
+			} else {
+				sh.Decline(*d.Chosen, v.Now)
+			}
 			declined = !took
 		}
 	}
@@ -81,12 +86,13 @@ func (r *Runner) arbAct(ctx context.Context, snap *d2.Snapshot, c control, d arb
 		acted = r.claimTripStep(ctx, snap, c)
 	case arbiter.SrcGoldFarm:
 		if c.spec.camp != nil && r.goldFarmOn() {
-			// the chain's low-life gate stands above both farm hooks (goal.go); a hurt hero with no potion heals first
-			acted = r.lowLifeGate(ctx, snap, c) || r.goldFarmStep(ctx, snap, c)
+			// the chain's prefix stands above both farm hooks (goal.go): a running trip goes on and due chores start
+			// whatever the arbiter backed off (review 11, N1); a hurt hero with no potion heals first
+			acted = r.arbChores(ctx, snap, c) || r.lowLifeGate(ctx, snap, c) || r.goldFarmStep(ctx, snap, c)
 		}
 	case arbiter.SrcRecovery:
 		if c.spec.camp != nil && !r.goldFarmOn() && r.recoveryDue(snap) {
-			acted = r.lowLifeGate(ctx, snap, c) || r.recoveryStep(ctx, snap, c)
+			acted = r.arbChores(ctx, snap, c) || r.lowLifeGate(ctx, snap, c) || r.recoveryStep(ctx, snap, c)
 		}
 	default:
 		return false, false
@@ -120,9 +126,7 @@ func (r *Runner) arbCompare(sh *arbiter.Shadow, d arbiter.Decision, now float64,
 	if line := sh.Compare(d, now, chain); line != "" {
 		r.e.Log.Info("arbiter shadow", "diverge", line)
 	}
-	for _, in := range d.Starved {
-		r.inv.noteStarved(r.starvedCause(d, in))
-	}
+	r.noteStarvedAll(d)
 }
 
 // arbHoldsQuest is the quest and level families' hook under control: the quest step defers to the arbiter's decision.

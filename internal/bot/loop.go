@@ -558,6 +558,11 @@ func (r *Runner) fail(ctx context.Context, c control, what string, err error) {
 		r.escalate(ctx, c, what, err)
 		return
 	}
+	// A step that failed or was refused ran no action, so no guard watched the hero: ask the safety check here. V lab night
+	// 2026-11-28, drill.act2.cube.stepexec: in the Sewers with 8 hostiles near the board went back and forth between two
+	// refused steps ("area banned", "no eligible reachable leveling area") for about 100 s of game time, life fell from
+	// 99 to 18 percent with four healing potions in the belt and the first drink came when an action ran again.
+	r.hazard(ctx, r.latest())
 	r.pause(ctx, min(time.Duration(l.failures)*500*time.Millisecond, 5*time.Second))
 }
 

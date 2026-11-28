@@ -146,6 +146,13 @@ func (s *Shadow) Report(in Intent, now float64, ok bool) {
 	s.arb.Report(in, now, ok)
 }
 
+// Decline tells the arbiter that the chosen intent's hook had nothing to do (see Arbiter.Decline).
+func (s *Shadow) Decline(in Intent, now float64) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	s.arb.Decline(in, now)
+}
+
 // Refused posts the temporary intent a typed refusal asks for (see Arbiter.Refused); false when none applies.
 func (s *Shadow) Refused(need, wake string, now float64) (posted bool) {
 	s.mu.Lock()

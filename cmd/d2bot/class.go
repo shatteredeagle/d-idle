@@ -112,7 +112,7 @@ func applyClassFor(p *d2.Player, cb *combat.Fighter, tw *town.Town, lt *loot.Loo
 	cb.GearBuild = cp.LevelerBuild
 	planBuild.Store(&cp.LevelerBuild)
 	if tw != nil {
-		tw.SetAmmoPath(ammoPath(cp.LevelerBuild))
+		tw.SetAmmoPath(leveler.TableAmmo(cp.LevelerBuild))
 		tw.SetBuild(cp.LevelerBuild)
 	}
 	if lt != nil {
@@ -120,15 +120,4 @@ func applyClassFor(p *d2.Player, cb *combat.Fighter, tw *town.Town, lt *loot.Loo
 	}
 	log.Info("class-aware start", "class", p.Class.String(), "level", p.Level, "combatProfile", cp.Profile,
 		"combatBuild", string(cp.CombatBuild), "levelerBuild", cp.LevelerBuild)
-}
-
-// ammoPath maps a gear build name to the town's ammo path ("" for builds without a launcher or thrown stack).
-func ammoPath(build string) string {
-	switch build {
-	case "amazon_bow_normal30", "amazon_multishot_endgame90":
-		return "bow"
-	case "amazon_javelin_normal30":
-		return "javelin"
-	}
-	return ""
 }

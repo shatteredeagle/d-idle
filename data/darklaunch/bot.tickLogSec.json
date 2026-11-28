@@ -1,0 +1,11 @@
+{
+ "name": "bot.tickLogSec",
+ "built_by": "ticklog (TASK-981)",
+ "dark_since": "2026-11-26",
+ "why_off": "Log volume: one tick line per second is about 3600 lines an hour. Built and tested offline only; no sandbox night recorded yet.",
+ "enable_criteria": "Set to 1 on both sandboxes for one night; cmd/d2arbiter -follow replays each night log without a panic or a parse error (procedure docs/design/ticklog-t4.md); 24 h watch with automatic revert on a hard breach",
+ "owner": "coordinator",
+ "review_by": "2026-12-09",
+ "status": "default-on",
+ "note": "2026-11-28 grad1 (TASK-1112): graduated, always on at a 1 s gap, the knob is deleted (key kept in env.RetiredKnobs so a tuning.json naming it loads). Evidence V: on both sandboxes since 2026-11-27 06:01Z; the logs of 2026-11-27 22:59Z to 2026-11-28 05:31Z replay through cmd/d2arbiter and d2arbiter -follow with exit 0, panics=0, no bad time (838 and 902 tick lines); 0 ERROR lines. Volume is about 130 lines an hour, not 3600 (I: the line is written only when the goal chain runs; docs/probes/graduations-2026-11-28.md)."
+}

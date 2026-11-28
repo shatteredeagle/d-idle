@@ -186,6 +186,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [builds-gear.md](sme/builds-gear.md): SME: gear, runewords, cube and vendors for a first playthrough (classic LoD 1.14d, offline SP)
 - [builds-leveling.md](sme/builds-leveling.md): SME: leveling builds for all 7 classes, clvl 1-40 (classic LoD 1.14d, offline SP, softcore)
 - [builds-open-questions.md](sme/builds-open-questions.md): SME builds: resolved open questions (classic LoD 1.14d, offline SP)
+- [capability-gaps.md](sme/capability-gaps.md): Capability table: what is filled and what is still open (card fix8) (status: current (2026-11-27). Reader: the card that next touches `data/capabilities/capabilities.json` for the...)
 - [cast-timing-sources.md](sme/cast-timing-sources.md): Cast timing (FCR) sources and verdicts, classic 1.14d
 - [class-amazon.md](sme/class-amazon.md): SME class file: Amazon (classic LoD 1.14d, offline single player, softcore)
 - [class-assassin.md](sme/class-assassin.md): SME class file: Assassin (classic LoD 1.14d, offline single player, softcore)
@@ -283,9 +284,13 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 `classes/`
 
 - [classes/README.md](classes/README.md): Class research index (docs only)
+- [amazon-gap-2026-11-28.md](classes/amazon-gap-2026-11-28.md): Amazon gap list against TASK-941 (card cls2, 2026-11-28) (status: current offline audit. Tags V (verified: a test or a code read this run), S (secondary: an SME doc of this...)
 - [amazon.md](classes/amazon.md): Amazon plan (D2 LoD 1.14d, offline softcore, unattended)
+- [assassin-gap-2026-11-28.md](classes/assassin-gap-2026-11-28.md): Assassin gap list against TASK-947 (card cls2, 2026-11-28) (status: current offline audit. Tags V (verified: a test or a code read this run), S (secondary: an SME doc of this...)
 - [assassin.md](classes/assassin.md): Assassin plan (D2 LoD 1.14d, offline softcore, unattended)
+- [barbarian-gap-2026-11-28.md](classes/barbarian-gap-2026-11-28.md): Barbarian gap list (card cls1, TASK-1111, 2026-11-28) (status: current offline audit, same shape as `necromancer-gap-2026-11-27.md`. Tags V (verified: a test or a code...)
 - [barbarian.md](classes/barbarian.md): Barbarian plan (D2 LoD 1.14d, offline softcore, unattended)
+- [druid-gap-2026-11-28.md](classes/druid-gap-2026-11-28.md): Druid gap list (card cls1, TASK-1111, 2026-11-28) (status: current offline audit, same shape as `necromancer-gap-2026-11-27.md`. Tags V (verified: a test or a code...)
 - [druid.md](classes/druid.md): Druid plan (D2 LoD 1.14d, offline softcore, unattended)
 - [necromancer-gap-2026-11-27.md](classes/necromancer-gap-2026-11-27.md): Necromancer gap list against TASK-942 (card necroepic, 2026-11-27) (status: current offline audit. Tags V (verified: a test or a code read this run), S (secondary), U (unverified)....)
 - [necromancer.md](classes/necromancer.md): Necromancer plan (D2 LoD 1.14d, offline softcore, unattended)
@@ -400,6 +405,10 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [07-arbiter-and-deciders.md](design/fable-review-2026-11-28/07-arbiter-and-deciders.md): Fable review 2026-11-28, part 7: the arbiter and the deciders (status: review, read-only (no code changed, nothing run against a game). Tree: `415b11f25` (origin/main at the...)
 - [08-builds-as-data.md](design/fable-review-2026-11-28/08-builds-as-data.md): Fable review 8 of 8: builds as data (2026-11-28) (status: review, decides nothing. Read-only pass over `origin/main` at `415b11f25`, "today" = the commits after...)
 - [09-change-pipeline.md](design/fable-review-2026-11-28/09-change-pipeline.md): Fable review 9: how a change travels, and why the dark ledger grows (status: current (reviewer run fr9, 2026-11-27 evening, docs only, nothing changed). Independent second opinion:...)
+- [10-fix-review-items-and-board.md](design/fable-review-2026-11-28/10-fix-review-items-and-board.md): Fable review 2026-11-28, round 2 part A: the fixes for the item flows (fix1) and the quest board (fix2) (status: review, read-only (no code changed). Base: `origin/main` at 7ec65e945. Scope: merge 95520db57 (fix1,...)
+- [11-fix-review-combat-arbiter.md](design/fable-review-2026-11-28/11-fix-review-combat-arbiter.md): Fable review 2026-11-28, round 2 part B: the fixes for reviews 3 and 7 (fix3, fix7) (status: review, read-only. Tree `829337379` (origin/main). Scope: merge `46365bb12` (fix3, TASK-1094) and merge...)
+- [12-fix-review-security-pg-data-pipeline.md](design/fable-review-2026-11-28/12-fix-review-security-pg-data-pipeline.md): Fable round 2, review C: tonight's fixes for security, Proving Ground, builds as data and the pipeline (status: REVIEW, docs only (reviewer run rv3, 2026-11-28 about 00:40 EST). No code changed, no game, no sandbox...)
+- [13-sandbox-live-review.md](design/fable-review-2026-11-28/13-sandbox-live-review.md): Fable review 2026-11-28, part 13: both sandbox heroes after the fix7 deploy (live logs, read-only) (status: review, read-only. Window: 2026-11-28 05:19:03 to 05:54:28 UTC (00:19 to 00:54 EST, about 35 minutes),...)
 
 `design/`
 
@@ -415,7 +424,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [proptest-t3.md](design/proptest-t3.md): Property tests on the pure deciders (T3) (status: current (TASK-980, card proptest1). Roadmap row T3, docs/research/fable-logic-review-2026-11-25.md section...)
 - [quest-board-2026-11-16.md](design/quest-board-2026-11-16.md): Quest board: quests as events the player takes part in (status: design proposal (2026-11-16, card questdesign, TASK-575), not built; waits for the user's answers (section...)
 - [stepexec-p9.md](design/stepexec-p9.md): P9: the generic step executor (card stepexec1, TASK-976) (status: current (2026-11-27). Source: docs/research/fable-logic-review-2026-11-25.md 2.4 (classes F, H), 7.1 P9;...)
-- [ticklog-t4.md](design/ticklog-t4.md): Recorded sessions: the tick line (T4) (status: current (card ticklog, TASK-981, 2026-11-26). Roadmap row T4 (docs/roadmap-fable.md); why:...)
+- [ticklog-t4.md](design/ticklog-t4.md): Recorded sessions: the tick line (T4) (status: current (card ticklog, TASK-981, 2026-11-26; the knob `bot.tickLogSec` graduated 2026-11-28, card grad1:...)
 - [townflip-p5.md](design/townflip-p5.md): townflip: finishing and flipping town.plan (roadmap P5, TASK-972) (status: current (2026-11-26). Runbook and state of the knob `town.plan` stage by stage. Design: town-planner.md;...)
 - [ui-build-ratings-sme-2026-11-22.md](design/ui-build-ratings-sme-2026-11-22.md): Build catalogue: ballpark star thresholds and first-draft ratings (SME, 2026-11-22) (status: current. Answers `docs/design/fable-review-2026-11-22/ui-unification.md` sections D3 and D5 (user decision...)
 - [desktop-app.md](desktop-app.md): Desktop app: d2idle-watch (status: the Go launcher is the FALLBACK; the main desktop app is now `apps/desktop-electron`...)
@@ -547,6 +556,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [lifecycle.md](lifecycle.md): Game lifecycle in Go (agent LIFECYCLE)
 - [lifelog.md](lifelog.md): Life log fields
 - [live-checks.md](live-checks.md): Live checks still open
+- [live1.md](live1.md): live1: fixes from the sandbox live review of 2026-11-28 (status: current. Offline only, nothing here was run against a live game. Source of the findings: the review. Task:...)
 - [locks.md](locks.md): Lock order and rules (status: current (lock audit, 2026-11-12, after the sandbox freeze of 2026-11-12: nav.roam called done() under...)
 - [logfields.md](logfields.md): Log fields for the per-skill soak report (change logfields)
 - [loop-order.md](loop-order.md): The Loop order and its unlock (status: built offline (task uib7), not verified live. Design: `docs/ui/redesign-2026-11-14/C-orders.md` section 8....)
@@ -665,6 +675,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [senses-units.md](senses-units.md): Senses tiers 2 and 3: enemy dots, target bar and name (TASK-151, sensesenemies)
 - [senses-unlock.md](senses-unlock.md): Senses unlock ladder (TASK-149, sensesunlock)
 - [session-record.md](session-record.md): Session record and decision dataset (status: BUILT offline, fixtures only (TASK-106). Tags: V verified live, S fixture or code, U unverified. Nothing...)
+- [shadowlog.md](shadowlog.md): Shadow log digest (`d2shadow`) (status: current (card road4, TASK-1121, 2026-11-28). Offline tool; nothing here ran against a live game or a...)
 - [skill-unlocks.md](skill-unlocks.md): Skill unlocks by quest or find (TASK-133) (status: engine and Sorceress table built and tested offline (fixtures and the real tables on the worker host);...)
 - [skilltrees.md](skilltrees.md): Skills page: the hero's skill trees on the watch screen (TASK-355, skilltrees) (status: current 2026-11-11. Read only. Tags: V verified (say how), S secondary, U unverified.)
 - [skmeleebot.md](skmeleebot.md): SKMELEEBOT: the plain Attack in the resource policy (status: current (2026-11-01). Offline: no game, no d2d slot. Source: docs/research/sk-melee-trace.md (B1 to B4),...)
@@ -1183,6 +1194,8 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 - [fidprobe.md](probes/fidprobe.md): d2fidprobe run recipe (same-save probe, slice 1) (status: first live run done 2026-11-07 (scenarios 1 to 4, see the last section); the recipe below is VERIFIED LIVE...)
 - [firsthour.md](probes/firsthour.md): First hour: fresh hero, 60 realtime minutes at 1x
+- [fork-rebase-20261128.md](probes/fork-rebase-20261128.md): Fork rebase round 2026-11-28 (branch pushed, built, tested; nothing switched) (status: current (2026-11-28, round `didle/rebase-20261128` of docs/process/fork-sync-cadence.md; user go for the...)
+- [graduations-2026-11-28.md](probes/graduations-2026-11-28.md): Graduations, 2026-11-28 (card grad1, TASK-1112) (status: current. Policy (user, 2026-11-27): a feature that ran clean on a sandbox graduates: its behaviour becomes...)
 - [gridwhole-2026-11-22.md](probes/gridwhole-2026-11-22.md): gridwhole: is `debug grid 5` whole at arrival? (card gridwhole, 2026-11-22) (status: current. Card `gridwhole` (first slice of `docs/design/fable-review-2026-11-22/map-knowledge.md`, user...)
 - [hero14-analysis-2026-11-14.md](probes/hero14-analysis-2026-11-14.md): Hero Doofer (Paladin clvl 14 to 15): why it is poor and slow (2026-11-14) (status: analysis, docs only (task hero14). Tags: V verified (how is said), S secondary, U unverified. No code, no...)
 - [hotkeydrift-2026-11-26.md](probes/hotkeydrift-2026-11-26.md): Build hotkeys versus profile layout (card hotkeydrift, 2026-11-26) (status: current. Tags: V verified (how said), S read in code or data, U unverified.)
@@ -1223,6 +1236,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [necrokeys-2026-11-26.md](probes/necrokeys-2026-11-26.md): Necromancer keys beyond F8 (card necrokeys, 2026-11-26) (status: current. Closes card necrokeys with evidence: on the d2d backend the F-key limit does not apply. Tags: V...)
 - [necromancer-act1-drill-2026-11-22.md](probes/necromancer-act1-drill-2026-11-22.md): Necromancer earned Act 1 drill (card necrodrill, 2026-11-22) (status: current. Verdict: BLOCKED, NOT ready to play. Tags: V verified in a named run, S read in a log, U...)
 - [necromancer-readiness-2026-11-22.md](probes/necromancer-readiness-2026-11-22.md): Necromancer readiness audit (card necro2, 2026-11-22) (status: current; section 6 (update after the merges of the same day) supersedes sections 1 to 3 where they differ....)
+- [needs-owner-2026-11-28.md](probes/needs-owner-2026-11-28.md): Needs owner (2026-11-28 night)
 - [night-log-2026-11-28.md](probes/night-log-2026-11-28.md): Night log 2026-11-28 (coordinator, unattended) (status: living. One line per coordinator tick. Rules: memory 'OVERNIGHT RULES' of 2026-11-28 00:30 (model:...)
 - [pactnative.md](probes/pactnative.md): pactnative: do the native difficulty levers work offline on 1.14d? (TASK-170) (status: probe result of 2026-11-08 (overnight, one hidden instance). Facts for the Pact design note...)
 - [paladin-aura-audit-2026-11-26.md](probes/paladin-aura-audit-2026-11-26.md): Paladin aura audit (2026-11-26) (status: audit, read-only; no fix made. Question (owner): auras only work when selected on an active skill slot...)
@@ -1250,6 +1264,9 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [quest-step-catalogue.md](probes/quest-step-catalogue.md): Quest step catalogue (generated) (status: current. GENERATED by `go run ./cmd/stepcat catalogue` from `data/questboard/act1..5.json`,...)
 - [questy-chunk-start-2026-11-27.md](probes/questy-chunk-start-2026-11-27.md): Why Questy's quest chunks never start (2026-11-27) (status: probe result, read-only on the Questy sandbox (2026-11-28 00:22 UTC). Answers the open question of...)
 - [readiness-floors-2026-11-24.md](probes/readiness-floors-2026-11-24.md): Readiness floors from game data, not from the SME ballpark (2026-11-24)
+- [review-sweep-2026-11-28.md](probes/review-sweep-2026-11-28.md): Review sweep 2026-11-28: what is still open from the 13 Fable reviews (status: current on 2026-11-28 (card sweep1, TASK-1122). A snapshot: statuses were read from the cards and branches...)
+- [review-sweep2-2026-11-28.md](probes/review-sweep2-2026-11-28.md): Review sweep 2, 2026-11-28: the OPEN rows of sweep 1 after the fixers merged (status: current on 2026-11-28 (card sweep2, TASK-1128). A snapshot against main at `f58d585f2` (fix1b, vault2,...)
+- [roadmap-refresh-2026-11-28.md](probes/roadmap-refresh-2026-11-28.md): Roadmap refresh 2026-11-28: every row of roadmap-fable.md against main (status: current (card roadfresh, TASK-1123; docs and one read-only script, no game run). Consumer: the...)
 - [sandbox-deploy-plan-2026-11-27.md](probes/sandbox-deploy-plan-2026-11-27.md): Sandbox deploy plan, 2026-11-27 (runbook, nothing run) (status: PLAN, docs only. Nothing was deployed, restarted or pruned in writing this. Tags: V = read in code or...)
 - [sandbox-fresh-20261115.md](probes/sandbox-fresh-20261115.md): Sandbox reset to a fresh hero, 2026-11-15 (status: record. Task sandboxfresh. Tags: V = verified in this run, U = not verified.)
 - [sandbox-log-analysis-2026-11-27.md](probes/sandbox-log-analysis-2026-11-27.md): Sandbox log analysis, 2026-11-27 (sandbox Doofer, Paladin; sandbox Questy, Paladin) (status: research, read-only (card sandboxlogs). Window: the last 12 h before 2026-11-27 16:45 EST, i.e. from 04:45...)

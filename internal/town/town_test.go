@@ -602,9 +602,16 @@ func TestPoorHeroKeepsScrollReserve(t *testing.T) {
 // visit has nothing to do. The sim world may have no NPC presets; then the route keeps the list and logs it.
 func TestChoresAct1AtRouteStage(t *testing.T) {
 	geartest.Need(t)
+	for _, cls := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		t.Run(cls.String(), func(t *testing.T) { choresAtRouteStage(t, cls) })
+	}
+}
+
+func choresAtRouteStage(t *testing.T, cls d2.Class) {
 	r := newRig(t)
 	r.Env.Tune.Town.Plan = 5
 	w := r.W
+	w.Player.Class = cls
 	dressed(w)
 	w.Player.Life = 12
 	w.Player.Level = 10

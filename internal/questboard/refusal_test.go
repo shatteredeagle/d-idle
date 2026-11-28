@@ -3,6 +3,7 @@ package questboard
 import (
 	"strings"
 	"testing"
+	"time"
 )
 
 // The refusal park (card refusalpark, knob quests.refusalPark). Every test runs for two classes.
@@ -105,8 +106,18 @@ func TestNoPathParkNamesTheExitAndCause(t *testing.T) {
 			r := refusalRig(t, class, 0)
 			why := "exit to Tower Cellar Level 4: nav: no path: gate to level 24 is on the map but not reachable from {45 20} (cause=cut_off, no way out found)"
 			c := StepResult{Outcome: StepFailed, Why: why}
-			r.f.Script = []StepResult{c, c, c}
+			now := time.Unix(1_800_000_000, 0)
+			r.x.o.Now = func() time.Time { return now }
+			r.f.Script = []StepResult{c, c, c, c, c, c}
+			// L3 (live review 2026-11-28): three identical refusals from one cell inside a minute are one try, not a park
 			r.tick(3)
+			if v := r.chunk(den, clr); v.State == Blocked {
+				t.Fatalf("three retries from one cell in the same minute parked the chunk: %+v", v)
+			}
+			for i := 0; i < 2; i++ { // the same refusal a minute later is a new try
+				now = now.Add(samePathWindow + time.Second)
+				r.tick(1)
+			}
 			if run := r.x.runOf(t, den, clr); run.Code != "no_path" {
 				t.Fatalf("stored park: %+v", run)
 			}
