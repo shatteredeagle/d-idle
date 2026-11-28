@@ -53,3 +53,17 @@ func (r *Runner) boardParkedNote() string {
 	sort.Strings(out)
 	return strings.Join(out, ", ")
 }
+
+// standingFiller reports whether in is a filler its source proposes all the time (no TTL): "nothing else wanted".
+// Losing to any objective is its normal state, not starvation.
+func standingFiller(in arbiter.Intent) bool { return in.Class == arbiter.Filler && in.TTL == 0 }
+
+// noteArbiterStarved raises the soft invariant arbiter-starved for the starved intents of d, except a standing filler:
+// on two sandboxes every one of 31 WARNs in 6.5 h was level/sweep outranked by quest/step (card evid1).
+func (r *Runner) noteArbiterStarved(d arbiter.Decision) {
+	for _, in := range d.Starved {
+		if !standingFiller(in) {
+			r.inv.noteStarved(r.starvedCause(d, in))
+		}
+	}
+}

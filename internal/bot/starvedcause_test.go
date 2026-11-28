@@ -29,3 +29,23 @@ func TestStarvedTextNamesTheCause(t *testing.T) {
 		t.Errorf("no winner: %q", got)
 	}
 }
+
+// The standing leveling filler is never reported as starved; a temporary filler and any other class still are.
+func TestStandingFillerIsNotStarved(t *testing.T) {
+	sweep := arbiter.Intent{Source: arbiter.SrcLevel, Kind: "sweep", Class: arbiter.Filler}
+	weak := arbiter.Intent{Source: arbiter.SrcLevel, Kind: "level_up", Class: arbiter.Filler, TTL: 900}
+	farm := arbiter.Intent{Source: arbiter.SrcRecovery, Kind: "farm_gold", Class: arbiter.Objective}
+	if !standingFiller(sweep) || standingFiller(weak) || standingFiller(farm) {
+		t.Fatal("only a filler without a TTL is standing")
+	}
+	r := &Runner{}
+	r.noteArbiterStarved(arbiter.Decision{Starved: []arbiter.Intent{sweep, weak, farm}})
+	if got := len(r.inv.pending); got != 2 {
+		t.Fatalf("%d starved hits, want 2 (the sweep is dropped): %+v", got, r.inv.pending)
+	}
+	for _, h := range r.inv.pending {
+		if strings.Contains(h.Detail, "level/sweep") {
+			t.Errorf("the standing filler was reported: %s", h.Detail)
+		}
+	}
+}
