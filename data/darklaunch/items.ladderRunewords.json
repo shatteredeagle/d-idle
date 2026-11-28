@@ -1,0 +1,10 @@
+{
+ "name": "items.ladderRunewords",
+ "built_by": "q4runes (ADR 0024) (f4a51a386)",
+ "dark_since": "2026-11-20",
+ "why_off": "Set only on ladder; off in offline play.",
+ "enable_criteria": "Owner go (ladder context)",
+ "owner": "owner",
+ "review_by": "2026-12-09",
+ "status": "by_design"
+}

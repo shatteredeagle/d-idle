@@ -48,7 +48,11 @@ class FakeSandbox:
         self.fail_restart = 0   # number of next restarts that fail
         self.fail_write = False
         self.fail_status = False
+        self.run = ""  # D2BOT_RUN inside the container
         self.log = []
+
+    def measured_run(self):
+        return self.run
 
     def read_tuning(self):
         return self.tuning
@@ -103,7 +107,7 @@ class FlipTest(unittest.TestCase):
         return F.Ledger(self.lp).row("town.plan")
 
     def rows(self, status):
-        return {i["name"] for i in json.load(open(self.lp))["items"] if i["status"] == status}
+        return {i["name"] for i in F.Ledger(self.lp).items() if i["status"] == status}
 
     def flip(self, window=3600):
         return self.f.flip("sb1", {"town.plan": 2.0}, "scenario green", window)
@@ -219,6 +223,17 @@ class FlipTest(unittest.TestCase):
         with self.assertRaises(F.FlipError):
             self.f.flip("sb3", {"no.such": 1.0}, "x", 60)
 
+    def test_measured_run_in_the_container_refuses(self):
+        """The marker of the sandbox counts, not the operator's shell: nothing is written or restarted."""
+        self.sb.run = "soak-7"
+        before = self.sb.tuning
+        with self.assertRaises(F.FlipError) as e:
+            self.flip()
+        self.assertIn("soak-7", str(e.exception))
+        self.assertEqual((self.sb.tuning, self.sb.restarts, self.f.store.get("sb1")), (before, 0, None))
+        self.sb.run = ""
+        self.flip()
+
     def test_watch_once_and_loop(self):
         self.flip(window=120)
         slept = []
@@ -308,7 +323,7 @@ class FlipTest(unittest.TestCase):
         ov = overrides(self.sb.tuning)
         self.assertEqual({k: ov[k] for k in BUNDLE2}, BUNDLE2)
         self.assertEqual(self.rows("trial"), set(BUNDLE2))
-        self.assertEqual(json.load(open(self.lp))["items"][-1]["trial_bundle"], "bot.arbiterControl,bot.arbiterFamilies")
+        self.assertEqual(F.Ledger(self.lp).items()[-1]["trial_bundle"], "bot.arbiterControl,bot.arbiterFamilies")
 
     def test_seven_knob_bundle_breach_reverts_all(self):
         self.bundle(BUNDLE7)
@@ -318,7 +333,7 @@ class FlipTest(unittest.TestCase):
         self.assertEqual(self.sb.tuning, ENVELOPE)  # every knob gone with the one backup
         self.assertEqual(self.sb.log.count("write"), 2)
         self.assertEqual(self.rows("dark"), set(BUNDLE7))
-        items = {i["name"]: i for i in json.load(open(self.lp))["items"]}
+        items = {i["name"]: i for i in F.Ledger(self.lp).items()}
         for k in BUNDLE7:
             self.assertEqual(items[k]["revert_breach"], "life-zero-alive")
             self.assertEqual(items[k]["revert_bundle"], ",".join(BUNDLE7))
@@ -417,6 +432,14 @@ class TransportTest(unittest.TestCase):
         self.assertEqual(open(self.path).read(), ENVELOPE)  # untouched, and no stray temp file
         self.assertFalse(os.path.exists(self.path + ".new"))
 
+    def test_measured_run_is_read_from_the_container(self):
+        sb = F.Sandbox("c1", self.env)
+        os.environ.pop("D2BOT_RUN", None)
+        self.assertEqual(sb.measured_run(), "")
+        os.environ["D2BOT_RUN"] = "gate-3"  # the fake docker runs the command here, so this is the container's env
+        self.addCleanup(os.environ.pop, "D2BOT_RUN", None)
+        self.assertEqual(sb.measured_run(), "gate-3")
+
     def test_oversize_refused(self):
         sb = F.Sandbox("c1", self.env)
         with self.assertRaises(F.FlipError):
@@ -466,87 +489,95 @@ class _Hardening:  # methods are attached to FlipTest below (same fixtures, no r
         self.assertIn("Restart=always", u)
         self.assertIn("watch --daemon --interval 30", u)
 
-    def test_commit_ledger_branch(self):
-        import subprocess
-        repo = os.path.join(self.d.name, "d2lod")
-        os.makedirs(os.path.join(repo, "data"))
-        g = lambda *a: subprocess.run(["git", "-c", "user.name=t", "-c", "user.email=t@t", *a], cwd=repo, check=True, capture_output=True)
-        g("init", "-q")
-        rows = json.load(open(self.lp))
-        json.dump(rows, open(os.path.join(repo, "data", "darklaunch.json"), "w"))
-        g("add", "."); g("commit", "-q", "-m", "x")
-        self.flip()  # live ledger (self.lp) now says trial
-        branch, wt, line = F.commit_ledger(self.lp, {"town.plan": 2.0}, root=repo, today="20261127")
-        self.assertEqual(branch, "agent/ledger-town-plan-20261127")
-        self.assertIn("mergeq.sh add " + branch, line)
-        row = F.Ledger(os.path.join(wt, "data", "darklaunch.json")).row("town.plan")
-        self.assertEqual(row["status"], "trial")
-        out = subprocess.run(["git", "log", "-1", "--format=%s"], cwd=wt, capture_output=True, text=True).stdout
-        self.assertIn("darklaunch ledger", out)
-        self.assertEqual(subprocess.run(["git", "status", "--porcelain"], cwd=wt, capture_output=True, text=True).stdout, "")
+    def split_ledger(self):
+        """The same rows as one design file per knob (the form in git since led1); returns (dir, state path)."""
+        d = os.path.join(self.d.name, "darklaunch")
+        for it in json.load(open(self.lp))["items"]:
+            F.L.write_row(d, F.L.split_row(it)[0])
+        state = os.path.join(self.d.name, "cache", "ledger", "ledger-state.json")
+        self.f.ledger = F.Ledger(d, state)
+        return d, state
 
-    def _scratch_repo(self):
-        import subprocess
-        repo = os.path.join(self.d.name, "d2lod")
-        os.makedirs(os.path.join(repo, "data"))
-        g = lambda *a: subprocess.run(["git", "-c", "user.name=t", "-c", "user.email=t@t", *a], cwd=repo, check=True, capture_output=True)
-        g("init", "-q")
-        json.dump(json.load(open(self.lp)), open(os.path.join(repo, "data", "darklaunch.json"), "w"))
-        g("add", "."); g("commit", "-q", "-m", "x")
-        return repo
+    def tree(self, d):
+        return {fn: open(os.path.join(d, fn), "rb").read() for fn in sorted(os.listdir(d))}
 
-    def _watcher_with_hook(self, repo, calls):
-        def hook(event, knobs):
-            b, wt, line = F.commit_ledger(self.lp, knobs, root=repo, today="20261127", event=event)
-            calls.append((event, b, wt))
-            return line
-        self.f.on_ledger = hook
-
-    def test_watcher_commits_ledger_on_close_and_revert(self):
-        import subprocess
-        repo = self._scratch_repo()
-        calls = []
-        self._watcher_with_hook(repo, calls)
+    def test_flip_close_revert_write_only_the_state_file(self):
+        d, state = self.split_ledger()
+        before = self.tree(d)
         self.flip(600)
+        self.assertEqual(self.f.ledger.row("town.plan")["status"], "trial")
+        self.assertEqual(json.load(open(state))["rows"]["town.plan"]["state"], "trial")
         self.clock.t += timedelta(seconds=700)
         self.assertEqual(self.f.watch(5, once=True), ["closed"])
-        self.assertEqual([c[0] for c in calls], ["close"])
-        wt = calls[0][2]
-        self.assertEqual(F.Ledger(os.path.join(wt, "data", "darklaunch.json")).row("town.plan")["status"], "enabled")
-        self.assertTrue(any("mergeq.sh add agent/ledger-town-plan-20261127" in o for o in self.out))
-        self.assertEqual(subprocess.run(["git", "status", "--porcelain"], cwd=wt, capture_output=True, text=True).stdout, "")
-        # revert: a second knob on a fresh branch name
-        calls.clear()
-        self.f.on_ledger = lambda event, knobs: F.commit_ledger(self.lp, knobs, root=repo, today="20261128", event=event)[2]
+        self.assertEqual(self.f.ledger.row("town.plan")["status"], "enabled")
         self.f.reflip = True
         self.flip(3600)
-        w = self.f.store.get("sb1")
-        self.f.revert(w, "test breach")
-        wt2 = os.path.join(self.d.name, "d2lod-wt", "ledger-town-plan-20261128")
-        self.assertEqual(F.Ledger(os.path.join(wt2, "data", "darklaunch.json")).row("town.plan")["status"], "dark")
-        msg = subprocess.run(["git", "log", "-1", "--format=%s"], cwd=wt2, capture_output=True, text=True).stdout
-        self.assertIn("after revert", msg)
+        self.f.revert(self.f.store.get("sb1"), "test breach")
+        row = self.f.ledger.row("town.plan")
+        self.assertEqual((row["status"], row["revert_reason"]), ("dark", "test breach"))
+        self.assertEqual(self.tree(d), before)  # the checkout is never written
+        self.assertEqual(sorted(os.listdir(os.path.dirname(state))), ["ledger-state.json", "ledger-state.json.lock"])
+        log = json.load(open(state))["log"]
+        self.assertEqual([e["state"] for e in log if e["name"] == "town.plan"], ["trial", "enabled", "trial", "dark"])
 
-    def test_two_ledger_commits_same_day_get_distinct_branches(self):
-        repo = self._scratch_repo()
-        real = F.now_utc
-        try:
-            F.now_utc = lambda: datetime(2026, 11, 27, 10, 0, 0, tzinfo=timezone.utc)
-            b1 = F.commit_ledger(self.lp, {"town.plan": 2.0}, root=repo, event="close")[0]
-            F.now_utc = lambda: datetime(2026, 11, 27, 11, 30, 5, tzinfo=timezone.utc)
-            b2 = F.commit_ledger(self.lp, {"town.plan": 2.0}, root=repo, event="revert")[0]
-        finally:
-            F.now_utc = real
-        self.assertEqual((b1, b2), ("agent/ledger-town-plan-20261127-100000", "agent/ledger-town-plan-20261127-113005"))
+    def test_state_file_is_not_listed_as_a_window(self):
+        d, _ = self.split_ledger()
+        self.f.ledger = F.Ledger(d, os.path.join(self.f.store.d, "ledger", "ledger-state.json"))
+        self.flip(600)
+        self.assertEqual(self.f.store.all(), ["sb1"])
+        self.assertEqual(self.f.watch(5, once=True), ["open"])
 
-    def test_ledger_commit_failure_is_logged_not_raised(self):
-        def boom(event, knobs):
-            raise F.FlipError("no git")
-        self.f.on_ledger = boom
+    def test_close_prints_the_design_commit_line(self):
+        self.split_ledger()
         self.flip(10)
         self.clock.t += timedelta(seconds=20)
         self.f.watch(5, once=True)
-        self.assertTrue(any("LEDGER COMMIT FAILED after close" in o for o in self.out))
+        line = next(o for o in self.out if o.startswith("LEDGER git:"))
+        self.assertIn("tools/darklaunch/ledger.py status enabled town.plan", line)
+        self.assertIn("git add data/darklaunch/town.plan.json", line)
+
+    def test_revert_of_a_dark_row_needs_no_commit_and_of_an_enabled_row_prints_dark(self):
+        d, _ = self.split_ledger()
+        self.flip(3600)
+        self.f.revert(self.f.store.get("sb1"), "breach")
+        self.assertTrue(any(o == "LEDGER git: nothing to commit (rows already dark)" for o in self.out))
+        F.L.set_status(d, "enabled", ["town.plan"])  # the coordinator committed the close; a re-flip then reverts
+        self.out.clear()
+        self.f.reflip = True
+        self.flip(3600)
+        self.f.revert(self.f.store.get("sb1"), "breach")
+        self.assertTrue(any("ledger.py status dark town.plan" in o for o in self.out))
+        self.assertEqual(self.f.ledger.row("town.plan")["status"], "dark")  # the runtime state wins over the lagging word
+
+    def test_design_hint_failure_is_logged_not_raised(self):
+        self.split_ledger()
+        self.flip(10)
+        self.clock.t += timedelta(seconds=20)
+
+        def boom(name):
+            raise OSError("checkout gone")
+        self.f.ledger.design_status = boom
+        self.assertEqual(self.f.watch(5, once=True), ["closed"])
+        self.assertTrue(any("design rows unreadable" in o for o in self.out))
+        self.assertEqual(self.f.ledger.row("town.plan")["status"], "enabled")
+
+    def test_unknown_knob_and_retired_row_are_refused(self):
+        d, _ = self.split_ledger()
+        with self.assertRaises(F.FlipError):
+            self.f.flip("sb1", {"no.such": 1.0}, "x", 60)
+        self.f.ledger.update("no.such", status="trial")  # state without a design row is never shown
+        self.assertNotIn("no.such", [i["name"] for i in self.f.ledger.items()])
+        F.L.set_status(d, "retired", ["town.plan"])
+        with self.assertRaises(F.FlipError):
+            self.flip()
+        self.f.ledger.update("town.plan", status="trial")  # a stale runtime state never revives a retired row
+        self.assertEqual(self.f.ledger.row("town.plan")["status"], "retired")
+
+    def test_old_one_file_ledger_still_loads_and_is_not_written(self):
+        before = open(self.lp, "rb").read()
+        self.flip(10)
+        self.assertEqual(self.row()["status"], "trial")
+        self.assertEqual(open(self.lp, "rb").read(), before)
 
     def test_load_env_reads_local_env_of_its_checkout_from_any_cwd(self):
         import shutil
@@ -570,7 +601,7 @@ class _Hardening:  # methods are attached to FlipTest below (same fixtures, no r
 
 
 for _n, _f in vars(_Hardening).items():
-    if _n.startswith(("test_", "_scratch", "_watcher")):
+    if _n.startswith(("test_", "split_ledger", "tree")):
         setattr(FlipTest, _n, _f)
 
 
