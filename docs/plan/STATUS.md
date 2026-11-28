@@ -59,6 +59,7 @@
 | durieltyrael | proposed | - | `internal/questboard/`<br>`internal/task/`<br>`internal/bot/stepexec.go`<br>`internal/bot/stepexec_act2chunks_test.go` | - |
 | drilldrivers | proposed | - | `internal/combat/`<br>`tools/provingground/scenarios/combatdrills.json`<br>`tools/provingground/scenarios/necro.json`<br>`tools/provingground/golden/setup-played.tsv` | - |
 | fix14 | proposed | - | `internal/admit/`<br>`internal/quest/objective.go`<br>`internal/bot/`<br>`internal/combat/`<br>`internal/vaultkeep/`<br>`internal/arbiter/`<br>`internal/town/` | - |
+| morning | in-progress | - | `docs/probes/morning-briefing-2026-11-28.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
 | ghcrpublish | in-progress | - | `.github/workflows/tester-image.yml`<br>`docs/registry-publish.md`<br>`deploy/d2d-container/compose.friends.yml`<br>`docs/tester-registry.md`<br>`deploy/d2d-container/compose.tester.yml`<br>`deploy/d2d-container/context.sh`<br>`deploy/d2d-container/tester_image_test.go` | - |
@@ -201,6 +202,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- ba5ccdbde 11-28 06:48 `Merge agent/morning: morning briefing 2026-11-28 (docs)` (morning)
+- f84dc9cc4 11-28 06:47 `Merge branch 'main' into morning` (-)
 - b41ae5eb9 11-28 06:44 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
 - 8da0064ff 11-28 06:43 `Merge branch 'main' into nightlog` (-)
 - ab0b8fd6f 11-28 06:42 `Merge agent/ledenable: ledger: boardSM, refusalPark, resumeAfterDeaths enabled (clean windows)` (ledenable)
@@ -209,6 +212,4 @@
 - d33d5bed4 11-28 06:08 `Merge agent/road5: road5: literal-count ratchet, gatemark, questspec pending coverage (TASK-1133)` (road5)
 - 9bdb99688 11-28 06:08 `Merge agent/drv2: drv2: combat hold driver log, drill classification (TASK-1127)` (drv2)
 - 9ebe774bf 11-28 06:08 `Merge agent/dur2: dur2: Tyrael door finding (fork), npc_out_of_reach, board retry count (TASK-1126/1120)` (dur2)
-- 951385660 11-28 06:05 `Merge branch 'main' into road5` (-)
-- 43b3a8756 11-28 06:05 `Merge branch 'main' into drv2` (-)
 <!-- statusgen:end -->

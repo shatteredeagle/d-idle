@@ -1218,6 +1218,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [live-queue-2026-11-27.md](probes/live-queue-2026-11-27.md): Live queue, 2026-11-27: cards waiting only on a live run (status: current (docs only; made by card cardfix2 on current main, no game, no lab run). Supersedes the unmerged...)
 - [merc-revive-live-checklist.md](probes/merc-revive-live-checklist.md): Merc revive and hire: what is wired, what is not, live checklist (card mercgold) (status: current 2026-11-27. Tags: V verified (how), S secondary, U unverified. Source:...)
 - [mercbr-2026-11-21.md](probes/mercbr-2026-11-21.md): mercbr: Blood Raven hand-in at Kashya and the free Act 1 merc (2026-11-21) (status: current. Tags: V verified (run named), S secondary, U unverified. Setups are CHEATED (quest word, level,...)
+- [morning-briefing-2026-11-28.md](probes/morning-briefing-2026-11-28.md): Morning briefing, 2026-11-28 (status: current at 06:50 EST (card morning, TASK-1138). Docs only: nothing was run against a game or a sandbox....)
 - [navsoak-compare.md](probes/navsoak-compare.md): navsoak vs navsoak2: paired soak comparison (2026-10-31) (status: analysis of two hidden d2d soaks, read-only. Handoffs: branches agent/navsoak, agent/navsoak2...)
 
 `probes/navsoak/`
