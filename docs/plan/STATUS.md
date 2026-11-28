@@ -42,6 +42,7 @@
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | cellar3gate | in-progress | - | `internal/nav/exit.go`<br>`internal/nav/cellar3gate_test.go`<br>`internal/questboard/`<br>`docs/probes/cellar3-gate-capture.md` | - |
+| townapply | proposed | - | `internal/supply`<br>`internal/town/planshadow.go` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
@@ -185,6 +186,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 90dde084a 11-27 21:28 `Merge agent/townapply: townapply: SME town profile rows, beltSlots and tierFloor loader fields (TASK-1087)` (townapply)
+- 0f92b2853 11-27 21:27 `Merge branch 'main' into townapply` (-)
 - db2f6c04f 11-27 21:17 `Merge agent/smetown: smetown: SME advice on town supply profiles (TASK-765)` (smetown)
 - 912f71256 11-27 21:16 `Merge branch 'main' into smetown` (-)
 - e3ad47351 11-27 21:12 `Merge agent/cardclose4: cardclose4: card status sync after the afternoon merges` (cardclose4)
@@ -193,6 +196,4 @@
 - 1db8a65e9 11-27 19:59 `Merge agent/questautovis: questautovis: auto/waitingFor visible in ops, api and Return screen (TASK-1085)` (questautovis)
 - 715757050 11-27 19:58 `Merge branch 'main' into questautovis` (-)
 - 1542a59b7 11-27 19:53 `Merge agent/cellar3gate: cellar3gate: leave the pocket through a click the mouth gate allows, coded no_path park (TASK-1084)` (cellar3gate)
-- 63564ad8a 11-27 19:52 `Merge branch 'main' into cellar3gate` (-)
-- a115a3215 11-27 19:28 `Merge agent/chunkstart: chunkstart: why Questy chunks do not start (docs)` (chunkstart)
 <!-- statusgen:end -->

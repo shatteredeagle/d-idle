@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- townapply: SME town profile rows, beltSlots and tierFloor loader fields (TASK-1087) <!--sg:agent/townapply-->
 - smetown: SME advice on town supply profiles (TASK-765) <!--sg:agent/smetown-->
 - cardclose4: card status sync after the afternoon merges <!--sg:agent/cardclose4-->
 - devupdatefix: dev-update.sh local mode, per-run stage dir, host line (TASK-1086) <!--sg:agent/devupdatefix-->
