@@ -188,6 +188,78 @@ func packWorld(t *testing.T, class d2.Class, build string, mode, n int) (*harnes
 	return h, w
 }
 
+// enabledPackWorld is packWorld with the profile's insidePack row switched on (the shipped rows are off until their
+// live drill passes).
+func enabledPackWorld(t *testing.T, class d2.Class, build string, mode, n int) (*harness, *nworld) {
+	h, w := packWorld(t, class, build, mode, n)
+	if s := h.f.profileFor(w.snap.Player).Stance; s != nil && !s.Enabled {
+		s.Enabled = true
+		t.Cleanup(func() { s.Enabled = false })
+	}
+	return h, w
+}
+
+// Card fix3: the shipped insidePack rows carry no enable, so combat.deliveryUpkeep 2 (upkeep, press, move) does not
+// switch the stance on with it: the row logs like the shadow and nothing walks.
+func TestStanceInsidePackRowsAreOffByDefault(t *testing.T) {
+	for _, b := range []struct {
+		class d2.Class
+		build string
+	}{{d2.Paladin, "hammerdin"}, {d2.Paladin, "hammerdin_zeal"}, {d2.Necromancer, "poisonnova"}} {
+		h, w := packWorld(t, b.class, b.build, 2, 4)
+		s := h.f.profileFor(w.snap.Player).Stance
+		if s == nil || s.Kind != StanceInsidePack || s.Enabled {
+			t.Fatalf("%s: stance row %+v, want insidePack and not enabled", b.build, s)
+		}
+		acted, err := h.f.stanceTick(context.Background(), w.snap, castJustNow(h))
+		if err != nil || acted || len(w.walkedTo) > 0 || h.f.StanceShadowSteps() != 1 {
+			t.Fatalf("%s: acted %v walked %v shadow %d err %v", b.build, acted, w.walkedTo, h.f.StanceShadowSteps(), err)
+		}
+	}
+}
+
+// Card fix3 (review 3 finding 1): a hurt hero facing a ranged pack with nothing in contact does not walk in, leaves
+// while the pack is near, and holds once clear (no leave, walk back, leave).
+func TestStanceInsidePackLowLife(t *testing.T) {
+	for _, b := range []struct {
+		class d2.Class
+		build string
+	}{{d2.Paladin, "hammerdin"}, {d2.Necromancer, "poisonnova"}} {
+		h, w := enabledPackWorld(t, b.class, b.build, 2, 0)
+		for i := 0; i < 4; i++ {
+			w.snap.Monsters = append(w.snap.Monsters, mon(uint32(300+i), 1, 110, 98+i))
+		}
+		w.snap.Player.MaxLife, w.snap.Player.Life = 400, 80
+		if act, to, why := h.f.stancePlan(w.snap); act != "" {
+			t.Fatalf("%s at 20 percent life, pack 10 away: %s to %v (%s)", b.build, act, to, why)
+		}
+		w.snap.Player.X = 105 // the pack is 5 away, none within 3
+		act, to, _ := h.f.stancePlan(w.snap)
+		if act != "leave" || to.X >= 105 {
+			t.Fatalf("%s at 20 percent life, pack 5 away: %q to %v", b.build, act, to)
+		}
+		w.snap.Player.Life = 400
+		if act, _, _ := h.f.stancePlan(w.snap); act == "leave" {
+			t.Fatalf("%s at full life left a pack 5 away", b.build)
+		}
+	}
+}
+
+// Card fix3: a pinned hero (pinHold) is not stepped by the stance.
+func TestStanceHonoursPinHold(t *testing.T) {
+	ctx := context.Background()
+	h, w := enabledPackWorld(t, d2.Paladin, "hammerdin", 2, 4)
+	h.f.noEvadeUntil = h.f.now().Add(pinHold)
+	if acted, _ := h.f.stanceTick(ctx, w.snap, castJustNow(h)); acted || len(w.walkedTo) > 0 {
+		t.Fatalf("pack stance stepped a pinned hero to %v", w.walkedTo)
+	}
+	hs, ws := summonerWorld(t, 2, 3)
+	hs.f.noEvadeUntil = hs.f.now().Add(pinHold)
+	if acted, _ := hs.f.stanceTick(ctx, ws.snap, castJustNow(hs)); acted || len(ws.walkedTo) > 0 {
+		t.Fatalf("army stance stepped a pinned hero to %v", ws.walkedTo)
+	}
+}
+
 // Scenario combat.hammer-in-pack (offline part): a Hammerdin and a Poison Nova Necromancer walk to the pack's edge at
 // 2, only log at 1, stay put at 0, hold on the spot, and back out of a surround or at low life. Hits per cast, mana and
 // the aura uptime of the scenario need the live look H1 and the survival model (R6).
@@ -199,7 +271,7 @@ func TestStanceInsidePack(t *testing.T) {
 		off   int
 	}{{d2.Paladin, "hammerdin", 2}, {d2.Necromancer, "poisonnova", 3}} {
 		for _, mode := range []int{0, 1, 2} {
-			h, w := packWorld(t, b.class, b.build, mode, 4)
+			h, w := enabledPackWorld(t, b.class, b.build, mode, 4)
 			acted, err := h.f.stanceTick(ctx, w.snap, castJustNow(h))
 			if err != nil {
 				t.Fatal(err)
@@ -217,18 +289,18 @@ func TestStanceInsidePack(t *testing.T) {
 			}
 		}
 		// in the pack's edge: cast in place
-		h, w := packWorld(t, b.class, b.build, 2, 4)
+		h, w := enabledPackWorld(t, b.class, b.build, 2, 4)
 		w.snap.Player.X = 112 - b.off
 		if act, _, why := h.f.stancePlan(w.snap); act != "" {
 			t.Fatalf("%s on its spot: %s %s", b.build, act, why)
 		}
 		// a lone hostile is no pack
-		h, w = packWorld(t, b.class, b.build, 2, 1)
+		h, w = enabledPackWorld(t, b.class, b.build, 2, 1)
 		if act, _, _ := h.f.stancePlan(w.snap); act != "" {
 			t.Fatalf("%s one hostile: %s", b.build, act)
 		}
 		// surrounded: leave, away from the pack
-		h, w = packWorld(t, b.class, b.build, 2, 0)
+		h, w = enabledPackWorld(t, b.class, b.build, 2, 0)
 		for i := 0; i < 5; i++ {
 			w.snap.Monsters = append(w.snap.Monsters, mon(uint32(400+i), 1, 101+i%2, 99+i%3))
 		}
@@ -237,7 +309,7 @@ func TestStanceInsidePack(t *testing.T) {
 			t.Fatalf("%s surrounded: %s to %v", b.build, act, to)
 		}
 		// low life with one in contact: leave; full life with one in contact: hold
-		h, w = packWorld(t, b.class, b.build, 2, 0)
+		h, w = enabledPackWorld(t, b.class, b.build, 2, 0)
 		w.snap.Monsters = append(w.snap.Monsters, mon(401, 1, 101, 100), mon(402, 1, 108, 100), mon(403, 1, 108, 101))
 		w.snap.Player.MaxLife, w.snap.Player.Life = 400, 100
 		if act, _, _ := h.f.stancePlan(w.snap); act != "leave" {
@@ -249,7 +321,7 @@ func TestStanceInsidePack(t *testing.T) {
 		}
 	}
 	// no cast lately: the step may not take the tick
-	h, w := packWorld(t, d2.Paladin, "hammerdin", 2, 4)
+	h, w := enabledPackWorld(t, d2.Paladin, "hammerdin", 2, 4)
 	if acted, _ := h.f.stanceTick(ctx, w.snap, newFightState()); acted || len(w.walkedTo) > 0 {
 		t.Fatal("pack step replaced a cast")
 	}

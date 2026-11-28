@@ -185,6 +185,12 @@ func (r *Runner) tripsRecentLocked(now time.Time) int { return len(r.tripTimesLo
 // character standing in act 2's town must not be sent to the Blood Moor), else the first step of the difficulty. ok is
 // false when that step is cleared or banned.
 func (r *Runner) starveStep(s *d2.Snapshot, diff string) (int, bool) {
+	return r.starveStepEx(s, diff, nil)
+}
+
+// starveStepEx is starveStep with areas the own-level pick must not take (the recovery no-potion rule); the first field
+// stays the floor whatever ban says.
+func (r *Runner) starveStepEx(s *d2.Snapshot, diff string, ban map[int]bool) (int, bool) {
 	act := s.Player.Act + 1
 	var first int
 	for _, st := range r.d.Plan.Steps[diff] {
@@ -202,7 +208,7 @@ func (r *Runner) starveStep(s *d2.Snapshot, diff string) (int, bool) {
 	if first == 0 || r.loop.cleared[first] || r.banned(first) {
 		return 0, false
 	}
-	if a, ok := r.homeBandArea(s, diff, first); ok {
+	if a, ok := r.homeBandArea(s, diff, first, ban); ok {
 		return a, true
 	}
 	return first, true
@@ -226,14 +232,14 @@ func (r *Runner) homeReach(s *d2.Snapshot, first int) map[int]bool {
 // homeBandArea picks the plan area of the character's own level among the areas it can leave without a portal. A clvl 14
 // hero was sent to Blood Moor (0.6 xp and 0.26 gold per kill) because the first field was the only option (sellskip,
 // docs/sellskip.md). ok is false when the band holds nothing reachable (the caller keeps the first field).
-func (r *Runner) homeBandArea(s *d2.Snapshot, diff string, first int) (int, bool) {
+func (r *Runner) homeBandArea(s *d2.Snapshot, diff string, first int, ban map[int]bool) (int, bool) {
 	if r.kitGateActive(s) {
 		return 0, false // the early kit gate keeps the walk home short: first field only
 	}
 	reach := r.homeReach(s, first)
 	ex := map[int]bool{}
 	for _, st := range r.d.Plan.Steps[diff] {
-		if !reach[st.Area] || r.loop.cleared[st.Area] || r.banned(st.Area) {
+		if !reach[st.Area] || ban[st.Area] || r.loop.cleared[st.Area] || r.banned(st.Area) {
 			ex[st.Area] = true
 		}
 	}
