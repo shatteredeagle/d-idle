@@ -127,6 +127,13 @@ docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-extras.jsonl.gz  gaterun  gate
 
 # BEGIN GENERATED OWNERS (tools/sharedgen/sharedgen.py from the owns: keys of open tasks; do not edit between the markers)
 .github/workflows/tester-image.yml  credit-runner  ghcrpublish
+backlog/tasks/task-1102 - navbarracks-no-route-from-the-Barracks-up-to-the-Outer-Cloister-when-the-hero-starts-in-the-Barracks.md  credit-runner  labtriage
+backlog/tasks/task-1103 - cainspin-cain.chain-seed-11-with-bot.portalRetryWaitSec-0-spins-on-run-finished-and-is-cut-by-the-wall.md  credit-runner  labtriage
+backlog/tasks/task-1104 - summonerstall-drill.act2.summoner.stepexec-ends-in-the-runner-watchdog-after-a-nav-stuck-loop.md  credit-runner  labtriage
+backlog/tasks/task-1105 - drillskills-combat-and-necro-drills-with-hero_profile-played-run-without-the-builds-skills-no-leveler-line-last_skill-Attack.md  credit-runner  labtriage
+backlog/tasks/task-1106 - bsmnight-board.sm.restart-mid-chain-and-stop-cascades-RED-on-both-classes-assertion-and-trigger-timing-against-the-log.md  credit-runner  labtriage
+backlog/tasks/task-1107 - act2night-three-Act-2-stepexec-drill-findings-Duriel-stall-shaft-road-without-a-portal-potion-not-drunk-in-the-cube-drill.md  credit-runner  labtriage
+backlog/tasks/task-1108 - townnight-town.plan-stage-4-and-5-REDs-of-the-lab-night-route-kept-the-list-Charsi-talk-not-credited-scroll-before-potions.md  credit-runner  labtriage
 backlog/tasks/task-726 - dlv-cast-verbs-input-caps-cast-unit-cast-point-cast-hold.md  live-agent  inputl3
 backlog/tasks/task-765 - town12-SME-review-of-the-supply-profile-numbers-advice-only.md  live-agent  town11
 cmd/d2bot/adapters.go  credit-runner  cainfix3
@@ -144,6 +151,7 @@ cmd/d2bot/live.go  credit-runner  campaign1
 cmd/d2bot/live.go  live-agent  agencyp1b
 cmd/d2bot/necroplay_test.go  live-agent  epic-class-necromancer
 cmd/d2scenario  credit-runner  pgfix
+cmd/d2scenario/  credit-runner  drillskills
 cmd/d2scenario/  live-agent  arbmig
 cmd/d2scenario/ledger.go  credit-runner  pgearned
 cmd/d2scenario/ledger.go  credit-runner  pgpage
@@ -213,6 +221,7 @@ docs/probes/classorder1.md  user  classorder1
 docs/probes/flipwave2.md  live-agent  flipwave2
 docs/probes/h1-baseline.md  user  h1baseline
 docs/probes/h3-verdict.md  user  h3verdict
+docs/probes/lab-night-results-2026-11-28.md  credit-runner  labtriage
 docs/probes/provingground-act1more-2026-11-20.md  credit-runner  pgpage
 docs/probes/provingground-act1next-2026-11-20.md  credit-runner  pgpage
 docs/probes/provingground-cain-2026-11-19.md  credit-runner  pgpage
@@ -256,7 +265,10 @@ internal/arbiter  live-agent  town10
 internal/arbiter/  live-agent  arbmig
 internal/arbiter/replay.go  live-agent  ticklog
 internal/arbiter/replay_ticklog_test.go  live-agent  ticklog
+internal/bot/  credit-runner  act2night
 internal/bot/  credit-runner  cainfix3
+internal/bot/  credit-runner  cainspin
+internal/bot/  credit-runner  summonerstall
 internal/bot/arbiter_control.go  live-agent  arbmig
 internal/bot/arbiter_control_test.go  live-agent  arbmig
 internal/bot/arbloop_test.go  live-agent  arbloop
@@ -307,6 +319,7 @@ internal/d2dctl/use_verb_test.go  credit-runner  inputl4
 internal/d2dctl/use_verb_test.go  live-agent  inputl3
 internal/d2dinput/repairverbs.go  credit-runner  inputl4
 internal/d2dinput/useitem.go  live-agent  inputl3
+internal/d2dworld/  credit-runner  navbarracks
 internal/data/  credit-runner  dlv-upkeep-state
 internal/decide/build_test.go  live-agent  epic-class-necromancer
 internal/decide/catalogue.json  live-agent  epic-class-necromancer
@@ -337,6 +350,8 @@ internal/invdesk/mercverbs.go  credit-runner  uib9
 internal/invdesk/mercverbs_test.go  credit-runner  uib9
 internal/invdesk/sets.go  credit-runner  uib9
 internal/levelplan/necro_test.go  live-agent  epic-class-necromancer
+internal/nav/  credit-runner  navbarracks
+internal/nav/  credit-runner  summonerstall
 internal/nav/  live-agent  dlv-move-tele
 internal/nav/cellar3gate_test.go  live-agent  cellar3gate
 internal/nav/exit.go  live-agent  cellar3gate
@@ -346,10 +361,12 @@ internal/plandata/build-necromancer_summoner_endgame90.json  live-agent  epic-cl
 internal/plandata/levelplan-normal.json  live-agent  epic-class-necromancer
 internal/power/  credit-runner  dlv-cleanup
 internal/questboard  live-agent  bsmdef
+internal/questboard/  credit-runner  bsmnight
 internal/questboard/  live-agent  cellar3gate
 internal/questboard/def.go  credit-runner  cainfix3
 internal/resource  live-agent  town5
 internal/scenario  credit-runner  pgfix
+internal/scenario/  credit-runner  drillskills
 internal/scenario/earned.go  credit-runner  pgearned
 internal/scenario/earned_test.go  credit-runner  pgearned
 internal/scenario/ledger.go  credit-runner  pgearned
@@ -362,6 +379,7 @@ internal/scenario/scenario.go  credit-runner  pgearned
 internal/scenario/setup.go  credit-runner  pgearned
 internal/scenario/taps.go  live-agent  pgtaps
 internal/supply  live-agent  town10
+internal/supply/  credit-runner  townnight
 internal/task  live-agent  bsmdef
 internal/task/banote_test.go  credit-runner  cainfix3
 internal/task/campaign.go  credit-runner  campaign1
@@ -371,6 +389,7 @@ internal/task/guided_test.go  credit-runner  campaign1
 internal/task/world.go  credit-runner  cainfix3
 internal/town  live-agent  town11
 internal/town  live-agent  town5
+internal/town/  credit-runner  townnight
 internal/town/chores.go  credit-runner  inputl4
 internal/town/chores.go  live-agent  townflip
 internal/town/portalverb.go  live-agent  inputl3
@@ -447,12 +466,19 @@ tools/provingground/pgenv.sh  credit-runner  pgledgeron
 tools/provingground/pgenv_test.sh  credit-runner  pgledgeron
 tools/provingground/run.sh  credit-runner  pgledgeron
 tools/provingground/scenarios  credit-runner  pgfix
+tools/provingground/scenarios/board.json  credit-runner  bsmnight
 tools/provingground/scenarios/board.json  live-agent  bsmdef
 tools/provingground/scenarios/cain.json  credit-runner  cainfix3
 tools/provingground/scenarios/cain.json  credit-runner  pgearned
+tools/provingground/scenarios/combatdrills.json  credit-runner  drillskills
+tools/provingground/scenarios/combatdrills.json  credit-runner  labtriage
 tools/provingground/scenarios/necro-acts.json  live-agent  epic-class-necromancer
 tools/provingground/scenarios/necro-epic.json  live-agent  epic-class-necromancer
+tools/provingground/scenarios/necro.json  credit-runner  drillskills
+tools/provingground/scenarios/stepexec-act2chunks.json  credit-runner  act2night
 tools/provingground/scenarios/tiers.json  live-agent  epic-class-necromancer
+tools/provingground/scenarios/townplan.json  credit-runner  labtriage
+tools/provingground/scenarios/townplan.json  credit-runner  townnight
 tools/provingground/scenarios/townplan.json  live-agent  town5
 tools/provingground/status_doc.sh  credit-runner  pgpage
 tools/tester-pack.sh  credit-runner  testerpack
