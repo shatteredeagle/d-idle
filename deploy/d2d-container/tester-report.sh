@@ -211,11 +211,13 @@ Feedback bundle $stamp (made by tester-report.sh, nothing was sent anywhere).
 What this is: the last $tail_n lines of the bot and d2d logs, the once-a-minute lines, deaths, the ladder journal, your wizard
 answers (name, class, goals) and the game's own state line.
 Replaced by a filter of shapes: values labelled token, secret, password, passcode, passphrase, key, auth, cookie, user
-or hostname; Bearer tokens; key-shaped text (16 or more letters and digits mixed, dashed game keys); e-mail addresses;
+or hostname (a passcode or password also when it is several words); Bearer tokens; key-shaped text (16 or more
+letters and digits mixed, game keys with dashes or spaces); control characters; e-mail addresses;
 home folders (/home, /Users, C:\\Users); paths under /mnt, /media and /root; IPv4 (except 127.x), IPv6 and MAC
 addresses; host names in links and names ending in .lan or .local.
 NOT replaced: your hero's name (it is in every line on purpose), a bare computer or person name the filter cannot
-know, other Windows folders, a short code with no label. A filter of shapes can miss things.
+know, other Windows folders, a short code with no label. A filter of shapes can miss things. A second check looked
+at every file for a few known shapes; had it found one, this bundle would not exist.
 Not copied at all: the watch token file, the passcode file, save files and keys.
 Please open the files and read them before you send anything. If you see something private that was missed, delete that
 line and tell us which kind it was.
