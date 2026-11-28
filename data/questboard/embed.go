@@ -42,3 +42,8 @@ var Act5 []byte
 //
 //go:embed resume.json
 var Resume []byte
+
+// Refusal is refusal.json (quests.refusal/1: how many identical coded refusals park a chunk).
+//
+//go:embed refusal.json
+var Refusal []byte

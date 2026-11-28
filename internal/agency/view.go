@@ -18,7 +18,7 @@ type View struct {
 	Aura        *ViewSkill  `json:"aura,omitempty"`
 	Archetype   string      `json:"archetype,omitempty"`
 	Profile     string      `json:"profile,omitempty"` // what the combat profile would attack with today
-	Agrees      *bool       `json:"agrees,omitempty"`  // the plan's attack equals the profile's
+	Agrees      *bool       `json:"agrees,omitempty"`  // the plan's attack and aura equal the profile's
 	Unplayed    []string    `json:"unplayed,omitempty"`
 	Warnings    []ViewWarn  `json:"warnings"`
 	Viability   *Viability  `json:"viability,omitempty"`
@@ -81,6 +81,9 @@ func ViewOf(pl Plan, profile string, v *Viability) View {
 	out.Unsupported = out.Unplayed
 	if profile != "" && pl.Attack != nil {
 		b := profile == pl.Attack.Skill
+		if pl.Aura != nil && pl.PriorAura != "" { // a differing aura pick is a disagreement too (auraflap)
+			b = b && pl.Aura.Skill == pl.PriorAura
+		}
 		out.Agrees = &b
 	}
 	out.Line = lineOf(out)

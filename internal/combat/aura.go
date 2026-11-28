@@ -114,11 +114,11 @@ func (f *Fighter) wantAura(p *d2.Player, pr *Profile, tg *Target, resting bool) 
 			continue
 		}
 		if a.NeedsCrowd {
-			need := f.tune().HolyFireMinMonsters
-			if f.auraActive(p, sp.ID) {
-				need-- // already on: leave it only when the pack is clearly gone, so the aura does not flip each tick
-			}
-			if tg == nil || f.auraCrowd < max(need, 1) { // no fight: no pack
+			// Already on: keep it through the fight and for auraHold after it. The pack count moves with every kill and
+			// every walker-in, and the check between two fights has no target; leaving at those points flipped Holy
+			// Fire and Might every few seconds (V live, auraflap: 95 and 97 presses in 70 minutes).
+			held := !resting && f.auraActive(p, sp.ID) && (tg != nil || f.now().Sub(f.auraFightAt) < auraHold)
+			if !held && (tg == nil || f.auraCrowd < max(f.tune().HolyFireMinMonsters, 1)) { // no fight: no pack
 				continue
 			}
 		}
@@ -175,6 +175,9 @@ func (f *Fighter) keepAura(ctx context.Context, snap *d2.Snapshot, tg *Target, f
 		return false, nil
 	}
 	f.auraChecked = now
+	if tg != nil {
+		f.auraFightAt = now
+	}
 	f.auraPotions, f.auraPotKnown = 0, snap.Inventory != nil // unknown potions never count as low
 	if f.auraPotKnown {
 		b := BeltOf(snap.Inventory, f.cat)
@@ -232,6 +235,9 @@ func (f *Fighter) keepAura(ctx context.Context, snap *d2.Snapshot, tg *Target, f
 // auraRetryBackoff is how long a failed aura apply waits before the next try (V live, palready: without it the
 // dirty flag made every combat tick press the key again, 140 lines in 22 minutes).
 const auraRetryBackoff = 10 * time.Second
+
+// auraHold is how long after the last fight tick a crowd aura (Holy Fire) stays chosen when no target is in view.
+const auraHold = 30 * time.Second
 
 // fightAuraHysteresis is how far above AuraPref.FightLifePct life must climb before the fight aura is given up.
 const fightAuraHysteresis = 15

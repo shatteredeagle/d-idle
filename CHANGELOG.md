@@ -8,6 +8,9 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- auraflap: hold a crowd aura through the fight, shadow agree includes aura (TASK-1082) <!--sg:agent/auraflap-->
+- postdeploy: sandbox post-deploy audit (docs) <!--sg:agent/postdeploy-->
+- refusalpark: quests.refusalPark dark knob, refused_repeatedly park (TASK-1081) <!--sg:agent/refusalpark-->
 - recoverydeath: no-potion recovery farm picks the safest area below clvl 8 (TASK-1080) <!--sg:agent/recoverydeath-->
 - zonepace: lock lapses by time, zones far below the hero dropped (under bot.zoneModel) (TASK-1078) <!--sg:agent/zonepace-->
 - relaunches: relaunch reason log line + minute-line counters, refusal-storm top list (TASK-1079) <!--sg:agent/relaunches-->

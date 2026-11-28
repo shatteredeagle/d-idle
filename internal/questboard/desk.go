@@ -662,7 +662,7 @@ func (d *Desk) needs(v View) []NeedRow {
 			}
 		}
 		text, sub := fmt.Sprintf("%s is stuck: %s", b.QuestTitle, why), ""
-		if b.Reason != nil && b.Reason.Code == "paused_after_deaths" {
+		if b.Reason != nil && (b.Reason.Code == "paused_after_deaths" || b.Reason.Code == "refused_repeatedly") {
 			text, sub = b.Reason.Text, b.Reason.Clears
 		}
 		out = append(out, NeedRow{ID: "quest:blocked:" + b.Quest + "/" + b.Chunk, Kind: "quest_blocked", Sev: "warn",
