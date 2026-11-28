@@ -96,7 +96,7 @@ def make_plan(items, cfg, make_sandbox):
 def command(b):
     kv = " ".join(f"{k}={v:g}" for k, v in b["knobs"].items())
     why = f"autoflip {b['group']} bundle"
-    return f"python3 tools/flip/flip.py {b['instance']} {kv} --why '{why}' --window {b['window']} --commit-ledger"
+    return f"python3 tools/flip/flip.py {b['instance']} {kv} --why '{why}' --window {b['window']}"
 
 
 def runnable(bundles, store):
@@ -185,7 +185,7 @@ def cmd_graduate(items, root, out=print):
         out("- old-path sites (grep of the knob name, review each):")
         for l in sites[:20] or ["(none found: look for an accessor of the knob in the file above)"]:
             out(f"    {l}")
-        out(f"- ledger edit: data/darklaunch.json row {k}: status -> default-on, note the merge commit; data/darklaunch.json keeps the row until review_by")
+        out(f"- ledger edit: data/darklaunch/{k}.json: status -> default-on (python3 -I tools/darklaunch/ledger.py status default-on {k}), note the merge commit; the file stays as history")
         out("- no automatic code edit: launch a worker with this brief")
     return 0
 
@@ -198,8 +198,8 @@ def main(argv=None):
     a = ap.parse_args(argv)
     cfg = load_config()
     env = F.load_env()
-    ledger = F.Ledger()
-    items = ledger._load()["items"]
+    ledger = F.Ledger(env=env)
+    items = ledger.items()
     store = F.Store(env.get("D2_FLIP_STATE") or os.path.expanduser("~/.cache/d2flip"))
     mk = lambda inst: F.Sandbox(inst, env)  # noqa: E731
     try:

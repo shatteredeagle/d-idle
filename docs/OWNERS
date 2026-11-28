@@ -156,9 +156,12 @@ cmd/d2scenario/tap.go  live-agent  pgtaps
 cmd/d2scenario/tap_test.go  live-agent  pgtaps
 cmd/d2scenario/validate.go  credit-runner  pgearned
 data/capabilities/  live-agent  dlv-stance-pack
+data/darklaunch-cap.json  credit-runner  led1
 data/darklaunch.json  credit-runner  dlv-upkeep-state
+data/darklaunch.json  credit-runner  led1
 data/darklaunch.json  live-agent  arbmig
 data/darklaunch.json  live-agent  ticklog
+data/darklaunch/  credit-runner  led1
 data/input/caps/  live-agent  inputl3
 data/input/caps_test.go  live-agent  inputl3
 data/questboard/act1.json  credit-runner  cainfix3
@@ -230,6 +233,8 @@ docs/probes/ready-audit.md  live-agent  ready-audit
 docs/probes/test-characters.md  live-agent  fid-fixtures
 docs/probes/town-plan-stage3-2026-11-22.md  live-agent  town5
 docs/probes/tpreserve.md  live-agent  tpreserve-live
+docs/process/autoflip.md  credit-runner  led1
+docs/process/dark-launch.md  credit-runner  led1
 docs/process/pg-ledger-ops.md  credit-runner  pgledgeron
 docs/process/pg-ops-mgonejob.md  credit-runner  mgonejob
 docs/process/proving-ground-status.md  credit-runner  pgpage
@@ -453,6 +458,7 @@ tools/ci/check.sh  credit-runner  inputl5
 tools/ci/pointercount-baseline.json  credit-runner  inputl5
 tools/ci/pointercount.py  credit-runner  inputl5
 tools/ci/test_pointercount.py  credit-runner  inputl5
+tools/darklaunch/  credit-runner  led1
 tools/emu/mb_act2.py  credit-runner  decomp43
 tools/emu/mb_block.py  credit-runner  decomp43
 tools/emu/mb_col.py  credit-runner  decomp43
@@ -462,6 +468,7 @@ tools/emu/mb_gate.py  credit-runner  decomp43
 tools/emu/mb_mut.py  credit-runner  decomp43
 tools/emu/mb_mut2.py  credit-runner  decomp43
 tools/emu/zd_*  credit-runner  zealdiff
+tools/flip/  credit-runner  led1
 tools/flip/flip.py  credit-runner  fix4
 tools/flip/test_flip.py  credit-runner  fix4
 tools/friendpack/README.txt  credit-runner  cut012
@@ -471,6 +478,7 @@ tools/friendpack/install.sh  credit-runner  cut012
 tools/friendpack/pack_test.go  credit-runner  cut012
 tools/provingground/arbiter-outcomes/  live-agent  arbmig
 tools/provingground/earned  credit-runner  pgearned
+tools/provingground/golden/setup-played.tsv  credit-runner  drillskills
 tools/provingground/pgenv.sh  credit-runner  pgledgeron
 tools/provingground/pgenv_test.sh  credit-runner  pgledgeron
 tools/provingground/run.sh  credit-runner  pgledgeron

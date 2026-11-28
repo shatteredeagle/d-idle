@@ -1,0 +1,10 @@
+{
+ "name": "resource.pointsDecisions",
+ "built_by": "agencyp0 (812d9de60)",
+ "dark_since": "2026-11-19",
+ "why_off": "Default 0 = the player decides (user decision); 1 is legacy for drills and soaks.",
+ "enable_criteria": "Owner go only (product decision, not a defect); stays 0 by design",
+ "owner": "owner",
+ "review_by": "2026-12-09",
+ "status": "by_design"
+}

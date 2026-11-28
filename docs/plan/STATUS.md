@@ -48,10 +48,11 @@
 | navbarracks | proposed | - | `internal/nav/`<br>`internal/d2dworld/` | - |
 | cainspin | proposed | - | `internal/bot/` | - |
 | summonerstall | proposed | - | `internal/bot/`<br>`internal/nav/` | - |
-| drillskills | proposed | - | `internal/scenario/`<br>`cmd/d2scenario/`<br>`tools/provingground/scenarios/combatdrills.json`<br>`tools/provingground/scenarios/necro.json` | - |
+| drillskills | proposed | - | `internal/scenario/`<br>`cmd/d2scenario/`<br>`tools/provingground/scenarios/combatdrills.json`<br>`tools/provingground/scenarios/necro.json`<br>`tools/provingground/golden/setup-played.tsv` | - |
 | bsmnight | proposed | - | `tools/provingground/scenarios/board.json`<br>`internal/questboard/` | - |
 | act2night | proposed | - | `internal/bot/`<br>`tools/provingground/scenarios/stepexec-act2chunks.json` | - |
 | townnight | proposed | - | `internal/town/`<br>`internal/supply/`<br>`tools/provingground/scenarios/townplan.json` | - |
+| led1 | in-progress | - | `data/darklaunch/`<br>`data/darklaunch.json`<br>`data/darklaunch-cap.json`<br>`tools/darklaunch/`<br>`tools/flip/`<br>`docs/process/dark-launch.md`<br>`docs/process/autoflip.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
@@ -195,14 +196,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
-- 07762b586 11-28 01:43 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
-- f8f830352 11-28 01:42 `Merge branch 'main' into nightlog` (-)
-- ab6763901 11-28 01:29 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
-- 317417875 11-28 01:28 `Merge branch 'main' into nightlog` (-)
-- 702b6cfd5 11-28 01:23 `Merge agent/nf1: nf1: nav strip behind a sealed frontier pocket (TASK-1102)` (nf1)
-- 6aa6ad5b9 11-28 01:22 `Merge branch 'main' into nf1` (-)
-- 93b181848 11-28 01:15 `Merge agent/fix8: fix8: build-table consistency check, capability facts, SelectProfile error, combat keys, traps list, mana_heavy in Normal (TASK-1097)` (fix8)
-- 275751034 11-28 01:13 `Merge branch 'main' into fix8` (-)
-- 028b8a1bc 11-28 01:11 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
-- d89ce280c 11-28 01:11 `Merge agent/rv4: review 13: sandbox live log review (docs)` (rv4)
+- 28216bd08 11-28 02:12 `Merge agent/nf1b: nf1b: pre.bind and pre.summon (TASK-1105)` (nf1b)
+- a02253d37 11-28 02:12 `Merge agent/nf2: nf2: flail hold and sweep in a cleared area let time pass (TASK-1103)` (nf2)
+- 5e6060a73 11-28 02:12 `Merge agent/nf4: nf4: board restart scenario timing, town route reinsertion (TASK-1106/1108)` (nf4)
+- 9e59401c9 11-28 02:09 `Merge branch 'main' into nf1b` (-)
+- ee787a3f2 11-28 02:09 `Merge branch 'main' into nf2` (-)
+- 413084b65 11-28 02:09 `Merge branch 'main' into nf4` (-)
+- b5055f308 11-28 02:08 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
+- bb9980751 11-28 02:01 `Merge remote-tracking branch 'origin/main' into agent/nf4` (-)
+- 41fb5b723 11-28 01:52 `Merge agent/nf3: nf3: early road kit entry rule, unreachable goal searched once (TASK-1104/1107)` (nf3)
+- 04bfc9149 11-28 01:51 `Merge branch 'main' into nf3` (-)
 <!-- statusgen:end -->

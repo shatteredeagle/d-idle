@@ -17,7 +17,10 @@ import (
 //   - reply shapes follow the client's parsers and internal/d2dsrc/testdata/dump_head_necro.json (S);
 //   - `cmd stat` and `cmd skillpt` spend a banked point and fail without one (S docs/forkcheats.md), `cmd select` puts a
 //     skill on a hand without checking that it is learned (U);
-//   - `debug points` is accepted and changes nothing (U: what the fork does with it);
+//   - `debug points` is accepted and changes nothing (the fork sets the hard points, V lab run 20261128-000130
+//     skill_levels; the model cannot map an id to a class index without the game tables);
+//   - `cmd skill` is a cast: the model counts every cast as one standing summon and `debug minions` lists them (U: no
+//     corpse, mana or one-golem rule), `debug players` puts the hero at a fixed cell;
 //   - the pack is packCols x packRows cells, an item needs packCells(code) of them (S), `debug give` answers
 //     "err no room" when they are not free.
 //
@@ -26,6 +29,9 @@ import (
 type smokeGame struct {
 	// NoHands leaves lskill and rskill out of the dump: the 2026-11-27 defect, kept as the must-fail arm.
 	NoHands bool
+	// DeafSelect answers `cmd select` ok and changes no hand; NoSummon answers `cmd skill` ok and summons nothing: the
+	// must-fail arms of pre.bind and pre.summon.
+	DeafSelect, NoSummon bool
 
 	mu       sync.Mutex
 	class    string
@@ -36,6 +42,7 @@ type smokeGame struct {
 	skillPts int
 	levels   [30]int
 	hands    [2]int // left, right
+	minions  int
 	pack     []string
 	belt     []string
 	used     int
@@ -156,7 +163,14 @@ func (g *smokeGame) handle(line string) string {
 			if num(3) != 0 {
 				hand = 0
 			}
-			g.hands[hand] = num(2)
+			if !g.DeafSelect {
+				g.hands[hand] = num(2)
+			}
+			return "ok\n"
+		case "skill":
+			if !g.NoSummon {
+				g.minions++
+			}
 			return "ok\n"
 		}
 	case f[0] == "debug" && len(f) >= 2:
@@ -199,6 +213,15 @@ func (g *smokeGame) handle(line string) string {
 		case "belt":
 			g.belt = nil
 			return "ok\n"
+		case "players":
+			return "1\tSmoke\t30.5\t20.5\t-1\t1\t0\nok\n"
+		case "minions":
+			ms := make([]map[string]any, g.minions)
+			for i := range ms {
+				ms[i] = map[string]any{"id": 10 + i, "name": "summon", "owner": 1}
+			}
+			b, _ := json.Marshal(map[string]any{"tick": 1, "hero": 1, "minions": ms})
+			return string(b) + "\nok\n"
 		case "goto":
 			return "ok 30.5 20.5\n"
 		case "points", "wp", "warp", "spawn", "quest", "difficulty":
