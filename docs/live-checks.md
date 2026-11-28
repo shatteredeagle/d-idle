@@ -135,3 +135,4 @@ Closing rule: a card closes when merged with offline acceptance proven; every op
 | TASK-1114 fix1b | #6 | Live check: direct Equip, Carry, Stow across a new game on a throwaway hero | live drill on the sandbox, fresh hero, per the card result | open |
 | TASK-1109 cls2 | #7 | live drill of the new scenarios (needs live) | live drill on the sandbox, fresh hero, per the card result | open |
 | TASK-1111 cls1 | #6 | live: run the new scenarios in the lab (needs live drill) | live drill on the sandbox, fresh hero, per the card result | open |
+| TASK-1115 fix7b | #8 | Live check on the canary with bot.arbiterControl 1: an emergency trip after declined refills goes on; writes after start 0 | live drill on the sandbox, fresh hero, per the card result | open |
