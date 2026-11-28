@@ -187,6 +187,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 24328a060 11-27 22:48 `Merge agent/fable-fr4: fable review 4 (docs)` (fable-fr4)
+- ae87511ab 11-27 22:46 `Merge branch 'main' into fable-fr4` (-)
 - 4699c6551 11-27 22:44 `Merge agent/fable-fr2: fable review 2 (docs)` (fable-fr2)
 - b4b821f56 11-27 22:44 `Merge agent/ledger-bot-diffReadyV2-items-advisor-20261128-034138: ledger: diffReadyV2 + advisor bundles on both sandboxes (re-flip)` (ledger-bot-diffReadyV2-items-advisor-20261128-034138)
 - be34b8363 11-27 22:43 `Merge branch 'main' into fable-fr2` (-)
@@ -195,6 +197,4 @@
 - f53f63a4c 11-27 22:41 `Merge agent/fable-fr1: fable review 1: item flows (docs)` (fable-fr1)
 - 270609cdb 11-27 22:40 `Merge branch 'main' into fable-fr5` (-)
 - b7f728c74 11-27 22:40 `Merge branch 'main' into fable-fr1` (-)
-- d64efd5c7 11-27 22:36 `Merge agent/fable-fr3: fable review 3: combat, nav, survival (docs)` (fable-fr3)
-- 4b0cdccb4 11-27 22:35 `Merge branch 'main' into fable-fr3` (-)
 <!-- statusgen:end -->
