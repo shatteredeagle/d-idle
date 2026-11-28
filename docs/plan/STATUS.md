@@ -188,6 +188,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- d64efd5c7 11-27 22:36 `Merge agent/fable-fr3: fable review 3: combat, nav, survival (docs)` (fable-fr3)
+- 4b0cdccb4 11-27 22:35 `Merge branch 'main' into fable-fr3` (-)
 - 388fd1316 11-27 22:35 `Merge agent/autoflip: autoflip: plan/run/graduate-list tool (TASK-1092)` (autoflip)
 - 794d66c7c 11-27 22:34 `Merge branch 'main' into autoflip` (-)
 - e340dc50e 11-27 22:25 `Merge agent/darkthrottle: darkthrottle: ledger cap, by_design status, flip_plan, sandbox-first doc (TASK-1091)` (darkthrottle)
@@ -196,6 +198,4 @@
 - f8a505433 11-27 22:12 `Merge branch 'main' into pgfix` (-)
 - f4865d49e 11-27 22:04 `Merge agent/farmresetretire: farmresetretire: bot.farmReset graduated to always-on, knob removed (TASK-1090)` (farmresetretire)
 - b540e608c 11-27 22:03 `Merge branch 'main' into farmresetretire` (-)
-- 4e171e621 11-27 21:56 `Merge agent/flipjson: flipjson: flip.py parses the first JSON document of ops status --why` (flipjson)
-- 98a9c9be9 11-27 21:56 `Merge agent/xplostfalse: xplostfalse: believe an xp fall only when repeated, relaunch-aware Save and Exit level, auto-start held-back reasons (TASK-1089)` (xplostfalse)
 <!-- statusgen:end -->

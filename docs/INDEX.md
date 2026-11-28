@@ -384,6 +384,10 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [ui-unification-appendix-pages.md](design/fable-review-2026-11-22/ui-unification-appendix-pages.md): UI unification review, appendix: page and panel inventory (status: current (review of 2026-11-22, card fableui). Belongs to ui-unification.md. Docs only.)
 - [ui-unification.md](design/fable-review-2026-11-22/ui-unification.md): UI unification review: navigation, cruft and readable build pages (2026-11-22) (status: DESIGN REVIEW, nothing built (card fableui). Docs only. The user decides the open questions in section F;...)
 
+`design/fable-review-2026-11-28/`
+
+- [03-combat-nav-survival.md](design/fable-review-2026-11-28/03-combat-nav-survival.md): Fable review 3 of 8: combat, navigation and survival merged 2026-11-27 (status: review, read-only. Base `75e4c2f4e` (last commit before 2026-11-27 00:00) against `origin/main` at...)
+
 `design/`
 
 - [input-cast-verbs.md](design/input-cast-verbs.md): Input: cast verbs (cast-unit, cast-point, cast-hold) (status: bot side built offline (TASK-726, card dlv-cast-verbs, 2026-11-27), dark behind `input.planner` (0). Fork...)
