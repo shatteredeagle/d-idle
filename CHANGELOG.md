@@ -8,6 +8,10 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- fix7b: arbiter fixes N1-N6 (TASK-1115) <!--sg:agent/fix7b-->
+- roadfresh: roadmap refresh (TASK-1123) <!--sg:agent/roadfresh-->
+- road4: d2shadow (TASK-1121) <!--sg:agent/road4-->
+- vault2: atomic Reserve, merc journal (TASK-1113) <!--sg:agent/vault2-->
 - nf1b: pre.bind and pre.summon (TASK-1105) <!--sg:agent/nf1b-->
 - nf2: flail hold and sweep in a cleared area let time pass (TASK-1103) <!--sg:agent/nf2-->
 - nf4: board restart scenario timing, town route reinsertion (TASK-1106/1108) <!--sg:agent/nf4-->
