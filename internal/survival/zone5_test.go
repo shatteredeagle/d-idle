@@ -1,6 +1,7 @@
 package survival
 
 import (
+	"strings"
 	"testing"
 	"time"
 
@@ -155,5 +156,35 @@ func TestEveryArchetypeHasASurvivalRow(t *testing.T) {
 		if _, ok := e.p.Archetypes[id]; !ok {
 			t.Errorf("archetype %q has no row in params.json archetypes", id)
 		}
+	}
+}
+
+// The decision line of a deciding controller names the two factors of k, so a run pinned at the clamp says whether the
+// hero-wide kill-time ratio or the zone's own damage ratio holds it there (holdout 5: k 3.00 on the three worst seeds,
+// cause not isolated). Both builds; the shadow line is unchanged.
+func TestDecisionLineSplitsK(t *testing.T) {
+	for _, b := range twoBuilds {
+		t.Run(b.name, func(t *testing.T) {
+			e := newEnv(t, b.arch)
+			in := supplyScene(e, b.hero(12), b.arch, ZoneKey{}, t0)
+			l := NewLedger(e.p)
+			// slow kills everywhere: the hero-wide ratio goes to the clamp
+			l.Observe(in.Cands[0].Key, t0, Event{Kind: EvFight, Kills: 200, Seconds: 2000, PredKillSec: 200, Taken: 200, PredTaken: 200}, in.Power)
+			d, err := l.Choose(in)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if !strings.Contains(d.Line(), "k parts: zone ") || !strings.Contains(d.Line(), " hero 3.00") {
+				t.Errorf("no k parts in %q", d.Line())
+			}
+			in.Active = false
+			d, err = l.Choose(in)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if strings.Contains(d.Line(), "k parts") {
+				t.Errorf("shadow line changed: %q", d.Line())
+			}
+		})
 	}
 }

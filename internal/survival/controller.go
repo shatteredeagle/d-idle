@@ -92,18 +92,20 @@ func PowerOf(h power.Hero) float64 {
 
 // verdict is a candidate judged against the dial and the ledger.
 type verdict struct {
-	c        Candidate
-	best     float64 // margin of the bad pack after the ledger correction
-	low      float64
-	k        float64 // k_zone x k_hero
-	eligible bool
-	word     string
-	why      Why
-	value    float64
-	xp       float64 // xp/min the value rests on (model prior, or the blend with the realized one)
-	realized float64 // the realized xp/min behind the blend, 0 = the prior stands
-	prior    float64 // the model's xp/min after the supply cap
-	starving bool
+	c    Candidate
+	best float64 // margin of the bad pack after the ledger correction
+	low  float64
+	k    float64 // k_zone x k_hero
+	// kZone and kHero are the two factors before the pooled-k rule, for the log: which of them holds k at the clamp
+	kZone, kHero float64
+	eligible     bool
+	word         string
+	why          Why
+	value        float64
+	xp           float64 // xp/min the value rests on (model prior, or the blend with the realized one)
+	realized     float64 // the realized xp/min behind the blend, 0 = the prior stands
+	prior        float64 // the model's xp/min after the supply cap
+	starving     bool
 	// yieldStarved: realized yield stayed below the dial's share of the prior (card survhold7); yieldMul is its value factor
 	yieldStarved bool
 	yieldMul     float64
@@ -132,7 +134,8 @@ func lambda(p *Params, pu Purse) float64 {
 func (l *Ledger) judge(in Input, c Candidate, lam float64, disc float64) verdict {
 	l.Refresh(c.Key, in.Power)
 	v := verdict{c: c}
-	v.k = l.KZoneFor(c.Key, in.Now, in.OffenceUnread) * l.KHeroFor(in.OffenceUnread)
+	v.kZone, v.kHero = l.KZoneFor(c.Key, in.Now, in.OffenceUnread), l.KHeroFor(in.OffenceUnread)
+	v.k = v.kZone * v.kHero
 	if row, err := l.P.stepDown(in.Dial.ID); err == nil && row.PoolUnvisitedK {
 		if s := l.peek(c.Key); s == nil || s.Kills <= 0 {
 			if pk, ok := l.pooledK(in); ok && pk < v.k {
@@ -365,6 +368,9 @@ func decisionLine(d Decision, p *verdict, in Input) string {
 	}
 	if p.starving {
 		b.WriteString("  mana-starved")
+	}
+	if in.Active && p.k != 1 {
+		fmt.Fprintf(&b, "  k parts: zone %.2f hero %.2f", p.kZone, p.kHero)
 	}
 	if d.Fresh {
 		b.WriteString("  fresh game")
