@@ -1,10 +1,13 @@
 ---
 id: TASK-1090
-title: 'farmresetretire: farm loop always on (flip bot.farmReset to default, remove the gate)'
-status: Proposed
+title: >-
+  farmresetretire: farm loop always on (flip bot.farmReset to default, remove
+  the gate)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T02:48:00Z'
+updated_date: '2026-11-28T03:24:00Z'
 labels:
   - bot
   - chore

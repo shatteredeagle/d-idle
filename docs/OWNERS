@@ -129,7 +129,6 @@ docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-extras.jsonl.gz  gaterun  gate
 .github/workflows/tester-image.yml  credit-runner  ghcrpublish
 backlog/tasks/task-726 - dlv-cast-verbs-input-caps-cast-unit-cast-point-cast-hold.md  live-agent  inputl3
 backlog/tasks/task-765 - town12-SME-review-of-the-supply-profile-numbers-advice-only.md  live-agent  town11
-cmd/d2bot  credit-runner  farmresetretire
 cmd/d2bot/adapters.go  credit-runner  cainfix3
 cmd/d2bot/agencydrive_test.go  live-agent  agencyp1b
 cmd/d2bot/agencywire.go  live-agent  agencyp1b
@@ -157,7 +156,6 @@ cmd/d2scenario/tap_test.go  live-agent  pgtaps
 cmd/d2scenario/validate.go  credit-runner  pgearned
 data/capabilities/  live-agent  dlv-stance-pack
 data/darklaunch.json  credit-runner  dlv-upkeep-state
-data/darklaunch.json  credit-runner  farmresetretire
 data/darklaunch.json  live-agent  arbmig
 data/darklaunch.json  live-agent  ticklog
 data/input/caps/  live-agent  inputl3
@@ -202,13 +200,11 @@ docs/epics/epic-hell.md  live-agent  epic-hell
 docs/epics/epic-merc.md  live-agent  epic-merc
 docs/epics/epic-nightmare.md  live-agent  epic-nightmare
 docs/epics/epic-normal.md  live-agent  epic-normal
-docs/farmloop.md  credit-runner  farmresetretire
 docs/friend-checklist-0.1.2.md  credit-runner  cut012
 docs/friend-guide.md  credit-runner  cut012
 docs/inventory-actions.md  credit-runner  campaign1
 docs/knobs.md  credit-runner  cainfix3
 docs/knobs.md  credit-runner  dlv-upkeep-state
-docs/knobs.md  credit-runner  farmresetretire
 docs/knobs.md  live-agent  arbmig
 docs/onboarding-tour.md  credit-runner  onboardtour
 docs/probes/cellar3-gate-capture.md  live-agent  cellar3gate
@@ -236,7 +232,6 @@ docs/process/proving-ground.md  credit-runner  pgearned
 docs/process/proving-ground.md  credit-runner  pgfix
 docs/quest-givers.md  credit-runner  campaign1
 docs/questboard.md  credit-runner  cainfix3
-docs/questboard.md  credit-runner  farmresetretire
 docs/questboard.md  live-agent  bsmdef
 docs/registry-publish.md  credit-runner  ghcrpublish
 docs/releases/0.1.2.md  credit-runner  cut012
@@ -261,7 +256,6 @@ internal/arbiter  live-agent  town10
 internal/arbiter/  live-agent  arbmig
 internal/arbiter/replay.go  live-agent  ticklog
 internal/arbiter/replay_ticklog_test.go  live-agent  ticklog
-internal/bot  credit-runner  farmresetretire
 internal/bot/  credit-runner  cainfix3
 internal/bot/arbiter_control.go  live-agent  arbmig
 internal/bot/arbiter_control_test.go  live-agent  arbmig
@@ -327,7 +321,6 @@ internal/decide/queue.go  credit-runner  qqueue
 internal/decide/queue_test.go  credit-runner  qqueue
 internal/decide/variants.go  credit-runner  qdensity
 internal/decide/variants_test.go  credit-runner  qdensity
-internal/env  credit-runner  farmresetretire
 internal/env/tuning_agency.go  live-agent  agencyp1b
 internal/env/tuning_bot.go  live-agent  arbmig
 internal/env/tuning_bot.go  live-agent  ticklog
@@ -393,7 +386,6 @@ internal/town/sellplan_test.go  live-agent  townflip
 internal/town/shop.go  live-agent  townflip
 internal/town/town.go  live-agent  townflip
 internal/town/trip.go  live-agent  inputl3
-internal/watch  credit-runner  farmresetretire
 internal/watch/areamap_test.go  credit-runner  uis6
 internal/watch/layout.go  credit-runner  uis1
 internal/watch/layout.go  credit-runner  uis6
@@ -466,7 +458,6 @@ tools/provingground/status_doc.sh  credit-runner  pgpage
 tools/tester-pack.sh  credit-runner  testerpack
 tools/uilint/  credit-runner  uis1
 tools/uilint/lint.go  credit-runner  uis6
-tools/uishots  credit-runner  farmresetretire
 tools/uishots.sh  credit-runner  uis6
 tools/uishots/  credit-runner  uis6
 tools/uishots/genlayouts.js  credit-runner  uis1
