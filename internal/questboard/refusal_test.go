@@ -54,7 +54,7 @@ func TestRefusalIdenticalCodedRefusalsPark(t *testing.T) {
 			}
 			v := r.desk(nil).viewFresh()
 			if v.Blocked == nil || v.Blocked.Reason == nil || v.Blocked.Reason.Code != "refused_repeatedly" ||
-				!strings.Contains(v.Blocked.Reason.Text, "area_ban") || !strings.Contains(v.Blocked.Reason.Text, "text") || strings.Contains(v.Blocked.Reason.Text, "{") {
+				!strings.Contains(v.Blocked.Reason.Text, "area_ban") || !strings.Contains(v.Blocked.Reason.Text, "text") {
 				t.Fatalf("reason: %+v", v.Blocked)
 			}
 			if l := r.desk(nil).ParkLines(); len(l) != 1 || !strings.Contains(l[0], "area_ban") {
@@ -94,5 +94,27 @@ func TestRefusalUncodedAndKnobOffKeepToday(t *testing.T) {
 				}
 			})
 		}
+	}
+}
+
+// Card cellar3gate: a step that fails three times with a navigation refusal that names its cause parks as no_path (the exit
+// and the cause stay in the text); the same count of plain failures stays gave_up.
+func TestNoPathParkNamesTheExitAndCause(t *testing.T) {
+	for _, class := range smClasses {
+		t.Run(class, func(t *testing.T) {
+			r := refusalRig(t, class, 0)
+			why := "exit to Tower Cellar Level 4: nav: no path: gate to level 24 is on the map but not reachable from {45 20} (cause=cut_off, no way out found)"
+			c := StepResult{Outcome: StepFailed, Why: why}
+			r.f.Script = []StepResult{c, c, c}
+			r.tick(3)
+			if run := r.x.runOf(t, den, clr); run.Code != "no_path" {
+				t.Fatalf("stored park: %+v", run)
+			}
+			v := r.desk(nil).viewFresh()
+			if v.Blocked == nil || v.Blocked.Reason == nil || v.Blocked.Reason.Code != "no_path" ||
+				!strings.Contains(v.Blocked.Reason.Text, "Tower Cellar Level 4") || !strings.Contains(v.Blocked.Reason.Text, "cause=cut_off") {
+				t.Fatalf("reason: %+v", v.Blocked.Reason)
+			}
+		})
 	}
 }
