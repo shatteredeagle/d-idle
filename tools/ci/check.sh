@@ -62,6 +62,10 @@ python3 -I tools/ci/test_knobbudget.py >/dev/null 2>&1 || bad "tools/ci/test_kno
 python3 -I tools/ci/pointercount.py || fail=1
 python3 -I tools/ci/test_pointercount.py >/dev/null 2>&1 || bad "tools/ci/test_pointercount.py"
 
+# --- combat engine: class and skill literals in internal/combat and internal/power may fall, never rise (card dlv-cleanup, DLVc) ---
+python3 -I tools/ci/literalcount.py || fail=1
+python3 -I tools/ci/test_literalcount.py >/dev/null 2>&1 || bad "tools/ci/test_literalcount.py"
+
 # --- no decompiled game code or game data tables (docs/process/gamecode-guard.md) ---
 tools/ci/gamecode_guard.sh || fail=1
 
