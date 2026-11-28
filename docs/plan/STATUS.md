@@ -197,6 +197,7 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 48f4d1a49 11-28 04:15 `Merge agent/ledenable: ledger: refusalPark and resumeAfterDeaths enabled (clean 2 h windows)` (ledenable)
 - b6124a294 11-28 03:53 `Merge agent/flipfix2: flipfix2: sandbox aliases, flip status EST, graduate-list checks (TASK-1130)` (flipfix2)
 - 8218c38ea 11-28 03:51 `Merge branch 'main' into flipfix2` (-)
 - ab797f0cc 11-28 03:51 `Merge agent/rv5: review 14: round-3 review of merged work (docs)` (rv5)
@@ -206,5 +207,4 @@
 - 5bfdc8aa4 11-28 03:36 `Merge agent/zone5: zone5: zone prior capped by monster supply (supplyMinutes), caster archetype rows (TASK-1129)` (zone5)
 - 113323e05 11-28 03:35 `Merge branch 'main' into zone5` (-)
 - 5b3b4951e 11-28 03:26 `Merge agent/sweep2: sweep2: parked boss area, equip journal refuse, hand-in evidence, admission road floors (TASK-1128)` (sweep2)
-- 7bbd7ee07 11-28 03:25 `Merge branch 'main' into sweep2` (-)
 <!-- statusgen:end -->
