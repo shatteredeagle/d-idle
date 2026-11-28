@@ -111,8 +111,8 @@ func (r *Runner) leanHero(s *d2.Snapshot) bool {
 // (Questy entered Stony Field at 90/176 with no portal). "" = fine. A hero in town is held by the heal chore, not here.
 func (r *Runner) leanEntryWhy(s *d2.Snapshot, a int) string {
 	d := loadPovertyFarm()
-	if !r.leanHero(s) || a == 0 || a == s.Player.Area || s.Player.InTown() || r.d.Plan.IsTown(a) || r.corpseRun.Load() || s.Player.MaxLife <= 0 {
-		return ""
+	if !r.leanHero(s) || a == 0 || a == s.Player.Area || s.Player.InTown() || r.d.Plan.IsTown(a) || r.corpseRun.Load() || s.Player.MaxLife <= 0 || task.TryActive() {
+		return "" // the owner's try anyway exempts this row like every other entry row (admit.View.exempt)
 	}
 	if pct := s.Player.LifePct(); pct < d.Lean.EntryLifePct {
 		return fmt.Sprintf("no portal and %d%% life: not entering another field below %d%%", pct, d.Lean.EntryLifePct)

@@ -44,6 +44,8 @@ const (
 	defaultPerVisit = 20
 	defaultBudget   = 8 * time.Second
 	keyPrefix       = "vk-"
+	zoneWorn        = "previously worn"     // the found-zone of a record filed by the direct Equip, the merc Equip or Stow
+	zoneReplaced    = "worn until replaced" // ... by the old Equip order
 )
 
 // Reason strips the log prefix from a stored reason.
@@ -122,6 +124,8 @@ type Keeper struct {
 	cb        carryBook
 
 	eq         equipBook
+	actMu      sync.Mutex // one player-ordered item move at a time (direct Equip, Wear set, merc, Carry, Stow, their repair); taken before mu
+	jonce      sync.Once
 	mu         sync.Mutex
 	promptMute time.Time
 	backedUp   bool
@@ -490,6 +494,13 @@ func (k *Keeper) runKeep(ctx context.Context) []string {
 			havePack = false
 		} else if k.presentIn(st, r, have) {
 			confirm = append(confirm, created{r, placeOf(r)})
+		} else if k.twinDoubt(st, r, have) {
+			if err := st.FailKeep(r.ID, stored(ReasonTwin)); err != nil {
+				lines = append(lines, "keep: "+r.ID+" fail: "+err.Error())
+				continue
+			}
+			k.note("twin-"+r.ID, "Keep of "+r.Name+" stopped: "+ReasonTwin+".")
+			lines = append(lines, "keep: "+r.ID+" not judged (identical twin on the hero), back in the vault, not created again")
 		} else if err := st.RetryKeep(r.ID, ""); err != nil {
 			lines = append(lines, "keep: "+r.ID+" requeue: "+err.Error())
 		} else {
@@ -579,6 +590,33 @@ func placeOf(r vault.Rec) string {
 	}
 	return "stash"
 }
+
+// twinDoubt reports an in-flight Keep that presentIn calls "not created" only because of kept twins, while a record of the
+// same bytes came back off the hero ("previously worn"): a kept record is never reduced when its item is displaced, so the
+// count cannot tell whether this item was created. Such a Keep is failed visibly, never created a second time.
+func (k *Keeper) twinDoubt(st *vault.Store, r vault.Rec, have []d2dctl.VaultRecord) bool {
+	n, kept, back := 0, 0, 0
+	for _, h := range have {
+		if strings.EqualFold(h.Norm, createHex(r)) {
+			n++
+		}
+	}
+	for _, o := range st.Dump() {
+		if !strings.EqualFold(o.Raw, r.Raw) {
+			continue
+		}
+		if o.State == vault.Kept && o.ID != r.ID {
+			kept++
+		}
+		if o.Found.Zone == zoneWorn || o.Found.Zone == zoneReplaced {
+			back++
+		}
+	}
+	return n > 0 && n <= kept && n > kept-back
+}
+
+// ReasonTwin is the visible end of a Keep the bot cannot judge by counting.
+const ReasonTwin = "an identical item is already on your hero and the bot cannot tell whether this one was taken out too: check your stash and backpack before keeping it again"
 
 // presentIn reports whether the hero carries the record: more items with its bytes than kept records of the same bytes
 // the vault already counts (two identical items are legitimate; one already kept must not stand in for this one).

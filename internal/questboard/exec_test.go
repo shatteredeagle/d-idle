@@ -27,6 +27,7 @@ type rig struct {
 	hero string
 	x    *Exec
 	sm   bool   // run this rig's Exec on the run machine whatever QUESTBOARD_SM says
+	old  bool   // run this rig's Exec on the legacy board whatever QUESTBOARD_SM says (wins over sm)
 	led  Ledger // the account wallet of the rig (nil: none); see ledger_test.go
 }
 
@@ -46,7 +47,7 @@ func (r *rig) restart() {
 	if err != nil {
 		r.t.Fatal(err)
 	}
-	r.x = NewExec(r.b, st, r.f, r.f, Options{Enabled: true, SM: testSM || r.sm, Ledger: func() Ledger { return r.led }})
+	r.x = NewExec(r.b, st, r.f, r.f, Options{Enabled: true, SM: (testSM || r.sm) && !r.old, Ledger: func() Ledger { return r.led }})
 }
 
 func (r *rig) tick(n int) Decision {
@@ -355,7 +356,9 @@ func TestFailureDeathParkResume(t *testing.T) {
 		r.restart() // the bot restarts while recovering: progress comes from the evidence
 		r.f.Script = []StepResult{{StepDied, "Fallen pack", ""}}
 		r.tick(1)
-		r.x.Report(Decision{Quest: den, Chunk: clr}, StepResult{StepDied, "again", ""})
+		if !testSM { // the machine kept the first death over the restart (card fix2): the second one parked already
+			r.x.Report(Decision{Quest: den, Chunk: clr}, StepResult{StepDied, "again", ""})
+		}
 		d := r.next()
 		if d.Kind != DecBlocked || !strings.Contains(d.Why, "died 2 times") {
 			t.Fatalf("%v", d)

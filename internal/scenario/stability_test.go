@@ -247,3 +247,50 @@ func TestLoadTiersRejects(t *testing.T) {
 		t.Fatalf("%v", bad)
 	}
 }
+
+// The streak keys on the bot BINARY, not the commit: a new commit that builds the same binary continues the streak (and
+// a flip across it is a flake), a new binary resets it. Lines without a hash fall back to the commit. Two classes.
+func TestStabilityStreakKeysOnBotBinaryHash(t *testing.T) {
+	for _, class := range []string{"Paladin", "Sorceress"} {
+		var recs []LedgerRecord
+		for i := 0; i < StableRuns; i++ {
+			r := run(i, class, Green, "aa", fmt.Sprintf("commit%d", i)) // a merge between every run
+			r.BotSHA256 = "bin1"
+			recs = append(recs, r)
+		}
+		if s := keyState(t, mustStability(t, recs, nil), class); s.State != StabilityStable || s.Streak != StableRuns {
+			t.Fatalf("%s: same binary over %d commits: %+v, want stable", class, StableRuns, s)
+		}
+		for i := range recs {
+			recs[i].BotSHA256 = ""
+		}
+		if s := keyState(t, mustStability(t, recs, nil), class); s.State != StabilityCandidate || s.Streak != 1 {
+			t.Fatalf("%s: no hash, a commit per run: %+v, want candidate with streak 1", class, s)
+		}
+		same := run(0, class, Green, "aa", "c1")
+		next := run(1, class, Green, "aa", "c1") // the same commit string, another binary (a dirty or re-stamped tree)
+		same.BotSHA256, next.BotSHA256 = "bin1", "bin2"
+		if s := keyState(t, mustStability(t, []LedgerRecord{same, next}, nil), class); s.Streak != 1 {
+			t.Fatalf("%s: a new binary must reset the streak: %+v", class, s)
+		}
+		flip := run(1, class, Red, "bb", "c2")
+		flip.BotSHA256 = "bin1"
+		if s := keyState(t, mustStability(t, []LedgerRecord{same, flip}, nil), class); s.State != StabilityQuarantined {
+			t.Fatalf("%s: a flip on one binary across two commits is a flake: %+v", class, s)
+		}
+	}
+}
+
+// BLOCKED runs are reported per key and are never evidence: they neither extend nor reset the streak, and a key that
+// only ever blocked is listed (candidate, no counted run).
+func TestStabilityReportsBlockedWithoutCountingIt(t *testing.T) {
+	recs := []LedgerRecord{run(0, "Paladin", Green, "aa", "c1"), run(1, "Paladin", Blocked, "", "c1"), run(2, "Paladin", Green, "aa", "c1"),
+		run(3, "Paladin", Blocked, "", "c1"), run(4, "Paladin", Blocked, "", "c1"), run(5, "Sorceress", Blocked, "", "c1")}
+	keys := mustStability(t, recs, nil)
+	if s := keyState(t, keys, "Paladin"); s.Runs != 2 || s.Streak != 2 || s.Blocked != 3 || s.BlockedNow != 2 || s.LastBlocked != recs[4].Run || len(s.Flakes) != 0 {
+		t.Fatalf("%+v", s)
+	}
+	if s := keyState(t, keys, "Sorceress"); s.State != StabilityCandidate || s.Runs != 0 || s.Blocked != 1 || s.BlockedNow != 1 {
+		t.Fatalf("%+v", s)
+	}
+}

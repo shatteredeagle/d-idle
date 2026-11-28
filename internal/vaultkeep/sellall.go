@@ -185,6 +185,8 @@ func (k *Keeper) SellAll(ctx context.Context, clientID string) SellAllOutcome {
 	if ok, why := k.SaleOn(ctx); !ok {
 		return SellAllOutcome{Code: saleOffCode(why), Why: why}
 	}
+	k.actMu.Lock()
+	defer k.actMu.Unlock()
 	k.smu.Lock()
 	defer k.smu.Unlock()
 	if o := k.saleOrder(); o != nil && o.ID == oid {

@@ -2,6 +2,7 @@
  "schema": "stepgrounds/1",
  "kit": {
   "pre": {
+   "hero_profile": "banked",
    "level": 24,
    "gold": 3000,
    "stash": 500000,

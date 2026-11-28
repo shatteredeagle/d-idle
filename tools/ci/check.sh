@@ -80,6 +80,19 @@ out=$(gofmt -l $(git ls-files -co --exclude-standard '*.go') 2>&1)
 # --- vet ---
 go vet ./... || bad "go vet"
 
+# --- Proving Ground smoke (no game; review 2026-11-28 section 1.2): when the branch touches the runner, the scenario
+# package, the Proving Ground tools or a scenario file, the prep half must still prepare and record four heroes on a
+# fake d2d. PG_SMOKE=1 forces it; the marker line is required, not only the exit code. ---
+pg_base=$(git merge-base HEAD origin/main 2>/dev/null || git merge-base HEAD main 2>/dev/null || echo HEAD)
+pg_changed=$( { git diff --name-only "$pg_base" HEAD; git status --porcelain | cut -c4-; } 2>/dev/null |
+  grep -E '^(cmd/d2scenario/|internal/scenario/|tools/provingground/|tools/ci/check\.sh$)' | head -1)
+if [ -n "$pg_changed" ] || [ "${PG_SMOKE:-}" = 1 ]; then
+  out=$(go run ./cmd/d2scenario smoke 2>&1)
+  echo "$out" | grep -Eq '^smoke: static [0-9]+ scenarios, prep 4, ledger 4, blocked 0$' || bad "d2scenario smoke:"$'\n'"$out"
+  bash tools/provingground/nightcheck_test.sh >/dev/null 2>&1 || bad "tools/provingground/nightcheck_test.sh"
+  bash tools/provingground/pgenv_test.sh >/dev/null 2>&1 || bad "tools/provingground/pgenv_test.sh"
+fi
+
 # Opt-in (CROSSBUILD=1): windows+darwin vet/build of the shipped binaries; the full matrix is the ci.yml crossbuild job.
 if [ "${CROSSBUILD:-}" = 1 ]; then tools/ci/crossbuild.sh --quick || fail=1; fi
 

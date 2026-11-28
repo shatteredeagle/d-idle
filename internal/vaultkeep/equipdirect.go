@@ -110,6 +110,8 @@ func orderTag(id string) string {
 type chosen struct {
 	idx  int
 	id   string
+	key  string // the order's key in the book ("" = id)
+	tag  string // the order id: the mark of the records this order files
 	rec  vault.Rec
 	slot string
 	pv   Preview
@@ -199,6 +201,14 @@ func (k *Keeper) directOne(ctx context.Context, id, slotWord string) (Result, bo
 		res.Code, res.Why = "missing", "there is no vault for this hero yet"
 		return res, true
 	}
+	k.actMu.Lock()
+	defer k.actMu.Unlock()
+	k.journalOnce()
+	k.repairDirectLocked(ctx) // an order a restart left open is settled before a new swap can displace its item
+	if k.directOpen(id) {
+		res.Code, res.Why = CodeInFlight, ReasonInFlight
+		return res, true
+	}
 	c, code, why := k.precheck(st, id, slotWord, nil)
 	if why != "" {
 		res.Code, res.Why = code, why
@@ -211,39 +221,174 @@ func (k *Keeper) directOne(ctx context.Context, id, slotWord string) (Result, bo
 		}
 	}
 	order := "eq-" + orderTag(id) + fmt.Sprintf("-%d", k.now().UnixMilli())
-	k.putEq(&EquipOrder{ID: id, Name: c.rec.Name, Slot: slotWord, Group: []string{c.slot}, State: EqEquipping, Direct: true})
+	c.tag = order
+	bu, bh := k.wornBefore(ctx, c.slot)
+	k.putEq(&EquipOrder{ID: id, Name: c.rec.Name, Slot: slotWord, Group: []string{c.slot}, State: EqEquipping, Direct: true,
+		Order: order, BeforeUnit: bu, Before: bh})
 	dr, err := k.Direct.EquipDirect(ctx, c.hex, c.slot, order)
-	if err != nil {
-		if errors.Is(err, d2dctl.ErrDirectOff) { // an older image: the order flow
-			k.mu.Lock()
-			delete(k.bookLocked().orders, id)
-			k.dcapsOK = false
-			k.mu.Unlock()
-			return Result{}, false
+	if dr.OK { // the engine swapped: whatever failed after it, the displaced item is filed
+		k.markApplied(id, c.slot, dr)
+		if err != nil {
+			k.note("equip-late-"+order, "Equip: the "+c.rec.Name+" is worn; a step after the swap failed ("+err.Error()+").")
 		}
+		k.finishDirect(ctx, st, c, dr, &res)
+		return res, true
+	}
+	if errors.Is(err, d2dctl.ErrDirectOff) { // an older image: the order flow
+		k.mu.Lock()
+		delete(k.bookLocked().orders, id)
+		k.dcapsOK = false
+		k.mu.Unlock()
+		return Result{}, false
+	}
+	if answered(err) {
 		res.Code, res.Why = directWhy(err)
 		k.failOrder(id, res.Code, res.Why)
 		return res, true
 	}
-	k.setOrder(id, func(o *EquipOrder) { o.Applied, o.Removed, o.Worn, o.Unit = true, dr.Removed, c.slot, dr.Unit })
-	k.finishDirect(ctx, st, c, dr, &res)
+	// No usable answer: the swap may have happened. Never "nothing happened": look at the hero, else the order stays open.
+	k.resolveDirect(ctx, st, id, &res)
+	if res.Code == "" && !res.OK {
+		res.Code, res.Why = directWhy(err)
+	}
 	return res, true
+}
+
+// CodeInFlight is the refusal of an order for a record that another order is still moving.
+const (
+	CodeInFlight   = "order_in_flight"
+	ReasonInFlight = "an order for this item is still being settled: wait a moment"
+	ReasonUnknown  = "the game did not answer; the order stays open until the bot can see what happened (check the Inventory page)"
+)
+
+// answered says the engine itself refused the call, so nothing moved.
+func answered(err error) bool {
+	var ref *d2dctl.DirectRefused
+	return errors.As(err, &ref) || errors.Is(err, d2dctl.ErrDirectMeasured) || errors.Is(err, d2dctl.ErrBusy)
+}
+
+func (k *Keeper) journalOnce() {
+	k.jonce.Do(func() {
+		if j, ok := k.Direct.(d2dctl.ReplyJournaler); ok {
+			j.JournalReplies(k.journalReply)
+		}
+	})
+}
+
+// journalReply writes the engine's answer into the order file before the direct client does anything else with it. A reply
+// that did not parse is kept as text: it is the only copy of what came off.
+func (k *Keeper) journalReply(order, raw string, res []d2dctl.DirectResult) {
+	k.mu.Lock()
+	defer k.mu.Unlock()
+	for _, o := range k.bookLocked().orders {
+		if !o.Direct || o.Order != order || !o.active() {
+			continue
+		}
+		switch {
+		case res == nil:
+			o.Reply = raw
+		case o.Piece < len(res) && res[o.Piece].OK:
+			r := res[o.Piece]
+			o.Applied, o.Removed, o.Unit = true, r.Removed, r.Unit
+			if len(o.Group) > 0 {
+				o.Worn = o.Group[0]
+			}
+		}
+		o.Updated = k.now()
+	}
+	k.saveBookLocked()
+}
+
+func (k *Keeper) markApplied(key, slot string, dr d2dctl.DirectResult) {
+	k.setOrder(key, func(o *EquipOrder) { o.Applied, o.Removed, o.Worn, o.Unit = true, dr.Removed, slot, dr.Unit })
+}
+
+// directOpen reports an unsettled direct order for the record (its own or one moved aside by its order id).
+func (k *Keeper) directOpen(id string) bool {
+	k.mu.Lock()
+	defer k.mu.Unlock()
+	for _, o := range k.bookLocked().orders {
+		if o.ID == id && o.Direct && o.active() {
+			return true
+		}
+	}
+	return false
+}
+
+// wornBefore reads what the slot holds before the swap (unit and item bytes), so an unanswered call can be judged by looking
+// and the displaced item filed from this copy. Best effort: 0 and "" when the slot is empty or cannot be read. U live.
+func (k *Keeper) wornBefore(ctx context.Context, slot string) (int, string) {
+	u := int(k.Hand.WornUnit(slot))
+	if u == 0 {
+		return 0, ""
+	}
+	have, err := k.API.ItemFull(ctx, u)
+	if err != nil || len(have) != 1 {
+		return 0, ""
+	}
+	return u, have[0].Norm
+}
+
+// resolveDirect settles an order whose engine answer never arrived, by looking: the old unit still in the slot means nothing
+// moved; the old unit gone from the game means the swap ran and the copy read before it is filed. Anything else leaves the
+// order open (no new order for the record) for the next pass.
+func (k *Keeper) resolveDirect(ctx context.Context, st *vault.Store, key string, res *Result) {
+	k.mu.Lock()
+	op := k.bookLocked().orders[key]
+	if op == nil {
+		k.mu.Unlock()
+		return
+	}
+	o := *op
+	k.mu.Unlock()
+	slot := o.Worn
+	if slot == "" && len(o.Group) > 0 {
+		slot = o.Group[0]
+	}
+	if o.BeforeUnit == 0 {
+		k.failOrder(key, "interrupted", "the game did not answer and the bot cannot tell whether the item was worn: check the Inventory page")
+		res.Code, res.Why = "interrupted", "the game did not answer: check the Inventory page"
+		return
+	}
+	if int(k.Hand.WornUnit(slot)) == o.BeforeUnit {
+		k.failOrder(key, "equip", "the game did not answer and nothing changed: try again")
+		res.Code, res.Why = "equip", "the game did not answer and nothing changed: try again"
+		return
+	}
+	if have, err := k.API.ItemFull(ctx, o.BeforeUnit); err != nil || len(have) != 0 {
+		k.note("equip-open-"+o.Order, "Equip: "+ReasonUnknown)
+		res.Code, res.Why = CodeInFlight, ReasonUnknown
+		return
+	}
+	dr := d2dctl.DirectResult{OK: true, Slot: slot, Removed: []string{o.Before}}
+	k.markApplied(key, slot, dr)
+	k.finishDirect(ctx, st, chosen{key: key, id: o.ID, tag: o.Order, rec: vault.Rec{Item: vault.Item{Name: o.Name}}, slot: slot}, dr, res)
 }
 
 // finishDirect is the store step after the engine swapped: the equipped record leaves the vault, what came off becomes
 // records ("previously worn", identified state kept), the character is saved. Idempotent (repairDirect re-runs it).
 func (k *Keeper) finishDirect(ctx context.Context, st *vault.Store, c chosen, dr d2dctl.DirectResult, res *Result) {
-	if r, ok := st.Get(c.id); ok && r.State == vault.Recorded {
-		_ = st.Discard(c.id, "equipped directly (vault equip v2)")
+	if c.key == "" {
+		c.key = c.id
 	}
+	if r, ok := st.Get(c.id); ok && r.State == vault.Recorded && c.key == c.id {
+		if err := st.Discard(c.id, "equipped directly (vault equip v2)"); err != nil {
+			k.note("equip-rec-"+c.id, "Equip: the "+c.rec.Name+" is worn but its vault record could not be retired ("+err.Error()+").")
+		}
+	}
+	quiet := k.measured() // a repair during a measured run files records only: no create, no save (F12)
 	where := "vault"
-	var names []string
+	var names, left []string
 	for i, h := range dr.Removed {
 		name, _ := c.wornName(c.slot)
 		if i > 0 || name == "" {
 			name = ""
 		}
-		n, w := k.recordRemoved(ctx, st, h, name)
+		n, w, ok := k.recordRemoved(ctx, st, h, name, c.tag, quiet)
+		if !ok {
+			left = append(left, h)
+			continue
+		}
 		names = append(names, n)
 		switch {
 		case w == "backpack" || where == "backpack":
@@ -252,15 +397,24 @@ func (k *Keeper) finishDirect(ctx context.Context, st *vault.Store, c chosen, dr
 			where = "stash"
 		}
 	}
+	if len(left) > 0 { // never dropped: the bytes stay in the order file and the next pass files them
+		why := "what you took off could not be filed yet; its data is kept in the order and the bot tries again"
+		k.setOrder(c.key, func(o *EquipOrder) { o.Removed, o.Code, o.Reason = left, "unfiled", why })
+		k.note("equip-unfiled-"+c.tag, "Equip: "+c.rec.Name+" is worn, but "+why+".")
+		res.Code, res.Why, res.Slot = "unfiled", why, c.slot
+		return
+	}
 	if k.Pinner != nil {
 		k.Pinner(c.slot, uint32(dr.Unit), c.rec.Name)
 	}
-	if k.Save != nil {
+	if k.Save != nil && !quiet {
 		if err := k.Save(ctx); err != nil {
 			k.note("save", "Equip: "+ReasonSave+" ("+err.Error()+")")
 		}
 	}
-	k.setOrder(c.id, func(o *EquipOrder) { o.State, o.Displaced, o.Where, o.Removed = EqDone, names, where, nil })
+	k.setOrder(c.key, func(o *EquipOrder) {
+		o.State, o.Displaced, o.Where, o.Removed, o.Code, o.Reason = EqDone, names, where, nil, "", ""
+	})
 	k.mu.Lock()
 	k.info.Done++
 	k.mu.Unlock()
@@ -275,8 +429,10 @@ func (k *Keeper) finishDirect(ctx context.Context, st *vault.Store, c chosen, dr
 }
 
 // recordRemoved turns the bytes the engine returned into a vault record. When the vault cannot take it the item is created
-// into the stash, else the backpack, so nothing is lost; the order says where it is.
-func (k *Keeper) recordRemoved(ctx context.Context, st *vault.Store, hexRaw, name string) (string, string) {
+// into the stash, else the backpack, so nothing is lost; the order says where it is. ok false: the item has no home yet
+// and the caller keeps its bytes. tag marks the record as this order's, so a second pass knows it filed it. quiet: no
+// game write (a measured run).
+func (k *Keeper) recordRemoved(ctx context.Context, st *vault.Store, hexRaw, name, tag string, quiet bool) (string, string, bool) {
 	dec, _ := k.API.(d2dctl.Decoder)
 	var r d2dctl.VaultRecord
 	var err error
@@ -286,15 +442,19 @@ func (k *Keeper) recordRemoved(ctx context.Context, st *vault.Store, hexRaw, nam
 		err = errors.New("no decoder")
 	}
 	if err != nil {
-		w := k.createBack(ctx, hexRaw)
-		k.note("equip-"+hexRaw[:min(8, len(hexRaw))], "An item you replaced could not be read for the vault ("+err.Error()+"); it is in your "+w+".")
-		return "an item", w
+		w, ok := k.createBack(ctx, hexRaw, tag, quiet)
+		if ok {
+			k.note("equip-"+hexRaw[:min(8, len(hexRaw))], "An item you replaced could not be read for the vault ("+err.Error()+"); it is in your "+w+".")
+		}
+		return "an item", w, ok
 	}
-	return k.recordItem(ctx, st, r, name)
+	return k.recordItem(ctx, st, r, name, tag, quiet)
 }
 
 // recordItem files a decoded item as a "previously worn" vault record (the vault full: the stash, else the backpack).
-func (k *Keeper) recordItem(ctx context.Context, st *vault.Store, r d2dctl.VaultRecord, name string) (string, string) {
+// An identical live record is NOT taken as "filed" (d2d items have no unique id, two real items can have equal bytes):
+// only a record this same order wrote counts; a real twin goes back to the hero and the player is told.
+func (k *Keeper) recordItem(ctx context.Context, st *vault.Store, r d2dctl.VaultRecord, name, tag string, quiet bool) (string, string, bool) {
 	if name == "" && k.Namer != nil {
 		name = k.Namer(r, vault.Rec{})
 	}
@@ -302,36 +462,60 @@ func (k *Keeper) recordItem(ctx context.Context, st *vault.Store, r d2dctl.Vault
 		name = r.Code
 	}
 	it := vault.Item{Raw: r.Norm, Code: r.Code, Name: name, Quality: r.Quality, Ilvl: r.ILvl, Identified: true, Props: r.Props,
-		Sockets: r.Sockets, Eth: r.Ethereal, Found: vault.Found{Time: k.now().UTC(), Zone: "previously worn"}}
+		Sockets: r.Sockets, Eth: r.Ethereal, Found: vault.Found{Time: k.now().UTC(), Zone: "previously worn", Area: tag}}
 	it.Pic, it.Tint, it.FileIndex = r.Pic, r.Tint, r.FileIndex()
 	if k.Chain != nil {
 		it.Chain = k.Chain(r.Code)
 	}
-	if _, err := st.Add(it); err != nil && !errors.Is(err, vault.ErrDuplicate) {
-		w := k.createBack(ctx, r.Norm)
-		k.note("equip-"+name, "The "+name+" you replaced is in your "+w+": the vault could not take it ("+err.Error()+").")
-		return name, w
+	_, err := st.Add(it)
+	if err == nil {
+		return name, "vault", true
 	}
-	return name, "vault"
+	if errors.Is(err, vault.ErrDuplicate) && tag != "" {
+		for _, o := range st.Dump() {
+			if o.State == vault.Recorded && o.Found.Area == tag && strings.EqualFold(o.Raw, r.Norm) {
+				return name, "vault", true // this order filed it on an earlier pass
+			}
+		}
+	}
+	w, ok := k.createBack(ctx, r.Norm, tag, quiet)
+	if ok {
+		text := "The " + name + " you replaced is in your " + w + ": the vault could not take it (" + err.Error() + ")."
+		if errors.Is(err, vault.ErrDuplicate) {
+			text = "The " + name + " you took off is in your " + w + ": an identical item is already in the vault, so it was not filed as a second record."
+		}
+		k.note("equip-"+name+tag, text)
+	}
+	return name, w, ok
 }
 
 // createBack puts an item that has no vault record back on the hero: the stash, else the backpack under the keep mark.
-func (k *Keeper) createBack(ctx context.Context, hexNorm string) string {
-	if _, err := k.API.ItemCreate(ctx, hexNorm, d2dctl.CreateOpts{}); err == nil {
-		return "stash"
+// The create carries a key (order and bytes), so a repeated pass does not make a second copy. ok false: not placed.
+func (k *Keeper) createBack(ctx context.Context, hexNorm, tag string, quiet bool) (string, bool) {
+	if quiet {
+		return "", false
 	}
-	if r, err := k.API.ItemCreate(ctx, hexNorm, d2dctl.CreateOpts{Pack: true}); err == nil {
+	key := keyPrefix + "rb-" + orderTag(tag+hexNorm)
+	_, err := k.API.ItemCreate(ctx, hexNorm, d2dctl.CreateOpts{Key: key})
+	if err == nil || errors.Is(err, d2dctl.ErrVaultDup) {
+		return "stash", true
+	}
+	r, err := k.API.ItemCreate(ctx, hexNorm, d2dctl.CreateOpts{Pack: true, Key: key + "p"})
+	if err == nil {
 		k.Hand.Protect(uint32(r.ID))
-		return "backpack"
+		return "backpack", true
 	}
-	return "backpack (not placed: " + hexNorm + ")"
+	if errors.Is(err, d2dctl.ErrVaultDup) {
+		return "backpack", true
+	}
+	return "", false
 }
 
 func (k *Keeper) putEq(o *EquipOrder) {
 	k.mu.Lock()
 	defer k.mu.Unlock()
 	o.At, o.Updated = k.now(), k.now()
-	k.bookLocked().orders[o.ID] = o
+	k.bookLocked().put(o)
 	k.saveBookLocked()
 }
 
@@ -358,6 +542,10 @@ func (k *Keeper) directSet(ctx context.Context, ids []string) ([]Result, bool) {
 		}
 		return out, true
 	}
+	k.actMu.Lock()
+	defer k.actMu.Unlock()
+	k.journalOnce()
+	k.repairDirectLocked(ctx)
 	type cand struct {
 		pos, rank int
 		id        string
@@ -383,6 +571,9 @@ func (k *Keeper) directSet(ctx context.Context, ids []string) ([]Result, bool) {
 			rings++
 		}
 		ch, code, why := k.precheck(st, c.id, word, taken)
+		if k.directOpen(c.id) {
+			code, why = CodeInFlight, ReasonInFlight
+		}
 		if why != "" {
 			out[c.pos].Code, out[c.pos].Why = code, why
 			continue
@@ -408,63 +599,84 @@ func (k *Keeper) directSet(ctx context.Context, ids []string) ([]Result, bool) {
 	}
 	order := "eq-set-" + orderTag(strings.Join(ids, ",")) + fmt.Sprintf("-%d", k.now().UnixMilli())
 	var pieces []d2dctl.DirectPiece
-	for _, ch := range picks {
+	for i := range picks {
+		ch := &picks[i]
+		ch.tag = order
 		pieces = append(pieces, d2dctl.DirectPiece{Hex: ch.hex, Slot: ch.slot})
-		k.putEq(&EquipOrder{ID: ch.id, Name: ch.rec.Name, Slot: SlotAuto, Group: []string{ch.slot}, State: EqEquipping, Direct: true})
+		bu, bh := k.wornBefore(ctx, ch.slot)
+		k.putEq(&EquipOrder{ID: ch.id, Name: ch.rec.Name, Slot: SlotAuto, Group: []string{ch.slot}, State: EqEquipping, Direct: true,
+			Order: order, Piece: i, BeforeUnit: bu, Before: bh})
 	}
 	rs, err := k.Direct.WearSet(ctx, pieces, order)
-	if err != nil {
-		if errors.Is(err, d2dctl.ErrDirectOff) {
-			k.mu.Lock()
-			for _, ch := range picks {
-				delete(k.bookLocked().orders, ch.id)
-			}
-			k.dcapsOK = false
-			k.mu.Unlock()
-			return nil, false
-		}
-		code, why := directWhy(err)
+	if errors.Is(err, d2dctl.ErrDirectOff) {
+		k.mu.Lock()
 		for _, ch := range picks {
-			out[ch.idx].Code, out[ch.idx].Why = code, why
-			k.failOrder(ch.id, code, why)
+			delete(k.bookLocked().orders, ch.id)
 		}
-		return out, true
+		k.dcapsOK = false
+		k.mu.Unlock()
+		return nil, false
+	}
+	if err != nil && len(rs) > 0 {
+		k.note("equip-late-"+order, "Wear set: the pieces are worn; a step after the swap failed ("+err.Error()+").")
 	}
 	for i, ch := range picks {
-		r := rs[i]
-		if !r.OK {
-			code, why := directWhy(&d2dctl.DirectRefused{Code: r.Code, Why: r.Why})
+		switch {
+		case i < len(rs) && rs[i].OK: // worn: filed whatever failed after the engine answered
+			k.markApplied(ch.id, ch.slot, rs[i])
+			k.finishDirect(ctx, st, ch, rs[i], &out[ch.idx])
+		case i < len(rs):
+			code, why := directWhy(&d2dctl.DirectRefused{Code: rs[i].Code, Why: rs[i].Why})
 			out[ch.idx].Code, out[ch.idx].Why = code, why
 			k.failOrder(ch.id, code, why)
-			continue
+		case answered(err):
+			code, why := directWhy(err)
+			out[ch.idx].Code, out[ch.idx].Why = code, why
+			k.failOrder(ch.id, code, why)
+		default: // no answer for this piece: judged by looking, else it stays open
+			k.resolveDirect(ctx, st, ch.id, &out[ch.idx])
+			if out[ch.idx].Code == "" && !out[ch.idx].OK {
+				out[ch.idx].Code, out[ch.idx].Why = "equip", ReasonUnknown
+			}
 		}
-		k.setOrder(ch.id, func(o *EquipOrder) { o.Applied, o.Removed, o.Worn, o.Unit = true, r.Removed, ch.slot, r.Unit })
-		k.finishDirect(ctx, st, ch, r, &out[ch.idx])
 	}
 	return out, true
 }
 
-// repairDirect finishes the store step of an order the engine applied but the process left before the records were written
-// (a restart), and ends an order whose engine answer never arrived. Called at the top of every Run.
+// repairDirect settles the direct orders a restart or a failed step left open: an applied one gets its displaced items
+// filed (from the order file), an unanswered one is judged by looking at the hero. Called at the top of every Run and before
+// every new direct order. In a measured run it only files records (finishDirect, quiet).
 func (k *Keeper) repairDirect(ctx context.Context) {
+	k.actMu.Lock()
+	defer k.actMu.Unlock()
+	k.repairDirectLocked(ctx)
+	k.repairCarry(ctx)
+}
+
+func (k *Keeper) repairDirectLocked(ctx context.Context) {
 	st := k.store()
 	if st == nil {
 		return
 	}
 	k.mu.Lock()
-	var todo []EquipOrder
-	for _, o := range k.bookLocked().orders {
+	todo := map[string]EquipOrder{}
+	for key, o := range k.bookLocked().orders {
 		if o.Direct && o.active() {
-			todo = append(todo, *o)
+			todo[key] = *o
 		}
 	}
 	k.mu.Unlock()
-	for _, o := range todo {
-		if !o.Applied {
-			k.failOrder(o.ID, "interrupted", "the bot restarted before the game answered: check the Inventory page")
-			continue
-		}
+	for key, o := range todo {
 		var res Result
-		k.finishDirect(ctx, st, chosen{id: o.ID, rec: vault.Rec{Item: vault.Item{Name: o.Name}}, slot: o.Worn}, d2dctl.DirectResult{Removed: o.Removed, Unit: o.Unit}, &res)
+		switch {
+		case o.Applied:
+			k.finishDirect(ctx, st, chosen{key: key, id: o.ID, tag: o.Order, rec: vault.Rec{Item: vault.Item{Name: o.Name}}, slot: o.Worn},
+				d2dctl.DirectResult{Removed: o.Removed, Unit: o.Unit}, &res)
+		case o.Reply != "": // an answer the bot could not read: the text is the only copy, it is never ended or overwritten
+			k.note("equip-reply-"+o.Order, "Equip: the game's answer for "+o.Name+" could not be read; it is kept in the order file (order "+o.Order+"). Check the Inventory page.")
+		case k.Hand == nil:
+		default:
+			k.resolveDirect(ctx, st, key, &res)
+		}
 	}
 }

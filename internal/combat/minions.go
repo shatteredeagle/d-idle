@@ -213,7 +213,7 @@ func (f *Fighter) planMinion(snap *d2.Snapshot, pr *Profile, inFight, allowWalk 
 			return minionPlan{sp: sp, group: g.Name}, true
 		}
 		if !corpsesRead {
-			corpses, corpsesRead = Corpses(snap, f.cat, me, reach, f.necro.tried), true
+			corpses, corpsesRead = Corpses(snap, f.cat, me, reach, f.takenCorpses(snap.Player.Area)), true
 		}
 		if len(corpses) == 0 {
 			continue

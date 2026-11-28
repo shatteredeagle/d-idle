@@ -20,6 +20,7 @@
         "internal/watch/web/vault.js"
       ],
       "pre": {
+        "hero_profile": "banked",
         "level": 30,
         "gold": 500,
         "stash": 7200,

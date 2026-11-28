@@ -546,6 +546,8 @@ func (r *Runner) fail(ctx context.Context, c control, what string, err error) {
 	l.failures++
 	if isRefusal(err) {
 		r.inv.noteRefusalFailure(what, err)
+	} else {
+		r.inv.noteFault()
 	}
 	r.e.Log.Warn("action failed", "what", what, "err", err, "consecutive", l.failures)
 	r.noteStanding(what, err.Error())

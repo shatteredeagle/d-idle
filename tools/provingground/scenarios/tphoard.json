@@ -18,6 +18,7 @@
     "internal/combat/portal.go"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 18,
     "gold": 600,
     "items": [

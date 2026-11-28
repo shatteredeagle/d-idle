@@ -1,10 +1,13 @@
 package bot
 
 import (
+	"strings"
 	"testing"
 
+	"d2lod-bot/internal/admit"
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/env"
+	"d2lod-bot/internal/task"
 )
 
 // admitRig is a rig for one class with the given kit, life and area; EarlyRoute 1 so every row is on.
@@ -87,5 +90,64 @@ func TestAdmissionExplainLine(t *testing.T) {
 	oldWhy, oldKit := g.r.questWalkCheck(g.r.latest())
 	if why != oldWhy || kit != oldKit || why == "" {
 		t.Errorf("quest walk exit: control %q %v, old %q %v", why, kit, oldWhy, oldKit)
+	}
+}
+
+// Fable review part 7, section 4, difference 2: Duriel's Lair (area 73) is on the tombs road and has its own row with the
+// caster life floor of 220. The old judge took the first row only, so a caster with max life 176 walked in while the
+// function refused: a new-only differ. Both now ask every row; the pair agrees and both refuse. The Paladin (melee floor
+// 220 on both rows) was refused by both before and after: the second build.
+func TestAdmissionDurielLairAsksEveryRoadRow(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		g := admitRig(t, class, 30, 46, 176, 6, true, 0)
+		s := g.r.latest()
+		old := g.r.earlyRouteWhy(s, 73)
+		if !strings.Contains(old, "life 220 needed") {
+			t.Fatalf("%v: the old judge lets max life 176 into Duriel's Lair: %q", class, old)
+		}
+		if got := g.r.admitEnter(s, 73); got != old {
+			t.Fatalf("%v: admitEnter %q, old %q", class, got, old)
+		}
+		if ex := g.r.admissionExplain(); ex.Differ != 0 || ex.AgreeRefused != 1 {
+			t.Fatalf("%v: counters %+v, want differ 0 and one refused/refused agreement", class, ex)
+		}
+		w := &task.World{}
+		g.r.fillEarly(w)
+		if _, blocked := w.EarlyBlocked[73]; !blocked {
+			t.Fatalf("%v: the task layer says Duriel's Lair is open while the hop refuses", class)
+		}
+	}
+}
+
+// Difference 1: the lean entry row under the owner's try anyway. The old judge held (no exemption), the function let
+// through: an old-only differ. Both exempt now. Without the try both still hold (the must-fail half). Two classes.
+func TestAdmissionLeanRowIsExemptUnderTry(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		for _, try := range []bool{false, true} {
+			task.SetTry(try)
+			g := admitRig(t, class, 12, 2, 90, 1, false, 0)
+			got := g.r.admitEnter(g.r.latest(), 3)
+			ex := g.r.admissionExplain()
+			task.SetTry(false)
+			if held := got != ""; held == try || ex.Differ != 0 {
+				t.Fatalf("%v try %v: entry words %q, counters %+v", class, try, got, ex)
+			}
+		}
+	}
+}
+
+// The shadow window can fail: each mixed cell is counted on its own and logged as a differ line, and an agreement on a
+// refusal is told from the both-open case (a window with agreeRefused 0 exercised no row).
+func TestAdmissionShadowCountsTheMixedCells(t *testing.T) {
+	g := admitRig(t, d2.Paladin, 12, 2, 176, 4, true, 0)
+	ref := admit.Verdict{Refused: true, Why: "new words", Row: "row", Need: "needs_potions"}
+	g.r.admitNote(3, admit.Level, "", admit.Allow, false)          // both open
+	g.r.admitNote(3, admit.Level, "new words", ref, false)         // both refuse, same words
+	g.r.admitNote(3, admit.Level, "old words", admit.Allow, false) // old-only
+	g.r.admitNote(3, admit.Level, "", ref, false)                  // new-only
+	g.r.admitNote(3, admit.Level, "old words", ref, false)         // words
+	ex := g.r.admissionExplain()
+	if ex.Agree != 2 || ex.AgreeRefused != 1 || ex.Differ != 3 || ex.OldOnly != 1 || ex.NewOnly != 1 {
+		t.Fatalf("counters %+v", ex)
 	}
 }
