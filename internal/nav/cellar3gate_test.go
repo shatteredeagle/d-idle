@@ -3,6 +3,7 @@ package nav
 import (
 	"context"
 	"errors"
+	"strings"
 	"testing"
 
 	"d2lod-bot/internal/d2map"
@@ -82,7 +83,7 @@ func TestExitToRefusesARealBarrierBesideTheStairs(t *testing.T) {
 		t.Run(c.name, func(t *testing.T) {
 			s, n := c.build(true)
 			err := n.ExitTo(ctxT(t), 24)
-			if !errors.Is(err, ErrNoPath) || s.cur().no == 24 {
+			if !errors.Is(err, ErrNoPath) || s.cur().no == 24 || !strings.Contains(err.Error(), "cause=") {
 				t.Fatalf("ExitTo: %v, level %d at %v", err, s.cur().no, s.pos())
 			}
 		})
