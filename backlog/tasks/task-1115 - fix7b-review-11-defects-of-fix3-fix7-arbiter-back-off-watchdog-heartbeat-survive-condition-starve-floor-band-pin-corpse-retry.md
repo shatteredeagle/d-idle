@@ -18,6 +18,7 @@ owns:
   - "internal/arbiter/"
   - "internal/survival/"
   - "internal/combat/"
+  - "cmd/d2bot/"
   - "docs/arbiter.md"
   - "docs/design/arbiter-target-and-migration.md"
 exclusive: []
