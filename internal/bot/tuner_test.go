@@ -120,11 +120,11 @@ func TestTunerZoneClearLiveSourcePersist(t *testing.T) {
 	if _, src, _ := tn.Value("bot.farmResetPct"); src != "default" {
 		t.Fatalf("source %q, want default", src)
 	}
-	x, on := 75.0, 1.0
-	if err := tn.Edit(api.TuneEdit{Overrides: map[string]*float64{"bot.exploredPct": &x, "bot.farmReset": &on}}); err != nil {
+	x, pct := 75.0, 90.0
+	if err := tn.Edit(api.TuneEdit{Overrides: map[string]*float64{"bot.exploredPct": &x, "bot.farmResetPct": &pct}}); err != nil {
 		t.Fatal(err)
 	}
-	if tune.Bot.ExploredPct != 75 || tune.Bot.FarmReset != 1 {
+	if tune.Bot.ExploredPct != 75 || tune.Bot.FarmResetPct != 90 {
 		t.Fatalf("the live tuning did not change: %+v", tune.Bot)
 	}
 	if v, src, _ := tn.Value("bot.exploredPct"); v != 75 || src != "dashboard" {
@@ -135,7 +135,7 @@ func TestTunerZoneClearLiveSourcePersist(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if v, src, _ := tn2.Value("bot.exploredPct"); v != 75 || src != "dashboard" || tune2.Bot.FarmReset != 1 {
+	if v, src, _ := tn2.Value("bot.exploredPct"); v != 75 || src != "dashboard" || tune2.Bot.FarmResetPct != 90 {
 		t.Fatalf("after a restart: %v %q", v, src)
 	}
 	if err := tn2.Edit(api.TuneEdit{Overrides: map[string]*float64{"bot.exploredPct": nil}}); err != nil {
