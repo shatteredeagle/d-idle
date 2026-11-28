@@ -269,17 +269,16 @@ func (t *Town) routePositions(a *Act) map[string]input.Point {
 // reorderChores applies stage 5 to the visit's chore list: it returns the names in the order to run and logs the route.
 func (t *Town) reorderChores(s *d2.Snapshot, a *Act, names []string, settleFirst bool) []string {
 	pos := t.routePositions(a)
-	// A role without a preset (Deckard Cain before his rescue, a preset the map does not give) cannot be priced: its chores
-	// leave the walk and are put back after their last predecessor, so one missing NPC does not cost the whole route.
-	var routed, unplaced []string
-	for _, nm := range names {
-		if r := choreRole[nm]; r != "" && pos[r] == (input.Point{}) {
-			t.e.Log.Info(fmt.Sprintf("town plan: route leaves out chore %s (no preset position for %s)", nm, r))
-			unplaced = append(unplaced, nm)
-			delete(pos, r)
-			continue
-		}
-		routed = append(routed, nm)
+	routed, unplaced := splitUnplaced(names, pos)
+	for _, nm := range unplaced {
+		t.e.Log.Info(fmt.Sprintf("town plan: route leaves out chore %s (no preset position for %s)", nm, choreRole[nm]))
+		delete(pos, choreRole[nm])
+	}
+	// Nothing left to price (no stop of this visit has a preset): the walk gives no reason to leave the fixed list, and
+	// its settle-before-shop order is the one whose second run is idle (TestChoresAct1AtRouteStage).
+	if !hasStop(routed) {
+		t.e.Log.Info("town plan: route kept the list (no stop of this visit has a preset position)")
+		return names
 	}
 	start := input.Point{X: s.Player.X, Y: s.Player.Y}
 	rc := t.routePrices(pos, start)
@@ -289,6 +288,24 @@ func (t *Town) reorderChores(s *d2.Snapshot, a *Act, names []string, settleFirst
 	t.lastStops.Store(&res.Stops)
 	t.e.Log.Info(fmt.Sprintf("town plan: route stops=%s cost=%d settle-first=%v order=%s", strings.Join(res.Stops, ","), res.Cost, settleFirst, strings.Join(res.Order, ",")))
 	return res.Order
+}
+
+// splitUnplaced separates the chores whose stop has no preset (Deckard Cain before his rescue, a preset the map does not
+// give) from those the route can price: one missing NPC does not cost the whole route.
+func splitUnplaced(names []string, pos map[string]input.Point) (routed, unplaced []string) {
+	for _, nm := range names {
+		if r := choreRole[nm]; r != "" && pos[r] == (input.Point{}) {
+			unplaced = append(unplaced, nm)
+			continue
+		}
+		routed = append(routed, nm)
+	}
+	return routed, unplaced
+}
+
+// hasStop reports whether any of the chores walks to a stop.
+func hasStop(names []string) bool {
+	return slices.ContainsFunc(names, func(nm string) bool { return choreRole[nm] != "" })
 }
 
 // reinsertChores puts the chores that were left out of the route back into order, each right after the last chore it must
