@@ -364,15 +364,23 @@ func TestZoneHoleNotWalkedAfterFaultBansOrWithoutMargin(t *testing.T) {
 				if got := ok && st.Area == 3; got != tc.want {
 					t.Fatalf("picked %+v ok %v, want the hole zone walked to: %v", st.Area, ok, tc.want)
 				}
-				if tc.want || ok {
+				if tc.want {
 					return
 				}
-				// Review 14 H4: the hold waits in town; with an area cleared and a way to cycle no new game is asked for.
+				// Review 14 H4: with the first field cleared the hold picks nothing, and the leveling slice waits in town:
+				// no new game is asked for although an area is cleared and the bot can cycle.
+				safe := g.r.safeFarmArea(g.r.latest())
+				ex[safe] = true
+				o.Cleared = map[int]bool{safe: true}
+				o.Model = g.r.zoneModelPick(g.r.latest(), "normal", o.Cleared)
+				if st, ok := g.r.d.Plan.Pick("normal", 12, o); ok {
+					t.Fatalf("hold with the first field cleared picked %d", st.Area)
+				}
 				g.r.d.Cycler = fakeCycler{g.w}
 				g.r.syncGames()
-				g.r.loop.cleared = map[int]bool{2: true}
 				g.w.set(func(w *world) { w.area = 1 })
 				g.r.poll()
+				g.r.loop.cleared = o.Cleared
 				for i := 0; i < 3; i++ {
 					if done, err := g.r.freshGameToLevel(context.Background(), g.r.latest()); !done || err != nil {
 						t.Fatalf("hold: done %v err %v, want a wait in town", done, err)
