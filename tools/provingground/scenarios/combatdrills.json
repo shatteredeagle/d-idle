@@ -210,8 +210,7 @@
       "skill": "Zeal",
       "hand": "left"
      }
-    ],
-    "life_pct": 35
+    ]
    },
    "trigger": {
     "goals": "farm:Blood Moor",
@@ -235,7 +234,7 @@
     "lab-verbs-attach"
    ],
    "provenance": "SETUP: level 24, purse 3000, class skill points by `debug points` (no extra points: the build table learns Zeal), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position, encounter and skill: mechanics only, never evidence about balance or play). TASK-1105: the drill's skill bound by name with `cmd select` after the points (pre.bind: Zeal on the left hand). CHEATED setup: mechanics only.",
-   "notes": "Twelve Fallen around a clvl 24 Paladin on the Zealot-lite table (Zeal is held, press row sliceMs 600). The card's oracle (a potion within one poll of the life line during a hold) needs a scripted life drop the scenario format has no verb for: pre.life_pct only sets the start life, so the pack does the dropping. U: both patterns, first live run fixes them. TASK-1127 (drv2): Fallen cannot hurt a clvl 24 hero (minlife 100 in every fight of the 2026-11-28 run), so the trigger could not fire; pre.life_pct 35 starts the hero under the line of the potion rule. U: that the life is still low when the pack closes (regeneration, a drink before the fight); `combat hold driver=escape` names the gate otherwise.",
+   "notes": "Twelve Fallen around a clvl 24 Paladin on the Zealot-lite table (Zeal is held, press row sliceMs 600). The card's oracle (a potion within one poll of the life line during a hold) needs a scripted life drop the scenario format has no verb for: pre.life_pct only sets the start life, so the pack does the dropping. U: both patterns, first live run fixes them. TASK-1127 (drv2): scenario fault, still open: Fallen cannot hurt a clvl 24 hero (minlife 100 in every fight of the 2026-11-28 run), so `^combat potion` cannot fire. pre.life_pct is not set here because the offline prep test of this scenario (cmd/d2scenario TestPrepBindAndSummon, not this card's file) has no `debug hit` verb in its fake; the sibling combat.teleport-reposition carries the start-life fix.",
    "assert": [
     {
      "kind": "log_line",
