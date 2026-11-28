@@ -8,6 +8,16 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- zone5: zone prior capped by monster supply (supplyMinutes), caster archetype rows (TASK-1129) <!--sg:agent/zone5-->
+- sweep2: parked boss area, equip journal refuse, hand-in evidence, admission road floors (TASK-1128) <!--sg:agent/sweep2-->
+- ops2: watch cookie, smoke wiring (TASK-1116) <!--sg:agent/ops2-->
+- cls1: Druid and Barbarian (TASK-1111) <!--sg:agent/cls1-->
+- grad1: graduate bot.tickLogSec (TASK-1112) <!--sg:agent/grad1-->
+- cls2: Amazon and Assassin (TASK-1109) <!--sg:agent/cls2-->
+- ops4: backlog check fails invalid YAML cards, quote values, repair cards (TASK-1124) <!--sg:agent/ops4-->
+- sweep1: review sweep, consent fix (TASK-1122) <!--sg:agent/sweep1-->
+- live1: live log findings L1-L6 (TASK-1119) <!--sg:agent/live1-->
+- fix1b: vault equip by bytes etc (TASK-1114) <!--sg:agent/fix1b-->
 - nf3b: nav seam, mapKillErr, Approach field NPC (TASK-1104/1107) <!--sg:agent/nf3b-->
 - fix7b: arbiter fixes N1-N6 (TASK-1115) <!--sg:agent/fix7b-->
 - roadfresh: roadmap refresh (TASK-1123) <!--sg:agent/roadfresh-->

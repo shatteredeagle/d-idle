@@ -134,7 +134,8 @@ type EquipOrder struct {
 	Order      string   `json:"order,omitempty"`       // direct: the order id (ledger, record mark)
 	Piece      int      `json:"piece,omitempty"`       // direct: index in a wearset call
 	Reply      string   `json:"reply,omitempty"`       // direct: an engine answer that did not parse, kept as received
-	BeforeUnit int      `json:"before_unit,omitempty"` // direct: the unit worn in the slot before the call
+	BeforeUnit int      `json:"before_unit,omitempty"` // direct: the unit worn in the slot before the call (0: empty; never compared, ids do not survive a game)
+	New        string   `json:"new,omitempty"`         // direct: the bytes (norm hex) of the item being worn; an unanswered swap is judged by them
 	Before     string   `json:"before,omitempty"`      // direct: its item bytes (norm hex), the copy an unanswered swap is filed from
 	// direct, a hand slot only: the unit and bytes worn in the OTHER hand before the call. A two-hander pushes the shield off
 	// too, and after a lost reply this copy is the only one the bot has (card vault2).
@@ -194,9 +195,11 @@ func (k *Keeper) bookLocked() *equipBook {
 	return &k.eq
 }
 
-func (k *Keeper) saveBookLocked() {
+// saveBookLocked writes the order file and reports a failed write: the direct Equip journals its order here BEFORE the
+// engine call, and a journal that is not on disk cannot settle a lost reply after a restart (review 10 N4).
+func (k *Keeper) saveBookLocked() error {
 	if k.EquipPath == "" {
-		return
+		return nil
 	}
 	var f equipFile
 	f.Version = 1
@@ -215,13 +218,16 @@ func (k *Keeper) saveBookLocked() {
 	}
 	b, err := json.MarshalIndent(f, "", " ")
 	if err != nil {
-		return
+		return err
 	}
-	_ = os.MkdirAll(filepath.Dir(k.EquipPath), 0o755)
+	if err := os.MkdirAll(filepath.Dir(k.EquipPath), 0o755); err != nil {
+		return err
+	}
 	tmp := k.EquipPath + ".tmp"
-	if os.WriteFile(tmp, b, 0o644) == nil {
-		_ = os.Rename(tmp, k.EquipPath)
+	if err := os.WriteFile(tmp, b, 0o644); err != nil {
+		return err
 	}
+	return os.Rename(tmp, k.EquipPath)
 }
 
 // EquipEnabled is the gate of the feature: knob and hand present on top of the Keep gate.

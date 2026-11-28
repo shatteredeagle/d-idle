@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Repo gate: gofmt, vet, hygiene. Run from anywhere; exits non-zero on any failure.
+# Repo gate: hygiene, Proving Ground smoke (when its paths changed), gofmt, vet. Run from anywhere; exits non-zero on any failure.
 # Usage: tools/ci/check.sh [--hygiene-only]
 set -u
 cd "$(git -C "$(dirname "$0")" rev-parse --show-toplevel)"
@@ -68,6 +68,26 @@ tools/ci/gamecode_guard.sh || fail=1
 # --- watch UI panel contract: layered CSS, panel scope, no inline styles (tools/uilint, docs/ui-regression-plan.md) ---
 go run ./tools/uilint >/dev/null 2>&1 || { go run ./tools/uilint; bad "tools/uilint (watch UI panel contract)"; }
 
+# --- Proving Ground smoke (no game; review 2026-11-28 section 1.2): when the branch touches the runner, the scenario
+# package, the Proving Ground tools or a scenario file, the prep half must still prepare and record four heroes on a
+# fake d2d. PG_SMOKE=1 forces it; the marker line is required, not only the exit code. It sits above the --hygiene-only
+# exit because the merge gate, the preflight and the light CI job stop there (review 12 D1: it ran in no automatic path).
+# PG_BASE names the commit to diff against where the merge base is HEAD itself (a push to main: the head before the push). ---
+pg_base=${PG_BASE:-$(git merge-base HEAD origin/main 2>/dev/null || git merge-base HEAD main 2>/dev/null || echo HEAD)}
+git cat-file -e "$pg_base^{commit}" 2>/dev/null || pg_base=HEAD
+pg_changed=$( { git diff --name-only "$pg_base" HEAD; git status --porcelain | cut -c4-; } 2>/dev/null |
+  grep -E '^(cmd/d2scenario/|internal/scenario/|tools/provingground/|tools/ci/check\.sh$)' | head -1)
+if [ -n "$pg_changed" ] || [ "${PG_SMOKE:-}" = 1 ]; then
+  out=$(go run ./cmd/d2scenario smoke 2>&1)
+  if echo "$out" | grep -Eq '^smoke: static [0-9]+ scenarios, prep 4, ledger 4, blocked 0$'; then
+    echo "pg smoke ok: $(echo "$out" | grep -E '^smoke: static' | tail -1)"
+  else
+    bad "d2scenario smoke:"$'\n'"$out"
+  fi
+  bash tools/provingground/nightcheck_test.sh >/dev/null 2>&1 || bad "tools/provingground/nightcheck_test.sh"
+  bash tools/provingground/pgenv_test.sh >/dev/null 2>&1 || bad "tools/provingground/pgenv_test.sh"
+fi
+
 # --- build tables, combat profiles and the capability table agree (fable review 8; ratchet data/build-cap-ratchet.json) ---
 go test -count=1 ./internal/plandata -run TestBuildTablesConsistent >/dev/null 2>&1 || { go test -count=1 ./internal/plandata -run TestBuildTablesConsistent; bad "build data consistency (internal/plandata TestBuildTablesConsistent)"; }
 
@@ -79,19 +99,6 @@ out=$(gofmt -l $(git ls-files -co --exclude-standard '*.go') 2>&1)
 
 # --- vet ---
 go vet ./... || bad "go vet"
-
-# --- Proving Ground smoke (no game; review 2026-11-28 section 1.2): when the branch touches the runner, the scenario
-# package, the Proving Ground tools or a scenario file, the prep half must still prepare and record four heroes on a
-# fake d2d. PG_SMOKE=1 forces it; the marker line is required, not only the exit code. ---
-pg_base=$(git merge-base HEAD origin/main 2>/dev/null || git merge-base HEAD main 2>/dev/null || echo HEAD)
-pg_changed=$( { git diff --name-only "$pg_base" HEAD; git status --porcelain | cut -c4-; } 2>/dev/null |
-  grep -E '^(cmd/d2scenario/|internal/scenario/|tools/provingground/|tools/ci/check\.sh$)' | head -1)
-if [ -n "$pg_changed" ] || [ "${PG_SMOKE:-}" = 1 ]; then
-  out=$(go run ./cmd/d2scenario smoke 2>&1)
-  echo "$out" | grep -Eq '^smoke: static [0-9]+ scenarios, prep 4, ledger 4, blocked 0$' || bad "d2scenario smoke:"$'\n'"$out"
-  bash tools/provingground/nightcheck_test.sh >/dev/null 2>&1 || bad "tools/provingground/nightcheck_test.sh"
-  bash tools/provingground/pgenv_test.sh >/dev/null 2>&1 || bad "tools/provingground/pgenv_test.sh"
-fi
 
 # Opt-in (CROSSBUILD=1): windows+darwin vet/build of the shipped binaries; the full matrix is the ci.yml crossbuild job.
 if [ "${CROSSBUILD:-}" = 1 ]; then tools/ci/crossbuild.sh --quick || fail=1; fi

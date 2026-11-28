@@ -84,6 +84,8 @@ jobs:
           fi
       - name: Gate (gofmt, go vet ./...)
         if: steps.scope.outputs.code == 'true'
+        env:
+          PG_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
         run: tools/ci/check.sh
       - name: Tests (short, -p 2, no game data, tests that need tables skip)
         if: steps.scope.outputs.code == 'true'

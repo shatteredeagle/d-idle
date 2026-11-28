@@ -1,0 +1,409 @@
+{
+ "version": "didle.scenario/1",
+ "scenarios": [
+  {
+   "pre": {
+    "hero_profile": "banked"
+   },
+   "kind": "e2e",
+   "tier": "nightly",
+   "covers": [
+    "combat.fight"
+   ],
+   "touches": [
+    "internal/combat/",
+    "internal/bot/",
+    "internal/leveler/",
+    "internal/plandata/build-druid_fire_normal30.json",
+    "internal/decide/"
+   ],
+   "needs": [
+    "read.minions"
+   ],
+   "matrix": {
+    "classes": [
+     "Druid"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "id": "druid.level-1-30",
+   "title": "Fresh Druid levels from clvl 1 to 30 on the default table, zero setup writes",
+   "trigger": {
+    "goals": "reach:30",
+    "knobs": {
+     "combat.minionRead": 1,
+     "quests.board": 1,
+     "resource.pointsDecisions": 1
+    },
+    "build": "druid_fire_normal30"
+   },
+   "budget": {
+    "virtual_min": 700,
+    "wall_min": 240
+   },
+   "provenance": "No setup write: a fresh level 1 hero, town start. Not CHEATED if no_writes holds.",
+   "notes": "Card cls1, clone of necro.level-1-30. Table druid_fire_normal30 (explicit). NOT run yet; ceilings and budgets are the Necromancer's guesses (U).",
+   "assert": [
+    {
+     "kind": "level_at_least",
+     "min": 30,
+     "why": "leveling plan clvl 1 to 30"
+    },
+    {
+     "kind": "stat_between",
+     "code": "skillsspent",
+     "min": 25,
+     "max": 33,
+     "why": "every skill point spent by the plan"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 6,
+     "why": "survival gate: no death spiral (U ceiling; ADR 0005 judges by streak, the invariant monitor is the verdict)"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "pre": {
+    "hero_profile": "banked"
+   },
+   "kind": "e2e",
+   "tier": "nightly",
+   "covers": [
+    "combat.fight"
+   ],
+   "touches": [
+    "internal/combat/",
+    "internal/bot/",
+    "internal/leveler/",
+    "internal/plandata/build-druid_fire_normal30.json",
+    "internal/decide/"
+   ],
+   "needs": [
+    "read.minions"
+   ],
+   "matrix": {
+    "classes": [
+     "Druid"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "id": "druid.earned-act2",
+   "title": "Earned Acts 1 and 2: a fresh Druid through Andariel and the Act 2 quests toward Duriel, zero setup writes",
+   "trigger": {
+    "goals": "campaign:normal_act2",
+    "knobs": {
+     "combat.minionRead": 1,
+     "quests.board": 1,
+     "resource.pointsDecisions": 1
+    },
+    "build": "druid_fire_normal30"
+   },
+   "budget": {
+    "virtual_min": 1500,
+    "wall_min": 500
+   },
+   "provenance": "No setup write: fresh hero. Not CHEATED if no_writes holds.",
+   "notes": "Card cls1, clone of necro.earned-act2. Table druid_fire_normal30 (explicit). NOT run yet; ceilings and budgets are the Necromancer's guesses (U). Goal string campaign:normal_act2 exists (V: internal/task/act2_campaign.go). The Act 2 level floor is a guess (U).",
+   "assert": [
+    {
+     "kind": "level_at_least",
+     "min": 24,
+     "why": "a played Act 2 reaches clvl 24 at the least (U)"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^Entered Lut Gholein",
+     "min": 1,
+     "why": "Act 2 entered"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "pre": {
+    "hero_profile": "played",
+    "level": 14,
+    "gold": 3000,
+    "start": "field",
+    "area": 3,
+    "items": [
+     {
+      "code": "hp1",
+      "count": 8
+     },
+     {
+      "code": "mp1",
+      "count": 8
+     }
+    ],
+    "belt": [
+     "hp1",
+     "hp1",
+     "mp1",
+     "mp1"
+    ]
+   },
+   "kind": "e2e",
+   "tier": "nightly",
+   "covers": [
+    "combat.fight"
+   ],
+   "touches": [
+    "internal/combat/",
+    "internal/bot/",
+    "internal/leveler/",
+    "internal/plandata/build-druid_fire_normal30.json",
+    "internal/decide/"
+   ],
+   "needs": [
+    "read.minions"
+   ],
+   "matrix": {
+    "classes": [
+     "Druid"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "id": "druid.soak-3h-kit",
+   "title": "Druid 3 virtual hours from clvl 14: kit and economy, no death spiral",
+   "trigger": {
+    "goals": "reach:30",
+    "knobs": {
+     "combat.minionRead": 1,
+     "quests.board": 1,
+     "resource.pointsDecisions": 1
+    },
+    "build": "druid_fire_normal30"
+   },
+   "budget": {
+    "virtual_min": 180,
+    "wall_min": 70
+   },
+   "provenance": "CHEATED: level 14, gold, potions and the field start by SETUP verbs, mechanics only.",
+   "notes": "Card cls1, clone of necro.soak-3h-kit. Table druid_fire_normal30 (explicit). NOT run yet; ceilings and budgets are the Necromancer's guesses (U). Caster belt (two life, two mana; chores-defaults druid potions 1:1). Report-only soak shape like soak.fault.*.",
+   "assert": [
+    {
+     "kind": "level_at_least",
+     "min": 14,
+     "why": "alive and not below the start level; the invariant monitor is the verdict"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 3,
+     "why": "no death spiral in three hours (U ceiling)"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "pre": {
+    "hero_profile": "banked"
+   },
+   "kind": "e2e",
+   "tier": "nightly",
+   "covers": [
+    "combat.fight"
+   ],
+   "touches": [
+    "internal/combat/",
+    "internal/bot/",
+    "internal/leveler/",
+    "internal/plandata/build-barbarian_melee_normal30.json",
+    "internal/decide/"
+   ],
+   "matrix": {
+    "classes": [
+     "Barbarian"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "id": "barbarian.level-1-30",
+   "title": "Fresh Barbarian levels from clvl 1 to 30 on the default table, zero setup writes",
+   "trigger": {
+    "goals": "reach:30",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1
+    },
+    "build": "barbarian_melee_normal30"
+   },
+   "budget": {
+    "virtual_min": 700,
+    "wall_min": 240
+   },
+   "provenance": "No setup write: a fresh level 1 hero, town start. Not CHEATED if no_writes holds.",
+   "notes": "Card cls1, clone of necro.level-1-30. Table barbarian_melee_normal30 (explicit). NOT run yet; ceilings and budgets are the Necromancer's guesses (U).",
+   "assert": [
+    {
+     "kind": "level_at_least",
+     "min": 30,
+     "why": "leveling plan clvl 1 to 30"
+    },
+    {
+     "kind": "stat_between",
+     "code": "skillsspent",
+     "min": 25,
+     "max": 33,
+     "why": "every skill point spent by the plan"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 6,
+     "why": "survival gate: no death spiral (U ceiling; ADR 0005 judges by streak, the invariant monitor is the verdict)"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "pre": {
+    "hero_profile": "banked"
+   },
+   "kind": "e2e",
+   "tier": "nightly",
+   "covers": [
+    "combat.fight"
+   ],
+   "touches": [
+    "internal/combat/",
+    "internal/bot/",
+    "internal/leveler/",
+    "internal/plandata/build-barbarian_melee_normal30.json",
+    "internal/decide/"
+   ],
+   "matrix": {
+    "classes": [
+     "Barbarian"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "id": "barbarian.earned-act2",
+   "title": "Earned Acts 1 and 2: a fresh Barbarian through Andariel and the Act 2 quests toward Duriel, zero setup writes",
+   "trigger": {
+    "goals": "campaign:normal_act2",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1
+    },
+    "build": "barbarian_melee_normal30"
+   },
+   "budget": {
+    "virtual_min": 1500,
+    "wall_min": 500
+   },
+   "provenance": "No setup write: fresh hero. Not CHEATED if no_writes holds.",
+   "notes": "Card cls1, clone of necro.earned-act2. Table barbarian_melee_normal30 (explicit). NOT run yet; ceilings and budgets are the Necromancer's guesses (U). Goal string campaign:normal_act2 exists (V: internal/task/act2_campaign.go). The Act 2 level floor is a guess (U).",
+   "assert": [
+    {
+     "kind": "level_at_least",
+     "min": 24,
+     "why": "a played Act 2 reaches clvl 24 at the least (U)"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^Entered Lut Gholein",
+     "min": 1,
+     "why": "Act 2 entered"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "pre": {
+    "hero_profile": "played",
+    "level": 14,
+    "gold": 3000,
+    "start": "field",
+    "area": 3,
+    "items": [
+     {
+      "code": "hp1",
+      "count": 16
+     }
+    ],
+    "belt": [
+     "hp1",
+     "hp1",
+     "hp1",
+     "hp1"
+    ]
+   },
+   "kind": "e2e",
+   "tier": "nightly",
+   "covers": [
+    "combat.fight"
+   ],
+   "touches": [
+    "internal/combat/",
+    "internal/bot/",
+    "internal/leveler/",
+    "internal/plandata/build-barbarian_melee_normal30.json",
+    "internal/decide/"
+   ],
+   "matrix": {
+    "classes": [
+     "Barbarian"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "id": "barbarian.soak-3h-kit",
+   "title": "Barbarian 3 virtual hours from clvl 14: kit and economy, no death spiral",
+   "trigger": {
+    "goals": "reach:30",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1
+    },
+    "build": "barbarian_melee_normal30"
+   },
+   "budget": {
+    "virtual_min": 180,
+    "wall_min": 70
+   },
+   "provenance": "CHEATED: level 14, gold, potions and the field start by SETUP verbs, mechanics only.",
+   "notes": "Card cls1, clone of necro.soak-3h-kit. Table barbarian_melee_normal30 (explicit). NOT run yet; ceilings and budgets are the Necromancer's guesses (U). Melee belt (four life columns; chores-defaults barbarian potions health 1, mana 0). Report-only soak shape like soak.fault.*.",
+   "assert": [
+    {
+     "kind": "level_at_least",
+     "min": 14,
+     "why": "alive and not below the start level; the invariant monitor is the verdict"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 3,
+     "why": "no death spiral in three hours (U ceiling)"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  }
+ ]
+}

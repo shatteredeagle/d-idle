@@ -284,6 +284,9 @@ func (k *Keeper) saleSkip(ctx context.Context, id string, rec vault.Rec, found b
 	case rec.Hold != "":
 		return SaleLine{}, &SaleSkip{ID: id, Code: "busy", Why: "another sale has reserved it"}
 	}
+	if by := k.heldBy(id); by != "" { // it may be worn or carried already: never paid for meanwhile
+		return SaleLine{}, &SaleSkip{ID: id, Code: "busy", Why: ReasonHeld(by)}
+	}
 	g, err := k.value(ctx, rec)
 	if err != nil {
 		return SaleLine{}, &SaleSkip{ID: id, Code: "price", Why: "the engine price could not be read: " + err.Error()}
