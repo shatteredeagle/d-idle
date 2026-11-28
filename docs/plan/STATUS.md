@@ -197,6 +197,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- d318b165a 11-28 03:50 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
+- 910df4846 11-28 03:48 `Merge branch 'main' into nightlog` (-)
 - 5bfdc8aa4 11-28 03:36 `Merge agent/zone5: zone5: zone prior capped by monster supply (supplyMinutes), caster archetype rows (TASK-1129)` (zone5)
 - 113323e05 11-28 03:35 `Merge branch 'main' into zone5` (-)
 - 5b3b4951e 11-28 03:26 `Merge agent/sweep2: sweep2: parked boss area, equip journal refuse, hand-in evidence, admission road floors (TASK-1128)` (sweep2)
@@ -205,6 +207,4 @@
 - 808f920da 11-28 03:18 `Merge agent/cls1: cls1: Druid and Barbarian (TASK-1111)` (cls1)
 - 0a686de8e 11-28 03:16 `Merge branch 'main' into ops2` (-)
 - c31d6dfaf 11-28 03:16 `Merge branch 'main' into cls1` (-)
-- b2003074b 11-28 03:09 `Merge origin/main into ops2 (keep both check.sh blocks)` (-)
-- 6a756b649 11-28 03:07 `Merge agent/grad1: grad1: graduate bot.tickLogSec (TASK-1112)` (grad1)
 <!-- statusgen:end -->
