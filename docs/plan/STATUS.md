@@ -44,16 +44,24 @@
 | cellar3gate | in-progress | - | `internal/nav/exit.go`<br>`internal/nav/cellar3gate_test.go`<br>`internal/questboard/`<br>`docs/probes/cellar3-gate-capture.md` | - |
 | holereach | proposed | - | `internal/bot/zonemodel.go`<br>`internal/bot/zonemodel_test.go` | - |
 | pgfix | proposed | - | `cmd/d2scenario`<br>`internal/scenario`<br>`tools/provingground/scenarios`<br>`docs/process/proving-ground.md` | - |
-| fix8 | in-progress | - | `internal/plandata/`<br>`data/build-cap-ratchet.json`<br>`data/capabilities/`<br>`tools/ci/check.sh`<br>`internal/combat/`<br>`cmd/d2bot/`<br>`internal/leveler/`<br>`internal/task/`<br>`internal/bot/`<br>`internal/d2/`<br>`internal/town/`<br>`internal/resource/`<br>`docs/plan/data/`<br>`docs/sme/capability-gaps.md`<br>`docs/invariants.md`<br>`tools/rigs/` | - |
 | fix4 | in-progress | - | `deploy/d2d-container/tester-report.sh`<br>`deploy/d2d-container/tester_report_test.go`<br>`internal/watch/serve.go`<br>`internal/watch/serve_test.go`<br>`internal/watch/gate.go`<br>`internal/watch/web/shell.js`<br>`internal/watch/difficultydesk.go`<br>`internal/watch/difficultydesk_test.go`<br>`internal/diffready/`<br>`internal/bot/diffready.go`<br>`internal/bot/diffready_test.go`<br>`tools/flip/flip.py`<br>`tools/flip/test_flip.py`<br>`internal/logx/sink.go`<br>`internal/logx/sink_test.go`<br>`docs/ops/docker-volumes.md`<br>`docs/diffready.md` | - |
 | navbarracks | proposed | - | `internal/nav/`<br>`internal/d2dworld/` | - |
 | cainspin | proposed | - | `internal/bot/` | - |
-| summonerstall | proposed | - | `internal/bot/`<br>`internal/nav/` | - |
-| drillskills | proposed | - | `internal/scenario/`<br>`cmd/d2scenario/`<br>`tools/provingground/scenarios/combatdrills.json`<br>`tools/provingground/scenarios/necro.json` | - |
+| summonerstall | proposed | - | `internal/bot/`<br>`internal/nav/`<br>`cmd/d2bot/boss.go`<br>`cmd/d2bot/boss_test.go`<br>`backlog/tasks/task-1107 - act2night-three-Act-2-stepexec-drill-findings-Duriel-stall-shaft-road-without-a-portal-potion-not-drunk-in-the-cube-drill.md` | - |
+| drillskills | proposed | - | `internal/scenario/`<br>`cmd/d2scenario/`<br>`tools/provingground/scenarios/combatdrills.json`<br>`tools/provingground/scenarios/necro.json`<br>`tools/provingground/golden/setup-played.tsv` | - |
 | bsmnight | proposed | - | `tools/provingground/scenarios/board.json`<br>`internal/questboard/` | - |
 | act2night | proposed | - | `internal/bot/`<br>`tools/provingground/scenarios/stepexec-act2chunks.json` | - |
 | townnight | proposed | - | `internal/town/`<br>`internal/supply/`<br>`tools/provingground/scenarios/townplan.json` | - |
+| led1 | in-progress | - | `data/darklaunch/`<br>`data/darklaunch.json`<br>`data/darklaunch-cap.json`<br>`tools/darklaunch/`<br>`tools/flip/`<br>`docs/process/dark-launch.md`<br>`docs/process/autoflip.md` | - |
+| cls1 | proposed | - | `internal/decide/`<br>`internal/plandata/`<br>`internal/d2/classtraits.json`<br>`internal/d2/`<br>`internal/combat/classdata/`<br>`internal/levelplan/`<br>`data/build-cap-ratchet.json`<br>`tools/provingground/scenarios/`<br>`docs/classes/`<br>`tools/provingground/golden/`<br>`internal/watch/policysheet_test.go`<br>`internal/watch/policypreview_test.go`<br>`internal/watch/stance_test.go`<br>`internal/watch/unlockrisk_test.go` | - |
+| fix7b | in-progress | - | `internal/bot/`<br>`internal/arbiter/`<br>`internal/survival/`<br>`internal/combat/`<br>`cmd/d2bot/`<br>`docs/arbiter.md`<br>`docs/design/arbiter-target-and-migration.md` | - |
+| ops2 | in-progress | - | `internal/watch/serve.go`<br>`internal/watch/serve_test.go`<br>`tools/ci/check.sh`<br>`.github/workflows/ci.yml`<br>`docs/process/proving-ground.md` | - |
+| live1 | proposed | - | `internal/bot/`<br>`internal/survival/`<br>`internal/questboard/`<br>`internal/arbiter/`<br>`cmd/d2bot/survivalwire.go`<br>`docs/live1.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
+| sweep1 | in-progress | - | `docs/probes/review-sweep-2026-11-28.md`<br>`internal/diffready/`<br>`internal/bot/diffready_test.go`<br>`internal/combat/move.go`<br>`internal/combat/whirl.go`<br>`internal/combat/fight.go`<br>`internal/combat/move_test.go`<br>`internal/watch/difficultydesk.go` | - |
+| ops4 | in-progress | - | `tools/backlog/`<br>`backlog/tasks/task-185 - unlockwire-wire-bestiary-risk-order-queue-and-atlas-into-the-live-bot.md`<br>`backlog/tasks/task-597 - vaultv7b-wire-the-ETHER-wallet-Vault-page-upgrade-UI-earn-call-sites.md`<br>`backlog/tasks/task-1100 - fix4-security-fixes-from-fable-review-4-scrubber-watch-token-difficulty-go-flip-run-check-log-tail.md` | - |
+| sweep2 | in-progress | - | `docs/probes/review-sweep2-2026-11-28.md`<br>`docs/arbiter.md`<br>`cmd/d2bot/survivalwire.go`<br>`internal/admit/admit.go`<br>`internal/arbiter/arbiter.go`<br>`internal/arbiter/shadow.go`<br>`internal/arbiter/sweep2_test.go`<br>`internal/bot/admission.go`<br>`internal/bot/arbiter_control.go`<br>`internal/bot/earlyroute.go`<br>`internal/bot/questboard.go`<br>`internal/bot/routeguard.go`<br>`internal/bot/sweep2_test.go`<br>`internal/questboard/exec.go`<br>`internal/questboard/fake.go`<br>`internal/questboard/readiness.go`<br>`internal/questboard/sweep2_test.go`<br>`internal/vaultkeep/equip.go`<br>`internal/vaultkeep/equipdirect.go`<br>`internal/vaultkeep/sweep2_test.go` | - |
+| zone5 | proposed | - | `internal/survival/`<br>`cmd/d2bot/survivalwire.go`<br>`docs/survival/zonemodel.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
 | ghcrpublish | in-progress | - | `.github/workflows/tester-image.yml`<br>`docs/registry-publish.md`<br>`deploy/d2d-container/compose.friends.yml`<br>`docs/tester-registry.md`<br>`deploy/d2d-container/compose.tester.yml`<br>`deploy/d2d-container/context.sh`<br>`deploy/d2d-container/tester_image_test.go` | - |
@@ -196,14 +204,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
-- ab6763901 11-28 01:29 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
-- 317417875 11-28 01:28 `Merge branch 'main' into nightlog` (-)
-- 702b6cfd5 11-28 01:23 `Merge agent/nf1: nf1: nav strip behind a sealed frontier pocket (TASK-1102)` (nf1)
-- 6aa6ad5b9 11-28 01:22 `Merge branch 'main' into nf1` (-)
-- 93b181848 11-28 01:15 `Merge agent/fix8: fix8: build-table consistency check, capability facts, SelectProfile error, combat keys, traps list, mana_heavy in Normal (TASK-1097)` (fix8)
-- 275751034 11-28 01:13 `Merge branch 'main' into fix8` (-)
-- 028b8a1bc 11-28 01:11 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
-- d89ce280c 11-28 01:11 `Merge agent/rv4: review 13: sandbox live log review (docs)` (rv4)
-- af0509e9f 11-28 01:09 `Merge branch 'main' into rv4` (-)
-- 76fbf6545 11-28 01:00 `Merge branch 'main' into fix8` (-)
+- 5bfdc8aa4 11-28 03:36 `Merge agent/zone5: zone5: zone prior capped by monster supply (supplyMinutes), caster archetype rows (TASK-1129)` (zone5)
+- 113323e05 11-28 03:35 `Merge branch 'main' into zone5` (-)
+- 5b3b4951e 11-28 03:26 `Merge agent/sweep2: sweep2: parked boss area, equip journal refuse, hand-in evidence, admission road floors (TASK-1128)` (sweep2)
+- 7bbd7ee07 11-28 03:25 `Merge branch 'main' into sweep2` (-)
+- 9fe7dbb41 11-28 03:18 `Merge agent/ops2: ops2: watch cookie, smoke wiring (TASK-1116)` (ops2)
+- 808f920da 11-28 03:18 `Merge agent/cls1: cls1: Druid and Barbarian (TASK-1111)` (cls1)
+- 0a686de8e 11-28 03:16 `Merge branch 'main' into ops2` (-)
+- c31d6dfaf 11-28 03:16 `Merge branch 'main' into cls1` (-)
+- b2003074b 11-28 03:09 `Merge origin/main into ops2 (keep both check.sh blocks)` (-)
+- 6a756b649 11-28 03:07 `Merge agent/grad1: grad1: graduate bot.tickLogSec (TASK-1112)` (grad1)
 <!-- statusgen:end -->

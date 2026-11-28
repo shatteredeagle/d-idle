@@ -26,7 +26,8 @@ type AdmissionExplain struct {
 	AgreeRefused int       `json:"agreeRefused,omitempty"`
 	OldOnly      int       `json:"oldOnly,omitempty"`
 	NewOnly      int       `json:"newOnly,omitempty"`
-	Last         string    `json:"last,omitempty"` // area, purpose and the words of the last non-open verdict
+	Words        int       `json:"words,omitempty"` // both refused, with different words
+	Last         string    `json:"last,omitempty"`  // area, purpose and the words of the last non-open verdict
 	Row          string    `json:"row,omitempty"`
 	Need         string    `json:"need,omitempty"`
 	Wake         string    `json:"wake,omitempty"`
@@ -158,6 +159,8 @@ func (r *Runner) admitNote(a int, p admit.Purpose, old string, nv admit.Verdict,
 	x.st.Differ++
 	cell := "words" // both refuse, for different reasons
 	switch {
+	case !extra && old != "" && nv.Refused:
+		x.st.Words++
 	case extra || old == "" && nv.Refused:
 		cell = "new-only"
 		x.st.NewOnly++

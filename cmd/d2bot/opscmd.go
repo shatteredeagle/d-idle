@@ -16,6 +16,7 @@ import (
 	"d2lod-bot/internal/ops"
 	"d2lod-bot/internal/questboard"
 	"d2lod-bot/internal/support"
+	"d2lod-bot/internal/vaultkeep"
 )
 
 const opsUsage = `usage: d2bot ops quest status [--json] [--why]
@@ -28,6 +29,8 @@ const opsUsage = `usage: d2bot ops quest status [--json] [--why]
        d2bot ops park <quest> <hours 1..24> --why "reason"   (stop the quest's chunk, refuse start and retry until then)
        d2bot ops go-difficulty <nightmare|hell> --why "reason"   (your go for the hop; refused with what is missing unless ready)
        d2bot ops log [--tail N] [--grep REGEXP] [--file PATH]   (the bot's own log file, read only, no socket; default N 50)
+       d2bot ops vault check --dir DIR [--items FILE] [--json]   (the dry run of a vault repair: read only, no socket; DIR is
+                                                              <data>/vaults/<hero>/vault; FILE: the hero's item bytes, one hex a line)
        d2bot ops quest wait <quest> [--chunk ID] [--timeout 600]
 flags: --sock PATH (default $D2BOT_OPERATOR_SOCK, else the sandbox container's state directory)`
 
@@ -39,6 +42,9 @@ const defaultOpsSock = "/data/instances/main/state/" + ops.SockName
 func opsMain(args []string, out io.Writer) (int, error) {
 	if len(args) > 0 && args[0] == "log" {
 		return opsLog(args[1:], out)
+	}
+	if len(args) > 0 && args[0] == "vault" {
+		return opsVault(args[1:], out)
 	}
 	if len(args) > 0 && args[0] != "quest" {
 		return opsHero(args, out)
@@ -301,6 +307,50 @@ func opsLog(args []string, out io.Writer) (int, error) {
 	// the output goes to a terminal and from there into chats: no credential, no control character (review 4 finding 7)
 	for _, l := range lines {
 		fmt.Fprintln(out, logx.Printable(support.RedactCredentials(l)))
+	}
+	return 0, nil
+}
+
+// opsVault is `d2bot ops vault check`: what a vault repair would look at (open intents, duplicates, sales that paid for
+// records they do not hold), read from the files of one hero's vault directory. It changes nothing and needs no socket.
+// Exit 0: clean, 1: findings or unreadable, 2: usage.
+func opsVault(args []string, out io.Writer) (int, error) {
+	if len(args) == 0 || args[0] != "check" {
+		return 2, errors.New(opsUsage)
+	}
+	fs := flag.NewFlagSet("ops vault check", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	dir := fs.String("dir", "", "the hero's vault directory")
+	items := fs.String("items", "", "file with the hero's item bytes (norm hex), one a line")
+	asJSON := fs.Bool("json", false, "findings as JSON lines")
+	if err := fs.Parse(args[1:]); err != nil || fs.NArg() != 0 || *dir == "" {
+		return 2, fmt.Errorf("%v\n%s", err, opsUsage)
+	}
+	var hero []string
+	if *items != "" {
+		b, err := os.ReadFile(*items)
+		if err != nil {
+			return 1, err
+		}
+		hero = strings.Fields(string(b))
+	}
+	fnd, err := vaultkeep.Check(*dir, hero)
+	if err != nil {
+		return 1, err
+	}
+	for _, f := range fnd {
+		if *asJSON {
+			b, _ := json.Marshal(f)
+			fmt.Fprintln(out, string(b))
+			continue
+		}
+		fmt.Fprintf(out, "%-14s %s  %s\n", f.Kind, f.ID, f.Text)
+	}
+	if !*asJSON {
+		fmt.Fprintf(out, "vault check: %d finding(s), nothing was changed\n", len(fnd))
+	}
+	if len(fnd) > 0 {
+		return 1, nil
 	}
 	return 0, nil
 }

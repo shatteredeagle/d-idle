@@ -132,6 +132,11 @@ func TestZonePaceLockLapsesAndBandDrops(t *testing.T) {
 			if got := l.inBand(in, judged(true, true, true)); len(got) != 2 || got[0].c.Key != in.Current {
 				t.Fatalf("the band dropped the current zone: %v", got)
 			}
+			// review 11, N5: the current zone (5) is the only safe zone kept and it is below the band; the better safe zone
+			// below the band (7) must stay so value can choose it. Before the fix the hero was pinned in the lowest zone.
+			if got := l.inBand(in, judged(true, true, false)); len(got) != len(in.Cands) {
+				t.Fatalf("the band pinned the hero in the lowest zone: %d of %d zones left", len(got), len(in.Cands))
+			}
 			in.Current = ZoneKey{}
 			in.Level = 40 // every zone below the band: the list is kept whole, never emptied
 			if got := l.inBand(in, judged(true, true, true)); len(got) != len(in.Cands) {

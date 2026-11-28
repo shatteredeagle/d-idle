@@ -137,10 +137,16 @@ func (e *Exec) SetResume(o ResumeOptions) {
 	e.mu.Unlock()
 }
 
+// ResumeNoteLegacy is the sentence for a stored park shown by the legacy board (quests.boardSM 0), where no policy runs.
+const ResumeNoteLegacy = "Only you can clear it: tap Try again or Reset. Nothing resumes it by itself while the board runs without the state machine (quests.boardSM is off)."
+
 // ResumeNote is the "what clears it" sentence of a parked run, for the API and the Return screen.
 func (e *Exec) ResumeNote(run Run) string {
 	e.mu.Lock()
 	defer e.mu.Unlock()
+	if !e.o.SM { // ResumeTick never lifts a park without the machine: do not promise it
+		return ResumeNoteLegacy
+	}
 	w := decideResume(e.o.Resume, run, ResumeInput{Calm: true, LifePct: 100}, e.o.Now(), 0).Wait
 	if w == "" {
 		w = "Resumes by itself as soon as the hero is calm and at full life, or tap Try again now."

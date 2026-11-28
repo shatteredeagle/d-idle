@@ -130,3 +130,7 @@ Closing rule: a card closes when merged with offline acceptance proven; every op
 | TASK-1096 fix7 | #7 | live: one control-0 recorded night scored before any family bit beyond 14 | live drill on the sandbox, fresh hero, per the card result | open |
 | TASK-1099 fix2 | #7 | Live: restart between two deaths still parks; flip, park, revert keeps the park (sandbox) | live drill on the sandbox, fresh hero, per the card result | open |
 | TASK-1098 fix6 | #6 | live: one T2 run on the lab d2d records one ledger line per result | live drill on the sandbox, fresh hero, per the card result | open |
+| TASK-1113 vault2 | #7 | live check on a sandbox: sell while tapping Keep, equip on merc with a worn piece, run ops vault check | live drill on the sandbox, fresh hero, per the card result | open |
+| TASK-1121 road4 | #6 | run d2shadow on one recorded sandbox night and cite the output in the ledger rows (live check) | live drill on the sandbox, fresh hero, per the card result | open |
+| TASK-1114 fix1b | #6 | Live check: direct Equip, Carry, Stow across a new game on a throwaway hero | live drill on the sandbox, fresh hero, per the card result | open |
+| TASK-1109 cls2 | #7 | live drill of the new scenarios (needs live) | live drill on the sandbox, fresh hero, per the card result | open |

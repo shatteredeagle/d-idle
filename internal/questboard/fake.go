@@ -31,7 +31,9 @@ type Fake struct {
 	// HandInTier (default T2; T3 leaves only the proxy).
 	HandInErrs   int
 	HandInSilent int
-	HandInTier   Tier
+	// HandInLateErr: that many hand-ins register the reward and still return an error.
+	HandInLateErr int
+	HandInTier    Tier
 
 	Calls []string // "step quest/chunk", "handin quest/chunk", "stop quest/chunk"
 	board *Board
@@ -119,6 +121,13 @@ func (f *Fake) HandIn(_ context.Context, q Quest, c Chunk) error {
 	k := ChunkKey(q.ID, c.ID)
 	f.Calls = append(f.Calls, "handin "+k)
 	switch {
+	case f.HandInLateErr > 0: // the reward registers and the dialogue still reports an error
+		f.HandInLateErr--
+		if len(q.Chunks) == 1 {
+			f.DoneQuest[q.ID] = f.HandInTier
+		}
+		f.ChunkDone[k] = f.HandInTier
+		return errors.New("dialog closed early")
 	case f.HandInErrs > 0:
 		f.HandInErrs--
 		return errors.New("dialog row not found")

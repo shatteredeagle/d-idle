@@ -91,9 +91,6 @@ type BotTuning struct {
 	// arbiter.Families); the chain's hooks of such a family defer to its decision. 0 (default) changes nothing. Needs
 	// ArbiterShadow 1. Enable rule: data/darklaunch.json.
 	ArbiterControl, ArbiterFamilies int
-	// TickLogSec [dark-launch]: above 0 writes one "tick" line at most every this many seconds with the arbiter's world
-	// facts and the chain's family, for offline replay (cmd/d2arbiter, docs/design/ticklog-t4.md). 0 (default) is off.
-	TickLogSec int
 	// Admission [dark-launch]: 1 lets internal/admit decide the area entry rows (early road, poverty, kit floor, lean) and the
 	// quest-walk kit at the town exit; 0 (default) keeps the old judges in control and only logs where admit would differ.
 	Admission           int
@@ -179,7 +176,7 @@ func DefaultBotTuning() BotTuning {
 		CorpseValueMin: 1000, SpiralDeaths: 4, SpiralMinutes: 15, DangerBanMin: 20, StarterBanMin: 3, QuestBlockedFarmMin: 10, ParkAfter: 2, ParkMinutes: 15, RepeatSiteBanMin: 30, RepeatSiteEscalate: 1, RepeatSiteWindowMin: 30, RepeatSiteGapSec: 180, CorpseMinValue: 50, NavSkipSec: 150, AreaIdleSec: 60, StallWarnMin: 30, StallExitMin: 30, PauseDeathsPerHour: 8, PauseCapMin: 60, StalePackHostiles: 4, StalePackMinutes: 10, StalePackMinHP: 5, StalePackMinTier: 2, PotionBurstN: 5, PotionBurstSec: 20, PotionBurstHostiles: 3, PovertyTier: 0, GoldFloor: 2000,
 		PointsRetrySec: 30, GearCheckSec: 60, GearMinGold: 150, GearBudgetPct: 70, GearReserve: 100,
 		SellMinItems: 4, DifficultyBanMin: 60, SavePointMin: 20, HeapLimitMB: 4096, FailsafeRung3Max: 6, FailsafePauseMaxSec: 3600, FlailMoves: 6, FlailWindowMin: 10, FlailHoldMin: 5,
-		Invariants: 1, TypedOutcome: 1, ArbiterShadow: 0, ArbiterDwellSec: 120, ArbiterTravelSec: 600, ArbiterLogGapSec: 60, ArbiterControl: 0, ArbiterFamilies: 3, TickLogSec: 0, Admission: 0,
+		Invariants: 1, TypedOutcome: 1, ArbiterShadow: 0, ArbiterDwellSec: 120, ArbiterTravelSec: 600, ArbiterLogGapSec: 60, ArbiterControl: 0, ArbiterFamilies: 3, Admission: 0,
 		Rung3WindowMax: 3, Rung3WindowMin: 20, DroughtMin: 8, EmptyFieldSec: 150, ClearIdleMin: 3, NoPortalWaitSec: 20, PortalRetryWaitSec: 3, CheckpointEnable: 0, CheckpointMinLifePct: 80, CheckpointRetreatPct: 40, CheckpointGapSec: 60, CheckpointMinScrolls: 2, CheckpointSafeRadius: 30, CheckpointEntryDist: 40, CheckpointReach: 60, CheckpointArrivalHostiles: 4, DroughtStage2Min: 2, DroughtSlowMin: 10, DroughtSlowKills: 3, DroughtSlowMaxLevel: 10, FreshAfterRecoverySec: 180, RecoveryDryMin: 5, RecoveryDryKills: 5, RecoveryDrySkipMin: 15,
 		ZoneModel: 0, ZoneDial: 1, PortalGuard: 0, PortalCastMs: 3000, PortalWalkMs: 3000, PortalHitMs: 700, PortalLifePct: 50,
 		MercRetryMin: 10, MercHireMinGold: 400, MercReviveLoopN: 3, MercReviveLoopMin: 10, CubeMaxJobs: 6, CubeRuneCap: 10, CubeGemCap: 2,
@@ -378,8 +375,6 @@ func botKnobs() []Knob {
 			Desc: "[dark-launch] 1 lets the intent arbiter act for the families in bot.arbiterFamilies: the goal chain's hooks of such a family defer to its decision, and the old chain is the fallback when the arbiter chooses nothing or fails. Needs bot.arbiterShadow 1. 0 is off: nothing changes (docs/arbiter.md, data/darklaunch.json)."},
 		{Key: "bot.arbiterFamilies", Label: "Arbiter control families", Unit: "mask", Default: 3, Min: 0, Max: 255, NoHandicap: true,
 			Desc: "Arbiter control: which families the arbiter controls, one bit each in the order survive 1, player 2, chores 4, claim 8, goldfarm 16, recovery 32, quest 64, level 128. 3 is survive and player, the first family. Every bit is wired (arbfam entries 1 to 4); with bot.arbiterControl 0 none acts (docs/arbiter.md)."},
-		{Key: "bot.tickLogSec", Label: "Tick log", Unit: "s", Default: 0, Min: 0, Max: 60, NoHandicap: true,
-			Desc: "[dark-launch] Above 0 writes one `tick` line at most every this many seconds: area, kills, xp, the chain's hook family and the arbiter's world facts, so `d2arbiter -follow` can replay a recorded session. Log only, independent of bot.arbiterShadow. 0 is off (docs/design/ticklog-t4.md, data/darklaunch.json)."},
 		{Key: "bot.admission", Label: "Admission function", Unit: "bool", Default: 0, Min: 0, Max: 1, NoHandicap: true,
 			Desc: "[dark-launch] 1 lets the admission function (internal/admit, rows in admission.json) decide the early road, poverty, kit floor and lean entry rows at the travel chokepoint and the quest-walk kit at the town exit. 0 keeps the old judges in control; the function runs beside them and logs one `admission shadow` line per disagreement (docs/design/admission-p4.md, data/darklaunch.json)."},
 		{Key: "bot.arbiterDwellSec", Label: "Arbiter lease", Unit: "s", Default: 120, Min: 10, Max: 1800, NoHandicap: true,

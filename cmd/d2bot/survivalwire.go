@@ -225,7 +225,7 @@ func (w *survivalShadow) judge(s *d2.Snapshot, area int, diff string, potions in
 			if c.Area == area {
 				tm = 0
 			}
-			out = append(out, survival.Candidate{Key: k, Name: z.Name, ZM: zm, Eco: survival.Economy(z, zm, h.Level, w.p), TravelMin: tm, Depleted: c.Depleted, MLvl: z.MLvl})
+			out = append(out, survival.Candidate{Key: k, Name: z.Name, ZM: zm, Eco: survival.Economy(z, zm, h.Level, w.p), TravelMin: tm, Depleted: c.Depleted, MLvl: z.MLvl, Units: z.Density.Units})
 		}
 		return out, nil
 	}
@@ -250,7 +250,7 @@ func (w *survivalShadow) judge(s *d2.Snapshot, area int, diff string, potions in
 		return bot.ZoneVerdict{}, err
 	}
 	lines := d.Line()
-	v := bot.ZoneVerdict{Area: d.Area, Fresh: d.Fresh, Hole: d.Hole, Margin: d.Margin, Why: d.Why.Text, K: d.CurK}
+	v := bot.ZoneVerdict{Area: d.Area, Fresh: d.Fresh, Hole: d.Hole, Hold: d.Hold, Margin: d.Margin, Why: d.Why.Text, K: d.CurK}
 	var merc *survival.ReviveDecision
 	if mercDead {
 		alive := hero
@@ -339,5 +339,6 @@ func (w *survivalShadow) questMargin(s *d2.Snapshot, boss, diff string, potions 
 	}
 	k := w.led.KHeroFor(w.m.OffenceUnread(hero))
 	enc := questboard.EncounterFrom(b.Name, "boss", r, k)
+	enc.Area = b.Area
 	return qh, &enc, true
 }

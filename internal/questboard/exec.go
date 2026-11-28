@@ -107,7 +107,9 @@ type runState struct {
 	hold     string    // the code of the hold the head run is under (quests.boardSM), "" when none
 	holdWhy  string    // the guard's words
 	holdFrom time.Time // when the hold began; the budget of its code runs from here
-	refCode  string    // the code of the refusal streak (quests.refusalPark), refN identical ones in a row, refWhy the last text
+	pathWhy  string    // the last counted navigation refusal and when it was counted (samePathWindow)
+	pathAt   time.Time
+	refCode  string // the code of the refusal streak (quests.refusalPark), refN identical ones in a row, refWhy the last text
 	refN     int
 	refWhy   string
 }
@@ -176,6 +178,18 @@ func (e *Exec) state(k string) *runState {
 		e.rs[k] = r
 	}
 	return r
+}
+
+// seeded is state for a chunk about to be counted or parked: a state made here starts from the stored counters of the
+// live run, so a park written after a restart does not store zeros over them (review 10 B3). Callers hold e.mu.
+func (e *Exec) seeded(quest, chunk string) *runState {
+	k := ChunkKey(quest, chunk)
+	_, known := e.rs[k]
+	rs := e.state(k)
+	if !known {
+		e.smSeed(quest, chunk, rs)
+	}
+	return rs
 }
 
 // derive builds the views for the current difficulty. Callers hold e.mu.
@@ -622,8 +636,10 @@ func (e *Exec) reset(parks bool) {
 		act = e.open(vs, plan, diff)
 	}
 	e.rs = map[string]*runState{}
-	if parks && !e.boardLegacy() && err == nil {
-		e.smRetryAll() // the player's Reset is the one explicit way a stored park is cleared
+	if parks && err == nil && (!e.boardLegacy() || plan.anyStoredPark(Difficulties[diff])) {
+		// The player's Reset is the one explicit way a stored park is cleared. The legacy board honours stored parks too
+		// (Next), so its Reset clears them as well; it writes the runs only when there is one (card fix1b, review B2).
+		e.smRetryAll()
 	}
 	e.mu.Unlock()
 	for _, r := range act {
@@ -783,11 +799,7 @@ func (e *Exec) Report(d Decision, res StepResult) {
 	e.mu.Lock()
 	defer e.mu.Unlock()
 	k := ChunkKey(d.Quest, d.Chunk)
-	_, known := e.rs[k]
-	rs := e.state(k)
-	if !known {
-		e.smSeed(d.Quest, d.Chunk, rs)
-	}
+	rs := e.seeded(d.Quest, d.Chunk)
 	f0, d0 := rs.failures, rs.deaths
 	defer func() {
 		if rs.blocked == "" && (rs.failures != f0 || rs.deaths != d0) {
@@ -805,8 +817,17 @@ func (e *Exec) Report(d Decision, res StepResult) {
 		rs.refCode, rs.refN = "", 0
 	case StepFailed:
 		rs.started = true
-		rs.failures++
 		rs.lastWhy = res.Why
+		if parkCode(res.Why) == "no_path" {
+			// The same navigation refusal (the text names the exit, the cause and the cell) inside samePathWindow is the
+			// same try: three retries from one cell in 27 s parked the Countess (live 2026-11-28, L3).
+			now := e.o.Now()
+			if res.Why == rs.pathWhy && now.Sub(rs.pathAt) < samePathWindow {
+				break
+			}
+			rs.pathWhy, rs.pathAt = res.Why, now
+		}
+		rs.failures++
 		if e.refusalCount(rs, res) {
 			rs.blocked = fmt.Sprintf("refused %d times in a row (%s): %s", rs.refN, rs.refCode, nonEmpty(res.Why, "the step was refused"))
 			e.o.Log("quest board: parked "+k, "chunk", k, "why", rs.blocked)
@@ -832,6 +853,9 @@ func (e *Exec) Report(d Decision, res StepResult) {
 		}
 	}
 }
+
+// samePathWindow: an identical navigation refusal inside it is not a new try (U: judgment; the live retries were 13 s apart).
+const samePathWindow = time.Minute
 
 // parkCode is the code of a failure park: "no_path" when the step failed with a navigation refusal that names its cause
 // (nav ErrNoPath text "no path: ... (cause=...)": the exit and the cause stay in the why), else "gave_up" (card cellar3gate).
@@ -942,11 +966,13 @@ func (e *Exec) HandIn(ctx context.Context, quest, chunk string) (HandInResult, e
 			return res, ctx.Err()
 		}
 		res.Attempts++
+		last = "the reward did not register after the dialogue"
 		if err := e.act.HandIn(ctx, q, c); err != nil {
 			last = err.Error()
 			e.o.Log("quest board: hand-in failed "+ChunkKey(quest, chunk), "quest", quest, "chunk", chunk, "attempt", res.Attempts, "err", err)
-			continue
 		}
+		// The evidence is read after EVERY attempt: a dialogue that paid the reward and then reported an error is done,
+		// and the next attempts would only find an NPC with nothing to say ("failed 3 times", review 2 finding 8).
 		e.mu.Lock()
 		vs, _, _, derr := e.derive()
 		e.mu.Unlock()
@@ -963,12 +989,11 @@ func (e *Exec) HandIn(ctx context.Context, quest, chunk string) (HandInResult, e
 			e.o.Log("quest board: handed in "+ChunkKey(quest, chunk), "quest", quest, "chunk", chunk, "outcome", res.Outcome, "tier", cv.Tier.String())
 			return res, nil
 		}
-		last = "the reward did not register after the dialogue"
 	}
 	res.Outcome = HandInBlocked
 	res.Why = fmt.Sprintf("hand-in failed %d times: %s", res.Attempts, last)
 	e.mu.Lock()
-	rs := e.state(ChunkKey(quest, chunk))
+	rs := e.seeded(quest, chunk)
 	rs.blocked = res.Why
 	e.smPark(quest, chunk, "handin_failed", rs)
 	e.mu.Unlock()

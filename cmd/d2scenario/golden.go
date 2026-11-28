@@ -47,7 +47,7 @@ func goldenFiles(scs []scenario.Scenario) (map[string]string, error) {
 					}
 					lines = append(lines, v.Line)
 					spend++
-					if f := strings.Fields(v.Line); len(f) == 4 && f[1] == "select" { // cmd select <skill> <left>
+					if f := strings.Fields(v.Line); len(f) == 4 && f[1] == "select" && hand == "-" { // cmd select <skill> <left>: the first is the main attack, a pre.bind follows
 						hand = map[bool]string{true: "right", false: "left"}[f[3] == "0"]
 					}
 				}

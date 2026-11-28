@@ -38,7 +38,8 @@ owns:
   - "internal/watch/hero.go"
   - "internal/watch/web/panels/hero-vitals/panel.js"
   - "docs/vault.md"
-  - "docs/design/loot-vault-2026-11-16.md"exclusive: []
+  - "docs/design/loot-vault-2026-11-16.md"
+exclusive: []
 contracts: []
 result: "Built and tested offline, not run live: the ETHER wallet is wired in cmd/d2bot behind loot.vault (per account, survives hero switches, feeds store capacity), gated POST routes, Vault page Upgrade/Refund with wallet chip and confirm sheet (node test, fit pages and pictures viewed on the builder), Hero tile chip, earn call sites (firsts, bosses, level and difficulty milestones, capped kill trickle). Quest hand-in earn stays S10."
 ---
