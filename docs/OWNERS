@@ -262,6 +262,9 @@ docs/ui/redesign-2026-11-14/stash-anywhere.md  credit-runner  stashany
 docs/upstream/bodies/monster-block-body.md  credit-runner  decomp43
 internal/agency/drive.go  credit-runner  agencyp1b
 internal/agency/drive_test.go  credit-runner  agencyp1b
+internal/agency/planner_test.go  credit-runner  auraflap
+internal/agency/rotation_test.go  credit-runner  auraflap
+internal/agency/view.go  credit-runner  auraflap
 internal/arbiter  credit-runner  town10
 internal/arbiter/  live-agent  arbmig
 internal/arbiter/replay.go  live-agent  ticklog
@@ -309,10 +312,15 @@ internal/combat/  live-agent  dlv-press
 internal/combat/  live-agent  dlv-stance-pack
 internal/combat/  live-agent  dlv-upkeep-minions
 internal/combat/aura.go  credit-runner  agencyp1b
+internal/combat/aura.go  credit-runner  auraflap
+internal/combat/auraflap_test.go  credit-runner  auraflap
+internal/combat/class_test.go  credit-runner  auraflap
 internal/combat/classdata/profiles.json  live-agent  epic-class-necromancer
 internal/combat/drive_test.go  credit-runner  agencyp1b
 internal/combat/fighter.go  credit-runner  agencyp1b
+internal/combat/fighter.go  credit-runner  auraflap
 internal/combat/fighter.go  live-agent  inputl3
+internal/combat/lifeprice_test.go  credit-runner  auraflap
 internal/combat/portalverb.go  live-agent  inputl3
 internal/combat/portalverb_test.go  live-agent  inputl3
 internal/d2dcombat/  live-agent  dlv-press

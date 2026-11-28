@@ -44,6 +44,7 @@
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | refusalpark | proposed | - | `internal/questboard/`<br>`data/questboard/`<br>`internal/bot/questboard.go`<br>`internal/bot/questauto.go`<br>`internal/bot/invariants.go`<br>`internal/bot/loop.go`<br>`internal/bot/failsafe_test.go`<br>`internal/env/tuning_quests.go`<br>`data/darklaunch.json`<br>`docs/knobs.md`<br>`docs/questboard.md` | - |
+| auraflap | proposed | - | `internal/combat/aura.go`<br>`internal/combat/fighter.go`<br>`internal/combat/auraflap_test.go`<br>`internal/combat/class_test.go`<br>`internal/combat/lifeprice_test.go`<br>`internal/agency/view.go`<br>`internal/agency/rotation_test.go`<br>`internal/agency/planner_test.go` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
@@ -192,6 +193,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 198ef5168 11-27 19:22 `Merge agent/auraflap: auraflap: hold a crowd aura through the fight, shadow agree includes aura (TASK-1082)` (auraflap)
+- 776d76832 11-27 19:21 `Merge branch 'main' into auraflap` (-)
 - baa3c731b 11-27 19:21 `Merge agent/postdeploy: postdeploy: sandbox post-deploy audit (docs)` (postdeploy)
 - 1ee35a2c1 11-27 19:20 `Merge branch 'main' into postdeploy` (-)
 - 8b8ab22f6 11-27 19:12 `Merge agent/refusalpark: refusalpark: quests.refusalPark dark knob, refused_repeatedly park (TASK-1081)` (refusalpark)
@@ -200,6 +203,4 @@
 - 9d9f28b47 11-27 18:51 `Merge branch 'main' into recoverydeath` (-)
 - 0bf8865a2 11-27 18:39 `Merge agent/zonepace: zonepace: lock lapses by time, zones far below the hero dropped (under bot.zoneModel) (TASK-1078)` (zonepace)
 - c72327077 11-27 18:39 `Merge agent/relaunches: relaunches: relaunch reason log line + minute-line counters, refusal-storm top list (TASK-1079)` (relaunches)
-- 2865b726c 11-27 18:38 `Merge branch 'main' into zonepace` (-)
-- 94912298e 11-27 18:38 `Merge branch 'main' into relaunches` (-)
 <!-- statusgen:end -->
