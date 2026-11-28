@@ -12,7 +12,8 @@ card cell against backlog/tasks (key `card:`, `status:`) and against the merge s
   S3  the card cell names no card known to backlog/tasks or to the merge subjects (the row cannot be checked)
 A card cell may name a range ("bsm1 to bsm9", "necro2a to necro2e") or a prefix ("fid-*"); both are
 expanded. Words in the cell that are not a card id are ignored. To keep a row `in flight` on purpose, name
-the open card that holds the rest of the work in its card cell. --rows lists every row with what was found; --summary prints the
+the open card that holds the rest of the work in its card cell, or write "(open: why)" there when the
+rest has no card in this repo (S2 is then not raised). --rows lists every row with what was found; --summary prints the
 one-line form for CI. Standard library only. Rule: "How to keep this file true" in the doc.
 """
 import argparse
@@ -105,7 +106,7 @@ def check(text, status, merged):
             finds.append("S3 %s [%s]: no known card in '%s'" % (rid, state, cell))
         elif state == "not started" and landed:
             finds.append("S1 %s [not started]: Done or merged: %s" % (rid, ", ".join(landed)))
-        elif state in ("in flight", "not started") and len(clean) == len(known):
+        elif state in ("in flight", "not started") and len(clean) == len(known) and "(open:" not in cell:
             finds.append("S2 %s [%s]: every card is Done, no open box: %s" % (rid, state, ", ".join(clean)))
     return finds, facts, tally
 

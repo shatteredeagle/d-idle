@@ -19,6 +19,7 @@ DOC = """# t
 | A6 | retired | alpha | retired | V |
 | A7 | prefix | fid-* | not started | V |
 | A8 | merged under its branch, card open | zeta | not started | V |
+| A9 | done, rest has no card here | alpha (open: ops timer) | in flight | V |
 
 | row | size | decision |
 |---|---|---|
@@ -30,7 +31,7 @@ STATUS = {"alpha": ("Done", 0), "beta1": ("Done", 0), "beta2": ("Done", 0), "bet
 
 class T(unittest.TestCase):
     def test_rows(self):
-        self.assertEqual([r[0] for r in check.rows(DOC)], ["A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8"])
+        self.assertEqual([r[0] for r in check.rows(DOC)], ["A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "A9"])
 
     def test_expand(self):
         self.assertEqual(check.expand("bsm1 to bsm3, necro2a to necro2c")[:6],
@@ -40,7 +41,7 @@ class T(unittest.TestCase):
     def test_findings(self):
         finds, facts, tally = check.check(DOC, STATUS, {"zeta"})
         self.assertEqual(sorted(f.split()[:2] for f in finds), [["S1", "A1"], ["S1", "A8"], ["S2", "A2"], ["S3", "A5"]])
-        self.assertEqual(tally["in flight"], 3)
+        self.assertEqual(tally["in flight"], 4)
         self.assertEqual(dict((f[0], f[2]) for f in facts)["A7"], ["fid-one"])
 
     def test_no_git(self):
