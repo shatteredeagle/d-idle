@@ -1,10 +1,11 @@
 ---
 id: TASK-1123
 title: 'roadfresh: roadmap-fable rows verified against main, roadmap check script'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T06:38:00Z'
+updated_date: '2026-11-28T07:39:00Z'
 labels:
   - docs
   - chore
