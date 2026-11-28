@@ -1,10 +1,13 @@
 package bot
 
 import (
+	"context"
 	"strings"
 	"testing"
+	"time"
 
 	"d2lod-bot/internal/admit"
+	"d2lod-bot/internal/arbiter"
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/questboard"
 )
@@ -116,5 +119,26 @@ func TestAdmissionShadowCountsTheWordsCell(t *testing.T) {
 	g.r.admitNote(3, admit.Level, "", ref, false)
 	if ex := g.r.admissionExplain(); ex.Words != 1 || ex.Differ != 2 || ex.NewOnly != 1 {
 		t.Fatalf("counters %+v", ex)
+	}
+}
+
+// Review 11 N1c (card sweep2): a controlled hook that declines is asked again after arbiter.DeclineMax at the latest.
+// Before: every decline counted as a failure and the refill was silent for up to 30 minutes. Two classes.
+func TestArbiterDeclinedHookIsAskedAgainAfterTheCap(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		g, _ := farmRig(t, 6, class)
+		g.w.set(func(w *world) { w.gold0 = 900 })
+		g.w.belt()
+		g.r.e.Tune.Bot.ArbiterShadow, g.r.e.Tune.Bot.ArbiterControl, g.r.e.Tune.Bot.ArbiterFamilies = 1, 1, 3|4|64
+		for i := 0; i < 8; i++ {
+			g.r.setLastTrip(g.clock.Now()) // the trip cooldown: the chores hook declines
+			g.r.poll()
+			g.clock.Sleep((arbiter.DeclineMax + 1) * time.Second)
+			g.r.setLastTrip(g.clock.Now())
+			g.r.runGoalShadowed(context.Background(), g.r.latest(), campControl())
+			if d, _ := g.r.Arbiter(); d.Chosen == nil || arbiter.Family(d.Chosen.Source) != "chores" {
+				t.Fatalf("%v: decline %d still silences the refill %d s later: chosen %+v rejected %+v", class, i, arbiter.DeclineMax+1, d.Chosen, d.Rejected)
+			}
+		}
 	}
 }
