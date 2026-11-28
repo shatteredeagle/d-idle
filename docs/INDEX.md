@@ -1149,6 +1149,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 `probes/`
 
+- [evidence-logs-2026-11-28.md](probes/evidence-logs-2026-11-28.md): Evidence lines for the NOT YET knobs, 2026-11-28 (card evid1) (status: current. Follows docs/probes/graduations-2026-11-28.md section 3. Tags: V = read or run today (how is...)
 - [exitsread-2026-11-22.md](probes/exitsread-2026-11-22.md): exitsread: the engine's link table against the bot's exit data (card exitsread, 2026-11-22) (status: current. Card `exitsread` (map-knowledge review card 4). Tags: V = measured in a named run, S = source or...)
 - [farmloop-live-20261116.md](probes/farmloop-live-20261116.md): Farm loop live check in the sandbox, 2026-11-16 (status: record. Task farmlive (TASK-553). Tags: V = verified in this run (container logs, read only), U = not...)
 - [farmloop-measure.md](probes/farmloop-measure.md): Recipe: kills per minute against coverage (farm loop decay curve) (status: current. Tool `tools/farmloop/measure.py` (stdlib Python, reads stdin). Tags: V = ran once...)

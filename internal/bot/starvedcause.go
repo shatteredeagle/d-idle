@@ -24,10 +24,11 @@ func (r *Runner) starvedByOwnWork(d arbiter.Decision, in arbiter.Intent) bool {
 	return in.Source == arbiter.SrcLevel && d.Chosen != nil && d.Chosen.Source == arbiter.SrcQuest && r.boardTraining.Load()
 }
 
-// noteStarvedAll files the arbiter-starved rows of one decision.
+// noteStarvedAll files the arbiter-starved rows of one decision. Two cases are not starvation: a standing filler
+// (card evid1) and a leveling intent outranked by the board's training slice (L6).
 func (r *Runner) noteStarvedAll(d arbiter.Decision) {
 	for _, in := range d.Starved {
-		if !r.starvedByOwnWork(d, in) {
+		if !standingFiller(in) && !r.starvedByOwnWork(d, in) {
 			r.inv.noteStarved(r.starvedCause(d, in))
 		}
 	}
@@ -69,3 +70,8 @@ func (r *Runner) boardParkedNote() string {
 	sort.Strings(out)
 	return strings.Join(out, ", ")
 }
+
+// standingFiller reports whether in is a filler its source proposes all the time (no TTL): "nothing else wanted".
+// Losing to any objective is its normal state, not starvation: on two sandboxes every one of 31 WARNs in 6.5 h was
+// level/sweep outranked by quest/step (card evid1).
+func standingFiller(in arbiter.Intent) bool { return in.Class == arbiter.Filler && in.TTL == 0 }
