@@ -178,22 +178,39 @@ func (h *Hub) Serve(ctx context.Context, o ServeOptions) (Served, error) {
 
 func hostOf(addr string) string { h, _, _ := net.SplitHostPort(addr); return h }
 
-// tokenGate checks the bearer header, the ?t= query (which sets the cookie) or the d2dview cookie, as d2dview does.
+// tokenGate checks the bearer header, the ?t= query or the d2dview cookie, as d2dview does. A valid ?t= sets the cookie;
+// a page load (GET that accepts HTML) is then redirected to the same address without t, so the token does not stay in
+// the address bar, the history or a Referer. A wrong ?t= never becomes a cookie. Scripts that send ?t= on an API call
+// are served directly.
 func tokenGate(token string, next http.Handler) http.Handler {
 	if token == "" {
 		return next
 	}
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		got := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
-		if q := r.URL.Query().Get("t"); q != "" {
-			got = q
-			http.SetCookie(w, &http.Cookie{Name: "d2dview", Value: q, Path: "/", HttpOnly: true, SameSite: http.SameSiteLaxMode})
+		q := r.URL.Query()
+		fromQuery := q.Get("t") != ""
+		if fromQuery {
+			got = q.Get("t")
 		} else if c, err := r.Cookie("d2dview"); err == nil && got == "" {
 			got = c.Value
 		}
+		h := w.Header()
+		h.Set("Referrer-Policy", "no-referrer")
+		h.Set("Cache-Control", "no-store") // the default; a handler that serves cacheable art sets its own
 		if subtle.ConstantTimeCompare([]byte(got), []byte(token)) != 1 {
 			http.Error(w, "unauthorized", http.StatusUnauthorized)
 			return
+		}
+		if fromQuery {
+			http.SetCookie(w, &http.Cookie{Name: "d2dview", Value: got, Path: "/", HttpOnly: true, SameSite: http.SameSiteLaxMode})
+			if r.Method == http.MethodGet && strings.Contains(r.Header.Get("Accept"), "text/html") {
+				u := *r.URL
+				q.Del("t")
+				u.RawQuery = q.Encode()
+				http.Redirect(w, r, u.RequestURI(), http.StatusSeeOther)
+				return
+			}
 		}
 		next.ServeHTTP(w, r)
 	})

@@ -102,3 +102,26 @@ func TestManaHeavyFromTableFlag(t *testing.T) {
 		t.Errorf("%d mana-heavy builds, want 9", n)
 	}
 }
+
+// Review 8 C8: the mana need comes from the build in every difficulty, for two classes; a table without the flag
+// keeps the class value.
+func TestManaNeedForHonoursTheFlagInNormal(t *testing.T) {
+	for _, tc := range []struct {
+		class d2.Class
+		build string
+		want  int
+	}{
+		{d2.Paladin, "paladin_hammerdin_endgame90", 2},
+		{d2.Barbarian, "barbarian_warcry_endgame90", 2},
+		{d2.Paladin, "paladin-normal30-v2", ManaNeed(d2.Paladin)},
+		{d2.Barbarian, "", ManaNeed(d2.Barbarian)},
+	} {
+		if got := ManaNeedFor(tc.class, tc.build); got != tc.want {
+			t.Errorf("%v %q: need %d, want %d", tc.class, tc.build, got, tc.want)
+		}
+		in := Input{Class: tc.class, Build: tc.build, Diff: d2.Normal}
+		if in.manaNeed() != tc.want {
+			t.Errorf("%v %q in Normal: need %d, want %d", tc.class, tc.build, in.manaNeed(), tc.want)
+		}
+	}
+}

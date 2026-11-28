@@ -116,6 +116,14 @@ class Sandbox:
             raise FlipError(f"container {self.instance} not reachable through `{' '.join(self.run)}` ({e}); "
                             "set D2_FLIP_RUN (or D2_LABRUN_HOST) to the host whose local docker runs the sandboxes") from None
 
+    def measured_run(self):
+        """The run name when the CONTAINER is in a measured run ("" when not): D2BOT_RUN in the environment docker gives
+        its processes, or in that of its first process. The operator's own shell says nothing about the sandbox. A
+        failed read raises: a flip never goes ahead without the answer."""
+        script = ('{ printenv D2BOT_RUN; tr "\\0" "\\n" </proc/1/environ | sed -n "s/^D2BOT_RUN=//p"; } 2>/dev/null; true')
+        out = self._x(["docker", "exec", self.instance, "sh", "-c", script], timeout=PROBE_S)
+        return next((l.strip() for l in out.splitlines() if l.strip()), "")
+
     def read_tuning(self):
         try:
             return self._x(["docker", "exec", self.instance, "cat", self.path])
@@ -367,7 +375,7 @@ class Flipper:
     # --- flip ---------------------------------------------------------------------------------------------
     def flip(self, instance, knobs, why, window_s):
         """knobs: {name: value}. One backup, one atomic write of all of them, one restart, every knob verified."""
-        if self.env.get("D2BOT_RUN"):
+        if self.env.get("D2BOT_RUN"):  # the operator's shell; the sandbox's own marker is read below
             raise FlipError("D2BOT_RUN is set: never flip in a measured run")
         if not why.strip():
             raise FlipError("--why is required")
@@ -384,6 +392,9 @@ class Flipper:
         sb = self.make(instance)
         if hasattr(sb, "probe"):
             sb.probe()
+        run = sb.measured_run()
+        if run:
+            raise FlipError(f"{instance} is in a measured run (D2BOT_RUN={run} in the container): never flip in a measured run")
         if not self.dry and not heartbeat_alive(self.store.d, self.clock()):
             self.out("WARNING: no watcher is alive (no fresh heartbeat): this window will not be watched or reverted. "
                      "Start `flip.py watch --daemon` (see `flip.py watch --install-unit`)")
