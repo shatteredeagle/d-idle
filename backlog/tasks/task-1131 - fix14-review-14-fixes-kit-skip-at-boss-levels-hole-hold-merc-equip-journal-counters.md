@@ -14,13 +14,13 @@ ordinal: 536000
 card: "fix14"
 lane: next
 owns:
-  - "internal/admit"
+  - "internal/admit/"
   - "internal/quest/objective.go"
-  - "internal/bot"
-  - "internal/combat"
-  - "internal/vaultkeep"
-  - "internal/arbiter"
-  - "internal/town"
+  - "internal/bot/"
+  - "internal/combat/"
+  - "internal/vaultkeep/"
+  - "internal/arbiter/"
+  - "internal/town/"
 exclusive: []
 contracts: []
 result: "Review 14 H1 to H5, M1 and M5 fixed with tests that fail on the old code (fakes; two classes where the class matters); nothing verified live. H3: the on-road kit skip keeps the potion half for a road area a quest handler row works in (quest.ObjectiveAreas, derived from the handler steps, no area list); portal in hand is a trip, none is a hold (that the trip rules then walk the hero out is U). H5: Clear and Kill select the profile again before refusing (the rest came with the merged fix8b). H4: a hole hold waits in town instead of asking for a fresh game. H1: a takeback journal step; a gone copy is given only when the hand shows the piece in the mercenary slots (optional MercWearer; the bot hand in cmd/d2bot does not implement it yet, so there an unanswered give keeps the vault record and raises a notice: a possible second copy, never a loss). H2: at most the one new piece of the same merc slot is filed, never a piece the hand reports worn. M1: separate decline and failure counters. M5: transitive edges before routing. Open: M2, M3, M4 (not started) and M6 (ops repo, not owned). Nothing build-specific; no new knob."
