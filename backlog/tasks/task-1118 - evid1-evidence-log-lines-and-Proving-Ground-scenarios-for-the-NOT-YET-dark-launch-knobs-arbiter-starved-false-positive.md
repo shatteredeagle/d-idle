@@ -17,6 +17,7 @@ owns:
   - "internal/combat/"
   - "internal/bot/"
   - "tools/provingground/scenarios/evidence.json"
+  - "tools/provingground/golden/"
   - "docs/probes/evidence-logs-2026-11-28.md"
 exclusive: []
 contracts: []
