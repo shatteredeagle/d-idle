@@ -346,7 +346,8 @@ func TestArbiterSurviveReadsTheSafetyVerdictAndYieldsToATrip(t *testing.T) {
 			survive bool
 		}{
 			{"low life, verdict none", SafetyNone, false, false},
-			{"verdict town portal", SafetyTownPortal, false, true},
+			{"verdict drink, hostile near", SafetyDrinkLife, false, true},
+			{"verdict rejuv, hostile near", SafetyDrinkRejuv, false, true},
 			{"verdict mana only", SafetyDrinkMana, false, false},
 			{"verdict chicken, trip running", SafetyChicken, true, false},
 		} {
@@ -428,6 +429,50 @@ func TestArbiterFarmHooksHonourTheTripPrefix(t *testing.T) {
 					t.Fatalf("%v %s trip running %v: took %v why %s chores %d totown %d: the farm ran over the trip or the due chores",
 						class, fam, running, took, why, g.w.count("chores"), g.w.count("totown"))
 				}
+			}
+		}
+	}
+}
+
+// Review 11, N3: survive is "a drink verdict with a hostile near", nothing else. A quiet hurt hero (the verdict drinks
+// or asks for the portal with nothing in the snapshot) and a leave verdict (portal, chicken, crowd retreat or abandon)
+// must not get the survive hook's full sweep of the area: the chain's own step runs (a plain chores trip goes on) and
+// the guard carries the verdict out. Before the fix every case here chose survive and started a fight. Two classes.
+func TestArbiterSurviveNeedsAHostileAndNeverSweepsOnALeaveVerdict(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		for _, tc := range []struct {
+			name    string
+			verdict SafetyAction
+			quiet   bool
+			trip    bool
+		}{
+			{"quiet, drink verdict, plain trip running", SafetyDrinkLife, true, true},
+			{"quiet, portal verdict", SafetyTownPortal, true, false},
+			{"hostile, portal verdict", SafetyTownPortal, false, false},
+			{"hostile, chicken", SafetyChicken, false, false},
+			{"hostile, crowd retreat", SafetyCrowdRetreat, false, false},
+			{"hostile, crowd abandon", SafetyCrowdAbandon, false, false},
+		} {
+			g := controlRig(t, class, 1, 1)
+			g.w.set(func(w *world) {
+				w.life = 40
+				if tc.quiet {
+					w.mons = nil
+				}
+			})
+			g.w.belt(101)
+			g.fight.safety = func(*d2.Snapshot) SafetyAction { return tc.verdict }
+			if tc.trip {
+				g.r.loop.trip = &trip{plan: ChorePlan{Heal: true, Reason: "test"}}
+			}
+			g.r.poll()
+			g.r.runGoalShadowed(context.Background(), g.r.latest(), levelGoalControl())
+			d, _ := g.r.Arbiter()
+			if d.Chosen != nil && d.Chosen.Source == arbiter.SrcSurvive || g.r.arb.ctl.Load() != 0 {
+				t.Fatalf("%v %s: survive chosen (%+v), controlled ticks %d", class, tc.name, d.Chosen, g.r.arb.ctl.Load())
+			}
+			if tc.trip && (g.r.currentWhy() == WhyFight || g.w.count("totown") == 0) {
+				t.Fatalf("%v %s: the trip did not go on (why %s, calls %s)", class, tc.name, g.r.currentWhy(), g.w.log())
 			}
 		}
 	}

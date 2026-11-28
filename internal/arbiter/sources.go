@@ -82,9 +82,11 @@ func StdSources() []Source {
 				return nil
 			}
 			if _, ok := f[FactSafety]; ok {
-				if f[FactSafety] > 0 {
+				// The hook fights where the hero stands, so it needs something to fight (review 11, N3): a quiet hurt hero
+				// keeps the chain's step (the trip home, rest) and the guard does the drinking.
+				if f[FactSafety] > 0 && f[FactHostile] > 0 {
 					return &Intent{Kind: "drink", Class: Reflex, Urgency: 1, NeedsArea: Any, EstCost: 2,
-						Reason: fmt.Sprintf("the safety verdict asks for a life action (life %d%%)", f[FactLifePct])}
+						Reason: fmt.Sprintf("the safety verdict asks for a drink with hostiles near (life %d%%)", f[FactLifePct])}
 				}
 				return nil
 			}
