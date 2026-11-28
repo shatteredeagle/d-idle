@@ -1,10 +1,11 @@
 ---
 id: TASK-1138
 title: 'morning: owner briefing for 2026-11-28 (one page)'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T11:42:00Z'
+updated_date: '2026-11-28T11:51:00Z'
 labels:
   - docs
   - readonly
