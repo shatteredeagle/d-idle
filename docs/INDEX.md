@@ -939,6 +939,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 `process/`
 
 - [api-credits.md](process/api-credits.md): API credits: PR review and the optional Haiku tick
+- [autoflip.md](process/autoflip.md): Autoflip
 - [backlog-board-nas.md](process/backlog-board-nas.md): Backlog.md web board on the NAS (read-only mirror) (status: DEPLOYED 2026-11-05 as a NAS Docker-tab template (variant B: own br0 address behind Nginx Proxy Manager...)
 - [barbarian-support.md](process/barbarian-support.md): Barbarian Frenzy: what the engine plays, and what a later card must build (status: current (card barb1, 2026-11-20; Fable roadmap Q8, class 4 after the Sorceress fire build, the Necromancer...)
 - [baseline-runs.md](process/baseline-runs.md): Baseline runs: the extra original-game runs (card baselineruns) (status: current, PREPARED ONLY (2026-11-01). Nothing here was run live; no game was started. The launcher is...)
