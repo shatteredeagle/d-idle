@@ -19,6 +19,8 @@ type Candidate struct {
 	TravelMin float64
 	Depleted  bool // the zone is cleared (the levelsim supply term)
 	MLvl      int  // the zone's monster level (0 = unknown: never dropped by the band rule)
+	// Units is what the zone holds per clear (danger Density.Units; 0 = unknown: the supply cap leaves the zone alone).
+	Units float64
 }
 
 // Purse is the gold side of lambda: what the kit and the next purchase need against what the hero holds.
@@ -100,6 +102,7 @@ type verdict struct {
 	value    float64
 	xp       float64 // xp/min the value rests on (model prior, or the blend with the realized one)
 	realized float64 // the realized xp/min behind the blend, 0 = the prior stands
+	prior    float64 // the model's xp/min after the supply cap
 	starving bool
 	// yieldStarved: realized yield stayed below the dial's share of the prior (card survhold7); yieldMul is its value factor
 	yieldStarved bool
@@ -182,9 +185,10 @@ func (l *Ledger) judge(in Input, c Candidate, lam float64, disc float64) verdict
 		}
 	}
 	stayMin := l.P.StayMinutes
-	v.xp = c.Eco.XPPerMin
+	prior := l.prior(in, c)
+	v.xp, v.prior = prior, prior
 	if in.Active {
-		v.xp, v.realized = l.BlendYield(c.Key, c.Eco.XPPerMin, in.Archetype)
+		v.xp, v.realized = l.BlendYield(c.Key, prior, in.Archetype)
 		v.starving = l.Starving(c.Key, in.Archetype)
 		if v.starving && v.realized > 0 && v.realized < v.xp {
 			v.xp = v.realized // a starved zone is worth what it paid, not what the model's kill speed promised
@@ -193,7 +197,7 @@ func (l *Ledger) judge(in Input, c Candidate, lam float64, disc float64) verdict
 			v.xp *= disc // no data here: the prior is discounted by how the hero fared in the zones that have data
 		}
 		if ratio, minutes, mul := l.P.yieldStarve(in.Archetype); ratio > 0 {
-			if obs, sec := l.RealizedXPPerMin(c.Key); sec/60 >= minutes && obs < ratio*c.Eco.XPPerMin {
+			if obs, sec := l.RealizedXPPerMin(c.Key); sec/60 >= minutes && obs < ratio*prior {
 				v.xp, v.realized, v.yieldStarved = math.Min(obs, v.xp), obs, true
 				v.yieldMul = mul
 			}
@@ -211,6 +215,18 @@ func (l *Ledger) judge(in Input, c Candidate, lam float64, disc float64) verdict
 		v.value *= l.P.starveMul(in.Archetype) // the hero cannot cast here for want of mana: the model's kill speed is a fiction
 	}
 	return v
+}
+
+// prior is the model's xp/min of a candidate for this decision. With the controller deciding and the archetype's
+// supplyMinutes set, the kill rate behind it is capped at the zone's units spread over that stay: the model's kill speed
+// assumes the next monster is always four seconds away, which a 38-unit graveyard cannot keep up for a 20-minute stay
+// (card zone5: Burial Grounds modelled at 150 to 160 xp/min, realized 4 to 11).
+func (l *Ledger) prior(in Input, c Candidate) float64 {
+	m := l.P.supplyMinutes(in.Archetype)
+	if !in.Active || m <= 0 || c.Units <= 0 || c.Eco.KillsPerMin <= 0 {
+		return c.Eco.XPPerMin
+	}
+	return c.Eco.XPPerMin * math.Min(1, c.Units/m/c.Eco.KillsPerMin)
 }
 
 // pooledK is the kill-weighted mean of k (zone x hero) over the candidate zones with kills in the ledger; false when none.
@@ -345,7 +361,7 @@ func decisionLine(d Decision, p *verdict, in Input) string {
 	fmt.Fprintf(&b, "zone choice: %s  margin %.1f (need %.1f; low %.1f)  k %.2f  xp/min %.0f  gold/min %+.0f  dial %s  why: %s (%s)",
 		d.Name, p.best, in.Dial.Enter, p.low, p.k, p.xp, p.c.Eco.Net(), in.Dial.ID, d.Why.Code, d.Why.Text)
 	if p.realized > 0 {
-		fmt.Fprintf(&b, "  realized %.0f (model %.0f)", p.realized, p.c.Eco.XPPerMin)
+		fmt.Fprintf(&b, "  realized %.0f (model %.0f)", p.realized, p.prior)
 	}
 	if p.starving {
 		b.WriteString("  mana-starved")
@@ -377,7 +393,7 @@ func (l *Ledger) unvisitedDiscount(in Input) float64 {
 			continue
 		}
 		num += obs * m
-		den += c.Eco.XPPerMin * m
+		den += l.prior(in, c) * m
 	}
 	if den <= 0 {
 		return 1

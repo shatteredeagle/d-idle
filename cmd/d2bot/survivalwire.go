@@ -225,7 +225,7 @@ func (w *survivalShadow) judge(s *d2.Snapshot, area int, diff string, potions in
 			if c.Area == area {
 				tm = 0
 			}
-			out = append(out, survival.Candidate{Key: k, Name: z.Name, ZM: zm, Eco: survival.Economy(z, zm, h.Level, w.p), TravelMin: tm, Depleted: c.Depleted, MLvl: z.MLvl})
+			out = append(out, survival.Candidate{Key: k, Name: z.Name, ZM: zm, Eco: survival.Economy(z, zm, h.Level, w.p), TravelMin: tm, Depleted: c.Depleted, MLvl: z.MLvl, Units: z.Density.Units})
 		}
 		return out, nil
 	}

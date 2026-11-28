@@ -57,6 +57,9 @@ type ArchTune struct {
 	UnvisitedFloor     float64 `json:"unvisitedFloor"`
 	// UnvisitedBelow: the discount applies only when the pooled ratio is under this (a hero near its prior is left alone).
 	UnvisitedBelow float64 `json:"unvisitedBelow"`
+	// SupplyMinutes (card zone5): the prior xp/min of a zone is capped by what the zone holds: over a stay of this many
+	// minutes the hero cannot kill more than the zone's units (Candidate.Units). 0 = the global value, and 0 there = off.
+	SupplyMinutes float64 `json:"supplyMinutes"`
 }
 
 // Params are the controller constants; every one is tagged in Tags (all U today).
@@ -97,6 +100,7 @@ type Params struct {
 	UnvisitedFloor      float64 `json:"unvisitedFloor"`
 	UnvisitedBelow      float64 `json:"unvisitedBelow"`
 	FreshNeedsMerc      bool    `json:"freshNeedsMerc"`
+	SupplyMinutes       float64 `json:"supplyMinutes"`
 	// LockHoldMinutes: a left-for-cost lock lapses this long after the hero left (0 = only a power change lifts it).
 	// BandDrop: per difficulty, a zone whose monster level is more than this many levels below the hero is not a
 	// candidate while another one remains (0 or absent = off). Card zonepace, class G (a threshold moved by one incident).
@@ -126,6 +130,14 @@ func LoadParams() (*Params, error) {
 	for d, n := range p.BandDrop {
 		if n < 0 {
 			return nil, fmt.Errorf("survival: params: bandDrop %q must not be negative", d)
+		}
+	}
+	if p.SupplyMinutes < 0 {
+		return nil, fmt.Errorf("survival: params: supplyMinutes must not be negative")
+	}
+	for id, a := range p.Archetypes {
+		if a.SupplyMinutes < 0 {
+			return nil, fmt.Errorf("survival: params: archetype %q: supplyMinutes must not be negative", id)
 		}
 	}
 	if p.PredTakenFloor < 0 {
@@ -200,6 +212,14 @@ func (p *Params) yieldStarve(arch string) (ratio, minutes, mul float64) {
 		mul = 1
 	}
 	return
+}
+
+// supplyMinutes is the stay the supply cap of an archetype spreads a zone's units over (0 = no cap).
+func (p *Params) supplyMinutes(arch string) float64 {
+	if a := p.Archetypes[arch]; a.SupplyMinutes > 0 {
+		return a.SupplyMinutes
+	}
+	return p.SupplyMinutes
 }
 
 func (p *Params) unvisitedFloor(arch string) (floor, below float64) {
