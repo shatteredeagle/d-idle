@@ -8,7 +8,7 @@
    - (b) a seed set: at least 2 runs from different seeds or heroes (`evidence: n`, n >= 2) whose summary the `evidence_ref` points to (a probe doc, a soak record, a scenario row).
    One death, one hero, one day is `evidence: 1`: it may seed a row, it may not move one.
 2. Every threshold row in a governed file carries `evidence` (n, a number) and `evidence_ref` (text or doc path). An existing row that came from a single incident is seeded with `evidence: 1` and `evidence_ref: "single incident: needs seed set"`; the first change to it needs rule 1.
-3. Knob budget: a fix card may not add a knob without removing one, or the owner's word. The card says so in its front matter: `knob_net: 0` (default, nothing to say) or `knob_net: +1 owner-ok` (the owner approved the net rise; name where).
+3. Knob budget: a fix card may not add a knob without removing one, or the owner's word, and a card that adds a knob says in its result how it graduates (its `flip_plan`, docs/process/dark-launch.md) and must not push the dark ledger over its hard cap (`data/darklaunch-cap.json`; a new dark/trial coordinator row needs a closed or retired one in the same branch). The card says so in its front matter: `knob_net: 0` (default, nothing to say) or `knob_net: +1 owner-ok` (the owner approved the net rise; name where).
 4. Later (not built): safety and supply thresholds as rows in the loot-rule grammar, readable and editable by the operator (review row 7, P10).
 
 ## Enforcement: tools/ci/knobbudget.py

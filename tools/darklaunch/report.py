@@ -34,7 +34,9 @@ def main(argv=None):
     print(f"{'age(d)':>6}  {'name':<28} {'status':<7} {'met':<4} {'owner':<12} due")
     for age, n, st, met, ow, due in rs:
         print(f"{age:>6}  {n:<28} {st:<7} {met:<4} {ow:<12} {due}")
+    bd = [it["name"] for it in L.load_ledger(a.ledger) if it["status"] == "by_design"]
     print(f"{len(rs)} item(s), {sum(1 for r in rs if 'OVERDUE' in r[5])} overdue")
+    print(f"by design (not counted): {', '.join(bd) or 'none'}")
 
 
 if __name__ == "__main__":

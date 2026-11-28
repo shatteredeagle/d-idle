@@ -92,7 +92,7 @@
    "enable_criteria": "Owner go only (product decision, not a defect); stays 0 by design",
    "owner": "owner",
    "review_by": "2026-12-09",
-   "status": "dark",
+   "status": "by_design",
    "criteria_met": "U"
   },
   {
@@ -103,7 +103,7 @@
    "enable_criteria": "Owner go only; stays 0 by design",
    "owner": "owner",
    "review_by": "2026-12-09",
-   "status": "dark",
+   "status": "by_design",
    "criteria_met": "U"
   },
   {
@@ -436,7 +436,7 @@
    "enable_criteria": "Owner go (ladder context)",
    "owner": "owner",
    "review_by": "2026-12-09",
-   "status": "dark",
+   "status": "by_design",
    "criteria_met": "U"
   },
   {
