@@ -1,10 +1,13 @@
 ---
 id: TASK-1128
-title: 'sweep2: second review sweep, OPEN findings re-verified against main, offline-testable ones fixed'
-status: In Progress
+title: >-
+  sweep2: second review sweep, OPEN findings re-verified against main,
+  offline-testable ones fixed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T08:10:00Z'
+updated_date: '2026-11-28T08:48:00Z'
 labels:
   - bot
   - bot-fix
