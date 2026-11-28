@@ -22,9 +22,10 @@ import (
 
 // Pack stance (card dlv-stance-pack): kind insidePack stands on a free cell StandOff subtiles from the hostiles'
 // centroid and casts in place (a self-centred area skill such as a hammer or a nova), and leaves when LeaveSurround
-// hostiles close within stancePackContact or life falls under LeaveLifePct. It is the dangerous stance: knob 2 waits
-// for the survival model's contact archetype (roadmap R6) to judge it; the knob, not the data, is the rollback. H1 (does
-// the clicked point of Blessed Hammer matter) is a live look, so the cast aim stays the target.
+// hostiles close within stancePackContact or life falls under LeaveLifePct (at any hostile distance: a hurt hero never
+// walks in). It is the dangerous stance, so each row carries its own switch: without "enabled" the row only shadows at
+// knob 2 (card fix3; the knob also switches upkeep, press, move and whirl). A row is enabled when its live drill has
+// passed. H1 (does the clicked point of Blessed Hammer matter) is a live look, so the cast aim stays the target.
 
 // StanceBehindArmy is the stance kind of a summoner; StanceInsidePack of an area caster standing in the pack.
 const (
@@ -48,11 +49,13 @@ type ArmyStance struct {
 	BossMin int `json:"bossMin,omitempty"`
 	// insidePack: StandOff subtiles from the hostiles' centroid; leave with LeaveSurround hostiles within
 	// stancePackContact or life under LeaveLifePct percent; MinPack hostiles make a pack (0: stancePackMin).
-	StandOff      int    `json:"standOff,omitempty"`
-	LeaveSurround int    `json:"leaveSurround,omitempty"`
-	LeaveLifePct  int    `json:"leaveLifePct,omitempty"`
-	MinPack       int    `json:"minPack,omitempty"`
-	Source        string `json:"source"` // V, S or U first: where the numbers come from
+	StandOff      int `json:"standOff,omitempty"`
+	LeaveSurround int `json:"leaveSurround,omitempty"`
+	LeaveLifePct  int `json:"leaveLifePct,omitempty"`
+	MinPack       int `json:"minPack,omitempty"`
+	// Enabled lets an insidePack row step at knob 2; false (the default) keeps it in shadow.
+	Enabled bool   `json:"enabled,omitempty"`
+	Source  string `json:"source"` // V, S or U first: where the numbers come from
 }
 
 func (s *ArmyStance) slack() float64 {
@@ -286,7 +289,7 @@ func (f *Fighter) stanceTick(ctx context.Context, snap *d2.Snapshot, st *fightSt
 		f.stance.last = ""
 		return false, nil
 	}
-	if mode == 1 {
+	if s := f.profileFor(snap.Player).Stance; mode == 1 || (s != nil && s.Kind == StanceInsidePack && !s.Enabled) {
 		if key := act + "|" + why; key != f.stance.last {
 			f.stance.last = key
 			f.stance.diffs++
@@ -294,7 +297,7 @@ func (f *Fighter) stanceTick(ctx context.Context, snap *d2.Snapshot, st *fightSt
 		}
 		return false, nil
 	}
-	if !f.evadeOK(st) {
+	if f.mv == nil || !f.mayEvade() || !f.evadeOK(st) {
 		return false, nil
 	}
 	f.decision(st, "stance", act+": "+why)
@@ -337,13 +340,14 @@ func (f *Fighter) packPlan(snap *d2.Snapshot, s *ArmyStance) (act string, to inp
 	me := input.Point{X: p.X, Y: p.Y}
 	var near []input.Point
 	var cx, cy float64
-	contact := 0
+	contact, nearest := 0, math.MaxFloat64
 	for _, h := range Hostiles(snap, f.hostileCtx(p)) {
 		hp := input.Point{X: h.Unit.X, Y: h.Unit.Y}
 		d := pdist(me, hp)
 		if d > stanceThreatRange {
 			continue
 		}
+		nearest = min(nearest, d)
 		near = append(near, hp)
 		cx, cy = cx+float64(hp.X), cy+float64(hp.Y)
 		if d <= stancePackContact {
@@ -357,7 +361,13 @@ func (f *Fighter) packPlan(snap *d2.Snapshot, s *ArmyStance) (act string, to inp
 	if len(near) < minPack {
 		return "", input.Point{}, ""
 	}
-	if contact >= s.LeaveSurround || (contact > 0 && p.MaxLife > 0 && p.Life*100 < p.MaxLife*s.LeaveLifePct) {
+	// Under the row's life floor the hero leaves whatever the hostiles' distance and never walks in: once clear of the
+	// pack it holds, so a leave is not followed by a walk back.
+	low := p.MaxLife > 0 && p.Life*100 < p.MaxLife*s.LeaveLifePct
+	if low && contact < s.LeaveSurround && nearest >= float64(s.StandOff+4) {
+		return "", input.Point{}, ""
+	}
+	if contact >= s.LeaveSurround || low {
 		if pt, ok := awayPoint(me, near, nil, s.StandOff+4, f.valid); ok {
 			return "leave", pt, fmt.Sprintf("%d hostiles in contact, life %d of %d", contact, p.Life, p.MaxLife)
 		}

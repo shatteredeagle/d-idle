@@ -113,16 +113,77 @@ func TestZonePaceLockLapsesAndBandDrops(t *testing.T) {
 			for i := range in.Cands {
 				in.Cands[i].MLvl = []int{5, 7, 9}[i]
 			}
-			if got := l.inBand(in); len(got) != 1 || got[0].Key.Area != 4 {
+			judged := func(eligible ...bool) []verdict {
+				vs := make([]verdict, len(in.Cands))
+				for i, c := range in.Cands {
+					vs[i] = verdict{c: c, eligible: eligible[i]}
+				}
+				return vs
+			}
+			if got := l.inBand(in, judged(true, true, true)); len(got) != 1 || got[0].c.Key.Area != 4 {
 				t.Fatalf("band kept %v", got)
 			}
+			// card fix3: the only zone in the band is not safe, so the safe ones below it stay
+			if got := l.inBand(in, judged(true, true, false)); len(got) != len(in.Cands) {
+				t.Fatalf("the band dropped the safe zones and kept an unsafe one: %d left", len(got))
+			}
+			// card fix3: the current zone is never dropped
+			in.Current = in.Cands[0].Key
+			if got := l.inBand(in, judged(true, true, true)); len(got) != 2 || got[0].c.Key != in.Current {
+				t.Fatalf("the band dropped the current zone: %v", got)
+			}
+			in.Current = ZoneKey{}
 			in.Level = 40 // every zone below the band: the list is kept whole, never emptied
-			if got := l.inBand(in); len(got) != len(in.Cands) {
+			if got := l.inBand(in, judged(true, true, true)); len(got) != len(in.Cands) {
 				t.Fatalf("an empty band must keep every zone, got %d", len(got))
 			}
 			in.Level = 0
-			if got := l.inBand(in); len(got) != len(in.Cands) {
+			if got := l.inBand(in, judged(true, true, true)); len(got) != len(in.Cands) {
 				t.Fatal("unknown level: band rule off")
+			}
+		})
+	}
+}
+
+// Card fix3 (review 3 finding 3): the band rule ran before any zone was judged, so it could drop every safe zone and
+// leave one the hero had just died in; the hole fallback then sent the hero there as "the easiest field". Both builds.
+func TestBandNeverDropsTheLastSafeOrCurrentZone(t *testing.T) {
+	for _, tc := range []struct {
+		name, arch string
+		hero       func(int) power.Hero
+	}{{"paladin", "bruiser", paladin}, {"sorceress", "caster", sorceress}} {
+		t.Run(tc.name, func(t *testing.T) {
+			e := newEnv(t, tc.arch)
+			h := tc.hero(20)
+			banded := func(cur ZoneKey) Input {
+				in := e.input(h, cur, t0.Add(time.Minute))
+				in.Level = 14 // normal drop 6: only the last zone (monster level 9) is in the band
+				for i := range in.Cands {
+					in.Cands[i].MLvl = []int{5, 7, 9}[i]
+				}
+				return in
+			}
+			in := banded(ZoneKey{})
+			top := in.Cands[2].Key
+			l := NewLedger(e.p)
+			l.Observe(top, t0, Event{Kind: EvDeath}, in.Power) // the hero died in the only zone of the band
+			d, err := l.Choose(in)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if d.Hole || d.Area == top.Area {
+				t.Fatalf("picked area %d hole %v (%s): a safe zone below the band was dropped for the one the hero died in", d.Area, d.Hole, d.Why.Text)
+			}
+			// the hero stands in a safe zone below the band and every other zone is closed by a death: it stays
+			in = banded(in.Cands[0].Key)
+			l = NewLedger(e.p)
+			l.Observe(in.Cands[1].Key, t0, Event{Kind: EvDeath}, in.Power)
+			l.Observe(in.Cands[2].Key, t0, Event{Kind: EvDeath}, in.Power)
+			if d, err = l.Choose(in); err != nil {
+				t.Fatal(err)
+			}
+			if !d.Stay || d.Hole || d.Area != in.Current.Area {
+				t.Fatalf("current zone is the only safe one: picked area %d stay %v hole %v (%s)", d.Area, d.Stay, d.Hole, d.Why.Text)
 			}
 		})
 	}

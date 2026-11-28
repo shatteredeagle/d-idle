@@ -8,6 +8,13 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- fix3: stance leave at low life, no-portal recovery exclusion, bandDrop keeps safe zones, driveAura, corpse reservation lapse (TASK-1094) <!--sg:agent/fix3-->
+- fable review 9 (docs) <!--sg:agent/fable-fr9-->
+- fable review 8 (docs) <!--sg:agent/fable-fr8-->
+- fable review 6 (docs) <!--sg:agent/fable-fr6-->
+- fable review 4 (docs) <!--sg:agent/fable-fr4-->
+- fable review 2 (docs) <!--sg:agent/fable-fr2-->
+- ledger: diffReadyV2 + advisor bundles on both sandboxes (re-flip) <!--sg:agent/ledger-bot-diffReadyV2-items-advisor-20261128-034138-->
 - fable review 5: dark ledger process (docs) <!--sg:agent/fable-fr5-->
 - fable review 1: item flows (docs) <!--sg:agent/fable-fr1-->
 - fable review 3: combat, nav, survival (docs) <!--sg:agent/fable-fr3-->

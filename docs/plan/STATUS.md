@@ -44,6 +44,7 @@
 | cellar3gate | in-progress | - | `internal/nav/exit.go`<br>`internal/nav/cellar3gate_test.go`<br>`internal/questboard/`<br>`docs/probes/cellar3-gate-capture.md` | - |
 | holereach | proposed | - | `internal/bot/zonemodel.go`<br>`internal/bot/zonemodel_test.go` | - |
 | pgfix | proposed | - | `cmd/d2scenario`<br>`internal/scenario`<br>`tools/provingground/scenarios`<br>`docs/process/proving-ground.md` | - |
+| fix3 | in-progress | - | `internal/combat/`<br>`internal/bot/`<br>`internal/survival/` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
@@ -187,14 +188,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
-- c2baa8c30 11-27 22:41 `Merge agent/fable-fr5: fable review 5: dark ledger process (docs)` (fable-fr5)
-- f53f63a4c 11-27 22:41 `Merge agent/fable-fr1: fable review 1: item flows (docs)` (fable-fr1)
-- 270609cdb 11-27 22:40 `Merge branch 'main' into fable-fr5` (-)
-- b7f728c74 11-27 22:40 `Merge branch 'main' into fable-fr1` (-)
-- d64efd5c7 11-27 22:36 `Merge agent/fable-fr3: fable review 3: combat, nav, survival (docs)` (fable-fr3)
-- 4b0cdccb4 11-27 22:35 `Merge branch 'main' into fable-fr3` (-)
-- 388fd1316 11-27 22:35 `Merge agent/autoflip: autoflip: plan/run/graduate-list tool (TASK-1092)` (autoflip)
-- 794d66c7c 11-27 22:34 `Merge branch 'main' into autoflip` (-)
-- e340dc50e 11-27 22:25 `Merge agent/darkthrottle: darkthrottle: ledger cap, by_design status, flip_plan, sandbox-first doc (TASK-1091)` (darkthrottle)
-- af5382fe3 11-27 22:24 `Merge branch 'main' into darkthrottle` (-)
+- 46365bb12 11-27 22:55 `Merge agent/fix3: fix3: stance leave at low life, no-portal recovery exclusion, bandDrop keeps safe zones, driveAura, corpse reservation lapse (TASK-1094)` (fix3)
+- 585872033 11-27 22:54 `Merge branch 'main' into fix3` (-)
+- cc8a551ed 11-27 22:49 `Merge agent/fable-fr9: fable review 9 (docs)` (fable-fr9)
+- 861efe7b8 11-27 22:49 `Merge agent/fable-fr8: fable review 8 (docs)` (fable-fr8)
+- 64205b981 11-27 22:49 `Merge agent/fable-fr6: fable review 6 (docs)` (fable-fr6)
+- 24328a060 11-27 22:48 `Merge agent/fable-fr4: fable review 4 (docs)` (fable-fr4)
+- 4ba5b20b4 11-27 22:46 `Merge branch 'main' into fable-fr9` (-)
+- 9984d6c7c 11-27 22:46 `Merge branch 'main' into fable-fr8` (-)
+- ce257d051 11-27 22:46 `Merge branch 'main' into fable-fr6` (-)
+- ae87511ab 11-27 22:46 `Merge branch 'main' into fable-fr4` (-)
 <!-- statusgen:end -->

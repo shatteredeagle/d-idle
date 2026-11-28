@@ -521,8 +521,14 @@
    "enable_criteria": "Live check docs/diffready.md passes on a throwaway Nightmare-eligible hero (Baal word reads Done after the kill, ready line shows in ops why); an owner-go verb exists; then one sandbox for a week with the owner granting the hop by hand",
    "owner": "coordinator",
    "review_by": "2026-12-18",
-   "status": "dark",
-   "criteria_met": "no"
+   "status": "trial",
+   "criteria_met": "no",
+   "trial_started": "2026-11-28T03:41:24Z",
+   "trial_instance": "d2play-20261108",
+   "trial_value": 1.0,
+   "trial_window": "7200s",
+   "trial_why": "sandbox-first policy (user 2026-11-27): readiness line (opt-in go) and advisor lines; quests.refusalPark and resumeAfterDeaths held back after Fable review 2",
+   "trial_bundle": "bot.diffReadyV2,items.advisor"
   },
   {
    "name": "bot.admission",
@@ -544,8 +550,14 @@
    "enable_criteria": "d2-sme reviews the advice lines for each class on a real stock; the bot-side stock gatherer is wired; advice stays lines only (no item moves) without an owner go.",
    "owner": "coordinator",
    "review_by": "2026-12-11",
-   "status": "dark",
-   "criteria_met": "U"
+   "status": "trial",
+   "criteria_met": "U",
+   "trial_started": "2026-11-28T03:41:24Z",
+   "trial_instance": "d2play-20261108",
+   "trial_value": 1.0,
+   "trial_window": "7200s",
+   "trial_why": "sandbox-first policy (user 2026-11-27): readiness line (opt-in go) and advisor lines; quests.refusalPark and resumeAfterDeaths held back after Fable review 2",
+   "trial_bundle": "bot.diffReadyV2,items.advisor"
   },
   {
    "name": "quests.resumeAfterDeaths",

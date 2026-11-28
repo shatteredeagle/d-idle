@@ -291,8 +291,11 @@ func (f *Fighter) repickVia(p *d2.Player, id int) (int, bool) {
 	return best, found
 }
 
-// driveAura puts the planner's aura (Drive) first as a plain entry; the profile's ladder stays behind it, so an aura the
-// hero cannot reach falls back to the profile's choice. Without a Drive the ladder is returned as it is.
+// driveAura moves the planner's aura (Drive) ahead of the profile's standing auras. The profile's entry keeps its fields
+// (element, needsCrowd), so the immunity and crowd skips still apply to it, and the resting and low-life entries
+// (restLifePct rows, Prayer) stay ahead: they only win under their life lines. An aura the profile does not list goes in
+// as a plain entry; one the hero cannot reach falls back to the profile's choice. Without a Drive the ladder is returned
+// as it is.
 func (f *Fighter) driveAura(ladder []AuraPref) []AuraPref {
 	if f.Drive == nil {
 		return ladder
@@ -301,5 +304,20 @@ func (f *Fighter) driveAura(ladder []AuraPref) []AuraPref {
 	if a == "" {
 		return ladder
 	}
-	return append([]AuraPref{{Name: a}}, ladder...)
+	driven := AuraPref{Name: a}
+	var life, rest []AuraPref
+	for _, e := range ladder {
+		switch {
+		case e.RestLifePct > 0:
+			if e.Name == a {
+				return ladder // the planner named a life aura: the profile's lines already decide when it is on
+			}
+			life = append(life, e)
+		case e.Name == a:
+			driven = e
+		default:
+			rest = append(rest, e)
+		}
+	}
+	return append(append(life, driven), rest...)
 }
