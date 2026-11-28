@@ -23,14 +23,14 @@ owns:
   - "data/build-cap-ratchet.json"
   - "tools/provingground/scenarios/"
   - "docs/classes/"
-  - "docs/plan/data/"
+  - "tools/provingground/golden/"
   - "internal/watch/policysheet_test.go"
   - "internal/watch/policypreview_test.go"
   - "internal/watch/stance_test.go"
   - "internal/watch/unlockrisk_test.go"
 exclusive: []
 contracts: []
-result: "Offline only, not verified live. Druid and Barbarian have decide rows (mana band, stance knobs, propose lead), judged act2plan and levelplan rows, merc aura rows, six scenarios (validate ok) and gap docs; cap ratchet 110 to 95 rows. Build-specific: warcry stance in profiles.json (barbarian/warcry melee block), table row order in the two endgame90 tables; class-keyed: decide rows, plan rows, merc aura (classtraits.json)."
+result: "Offline only, not verified live. Druid and Barbarian have decide rows (mana band, stance knobs, propose lead), judged act2plan and levelplan rows, merc aura rows, six scenarios (validate ok) and gap docs; cap ratchet 110 to 101 rows. Build-specific: warcry stance in profiles.json (barbarian/warcry melee block), table row order in the two endgame90 tables; class-keyed: decide rows, plan rows, merc aura (classtraits.json)."
 ---
 
 ## Description

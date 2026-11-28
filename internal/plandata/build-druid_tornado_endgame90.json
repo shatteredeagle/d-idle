@@ -209,7 +209,12 @@
    "dexterity": 0,
    "vitality": 5,
    "energy": 0,
-   "skills": []
+   "skills": [
+    {
+     "skill": "Arctic Blast",
+     "points": 1
+    }
+   ]
   },
   {
    "clvl": 12,
@@ -262,7 +267,7 @@
      "points": 1
     },
     {
-     "skill": "Arctic Blast",
+     "skill": "Cyclone Armor",
      "points": 1,
      "quest": "radament"
     }
@@ -304,10 +309,6 @@
     {
      "skill": "Cyclone Armor",
      "points": 1
-    },
-    {
-     "skill": "Twister",
-     "points": 1
     }
    ]
   },
@@ -345,7 +346,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Cyclone Armor",
+     "skill": "Twister",
      "points": 1
     }
    ]
