@@ -55,7 +55,6 @@
 | led1 | in-progress | - | `data/darklaunch/`<br>`data/darklaunch.json`<br>`data/darklaunch-cap.json`<br>`tools/darklaunch/`<br>`tools/flip/`<br>`docs/process/dark-launch.md`<br>`docs/process/autoflip.md` | - |
 | live1 | proposed | - | `internal/bot/`<br>`internal/survival/`<br>`internal/questboard/`<br>`internal/arbiter/`<br>`cmd/d2bot/survivalwire.go`<br>`docs/live1.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
-| sweep2 | in-progress | - | `docs/probes/review-sweep2-2026-11-28.md`<br>`docs/arbiter.md`<br>`cmd/d2bot/survivalwire.go`<br>`internal/admit/admit.go`<br>`internal/arbiter/arbiter.go`<br>`internal/arbiter/shadow.go`<br>`internal/arbiter/sweep2_test.go`<br>`internal/bot/admission.go`<br>`internal/bot/arbiter_control.go`<br>`internal/bot/earlyroute.go`<br>`internal/bot/questboard.go`<br>`internal/bot/routeguard.go`<br>`internal/bot/sweep2_test.go`<br>`internal/questboard/exec.go`<br>`internal/questboard/fake.go`<br>`internal/questboard/readiness.go`<br>`internal/questboard/sweep2_test.go`<br>`internal/vaultkeep/equip.go`<br>`internal/vaultkeep/equipdirect.go`<br>`internal/vaultkeep/sweep2_test.go` | - |
 | zone5 | proposed | - | `internal/survival/`<br>`cmd/d2bot/survivalwire.go`<br>`docs/survival/zonemodel.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
