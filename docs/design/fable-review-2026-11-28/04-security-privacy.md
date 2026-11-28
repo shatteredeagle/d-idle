@@ -41,9 +41,9 @@ container, no real data). These lines came out UNCHANGED:
   addresses (link-local ones embed the MAC), and a public IPv4.
 - `host=DESKTOP-K3J2L1 user=alice` (bare host names and user names with no dotted suffix).
 - `/mnt/user/games/alice/...`, `/media/alice/...`, `C:\Games\...`: only `/home`, `/Users` and `X:\Users` count as home.
-- `open /Users/Bob Smith/Games/x.mpq` became `open <home> Smith/Games/x.mpq`: a home folder with a space leaks the
+- A macOS-style home folder whose user name is two words ("Bob Smith") became `<home> Smith/Games/x.mpq`: a home folder with a space leaks the
   rest of the name.
-- Cosmetic: `http://192.168.1.50:8891` became `http://<ip>8891` (the rule eats the colon).
+- Cosmetic: a URL with a private address and port 8891 became `http://<ip>8891` (the rule eats the colon).
 
 Attacker or trigger: none needed. The tester runs the script as told and mails the tarball; the README inside says
 "Tokens, key-shaped text, home folders, private host names, IP addresses ... were replaced".
