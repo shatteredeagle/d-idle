@@ -359,3 +359,22 @@ func TestDeterministicGolden(t *testing.T) {
 		t.Errorf("trace differs from %s (run with -update after reviewing):\n%s", path, got)
 	}
 }
+
+// Review 11, N3: the survive source needs a hostile near, with the safety fact as without it: a quiet hurt hero keeps
+// the running trip. Both source sets.
+func TestSurviveNeedsAHostile(t *testing.T) {
+	for name, src := range map[string][]Source{"std": StdSources(), "upkeep": UpkeepSources()} {
+		for _, f := range []map[string]int{
+			{FactSafety: 1, FactLifePct: 40, FactTrip: 1},
+			{FactSurviveBelow: 50, FactLifePct: 40, FactTrip: 1},
+		} {
+			if d := New(DefaultConfig(), src...).Decide(View{Area: "dark_wood", Facts: f}); d.Chosen == nil || d.Chosen.Source == SrcSurvive {
+				t.Fatalf("%s %v: quiet hero, chosen %+v", name, f, d.Chosen)
+			}
+			f[FactHostile] = 2
+			if d := New(DefaultConfig(), src...).Decide(View{Area: "dark_wood", Facts: f}); d.Chosen == nil || d.Chosen.Source != SrcSurvive {
+				t.Fatalf("%s %v: hostile near, chosen %+v", name, f, d.Chosen)
+			}
+		}
+	}
+}

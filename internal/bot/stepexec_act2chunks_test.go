@@ -235,3 +235,45 @@ func TestAct2ChunksOffKeepOldPath(t *testing.T) {
 		t.Fatalf("book: %v %v", err, cw.clicks)
 	}
 }
+
+// Tyrael after the Duriel kill (lab night 2026-11-28, drill.act2.duriel.stepexec 0 of 3): he stands out of sight in the
+// lair, the dialog adapter walks only to an NPC the snapshot lists and the chunk parked. The talk row walks the level
+// until the snapshot lists him, then talks. Must fail without that: no explore call. In a town nobody is looked for.
+func TestTalkRowLooksForAFieldNPC(t *testing.T) {
+	const lair, tyrael = 73, 251
+	for _, cl := range execClasses {
+		a, cw := chunkRig(t, cl)
+		cw.setWord(task.QDuriel, task.StageCleared, 0x0020)
+		cw.onTalk["Tyrael/reward"] = func(c *chunkWorld) { c.setWord(task.QDuriel, task.StageCleared, 0x0020|0x2000) }
+		cw.g.w.set(func(w *world) { w.area = lair })
+		explores := 0
+		cw.g.mover.exploreFn = func(_ context.Context, done func() bool) error {
+			explores++
+			if done() {
+				t.Errorf("class %v: Tyrael read as seen before he is in the snapshot", cl)
+			}
+			cw.g.w.set(func(w *world) {
+				w.mons = append(w.mons, d2.Unit{Type: d2.TypeMonster, ID: 77, Class: tyrael, X: 150, Y: 150})
+			})
+			if !done() {
+				t.Errorf("class %v: Tyrael in the snapshot is not seen", cl)
+			}
+			return nil
+		}
+		if err := a.Talk(context.Background(), task.NPCTyrael, "reward"); err != nil || explores != 1 || len(cw.talks) != 1 {
+			t.Fatalf("class %v: err %v explores %d talks %v", cl, err, explores, cw.talks)
+		}
+		// in sight already: no walk
+		cw.setWord(task.QDuriel, task.StageCleared, 0x0020)
+		if err := a.Talk(context.Background(), task.NPCTyrael, "reward"); err != nil || explores != 1 {
+			t.Fatalf("class %v: second talk: err %v explores %d", cl, err, explores)
+		}
+		// a town NPC out of sight is the town adapter's walk
+		a, cw = chunkRig(t, cl)
+		cw.g.mover.exploreFn = func(context.Context, func() bool) error { explores++; return nil }
+		cw.onTalk["Atma/quest"] = func(c *chunkWorld) { c.setWord(task.QRadament, task.StageStarted, 0x0004) }
+		if err := a.Talk(context.Background(), task.NPCAtma, "quest"); err != nil || explores != 1 {
+			t.Fatalf("class %v: town talk: err %v explores %d", cl, err, explores)
+		}
+	}
+}

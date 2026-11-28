@@ -1161,8 +1161,9 @@ func TestKillsAndXPAreAHeartbeat(t *testing.T) {
 		walk  bool
 		fresh bool
 	}{{"kill inside a long action", true, false, true}, {"hung step, nothing observed", false, false, false},
-		// A4 (fable review part 7): a slice that walks or shops for ten minutes without a kill is progressing, not hung.
-		{"walking inside a long slice, no kill", false, true, true}} {
+		// Review 11, N2: the stuck check's small facts (bump: a 3 subtile shift, a potion drunk, monster life) are not a
+		// heartbeat; TestHungActionGoesStale has the facts that are.
+		{"small facts inside a hung slice", false, true, false}} {
 		var r Runner
 		r.lastStep.Store(old.UnixNano())
 		if tc.bump {
@@ -1174,6 +1175,58 @@ func TestKillsAndXPAreAHeartbeat(t *testing.T) {
 		age := time.Since(r.LastStep())
 		if got := age < time.Minute; got != tc.fresh {
 			t.Errorf("%s: heartbeat age %v, fresh=%v want %v", tc.name, age.Round(time.Second), got, tc.fresh)
+		}
+	}
+}
+
+// Review 11, N2: while an action hangs (the acting goroutine is blocked and ignores its context) the guard goroutine
+// keeps polling. What it sees then is not a heartbeat: a monster walking out of the snapshot, a monster losing life to
+// a minion, the mercenary or poison, the guard's own reflex drink, a knockback, gold lost on death. Before the fix
+// each of them stamped the heartbeat, so a hung 40 min slice was restarted after about 50 min instead of 10. Progress
+// only the acting goroutine can make still is one (a long walk, a pickup, an area change, a kill), so a slice that is
+// getting somewhere is not judged hung (A4). A caster and a summoner whose minion does the damage.
+func TestHungActionGoesStale(t *testing.T) {
+	const limit = 10 * time.Minute // cmd/d2bot defaultWatchdog
+	for _, class := range []d2.Class{d2.Sorceress, d2.Necromancer} {
+		g := newRig(t)
+		mon := func(id uint32, life int) d2.Unit {
+			return d2.Unit{ID: id, Type: d2.TypeMonster, Class: 10, Mode: d2.MonModeStand, X: 110, Y: 100, Monster: &d2.MonsterInfo{LifePct: life}}
+		}
+		g.w.set(func(w *world) { w.area, w.class, w.mons = 5, class, []d2.Unit{mon(7, 100), mon(8, 100)} })
+		g.w.belt(101, 102)
+		g.r.poll()
+		g.r.poll()
+		stale := func() { // the action started long ago and no step finished since
+			old := time.Now().Add(-limit - time.Minute).UnixNano()
+			g.r.lastStep.Store(old)
+			g.r.ob.realWall.Store(old)
+		}
+		for _, f := range []struct {
+			name  string
+			do    func(w *world)
+			alive bool
+		}{
+			{"a monster leaves the snapshot", func(w *world) { w.mons = w.mons[:1] }, false},
+			{"a minion hurts a monster", func(w *world) { w.mons = []d2.Unit{mon(7, 60)} }, false},
+			{"knockback", func(w *world) { w.x += 4 }, false},
+			{"gold lost in the field", func(w *world) { w.gold0 -= 100 }, false},
+			{"the hero walked away", func(w *world) { w.x += beatMove + 5 }, true},
+			{"gold picked up", func(w *world) { w.gold0 += 50 }, true},
+			{"a kill", func(w *world) { w.mons[0].Mode = d2.MonModeDead }, true},
+			{"an area change", func(w *world) { w.area = 4 }, true},
+		} {
+			stale()
+			g.w.set(f.do)
+			g.r.poll()
+			if got := time.Since(g.r.LastStep()) < limit; got != f.alive {
+				t.Errorf("%v, %s: heartbeat fresh %v, want %v", class, f.name, got, f.alive)
+			}
+		}
+		stale()
+		g.w.belt(101) // the guard's reflex drink: a potion leaves the belt
+		g.r.poll()
+		if time.Since(g.r.LastStep()) < limit {
+			t.Errorf("%v: the guard's reflex drink kept a hung action alive", class)
 		}
 	}
 }
