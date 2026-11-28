@@ -11,6 +11,7 @@ import (
 	"sort"
 	"strings"
 	"sync"
+	"unicode/utf8"
 )
 
 // Rotating is a size-capped log file: when a write would pass Max bytes the file is renamed to name.1 (name.1 to
@@ -142,11 +143,7 @@ func eachLine(r io.Reader, fn func(string)) error {
 // Tail returns the last n lines (0 = all) of the log at path and its rotations (oldest first) whose text matches re
 // (nil = all). Read only.
 func Tail(path string, n int, re *regexp.Regexp) ([]string, error) {
-	files := []string{path}
-	if m, _ := filepath.Glob(path + ".*"); len(m) > 0 {
-		sort.Slice(m, func(i, j int) bool { return rotNum(m[i]) > rotNum(m[j]) }) // .5 before .1: oldest first
-		files = append(m, path)
-	}
+	files := append(rotations(path), path)
 	var out []string
 	found := false
 	for _, f := range files {
@@ -179,6 +176,52 @@ func Tail(path string, n int, re *regexp.Regexp) ([]string, error) {
 		out = out[len(out)-n:]
 	}
 	return out, nil
+}
+
+// rotations lists path.N (N a number) oldest first. Only that shape counts: a sibling such as bot.log.bak or
+// bot.log.tmp is not a rotation, and a glob character in path is a plain character.
+func rotations(path string) []string {
+	ents, _ := os.ReadDir(filepath.Dir(path))
+	pfx := filepath.Base(path) + "."
+	var m []string
+	for _, e := range ents {
+		n, ok := strings.CutPrefix(e.Name(), pfx)
+		if !ok || n == "" || strings.Trim(n, "0123456789") != "" || !e.Type().IsRegular() {
+			continue
+		}
+		m = append(m, filepath.Join(filepath.Dir(path), e.Name()))
+	}
+	sort.Slice(m, func(i, j int) bool { return rotNum(m[i]) > rotNum(m[j]) }) // .5 before .1
+	return m
+}
+
+// Printable makes a log line safe for a terminal: control characters (escape sequences that move the cursor, clear
+// the screen or set the title) are shown as \xNN instead of being sent. Tab stays.
+func Printable(s string) string {
+	clean := true
+	for _, r := range s {
+		if (r < 0x20 && r != '\t') || (r >= 0x7f && r < 0xa0) || r == utf8.RuneError {
+			clean = false
+			break
+		}
+	}
+	if clean {
+		return s
+	}
+	var b strings.Builder
+	for i := 0; i < len(s); {
+		r, n := utf8.DecodeRuneInString(s[i:])
+		switch {
+		case r == utf8.RuneError && n == 1:
+			fmt.Fprintf(&b, `\x%02x`, s[i])
+		case (r < 0x20 && r != '\t') || (r >= 0x7f && r < 0xa0):
+			fmt.Fprintf(&b, `\x%02x`, r)
+		default:
+			b.WriteString(s[i : i+n])
+		}
+		i += n
+	}
+	return b.String()
 }
 
 func rotNum(p string) int {

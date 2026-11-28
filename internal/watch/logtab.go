@@ -55,6 +55,11 @@ type LogView struct {
 // LogHandler serves LogRoute over m, the mux that holds the routes of logSource.
 func (h *Hub) LogHandler(m http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet && r.Method != http.MethodHead {
+			w.Header().Set("Allow", "GET, HEAD")
+			http.Error(w, "read-only", http.StatusMethodNotAllowed)
+			return
+		}
 		tab := r.URL.Query().Get("tab")
 		if tab == "" {
 			tab = "now"
