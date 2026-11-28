@@ -161,7 +161,7 @@ func (d *Desk) ParkLines() []string {
 	v := d.View()
 	b := v.Blocked
 	if !v.Enabled || b == nil {
-		return nil
+		return d.WaitingLines()
 	}
 	line := b.QuestTitle + " is stuck: " + b.Why
 	var since string
@@ -174,5 +174,5 @@ func (d *Desk) ParkLines() []string {
 			since += " " + r.Clears
 		}
 	}
-	return []string{line + since}
+	return append([]string{line + since}, d.WaitingLines()...)
 }
