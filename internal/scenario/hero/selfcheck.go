@@ -159,6 +159,8 @@ func ReadPointDump(o *Observed, line string) error {
 			Level    *int `json:"level"`
 			StatPts  *int `json:"stat_pts"`
 			SkillPts *int `json:"skill_pts"`
+			LSkill   *int `json:"lskill"` // V docs/d2d-backend.md: the hands are in the same player dump
+			RSkill   *int `json:"rskill"`
 		} `json:"player"`
 		Skills struct {
 			Levels []int `json:"base_levels"`
@@ -170,6 +172,7 @@ func ReadPointDump(o *Observed, line string) error {
 	if d.Player.Level != nil {
 		o.Level = d.Player.Level
 	}
+	o.LeftSkill, o.RightSkill = d.Player.LSkill, d.Player.RSkill
 	o.StatPts, o.SkillPts, o.SkillLevels = d.Player.StatPts, d.Player.SkillPts, d.Skills.Levels
 	return nil
 }

@@ -13,35 +13,23 @@ import (
 	"d2lod-bot/internal/scenario/hero"
 )
 
-// The default hero of a Proving Ground scenario is played (points spent, main attack bound), on two classes; banked is
-// only the declared profile, a raw point write or a points scenario.
-func TestHeroProfileDefaultPlayed(t *testing.T) {
-	for _, class := range []string{"Sorceress", "Necromancer"} {
+// A scenario without pre.hero_profile is banked (as before the played profile existed); played is opt-in, on two classes.
+func TestHeroProfileDefaultBanked(t *testing.T) {
+	for _, class := range []string{"Sorceress", "Necromancer", "Paladin"} {
 		s := fightScenario(12)
-		if p := s.HeroProfile(); p != scenario.HeroPlayed {
+		if p := s.HeroProfile(); p != scenario.HeroBanked {
 			t.Fatalf("%s: default profile %q", class, p)
 		}
 		su, err := scenario.BuildSetup(s, class, 1)
-		if err != nil || su.HeroProfile != scenario.HeroPlayed {
+		if err != nil || su.HeroProfile != scenario.HeroBanked {
 			t.Fatalf("%s: setup %q, %v", class, su.HeroProfile, err)
 		}
-		h, _ := scenarioHero(s, class, hero.NameTables())
-		if h.SkillPts >= 11 || h.Attack == "" {
+		if h, _ := scenarioHero(s, class, hero.NameTables()); h.Attack != "" || h.SkillPts != 11 {
+			t.Errorf("%s: banked hero has attack %q and %d skill points", class, h.Attack, h.SkillPts)
+		}
+		s.Pre.HeroProfile = scenario.HeroPlayed
+		if h, _ := scenarioHero(s, class, hero.NameTables()); class != "Paladin" && (h.SkillPts >= 11 || h.Attack == "") {
 			t.Errorf("%s: played hero left %d skill points banked, attack %q", class, h.SkillPts, h.Attack)
-		}
-	}
-	for name, mod := range map[string]func(*scenario.Scenario){
-		"declared":   func(s *scenario.Scenario) { s.Pre.HeroProfile = scenario.HeroBanked },
-		"raw points": func(s *scenario.Scenario) { s.Pre.Stats = []scenario.StatSet{{Stat: 5, Value: 3}} },
-		"points":     func(s *scenario.Scenario) { s.Covers = []string{"points.autoalloc"} },
-	} {
-		s := fightScenario(12)
-		mod(&s)
-		if p := s.HeroProfile(); p != scenario.HeroBanked {
-			t.Errorf("%s: profile %q, want banked", name, p)
-		}
-		if h, _ := scenarioHero(s, "Necromancer", hero.NameTables()); h.Attack != "" || h.SkillPts == 0 {
-			t.Errorf("%s: banked hero has attack %q and %d skill points", name, h.Attack, h.SkillPts)
 		}
 	}
 }
@@ -77,6 +65,19 @@ func TestSpendPointsSendsBuildCommands(t *testing.T) {
 			if has != (profile == scenario.HeroPlayed) || (profile == scenario.HeroPlayed && !strings.Contains(lines, "cmd select")) {
 				t.Errorf("%s %s: commands %q", class, profile, lines)
 			}
+		}
+	}
+}
+
+// A run blocked before the setup ran (a failed self-check) still gets its ledger line: the tag is the scenario's own.
+func TestBlockedRunLedgerTagFromScenario(t *testing.T) {
+	for _, lvl := range []int{12, 1} {
+		su, err := scenario.BuildSetup(fightScenario(lvl), "Paladin", 11)
+		if err != nil || scenario.SetupTag(su.Tags) == "" {
+			t.Fatalf("level %d: tags %v, %v", lvl, su.Tags, err)
+		}
+		if lvl == 12 && scenario.SetupTag(su.Tags) != scenario.SetupCheated {
+			t.Errorf("level setup writes are CHEATED, got %v", su.Tags)
 		}
 	}
 }

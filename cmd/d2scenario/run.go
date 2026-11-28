@@ -235,6 +235,11 @@ func cmdExecOne(args []string) error {
 		res.Journal = os.Getenv(journalEnv)
 	}
 	res.Version, res.Run = scenario.ResultVersion, r
+	if len(res.Tags) == 0 { // a run blocked before the setup was built still carries the scenario's provenance tags
+		if su, err := scenario.BuildSetup(s, *class, *seed); err == nil {
+			res.Tags = su.Tags
+		}
+	}
 	if res.Status == "" { // not blocked by the infrastructure: judge the observed state
 		if res.State == nil {
 			res = withVerdict(res, blocked("no state was observed"))
