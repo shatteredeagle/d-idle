@@ -412,6 +412,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [12-fix-review-security-pg-data-pipeline.md](design/fable-review-2026-11-28/12-fix-review-security-pg-data-pipeline.md): Fable round 2, review C: tonight's fixes for security, Proving Ground, builds as data and the pipeline (status: REVIEW, docs only (reviewer run rv3, 2026-11-28 about 00:40 EST). No code changed, no game, no sandbox...)
 - [13-sandbox-live-review.md](design/fable-review-2026-11-28/13-sandbox-live-review.md): Fable review 2026-11-28, part 13: both sandbox heroes after the fix7 deploy (live logs, read-only) (status: review, read-only. Window: 2026-11-28 05:19:03 to 05:54:28 UTC (00:19 to 00:54 EST, about 35 minutes),...)
 - [14-round3-merged-since-midnight.md](design/fable-review-2026-11-28/14-round3-merged-since-midnight.md): Review 14: round 3, code merged since 00:30 EST (2026-11-28) (status: current. Reviewer run rv5, read-only. Base `27fe88d59` (first-parent tip before 00:30 EST) to...)
+- [15-round4-deploy-readiness.md](design/fable-review-2026-11-28/15-round4-deploy-readiness.md): Round 4: deploy readiness of main for the 06:30 EST canary autodeploy (2026-11-28)
 
 `design/`
 

@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- review 15: round-4 deploy readiness (docs) <!--sg:agent/rv6-->
 - road5: literal-count ratchet, gatemark, questspec pending coverage (TASK-1133) <!--sg:agent/road5-->
 - drv2: combat hold driver log, drill classification (TASK-1127) <!--sg:agent/drv2-->
 - dur2: Tyrael door finding (fork), npc_out_of_reach, board retry count (TASK-1126/1120) <!--sg:agent/dur2-->
