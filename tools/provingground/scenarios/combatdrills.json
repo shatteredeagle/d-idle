@@ -13,6 +13,7 @@
     "internal/combat/"
    ],
    "pre": {
+    "hero_profile": "played",
     "level": 30,
     "gold": 3000,
     "start": "field",
@@ -94,6 +95,7 @@
     "internal/combat/"
    ],
    "pre": {
+    "hero_profile": "played",
     "level": 30,
     "gold": 3000,
     "start": "field",
@@ -169,6 +171,7 @@
     "internal/combat/"
    ],
    "pre": {
+    "hero_profile": "played",
     "level": 24,
     "gold": 3000,
     "start": "field",
@@ -240,6 +243,7 @@
     "internal/combat/"
    ],
    "pre": {
+    "hero_profile": "played",
     "level": 24,
     "gold": 3000,
     "start": "field",
@@ -314,6 +318,7 @@
     "internal/combat/"
    ],
    "pre": {
+    "hero_profile": "played",
     "level": 24,
     "gold": 3000,
     "start": "field",
@@ -388,6 +393,7 @@
     "internal/combat/"
    ],
    "pre": {
+    "hero_profile": "played",
     "level": 24,
     "gold": 3000,
     "start": "field",
@@ -468,6 +474,7 @@
     "internal/combat/"
    ],
    "pre": {
+    "hero_profile": "played",
     "level": 24,
     "gold": 3000,
     "start": "field",
@@ -543,6 +550,7 @@
     "internal/combat/"
    ],
    "pre": {
+    "hero_profile": "played",
     "level": 30,
     "gold": 3000,
     "start": "field",
@@ -623,6 +631,7 @@
     "internal/combat/"
    ],
    "pre": {
+    "hero_profile": "played",
     "level": 24,
     "gold": 3000,
     "start": "field",
@@ -698,6 +707,7 @@
     "internal/combat/"
    ],
    "pre": {
+    "hero_profile": "played",
     "level": 30,
     "gold": 3000,
     "start": "field",
@@ -776,6 +786,7 @@
     "internal/combat/"
    ],
    "pre": {
+    "hero_profile": "played",
     "level": 24,
     "gold": 3000,
     "start": "field",
@@ -851,6 +862,7 @@
     "internal/combat/"
    ],
    "pre": {
+    "hero_profile": "played",
     "level": 24,
     "gold": 3000,
     "start": "field",
@@ -921,6 +933,7 @@
     "internal/combat/"
    ],
    "pre": {
+    "hero_profile": "played",
     "level": 24,
     "gold": 3000,
     "start": "field",

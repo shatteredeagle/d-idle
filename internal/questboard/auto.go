@@ -3,6 +3,7 @@ package questboard
 import (
 	"context"
 	"fmt"
+	"strings"
 	"sync"
 	"time"
 )
@@ -79,6 +80,7 @@ type autoState struct {
 	muted   map[string]bool // chunks whose countdown the player cancelled, until they leave the offer
 	tried   map[string]bool // chunks the board handed in (or tried to) this process
 	why     string          // why an opted-in offer does not start now, in words
+	logged  string          // the last why that was logged, so a lasting reason logs once
 }
 
 // Touch records watch activity: the board was asked for by a client.
@@ -93,7 +95,8 @@ func (e *Exec) Touch() {
 func (e *Exec) NoteHold() {
 	now := e.o.Now()
 	e.ax.am.Lock()
-	e.ax.hold, e.ax.pending = now, nil
+	e.ax.hold = now
+	e.dropPendingLocked("you paused or reset")
 	e.ax.am.Unlock()
 }
 
@@ -130,8 +133,33 @@ func (e *Exec) CancelAuto(quest, chunk string) bool {
 		e.ax.muted = map[string]bool{}
 	}
 	e.ax.muted[ChunkKey(p.Quest, p.Chunk)] = true
-	e.ax.pending = nil
+	e.dropPendingLocked("you cancelled it")
 	return true
+}
+
+// setWhyLocked sets the held-back reason (callers hold ax.am) and logs it once per change.
+func (e *Exec) setWhyLocked(why string) {
+	// a cancelled countdown already says why; the plain gate reason of the same tick must not replace it
+	if why != "" && strings.HasPrefix(e.ax.why, "countdown for ") && strings.HasSuffix(e.ax.why, ": "+why) {
+		return
+	}
+	e.ax.why = why
+	if why != e.ax.logged {
+		e.ax.logged = why
+		if why != "" {
+			e.o.Log("quest auto-start held back", "why", why)
+		}
+	}
+}
+
+// dropPendingLocked ends a running countdown and records why (callers hold ax.am); without one it does nothing.
+func (e *Exec) dropPendingLocked(reason string) {
+	p := e.ax.pending
+	if p == nil {
+		return
+	}
+	e.ax.pending = nil
+	e.setWhyLocked("countdown for " + p.Title + " cancelled: " + reason)
 }
 
 // AutoSnapshot is what the API shows of the controller.
@@ -222,12 +250,17 @@ func (e *Exec) autoCandidate(vs []QuestView, plan Plan, diff int) (Ref, string, 
 		}
 		q, err := e.b.Quest(v.ID)
 		if err != nil || q.AutoStart != "allowed" {
+			if held == "" {
+				held = v.Title + " is marked auto but the quest is never auto-started"
+			}
 			continue
 		}
+		ready := false
 		for _, cv := range v.Chunks {
 			if cv.State != Ready {
 				continue
 			}
+			ready = true
 			if cv.Reason != ReadySafe {
 				if held == "" {
 					held = v.Title + " is not safe enough to start by itself; it waits for you"
@@ -235,6 +268,9 @@ func (e *Exec) autoCandidate(vs []QuestView, plan Plan, diff int) (Ref, string, 
 				continue
 			}
 			return Ref{v.ID, cv.ID}, v.Title, ""
+		}
+		if !ready && held == "" {
+			held = v.Title + " has no ready chunk (" + v.Why + ")"
 		}
 	}
 	return Ref{}, "", held
@@ -256,7 +292,8 @@ func (e *Exec) AutoTick(in AutoInput) (AutoAct, error) {
 	}
 	e.ax.am.Lock()
 	if in.Paused {
-		e.ax.hold, e.ax.pending = now, nil
+		e.ax.hold = now
+		e.dropPendingLocked("the bot is paused")
 	}
 	away := e.awayAt(now, e.o.Auto)
 	e.ax.am.Unlock()
@@ -264,7 +301,10 @@ func (e *Exec) AutoTick(in AutoInput) (AutoAct, error) {
 	o := e.open(vs, plan, diff)
 	if len(o) > 0 {
 		e.ax.am.Lock()
-		e.ax.pending, e.ax.why = nil, ""
+		e.dropPendingLocked("a quest dialogue or hand-in is open")
+		if e.ax.pending == nil && e.ax.why == "" {
+			e.ax.logged = ""
+		}
 		e.ax.am.Unlock()
 		return e.autoHandInLocked(vs, plan, diff, o, in, away), nil
 	}
@@ -277,16 +317,33 @@ func (e *Exec) AutoTick(in AutoInput) (AutoAct, error) {
 		}
 	}
 	if cand.Quest == "" || e.ax.muted[ChunkKey(cand.Quest, cand.Chunk)] {
-		e.ax.pending, e.ax.why = nil, held
+		reason := held
+		if cand.Quest != "" {
+			reason = "you cancelled it"
+		} else if e.ax.pending != nil {
+			reason = "the offer is gone (" + held + ")"
+			if held == "" {
+				reason = "the offer is gone"
+			}
+		}
+		if e.ax.pending != nil {
+			e.dropPendingLocked(reason)
+		} else {
+			e.setWhyLocked(reason)
+		}
 		e.ax.am.Unlock()
 		return AutoAct{}, nil
 	}
 	if why := e.autoGate(plan, in, now); why != "" {
-		e.ax.pending, e.ax.why = nil, why
+		if e.ax.pending != nil {
+			e.dropPendingLocked(why)
+		} else {
+			e.setWhyLocked(why)
+		}
 		e.ax.am.Unlock()
 		return AutoAct{}, nil
 	}
-	e.ax.why = ""
+	e.setWhyLocked("")
 	p := e.ax.pending
 	if p == nil || p.Quest != cand.Quest || p.Chunk != cand.Chunk {
 		p = &AutoPending{Quest: cand.Quest, Chunk: cand.Chunk, Title: title, Ends: now.Add(time.Duration(maxInt(e.o.Auto.DelaySec, 0)) * time.Second)}

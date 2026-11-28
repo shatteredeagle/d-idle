@@ -54,7 +54,7 @@ func TestZoneClearViewAndPost(t *testing.T) {
 	f := newFakeZone()
 	z := f.zc()
 	v, err := z.View()
-	if err != nil || v.Schema != "watch.zoneclear/1" || len(v.Knobs) != 4 {
+	if err != nil || v.Schema != "watch.zoneclear/1" || len(v.Knobs) != 3 {
 		t.Fatalf("view %+v %v", v, err)
 	}
 	for _, k := range v.Knobs {
@@ -75,7 +75,7 @@ func TestZoneClearViewAndPost(t *testing.T) {
 		"empty":             {`{}`, "", 400},
 		"unknown field":     {`{"x":1}`, "", 400},
 		"reset with others": {`{"reset":true,"exploredPct":80}`, "reset", 400},
-		"order":             {`{"farmReset":true,"exploredPct":90,"farmResetPct":80}`, "farmResetPct", 400},
+		"retired knob":      {`{"farmReset":true}`, "", 400},
 	} {
 		w := invPost(post, ZoneClearRoute, c.body, auth)
 		if w.Code != c.code || (c.field != "" && !strings.Contains(w.Body.String(), `"field":"`+c.field+`"`)) {
@@ -85,18 +85,14 @@ func TestZoneClearViewAndPost(t *testing.T) {
 	if len(f.src) != 0 {
 		t.Fatalf("a refused edit changed %v", f.src)
 	}
-	w := invPost(post, ZoneClearRoute, `{"exploredPct":80,"farmReset":true,"farmResetPct":90}`, auth)
-	if w.Code != 200 || f.v["bot.exploredPct"] != 80 || f.v["bot.farmReset"] != 1 || f.v["bot.farmResetPct"] != 90 {
+	w := invPost(post, ZoneClearRoute, `{"exploredPct":80,"farmResetPct":90}`, auth)
+	if w.Code != 200 || f.v["bot.exploredPct"] != 80 || f.v["bot.farmResetPct"] != 90 {
 		t.Fatalf("save: %d %s %v", w.Code, w.Body, f.v)
 	}
 	var rep struct{ View ZoneClearView }
 	json.Unmarshal(w.Body.Bytes(), &rep)
 	if rep.View.Knobs[0].Source != "dashboard" || rep.View.Knobs[0].Value != 80 {
 		t.Errorf("reply %+v", rep.View.Knobs[0])
-	}
-	// the farm loop off: the order rule does not apply
-	if w := invPost(post, ZoneClearRoute, `{"farmReset":false,"farmResetPct":50}`, auth); w.Code != 200 {
-		t.Errorf("off: %d %s", w.Code, w.Body)
 	}
 	if w := invPost(post, ZoneClearRoute, `{"reset":true}`, auth); w.Code != 200 || f.v["bot.exploredPct"] != 100 || len(f.src) != 0 {
 		t.Errorf("reset: %d %v %v", w.Code, f.v, f.src)

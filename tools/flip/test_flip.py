@@ -575,6 +575,16 @@ for _n, _f in vars(_Hardening).items():
 
 
 class ProbeTransportTest(unittest.TestCase):
+    def test_status_reads_only_the_first_json_document(self):
+        # `ops status --why` appends human lines after the JSON view ("waiting for Start: ...")
+        sb = F.Sandbox.__new__(F.Sandbox)
+        sb.instance, sb.bin = "x", "/bin/d2bot"
+        sb._x = lambda args, stdin=None, timeout=120: '{"invariants": [{"name": "a", "count": 0}]}\nwaiting for Start: q/c (start_tap)\n'
+        self.assertEqual(sb.status()["invariants"][0]["name"], "a")
+        sb._x = lambda args, stdin=None, timeout=120: "no json here"
+        with self.assertRaises(F.FlipError):
+            sb.status()
+
     def test_wrong_transport_fails_fast_naming_d2_flip_run(self):
         sb = F.Sandbox("c1", {"D2_FLIP_RUN": "false"})
         with self.assertRaises(F.FlipError) as c:

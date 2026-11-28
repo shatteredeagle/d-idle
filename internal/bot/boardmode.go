@@ -15,7 +15,7 @@ import (
 //	       as the pinned target: it names the goal and feeds the readiness meter; it never starts the quest.
 //	idle   parked in town on purpose: the town chores of the normal loop, no field work, no watchdog stall.
 //	farm   the leveling slice with the farm-gold zone choice (one rung below what the level is ready for, so never
-//	       above the readiness line); bot.farmReset keeps its own rules there.
+//	       above the readiness line); the farm loop keeps its own rules there.
 //
 // An accepted chunk (Run, Await, Busy) comes first and never reads the mode; after the hand-in the hero returns to it.
 // A mode change is adopted at the next tick boundary where it is safe (in town, or nothing hostile in the clear radius),
