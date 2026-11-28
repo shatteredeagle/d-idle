@@ -237,12 +237,12 @@ func TestInvariantCountersHardAndSince(t *testing.T) {
 				got = &cs[i]
 			}
 		}
-		for _, n := range []string{"potion-not-drunk", "life-zero-alive", "refusal-storm", "xp-frozen", "mode-no-exit", "corpse-unresolved"} {
+		for _, n := range []string{"potion-not-drunk", "life-zero-alive", "refusal-storm", "xp-frozen", "mode-no-exit", "corpse-unresolved", "no-combat-profile"} {
 			if !hard[n] {
 				t.Errorf("%s: %s is not hard", h.name, n)
 			}
 		}
-		if hard["town-thrash"] || len(hard) != 6 {
+		if hard["town-thrash"] || len(hard) != 7 {
 			t.Errorf("%s: hard set %v", h.name, hard)
 		}
 		if got == nil || got.Count == 0 || got.Since.IsZero() || got.First.IsZero() || got.Last.Before(got.First) {
