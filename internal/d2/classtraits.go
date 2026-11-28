@@ -32,6 +32,19 @@ func MercAuraFor(c Class, diff string) (aura string, ok bool, err error) {
 	return aura, ok, nil
 }
 
+// DefaultMercAura is the "default" row of classtraits.json: the hireling skill a class without its own mercAura row
+// wants. key is a difficulty ("normal", "nightmare", "hell": the Act 2 aura) or "rogue" (the Act 1 Rogue's arrow
+// skill). The values are the former Go literals of town.HirePolicy, task/act2.go and cmd/d2bot/mercwire.go (S).
+func DefaultMercAura(key string) (string, error) {
+	a, ok := classTraits[defaultTraitsRow].MercAura[strings.ToLower(key)]
+	if !ok {
+		return "", fmt.Errorf("d2: classtraits.json default row has no mercAura %q", key)
+	}
+	return a, nil
+}
+
+const defaultTraitsRow = "default"
+
 //go:embed classtraits.json
 var classTraitsJSON []byte
 
@@ -48,6 +61,11 @@ var classTraits = func() map[string]ClassTraits {
 			if (d != "normal" && d != "nightmare" && d != "hell") || a == "" {
 				panic("d2: classtraits.json: bad mercAura entry for " + n + ": " + d)
 			}
+		}
+	}
+	for _, k := range []string{"normal", "nightmare", "hell", "rogue"} {
+		if m[defaultTraitsRow].MercAura[k] == "" {
+			panic("d2: classtraits.json: the default row has no mercAura " + k)
 		}
 	}
 	return m

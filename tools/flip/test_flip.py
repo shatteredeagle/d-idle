@@ -48,7 +48,11 @@ class FakeSandbox:
         self.fail_restart = 0   # number of next restarts that fail
         self.fail_write = False
         self.fail_status = False
+        self.run = ""  # D2BOT_RUN inside the container
         self.log = []
+
+    def measured_run(self):
+        return self.run
 
     def read_tuning(self):
         return self.tuning
@@ -218,6 +222,17 @@ class FlipTest(unittest.TestCase):
             f2.flip("sb2", {"town.plan": 1.0}, "x", 60)
         with self.assertRaises(F.FlipError):
             self.f.flip("sb3", {"no.such": 1.0}, "x", 60)
+
+    def test_measured_run_in_the_container_refuses(self):
+        """The marker of the sandbox counts, not the operator's shell: nothing is written or restarted."""
+        self.sb.run = "soak-7"
+        before = self.sb.tuning
+        with self.assertRaises(F.FlipError) as e:
+            self.flip()
+        self.assertIn("soak-7", str(e.exception))
+        self.assertEqual((self.sb.tuning, self.sb.restarts, self.f.store.get("sb1")), (before, 0, None))
+        self.sb.run = ""
+        self.flip()
 
     def test_watch_once_and_loop(self):
         self.flip(window=120)
@@ -416,6 +431,14 @@ class TransportTest(unittest.TestCase):
             sb.write_tuning(ENVELOPE.replace("22", "23"))
         self.assertEqual(open(self.path).read(), ENVELOPE)  # untouched, and no stray temp file
         self.assertFalse(os.path.exists(self.path + ".new"))
+
+    def test_measured_run_is_read_from_the_container(self):
+        sb = F.Sandbox("c1", self.env)
+        os.environ.pop("D2BOT_RUN", None)
+        self.assertEqual(sb.measured_run(), "")
+        os.environ["D2BOT_RUN"] = "gate-3"  # the fake docker runs the command here, so this is the container's env
+        self.addCleanup(os.environ.pop, "D2BOT_RUN", None)
+        self.assertEqual(sb.measured_run(), "gate-3")
 
     def test_oversize_refused(self):
         sb = F.Sandbox("c1", self.env)

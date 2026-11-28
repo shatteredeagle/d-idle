@@ -1,6 +1,7 @@
 package logx
 
 import (
+	"bytes"
 	"errors"
 	"os"
 	"path/filepath"
@@ -63,5 +64,27 @@ func TestTailFilterAndNul(t *testing.T) {
 	}
 	if _, err := Tail(p+".missing", 5, nil); err == nil {
 		t.Fatal("missing file must be an error")
+	}
+}
+
+// The usual crash damage is a hole of NUL bytes with no newline, larger than any line limit: the lines after it must
+// still be read. A real line over the cap is cut, not fatal.
+func TestTailSkipsLongNulRun(t *testing.T) {
+	p := filepath.Join(t.TempDir(), "bot.log")
+	var b bytes.Buffer
+	b.WriteString("before the crash\nhalf a li")
+	b.Write(make([]byte, 5<<20))
+	b.WriteString("ne\nafter the crash\n")
+	b.WriteString(strings.Repeat("x", maxTailLine+100))
+	b.WriteString("\nlast line")
+	if err := os.WriteFile(p, b.Bytes(), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	got, err := Tail(p, 0, nil)
+	if err != nil {
+		t.Fatalf("a NUL run over the line limit failed the read: %v", err)
+	}
+	if len(got) != 5 || got[0] != "before the crash" || got[1] != "half a line" || got[2] != "after the crash" || len(got[3]) != maxTailLine || got[4] != "last line" {
+		t.Fatalf("%d lines: %.40q", len(got), got)
 	}
 }

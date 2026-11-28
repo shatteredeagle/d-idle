@@ -1,6 +1,7 @@
 {
  "build": "druid_fire_normal30",
  "class": "druid",
+ "combat": "druid",
  "schema": "per-clvl allocation, same shape as build-paladin-normal30.json (leveler.ParseBuild). main_attack: extra, for combat: skill to use as main attack per clvl range, weapon says which equipped weapon type it needs ('any' = none). Quest points (Den, Radament, Izual) are skill entries with a quest key on the row where the guide spends them: rows count level points only, and a tagged point is bought as soon as its quest point is granted.",
  "tags": "Skills 2-15 and the quest points: V Maxroll Druid leveling https://maxroll.gg/d2/guides/druid-leveling (fetched earlier, docs/classes/druid.md): Firestorm 1-5, Molten Boulder 6-7, Firestorm 8-11, Fissure (skills.txt Eruption) 12+, Firestorm from the Radament and Izual points (tagged with a quest key on rows 15 and 21; the Den point on row 5). Skills 16-30: U (Oak Sage 16, Arctic Blast 17 and Cyclone Armor 18 added as cheap survivability for a bot; the rest into Fissure; Maxroll's respec to Tornado/Hurricane at 38 is not used). Stats: V Maxroll (2-11 Vit, 12-13 Str, 14-21 Vit, 22-26 Str); 26 split 4 Str 1 Vit and 27-30 Vit are U. Staff of any kind works: all skills are spells, no weapon swap (V docs/classes/druid.md). Prerequisites and reqlevels checked by gen_builds.py against skills.txt (V Patch_D2.mpq).",
  "respec": {

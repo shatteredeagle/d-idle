@@ -52,7 +52,7 @@ func TestSelectProfileCheckedErrorsAndFallbackLogs(t *testing.T) {
 		t.Fatal("unknown profile must be an error")
 	}
 	// the lenient form still returns something the fight loop can use
-	if pr := SelectProfile(&d2.Player{Class: d2.Sorceress}, cat, "poison"); pr == nil || pr.Class != "sorceress" {
+	if pr, _ := SelectProfile(&d2.Player{Class: d2.Sorceress}, cat, "poison"); pr == nil || pr.Class != "sorceress" {
 		t.Fatalf("%v", pr)
 	}
 }
