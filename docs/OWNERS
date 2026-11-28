@@ -129,7 +129,6 @@ docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-extras.jsonl.gz  gaterun  gate
 .github/workflows/tester-image.yml  credit-runner  ghcrpublish
 backlog/tasks/task-726 - dlv-cast-verbs-input-caps-cast-unit-cast-point-cast-hold.md  live-agent  inputl3
 backlog/tasks/task-765 - town12-SME-review-of-the-supply-profile-numbers-advice-only.md  live-agent  town11
-cmd/d2bot/  credit-runner  fix8
 cmd/d2bot/adapters.go  credit-runner  cainfix3
 cmd/d2bot/agencydrive_test.go  live-agent  agencyp1b
 cmd/d2bot/agencywire.go  live-agent  agencyp1b
@@ -156,8 +155,6 @@ cmd/d2scenario/run.go  live-agent  pgtaps
 cmd/d2scenario/tap.go  live-agent  pgtaps
 cmd/d2scenario/tap_test.go  live-agent  pgtaps
 cmd/d2scenario/validate.go  credit-runner  pgearned
-data/build-cap-ratchet.json  credit-runner  fix8
-data/capabilities/  credit-runner  fix8
 data/capabilities/  live-agent  dlv-stance-pack
 data/darklaunch.json  credit-runner  dlv-upkeep-state
 data/darklaunch.json  live-agent  arbmig
@@ -209,14 +206,12 @@ docs/epics/epic-nightmare.md  live-agent  epic-nightmare
 docs/epics/epic-normal.md  live-agent  epic-normal
 docs/friend-checklist-0.1.2.md  credit-runner  cut012
 docs/friend-guide.md  credit-runner  cut012
-docs/invariants.md  credit-runner  fix8
 docs/inventory-actions.md  credit-runner  campaign1
 docs/knobs.md  credit-runner  cainfix3
 docs/knobs.md  credit-runner  dlv-upkeep-state
 docs/knobs.md  live-agent  arbmig
 docs/onboarding-tour.md  credit-runner  onboardtour
 docs/ops/docker-volumes.md  credit-runner  fix4
-docs/plan/data/  credit-runner  fix8
 docs/probes/cellar3-gate-capture.md  live-agent  cellar3gate
 docs/probes/checkpoint-live-drill.md  live-agent  ckptlive
 docs/probes/classorder1.md  user  classorder1
@@ -253,7 +248,6 @@ docs/research/fidelity-vendor-probe.md  live-agent  fidprobe-vendor
 docs/research/merc-gear.md  credit-runner  uib9
 docs/research/upstream-next.md  credit-runner  upstream-next
 docs/session-record.md  live-agent  sessions
-docs/sme/capability-gaps.md  credit-runner  fix8
 docs/t0-variants.md  credit-runner  qdensity
 docs/tester-guide.md  credit-runner  testerpack
 docs/tester-licence.md  credit-runner  testerlicence
@@ -270,7 +264,6 @@ internal/arbiter/replay_ticklog_test.go  live-agent  ticklog
 internal/bot/  credit-runner  act2night
 internal/bot/  credit-runner  cainfix3
 internal/bot/  credit-runner  cainspin
-internal/bot/  credit-runner  fix8
 internal/bot/  credit-runner  summonerstall
 internal/bot/arbiter_control.go  live-agent  arbmig
 internal/bot/arbiter_control_test.go  live-agent  arbmig
@@ -298,7 +291,6 @@ internal/combat/  credit-runner  cainfix3
 internal/combat/  credit-runner  dlv-cleanup
 internal/combat/  credit-runner  dlv-mark
 internal/combat/  credit-runner  dlv-upkeep-state
-internal/combat/  credit-runner  fix8
 internal/combat/  live-agent  dlv-aim-corpse
 internal/combat/  live-agent  dlv-aim-point
 internal/combat/  live-agent  dlv-move-melee
@@ -314,7 +306,6 @@ internal/combat/fighter.go  live-agent  agencyp1b
 internal/combat/fighter.go  live-agent  inputl3
 internal/combat/portalverb.go  live-agent  inputl3
 internal/combat/portalverb_test.go  live-agent  inputl3
-internal/d2/  credit-runner  fix8
 internal/d2dcombat/  live-agent  dlv-press
 internal/d2dctl/fake/fake.go  credit-runner  inputl4
 internal/d2dctl/fake/fake.go  live-agent  inputl3
@@ -357,7 +348,6 @@ internal/input/useitem_test.go  live-agent  inputl3
 internal/invdesk/mercverbs.go  credit-runner  uib9
 internal/invdesk/mercverbs_test.go  credit-runner  uib9
 internal/invdesk/sets.go  credit-runner  uib9
-internal/leveler/  credit-runner  fix8
 internal/levelplan/necro_test.go  live-agent  epic-class-necromancer
 internal/logx/sink.go  credit-runner  fix4
 internal/logx/sink_test.go  credit-runner  fix4
@@ -366,7 +356,6 @@ internal/nav/  credit-runner  summonerstall
 internal/nav/  live-agent  dlv-move-tele
 internal/nav/cellar3gate_test.go  live-agent  cellar3gate
 internal/nav/exit.go  live-agent  cellar3gate
-internal/plandata/  credit-runner  fix8
 internal/plandata/act2plan.json  live-agent  epic-class-necromancer
 internal/plandata/build-necromancer_leveling_normal30.json  live-agent  epic-class-necromancer
 internal/plandata/build-necromancer_summoner_endgame90.json  live-agent  epic-class-necromancer
@@ -377,7 +366,6 @@ internal/questboard/  credit-runner  bsmnight
 internal/questboard/  live-agent  cellar3gate
 internal/questboard/def.go  credit-runner  cainfix3
 internal/resource  live-agent  town5
-internal/resource/  credit-runner  fix8
 internal/scenario  credit-runner  pgfix
 internal/scenario/  credit-runner  drillskills
 internal/scenario/earned.go  credit-runner  pgearned
@@ -394,7 +382,6 @@ internal/scenario/taps.go  live-agent  pgtaps
 internal/supply  live-agent  town10
 internal/supply/  credit-runner  townnight
 internal/task  live-agent  bsmdef
-internal/task/  credit-runner  fix8
 internal/task/banote_test.go  credit-runner  cainfix3
 internal/task/campaign.go  credit-runner  campaign1
 internal/task/gate.go  credit-runner  cainfix3
@@ -403,7 +390,6 @@ internal/task/guided_test.go  credit-runner  campaign1
 internal/task/world.go  credit-runner  cainfix3
 internal/town  live-agent  town11
 internal/town  live-agent  town5
-internal/town/  credit-runner  fix8
 internal/town/  credit-runner  townnight
 internal/town/chores.go  credit-runner  inputl4
 internal/town/chores.go  live-agent  townflip
@@ -463,7 +449,6 @@ internal/watch/web/shell.json  credit-runner  uis6
 internal/watch/web/tokens.css  credit-runner  uis1
 internal/watch/web/watch.html  credit-runner  onboardtour
 tools/ci/  credit-runner  dlv-cleanup
-tools/ci/check.sh  credit-runner  fix8
 tools/ci/check.sh  credit-runner  inputl5
 tools/ci/pointercount-baseline.json  credit-runner  inputl5
 tools/ci/pointercount.py  credit-runner  inputl5
@@ -503,7 +488,6 @@ tools/provingground/scenarios/tiers.json  live-agent  epic-class-necromancer
 tools/provingground/scenarios/townplan.json  credit-runner  townnight
 tools/provingground/scenarios/townplan.json  live-agent  town5
 tools/provingground/status_doc.sh  credit-runner  pgpage
-tools/rigs/  credit-runner  fix8
 tools/tester-pack.sh  credit-runner  testerpack
 tools/uilint/  credit-runner  uis1
 tools/uilint/lint.go  credit-runner  uis6
