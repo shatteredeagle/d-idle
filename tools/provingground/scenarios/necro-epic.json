@@ -352,7 +352,7 @@
    ]
   },
   {
-   "pre": {},
+   "pre": {"hero_profile": "banked"},
    "kind": "e2e",
    "tier": "nightly",
    "covers": [
@@ -415,7 +415,7 @@
    ]
   },
   {
-   "pre": {},
+   "pre": {"hero_profile": "banked"},
    "kind": "e2e",
    "tier": "nightly",
    "covers": [

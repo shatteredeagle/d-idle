@@ -13,12 +13,12 @@ import (
 	"d2lod-bot/internal/scenario/hero"
 )
 
-// A scenario without pre.hero_profile is banked (as before the played profile existed); played is opt-in, on two classes.
-func TestHeroProfileDefaultBanked(t *testing.T) {
+// A banked scenario leaves every point unspent; played spends them, on two classes.
+func TestHeroProfileBankedAndPlayed(t *testing.T) {
 	for _, class := range []string{"Sorceress", "Necromancer", "Paladin"} {
 		s := fightScenario(12)
 		if p := s.HeroProfile(); p != scenario.HeroBanked {
-			t.Fatalf("%s: default profile %q", class, p)
+			t.Fatalf("%s: profile %q", class, p)
 		}
 		su, err := scenario.BuildSetup(s, class, 1)
 		if err != nil || su.HeroProfile != scenario.HeroBanked {

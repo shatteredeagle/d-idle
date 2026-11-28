@@ -44,7 +44,7 @@ func TestLedgerCommands(t *testing.T) {
 		t.Fatalf("%v %s", err, sb.String())
 	}
 	sb.Reset()
-	if err := cmdLedger([]string{"status-doc", "-in", f, "-tiers", ""}, &sb); err != nil || !strings.Contains(sb.String(), "| x | P | ? | candidate | GREEN | SETUP |") {
+	if err := cmdLedger([]string{"status-doc", "-in", f, "-tiers", ""}, &sb); err != nil || !strings.Contains(sb.String(), "| x | P | ? | candidate | candidate | GREEN | SETUP |") {
 		t.Fatalf("%v %s", err, sb.String())
 	}
 	sb.Reset()

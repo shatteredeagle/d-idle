@@ -17,11 +17,15 @@ if [ -z "$dry" ] && [ "${avail:-0}" -lt "${PG_MIN_MB:-2500}" ]; then echo "provi
 W=${PG_DIR:-/data/d2d-lab/provingground}; mkdir -p "$W/bin"
 go build -o "$W/bin/d2scenario" ./cmd/d2scenario || exit 1
 go build -o "$W/bin/d2ddet" ./cmd/d2ddet || exit 1 # determinism-run compares journals with it
-[ -n "$dry" ] || go build -o "$W/bin/d2bot" ./cmd/d2bot || exit 1
+# -trimpath -buildvcs=false: the same bot sources give the same binary whatever the commit or the worktree path, so the
+# ledger's bot_sha256 (the key of the stability streak since fix6) only changes when the bot does (S: Go builds are
+# reproducible with -trimpath; U on the builder until two commits were compared there). The commit is stamped by env below.
+[ -n "$dry" ] || go build -trimpath -buildvcs=false -o "$W/bin/d2bot" ./cmd/d2bot || exit 1
 export D2D_BIN=${PG_D2D_BIN:-/data/d2d-lab/survhold/bin/d2d.lab} D2D_DATA=${PG_DATA:-/data/d2d-lab/data} D2BOT_BIN=$W/bin/d2bot
 . "$here/pgenv.sh" # the results ledger: PG_EVENT, PG_BRANCH, PG_JOB and the host-config ingest command (docs/process/pg-ledger-ops.md)
 export D2D_HOST_ROLE=${D2D_HOST_ROLE:-builder} D2LOD_BOT_COMMIT=${D2LOD_BOT_COMMIT:-$(git rev-parse --short HEAD 2>/dev/null || true)} # recorded in every result (prov)
 # a labrun-synced tree has no .git: the ledger refuses an empty bot_commit, so stamp the source tree instead (V: the builder runs printed "missing bot_commit")
+[ -z "$(git status --porcelain -- cmd internal go.mod 2>/dev/null)" ] || export D2LOD_BOT_DIRTY=1 # the binary carries no VCS stamp any more
 [ -n "$D2LOD_BOT_COMMIT" ] || D2LOD_BOT_COMMIT=tree-$(find cmd internal -name "*.go" | LC_ALL=C sort | xargs sha256sum | sha256sum | cut -c1-12); export D2LOD_BOT_COMMIT
 out=provingground-out/$(date +%Y%m%d-%H%M%S)
 sub=run; if [ "${1:-}" = determinism-run ]; then sub=determinism-run; shift; fi # N repetitions, journals compared

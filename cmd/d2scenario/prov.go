@@ -48,8 +48,8 @@ func collectProv(bot string) *scenario.Provenance {
 	if out, err := exec.Command("go", "version", "-m", bot).Output(); err == nil {
 		p.BotCommit, p.BotDirty = scenario.ParseBuildInfo(string(out))
 	}
-	if p.BotCommit == "" {
-		p.BotCommit = os.Getenv("D2LOD_BOT_COMMIT")
+	if p.BotCommit == "" { // a binary built without a VCS stamp (run.sh, for a reproducible hash): the runner says what it built
+		p.BotCommit, p.BotDirty = os.Getenv("D2LOD_BOT_COMMIT"), os.Getenv("D2LOD_BOT_DIRTY") == "1"
 	}
 	if b, err := os.ReadFile("/proc/loadavg"); err == nil {
 		if f := strings.Fields(string(b)); len(f) > 0 {

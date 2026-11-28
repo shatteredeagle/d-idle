@@ -32,6 +32,7 @@
     "internal/bot/questboard.go"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 17,
     "gold": 5000,
     "waypoints": [
@@ -112,6 +113,7 @@
     "internal/bot/questboard.go"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 17,
     "gold": 5000,
     "waypoints": [
@@ -214,6 +216,7 @@
     "internal/bot/questboard.go"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 17,
     "gold": 5000,
     "waypoints": [
@@ -319,6 +322,7 @@
     "internal/d2dctl/"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 17,
     "gold": 5000,
     "waypoints": [
@@ -391,6 +395,7 @@
     "internal/nav/"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 17,
     "gold": 5000,
     "waypoints": [
@@ -466,6 +471,7 @@
     "cmd/d2bot/cain.go"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 17,
     "gold": 5000,
     "items": [
@@ -534,6 +540,7 @@
     ]
    },
    "pre": {
+    "hero_profile": "banked",
     "level": 20,
     "gold": 5000,
     "start": "field",
@@ -621,6 +628,7 @@
     ]
    },
    "pre": {
+    "hero_profile": "banked",
     "level": 20,
     "gold": 5000,
     "start": "field",
@@ -708,6 +716,7 @@
     ]
    },
    "pre": {
+    "hero_profile": "banked",
     "level": 24,
     "gold": 5000,
     "belt": [
@@ -808,6 +817,7 @@
     "internal/quest/"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 17,
     "gold": 5000,
     "quests": [
@@ -895,6 +905,7 @@
     "internal/d2dsrc/"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 32,
     "gold": 8000,
     "merc": 0
@@ -972,6 +983,7 @@
     "internal/bot/questboard.go"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 17,
     "gold": 5000,
     "waypoints": [
@@ -1064,6 +1076,7 @@
     "internal/bot/questboard.go"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 17,
     "gold": 5000,
     "waypoints": [
@@ -1160,6 +1173,7 @@
     "internal/bot/questboard.go"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 17,
     "gold": 5000,
     "waypoints": [
@@ -1246,6 +1260,7 @@
     "internal/bot/questboard.go"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 17,
     "gold": 5000,
     "waypoints": [
@@ -1336,6 +1351,7 @@
     "internal/bot/task.go"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 17,
     "gold": 5000,
     "waypoints": [
@@ -1416,6 +1432,7 @@
     "internal/bot/task.go"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 17,
     "gold": 5000,
     "waypoints": [
@@ -1500,6 +1517,7 @@
     "internal/bot/questboard.go"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 17,
     "gold": 5000,
     "waypoints": [
@@ -1574,6 +1592,7 @@
     "cmd/d2bot/cain.go"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 17,
     "gold": 5000,
     "items": [

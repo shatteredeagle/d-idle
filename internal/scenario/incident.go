@@ -81,7 +81,7 @@ func (in Incident) Scenario(class string, seed int64) (Scenario, error) {
 	if diff == "" {
 		diff = "normal"
 	}
-	pre := Pre{Start: start, Area: in.Pre.Area, Level: in.Pre.Level, Gold: in.Pre.Gold, Stash: in.Pre.Stash, Difficulty: diff, LifePct: in.Pre.LifePct}
+	pre := Pre{HeroProfile: HeroBanked, Start: start, Area: in.Pre.Area, Level: in.Pre.Level, Gold: in.Pre.Gold, Stash: in.Pre.Stash, Difficulty: diff, LifePct: in.Pre.LifePct}
 	for i := 0; i < in.Facts.BeltHP; i++ {
 		pre.Belt = append(pre.Belt, "hp1")
 	}

@@ -31,6 +31,7 @@
     "cmd/d2bot/"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 17,
     "gold": 5000,
     "waypoints": [

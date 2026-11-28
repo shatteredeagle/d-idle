@@ -16,6 +16,7 @@
         "internal/watch/vaultapi.go"
       ],
       "pre": {
+        "hero_profile": "banked",
         "level": 20,
         "gold": 5000,
         "stash": 0,
@@ -90,6 +91,7 @@
         "internal/watch/vaultapi.go"
       ],
       "pre": {
+        "hero_profile": "banked",
         "level": 20,
         "gold": 5000,
         "stash": 0,

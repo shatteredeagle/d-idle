@@ -17,6 +17,7 @@
         "cmd/d2bot/vaultkeep.go"
       ],
       "pre": {
+        "hero_profile": "banked",
         "level": 20,
         "gold": 500,
         "stash": 7200,
@@ -161,6 +162,7 @@
         "cmd/d2bot/vaultkeep.go"
       ],
       "pre": {
+        "hero_profile": "banked",
         "level": 20,
         "gold": 500,
         "stash": 7200,
@@ -300,6 +302,7 @@
         "cmd/d2bot/vaultkeep.go"
       ],
       "pre": {
+        "hero_profile": "banked",
         "level": 20,
         "gold": 500,
         "stash": 250,
