@@ -85,6 +85,7 @@ func TestFix1DroppedReplyResolvedByLooking(t *testing.T) {
 			d.df.After = func([]d2dctl.DirectResult) { // the engine removed the old unit from the game
 				d.api.VaultFake.Remove(unit)
 				delete(d.h.body, unit)
+				d.mirror() // and the new item is worn (card fix1b)
 			}
 			res := d.k.EquipEnqueue(context.Background(), id, "", false)
 			if d.live("previously worn") != 1 {

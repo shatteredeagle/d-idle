@@ -134,7 +134,8 @@ type EquipOrder struct {
 	Order      string   `json:"order,omitempty"`       // direct: the order id (ledger, record mark)
 	Piece      int      `json:"piece,omitempty"`       // direct: index in a wearset call
 	Reply      string   `json:"reply,omitempty"`       // direct: an engine answer that did not parse, kept as received
-	BeforeUnit int      `json:"before_unit,omitempty"` // direct: the unit worn in the slot before the call
+	BeforeUnit int      `json:"before_unit,omitempty"` // direct: the unit worn in the slot before the call (0: empty; never compared, ids do not survive a game)
+	New        string   `json:"new,omitempty"`         // direct: the bytes (norm hex) of the item being worn; an unanswered swap is judged by them
 	Before     string   `json:"before,omitempty"`      // direct: its item bytes (norm hex), the copy an unanswered swap is filed from
 	// direct, a hand slot only: the unit and bytes worn in the OTHER hand before the call. A two-hander pushes the shield off
 	// too, and after a lost reply this copy is the only one the bot has (card vault2).
