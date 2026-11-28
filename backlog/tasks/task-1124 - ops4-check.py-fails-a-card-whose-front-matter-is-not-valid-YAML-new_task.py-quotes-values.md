@@ -20,6 +20,7 @@ owns:
   - "backlog/tasks/task-1100 - fix4-security-fixes-from-fable-review-4-scrubber-watch-token-difficulty-go-flip-run-check-log-tail.md"
 exclusive: []
 contracts: []
+result: "Not verified live (tooling, nothing to run live). check.py names a card whose front matter is not valid YAML (task, line, key); new_task.py quotes unsafe values; TASK-185, TASK-597 and TASK-1100 load as YAML again. Tested by unit tests and a one-off cross-check against a YAML parser over every card. Build-specific: nothing."
 ---
 
 ## Description
@@ -32,7 +33,7 @@ Why: a card with an unquoted result containing ': ' cannot be found by the Backl
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 check.py fails a card whose front matter is not valid YAML and names the task and the line (unit test with the two real defect shapes)
-- [ ] #2 TASK-185, TASK-597 and TASK-1100 load as YAML again; check.py is clean on the tree
-- [ ] #3 new_task.py quotes any value that is not a safe plain scalar and refuses to leave an invalid card (unit test)
+- [x] #1 check.py fails a card whose front matter is not valid YAML and names the task and the line (unit test with the two real defect shapes)
+- [x] #2 TASK-185, TASK-597 and TASK-1100 load as YAML again; check.py is clean on the tree
+- [x] #3 new_task.py quotes any value that is not a safe plain scalar and refuses to leave an invalid card (unit test)
 <!-- AC:END -->
