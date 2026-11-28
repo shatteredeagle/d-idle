@@ -84,14 +84,16 @@ func cmdRun(args []string, w io.Writer) error {
 	}
 	self, _ := os.Executable()
 	var todo []scenario.Run
+	var unrun []scenario.Result // blocked before the start: recorded by the runner itself, once the run is real (not a dry run)
 	for _, r := range runs {
 		s := by[r.ID]
 		if why := blockedBefore(s, r); why != "" {
-			results = append(results, scenario.Result{Version: scenario.ResultVersion, Run: r, Status: scenario.Blocked, Reason: why, BudgetMin: s.Budget.VirtualMin})
+			unrun = append(unrun, scenario.Result{Version: scenario.ResultVersion, Run: r, Status: scenario.Blocked, Reason: why, BudgetMin: s.Budget.VirtualMin})
 			continue
 		}
 		todo = append(todo, r)
 	}
+	results = append(results, unrun...)
 	cmdFor := func(r scenario.Run, outDir string) []string {
 		a := execOneCmd(*slot, *dir, *bot, self, r, by[r.ID].Budget.WallMin, outDir, false)
 		if *journal {
@@ -111,6 +113,11 @@ func cmdRun(args []string, w io.Writer) error {
 	}
 	if *bot == "" || os.Getenv("D2D_BIN") == "" {
 		return fmt.Errorf("run needs -bot (or D2BOT_BIN) and D2D_BIN (the lab d2d) in the environment")
+	}
+	// Every run must leave a ledger line (review 2026-11-28 fix 1): count what the spool gains against what was run.
+	began, linesBefore, expect := time.Now(), spoolLines(*out), len(unrun)
+	for _, res := range unrun {
+		shipUnrun(res, by[res.ID], *bot, *out, began)
 	}
 	var mu sync.Mutex
 	slotLog := filepath.Join(*out, slotLogName)
@@ -147,7 +154,11 @@ func cmdRun(args []string, w io.Writer) error {
 				res, rerr := readResult(filepath.Join(o, resultName(r)))
 				if rerr != nil { // the run wrapper died before writing a result: that is a blocked run, never a pass
 					res = scenario.Result{Version: scenario.ResultVersion, Run: r, Status: scenario.Blocked, Reason: fmt.Sprintf("no result written (slot or runner failed: %v)", err), BudgetMin: by[r.ID].Budget.VirtualMin}
+					shipUnrun(res, by[r.ID], *bot, o, began)
 				}
+				mu.Lock()
+				expect++
+				mu.Unlock()
 				reps = append(reps, res)
 			}
 			res := reps[0]
@@ -169,11 +180,20 @@ func cmdRun(args []string, w io.Writer) error {
 	}
 	f.Close()
 	scenario.Report(w, results)
+	recorded := spoolLines(*out) - linesBefore
+	fmt.Fprintf(w, "results %d, ledger %d\n", expect, recorded)
+	if recorded != expect {
+		return exitErr{exitUnrecorded, fmt.Sprintf("NOT RECORDED: %d runs, %d ledger lines (refusals in %s)", expect, recorded, filepath.Join(*out, ledgerRefused))}
+	}
 	if !scenario.Gate(results) {
 		return exitErr{3, "NOT GREEN"}
 	}
 	return nil
 }
+
+// exitUnrecorded is the exit code of a run set whose results and ledger lines differ. It wins over 3 (not green): a
+// verdict nobody can find again is worth less than a red one.
+const exitUnrecorded = 4
 
 func resultName(r scenario.Run) string {
 	return strings.NewReplacer("/", "_", " ", "_").Replace(r.Key()) + ".json"
@@ -263,7 +283,7 @@ func cmdExecOne(args []string) error {
 	if err := os.WriteFile(filepath.Join(*out, resultName(r)), b, 0o644); err != nil {
 		return err
 	}
-	shipLedger(res, s.Tier, *out, start)
+	shipLedger(res, s.Tier, *out, start) // a refusal is counted by `run` (results against ledger lines)
 	return nil
 }
 

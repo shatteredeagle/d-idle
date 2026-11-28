@@ -77,3 +77,29 @@ func TestStatusDocIsDeterministicAndFiltersBranch(t *testing.T) {
 		t.Fatal("empty branch shows all")
 	}
 }
+
+// A BLOCKED run is recorded whatever was missing (no setup, no binaries); a judged run without them is still refused,
+// and so is a BLOCKED one that does not name its host role.
+func TestLedgerRecordsBlockedInfrastructureFailures(t *testing.T) {
+	r := provRes()
+	r.Status, r.Reason, r.Tags = Blocked, "prep d2d start: no binary", nil
+	r.Prov = &Provenance{Host: "builder"}
+	rec, err := NewLedgerRecord(r, ctx0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if rec.Setup != SetupUnbuilt || rec.D2DSHA256 != ProvMissing || rec.BotCommit != ProvMissing {
+		t.Fatalf("%+v", rec)
+	}
+	if _, err := rec.LedgerLine(); err != nil {
+		t.Fatal(err)
+	}
+	rec.Verdict = Green
+	if rec.Validate() == nil {
+		t.Fatal("a GREEN line with an unbuilt setup and missing binaries was accepted")
+	}
+	r.Prov.Host = "unknown"
+	if _, err := NewLedgerRecord(r, ctx0); err == nil {
+		t.Fatal("host role unknown must be refused for a BLOCKED run too")
+	}
+}
