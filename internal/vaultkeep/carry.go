@@ -45,6 +45,9 @@ type Carried struct {
 	State string `json:"state,omitempty"`
 	Hex   string `json:"hex,omitempty"`
 	Tag   string `json:"tag,omitempty"`
+	// Seen is how many hero items had these bytes when the intent was written (card fix1b): the repair compares the count,
+	// so an identical charm elsewhere on the hero is not taken for the one that moved.
+	Seen int `json:"seen,omitempty"`
 }
 
 const (
@@ -118,32 +121,55 @@ func (k *Keeper) carryPut(id string, c *Carried) error {
 	return k.carrySave()
 }
 
-// packUnit finds the charm of entry c on the hero by its bytes (the stored unit id first, when it still has those bytes),
-// skipping units other carried entries own. 0: not there. An entry without bytes (written before the journal) is matched
-// by unit id and item code only.
-func (k *Keeper) packUnit(c Carried, have []d2dctl.VaultRecord) int {
-	taken := map[int]bool{}
-	for _, o := range k.CarriedList() {
-		if o.ID != c.ID && o.State != carryIntent {
-			taken[o.Unit] = true
+// carriedUnits matches every carried entry to a hero unit by item BYTES in one pass (card fix1b, review N1). Unit ids do
+// not survive a new game, so a stored id only breaks a tie between units of equal bytes and never excludes a unit. Each
+// unit serves one entry; open carry-intents choose last. An entry without bytes (written before the journal) is matched
+// by unit id and item code only. Not restricted to the backpack: the item list carries no location (U).
+func (k *Keeper) carriedUnits(have []d2dctl.VaultRecord) map[string]int {
+	list := k.CarriedList()
+	sort.SliceStable(list, func(i, j int) bool { return list[i].State != carryIntent && list[j].State == carryIntent })
+	out, used := map[string]int{}, map[int]bool{}
+	for _, sameUnit := range []bool{true, false} {
+		for _, c := range list {
+			if out[c.ID] != 0 {
+				continue
+			}
+			for _, h := range have {
+				fits := h.UnitID == c.Unit && h.Code == c.Code
+				if c.Hex != "" {
+					fits = strings.EqualFold(h.Norm, c.Hex) && (!sameUnit || h.UnitID == c.Unit)
+				}
+				if fits && !used[h.UnitID] {
+					out[c.ID], used[h.UnitID] = h.UnitID, true
+					break
+				}
+			}
 		}
 	}
-	found := 0
+	return out
+}
+
+// refreshCarried writes the units found by bytes back into the settled entries (a new game renumbered them) and renews
+// their keep mark.
+func (k *Keeper) refreshCarried(units map[string]int) {
+	for _, c := range k.CarriedList() {
+		if u := units[c.ID]; c.State == "" && u != 0 && u != c.Unit {
+			c.Unit = u
+			k.Hand.Protect(uint32(u))
+			_ = k.carryPut(c.ID, &c)
+		}
+	}
+}
+
+// countNorm is how many hero items have these bytes.
+func countNorm(have []d2dctl.VaultRecord, hexNorm string) int {
+	n := 0
 	for _, h := range have {
-		switch {
-		case taken[h.UnitID]:
-		case c.Hex == "" && h.UnitID == c.Unit && h.Code == c.Code:
-			return h.UnitID
-		case c.Hex != "" && strings.EqualFold(h.Norm, c.Hex):
-			if h.UnitID == c.Unit {
-				return h.UnitID
-			}
-			if found == 0 {
-				found = h.UnitID
-			}
+		if hexNorm != "" && strings.EqualFold(h.Norm, hexNorm) {
+			n++
 		}
 	}
-	return found
+	return n
 }
 
 func taggedRec(st *vault.Store, tag, hexNorm string) (string, bool) {
@@ -173,10 +199,14 @@ func (k *Keeper) repairCarry(ctx context.Context) {
 	if err != nil {
 		return // cannot look: the intents stay for the next pass
 	}
+	units := k.carriedUnits(have)
+	k.refreshCarried(units)
 	for _, c := range open {
-		u := k.packUnit(c, have)
+		// A twin with equal bytes elsewhere on the hero must not pass for the charm: the count of such items before the
+		// move (Seen) decides, the unit only says which one to mark.
+		u, n := units[c.ID], countNorm(have, c.Hex)
 		switch {
-		case c.State == carryIntent && u != 0:
+		case c.State == carryIntent && u != 0 && (c.Hex == "" || n > c.Seen):
 			k.Hand.Protect(uint32(u))
 			if r, ok := st.Get(c.ID); ok && r.State == vault.Recorded {
 				if err := st.Discard(c.ID, "carried to the backpack"); err != nil {
@@ -187,7 +217,7 @@ func (k *Keeper) repairCarry(ctx context.Context) {
 			_ = k.carryPut(c.ID, &c)
 		case c.State == carryIntent:
 			_ = k.carryPut(c.ID, nil)
-		case u != 0: // stow-intent, charm still carried
+		case u != 0 && n >= c.Seen: // stow-intent, charm still carried
 			if id, ok := taggedRec(st, c.Tag, c.Hex); ok {
 				if err := st.Discard(id, "stow rolled back: the charm is still in the backpack"); err != nil {
 					continue
@@ -274,8 +304,18 @@ func (k *Keeper) Carry(ctx context.Context, id string) Result {
 			return res
 		}
 	}
+	if by := k.heldBy(id); by != "" {
+		res.Code, res.Why = CodeInFlight, ReasonHeld(by)
+		return res
+	}
 	// The intent is on disk before the game is touched: a stop after the create is settled at the next start by looking.
 	c := Carried{ID: id, Name: rec.Name, Code: base.Code, Cells: base.Cells(), At: k.now(), State: carryIntent, Hex: createHex(rec)}
+	have, err := k.API.ItemFull(ctx, -1)
+	if err != nil {
+		res.Code, res.Why = carryErr(err)
+		return res
+	}
+	c.Seen = countNorm(have, c.Hex)
 	if err := k.carryPut(id, &c); err != nil {
 		res.Code, res.Why = "journal", "the carry could not be written down first ("+err.Error()+"): nothing was moved"
 		return res
@@ -352,7 +392,9 @@ func (k *Keeper) Stow(ctx context.Context, id string) Result {
 		res.Code, res.Why = carryErr(err)
 		return res
 	}
-	unit := k.packUnit(*c, have)
+	units := k.carriedUnits(have)
+	k.refreshCarried(units)
+	unit := units[id]
 	if unit == 0 { // sold, dropped or moved by the player: nothing to stow, forget it
 		k.forgetCarried(id)
 		res.Code, res.Why = "gone", "the charm is not in the game any more"
@@ -364,6 +406,7 @@ func (k *Keeper) Stow(ctx context.Context, id string) Result {
 			vr = h
 		}
 	}
+	c.Seen = countNorm(have, vr.Norm)
 	c.Unit, c.Hex, c.State, c.Tag = unit, vr.Norm, stowIntent, fmt.Sprintf("stow-%s-%d", orderTag(id), k.now().UnixMilli())
 	if err := k.carryPut(id, c); err != nil {
 		res.Code, res.Why = "journal", "the stow could not be written down first ("+err.Error()+"): nothing was moved"

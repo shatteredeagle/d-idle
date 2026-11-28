@@ -111,6 +111,7 @@ func (f *Fighter) whirlTick(snap *d2.Snapshot, st *fightState) (bool, error) {
 		return true, err
 	}
 	f.moves.legs++
+	st.noteCast(f.now())
 	return true, nil
 }
 
