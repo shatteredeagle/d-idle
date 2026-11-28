@@ -442,7 +442,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [exploredpct.md](exploredpct.md): Explored share: when a zone counts as explored (bot.exploredPct) (status: CURRENT. Tags: V = read from the code in this worktree and covered by a unit test, U = not run in a live game.)
 - [farm.md](farm.md): Farm runs (FARMRUNS, 2026-10-29)
 - [farmfallback.md](farmfallback.md): farmfallback: the gold farm as data, with a fallback
-- [farmloop.md](farmloop.md): The farm loop: reset a mostly cleared leveling zone with a fresh game (status: current (2026-11-15, agent farmloop). Shipped OFF (`bot.farmReset` 0): the simulation shows a small gain...)
+- [farmloop.md](farmloop.md): The farm loop: reset a mostly cleared leveling zone with a fresh game (status: current (2026-11-27, farmresetretire). The loop is ALWAYS ON: the knob `bot.farmReset` was removed...)
 - [first-hour.md](first-hour.md): First hour: the daily table tool
 - [first-session.md](first-session.md): First play session guide (TASK-134) (status: written 2026-11-08 from docs on main only; sections D, H and I brought up to date 2026-11-27 (TASK-27)...)
 - [fixbank.md](fixbank.md): FIXBANK: gold deposit and repair gold (card fix-bank) (status: current. Findings of the D3 drills (docs/probes/drills/2026-10-31-d3.txt); live proof is a drill rerun.)
