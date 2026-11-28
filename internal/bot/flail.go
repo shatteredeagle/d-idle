@@ -107,5 +107,12 @@ func (r *Runner) flailHold(ctx context.Context, snap *d2.Snapshot, c control) bo
 		r.pause(ctx, 5*time.Second)
 		return false
 	}
+	if a := snap.Player.Area; r.loop.cleared[a] && r.hostileNear(snap, r.e.Tune.Bot.ClearRadius) == 0 {
+		// Nothing left to fight here in this game: sweeping again acts in no virtual time, so under lockstep the hold
+		// never ran out (cain.chain seed 11, TASK-1103: 'area cleared' every 4 ms for 33 wall minutes). Wait instead.
+		r.setState(StateClearing, "Holding in "+r.areaName(a)+", flailing: the area is cleared")
+		r.pause(ctx, 5*time.Second)
+		return true
+	}
 	return r.sweep(ctx, snap, c, snap.Player.Area)
 }
