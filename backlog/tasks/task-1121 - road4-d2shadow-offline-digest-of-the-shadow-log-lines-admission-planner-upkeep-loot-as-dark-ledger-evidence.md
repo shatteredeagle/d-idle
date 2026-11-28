@@ -1,10 +1,13 @@
 ---
 id: TASK-1121
-title: 'road4: d2shadow, offline digest of the shadow log lines (admission, planner, upkeep, loot) as dark-ledger evidence'
-status: In Progress
+title: >-
+  road4: d2shadow, offline digest of the shadow log lines (admission, planner,
+  upkeep, loot) as dark-ledger evidence
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T06:27:00Z'
+updated_date: '2026-11-28T07:39:00Z'
 labels:
   - bot
   - feature
