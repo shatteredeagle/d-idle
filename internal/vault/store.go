@@ -496,8 +496,26 @@ func (s *Store) apply(ev *event) error {
 		if err != nil {
 			return err
 		}
-		r.Gold, r.Stage, r.Reason, r.Ordered = ev.N, "", ev.Reason, false
+		if r.Hold != "" && r.Hold != ev.Reason {
+			return fmt.Errorf("%w: %w: %s by %s", ErrState, ErrHeld, r.ID, r.Hold)
+		}
+		r.Gold, r.Stage, r.Reason, r.Ordered, r.Hold = ev.N, "", ev.Reason, false, ""
 		s.leave(r, Sold, ev.T)
+	case "hold": // reserved by order ev.Reason before its gold is credited
+		r, err := need(Recorded, SellQ)
+		if err != nil {
+			return err
+		}
+		if r.Pin || r.Stage != "" || r.InFlight || (r.Hold != "" && r.Hold != ev.Reason) || ev.Reason == "" {
+			return fmt.Errorf("%w: %s cannot be reserved", ErrState, r.ID)
+		}
+		r.Hold, r.Updated = ev.Reason, ev.T
+	case "release":
+		r := s.byID[ev.ID]
+		if r == nil {
+			return ErrNotFound
+		}
+		r.Hold, r.Updated = "", ev.T
 	case "discard":
 		r, err := need(Recorded)
 		if err != nil {
@@ -641,7 +659,7 @@ func (s *Store) trimCandidate() *Rec {
 		return a.seq < b.seq
 	}
 	for _, r := range s.recs {
-		if r.State != Recorded || r.Pin {
+		if r.State != Recorded || r.Pin || r.Hold != "" {
 			continue
 		}
 		if s.opt.Values.Protected(&r.Item) {
@@ -689,7 +707,23 @@ func (s *Store) dry(ev *event) error {
 		}
 		return fmt.Errorf("%w: %s is %s, event %s", ErrState, r.ID, r.State, ev.Ev)
 	}
+	// A reserved record moves only by its own order: sold by it, held again by it, or released.
+	if r.Hold != "" && ev.Ev != "release" && !((ev.Ev == "soldnow" || ev.Ev == "hold") && ev.Reason == r.Hold) {
+		return fmt.Errorf("%w: %w: %s by %s", ErrState, ErrHeld, r.ID, r.Hold)
+	}
 	switch ev.Ev {
+	case "hold":
+		if err := ok(Recorded, SellQ); err != nil {
+			return err
+		}
+		switch {
+		case ev.Reason == "":
+			return ErrInvalid
+		case r.Pin:
+			return ErrPinned
+		case r.Stage != "" || r.InFlight:
+			return fmt.Errorf("%w: %s has a step in flight", ErrState, r.ID)
+		}
 	case "pin":
 		if err := ok(Recorded); err != nil {
 			return err
@@ -821,6 +855,9 @@ func (s *Store) Reveal(id string, identified Item) error {
 	}
 	if r.State != Recorded && r.State != KeepQ {
 		return fmt.Errorf("%w: %s is %s, event reveal", ErrState, id, r.State)
+	}
+	if r.Hold != "" {
+		return fmt.Errorf("%w: %w: %s by %s", ErrState, ErrHeld, id, r.Hold)
 	}
 	h := hashOf(identified.Raw)
 	if o := s.liveHash[h]; o != nil && o != r {
@@ -1026,7 +1063,7 @@ func (s *Store) SellNow(id string, gold int, order string) error {
 	if r == nil {
 		return ErrNotFound
 	}
-	if err := s.dry(&event{Ev: "soldnow", ID: id}); err != nil {
+	if err := s.dry(&event{Ev: "soldnow", ID: id, Reason: order}); err != nil {
 		return err
 	}
 	if err := s.archive(r, fmt.Sprintf("sold: %d gold, order %s", gold, order)); err != nil {
@@ -1059,7 +1096,7 @@ func (s *Store) SellNowBatch(lines []SoldLine, order string) (done int, failed i
 			continue
 		}
 		seen[l.ID] = true
-		if e := s.dry(&event{Ev: "soldnow", ID: l.ID}); e != nil {
+		if e := s.dry(&event{Ev: "soldnow", ID: l.ID, Reason: order}); e != nil {
 			failed++
 			err = e
 			continue
@@ -1081,6 +1118,83 @@ func (s *Store) SellNowBatch(lines []SoldLine, order string) (done int, failed i
 		return 0, failed, e
 	}
 	return len(evs), failed, err
+}
+
+// Reserve is the compare-and-set that starts an order on records: every id becomes held by order in ONE logged batch, or
+// none does. ver is the Version the caller read the records at (0: no check); a store that changed since answers ErrStale
+// and the caller reads again. A record that is pinned, not in the vault, busy with a step or held by another order refuses
+// the whole reservation (ErrHeld, ErrPinned, ErrState, ErrNotFound; bad names the first such id). A held record leaves
+// only through SellNow/SellNowBatch of the same order or Release, so no Keep, Pin, Discard, queue Sell or Reveal can take
+// it between the reservation and the sale. Reserving again with the same order is a no-op for records it already holds.
+func (s *Store) Reserve(ids []string, order string, ver uint64) (bad string, err error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if order == "" {
+		return "", ErrInvalid
+	}
+	if ver != 0 && ver != s.ver {
+		return "", ErrStale
+	}
+	var evs []*event
+	seen := map[string]bool{}
+	for _, id := range ids {
+		r := s.byID[id]
+		if r == nil {
+			return id, ErrNotFound
+		}
+		if seen[id] || r.Hold == order {
+			continue
+		}
+		seen[id] = true
+		ev := &event{Ev: "hold", ID: id, Reason: order}
+		if e := s.dry(ev); e != nil {
+			return id, e
+		}
+		evs = append(evs, ev)
+	}
+	if len(evs) == 0 {
+		return "", nil
+	}
+	if e := s.commitBatch(evs); e != nil {
+		// A short write held only some: take those back so the reservation stays all or none (best effort; the log is
+		// the truth and a restart shows the same state).
+		s.releaseLocked(order)
+		return "", e
+	}
+	return "", nil
+}
+
+// Release frees every record order holds (the order failed before it paid) and returns how many it freed.
+func (s *Store) Release(order string) (int, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	return s.releaseLocked(order)
+}
+
+func (s *Store) releaseLocked(order string) (int, error) {
+	var evs []*event
+	for _, r := range s.recs {
+		if order != "" && r.Hold == order {
+			evs = append(evs, &event{Ev: "release", ID: r.ID, Reason: order})
+		}
+	}
+	if len(evs) == 0 {
+		return 0, nil
+	}
+	return len(evs), s.commitBatch(evs)
+}
+
+// Held lists the records an order holds, by order id, in insertion order.
+func (s *Store) Held() map[string][]string {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	out := map[string][]string{}
+	for _, r := range s.recs {
+		if r.Hold != "" {
+			out[r.Hold] = append(out[r.Hold], r.ID)
+		}
+	}
+	return out
 }
 
 func (s *Store) appendArchive(b []byte) error {
