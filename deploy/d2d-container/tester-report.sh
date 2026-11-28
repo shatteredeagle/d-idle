@@ -4,7 +4,7 @@
 #   docker cp tester-report.sh d2dbot:/tmp/ && docker exec d2dbot sh /tmp/tester-report.sh
 #   docker cp d2dbot:/data/reports/<name>.tar.gz .        (the last line printed is the path)
 # Bundle: bot.log, d2d.log, minutes.txt, deaths.jsonl, ladder/*, wizard.json, wizard.env, d2dping-state.txt, README.txt.
-# Everything text goes through scrub(); secrets, CD-key-like text, home paths, private hosts/IPs and names are replaced.
+# Everything text goes through scrub(); the README text at the end lists what it replaces and what it does not.
 # Left out on purpose: watch.token, access.json (hash), saves, keys. Read the files before you send them.
 # Env: D2BOT_DATA (/data), D2D_SOCK (/run/d2d/d2d.sock), REPORT_OUT (/data/reports), REPORT_TAIL (lines per log, 20000),
 #   REPORT_SCRUB_ONLY=1 (filter stdin to stdout and stop: used by the test), REPORT_NAMES (extra words to hide, | separated).
@@ -14,7 +14,7 @@ data=${D2BOT_DATA:-/data}
 tail_n=${REPORT_TAIL:-20000}
 
 # secret names as whole words inside an identifier: watch_token, apiKey, passphrase, cdkey, ...
-words='token|secret|passw(or)?d|passphrase|pwd|cookie|credentials?|auth(orization)?|api[_-]?key|cd[_-]?key|cdkey|private[_-]?key|license[_-]?key|access[_-]?key|session[_-]?id|watch[_-]?key'
+words='token|secret|passw(or)?d|passphrase|pass[_-]?code|pwd|cookie|credentials?|auth(orization)?|api[_-]?key|cd[_-]?key|cdkey|private[_-]?key|license[_-]?key|access[_-]?key|session[_-]?id|watch[_-]?key|user(name)?|hostname|computername|logname'
 
 # Literal secrets of this container (the watch token) are removed by value as well: a token that a log printed
 # without a label is still caught. The sed script is built once; values are escaped for a basic regex.
@@ -33,14 +33,20 @@ s/$(printf '%s' "$D2DVIEW_TOKEN" | sed 's/[][\.*^$/|]/\\&/g')/<token>/g"
 # private names of the lab, written in pieces so this file is not itself a leakcheck hit (same list as cmd/leakcheck)
 dom='bir''bhub\.com'
 names='bir''bhub|ori''on|her''dr|for''gejo|unr''aid|omle''tte|mac''mini|jes''se|des''mond'
+# whole-word host names of that list; its two other words are game words (an Act 1 area, a quest item) and stay
+hosts='ven''us|on''yx'
+h4='[0-9a-fA-F]{1,4}'
+nb='(^|[^0-9A-Za-z:.])'
 
 scrub() {
-	# order matters: structured secrets first, then shapes, then places and names
+	# order matters: structured secrets first, then shapes, then places and names.
+	# <k:..> marks a 16+ run of letters and digits; it stays only with both a letter and a digit and is not a run stamp.
+	# <LB> and <ANY> park 127.x and 0.0.0.0 while every other dotted quad becomes <ip> (twice: neighbours share a separator).
 	sed -E "$lit
 s#-----BEGIN [A-Z ]*PRIVATE KEY-----.*#<key-block>#
 s#([Bb]earer|[Bb]asic)[[:space:]]+[A-Za-z0-9._~+/=-]{6,}#\\1 <token>#g
 s#((^|[^A-Za-z0-9])(([A-Za-z0-9._-]*[_.-])?($words)([_.-][A-Za-z0-9._-]*)?)[\"']?[[:space:]]*[:=][[:space:]]*)(\"[^\"]*\"|'[^']*'|[^[:space:],}\"']+)#\\1<redacted>#Ig
-s#([?&](token|t|key|auth|sig|code|access_token|pass|password)=)[^&[:space:]\"'<]+#\\1<token>#Ig
+s#([?&](token|t|key|auth|sig|code|access_token|pass|password|passcode)=)[^&[:space:]\"'<]+#\\1<token>#Ig
 s#(://)[^/[:space:]@\"']+@#\\1<cred>@#g
 s#\b[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\b#<uuid>#g
 s#\b[A-Z0-9]{4,6}(-[A-Z0-9]{4,6}){2,4}\b#<cdkey>#g
@@ -48,18 +54,36 @@ s#\b[A-Z0-9]{26}\b#<cdkey>#g
 s#\b[A-Za-z0-9_-]{32,}\b#<tok:&>#g
 s#<tok:([^0-9>]*)>#\1#g
 s#<tok:[^>]*>#<token>#g
+s#(^|[^A-Za-z0-9/_.+-])([A-Za-z0-9+]{16,}={0,2})#\\1<k:\\2>#g
+s#<k:([^0-9>]*)>#\\1#g
+s#<k:([^A-Za-z>]*)>#\\1#g
+s#<k:([0-9]{8}T[0-9]{6}Z)>#\\1#g
+s#<k:[^>]*>#<key>#g
 s#[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)+#<email>#g
+s#/Users/+[^/[:space:]\"'<:;)]+( [^/[:space:]\"'<:;)]+){1,2}/#<home>/#g
+s#[A-Za-z]:(\\\\+|/)(Users|Documents and Settings)(\\\\+|/)+[^\\\\/\"'<:;)[:space:]]+( [^\\\\/\"'<:;)[:space:]]+){1,2}(\\\\|/|\$)#<home>\\5#g
 s#(/home|/Users)[/\\\\]+[^/\\\\[:space:]\"'<:;)]+#<home>#g
 s#[A-Za-z]:(\\\\+|/)(Users|home|Documents and Settings)(\\\\+|/)+[^\\\\/\"'<:;)[:space:]]+#<home>#g
+s#(^|[^A-Za-z0-9._-])/(mnt|media|root|Volumes)(/[^[:space:]\"'<;)]*|([^A-Za-z0-9._/-]|\$))#\\1<path>\\4#g
 s#~/(d2d-lab|labrun|d2lod-wt|d2lod-ops)#<lab>#g
-s#(^|[^0-9.])(10(\.[0-9]{1,3}){3}|192\.168(\.[0-9]{1,3}){2}|172\.(1[6-9]|2[0-9]|3[01])(\.[0-9]{1,3}){2}|169\.254(\.[0-9]{1,3}){2})([^0-9]|\$)#\\1<ip>\\7#g
+s#(^|[^0-9.])127\.([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})([^0-9.]|\$)#\\1<LB>\\2\\3#g
+s#(^|[^0-9.])0\.0\.0\.0([^0-9.]|\$)#\\1<ANY>\\2#g
+s#(^|[^0-9.])[0-9]{1,3}(\.[0-9]{1,3}){3}([^0-9.]|\$)#\\1<ip>\\3#g
+s#(^|[^0-9.])[0-9]{1,3}(\.[0-9]{1,3}){3}([^0-9.]|\$)#\\1<ip>\\3#g
+s#(^|[^0-9A-Za-z:])([0-9a-fA-F]{2}[:-]){5}[0-9a-fA-F]{2}([^0-9A-Za-z:]|\$)#\\1<mac>\\3#g
+s#$nb($h4:){7}$h4#\\1<ip6>#g
+s#$nb($h4:){1,7}(:$h4){1,7}#\\1<ip6>#g
+s#$nb($h4:){1,7}:#\\1<ip6>#g
+s#$nb::($h4:){0,6}$h4#\\1<ip6>#g
 s#://localhost#://<LH>#g
-s#://127\.0\.0\.1#://<LB>#g
 s#(https?://|wss?://)[^/:[:space:]\"'<>?]+#\\1<host>#g
 s#://<LH>#://localhost#g
-s#://<LB>#://127.0.0.1#g
 s#[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.(lan|local|internal|home\.arpa|${dom})\b#<host>#Ig
-s#($names${REPORT_NAMES:+|$REPORT_NAMES})#<private>#Ig"
+s#\b(DESKTOP|LAPTOP|WIN)-[A-Z0-9]{5,}\b#<host>#g
+s#\b($hosts)\b#<private>#Ig
+s#($names${REPORT_NAMES:+|$REPORT_NAMES})#<private>#Ig
+s#<LB>#127.#g
+s#<ANY>#0.0.0.0#g"
 }
 
 if [ "${REPORT_SCRUB_ONLY:-0}" = 1 ]; then scrub; exit 0; fi
@@ -122,8 +146,14 @@ ping=/opt/d2lod/d2dping
 cat >"$b/README.txt" <<TXT
 Feedback bundle $stamp (made by tester-report.sh, nothing was sent anywhere).
 What this is: the last $tail_n lines of the bot and d2d logs, the once-a-minute lines, deaths, the ladder journal, your wizard
-answers (name, class, goals) and the game's own state line. Tokens, key-shaped text, home folders, private host names,
-IP addresses and e-mail addresses were replaced. The watch token, your passcode, save files and keys are NOT in it.
+answers (name, class, goals) and the game's own state line.
+Replaced by a filter of shapes: values labelled token, secret, password, passcode, passphrase, key, auth, cookie, user
+or hostname; Bearer tokens; key-shaped text (16 or more letters and digits mixed, dashed game keys); e-mail addresses;
+home folders (/home, /Users, C:\\Users); paths under /mnt, /media and /root; IPv4 (except 127.x), IPv6 and MAC
+addresses; host names in links and names ending in .lan or .local.
+NOT replaced: your hero's name (it is in every line on purpose), a bare computer or person name the filter cannot
+know, other Windows folders, a short code with no label. A filter of shapes can miss things.
+Not copied at all: the watch token file, the passcode file, save files and keys.
 Please open the files and read them before you send anything. If you see something private that was missed, delete that
 line and tell us which kind it was.
 What to send: this .tar.gz, plus three or four sentences: what you did (class, how long you played), what felt wrong or
