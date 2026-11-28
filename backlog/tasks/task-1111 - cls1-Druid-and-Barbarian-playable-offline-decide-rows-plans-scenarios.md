@@ -30,6 +30,7 @@ owns:
   - "internal/watch/unlockrisk_test.go"
 exclusive: []
 contracts: []
+result: "Offline only, not verified live. Druid and Barbarian have decide rows (mana band, stance knobs, propose lead), judged act2plan and levelplan rows, merc aura rows, six scenarios (validate ok) and gap docs; cap ratchet 110 to 95 rows. Build-specific: warcry stance in profiles.json (barbarian/warcry melee block), table row order in the two endgame90 tables; class-keyed: decide rows, plan rows, merc aura (classtraits.json)."
 ---
 
 ## Description
@@ -42,10 +43,10 @@ Make Druid and Barbarian playable end to end offline as data. Done when the offl
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 decide catalogue, policy and propose rows for druid and barbarian, test on both
-- [ ] #2 act2plan and levelplan rows judged against docs/sme (S), classtraits mercAura rows
-- [ ] #3 cap ratchet lowered for the hand-kept druid and barbarian tables, consistency check green
-- [ ] #4 Proving Ground scenarios (level 1-30, earned act2, kit soak) for both classes validate
-- [ ] #5 gap docs docs/classes/druid-gap-2026-11-28.md and barbarian-gap-2026-11-28.md
+- [x] #1 decide catalogue, policy and propose rows for druid and barbarian, test on both
+- [x] #2 act2plan and levelplan rows judged against docs/sme (S), classtraits mercAura rows
+- [x] #3 cap ratchet lowered for the hand-kept druid and barbarian tables, consistency check green
+- [x] #4 Proving Ground scenarios (level 1-30, earned act2, kit soak) for both classes validate
+- [x] #5 gap docs docs/classes/druid-gap-2026-11-28.md and barbarian-gap-2026-11-28.md
 - [ ] #6 live: run the new scenarios in the lab (needs live drill)
 <!-- AC:END -->
