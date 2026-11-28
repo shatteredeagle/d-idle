@@ -44,7 +44,7 @@ var scanRules = []scanRule{
 		c := strings.Trim(s[0], ".")
 		return net.ParseIP(c) != nil && strings.Contains(c, ":") && (strings.Contains(c, "::") || strings.Count(c, ":") >= 5)
 	}},
-	{"secret-assignment", regexp.MustCompile(`(?i)(?:pass|passwd|password|passphrase|pwd|pw|secret|token|apikey|api[_-]key|cookie|authoriz` + `ation|credentials?|private[_-]key|cdkey|cd[_-]key)["']?\s*[:=]\s*["']?([^<"'\s,}])`), nil},
+	{"secret-assignment", regexp.MustCompile(`(?i)(?:pass|passcode|pass[_-]code|passwd|password|passphrase|pwd|pw|secret|token|apikey|api[_-]key|cookie|authoriz` + `ation|credentials?|private[_-]key|cdkey|cd[_-]key)["']?\s*[:=]\s*["']?([^<"'\s,}])`), nil},
 	{"pack-path", regexp.MustCompile(`/p/[A-Za-z0-9_-]{12,}`), nil},
 	{"bearer", regexp.MustCompile(`(?i)\b(?:bearer|basic)\s+[^<\s]{6,}`), nil},
 	{"url-userinfo", regexp.MustCompile(`://[^/\s@<]+@`), nil},
