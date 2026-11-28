@@ -194,7 +194,9 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- a115a3215 11-27 19:28 `Merge agent/chunkstart: chunkstart: why Questy chunks do not start (docs)` (chunkstart)
 - 39552a408 11-27 19:28 `Merge agent/mercgold: mercgold: dead merc with gold is a trip reason, no-merc and revive-off visibility (TASK-1083)` (mercgold)
+- fbe22468a 11-27 19:26 `Merge branch 'main' into chunkstart` (-)
 - 23e7c1750 11-27 19:26 `Merge branch 'main' into mercgold` (-)
 - 198ef5168 11-27 19:22 `Merge agent/auraflap: auraflap: hold a crowd aura through the fight, shadow agree includes aura (TASK-1082)` (auraflap)
 - 776d76832 11-27 19:21 `Merge branch 'main' into auraflap` (-)
@@ -202,6 +204,4 @@
 - 1ee35a2c1 11-27 19:20 `Merge branch 'main' into postdeploy` (-)
 - 8b8ab22f6 11-27 19:12 `Merge agent/refusalpark: refusalpark: quests.refusalPark dark knob, refused_repeatedly park (TASK-1081)` (refusalpark)
 - e6efa4ef6 11-27 19:11 `Merge branch 'main' into refusalpark` (-)
-- e13415294 11-27 18:52 `Merge agent/recoverydeath: recoverydeath: no-potion recovery farm picks the safest area below clvl 8 (TASK-1080)` (recoverydeath)
-- 9d9f28b47 11-27 18:51 `Merge branch 'main' into recoverydeath` (-)
 <!-- statusgen:end -->
