@@ -143,6 +143,8 @@ cmd/d2bot/ladder.go  live-agent  pgtaps
 cmd/d2bot/live.go  credit-runner  campaign1
 cmd/d2bot/live.go  live-agent  agencyp1b
 cmd/d2bot/necroplay_test.go  live-agent  epic-class-necromancer
+cmd/d2bot/opscmd.go  credit-runner  vault2
+cmd/d2bot/opsvault_test.go  credit-runner  vault2
 cmd/d2scenario  credit-runner  pgfix
 cmd/d2scenario/  credit-runner  drillskills
 cmd/d2scenario/  live-agent  arbmig
@@ -183,6 +185,7 @@ docs/design/arbiter-migration-p6.md  live-agent  arbmig
 docs/design/boardsm-flip.md  live-agent  bsmdef
 docs/design/fable-review-2026-11-21/town-planner-b-model.md  live-agent  town5
 docs/design/fable-review-2026-11-21/town-profiles-sme.md  live-agent  town12
+docs/design/fork-order-id-spec.md  credit-runner  vault2
 docs/design/input-cast-verbs.md  live-agent  inputl3
 docs/design/input-i3.md  live-agent  inputl3
 docs/design/input-i4.md  credit-runner  inputl4
@@ -260,6 +263,7 @@ docs/tester-registry.md  credit-runner  ghcrpublish
 docs/town.md  live-agent  town11
 docs/ui/redesign-2026-11-14/stash-anywhere.md  credit-runner  stashany
 docs/upstream/bodies/monster-block-body.md  credit-runner  decomp43
+docs/vault.md  credit-runner  vault2
 internal/agency/drive.go  live-agent  agencyp1b
 internal/agency/drive_test.go  live-agent  agencyp1b
 internal/arbiter  live-agent  town10
@@ -411,6 +415,9 @@ internal/town/sellplan_test.go  live-agent  townflip
 internal/town/shop.go  live-agent  townflip
 internal/town/town.go  live-agent  townflip
 internal/town/trip.go  live-agent  inputl3
+internal/vault/  credit-runner  vault2
+internal/vaultkeep/  credit-runner  vault2
+internal/watch/  credit-runner  vault2
 internal/watch/areamap_test.go  credit-runner  uis6
 internal/watch/difficultydesk.go  credit-runner  fix4
 internal/watch/difficultydesk_test.go  credit-runner  fix4

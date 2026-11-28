@@ -53,6 +53,7 @@
 | act2night | proposed | - | `internal/bot/`<br>`tools/provingground/scenarios/stepexec-act2chunks.json` | - |
 | townnight | proposed | - | `internal/town/`<br>`internal/supply/`<br>`tools/provingground/scenarios/townplan.json` | - |
 | led1 | in-progress | - | `data/darklaunch/`<br>`data/darklaunch.json`<br>`data/darklaunch-cap.json`<br>`tools/darklaunch/`<br>`tools/flip/`<br>`docs/process/dark-launch.md`<br>`docs/process/autoflip.md` | - |
+| vault2 | in-progress | - | `internal/vault/`<br>`internal/vaultkeep/`<br>`internal/watch/`<br>`cmd/d2bot/opscmd.go`<br>`cmd/d2bot/opsvault_test.go`<br>`docs/design/fork-order-id-spec.md`<br>`docs/vault.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
@@ -196,6 +197,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 14942d262 11-28 02:23 `Merge agent/vault2: vault2: atomic Reserve, merc journal (TASK-1113)` (vault2)
+- 0017b3d7b 11-28 02:20 `Merge branch 'main' into vault2` (-)
 - 28216bd08 11-28 02:12 `Merge agent/nf1b: nf1b: pre.bind and pre.summon (TASK-1105)` (nf1b)
 - a02253d37 11-28 02:12 `Merge agent/nf2: nf2: flail hold and sweep in a cleared area let time pass (TASK-1103)` (nf2)
 - 5e6060a73 11-28 02:12 `Merge agent/nf4: nf4: board restart scenario timing, town route reinsertion (TASK-1106/1108)` (nf4)
@@ -204,6 +207,4 @@
 - 413084b65 11-28 02:09 `Merge branch 'main' into nf4` (-)
 - b5055f308 11-28 02:08 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
 - bb9980751 11-28 02:01 `Merge remote-tracking branch 'origin/main' into agent/nf4` (-)
-- 41fb5b723 11-28 01:52 `Merge agent/nf3: nf3: early road kit entry rule, unreachable goal searched once (TASK-1104/1107)` (nf3)
-- 04bfc9149 11-28 01:51 `Merge branch 'main' into nf3` (-)
 <!-- statusgen:end -->
