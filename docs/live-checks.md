@@ -136,3 +136,4 @@ Closing rule: a card closes when merged with offline acceptance proven; every op
 | TASK-1109 cls2 | #7 | live drill of the new scenarios (needs live) | live drill on the sandbox, fresh hero, per the card result | open |
 | TASK-1111 cls1 | #6 | live: run the new scenarios in the lab (needs live drill) | live drill on the sandbox, fresh hero, per the card result | open |
 | TASK-1115 fix7b | #8 | Live check on the canary with bot.arbiterControl 1: an emergency trip after declined refills goes on; writes after start 0 | live drill on the sandbox, fresh hero, per the card result | open |
+| TASK-1116 ops2 | #5 | live check: open the canary watch link on a phone, bookmark the clean address, reopen after closing the browser | live drill on the sandbox, fresh hero, per the card result | open |
