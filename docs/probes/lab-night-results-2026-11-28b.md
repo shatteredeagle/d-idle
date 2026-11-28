@@ -115,6 +115,34 @@ Bot: main `93b181848` (fix8) for the cain pair and the park drill (V `bot_sha256
 | town.plan.belt-refill-from-pack (`town.plan` 4, class-neutral assertions) | Sorceress 3, Paladin 11 | GREEN, GREEN | Sorceress RED (b) in batch 1 | - | scenario fix here (fill line and no potion sold, in place of two end counts); `20261128-015616`, `20261128-015803` |
 | board.sm.restart-mid-chain (tap version) | Paladin 3 | RED | new seed | a | the same park in one second as seed 11 (`level 6 from 20`), so TASK-1120 is not a seed 11 accident; `20261128-015546` |
 
+## Batch 3 table (02:00 to 02:30 EST)
+
+Bot: main `702b6cfd5` (nf1) for the rows started before 02:12, main `41fb5b723` (adds nf3) for the act2 rows (V `bot_commit` `42d84163a`), main `28216bd08` (adds nf1b, nf2, nf4; merge `5a431443e`) for the combat and necro rows.
+
+| scenario | class/seed | result | vs earlier | class | evidence (V unless tagged), run dir |
+|---|---|---|---|---|---|
+| board.sm.restart-mid-chain (chain accepted in the setup) | Paladin 11, 13, Sorceress 3 | GREEN x3 | Paladin 11 RED (a), Sorceress 3 RED (c) in batch 1 | - | Paladin 11: chunk start 4 s after the bot, `awaiting hand-in of search_for_cain/read` at 27 s, restart at 150 s (38 virtual min done), no second `starting chunk`, scroll `done`; `20261128-020322`, `-020438`, `-020728` |
+| board.sm.restart-mid-chain (tap version) | Paladin 12 | GREEN | new seed | - | the tap found this hero outside the tower; `20261128-020025` |
+| board.sm.stop-idempotent | Paladin 11 | RED then GREEN | not run before | b | RED with the triggers at 60 and 75 wall seconds (409 `done`, the chunk was over); GREEN after the scenario fix (8 and 14 s); `20261128-020016`, `-020911` |
+| board.sm.busy-second-quest | Paladin 11 | RED then GREEN | not run before | b | RED with the trigger at 30 s (the second quest simply started, HTTP 200); GREEN at 8 s (409 `busy`); same dirs |
+| board.sm.stop-idempotent, busy-second-quest | Sorceress 3 | GREEN x2 with the old and x2 with the new trigger times | not run before | - | `20261128-020443`, `-021352` |
+| board.sm.start-idempotent, board.sm.one-head | Paladin 11, Sorceress 3 | GREEN x4 | not run before | - | `20261128-020016`, `-020443` |
+| board.handin.field-tap, board.handin.without-run, board.hold.broke | Paladin 11 | GREEN x3 | not run before | - | `20261128-021638` |
+| board.hold.restock | Paladin 11 | RED | not run before | b, U | no `hold needs_potions` line: with the three potions of the setup the chunk starts at once and the Countess run is auto-finished. The hold wording or the kit minimum moved since the scenario was written (U which); same dir |
+| board.hold.restock-stash-gold | Paladin 11 | RED | not run before | U | `stash 6641`, wanted at most 4999: the stash grew instead of paying the restock; the start gate did wait (`waiting for the recovery (purse and kit) to finish`). Not triaged further; same dir |
+| board.retry.runs-a-step, board.stale-accept-unblocks, board.view.reason-always | Paladin 11 | BLOCKED x3 | not run before | c | operator fault: `exit status 1` at wall 0 while the merge of nf4 left `board.json` with conflict markers for about a minute; rerun below |
+| drill.act2.shaft.stepexec (nf3) | Paladin 11 | GREEN | was RED | - | the early road fix works: `msf` in the pack; `20261128-021402` |
+| drill.act2.radament, radament.handin, amulet (.stepexec, nf3) | Paladin 11 | GREEN x3 | same | - | same dir |
+| drill.act2.cube.stepexec (nf3) | Paladin 11 | RED | same | a | `invariant potion-not-drunk` twice: `life=35% line=50% beltHP=4 drank=0 for=18s hostiles=4`, then `life=18% ... drank=0 for=93s hostiles=0`, step `Quest: fighting (Level up to 23)`. TASK-1107 names it, its result says not addressed |
+| drill.act2.duriel.stepexec (nf3) | Paladin 11, 3 repetitions | BLOCKED 0 of 3 | same as batch 2 | a | identical to batch 2 in all three (lair 1, boss dead 1, 11 x `talk_tyrael`, parked); TASK-1126; `20261128-021448` |
+| drill.act2.summoner.stepexec (nf3, without nf2) | Paladin 11 | BLOCKED | batch 2: busy loop | a | no watchdog and no busy loop any more: `boss: left the route or arena`, `Kill The Summoner` twice, `all steps done but the quest does not read as finished`, `parked summoner/kill_summoner`, then campaign stall and exit after 141 s wall. The journal touch is still not credited; `20261128-021806` |
+| combat.whirlwind-clears.control | Barbarian 11 | GREEN | same | - | `20261128-022149` |
+| combat.whirlwind-clears (nf1b) | Barbarian 11 | RED | same status, new cause | a, U | the setup holds now (Whirlwind bound right, prep self-check passed) and the driver still logs no `combat move` and no `move shadow` line; 98 kills by Attack 42, Double Swing 47, Bash 9; card drilldrivers (TASK-1127) |
+| combat.hold-interruptible (nf1b) | Paladin 11 | RED | same status, one assertion fewer | b | Zeal is used now (25 kills `last_skill=Zeal`); the only failing assertion is `^combat potion`: minlife 100 in every fight; `20261128-022229` |
+| combat.teleport-reposition (nf1b) | Sorceress 11 | RED | same | b | no `use=escape` leg: minlife 100, no surround; 6 x `out of mana`; `20261128-022258` |
+| combat.corpse-explodes (nf1b) | Necromancer 11 | RED | same | a, U | Corpse Explosion bound right, the Clay Golem of the setup stands (`combat minion skill=Clay Golem`), kills by Attack 69 and Teeth 13, no `combat corpse-explosion` line; TASK-1127; `20261128-022322` |
+| necro.corpse-ce1, ce5 (nf1b) | Necromancer 11, 12, 13 | RED x6 | was `minions 0`, now `minions 1` | a, U | the one minion is the setup's golem; Raise Skeleton has 8 points and is never cast (casts: Teeth 28 to 31, Amplify Damage 2, Bone Armor 1, Clay Golem 1) with 85 corpses made; TASK-1127; `20261128-022352`, `-022436`, `-022528` |
+
 ## Batch 2 and later
 
 See the sections below; they are appended as the runs finish.
