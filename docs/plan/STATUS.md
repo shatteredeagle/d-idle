@@ -187,14 +187,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 861efe7b8 11-27 22:49 `Merge agent/fable-fr8: fable review 8 (docs)` (fable-fr8)
 - 64205b981 11-27 22:49 `Merge agent/fable-fr6: fable review 6 (docs)` (fable-fr6)
 - 24328a060 11-27 22:48 `Merge agent/fable-fr4: fable review 4 (docs)` (fable-fr4)
+- 9984d6c7c 11-27 22:46 `Merge branch 'main' into fable-fr8` (-)
 - ce257d051 11-27 22:46 `Merge branch 'main' into fable-fr6` (-)
 - ae87511ab 11-27 22:46 `Merge branch 'main' into fable-fr4` (-)
 - 4699c6551 11-27 22:44 `Merge agent/fable-fr2: fable review 2 (docs)` (fable-fr2)
 - b4b821f56 11-27 22:44 `Merge agent/ledger-bot-diffReadyV2-items-advisor-20261128-034138: ledger: diffReadyV2 + advisor bundles on both sandboxes (re-flip)` (ledger-bot-diffReadyV2-items-advisor-20261128-034138)
 - be34b8363 11-27 22:43 `Merge branch 'main' into fable-fr2` (-)
 - bba059e4c 11-27 22:43 `Merge branch 'main' into ledger-bot-diffReadyV2-items-advisor-20261128-034138` (-)
-- c2baa8c30 11-27 22:41 `Merge agent/fable-fr5: fable review 5: dark ledger process (docs)` (fable-fr5)
-- f53f63a4c 11-27 22:41 `Merge agent/fable-fr1: fable review 1: item flows (docs)` (fable-fr1)
 <!-- statusgen:end -->
