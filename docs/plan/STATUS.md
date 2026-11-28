@@ -196,14 +196,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- b5055f308 11-28 02:08 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
+- 41fb5b723 11-28 01:52 `Merge agent/nf3: nf3: early road kit entry rule, unreachable goal searched once (TASK-1104/1107)` (nf3)
+- 04bfc9149 11-28 01:51 `Merge branch 'main' into nf3` (-)
 - cded674d7 11-28 01:50 `Merge agent/led1: led1: dark ledger split: per-knob design files + runtime state outside git (TASK-1110)` (led1)
 - b72217682 11-28 01:48 `Merge branch 'main' into led1` (-)
 - 07762b586 11-28 01:43 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
 - f8f830352 11-28 01:42 `Merge branch 'main' into nightlog` (-)
+- e9576a33f 11-28 01:29 `Merge branch 'main' into nf3` (-)
 - e4b6fc6eb 11-28 01:29 `Merge branch 'main' into led1` (-)
 - ab6763901 11-28 01:29 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
-- 317417875 11-28 01:28 `Merge branch 'main' into nightlog` (-)
-- 702b6cfd5 11-28 01:23 `Merge agent/nf1: nf1: nav strip behind a sealed frontier pocket (TASK-1102)` (nf1)
-- 6aa6ad5b9 11-28 01:22 `Merge branch 'main' into nf1` (-)
-- 93b181848 11-28 01:15 `Merge agent/fix8: fix8: build-table consistency check, capability facts, SelectProfile error, combat keys, traps list, mana_heavy in Normal (TASK-1097)` (fix8)
 <!-- statusgen:end -->
