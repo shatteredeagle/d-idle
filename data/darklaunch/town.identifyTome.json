@@ -1,0 +1,10 @@
+{
+ "name": "town.identifyTome",
+ "built_by": "idtome (bb2634cc9)",
+ "dark_since": "2026-11-15",
+ "why_off": "Optional chore off by default.",
+ "enable_criteria": "Live check buy+fill; owner go",
+ "owner": "coordinator",
+ "review_by": "2026-12-09",
+ "status": "dark"
+}

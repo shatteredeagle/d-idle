@@ -21,6 +21,8 @@ type Observed struct {
 	Weapon *string
 	// Gold is the purse; Potions the healing, mana and rejuvenation potions in belt and pack.
 	Gold, Potions *int
+	// Minions is the number of the hero's summons standing (`debug minions`).
+	Minions *int
 }
 
 // Floors are minimums a run declares beside the hero (0: not checked): the purse and the potions its setup gave.
@@ -56,8 +58,29 @@ func (h Hero) SelfCheck(o Observed) []Check {
 		c := Check{Name: "attack", Want: fmt.Sprintf("%s (id %d) learned and on a hand", h.Attack, h.AttackID)}
 		learned := h.AttackIndex < 0 || (h.AttackIndex < len(o.SkillLevels) && o.SkillLevels[h.AttackIndex] > 0)
 		bound := (o.LeftSkill != nil && *o.LeftSkill == h.AttackID) || (o.RightSkill != nil && *o.RightSkill == h.AttackID)
+		for _, b := range h.Binds { // a declared bind took the attack's hand: the attack only has to be learned
+			if b.Left == h.AttackLeft && b.ID != h.AttackID {
+				c.Want, bound = fmt.Sprintf("%s (id %d) learned (its hand holds %s)", h.Attack, h.AttackID, b.Skill), true
+			}
+		}
 		c.OK = learned && bound
 		c.Got = fmt.Sprintf("learned %v, hands %s %s", learned, show(o.LeftSkill), show(o.RightSkill))
+		out = append(out, c)
+	}
+	for _, b := range h.Binds {
+		hand, got := "right", o.RightSkill
+		if b.Left {
+			hand, got = "left", o.LeftSkill
+		}
+		learned := b.Index >= 0 && b.Index < len(o.SkillLevels) && o.SkillLevels[b.Index] > 0
+		out = append(out, Check{Name: "bind", Want: fmt.Sprintf("%s (id %d) learned and on the %s hand", b.Skill, b.ID, hand),
+			Got: fmt.Sprintf("learned %v, %s hand %s", learned, hand, show(got)), OK: learned && got != nil && *got == b.ID})
+	}
+	if h.MinMinions > 0 {
+		c := Check{Name: "minions", Want: fmt.Sprintf("at least %d", h.MinMinions), Got: "not read"}
+		if o.Minions != nil {
+			c.Got, c.OK = fmt.Sprint(*o.Minions), *o.Minions >= h.MinMinions
+		}
 		out = append(out, c)
 	}
 	if h.Weapon != "" {

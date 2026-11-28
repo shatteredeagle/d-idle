@@ -1,10 +1,11 @@
 ---
 id: TASK-1097
 title: 'fix8: builds-as-data fixes from fable review 8'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T03:46:00Z'
+updated_date: '2026-11-28T06:42:00Z'
 labels:
   - bot
   - bot-fix

@@ -1,0 +1,10 @@
+{
+ "name": "invdesk.instant",
+ "built_by": "botinstant (d5d89d093)",
+ "dark_since": "2026-11-14",
+ "why_off": "Depends on invdesk.verbs.",
+ "enable_criteria": "; then scenario/drill green, then flip on the sandboxes with a 24 h invariant-monitor watch and automatic revert on a hard breach",
+ "owner": "coordinator",
+ "review_by": "2026-12-09",
+ "status": "dark"
+}
