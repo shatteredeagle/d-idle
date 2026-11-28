@@ -195,6 +195,7 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 028b8a1bc 11-28 01:11 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
 - d89ce280c 11-28 01:11 `Merge agent/rv4: review 13: sandbox live log review (docs)` (rv4)
 - af0509e9f 11-28 01:09 `Merge branch 'main' into rv4` (-)
 - 5716e032a 11-28 00:57 `Merge agent/forkrebase: fork rebase doc 2026-11-28 (docs)` (forkrebase)
@@ -204,5 +205,4 @@
 - 767f5edba 11-28 00:53 `Merge agent/rv3: round-2 review C: security, PG, data, pipeline (docs)` (rv3)
 - 9da05821e 11-28 00:52 `Merge agent/rv1: round-2 review A: fix1 and fix2 (docs)` (rv1)
 - 9fd88574f 11-28 00:52 `Merge agent/rv2: round-2 review B: fix3 and fix7 (docs)` (rv2)
-- e5c21ff85 11-28 00:48 `Merge branch 'main' into rv3` (-)
 <!-- statusgen:end -->
