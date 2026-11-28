@@ -1,0 +1,11 @@
+{
+ "name": "resource.skillCapPerLevel",
+ "built_by": "agencyp0 (812d9de60)",
+ "dark_since": "2026-11-19",
+ "why_off": "Kolbot rule not enforced by d2d or game.exe; off until the player model needs it.",
+ "enable_criteria": "U",
+ "owner": "coordinator",
+ "review_by": "2026-12-09",
+ "status": "retired",
+ "note": "2026-11-27 retired (skillcapretire): knob and level-cap check removed; d2d and game.exe do not enforce the rule, no consumer. The table checker TableViolations stays."
+}
