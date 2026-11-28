@@ -1,10 +1,11 @@
 ---
 id: TASK-1129
 title: 'zone5: zone model supply cap rows, caster opens in a field not a graveyard'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T08:16:00Z'
+updated_date: '2026-11-28T08:48:00Z'
 labels:
   - bot
   - bug

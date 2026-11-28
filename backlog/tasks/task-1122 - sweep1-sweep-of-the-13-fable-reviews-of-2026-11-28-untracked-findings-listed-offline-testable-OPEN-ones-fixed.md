@@ -1,10 +1,13 @@
 ---
 id: TASK-1122
-title: 'sweep1: sweep of the 13 fable reviews of 2026-11-28, untracked findings listed, offline-testable OPEN ones fixed'
-status: In Progress
+title: >-
+  sweep1: sweep of the 13 fable reviews of 2026-11-28, untracked findings
+  listed, offline-testable OPEN ones fixed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T06:27:00Z'
+updated_date: '2026-11-28T08:48:00Z'
 labels:
   - bot
   - bot-fix
