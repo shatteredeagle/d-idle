@@ -2,7 +2,7 @@
 
 > status: current. Policy (user, 2026-11-27): a feature that ran clean on a sandbox graduates: its behaviour becomes the code default, the knob is deleted (the key stays loadable through `env.RetiredKnobs`) and the ledger row closes. Tags: V = read or run today (how is named), S = secondary (another doc), I = inferred, U = unverified. No game was driven and nothing was written to a sandbox; the sandbox bot logs were read read-only.
 
-Rule used per row: GRADUATE only when the row's `enable_criteria` text (data/darklaunch.json) is met by cited evidence, or the owner is the coordinator, a sandbox window exists, the feature can be shown to have RUN in it, and no open review finding says otherwise (docs/design/fable-review-2026-11-28/). Review finding 06 F2 (high) applies to every row below: "no hard invariant counter rose in the window" is absence of a breach, not presence of the feature. So each row was checked for presence in tonight's logs.
+Rule used per row: GRADUATE only when the row's `enable_criteria` text (`data/darklaunch/<knob>.json`) is met by cited evidence, or the owner is the coordinator, a sandbox window exists, the feature can be shown to have RUN in it, and no open review finding says otherwise (docs/design/fable-review-2026-11-28/). Review finding 06 F2 (high) applies to every row below: "no hard invariant counter rose in the window" is absence of a breach, not presence of the feature. So each row was checked for presence in tonight's logs.
 
 ## 1. Evidence read today (V)
 
@@ -53,7 +53,7 @@ Not considered, by the brief: `bot.admission`, `quests.boardSM`, `agency.planner
 
 - The tick line is always written, at most one a second (`tickLogGap`, `internal/bot/ticklog.go`); the field, the knob row and the off path are gone.
 - `bot.tickLogSec` is in `env.RetiredKnobs`: a `tuning.json` that still names it loads and changes nothing (`TestRetiredTickLogSecKeyLoads`), so no sandbox file needs an edit.
-- Ledger row `enabled`, `graduated_at` 2026-11-28; docs/knobs.md regenerated; docs/design/ticklog-t4.md carries the night's numbers.
+- Ledger row `data/darklaunch/bot.tickLogSec.json` set `default-on` (graduated 2026-11-28, in its note); docs/knobs.md regenerated; docs/design/ticklog-t4.md carries the night's numbers.
 - Found on the way: the procedure's own count rule is not met. About 23,400 s of log gave 838 and 902 ticks (one per 26 to 28 s, about 130 lines an hour, not 3,600). I: the line is written only when the goal chain runs, not while an action is in flight. U whether the session scoring needs the denser record; worth one look before the arbiter verdict leans on tick counts.
 - Not verified live after the change (the sandboxes already run the same behaviour through the knob).
 
