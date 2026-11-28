@@ -225,8 +225,6 @@ docs/probes/ready-audit.md  live-agent  ready-audit
 docs/probes/test-characters.md  live-agent  fid-fixtures
 docs/probes/town-plan-stage3-2026-11-22.md  live-agent  town5
 docs/probes/tpreserve.md  live-agent  tpreserve-live
-docs/process/autoflip.md  credit-runner  autoflip
-docs/process/dark-launch.md  credit-runner  autoflip
 docs/process/pg-ledger-ops.md  credit-runner  pgledgeron
 docs/process/pg-ops-mgonejob.md  credit-runner  mgonejob
 docs/process/proving-ground-status.md  credit-runner  pgpage
@@ -438,9 +436,6 @@ tools/emu/mb_gate.py  credit-runner  decomp43
 tools/emu/mb_mut.py  credit-runner  decomp43
 tools/emu/mb_mut2.py  credit-runner  decomp43
 tools/emu/zd_*  credit-runner  zealdiff
-tools/flip/autoflip.json  credit-runner  autoflip
-tools/flip/autoflip.py  credit-runner  autoflip
-tools/flip/test_autoflip.py  credit-runner  autoflip
 tools/friendpack/README.txt  credit-runner  cut012
 tools/friendpack/compose.yml  credit-runner  cut012
 tools/friendpack/didle  credit-runner  cut012
