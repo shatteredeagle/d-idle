@@ -1,6 +1,7 @@
 {
  "build": "assassin_sentry_endgame90",
  "class": "assassin",
+ "combat": "assassin",
  "schema": "per-clvl allocation, same shape as internal/gear/builds/*.json (leveler.ParseBuild) plus main_attack; rows clvl 2..90, NO respec. A row with no skills means the point is saved (no unlocked plan skill); the planner spends it in the row where the skill unlocks. Quest points (Den, Radament, Izual in each difficulty) are skill entries with a quest key (rows 8 Den, 15 Radament, 26 Izual, 38 Den, 44 Radament, 56 Izual, 68 Den, 72 Radament, 82 Izual; U timing): rows count level points only, and a tagged point is bought as soon as its quest point is granted.",
  "tags": "Skills: V end state Maxroll Lightning Sentry Assassin (fetched 2026-10-29): max Lightning Sentry, Shock Web, Charged Bolt Sentry, Death Sentry, Fire Blast; 1 each Burst of Speed, Fade, Cloak of Shadows, Mind Blast, Weapon Block. Internal names Fire Trauma/Shock Field/Quickness are U for the mapping (S: skills.txt naming, matches existing assassin_fireblast_normal30 which uses Fire Trauma and Quickness). U ordering: Fire Blast 6 early attack (as the existing build), Charged Bolt Sentry from 12, Lightning Sentry from 24, Death Sentry from 30; Wake of Fire not taken. Stats: Str and Dex 57 by clvl 50 (Chaos in Quhab claws, V weapons.txt: claws need Dex equal to Str), Str 55 by 43 (Treachery in a Mage Plate, V armor.txt), from internal/gear/milestones.json, rest Vitality.",
  "respec": {

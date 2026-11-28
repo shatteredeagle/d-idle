@@ -424,6 +424,9 @@ func prepHero(ctx context.Context, c *d2dctl.Client, s scenario.Scenario, r scen
 	if err := spendPoints(ctx, c, s, r.Class, su, tabs, p.ledger); err != nil {
 		return seedOut{}, fmt.Sprintf("hero points: %v", err)
 	}
+	if err := summonMinions(ctx, c, s, r.Class, su, tabs, p.ledger); err != nil {
+		return seedOut{}, fmt.Sprintf("summon: %v", err)
+	}
 	seeded, err := applySeeds(ctx, c, su, p.ledger, p.data, gameChain(p.data, p.gamedata), p.hero)
 	if err != nil {
 		return seedOut{}, fmt.Sprintf("seeding: %v", err)

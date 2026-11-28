@@ -1,5 +1,5 @@
 {
   "cap": 27,
   "ratchet_by": "2026-12-04",
-  "note": "Hard cap on dark+trial rows owned by the coordinator (docs/process/dark-launch.md). Lower cap by one each week."
+  "note": "Hard cap on rows with status dark in git (data/darklaunch/<knob>.json) owned by the coordinator; trial is the runtime state of a dark row and counts (docs/process/dark-launch.md). Lower cap by one each week."
 }

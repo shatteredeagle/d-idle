@@ -13,7 +13,7 @@ func tgAt(id uint32, x, y int) Target { return Target{Unit: mon(id, clsFallen, x
 // profileAim is the aim row of a shipped profile: the tests read the data, they do not restate it.
 func profileAim(t *testing.T, class d2.Class, build, skill string) AimRule {
 	t.Helper()
-	pr := SelectProfile(&d2.Player{Class: class}, testCatalog(), Build(build))
+	pr, _ := SelectProfile(&d2.Player{Class: class}, testCatalog(), Build(build))
 	for _, r := range pr.Aims {
 		if r.Name == skill {
 			return r

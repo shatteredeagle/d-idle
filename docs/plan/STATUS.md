@@ -44,14 +44,15 @@
 | cellar3gate | in-progress | - | `internal/nav/exit.go`<br>`internal/nav/cellar3gate_test.go`<br>`internal/questboard/`<br>`docs/probes/cellar3-gate-capture.md` | - |
 | holereach | proposed | - | `internal/bot/zonemodel.go`<br>`internal/bot/zonemodel_test.go` | - |
 | pgfix | proposed | - | `cmd/d2scenario`<br>`internal/scenario`<br>`tools/provingground/scenarios`<br>`docs/process/proving-ground.md` | - |
-| labtriage | in-progress | - | `docs/probes/lab-night-results-2026-11-28.md`<br>`tools/provingground/scenarios/combatdrills.json`<br>`tools/provingground/scenarios/townplan.json`<br>`backlog/tasks/task-1102 - navbarracks-no-route-from-the-Barracks-up-to-the-Outer-Cloister-when-the-hero-starts-in-the-Barracks.md`<br>`backlog/tasks/task-1103 - cainspin-cain.chain-seed-11-with-bot.portalRetryWaitSec-0-spins-on-run-finished-and-is-cut-by-the-wall.md`<br>`backlog/tasks/task-1104 - summonerstall-drill.act2.summoner.stepexec-ends-in-the-runner-watchdog-after-a-nav-stuck-loop.md`<br>`backlog/tasks/task-1105 - drillskills-combat-and-necro-drills-with-hero_profile-played-run-without-the-builds-skills-no-leveler-line-last_skill-Attack.md`<br>`backlog/tasks/task-1106 - bsmnight-board.sm.restart-mid-chain-and-stop-cascades-RED-on-both-classes-assertion-and-trigger-timing-against-the-log.md`<br>`backlog/tasks/task-1107 - act2night-three-Act-2-stepexec-drill-findings-Duriel-stall-shaft-road-without-a-portal-potion-not-drunk-in-the-cube-drill.md`<br>`backlog/tasks/task-1108 - townnight-town.plan-stage-4-and-5-REDs-of-the-lab-night-route-kept-the-list-Charsi-talk-not-credited-scroll-before-potions.md` | - |
+| fix4 | in-progress | - | `deploy/d2d-container/tester-report.sh`<br>`deploy/d2d-container/tester_report_test.go`<br>`internal/watch/serve.go`<br>`internal/watch/serve_test.go`<br>`internal/watch/gate.go`<br>`internal/watch/web/shell.js`<br>`internal/watch/difficultydesk.go`<br>`internal/watch/difficultydesk_test.go`<br>`internal/diffready/`<br>`internal/bot/diffready.go`<br>`internal/bot/diffready_test.go`<br>`tools/flip/flip.py`<br>`tools/flip/test_flip.py`<br>`internal/logx/sink.go`<br>`internal/logx/sink_test.go`<br>`docs/ops/docker-volumes.md`<br>`docs/diffready.md` | - |
 | navbarracks | proposed | - | `internal/nav/`<br>`internal/d2dworld/` | - |
 | cainspin | proposed | - | `internal/bot/` | - |
 | summonerstall | proposed | - | `internal/bot/`<br>`internal/nav/` | - |
-| drillskills | proposed | - | `internal/scenario/`<br>`cmd/d2scenario/`<br>`tools/provingground/scenarios/combatdrills.json`<br>`tools/provingground/scenarios/necro.json` | - |
+| drillskills | proposed | - | `internal/scenario/`<br>`cmd/d2scenario/`<br>`tools/provingground/scenarios/combatdrills.json`<br>`tools/provingground/scenarios/necro.json`<br>`tools/provingground/golden/setup-played.tsv` | - |
 | bsmnight | proposed | - | `tools/provingground/scenarios/board.json`<br>`internal/questboard/` | - |
 | act2night | proposed | - | `internal/bot/`<br>`tools/provingground/scenarios/stepexec-act2chunks.json` | - |
 | townnight | proposed | - | `internal/town/`<br>`internal/supply/`<br>`tools/provingground/scenarios/townplan.json` | - |
+| led1 | in-progress | - | `data/darklaunch/`<br>`data/darklaunch.json`<br>`data/darklaunch-cap.json`<br>`tools/darklaunch/`<br>`tools/flip/`<br>`docs/process/dark-launch.md`<br>`docs/process/autoflip.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
@@ -195,14 +196,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
-- 7ec65e945 11-28 00:28 `Merge agent/nightlog: nightlog: overnight coordinator log (docs)` (nightlog)
-- 4fdc91a46 11-28 00:25 `Merge agent/labtriage: labtriage: overnight lab triage, scenario marker fixes, 8 cards (TASK-1101..1108)` (labtriage)
-- 2c1465fec 11-27 23:15 `Merge agent/fix6: fix6: ledger accounting, mandatory hero_profile, d2scenario smoke, stability view, pack room (TASK-1098)` (fix6)
-- 29e0120bb 11-27 23:14 `Merge branch 'main' into fix6` (-)
-- b0844c390 11-27 23:06 `Merge agent/fix2: fix2: board counters persist, rung-4 skip counts coded refusals only, resume tick for all goals, difficulty go consumed after the hop (TASK-1099)` (fix2)
-- 74ae9b205 11-27 23:06 `Merge agent/fix7: fix7: arbiter low-life gate, Report, survive reads Safety, heartbeat, admission rows (TASK-1096)` (fix7)
-- 95520db57 11-27 23:05 `Merge agent/fix1: fix1: item-flow journal, per-record in-flight 409, carry/stow intent, duplicate not filed (TASK-1095)` (fix1)
-- 558600846 11-27 23:03 `Merge branch 'main' into fix2` (-)
-- b46c1f9c8 11-27 23:03 `Merge branch 'main' into fix7` (-)
-- c3b288ef4 11-27 23:03 `Merge branch 'main' into fix1` (-)
+- 28216bd08 11-28 02:12 `Merge agent/nf1b: nf1b: pre.bind and pre.summon (TASK-1105)` (nf1b)
+- a02253d37 11-28 02:12 `Merge agent/nf2: nf2: flail hold and sweep in a cleared area let time pass (TASK-1103)` (nf2)
+- 5e6060a73 11-28 02:12 `Merge agent/nf4: nf4: board restart scenario timing, town route reinsertion (TASK-1106/1108)` (nf4)
+- 9e59401c9 11-28 02:09 `Merge branch 'main' into nf1b` (-)
+- ee787a3f2 11-28 02:09 `Merge branch 'main' into nf2` (-)
+- 413084b65 11-28 02:09 `Merge branch 'main' into nf4` (-)
+- b5055f308 11-28 02:08 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
+- bb9980751 11-28 02:01 `Merge remote-tracking branch 'origin/main' into agent/nf4` (-)
+- 41fb5b723 11-28 01:52 `Merge agent/nf3: nf3: early road kit entry rule, unreachable goal searched once (TASK-1104/1107)` (nf3)
+- 04bfc9149 11-28 01:51 `Merge branch 'main' into nf3` (-)
 <!-- statusgen:end -->

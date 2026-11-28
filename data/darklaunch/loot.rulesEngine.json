@@ -1,0 +1,10 @@
+{
+ "name": "loot.rulesEngine",
+ "built_by": "lootrules (ae9166e99)",
+ "dark_since": "2026-11-14",
+ "why_off": "Stages 0..3; 0 = today's pickit.",
+ "enable_criteria": "Stage 1 replay vs pickit: no worse on recorded drops; owner go",
+ "owner": "coordinator",
+ "review_by": "2026-12-09",
+ "status": "dark"
+}

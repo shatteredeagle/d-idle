@@ -1,0 +1,10 @@
+{
+ "name": "combat.standOK",
+ "built_by": "botthreat (6f20628c2)",
+ "dark_since": "2026-11-01",
+ "why_off": "S, off until a live drill.",
+ "enable_criteria": "Live drill with a standing Fallen",
+ "owner": "coordinator",
+ "review_by": "2026-12-09",
+ "status": "enabled"
+}

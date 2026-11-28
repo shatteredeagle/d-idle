@@ -12,7 +12,7 @@ func TestBarbarianFrenzyBuildSelectableAndDefaultsUnchanged(t *testing.T) {
 	if lb.Class != "barbarian" || lb.Combat != "frenzy" {
 		t.Fatalf("class %q combat %q", lb.Class, lb.Combat)
 	}
-	if TableCombat("barbarian_frenzy_guide") != "frenzy" || TableCombat("barbarian_melee_normal30") != "" {
+	if TableCombat("barbarian_frenzy_guide") != "frenzy" || TableCombat("barbarian_melee_normal30") != "barbarian" {
 		t.Errorf("combat lines: guide %q, normal30 %q", TableCombat("barbarian_frenzy_guide"), TableCombat("barbarian_melee_normal30"))
 	}
 	got := map[string]int{}

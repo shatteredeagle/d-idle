@@ -1,16 +1,22 @@
 #!/usr/bin/env python3
 """Dark-launch ledger check (docs/process/dark-launch.md). Stdlib only.
 
-  python3 -I tools/darklaunch/check.py [--ledger F] [--knobs F] [--today YYYY-MM-DD]
+  python3 -I tools/darklaunch/check.py [--ledger DIR|F] [--knobs F] [--today YYYY-MM-DD]
+
+Reads the DESIGN rows only (data/darklaunch/<knob>.json, what git says), never the flip tool's runtime state file, so
+the verdict is the same on every machine. An old one-file ledger (--ledger F) still loads.
 
 Fails when
+  - data/darklaunch.json is back next to data/darklaunch/ (the old one-file ledger; move the row to its own file);
+  - a file in data/darklaunch/ is not named <row name>.json, or carries a runtime field (trial_*, enabled_at, revert_*,
+    criteria_met, state) or the status trial;
   - a ledger row misses a field, has an unknown status, or a bad date;
   - a knob with default 0 whose description carries the marker [dark-launch] has no ledger row;
   - a row of status dark or trial has a review-by date in the past (decide: enable, extend with a new date and
     reason, or retire);
   - a row with dark_since from 2026-11-28 has no flip_plan {instance doofer|questy|both, bundle, window "2h"} or a
     review_by more than 3 days after dark_since;
-  - the count of dark/trial coordinator rows exceeds data/darklaunch-cap.json "cap" and the branch grew it
+  - the count of dark coordinator rows exceeds data/darklaunch-cap.json "cap" and the branch grew it
     (net > 0 against the merge base; a branch may add a row when it closes or removes one);
   - a row names a knob that is not in docs/knobs.md (renamed or deleted) while its status is dark or trial.
 The marker is the declared contract: new default-off features put [dark-launch] in the knob description.
@@ -52,20 +58,37 @@ def cap_problems(items, cap, base_items, today):
     if n > cap["cap"]:
         grew = base_items is None or n > len(L.counted(base_items))
         if grew:
-            out.append(f"cap: {n} dark/trial coordinator rows exceed the cap {cap['cap']}: close or retire one in this branch (net must be <= 0)")
+            out.append(f"cap: {n} dark coordinator rows exceed the cap {cap['cap']}: close or retire one in this branch (net must be <= 0)")
     return out
 
 
-def base_ledger(path):
-    """The ledger at the merge base with origin/main, or None when git has no answer."""
+def base_ledger(root=ROOT):
+    """The design rows at the merge base with origin/main (per-knob files, else the old one-file ledger), or None when
+    git has no answer."""
     import subprocess
-    rel = os.path.relpath(path, ROOT)
+
+    def git(*a):
+        return subprocess.run(["git", "-C", root, *a], capture_output=True, text=True, check=True).stdout
+
     try:
-        base = subprocess.run(["git", "-C", ROOT, "merge-base", "HEAD", "origin/main"], capture_output=True, text=True, check=True).stdout.strip()
-        txt = subprocess.run(["git", "-C", ROOT, "show", f"{base}:{rel}"], capture_output=True, text=True, check=True).stdout
-        return json.loads(txt)["items"]
+        base = git("merge-base", "HEAD", "origin/main").strip()
+        files = [f for f in git("ls-tree", "-r", "--name-only", base, "data/darklaunch/").splitlines() if f.endswith(".json")]
+        if files:
+            return [json.loads(git("show", f"{base}:{f}")) for f in files]
+        return json.loads(git("show", f"{base}:data/darklaunch.json"))["items"]
     except (subprocess.CalledProcessError, OSError, ValueError, KeyError):
         return None
+
+
+def layout_problems(src, legacy):
+    """The directory form: per-file rules, and the old one-file ledger must stay gone."""
+    if not os.path.isdir(src):
+        return []
+    out = L.file_problems(src)
+    if os.path.exists(legacy):
+        out.append("data/darklaunch.json is back: the ledger is one file per knob now, move the row to data/darklaunch/<knob>.json "
+                   "(design fields only) and delete the old file")
+    return out
 
 
 def problems(items, knobs, today):
@@ -95,22 +118,23 @@ def problems(items, knobs, today):
                 out.append(f"{n}: not a knob in docs/knobs.md (renamed or deleted?): retire the row")
     for k, (default, row) in knobs.items():
         if L.MARKER in row and default in ("0", "0.0") and k not in names:
-            out.append(f"{k}: default 0 with {L.MARKER} but no row in data/darklaunch.json")
+            out.append(f"{k}: default 0 with {L.MARKER} but no row file data/darklaunch/{k}.json")
     return out
 
 
 def main(argv=None):
     ap = argparse.ArgumentParser()
-    ap.add_argument("--ledger", default=os.path.join(ROOT, "data", "darklaunch.json"))
+    ap.add_argument("--ledger", default=L.default_source(ROOT), help="per-knob directory, or an old one-file ledger")
     ap.add_argument("--knobs", default=os.path.join(ROOT, "docs", "knobs.md"))
     ap.add_argument("--cap", default=os.path.join(ROOT, "data", "darklaunch-cap.json"))
     ap.add_argument("--base-ledger", default=None, help="ledger JSON of the merge base (default: git merge-base with origin/main)")
     ap.add_argument("--today", default=None)
     a = ap.parse_args(argv)
     today = L.parse_date(a.today) if a.today else date.today()
+    ps = layout_problems(a.ledger, os.path.join(os.path.dirname(os.path.abspath(a.ledger)), "darklaunch.json"))
     items = L.load_ledger(a.ledger)
-    ps = problems(items, L.knob_rows(a.knobs), today)
-    base = L.load_ledger(a.base_ledger) if a.base_ledger else base_ledger(a.ledger)
+    ps += problems(items, L.knob_rows(a.knobs), today)
+    base = L.load_ledger(a.base_ledger) if a.base_ledger else base_ledger()
     cap = L.load_cap(a.cap)
     ps += cap_problems(items, cap, base, today)
     if L.parse_date(cap["ratchet_by"]) < today:

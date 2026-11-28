@@ -128,11 +128,11 @@ func TestDruidNoPetsInTownOrForOtherClasses(t *testing.T) {
 func TestDruidProfile(t *testing.T) {
 	cat := classCat()
 	p := &d2.Player{Class: d2.Druid, Level: 14, Skills: []d2.Skill{{ID: idOak, Level: 1}}}
-	pr := SelectProfile(p, cat, BuildBlizzard)
+	pr, _ := SelectProfile(p, cat, BuildBlizzard)
 	if pr == nil || pr.Layout["Eruption"] != "f3" || pr.Layout["Oak Sage"] != "f5" || len(pr.Buffs) != 1 || pr.Buffs[0][0] != "Cyclone Armor" {
 		t.Fatalf("%+v", pr)
 	}
-	ap := SelectProfile(&d2.Player{Class: d2.Assassin, Level: 14, Skills: []d2.Skill{{ID: idWake, Level: 1}}}, cat, BuildBlizzard)
+	ap, _ := SelectProfile(&d2.Player{Class: d2.Assassin, Level: 14, Skills: []d2.Skill{{ID: idWake, Level: 1}}}, cat, BuildBlizzard)
 	if ap == nil || ap.Layout["Wake of Fire Sentry"] != "f2" || ap.Buffs[0][0] != "Quickness" {
 		t.Fatalf("%+v", ap)
 	}

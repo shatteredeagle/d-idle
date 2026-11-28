@@ -18,6 +18,7 @@ owns:
   - "tools/provingground/scenarios/stepexec-act2chunks.json"
 exclusive: []
 contracts: []
+result: "shaft.stepexec (not verified live): the hero spent its only portal scroll escaping a nav stall at the Maggot Lair 1 exit to level 63, walked back in, and inside the lair the early road guard refused the next step for the missing portal; the chores trip it inserted could not reach town, the chunk parked after 3 tries in 0.3 s and the bot idled (Waiting for a fresh game) until the virtual budget. Fix: the early road kit is an entry rule, a hero already on the road goes on (internal/bot/earlyroute.go, test TestEarlyRoadKitIsAnEntryRule, Paladin and Sorceress); level and life floors still close it. msf is mapped in questItemCodes (V code). Duriel stall and cube potion-not-drunk not addressed here."
 ---
 
 ## Description
@@ -31,6 +32,6 @@ duriel.stepexec 0/3: 'quest board: starting chunk seven_tombs/duriel', then 'Wai
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
 - [ ] #1 drill.act2.duriel.stepexec: the bot plays (no 'campaign stalled' exit) in 2 of 3 runs
-- [ ] #2 drill.act2.shaft.stepexec: the setup gives the hero a town portal or the road guard does not need one
+- [x] #2 drill.act2.shaft.stepexec: the setup gives the hero a town portal or the road guard does not need one
 - [ ] #3 potion-not-drunk in drill.act2.cube.stepexec explained (life 35 percent under the 50 percent line for 18 s with 4 Super Healing in the belt, drank 0)
 <!-- AC:END -->

@@ -19,6 +19,7 @@ owns:
   - "tools/provingground/scenarios/townplan.json"
 exclusive: []
 contracts: []
+result: "Not live-verified. one-visit: product gap fixed in internal/town/route.go (a chore whose NPC has no preset no longer drops the route to the fixed list; tests TestReinsertChoresKeepsPrecedence, TestRouteKeepsListOnlyWhenNoStopHasAPreset; a visit where NO stop has a preset still keeps the fixed list, TestChoresAct1AtRouteStage now Sorceress and Paladin; nothing build-specific); rerun to see the stops line. malus-errand-gold: not the Charsi talk (optional greeting, skipped), the chunk parks on the route guard (life 180 needed, max 55): scenario note records it, U setup life and which record-3 bit. gold-short-priorities: marked pending for card town7; the setup also left a belt of 4 healing and a scroll so the plan saw verdict=ready. short-gold-handover and sell-keeps-need were fixed in labtriage; rerun."
 ---
 
 ## Description
@@ -32,6 +33,6 @@ one-visit RED both classes: the bot logged 'town plan: route kept the list (no p
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
 - [ ] #1 town.plan.one-visit logs 'town plan: route stops=' (Cain gets a position or the route tolerates a chore without one)
-- [ ] #2 town.plan.malus-errand-gold: the Charsi talk step sets quest record 3 or the cause is named
-- [ ] #3 town.plan.gold-short-priorities: decision D3 holds (potions before the first scroll) or the scenario is marked as waiting for card town7
+- [x] #2 town.plan.malus-errand-gold: the Charsi talk step sets quest record 3 or the cause is named
+- [x] #3 town.plan.gold-short-priorities: decision D3 holds (potions before the first scroll) or the scenario is marked as waiting for card town7
 <!-- AC:END -->

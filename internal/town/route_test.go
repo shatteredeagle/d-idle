@@ -1,6 +1,7 @@
 package town
 
 import (
+	"maps"
 	"math"
 	"slices"
 	"testing"
@@ -148,5 +149,50 @@ func TestRouteFollowsPathCostNotStraightLine(t *testing.T) {
 	rc.StopPenalty = 0
 	if c := routeOrderWith(names, nil, pos, start, rc).Cost; c != 12+40 {
 		t.Errorf("penalty 0: cost %d, want the walk alone 52", c)
+	}
+}
+
+// A chore whose NPC has no preset (Cain before the rescue) no longer drops the whole route to the fixed list: it is put
+// back after the chores it must follow (lab night 2026-11-28, town.plan.one-visit).
+func TestReinsertChoresKeepsPrecedence(t *testing.T) {
+	edges := routeEdges([]string{"idtome", "identify", "sell", "shop"}, false)
+	got := reinsertChores([]string{"idtome", "sell", "shop"}, []string{"identify"}, edges)
+	want := []string{"idtome", "identify", "sell", "shop"}
+	if !slices.Equal(got, want) {
+		t.Fatalf("order %v, want %v", got, want)
+	}
+	if got := reinsertChores([]string{"sell"}, []string{"identify"}, edges); got[0] != "identify" {
+		t.Fatalf("identify follows nothing here but must stay in front of sell: %v", got)
+	}
+}
+
+// A visit where no stop has a preset has nothing to price and keeps the fixed list (the sim world of
+// TestChoresAct1AtRouteStage; its reinserted order would put the settle behind the shop and bank again on the second
+// visit). One missing stop does not: the rest is still routed. The route takes no class; the two lists are what a caster
+// and a melee build bring (the Sorceress has no ammo or repair chore here, the Paladin has both).
+func TestRouteKeepsListOnlyWhenNoStopHasAPreset(t *testing.T) {
+	lists := map[string][]string{
+		"sorceress": {"identify", "equip", "beltfirst", "sell", "belt", "bank", "withdraw", "shop", "beltafter", "heal", "stash"},
+		"paladin":   {"identify", "equip", "beltfirst", "sell", "ammo", "beltbuy", "repair", "belt", "bank", "withdraw", "shop", "beltafter", "heal", "stash", "tidy"},
+	}
+	for build, names := range lists {
+		routed, unplaced := splitUnplaced(names, map[string]input.Point{})
+		if hasStop(routed) {
+			t.Errorf("%s: no presets at all, yet %v is to be routed (the fixed list must run)", build, routed)
+		}
+		if len(routed)+len(unplaced) != len(names) {
+			t.Errorf("%s: a chore was lost: routed %v unplaced %v", build, routed, unplaced)
+		}
+		pos := maps.Clone(layouts["compact"])
+		delete(pos, "cain")
+		routed, unplaced = splitUnplaced(names, pos)
+		if !slices.Equal(unplaced, []string{"identify"}) || !hasStop(routed) {
+			t.Fatalf("%s: only Cain is missing: unplaced %v routed %v", build, unplaced, routed)
+		}
+		edges := routeEdges(names, false)
+		got := reinsertChores(routeOrder(routed, edges, pos, input.Point{X: 1, Y: 1}).Order, unplaced, edges)
+		if len(got) != len(names) || !satisfies(got, edges) {
+			t.Errorf("%s: order %v drops a chore or breaks a rule", build, got)
+		}
 	}
 }

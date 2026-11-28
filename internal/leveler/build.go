@@ -349,6 +349,15 @@ func LoadBuild(name, dir string) (*Build, error) {
 			return nil, err
 		}
 	}
+	// A table names its class and its combat profile itself (review 8 B3, C12): no key, no table. Without the check a
+	// table without "class" was a Sorceress table and one without "combat" fought with whatever the class default was.
+	var keys struct{ Class, Combat string }
+	if err := json.Unmarshal(b, &keys); err != nil {
+		return nil, fmt.Errorf("leveler: build %q (%s): %w", name, f, err)
+	}
+	if keys.Class == "" || keys.Combat == "" {
+		return nil, fmt.Errorf("leveler: build %q (%s) needs a \"class\" and a \"combat\" key (class %q, combat %q)", name, f, keys.Class, keys.Combat)
+	}
 	bd, err := ParseBuild(b)
 	if err != nil {
 		return nil, err
