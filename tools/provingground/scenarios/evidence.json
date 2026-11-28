@@ -1,0 +1,589 @@
+{
+ "version": "didle.scenario/1",
+ "scenarios": [
+  {
+   "id": "evid.missile-dodge",
+   "title": "combat.missileDodge 1: a dangerous missile near the hero writes the evidence line (sidestep, held or no-room)",
+   "kind": "behaviour",
+   "tier": "full",
+   "covers": [
+    "combat.fight"
+   ],
+   "touches": [
+    "internal/combat/"
+   ],
+   "pre": {
+    "hero_profile": "banked",
+    "level": 30,
+    "gold": 3000,
+    "start": "field",
+    "area": 2,
+    "items": [
+     {
+      "code": "hp2",
+      "count": 8
+     },
+     {
+      "code": "mp2",
+      "count": 6
+     },
+     {
+      "code": "tsc",
+      "count": 5
+     }
+    ],
+    "belt": [
+     "hp2",
+     "hp2",
+     "hp2",
+     "mp2"
+    ],
+    "spawn": [
+     {
+      "monster": "willowisp1",
+      "n": 3
+     }
+    ]
+   },
+   "trigger": {
+    "goals": "farm:Blood Moor",
+    "knobs": {
+     "combat.missileDodge": 1
+    }
+   },
+   "budget": {
+    "virtual_min": 6
+   },
+   "matrix": {
+    "classes": [
+     "Paladin",
+     "Sorceress"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "needs": [
+    "lab-verbs-attach"
+   ],
+   "provenance": "SETUP: level 30, gold 3000, potions and scrolls, field start by debug goto 2, monsters by debug spawn (CHEATED position and encounter: mechanics only, never evidence about balance or play).",
+   "notes": "Three Gloams (willowisp1, lightning) beside a clvl 30 hero. The rule only counts missiles whose missiles.txt name holds firewall, hydra, chaos or lightning (d2.MissileKindByName, U names). U: that debug spawn takes willowisp1 and that its bolt's name holds `lightning`; a run with zero evidence lines and zero `sidestepping missile` lines DISPROVES the kind match for this monster and is the finding. Pass also proves the knob for graduation only together with `outcome=sidestep` and no death; count the outcomes beside the verdict. Card evid1.",
+   "assert": [
+    {
+     "kind": "log_line",
+     "pattern": "^combat evidence .*\\brule=missileDodge\\b",
+     "min": 1,
+     "why": "the rule met a dangerous missile (V marker: dodge.go sidestepMissiles, `combat evidence rule=missileDodge outcome=...`)"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 0,
+     "why": "no death"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "id": "evid.threat-dodge",
+   "title": "combat.threatDodge 1: a ranked hostile missile writes the evidence line (dodge, no-room or kill-shooter)",
+   "kind": "behaviour",
+   "tier": "full",
+   "covers": [
+    "combat.fight"
+   ],
+   "touches": [
+    "internal/combat/"
+   ],
+   "pre": {
+    "hero_profile": "banked",
+    "level": 30,
+    "gold": 3000,
+    "start": "field",
+    "area": 2,
+    "items": [
+     {
+      "code": "hp2",
+      "count": 8
+     },
+     {
+      "code": "mp2",
+      "count": 6
+     },
+     {
+      "code": "tsc",
+      "count": 5
+     }
+    ],
+    "belt": [
+     "hp2",
+     "hp2",
+     "hp2",
+     "mp2"
+    ],
+    "spawn": [
+     {
+      "monster": "fallenshaman1",
+      "n": 3
+     },
+     {
+      "monster": "fallen1",
+      "n": 3
+     }
+    ]
+   },
+   "trigger": {
+    "goals": "farm:Blood Moor",
+    "knobs": {
+     "combat.threatDodge": 1
+    }
+   },
+   "budget": {
+    "virtual_min": 6
+   },
+   "matrix": {
+    "classes": [
+     "Paladin",
+     "Sorceress"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "needs": [
+    "lab-verbs-attach"
+   ],
+   "provenance": "SETUP: level 30, gold 3000, potions and scrolls, field start by debug goto 2, monsters by debug spawn (CHEATED position and encounter: mechanics only, never evidence about balance or play).",
+   "notes": "Three Fallen Shamans (slow fireballs) and three Fallen beside the hero. The line is written only when a hostile missile is inside `combat.dodgeRadius` (4) while the fight may evade, so a shaman has to shoot at the hero (U how often in the budget; the melee class closes in and gives it less time than the caster). Outcomes: dodge = stepped away, no-room = no free cell, kill-shooter = the table says too fast to dodge. Card evid1.",
+   "assert": [
+    {
+     "kind": "log_line",
+     "pattern": "^combat evidence .*\\brule=threatDodge\\b",
+     "min": 1,
+     "why": "the threat table ranked a hostile missile inside combat.dodgeRadius (V marker: evidence.go noteThreat)"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 0,
+     "why": "no death"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "id": "evid.stand-ok",
+   "title": "combat.standOK 1: a Fallen that stands out of shot past combat.reachSec is kept, not dropped",
+   "kind": "behaviour",
+   "tier": "full",
+   "covers": [
+    "combat.fight"
+   ],
+   "touches": [
+    "internal/combat/"
+   ],
+   "pre": {
+    "hero_profile": "banked",
+    "level": 30,
+    "gold": 3000,
+    "start": "field",
+    "area": 2,
+    "items": [
+     {
+      "code": "hp2",
+      "count": 8
+     },
+     {
+      "code": "mp2",
+      "count": 6
+     },
+     {
+      "code": "tsc",
+      "count": 5
+     }
+    ],
+    "belt": [
+     "hp2",
+     "hp2",
+     "hp2",
+     "mp2"
+    ],
+    "spawn": [
+     {
+      "monster": "fallen1",
+      "n": 6
+     }
+    ]
+   },
+   "trigger": {
+    "goals": "farm:Blood Moor",
+    "knobs": {
+     "combat.standOK": 1,
+     "combat.reachSec": 6
+    }
+   },
+   "budget": {
+    "virtual_min": 6
+   },
+   "matrix": {
+    "classes": [
+     "Paladin",
+     "Sorceress"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "needs": [
+    "lab-verbs-attach"
+   ],
+   "provenance": "SETUP: level 30, gold 3000, potions and scrolls, field start by debug goto 2, monsters by debug spawn (CHEATED position and encounter: mechanics only, never evidence about balance or play).",
+   "notes": "Six Fallen and `combat.reachSec` at its floor (6 s) so the reach rule comes due early. The line needs a target engaged 6 s with no shot (a Fallen that stands away or runs after a kill, S mon-wake-trace); U whether that happens in every run: zero evidence lines with zero `never in range` lines means the case did not arise (not exercised), not a fail of the rule. Pair: evid.stand-ok.control. Card evid1.",
+   "assert": [
+    {
+     "kind": "log_line",
+     "pattern": "^combat evidence .*\\brule=standOK\\b",
+     "min": 1,
+     "why": "a stander was kept past reachSec (V marker: fight.go engage, `combat evidence rule=standOK outcome=kept`)"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "never in range with a clear line",
+     "max": 0,
+     "why": "with the knob on no Fallen is dropped as never in range (only Fallen are spawned)"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 0,
+     "why": "no death"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "id": "evid.stand-ok.control",
+   "title": "combat.standOK 0 (control): the same setup writes no standOK evidence line",
+   "kind": "behaviour",
+   "tier": "full",
+   "covers": [
+    "combat.fight"
+   ],
+   "touches": [
+    "internal/combat/"
+   ],
+   "pre": {
+    "hero_profile": "banked",
+    "level": 30,
+    "gold": 3000,
+    "start": "field",
+    "area": 2,
+    "items": [
+     {
+      "code": "hp2",
+      "count": 8
+     },
+     {
+      "code": "mp2",
+      "count": 6
+     },
+     {
+      "code": "tsc",
+      "count": 5
+     }
+    ],
+    "belt": [
+     "hp2",
+     "hp2",
+     "hp2",
+     "mp2"
+    ],
+    "spawn": [
+     {
+      "monster": "fallen1",
+      "n": 6
+     }
+    ]
+   },
+   "trigger": {
+    "goals": "farm:Blood Moor",
+    "knobs": {
+     "combat.standOK": 0,
+     "combat.reachSec": 6
+    }
+   },
+   "budget": {
+    "virtual_min": 6
+   },
+   "matrix": {
+    "classes": [
+     "Paladin",
+     "Sorceress"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "needs": [
+    "lab-verbs-attach"
+   ],
+   "provenance": "SETUP: level 30, gold 3000, potions and scrolls, field start by debug goto 2, monsters by debug spawn (CHEATED position and encounter: mechanics only, never evidence about balance or play).",
+   "notes": "Control of evid.stand-ok: knob 0, same Fallen. A `never in range` drop here and a `kept` line in the pair is the A/B evidence. Card evid1.",
+   "assert": [
+    {
+     "kind": "log_line",
+     "pattern": "^combat evidence .*\\brule=standOK\\b",
+     "max": 0,
+     "why": "knob off: the rule keeps nothing"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 0,
+     "why": "no death"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "id": "evid.portal-guard",
+   "title": "bot.portalGuard 1: a town portal asked for in a fight is passed or refused by the damage rule, with its line",
+   "kind": "behaviour",
+   "tier": "full",
+   "covers": [
+    "resource.chicken"
+   ],
+   "touches": [
+    "internal/combat/",
+    "internal/resource/"
+   ],
+   "pre": {
+    "hero_profile": "banked",
+    "level": 6,
+    "gold": 3000,
+    "start": "field",
+    "area": 2,
+    "items": [
+     {
+      "code": "tsc",
+      "count": 5
+     }
+    ],
+    "belt": [],
+    "spawn": [
+     {
+      "monster": "fallen1",
+      "n": 12
+     }
+    ],
+    "life_pct": 45
+   },
+   "trigger": {
+    "goals": "farm:Blood Moor",
+    "knobs": {
+     "bot.portalGuard": 1
+    }
+   },
+   "budget": {
+    "virtual_min": 6
+   },
+   "matrix": {
+    "classes": [
+     "Paladin",
+     "Sorceress"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "needs": [
+    "lab-verbs-attach"
+   ],
+   "provenance": "SETUP: level 6, gold 3000, potions and scrolls, field start by debug goto 2, life by the setup's life_pct, monsters by debug spawn (CHEATED position and encounter: mechanics only, never evidence about balance or play).",
+   "notes": "A clvl 6 hero at 45 percent life with no potions, five scrolls and twelve Fallen around it: the survival rule asks for a town portal (hurt and short of potions), the guard decides. Expected damage of one Fallen is small, so `allowed` is the likely line at 1 or 2 adjacent and `refused: expected damage` at more. U: which of the two a run shows and whether the hero is `in fight` when the rule asks (a quiet portal writes nothing). This is a reduced drill R3 (docs/fixportalmelee.md): it shows the rule decides, it does not measure the cast time. Card evid1.",
+   "assert": [
+    {
+     "kind": "log_line",
+     "pattern": "^(portal cast refused: .*mode=1|combat evidence .*\\brule=portalGuard\\b)",
+     "min": 1,
+     "why": "mode 1 decided a fight portal: refused (fighter.go noteCastRefused) or allowed (evidence.go noteCastGuard)"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 0,
+     "why": "no death"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "id": "evid.checkpoint-cast",
+   "title": "bot.checkpointEnable 1: a healthy hero alone at the entry of a checkpoint area drops the checkpoint portal",
+   "kind": "behaviour",
+   "tier": "full",
+   "covers": [
+    "travel.portal-return"
+   ],
+   "touches": [
+    "internal/bot/"
+   ],
+   "pre": {
+    "hero_profile": "banked",
+    "level": 30,
+    "gold": 3000,
+    "start": "field",
+    "area": 28,
+    "items": [
+     {
+      "code": "hp2",
+      "count": 8
+     },
+     {
+      "code": "mp2",
+      "count": 6
+     },
+     {
+      "code": "tsc",
+      "count": 5
+     }
+    ],
+    "belt": [
+     "hp2",
+     "hp2",
+     "hp2",
+     "mp2"
+    ]
+   },
+   "trigger": {
+    "goals": "farm:Barracks",
+    "knobs": {
+     "bot.checkpointEnable": 1
+    }
+   },
+   "budget": {
+    "virtual_min": 6
+   },
+   "matrix": {
+    "classes": [
+     "Paladin",
+     "Sorceress"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "needs": [
+    "lab-verbs-attach"
+   ],
+   "provenance": "SETUP: level 30, gold 3000, potions and scrolls, field start by debug goto 28 (CHEATED position and encounter: mechanics only, never evidence about balance or play).",
+   "notes": "Field start in the Barracks (area 28, in plandata.CheckpointArea) with five scrolls (reserve `bot.checkpointMinScrolls` 2). The rule casts when no hostile is within `bot.checkpointSafeRadius`; when the start cell has monsters near, the run shows `checkpoint idle why=hostiles near` instead (the new evidence line) and the cast comes after the first fight only while the hero is still within `bot.checkpointEntryDist` of the entry (U). Retreat and the return after a death are card ckptlive (TASK-990), not asserted here. no_writes is left out: the checkpoint is a scroll read through the input channel but the lab d2d has verbs on. Card evid1.",
+   "assert": [
+    {
+     "kind": "log_line",
+     "pattern": "^checkpoint .*\\bto=set\\b",
+     "min": 1,
+     "why": "the cast was recorded (V marker: checkpoint.go toLocked, `checkpoint from=none to=set`)"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 0,
+     "why": "no death"
+    }
+   ]
+  },
+  {
+   "id": "evid.checkpoint-idle",
+   "title": "bot.checkpointEnable 1 outside the checkpoint table: the rule says why it casts nothing",
+   "kind": "behaviour",
+   "tier": "full",
+   "covers": [
+    "travel.portal-return"
+   ],
+   "touches": [
+    "internal/bot/"
+   ],
+   "pre": {
+    "hero_profile": "banked",
+    "level": 30,
+    "gold": 3000,
+    "start": "field",
+    "area": 2,
+    "items": [
+     {
+      "code": "hp2",
+      "count": 8
+     },
+     {
+      "code": "mp2",
+      "count": 6
+     },
+     {
+      "code": "tsc",
+      "count": 5
+     }
+    ],
+    "belt": [
+     "hp2",
+     "hp2",
+     "hp2",
+     "mp2"
+    ]
+   },
+   "trigger": {
+    "goals": "farm:Blood Moor",
+    "knobs": {
+     "bot.checkpointEnable": 1
+    }
+   },
+   "budget": {
+    "virtual_min": 4
+   },
+   "matrix": {
+    "classes": [
+     "Paladin",
+     "Sorceress"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "needs": [
+    "lab-verbs-attach"
+   ],
+   "provenance": "SETUP: level 30, gold 3000, potions and scrolls, field start by debug goto 2 (CHEATED position and encounter: mechanics only, never evidence about balance or play).",
+   "notes": "The sandbox finding of 2026-11-28 as a scenario: a hero that farms an area outside plandata.CheckpointArea (the Blood Moor here, Tamoe Highland on the sandbox) never casts, and before card evid1 wrote nothing at all. Card evid1.",
+   "assert": [
+    {
+     "kind": "log_line",
+     "pattern": "^checkpoint idle .*why=area not in the checkpoint table",
+     "min": 1,
+     "why": "the enabled rule looked and named the reason (V marker: checkpoint.go noteIdle)"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^checkpoint .*\\bto=set\\b",
+     "max": 0,
+     "why": "no cast in the Blood Moor"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 0,
+     "why": "no death"
+    }
+   ]
+  }
+ ]
+}
