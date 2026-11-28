@@ -924,8 +924,9 @@ function makeCtx(m, parts, cfg, answerBase, timers) {
     hide(on) { parts.root.hidden = !!on; syncBand(parts.root.parentElement); },
     state(st) { parts.root.dataset.state = st; },
     later(fn, ms) { const t = setTimeout(() => { timers.delete(t); fn(); }, ms); timers.add(t); return t; },
+    // the d2dview cookie authenticates same-origin reads; the token is never copied into a fetch address
     // one read of a viewer route outside the manifest poll (a panel's own state, e.g. the video card's Labels button); null when it fails
-    get: (path) => fetch(path + (qs.get('t') ? '?t=' + encodeURIComponent(qs.get('t')) : ''), { cache: 'no-store', credentials: 'same-origin' }).then((r) => r.json()).catch(() => null),
+    get: (path) => fetch(path, { cache: 'no-store', credentials: 'same-origin' }).then((r) => r.json()).catch(() => null),
     post: (path, body) => postJSON(answerBase, path, body),
     askReset(from) { document.dispatchEvent(new CustomEvent('d2:reset-ask', { detail: { from } })); }, // the Reset confirm sheet (resetui.js)
     refresh() { if (theSched) theSched.poke(m.id); }, // poll this panel now (a drawer's tab changed)
