@@ -54,6 +54,7 @@
 | townnight | proposed | - | `internal/town/`<br>`internal/supply/`<br>`tools/provingground/scenarios/townplan.json` | - |
 | cls2 | in-progress | - | `internal/plandata/`<br>`internal/d2/`<br>`internal/decide/`<br>`data/capabilities/`<br>`internal/combat/`<br>`cmd/d2bot/`<br>`tools/provingground/`<br>`internal/leveler/`<br>`docs/classes/`<br>`docs/sme/capability-gaps.md` | - |
 | led1 | in-progress | - | `data/darklaunch/`<br>`data/darklaunch.json`<br>`data/darklaunch-cap.json`<br>`tools/darklaunch/`<br>`tools/flip/`<br>`docs/process/dark-launch.md`<br>`docs/process/autoflip.md` | - |
+| cls1 | proposed | - | `internal/decide/`<br>`internal/plandata/`<br>`internal/d2/classtraits.json`<br>`internal/d2/`<br>`internal/combat/classdata/`<br>`internal/levelplan/`<br>`data/build-cap-ratchet.json`<br>`tools/provingground/scenarios/`<br>`docs/classes/`<br>`tools/provingground/golden/`<br>`internal/watch/policysheet_test.go`<br>`internal/watch/policypreview_test.go`<br>`internal/watch/stance_test.go`<br>`internal/watch/unlockrisk_test.go` | - |
 | grad1 | in-progress | - | `internal/bot/ticklog.go`<br>`internal/bot/ticklog_test.go`<br>`internal/bot/shadow.go`<br>`internal/bot/broke_test.go`<br>`internal/env/tuning.go`<br>`internal/env/tuning_bot.go`<br>`data/darklaunch/bot.tickLogSec.json`<br>`docs/knobs.md`<br>`docs/probes/graduations-2026-11-28.md`<br>`docs/design/ticklog-t4.md`<br>`docs/arbiter.md`<br>`internal/arbiter/replay.go`<br>`cmd/d2scenario/arbreplay.go` | - |
 | fix7b | in-progress | - | `internal/bot/`<br>`internal/arbiter/`<br>`internal/survival/`<br>`internal/combat/`<br>`cmd/d2bot/`<br>`docs/arbiter.md`<br>`docs/design/arbiter-target-and-migration.md` | - |
 | live1 | proposed | - | `internal/bot/`<br>`internal/survival/`<br>`internal/questboard/`<br>`internal/arbiter/`<br>`cmd/d2bot/survivalwire.go`<br>`docs/live1.md` | - |
@@ -202,6 +203,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 808f920da 11-28 03:18 `Merge agent/cls1: cls1: Druid and Barbarian (TASK-1111)` (cls1)
+- c31d6dfaf 11-28 03:16 `Merge branch 'main' into cls1` (-)
 - 6a756b649 11-28 03:07 `Merge agent/grad1: grad1: graduate bot.tickLogSec (TASK-1112)` (grad1)
 - 8f25b5669 11-28 03:07 `Merge agent/cls2: cls2: Amazon and Assassin (TASK-1109)` (cls2)
 - 90646f9ff 11-28 03:06 `Merge branch 'main' into grad1` (-)
@@ -210,6 +213,4 @@
 - 3a2e18fbc 11-28 02:57 `Merge agent/sweep1: sweep1: review sweep, consent fix (TASK-1122)` (sweep1)
 - 4f4d93602 11-28 02:57 `Merge agent/live1: live1: live log findings L1-L6 (TASK-1119)` (live1)
 - 34ff2f56c 11-28 02:54 `Merge branch 'main' into ops4` (-)
-- 1c3f76941 11-28 02:54 `Merge branch 'main' into sweep1` (-)
-- 0f6c51cf1 11-28 02:54 `Merge branch 'main' into live1` (-)
 <!-- statusgen:end -->
