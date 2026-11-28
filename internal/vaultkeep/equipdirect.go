@@ -227,8 +227,11 @@ func (k *Keeper) directOne(ctx context.Context, id, slotWord string) (Result, bo
 	c.tag = order
 	bu, bh := k.wornBefore(ctx, c.slot)
 	ou, oh := k.wornBefore(ctx, otherHand[c.slot])
-	k.putEq(&EquipOrder{ID: id, Name: c.rec.Name, Slot: slotWord, Group: []string{c.slot}, State: EqEquipping, Direct: true,
-		Order: order, New: c.hex, BeforeUnit: bu, Before: bh, BeforeOffUnit: ou, BeforeOff: oh})
+	if err := k.putEq(&EquipOrder{ID: id, Name: c.rec.Name, Slot: slotWord, Group: []string{c.slot}, State: EqEquipping, Direct: true,
+		Order: order, New: c.hex, BeforeUnit: bu, Before: bh, BeforeOffUnit: ou, BeforeOff: oh}); err != nil {
+		res.Code, res.Why = k.dropUnjournaled(err, id)
+		return res, true
+	}
 	dr, err := k.Direct.EquipDirect(ctx, c.hex, c.slot, order)
 	if dr.OK { // the engine swapped: whatever failed after it, the displaced item is filed
 		k.markApplied(id, c.slot, dr)
@@ -571,12 +574,23 @@ func (k *Keeper) createBack(ctx context.Context, hexNorm, tag string, quiet bool
 	return "", false
 }
 
-func (k *Keeper) putEq(o *EquipOrder) {
+// putEq files a new order and reports whether it reached the order file.
+func (k *Keeper) putEq(o *EquipOrder) error {
 	k.mu.Lock()
 	defer k.mu.Unlock()
 	o.At, o.Updated = k.now(), k.now()
 	k.bookLocked().put(o)
-	k.saveBookLocked()
+	return k.saveBookLocked()
+}
+
+// dropUnjournaled removes orders whose journal write failed before any engine call and returns the refusal.
+func (k *Keeper) dropUnjournaled(err error, ids ...string) (code, why string) {
+	k.mu.Lock()
+	for _, id := range ids {
+		delete(k.bookLocked().orders, id)
+	}
+	k.mu.Unlock()
+	return "journal", "the order could not be written down first (" + err.Error() + "): nothing was moved"
 }
 
 // directSet is Wear set: every piece is judged, the pieces that fit go to the engine in ONE wearset call (in slotRank order,
@@ -665,8 +679,14 @@ func (k *Keeper) directSet(ctx context.Context, ids []string) ([]Result, bool) {
 		pieces = append(pieces, d2dctl.DirectPiece{Hex: ch.hex, Slot: ch.slot})
 		bu, bh := k.wornBefore(ctx, ch.slot)
 		ou, oh := k.wornBefore(ctx, otherHand[ch.slot])
-		k.putEq(&EquipOrder{ID: ch.id, Name: ch.rec.Name, Slot: SlotAuto, Group: []string{ch.slot}, State: EqEquipping, Direct: true,
-			Order: order, Piece: i, New: ch.hex, BeforeUnit: bu, Before: bh, BeforeOffUnit: ou, BeforeOff: oh})
+		if err := k.putEq(&EquipOrder{ID: ch.id, Name: ch.rec.Name, Slot: SlotAuto, Group: []string{ch.slot}, State: EqEquipping, Direct: true,
+			Order: order, Piece: i, New: ch.hex, BeforeUnit: bu, Before: bh, BeforeOffUnit: ou, BeforeOff: oh}); err != nil {
+			code, why := k.dropUnjournaled(err, ids...)
+			for _, c := range picks {
+				out[c.idx].Code, out[c.idx].Why = code, why
+			}
+			return out, true
+		}
 	}
 	rs, err := k.Direct.WearSet(ctx, pieces, order)
 	if errors.Is(err, d2dctl.ErrDirectOff) {
@@ -730,14 +750,17 @@ func (k *Keeper) repairDirectLocked(ctx context.Context) {
 	k.mu.Unlock()
 	for key, o := range todo {
 		var res Result
+		if o.Reply != "" && !o.Applied { // an answer the bot could not read: its text stays in the order file whatever the look says
+			k.note("equip-reply-"+o.Order, "Equip: the game's answer for "+o.Name+" could not be read; it is kept in the order file (order "+o.Order+"). Check the Inventory page.")
+		}
 		switch {
 		case o.Applied:
 			k.finishDirect(ctx, st, chosen{key: key, id: o.ID, tag: o.Order, rec: vault.Rec{Item: vault.Item{Name: o.Name}}, slot: o.Worn},
 				d2dctl.DirectResult{Removed: o.Removed, Unit: o.Unit}, &res)
-		case o.Reply != "": // an answer the bot could not read: the text is the only copy, it is never ended or overwritten
-			k.note("equip-reply-"+o.Order, "Equip: the game's answer for "+o.Name+" could not be read; it is kept in the order file (order "+o.Order+"). Check the Inventory page.")
 		case k.Hand == nil:
 		default:
+			// The bytes in the slot settle it, as they do in the call that got the answer (review 10 N4: such an order
+			// used to stay open for ever, refusing every Equip of the record, with no way out but editing the file).
 			k.resolveDirect(ctx, st, key, &res)
 		}
 	}
