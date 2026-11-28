@@ -195,6 +195,7 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 7ec65e945 11-28 00:28 `Merge agent/nightlog: nightlog: overnight coordinator log (docs)` (nightlog)
 - 4fdc91a46 11-28 00:25 `Merge agent/labtriage: labtriage: overnight lab triage, scenario marker fixes, 8 cards (TASK-1101..1108)` (labtriage)
 - 2c1465fec 11-27 23:15 `Merge agent/fix6: fix6: ledger accounting, mandatory hero_profile, d2scenario smoke, stability view, pack room (TASK-1098)` (fix6)
 - 29e0120bb 11-27 23:14 `Merge branch 'main' into fix6` (-)
@@ -204,5 +205,4 @@
 - 558600846 11-27 23:03 `Merge branch 'main' into fix2` (-)
 - b46c1f9c8 11-27 23:03 `Merge branch 'main' into fix7` (-)
 - c3b288ef4 11-27 23:03 `Merge branch 'main' into fix1` (-)
-- 46365bb12 11-27 22:55 `Merge agent/fix3: fix3: stance leave at low life, no-portal recovery exclusion, bandDrop keeps safe zones, driveAura, corpse reservation lapse (TASK-1094)` (fix3)
 <!-- statusgen:end -->
