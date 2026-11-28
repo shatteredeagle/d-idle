@@ -1,7 +1,7 @@
 ---
 id: TASK-1059
 title: 'diffbaal: Baal-dead-per-difficulty reader'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T19:46:00Z'

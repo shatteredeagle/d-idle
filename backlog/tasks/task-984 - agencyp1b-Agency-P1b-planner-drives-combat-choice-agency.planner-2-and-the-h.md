@@ -1,9 +1,9 @@
 ---
 id: TASK-984
 title: 'agencyp1b: Agency P1b: planner drives combat choice (agency.planner 2) and the h'
-status: Proposed
+status: In Progress
 assignee:
-  - credit-runner
+  - live-agent
 created_date: '2026-11-26T03:57:00Z'
 labels:
   - bot
@@ -26,7 +26,7 @@ owns:
   - "internal/env/tuning_agency.go"
 exclusive: []
 contracts: []
-result: "Partial, not verified live. agency.DriveOf and the fighter wiring are built (Fighter.Drive seam, agencyWire.Drive, knob agency.planner Max 2, default stays 0, offline mode 0/1/2 test for Paladin and Sorceress). The shipped capability table has no proven attack or aura, so mode 2 changes nothing today; shadow review, owner go, the live drill and the flip are owner/live."
+result: "Partial, not verified live. agency.DriveOf and the fighter wiring are built (Fighter.Drive seam, agencyWire.Drive, knob agency.planner Max 2, default stays 0, offline mode 0/1/2 test for Paladin and Sorceress). The shipped capability table has no proven attack or aura, so mode 2 changes nothing today; shadow review, owner go, the live drill and the flip are owner/live. Remaining (live): AC 1 replay review of the planner shadow lines; owner go for mode 2, the live drill and the flip."
 ---
 
 ## Description

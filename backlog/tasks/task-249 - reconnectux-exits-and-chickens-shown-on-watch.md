@@ -1,7 +1,7 @@
 ---
 id: TASK-249
 title: 'reconnectux: exits and chickens shown on /watch'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-10T16:55:00Z'

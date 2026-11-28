@@ -1,7 +1,7 @@
 ---
 id: TASK-856
 title: 'qdmatrix: quest drill matrix for the chunks after Tools of the Trade'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-23T05:09:00Z'
