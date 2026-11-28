@@ -17,6 +17,10 @@ owns:
   - "docs/probes/review-sweep-2026-11-28.md"
   - "internal/diffready/"
   - "internal/bot/diffready_test.go"
+  - "internal/combat/move.go"
+  - "internal/combat/whirl.go"
+  - "internal/combat/fight.go"
+  - "internal/combat/move_test.go"
 exclusive: []
 contracts: []
 ---
@@ -32,5 +36,6 @@ Sweep the 13 review docs in docs/design/fable-review-2026-11-28, list what no ca
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
 - [ ] #1 docs/probes/review-sweep-2026-11-28.md lists every finding of reviews 01 to 13 with severity and status
-- [ ] #2 review 12 C3: a read never deletes the difficulty go; another or unknown hero cannot use it (must-fail test, two classes)
+- [x] #2 review 12 C3: a read never deletes the difficulty go; another or unknown hero cannot use it (must-fail test, two classes)
+- [x] #3 review 3 finding 5 (part): a gap landing asks the cave-mouth gate; gap casts and whirl legs count as fight casts (must-fail test, Barbarian and Paladin)
 <!-- AC:END -->
