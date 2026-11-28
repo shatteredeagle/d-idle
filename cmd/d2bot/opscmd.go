@@ -155,10 +155,23 @@ func printBoard(out io.Writer, b *ops.Board, asJSON, showWhy bool) {
 			fmt.Fprintf(out, `{"quest":%q,"chunk":%q,"state":%q,"step":%q,"progress":%d,"code":%q,"text":%q}`+"\n", r.Quest, r.Chunk, r.State, r.Step, r.Progress, r.Code, r.Text)
 			continue
 		}
-		fmt.Fprintf(out, "%s/%s\t%s\tstep=%s\tcode=%s\t%s\n", r.Quest, r.Chunk, r.State, r.Step, r.Code, strings.ReplaceAll(r.Text, "\n", " "))
+		fmt.Fprintf(out, "%s/%s\t%s\tauto=%s\tstep=%s\tcode=%s\t%s\n", r.Quest, r.Chunk, r.State, r.Auto, r.Step, r.Code, strings.ReplaceAll(r.Text, "\n", " "))
 		if w := r.WhyNot; showWhy && w != nil {
 			fmt.Fprintf(out, "  why-not\tword=%s\tfloor=%d\tneed=%s\twake=%q\tadmission=%q\tlast-refused=%s\n", w.Word, w.Floor, w.Need, w.Wake, w.Admission, lastRefused(w))
 		}
+	}
+}
+
+// printWaiting says which ready chunks nothing will start (only the Start tap, the start verb or an auto opt-in do)
+// and why an opted-in offer is held back.
+func printWaiting(out io.Writer, b *ops.Board) {
+	for _, r := range b.Rows {
+		if r.WaitingFor != "" {
+			fmt.Fprintf(out, "waiting for Start: %s/%s (%s, auto=%s)\n", r.Quest, r.Chunk, r.WaitingFor, r.Auto)
+		}
+	}
+	if b.AutoWhy != "" {
+		fmt.Fprintf(out, "auto-start held back: %s\n", b.AutoWhy)
 	}
 }
 
@@ -247,6 +260,9 @@ func opsExplain(sock string, out io.Writer) (int, error) {
 	}
 	b, _ := json.MarshalIndent(r.Explain, "", " ")
 	fmt.Fprintf(out, "%s\n", b)
+	if sr, err := ops.Call(sock, ops.Request{Verb: "status"}); err == nil && sr.Board != nil {
+		printWaiting(out, sr.Board)
+	}
 	return 0, nil
 }
 

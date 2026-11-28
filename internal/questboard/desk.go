@@ -219,6 +219,10 @@ type ChunkRow struct {
 	Readiness Word   `json:"readiness,omitempty"`
 	Why       string `json:"why,omitempty"`
 	Confirmed bool   `json:"confirmed,omitempty"`
+	// Auto is the quest's auto-start word (AutoOn, AutoOff, AutoNever); WaitingFor is, for a ready part, what the board
+	// waits for (WaitStartTap, WaitNeverAuto): nothing else starts it (card questauto-visible).
+	Auto       string `json:"auto,omitempty"`
+	WaitingFor string `json:"waitingFor,omitempty"`
 	// Reason is why a live part does not move (closed code of appendix B.1 plus its sentence); nil for a part that
 	// moves or is not live.
 	Reason *ReasonView `json:"reason,omitempty"`
@@ -439,6 +443,10 @@ func (d *Desk) build() View {
 				}
 			}
 			cr := ChunkRow{ID: cv.ID, Title: c.Title, State: cv.State, Readiness: cv.Reason, Why: why, Confirmed: cv.Confirmed}
+			cr.Auto, cr.WaitingFor = autoWord(row.Auto, row.AutoOK), ""
+			if cv.State == Ready {
+				cr.WaitingFor = waitingFor(row.Auto, row.AutoOK, cv.Reason)
+			}
 			key := ChunkKey(qv.ID, cv.ID)
 			var run *Run
 			if r, ok := smRuns[key]; ok {

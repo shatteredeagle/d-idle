@@ -103,6 +103,8 @@ type Board struct {
 	Difficulty string `json:"difficulty,omitempty"`
 	Why        string `json:"why,omitempty"`
 	Rows       []Row  `json:"rows"`
+	// AutoWhy is why an opted-in offer is held back from starting by itself now (AutoSnapshot.Why).
+	AutoWhy string `json:"autoWhy,omitempty"`
 	// Parked lists the quests the operator set aside, with the wake time (RFC 3339).
 	Parked []Parked `json:"parked,omitempty"`
 }
@@ -124,16 +126,20 @@ type Row struct {
 	Progress int    `json:"progress,omitempty"`
 	Code     string `json:"code,omitempty"`
 	Text     string `json:"text,omitempty"`
+	// Auto is the quest's auto-start word (on, off, never); WaitingFor is what a ready chunk waits for (start_tap,
+	// never_auto), empty when AutoTick will start it or it is not ready.
+	Auto       string `json:"auto,omitempty"`
+	WaitingFor string `json:"waitingFor,omitempty"`
 	// WhyNot is the chunk's "Why not?" row (readiness word, floor, need, wake, last refusal); `status --why` prints it.
 	WhyNot *questboard.WhyNotView `json:"whyNot,omitempty"`
 }
 
 func boardOf(v questboard.View) *Board {
-	b := &Board{Enabled: v.Enabled, Difficulty: v.Difficulty, Why: v.Reason, Rows: []Row{}}
+	b := &Board{Enabled: v.Enabled, Difficulty: v.Difficulty, Why: v.Reason, Rows: []Row{}, AutoWhy: v.AutoStart.Why}
 	runs := []*questboard.RunView{v.Running, v.Awaiting, v.Blocked}
 	for _, q := range v.Quests {
 		for _, c := range q.Chunks {
-			r := Row{Quest: q.ID, Chunk: c.ID, State: string(c.State), WhyNot: c.WhyNot}
+			r := Row{Quest: q.ID, Chunk: c.ID, State: string(c.State), WhyNot: c.WhyNot, Auto: c.Auto, WaitingFor: c.WaitingFor}
 			if c.Reason != nil {
 				r.Code, r.Text = c.Reason.Code, c.Reason.Text
 			}
