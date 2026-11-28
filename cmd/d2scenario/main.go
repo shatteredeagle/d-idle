@@ -28,6 +28,8 @@ func main() {
 		err = cmdList(args, os.Stdout)
 	case "validate":
 		err = cmdValidate(args, os.Stdout)
+	case "smoke":
+		err = cmdSmoke(args, os.Stdout)
 	case "plan":
 		err = cmdPlan(args, os.Stdout)
 	case "setup":
@@ -89,6 +91,7 @@ func usage(w io.Writer) {
 	fmt.Fprint(w, `usage: d2scenario COMMAND [flags]
   list        [-dir D] [-tier T]                list scenarios
   validate    [-dir D] [-board B]               check files, ids and coverage references
+  smoke       [-dir D]                          cheap tier, no game: static checks of every scenario and four preps on a fake d2d
   plan        [-tier fast|full|nightly] [-changed F,F] [-id ID,..] [-class C] [-seed N] [-json]
                                                 DRY RUN: the runs, their setup verbs and a wall estimate; starts nothing
   setup       ID -class C -seed N               print the declared SETUP (verbs, board record, provenance tags)

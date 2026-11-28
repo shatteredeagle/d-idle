@@ -23,6 +23,7 @@ import (
 	"d2lod-bot/internal/faultproxy"
 	"d2lod-bot/internal/questboard"
 	"d2lod-bot/internal/scenario"
+	"d2lod-bot/internal/scenario/hero"
 )
 
 // cmdRun plans, then runs every run in its own lab slot (tools/d2dslot.sh), at most -parallel at once, and aggregates the
@@ -317,42 +318,15 @@ func execOne(s scenario.Scenario, r scenario.Run, out, bot string) scenario.Resu
 		return blocked("prep d2d not in game: %v", err)
 	}
 	c := prep.Controller().C
-	if caps, err := c.Caps(ctx); err != nil {
-		_ = prep.Stop()
-		return blocked("caps: %v", err)
-	} else if miss := missingCaps(s.Needs, caps); len(miss) > 0 {
-		_ = prep.Stop()
-		return blocked("the lab d2d lacks %s (the scenario needs them)", strings.Join(miss, ", "))
-	}
-	if err := applySetup(ctx, c, su, ledger); err != nil {
-		_ = prep.Stop()
-		return blocked("setup: %v", err)
-	}
 	tabs, err := heroTables(gamedata, data)
 	if err != nil {
 		_ = prep.Stop()
 		return blocked("%v", err)
 	}
-	if err := spendPoints(ctx, c, s, r.Class, su, tabs, ledger); err != nil {
+	seeded, why := prepHero(ctx, c, s, r, su, tabs, prepPaths{ledger: ledger, data: data, state: state, gamedata: gamedata, hero: hero})
+	if why != "" {
 		_ = prep.Stop()
-		return blocked("hero points: %v", err)
-	}
-	seeded, err := applySeeds(ctx, c, su, ledger, data, gameChain(data, gamedata), hero)
-	if err != nil {
-		_ = prep.Stop()
-		return blocked("seeding: %v", err)
-	}
-	if err := seedEther(state, su.Ether); err != nil {
-		_ = prep.Stop()
-		return blocked("ether seed: %v", err)
-	}
-	if _, err := c.Step(ctx, 50); err != nil {
-		_ = prep.Stop()
-		return blocked("settle: %v", err)
-	}
-	if failed := prepSelfCheck(ctx, c, s, r.Class, ledger, tabs); failed != "" { // design 6.2: refuse a hero that is not the declared one
-		_ = prep.Stop()
-		return blocked("selfcheck: %s (rows in %s)", failed, ledger)
+		return blocked("%s", why)
 	}
 	if err := writeBoardAndTuning(state, hero, su); err != nil {
 		_ = prep.Stop()
@@ -410,6 +384,40 @@ func execOne(s scenario.Scenario, r scenario.Run, out, bot string) scenario.Resu
 	addVaultFacts(&st, s, data, hero, trace, seeded)
 	res.State = &st
 	return withVerdict(res, scenario.Result{})
+}
+
+// prepPaths are the files and names the prep half writes to.
+type prepPaths struct{ ledger, data, state, gamedata, hero string }
+
+// prepHero is the prep half of execOne on a d2d that is in game: capabilities, the setup verbs, the played profile's
+// points, the seeds, a settle step and the self-check. It returns the BLOCKED reason ("" when the hero is the declared
+// one). It talks to the game through the control client only, so `d2scenario smoke` runs it against a fake d2d.
+func prepHero(ctx context.Context, c *d2dctl.Client, s scenario.Scenario, r scenario.Run, su scenario.Setup, tabs hero.Tables, p prepPaths) (seedOut, string) {
+	if caps, err := c.Caps(ctx); err != nil {
+		return seedOut{}, fmt.Sprintf("caps: %v", err)
+	} else if miss := missingCaps(s.Needs, caps); len(miss) > 0 {
+		return seedOut{}, fmt.Sprintf("the lab d2d lacks %s (the scenario needs them)", strings.Join(miss, ", "))
+	}
+	if err := applySetup(ctx, c, su, p.ledger); err != nil {
+		return seedOut{}, fmt.Sprintf("setup: %v", err)
+	}
+	if err := spendPoints(ctx, c, s, r.Class, su, tabs, p.ledger); err != nil {
+		return seedOut{}, fmt.Sprintf("hero points: %v", err)
+	}
+	seeded, err := applySeeds(ctx, c, su, p.ledger, p.data, gameChain(p.data, p.gamedata), p.hero)
+	if err != nil {
+		return seedOut{}, fmt.Sprintf("seeding: %v", err)
+	}
+	if err := seedEther(p.state, su.Ether); err != nil {
+		return seedOut{}, fmt.Sprintf("ether seed: %v", err)
+	}
+	if _, err := c.Step(ctx, 50); err != nil {
+		return seedOut{}, fmt.Sprintf("settle: %v", err)
+	}
+	if failed := prepSelfCheck(ctx, c, s, r.Class, p.ledger, tabs); failed != "" { // design 6.2: refuse a hero that is not the declared one
+		return seedOut{}, fmt.Sprintf("selfcheck: %s (rows in %s)", failed, p.ledger)
+	}
+	return seeded, ""
 }
 
 // instanceID is a stable, valid bot instance id for one run: "pg-" and 12 hex digits of the run key.
