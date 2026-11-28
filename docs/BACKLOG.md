@@ -1613,6 +1613,12 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - farmresetretire: farm loop always on (flip bot.farmReset to default, remove the gate) (TASK-1090, merged 2026-11-27, acceptance 3 of 3): DECISION: FLIP-TO-DEFAULT, not retire. The premise of docs/probes/dark-queue-final-2026-11-27.md (retire-farmreset: 'farm reset never fired', 45 min) is stale: V docs/probes/sandbox-postdeploy-audit-2026-11-27.md shows resets firing on both sandbox heroes ... <!--sg:agent/farmresetretire-->
 - pgfix: legacy scenarios banked by default, ledger tag for blocked runs (TASK-1093, merged 2026-11-27, acceptance 2 of 2) <!--sg:agent/pgfix-->
 - darkthrottle: dark ledger guard rails (by_design, cap, flip_plan, sandbox-first policy) (TASK-1091, merged 2026-11-27, acceptance 2 of 2): Offline only, not live. Cap 27; by_design on 3 rows; flip_plan and 3-day review_by for rows from 2026-11-28; tests green. AGENTS.md should link docs/process/dark-launch.md. <!--sg:agent/darkthrottle-->
+- autoflip: plan, run and graduate-list for dark knob flips (TASK-1092, merged 2026-11-27, acceptance 2 of 2): Offline tool plus 10 fake-sandbox tests; not run against a real sandbox (no transport on this box); nothing flipped. <!--sg:agent/autoflip-->
+- agent/fable-fr3: fable review 3: combat, nav, survival (docs) (merged 2026-11-27) <!--sg:agent/fable-fr3-->
+- agent/fable-fr1: fable review 1: item flows (docs) (merged 2026-11-27) <!--sg:agent/fable-fr1-->
+- agent/fable-fr5: fable review 5: dark ledger process (docs) (merged 2026-11-27) <!--sg:agent/fable-fr5-->
+- agent/ledger-bot-diffReadyV2-items-advisor-20261128-034138: ledger: diffReadyV2 + advisor bundles on both sandboxes (re-flip) (merged 2026-11-27) <!--sg:agent/ledger-bot-diffReadyV2-items-advisor-20261128-034138-->
+- agent/fable-fr2: fable review 2 (docs) (merged 2026-11-27) <!--sg:agent/fable-fr2-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
