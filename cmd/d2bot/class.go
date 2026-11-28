@@ -63,20 +63,51 @@ func planForClass(c d2.Class, cfgBuild string, level int, owned map[string]int) 
 // planBuild is the leveler build id chosen at the class-aware start; the play session record reads it (empty until then).
 var planBuild atomic.Pointer[string]
 
-// applyClass reads the character's class from memory and sets the fighter's build. Returns the plan for the log.
-func applyClass(ctx context.Context, snap func() (*d2.Snapshot, error), cb *combat.Fighter, tw *town.Town, lt *loot.Looter, cfgBuild string, db *data.DB, log *slog.Logger) {
-	s, err := snap()
-	if err != nil || s.Player == nil {
+// classRetryState is a class-aware start that has to be repeated: it could not read the character (noSnap) or it ended
+// with a plan error for class (a bad class read gives another class on the next tick; the same class with the same
+// table is a data error and is not retried).
+type classRetryState struct {
+	apply  func(p *d2.Player)
+	class  d2.Class
+	noSnap bool
+}
+
+var classRetry atomic.Pointer[classRetryState]
+
+// retryClass repeats the class-aware start for p when the last one is owed (classRetryState); the runner's profile
+// check calls it every tick, so one missing or bad snapshot at game start does not stop the fighting for the game.
+func retryClass(p *d2.Player) {
+	cr := classRetry.Load()
+	if cr == nil || p == nil || (!cr.noSnap && cr.class == p.Class) {
 		return
 	}
-	cp := planForClass(s.Player.Class, cfgBuild, s.Player.Level, leveler.OwnedSkills(db, s.Player))
+	cr.apply(p)
+}
+
+// applyClass reads the character's class from memory and sets the fighter's build; the plan goes to the log.
+func applyClass(ctx context.Context, snap func() (*d2.Snapshot, error), cb *combat.Fighter, tw *town.Town, lt *loot.Looter, cfgBuild string, db *data.DB, log *slog.Logger) {
+	apply := func(p *d2.Player) { applyClassFor(p, cb, tw, lt, cfgBuild, db, log) }
+	s, err := snap()
+	if err != nil || s.Player == nil {
+		classRetry.Store(&classRetryState{apply: apply, noSnap: true})
+		return
+	}
+	apply(s.Player)
+}
+
+func applyClassFor(p *d2.Player, cb *combat.Fighter, tw *town.Town, lt *loot.Looter, cfgBuild string, db *data.DB, log *slog.Logger) {
+	cp := planForClass(p.Class, cfgBuild, p.Level, leveler.OwnedSkills(db, p))
 	// No profile, no fight: the fighter refuses Clear and Kill while the error is set (it never fights on another
-	// class's or build's profile) and the invariant monitor counts no-combat-profile every tick until it is fixed.
+	// class's or build's profile), the runner parks the hero in town and the invariant monitor counts no-combat-profile.
 	cb.SetProfileErr(cp.Err)
 	if cp.Err != nil {
-		log.Error("class-aware start: NO COMBAT PROFILE, the hero will not fight (fix the table's class and combat keys)", "class", s.Player.Class.String(), "levelerBuild", cp.LevelerBuild, "err", cp.Err)
-	} else if cb.Build != cp.CombatBuild {
-		cb.Build = cp.CombatBuild
+		classRetry.Store(&classRetryState{apply: func(p *d2.Player) { applyClassFor(p, cb, tw, lt, cfgBuild, db, log) }, class: p.Class})
+		log.Error(fmt.Sprintf("no combat profile for %s/%s: the hero will not fight (fix the table's class and combat keys)", p.Class, cp.LevelerBuild), "err", cp.Err)
+	} else {
+		classRetry.Store(nil)
+		if cb.Build != cp.CombatBuild {
+			cb.Build = cp.CombatBuild
+		}
 	}
 	cb.GearBuild = cp.LevelerBuild
 	planBuild.Store(&cp.LevelerBuild)
@@ -87,7 +118,7 @@ func applyClass(ctx context.Context, snap func() (*d2.Snapshot, error), cb *comb
 	if lt != nil {
 		lt.SetBuild(cp.LevelerBuild)
 	}
-	log.Info("class-aware start", "class", s.Player.Class.String(), "level", s.Player.Level, "combatProfile", cp.Profile,
+	log.Info("class-aware start", "class", p.Class.String(), "level", p.Level, "combatProfile", cp.Profile,
 		"combatBuild", string(cp.CombatBuild), "levelerBuild", cp.LevelerBuild)
 }
 

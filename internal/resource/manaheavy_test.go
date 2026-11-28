@@ -17,7 +17,9 @@ func TestPlanForBuildManaHeavy(t *testing.T) {
 		build string
 		want  [4]Potion
 	}{
-		{d2.Normal, 40, b, PlanFor(d2.Barbarian, 40).Cols},
+		{d2.Normal, 20, b, [4]Potion{hp, hp, mp, mp}}, // review C B2: the kit asks mana in Normal, so the belt has the columns
+		{d2.Normal, 40, b, [4]Potion{hp, hp, mp, rv}},
+		{d2.Normal, 40, "barbarian_melee_normal30", PlanFor(d2.Barbarian, 40).Cols},
 		{d2.Nightmare, 20, b, [4]Potion{hp, mp, mp, hp}},
 		{d2.Nightmare, 40, b, [4]Potion{hp, mp, mp, rv}},
 		{d2.Hell, 70, b, [4]Potion{rv, mp, mp, rv}},
