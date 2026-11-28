@@ -1,10 +1,13 @@
 ---
 id: TASK-1115
-title: 'fix7b: review-11 defects of fix3/fix7 (arbiter back-off, watchdog heartbeat, survive condition, starve floor, band pin, corpse retry)'
-status: In Progress
+title: >-
+  fix7b: review-11 defects of fix3/fix7 (arbiter back-off, watchdog heartbeat,
+  survive condition, starve floor, band pin, corpse retry)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T05:43:00Z'
+updated_date: '2026-11-28T08:47:00Z'
 labels:
   - bot
   - bug
