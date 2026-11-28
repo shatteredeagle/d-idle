@@ -7,10 +7,12 @@ Reads every table of the doc that has a `card` and a `STATE` column, resolves th
 card cell against backlog/tasks (key `card:`, `status:`) and against the merge subjects on --ref
 (`Merge agent/<card>`), and prints one WARN line per row whose STATE disagrees:
   S1  STATE `not started` but a card of the row is Done or has a merge on --ref
-  S2  STATE `in flight` or `not started` but every card of the row is Done
+  S2  STATE `in flight` or `not started` but every card of the row is Done with every acceptance box ticked
+      (a Done card with an open box, usually a live check, keeps the row quiet)
   S3  the card cell names no card known to backlog/tasks or to the merge subjects (the row cannot be checked)
-A card cell may name a range ("bsm1 to bsm9", "necro2a to necro2e"); it is expanded. Words in the cell
-that are not a card id are ignored. --rows lists every row with what was found; --summary prints the
+A card cell may name a range ("bsm1 to bsm9", "necro2a to necro2e") or a prefix ("fid-*"); both are
+expanded. Words in the cell that are not a card id are ignored. To keep a row `in flight` on purpose, name
+the open card that holds the rest of the work in its card cell. --rows lists every row with what was found; --summary prints the
 one-line form for CI. Standard library only. Rule: "How to keep this file true" in the doc.
 """
 import argparse
@@ -23,7 +25,7 @@ from pathlib import Path
 DOC = "docs/roadmap-fable.md"
 STATES = ("not started", "in flight", "built-dark", "trial", "enabled", "retired")
 RANGE = re.compile(r"\b([a-z][a-z0-9-]*?)(\d+)([a-z]?) to \1(\d+)([a-z]?)\b")
-WORD = re.compile(r"[a-z][a-z0-9-]*")
+WORD = re.compile(r"[a-z][a-z0-9-]*\*?")
 
 
 def cells(line):
@@ -61,14 +63,15 @@ def expand(cell):
 
 
 def task_status(repo):
-    """card id -> status, from the frontmatter of backlog/tasks/*.md."""
+    """card id -> (status, open acceptance boxes), from backlog/tasks/*.md."""
     out = {}
     for p in sorted((Path(repo) / "backlog" / "tasks").glob("*.md")):
-        fm = p.read_text(encoding="utf-8", errors="replace").split("\n---", 1)[0]
+        text = p.read_text(encoding="utf-8", errors="replace")
+        fm = text.split("\n---", 1)[0]
         card = re.search(r'^card:\s*"?([^"\n]+?)"?\s*$', fm, re.M)
         status = re.search(r"^status:\s*'?([^'\n]+?)'?\s*$", fm, re.M)
         if card and status:
-            out[card.group(1)] = status.group(1)
+            out[card.group(1)] = (status.group(1), len(re.findall(r"^- \[ \]", text, re.M)))
     return out
 
 
@@ -85,8 +88,15 @@ def check(text, status, merged):
     finds, facts, tally = [], [], Counter()
     for rid, cell, state in rows(text):
         tally[state if state in STATES else "other"] += 1
-        known = [c for c in expand(cell) if c in status or c in merged]
-        done = [c for c in known if status.get(c) == "Done"]
+        known = []
+        for c in expand(cell):
+            if c.endswith("*"):
+                known += sorted(k for k in status if k.startswith(c[:-1]))
+            elif c in status or c in merged:
+                known.append(c)
+        known = list(dict.fromkeys(known))
+        done = [c for c in known if status.get(c, ("", 0))[0] == "Done"]
+        clean = [c for c in done if status[c][1] == 0]
         landed = [c for c in known if c in merged or c in done]
         facts.append((rid, state, known, done, landed))
         if state == "retired":
@@ -95,8 +105,8 @@ def check(text, status, merged):
             finds.append("S3 %s [%s]: no known card in '%s'" % (rid, state, cell))
         elif state == "not started" and landed:
             finds.append("S1 %s [not started]: Done or merged: %s" % (rid, ", ".join(landed)))
-        elif state in ("in flight", "not started") and len(done) == len(known):
-            finds.append("S2 %s [%s]: every card is Done: %s" % (rid, state, ", ".join(done)))
+        elif state in ("in flight", "not started") and len(clean) == len(known):
+            finds.append("S2 %s [%s]: every card is Done, no open box: %s" % (rid, state, ", ".join(clean)))
     return finds, facts, tally
 
 
