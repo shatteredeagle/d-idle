@@ -130,6 +130,9 @@ func (k *Keeper) precheck(st *vault.Store, id, slotWord string, taken map[string
 	case !rec.Identified:
 		return c, "reveal", ReasonEqReveal
 	}
+	if by := k.heldBy(id); by != "" {
+		return c, CodeInFlight, ReasonHeld(by)
+	}
 	pv := k.Hand.Preview(rec)
 	pv.Wearable = pv.Wearable || pv.Reveal // Preview counts an unrevealed record as wearable; ours is revealed here
 	group, w, cd := orderGroup(pv, slotWord)
@@ -225,7 +228,7 @@ func (k *Keeper) directOne(ctx context.Context, id, slotWord string) (Result, bo
 	bu, bh := k.wornBefore(ctx, c.slot)
 	ou, oh := k.wornBefore(ctx, otherHand[c.slot])
 	k.putEq(&EquipOrder{ID: id, Name: c.rec.Name, Slot: slotWord, Group: []string{c.slot}, State: EqEquipping, Direct: true,
-		Order: order, BeforeUnit: bu, Before: bh, BeforeOffUnit: ou, BeforeOff: oh})
+		Order: order, New: c.hex, BeforeUnit: bu, Before: bh, BeforeOffUnit: ou, BeforeOff: oh})
 	dr, err := k.Direct.EquipDirect(ctx, c.hex, c.slot, order)
 	if dr.OK { // the engine swapped: whatever failed after it, the displaced item is filed
 		k.markApplied(id, c.slot, dr)
@@ -320,7 +323,8 @@ func (k *Keeper) directOpen(id string) bool {
 var otherHand = map[string]string{"rhand": "lhand", "lhand": "rhand"}
 
 // wornBefore reads what the slot holds before the swap (unit and item bytes), so an unanswered call can be judged by looking
-// and the displaced item filed from this copy. Best effort: 0 and "" when the slot is empty or cannot be read. U live.
+// and the displaced item filed from this copy. 0 and "": the slot is empty. A unit with "": occupied but not readable (such
+// an order is never judged, it stays open). U live.
 func (k *Keeper) wornBefore(ctx context.Context, slot string) (int, string) {
 	if slot == "" {
 		return 0, ""
@@ -331,14 +335,17 @@ func (k *Keeper) wornBefore(ctx context.Context, slot string) (int, string) {
 	}
 	have, err := k.API.ItemFull(ctx, u)
 	if err != nil || len(have) != 1 {
-		return 0, ""
+		return u, ""
 	}
 	return u, have[0].Norm
 }
 
-// resolveDirect settles an order whose engine answer never arrived, by looking: the old unit still in the slot means nothing
-// moved; the old unit gone from the game means the swap ran and the copy read before it is filed. Anything else leaves the
-// order open (no new order for the record) for the next pass.
+// resolveDirect settles an order whose engine answer never arrived, by looking at item BYTES, never at unit ids (a new game
+// or a game restart renumbers every unit; card fix1b, review N2). The slot holds the bytes read before the call: nothing
+// moved. The slot holds the new item's bytes: the swap ran and the copy read before it is filed. Anything else (the look
+// failed, another item, an old order without the new bytes) leaves the order open for the next pass. Equal bytes old and
+// new count as "nothing moved": both verdicts leave one such item worn and one in the vault.
+// U live: that the fork reports a worn item with the norm bytes it was created from.
 func (k *Keeper) resolveDirect(ctx context.Context, st *vault.Store, key string, res *Result) {
 	k.mu.Lock()
 	op := k.bookLocked().orders[key]
@@ -352,41 +359,66 @@ func (k *Keeper) resolveDirect(ctx context.Context, st *vault.Store, key string,
 	if slot == "" && len(o.Group) > 0 {
 		slot = o.Group[0]
 	}
-	// The other hand (a two-hander pushes the shield off as well): gone from its slot and from the game means it was
-	// removed with the swap and the copy read before the call is the only one left. Still readable but off the body
-	// cannot be judged, like the main slot.
-	offGone, offOpen := false, false
-	if o.BeforeOffUnit != 0 && int(k.Hand.WornUnit(otherHand[slot])) != o.BeforeOffUnit {
-		have, err := k.API.ItemFull(ctx, o.BeforeOffUnit)
-		offGone, offOpen = err == nil && len(have) == 0, err != nil || len(have) != 0
-	}
 	open := func() {
 		k.note("equip-open-"+o.Order, "Equip: "+ReasonUnknown)
 		res.Code, res.Why = CodeInFlight, ReasonUnknown
 	}
-	var removed []string
-	switch {
-	case offOpen:
+	have, err := k.API.ItemFull(ctx, -1)
+	if err != nil {
 		open()
 		return
-	case o.BeforeUnit == 0 && offGone: // an empty hand took the piece and the other hand's item left the game
-	case o.BeforeUnit == 0:
-		k.failOrder(key, "interrupted", "the game did not answer and the bot cannot tell whether the item was worn: check the Inventory page")
-		res.Code, res.Why = "interrupted", "the game did not answer: check the Inventory page"
+	}
+	// worn: the bytes in a body slot now ("" and true: empty; false: occupied and not readable).
+	worn := func(s string) (string, bool) {
+		u := int(k.Hand.WornUnit(s))
+		if u == 0 {
+			return "", true
+		}
+		for _, h := range have {
+			if h.UnitID == u {
+				return h.Norm, h.Norm != ""
+			}
+		}
+		return "", false
+	}
+	now, ok := worn(slot)
+	switch {
+	case !ok, o.BeforeUnit != 0 && o.Before == "":
+		open()
 		return
-	case int(k.Hand.WornUnit(slot)) == o.BeforeUnit:
+	case o.Before != "" && strings.EqualFold(now, o.Before):
 		k.failOrder(key, "equip", "the game did not answer and nothing changed: try again")
 		res.Code, res.Why = "equip", "the game did not answer and nothing changed: try again"
 		return
-	default:
-		if have, err := k.API.ItemFull(ctx, o.BeforeUnit); err != nil || len(have) != 0 {
+	case o.Before == "" && now == "":
+		k.failOrder(key, "interrupted", "the game did not answer and the item is not worn: check the Inventory page")
+		res.Code, res.Why = "interrupted", "the game did not answer: check the Inventory page"
+		return
+	case o.New == "" || !strings.EqualFold(now, o.New):
+		open()
+		return
+	}
+	var removed []string
+	if o.Before != "" {
+		removed = append(removed, o.Before)
+	}
+	// The other hand (a two-hander pushes the shield off as well): its bytes still in that slot means it stayed; gone from
+	// the slot and from the whole hero means it left with the swap and the copy read before the call is the only one.
+	// Off the body but still on the hero (or a twin of it) cannot be judged.
+	if o.BeforeOffUnit != 0 {
+		off, ok := worn(otherHand[slot])
+		onHero := false
+		for _, h := range have {
+			onHero = onHero || (o.BeforeOff != "" && strings.EqualFold(h.Norm, o.BeforeOff))
+		}
+		switch {
+		case ok && off != "" && (o.BeforeOff == "" || strings.EqualFold(off, o.BeforeOff)):
+		case ok && o.BeforeOff != "" && !onHero:
+			removed = append(removed, o.BeforeOff)
+		default:
 			open()
 			return
 		}
-		removed = append(removed, o.Before)
-	}
-	if offGone {
-		removed = append(removed, o.BeforeOff)
 	}
 	dr := d2dctl.DirectResult{OK: true, Slot: slot, Removed: removed}
 	k.markApplied(key, slot, dr)
@@ -634,7 +666,7 @@ func (k *Keeper) directSet(ctx context.Context, ids []string) ([]Result, bool) {
 		bu, bh := k.wornBefore(ctx, ch.slot)
 		ou, oh := k.wornBefore(ctx, otherHand[ch.slot])
 		k.putEq(&EquipOrder{ID: ch.id, Name: ch.rec.Name, Slot: SlotAuto, Group: []string{ch.slot}, State: EqEquipping, Direct: true,
-			Order: order, Piece: i, BeforeUnit: bu, Before: bh, BeforeOffUnit: ou, BeforeOff: oh})
+			Order: order, Piece: i, New: ch.hex, BeforeUnit: bu, Before: bh, BeforeOffUnit: ou, BeforeOff: oh})
 	}
 	rs, err := k.Direct.WearSet(ctx, pieces, order)
 	if errors.Is(err, d2dctl.ErrDirectOff) {

@@ -650,3 +650,31 @@ func TestLedgerNeedsOneClock(t *testing.T) {
 		t.Error("mixed clocks: the event reads as ancient (this is the failure the wiring must avoid)")
 	}
 }
+
+// L2 (live review 2026-11-28): a hole whose best zone has no margin at all is not a fallback to walk to (Catacombs
+// Level 3 at margin 0.0 was "the easiest field" 58 times). A hole with some margin stays the first-field fallback.
+func TestHoleWithoutMarginHolds(t *testing.T) {
+	for _, tc := range []struct {
+		arch string
+		hero func(int) power.Hero
+	}{{"bruiser", paladin}, {"caster", sorceress}} {
+		e := newEnv(t, tc.arch)
+		in := e.input(tc.hero(17), ZoneKey{}, t0)
+		for i := range in.Cands {
+			in.Cands[i].ZM.Bad.Best, in.Cands[i].ZM.Bad.Low, in.Cands[i].ZM.Typical.Low = 0.02, 0, 0
+		}
+		d, err := NewLedger(e.p).Choose(in)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !d.Hole || !d.NeedsYou || !d.Hold {
+			t.Fatalf("%s: margin 0.0 everywhere must be a hole that holds: %+v", tc.arch, d)
+		}
+		for i := range in.Cands {
+			in.Cands[i].ZM.Bad.Best = 0.9
+		}
+		if d, _ = NewLedger(e.p).Choose(in); !d.Hole || d.Hold {
+			t.Fatalf("%s: a hole with margin 0.9 is the first-field fallback, not a hold: %+v", tc.arch, d)
+		}
+	}
+}

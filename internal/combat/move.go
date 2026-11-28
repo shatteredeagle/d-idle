@@ -273,7 +273,11 @@ func (f *Fighter) moveTick(snap *d2.Snapshot, st *fightState) (bool, error) {
 
 // gapClose casts the gap row at a target beyond MinGap and inside the row's range, with a clear line. aimed false: no
 // cast (mode 0, no row, refused or out of band); the caller walks as before.
-func (f *Fighter) gapClose(snap *d2.Snapshot, tg Target) (aimed bool, err error) {
+//
+// The landing is a movement like a walk: a point in a cave mouth's trigger area is refused as f.move refuses it
+// (fable review 3 finding 5; escape and whirl landings pass f.valid, which asks the same gate). A gap cast and a whirl
+// leg are attacks and count as casts of the fight, so the cast watchdog does not force casts into a fight made of them.
+func (f *Fighter) gapClose(snap *d2.Snapshot, tg Target, st *fightState) (aimed bool, err error) {
 	mode := f.upkeepMode()
 	p := snap.Player
 	if mode == 0 || p == nil || p.InTown() {
@@ -298,6 +302,9 @@ func (f *Fighter) gapClose(snap *d2.Snapshot, tg Target) (aimed bool, err error)
 	if r.Through > 0 {
 		at = approachPoint(me, at, -float64(r.Through)) // past the target on the line from the hero
 	}
+	if f.nearMouth(at) {
+		return false, nil
+	}
 	if mode == 1 {
 		f.moves.shadow++
 		f.info("move shadow", "use", MoveGap, "skill", r.Name, "target", tg.Name, "dist", int(tg.Dist))
@@ -309,6 +316,9 @@ func (f *Fighter) gapClose(snap *d2.Snapshot, tg Target) (aimed bool, err error)
 		return true, err
 	}
 	f.moves.gaps++
+	if st != nil {
+		st.noteCast(f.now())
+	}
 	return true, nil
 }
 

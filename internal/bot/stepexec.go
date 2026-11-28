@@ -165,8 +165,37 @@ type execBackend struct {
 	a taskActs
 }
 
-// Approach: the object and dialog adapters walk to their target themselves, so the step has nothing to do here.
-func (b *execBackend) Approach(context.Context, questspec.Target, int) error { return nil }
+// Approach: the object and dialog adapters walk to their target themselves, with one gap: the dialog adapter walks only to
+// an NPC the snapshot lists. An NPC of the field that is out of sight (V lab night 2026-11-28, drill.act2.duriel.stepexec,
+// 3 of 3 runs: Tyrael in Duriel's Lair right after the kill, "npc: walk failed seen=false" on every try, the row's tries
+// and the chunk's three were spent in 0.2 s and the chunk parked) is looked for first: the level is walked until the
+// snapshot lists him. U that the walk reaches his chamber on d2d (no run since). A town NPC is the town adapter's job.
+func (b *execBackend) Approach(ctx context.Context, t questspec.Target, _ int) error {
+	r := b.a.r
+	if t.Kind != "npc" || t.Class == 0 || r.d.Mover == nil {
+		return nil
+	}
+	seen := func() bool {
+		s, err := r.d.Snapshot()
+		if err != nil || s == nil || s.Player == nil || s.Player.InTown() {
+			return true // nothing to look for from here
+		}
+		for i := range s.Monsters {
+			if s.Monsters[i].Class == t.Class {
+				return true
+			}
+		}
+		return false
+	}
+	if seen() {
+		return nil
+	}
+	r.e.Log.Info("step executor: npc out of sight, walking the level for him", "class", t.Class)
+	if err := r.d.Mover.Explore(ctx, seen); err != nil && ctx.Err() != nil {
+		return b.a.tag(err)
+	}
+	return nil // seen or not, the talk says which
+}
 
 func (b *execBackend) Act(ctx context.Context, verb string, t questspec.Target, args questspec.ActArgs) error {
 	a := b.a

@@ -2,6 +2,7 @@ package watch
 
 import (
 	"errors"
+	"fmt"
 	"mime"
 	"net/http"
 	"strings"
@@ -153,7 +154,7 @@ func DifficultyPostHandler(c *DifficultyConfig, o AnswerOptions) http.Handler {
 			fail(code, c, msg)
 		}
 		if !c.admit() {
-			refuse(http.StatusTooManyRequests, "rate_limited", "the difficulty go was pressed 6 times in the last hour; wait")
+			refuse(http.StatusTooManyRequests, "rate_limited", fmt.Sprintf("the difficulty go was pressed %d times in the last hour; wait", difficultyGoPerHour))
 			return
 		}
 		if _, err := c.Go(b.Target); err != nil {

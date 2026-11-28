@@ -29,13 +29,14 @@ func (d *drig) wearReal(slot, code, extra string) (unit int, norm string) {
 	return unit, norm
 }
 
-// gone is the engine side of a swap: the units leave the body and the game.
+// gone is the engine side of a swap: the units leave the body and the game, the new item is worn.
 func (d *drig) gone(units ...int) func([]d2dctl.DirectResult) {
 	return func([]d2dctl.DirectResult) {
 		for _, u := range units {
 			d.api.VaultFake.Remove(u)
 			delete(d.h.body, u)
 		}
+		d.mirror() // and the new item is worn (card fix1b: the verdict reads the slot's bytes)
 	}
 }
 

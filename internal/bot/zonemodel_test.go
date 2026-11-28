@@ -326,3 +326,44 @@ func TestZoneHoleNeedsKitAndLogsOncePerHour(t *testing.T) {
 		})
 	}
 }
+
+// L2 (live review 2026-11-28): a hole names the best of the zones that are left. After bans for the bot's own faults
+// that was Tower Cellar Level 4; the hero must not walk to it, and not to a zone with no margin either.
+func TestZoneHoleNotWalkedAfterFaultBansOrWithoutMargin(t *testing.T) {
+	for _, cl := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		for _, tc := range []struct {
+			name string
+			hold bool
+			skip string
+			want bool // the hole zone is walked to
+		}{{"plain hole", false, "", true}, {"no margin", true, "", false}, {"unreachable ban", false, whyUnreachable, false}, {"death ban", false, whyDeath, true}} {
+			t.Run(cl.String()+"/"+tc.name, func(t *testing.T) {
+				g, _ := modelRig(t, cl, func(area int, c []ZoneCand) (ZoneVerdict, error) {
+					return ZoneVerdict{Area: 3, Hole: true, Hold: tc.hold, Margin: "too hard", Line: "zone choice: hole test"}, nil
+				})
+				g.w.belt(901, 902, 903, 904)
+				g.w.set(func(w *world) {
+					w.items = append(w.items, d2.Unit{ID: 900, Type: d2.TypeItem, Class: 5, Item: &d2.Item{Where: d2.ContInventory}})
+				})
+				g.r.poll()
+				if !g.r.fullKit(g.r.latest()) && tc.want {
+					t.Fatal("rig has a short kit")
+				}
+				if safe := g.r.safeFarmArea(g.r.latest()); safe == 3 || safe == 4 {
+					t.Fatalf("rig: first field %d collides with the test zones", safe)
+				}
+				ex := map[int]bool{}
+				if tc.skip != "" {
+					g.r.skipArea(4, time.Minute, tc.skip)
+					ex[4] = true
+				}
+				o := PickOptions{Acts: map[int]bool{1: true}, Exclude: ex, FullKit: true, Class: planClass(cl), Melee: MeleeTank(cl)}
+				o.Model = g.r.zoneModelPick(g.r.latest(), "normal", nil)
+				st, ok := g.r.d.Plan.Pick("normal", 12, o)
+				if got := ok && st.Area == 3; got != tc.want {
+					t.Fatalf("picked %+v ok %v, want the hole zone walked to: %v", st.Area, ok, tc.want)
+				}
+			})
+		}
+	}
+}

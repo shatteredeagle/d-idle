@@ -824,6 +824,9 @@ func (r *Runner) boardStep(ctx context.Context, snap *d2.Snapshot, c control) bo
 	if d.Kind != questboard.DecRun {
 		r.setQuestCrowd(false)
 	}
+	if d.Kind == questboard.DecRun || d.Kind == questboard.DecAwait {
+		r.boardTraining.Store(false)
+	}
 	switch d.Kind {
 	case questboard.DecRun:
 		rt.setQueued("")
@@ -859,6 +862,7 @@ func (r *Runner) boardNote(key, line string) {
 
 func (r *Runner) boardTrain(ctx context.Context, snap *d2.Snapshot, c control) bool {
 	r.noteTrain(snap)
+	r.boardTraining.Store(true)
 	_, ok := r.boardSlice(ctx, snap, c, boardPlan{train: true}, "Quest board: training")
 	return ok
 }
