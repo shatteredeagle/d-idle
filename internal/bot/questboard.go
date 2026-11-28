@@ -162,6 +162,7 @@ func (r *Runner) boardRTFor() *boardRT {
 	}
 	if rt != nil {
 		rt.exec.SetEnabled(r.questBoardOn())
+		rt.exec.SetSM(!r.boardLegacy())
 		rt.exec.SetAutoOptions(r.questAutoOptions())
 		rt.exec.SetResume(r.questResumeOptions())
 		rt.exec.SetRefusal(r.questRefusalParkAfter())
@@ -802,6 +803,7 @@ func (r *Runner) boardStep(ctx context.Context, snap *d2.Snapshot, c control) bo
 	}
 	rt.worldLoop()
 	rt.exec.SetEnabled(true)
+	rt.exec.SetSM(!r.boardLegacy())
 	rt.exec.SetAutoOptions(r.questAutoOptions())
 	r.parkedBoard.Store(false)
 	if r.boardServeHandIn(ctx, snap, c) {

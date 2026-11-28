@@ -147,16 +147,24 @@ func NewExec(b *Board, st *Store, env Env, act Actions, o Options) *Exec {
 // Enabled reports the knob.
 func (e *Exec) Enabled() bool { e.mu.Lock(); defer e.mu.Unlock(); return e.o.Enabled }
 
-// SetEnabled follows the knob at run time. Switching off stops the running slice but keeps the plan records.
+// SetEnabled follows the knob at run time. Switching off stops the running slice and drops the in-memory state; the
+// plan records and the stored parks stay (a knob switch is no Try again: only the player lifts a park).
 func (e *Exec) SetEnabled(on bool) {
 	e.mu.Lock()
 	was := e.o.Enabled
 	e.o.Enabled = on
 	e.mu.Unlock()
 	if was && !on {
-		e.Reset()
+		e.reset(false)
 	}
 }
+
+// SetSM follows the knob quests.boardSM at run time, like the guards that read it every tick: a knob edited from the
+// tuning page must not leave the executor on the other board (fable review 2 finding 5). Stored runs and parks stay.
+func (e *Exec) SetSM(on bool) { e.mu.Lock(); e.o.SM = on; e.mu.Unlock() }
+
+// SM reports whether the executor runs on the run machine now.
+func (e *Exec) SM() bool { e.mu.Lock(); defer e.mu.Unlock(); return e.o.SM }
 
 // SetMode records the between-chunks mode on new plan records (modes are slice S6).
 func (e *Exec) SetMode(m string) { e.mu.Lock(); e.o.Mode = m; e.mu.Unlock() }
@@ -601,8 +609,11 @@ func (e *Exec) CancelRuns(quest, chunk string) ([]Ref, error) {
 }
 
 // Reset cancels the running slice cleanly and forgets every counter and park. The plan records stay accepted:
-// the chunk resumes from the evidence at the next tick (the player's Reset, a new game, a knob switch off).
-func (e *Exec) Reset() {
+// the chunk resumes from the evidence at the next tick (the player's Reset).
+func (e *Exec) Reset() { e.reset(true) }
+
+// reset is Reset; without parks it keeps the stored ones (the knob quests.board going off).
+func (e *Exec) reset(parks bool) {
 	e.NoteHold()
 	e.mu.Lock()
 	vs, plan, diff, err := e.derive()
@@ -611,7 +622,7 @@ func (e *Exec) Reset() {
 		act = e.open(vs, plan, diff)
 	}
 	e.rs = map[string]*runState{}
-	if !e.boardLegacy() && err == nil {
+	if parks && !e.boardLegacy() && err == nil {
 		e.smRetryAll() // the player's Reset is the one explicit way a stored park is cleared
 	}
 	e.mu.Unlock()

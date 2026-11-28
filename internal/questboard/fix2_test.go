@@ -110,3 +110,81 @@ func TestLegacyBoardHonoursStoredPark(t *testing.T) {
 		})
 	}
 }
+
+// Finding 7: switching quests.board off drops the in-memory state only; a stored park stays until the player lifts it.
+func TestBoardOffKeepsStoredParks(t *testing.T) {
+	for _, class := range smClasses {
+		t.Run(class, func(t *testing.T) {
+			r := parkRig(t, class, true)
+			r.x.SetEnabled(false)
+			r.x.SetEnabled(true)
+			if d := r.next(); d.Kind != DecBlocked {
+				t.Fatalf("the knob switch lifted the park: %+v", d)
+			}
+			r.x.Reset() // the player's Reset still clears it
+			if d := r.next(); d.Kind != DecRun {
+				t.Fatalf("Reset must clear the park: %+v", d)
+			}
+		})
+	}
+}
+
+// Finding 5: the executor follows quests.boardSM at run time (SetSM), like the guards that read the knob live.
+func TestSetSMFollowsTheKnob(t *testing.T) {
+	for _, class := range smClasses {
+		t.Run(class, func(t *testing.T) {
+			r := &rig{t: t, b: mustBoard(t), dir: t.TempDir(), hero: "Testy", old: true}
+			r.f = NewFake(r.b, class, 6)
+			r.restart()
+			r.x.SetSM(true)
+			if !r.x.SM() {
+				t.Fatal("SetSM(true) did not switch the executor")
+			}
+			if err := r.x.Accept(den, clr); err != nil {
+				t.Fatal(err)
+			}
+			fail := StepResult{StepFailed, "no path to the Den", ""}
+			r.f.Script = []StepResult{fail, fail, fail}
+			r.tick(3)
+			r.old, r.sm = false, true
+			r.restart()
+			if d := r.next(); d.Kind != DecBlocked {
+				t.Fatalf("the park of a machine switched on at run time was not stored: %+v", d)
+			}
+			r.x.SetSM(false)
+			if r.x.SM() || !r.x.boardLegacy() {
+				t.Fatal("SetSM(false) did not switch back")
+			}
+		})
+	}
+}
+
+// Finding 6: the park codes that were gave_up before cellar3gate and refusalpark keep the one retry a new release gives.
+func TestSMReleaseRetriesNoPathAndRefusedOnce(t *testing.T) {
+	for _, class := range smClasses {
+		for _, code := range []string{"no_path", "refused_repeatedly"} {
+			t.Run(class+"/"+code, func(t *testing.T) {
+				r := releaseParkRig(t, class)
+				if err := r.x.st.UpdateSM(nil, func(m *SM) error {
+					m.find(den, clr, "normal").Code = code
+					return nil
+				}); err != nil {
+					t.Fatal(err)
+				}
+				r.restartRelease("A")
+				if d := r.next(); d.Kind != DecBlocked {
+					t.Fatalf("same release must stay parked: %+v", d)
+				}
+				r.restartRelease("B")
+				if d := r.next(); d.Kind != DecRun {
+					t.Fatalf("release B must retry the %s park once: %+v", code, d)
+				}
+				r.restartRelease("B")
+				m, _ := r.x.st.LoadSM(nil)
+				if run := m.find(den, clr, "normal"); run == nil || run.RetriesAfterRelease != 1 {
+					t.Fatalf("history: %+v", run)
+				}
+			})
+		}
+	}
+}

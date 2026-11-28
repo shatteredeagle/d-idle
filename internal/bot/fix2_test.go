@@ -101,3 +101,27 @@ func boardParked(t *testing.T, st *questboard.Store) bool {
 	}
 	return false
 }
+
+// Fable review 2 finding 5 (card fix2): quests.boardSM edited at run time reaches the executor, which was built with the
+// knob's value at start; the guards read it live, so the two must not disagree.
+func TestBoardExecFollowsBoardSMKnobLive(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		t.Run(class.String(), func(t *testing.T) {
+			g, x := boardRig(t, true)
+			g.w.set(func(w *world) { w.class = class })
+			if x.SM() {
+				t.Fatal("built with quests.boardSM 0 but on the machine")
+			}
+			g.r.e.Tune.Quests.BoardSM = 1
+			g.r.boardRTFor()
+			if !x.SM() {
+				t.Fatal("quests.boardSM 1 at run time: the executor stayed on the legacy board")
+			}
+			g.r.e.Tune.Quests.BoardSM = 0
+			g.r.boardRTFor()
+			if x.SM() {
+				t.Fatal("quests.boardSM 0 at run time: the executor stayed on the machine")
+			}
+		})
+	}
+}
