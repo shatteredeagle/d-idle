@@ -196,6 +196,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- ab6763901 11-28 01:29 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
+- 317417875 11-28 01:28 `Merge branch 'main' into nightlog` (-)
 - 702b6cfd5 11-28 01:23 `Merge agent/nf1: nf1: nav strip behind a sealed frontier pocket (TASK-1102)` (nf1)
 - 6aa6ad5b9 11-28 01:22 `Merge branch 'main' into nf1` (-)
 - 93b181848 11-28 01:15 `Merge agent/fix8: fix8: build-table consistency check, capability facts, SelectProfile error, combat keys, traps list, mana_heavy in Normal (TASK-1097)` (fix8)
@@ -204,6 +206,4 @@
 - d89ce280c 11-28 01:11 `Merge agent/rv4: review 13: sandbox live log review (docs)` (rv4)
 - af0509e9f 11-28 01:09 `Merge branch 'main' into rv4` (-)
 - 76fbf6545 11-28 01:00 `Merge branch 'main' into fix8` (-)
-- 5716e032a 11-28 00:57 `Merge agent/forkrebase: fork rebase doc 2026-11-28 (docs)` (forkrebase)
-- 80c57400c 11-28 00:57 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
 <!-- statusgen:end -->
