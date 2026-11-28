@@ -1636,6 +1636,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - agent/rv3: round-2 review C: security, PG, data, pipeline (docs) (merged 2026-11-28) <!--sg:agent/rv3-->
 - agent/rv4: review 13: sandbox live log review (docs) (merged 2026-11-28) <!--sg:agent/rv4-->
 - fix8: builds-as-data fixes from fable review 8 (TASK-1097, merged 2026-11-28, acceptance 7 of 7): Offline, not verified live. Consistency test with ratchet (110 cap rows, no other finding), no Sorceress fallback (fighter refuses without a profile, soft invariant no-combat-profile), class and combat keys required by the loader, main-attack test covers all ... <!--sg:agent/fix8-->
+- navbarracks: no route from the Barracks up to the Outer Cloister when the hero starts in the Barracks (TASK-1102, merged 2026-11-28, acceptance 1 of 2): Cause found offline, NOT verified live: unprovenTarget planned only every fifth cell of a 131 cell frontier, so a sealed pocket sorting before the 4 real strip cells hid them (live error reproduced by TestExitToFindsTheStripBehindASealedFrontierPocket, fails ... <!--sg:agent/nf1-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
