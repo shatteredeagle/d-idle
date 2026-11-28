@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- ledger: diffReadyV2 + advisor bundles on both sandboxes (re-flip) <!--sg:agent/ledger-bot-diffReadyV2-items-advisor-20261128-034138-->
 - fable review 5: dark ledger process (docs) <!--sg:agent/fable-fr5-->
 - fable review 1: item flows (docs) <!--sg:agent/fable-fr1-->
 - fable review 3: combat, nav, survival (docs) <!--sg:agent/fable-fr3-->

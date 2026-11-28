@@ -187,6 +187,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- b4b821f56 11-27 22:44 `Merge agent/ledger-bot-diffReadyV2-items-advisor-20261128-034138: ledger: diffReadyV2 + advisor bundles on both sandboxes (re-flip)` (ledger-bot-diffReadyV2-items-advisor-20261128-034138)
+- bba059e4c 11-27 22:43 `Merge branch 'main' into ledger-bot-diffReadyV2-items-advisor-20261128-034138` (-)
 - c2baa8c30 11-27 22:41 `Merge agent/fable-fr5: fable review 5: dark ledger process (docs)` (fable-fr5)
 - f53f63a4c 11-27 22:41 `Merge agent/fable-fr1: fable review 1: item flows (docs)` (fable-fr1)
 - 270609cdb 11-27 22:40 `Merge branch 'main' into fable-fr5` (-)
@@ -195,6 +197,4 @@
 - 4b0cdccb4 11-27 22:35 `Merge branch 'main' into fable-fr3` (-)
 - 388fd1316 11-27 22:35 `Merge agent/autoflip: autoflip: plan/run/graduate-list tool (TASK-1092)` (autoflip)
 - 794d66c7c 11-27 22:34 `Merge branch 'main' into autoflip` (-)
-- e340dc50e 11-27 22:25 `Merge agent/darkthrottle: darkthrottle: ledger cap, by_design status, flip_plan, sandbox-first doc (TASK-1091)` (darkthrottle)
-- af5382fe3 11-27 22:24 `Merge branch 'main' into darkthrottle` (-)
 <!-- statusgen:end -->
