@@ -150,7 +150,7 @@ Safe next flips, in order, each after its fix and one control-0 recorded night s
 
 ### What the control path is
 
-`areaGuardWhy` asks the route guard, Barracks and the NAS host first, then `admitEnter` (`bot/routeguard.go:178` to 188). With `bot.admission` 1 the words of `admit.MayEnter` replace the words of the four old judges; the old judges still run and the differ counter still counts (`bot/admission.go:79` to 93, 125 to 131). `admitLeave` takes only the quest-walk row; the lean exit line is log-only (95 to 122).
+`areaGuardWhy` asks the route guard, Barracks and the Countess-level guards first, then `admitEnter` (`bot/routeguard.go:178` to 188). With `bot.admission` 1 the words of `admit.MayEnter` replace the words of the four old judges; the old judges still run and the differ counter still counts (`bot/admission.go:79` to 93, 125 to 131). `admitLeave` takes only the quest-walk row; the lean exit line is log-only (95 to 122).
 
 ### What can differ from the old judges (V by reading both sides)
 
