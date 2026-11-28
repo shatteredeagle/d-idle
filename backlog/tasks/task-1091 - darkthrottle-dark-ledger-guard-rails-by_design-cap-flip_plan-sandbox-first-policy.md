@@ -1,10 +1,13 @@
 ---
 id: TASK-1091
-title: 'darkthrottle: dark ledger guard rails (by_design, cap, flip_plan, sandbox-first policy)'
-status: Proposed
+title: >-
+  darkthrottle: dark ledger guard rails (by_design, cap, flip_plan,
+  sandbox-first policy)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T02:54:00Z'
+updated_date: '2026-11-28T03:34:00Z'
 labels:
   - ops
   - chore
