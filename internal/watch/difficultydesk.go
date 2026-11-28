@@ -5,6 +5,10 @@ import (
 	"mime"
 	"net/http"
 	"strings"
+	"sync"
+	"time"
+
+	"d2lod-bot/internal/questboard"
 )
 
 // The owner's go for the difficulty hop (bot.diffReadyV2, docs/diffready.md): a Return screen section that shows the
@@ -29,6 +33,33 @@ type DifficultyOffer struct {
 type DifficultyConfig struct {
 	Offer func() DifficultyOffer
 	Go    func(target string) (string, error)
+	Now   func() time.Time // nil: time.Now (the hourly budget of the POST)
+
+	mu   sync.Mutex
+	gone []time.Time // POSTs that reached Go in the last hour
+}
+
+// difficultyGoPerHour is the budget of the page door, the same number as the operator verb's (ops.PerQuestHour).
+const difficultyGoPerHour = 6
+
+// admit counts one go against the hourly budget.
+func (c *DifficultyConfig) admit() bool {
+	now := time.Now()
+	if c.Now != nil {
+		now = c.Now()
+	}
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	i := 0
+	for i < len(c.gone) && now.Sub(c.gone[i]) >= time.Hour {
+		i++
+	}
+	c.gone = c.gone[i:]
+	if len(c.gone) >= difficultyGoPerHour {
+		return false
+	}
+	c.gone = append(c.gone, now)
+	return true
 }
 
 func titleCase(s string) string {
@@ -71,7 +102,9 @@ type difficultyBody struct {
 }
 
 // DifficultyPostHandler is POST /api/difficulty/go {target} on the answer listener: origin list, token, JSON only.
-// A refusal (not ready) is 409 with the reason in error.
+// A refusal (not ready, measured run) is 409 with the reason in error; more than difficultyGoPerHour is 429. Every
+// request that names a target writes one audit line (client class and agent family, never an address), like the
+// operator verb go-difficulty.
 func DifficultyPostHandler(c *DifficultyConfig, o AnswerOptions) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		origin := r.Header.Get("Origin")
@@ -112,8 +145,19 @@ func DifficultyPostHandler(c *DifficultyConfig, o AnswerOptions) http.Handler {
 			fail(http.StatusServiceUnavailable, "off", errors.New("the difficulty hop is not available").Error())
 			return
 		}
+		ev := questboard.AuditEvent{Action: "go-difficulty", Quest: b.Target, Path: safePath(r.URL.Path),
+			Remote: remoteClass(r.RemoteAddr), Agent: agentFamily(r.UserAgent()), Status: http.StatusOK, OK: true}
+		defer func() { logQuestAction(ev) }()
+		refuse := func(code int, c, msg string) {
+			ev.OK, ev.Status, ev.Code, ev.Reason = false, code, c, msg
+			fail(code, c, msg)
+		}
+		if !c.admit() {
+			refuse(http.StatusTooManyRequests, "rate_limited", "the difficulty go was pressed 6 times in the last hour; wait")
+			return
+		}
 		if _, err := c.Go(b.Target); err != nil {
-			fail(http.StatusConflict, "not-ready", err.Error())
+			refuse(http.StatusConflict, "not-ready", err.Error())
 			return
 		}
 		writeJSON(w, 200, hallReply{OK: true, Changed: true})
