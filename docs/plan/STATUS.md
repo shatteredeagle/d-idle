@@ -44,7 +44,6 @@
 | cellar3gate | in-progress | - | `internal/nav/exit.go`<br>`internal/nav/cellar3gate_test.go`<br>`internal/questboard/`<br>`docs/probes/cellar3-gate-capture.md` | - |
 | holereach | proposed | - | `internal/bot/zonemodel.go`<br>`internal/bot/zonemodel_test.go` | - |
 | pgfix | proposed | - | `cmd/d2scenario`<br>`internal/scenario`<br>`tools/provingground/scenarios`<br>`docs/process/proving-ground.md` | - |
-| fix1 | proposed | - | `internal/vaultkeep/`<br>`internal/d2dctl/`<br>`internal/watch/`<br>`docs/design/fork-order-id-spec.md` | - |
 | fix7 | proposed | - | `internal/bot/`<br>`internal/arbiter/`<br>`internal/admit/`<br>`cmd/d2bot/`<br>`docs/design/arbiter-target-and-migration.md`<br>`docs/arbiter.md`<br>`docs/probes/` | - |
 | fix6 | in-progress | - | `cmd/d2scenario/`<br>`internal/scenario/`<br>`tools/provingground/`<br>`tools/ci/check.sh`<br>`docs/process/proving-ground.md`<br>`docs/process/proving-ground-status.md`<br>`docs/probes/pg-ops-handoff-2026-11-28.md`<br>`data/stepgrounds/steps.json` | - |
 | fix2 | in-progress | - | `internal/questboard/`<br>`internal/bot/`<br>`docs/questboard.md` | - |

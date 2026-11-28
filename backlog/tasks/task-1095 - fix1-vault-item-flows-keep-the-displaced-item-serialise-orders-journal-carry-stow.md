@@ -1,10 +1,13 @@
 ---
 id: TASK-1095
-title: 'fix1: vault item flows keep the displaced item, serialise orders, journal carry/stow'
-status: Proposed
+title: >-
+  fix1: vault item flows keep the displaced item, serialise orders, journal
+  carry/stow
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T03:41:00Z'
+updated_date: '2026-11-28T04:33:00Z'
 labels:
   - bot
   - bot-fix

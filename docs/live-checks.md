@@ -126,3 +126,4 @@ Closing rule: a card closes when merged with offline acceptance proven; every op
 | TASK-1069 logsink | #4 | LIVE: a sandbox on the next release shows d2bot ops log lines with inv= and tick | live drill on the sandbox, fresh hero, per the card result | open |
 | TASK-1078 zonepace | #4 | Live Questy check: picks Black Marsh or Tamoe at clvl 15-16 (needs live sandbox) | live drill on the sandbox, fresh hero, per the card result | open |
 | TASK-1094 fix3 | #6 | live: combat.hammer-in-pack drill on a build whose hammerdin row carries enabled true | live drill on the sandbox, fresh hero, per the card result | open |
+| TASK-1095 fix1 | #6 | live check on a sandbox: Equip from the Vault with a worn item, displaced item is a vault record | live drill on the sandbox, fresh hero, per the card result | open |
