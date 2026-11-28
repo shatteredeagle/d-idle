@@ -23,14 +23,19 @@ func (r *Runner) runGoalControlled(ctx context.Context, snap *d2.Snapshot, c con
 	sh := r.arb.sh
 	r.arb.mu.Unlock()
 	d, ok := sh.Decide(v)
-	acted, took := false, false
+	acted, took, declined := false, false, false
 	if ok && d.Chosen != nil {
 		acted, took = r.arbAct(ctx, snap, c, d, t.ArbiterFamilies)
+		if arbHooked(t.ArbiterFamilies, arbiter.Family(d.Chosen.Source)) {
+			// Close the loop (review part 7, A3): a hook that did nothing backs its intent off, one that acted clears it.
+			sh.Report(*d.Chosen, v.Now, took)
+			declined = !took
+		}
 	}
 	if !took {
 		r.arb.mu.Lock()
 		r.arb.chose = ""
-		if ok && d.Chosen != nil {
+		if ok && d.Chosen != nil && !declined { // a family whose own hook just declined holds nothing back
 			r.arb.chose = arbiter.Family(d.Chosen.Source)
 		}
 		r.arb.mu.Unlock()
@@ -41,6 +46,11 @@ func (r *Runner) runGoalControlled(ctx context.Context, snap *d2.Snapshot, c con
 	}
 	r.arbCompare(sh, d, v.Now, acted, took)
 	return acted
+}
+
+// arbHooked says the family is under control and has a hook arbAct runs (quest and level only veto, see arbHoldsQuest).
+func arbHooked(mask int, fam string) bool {
+	return fam != arbiter.SrcQuest && fam != arbiter.SrcLevel && arbiter.Controlled(mask, fam)
 }
 
 // arbAct runs the controlled hook for the family the arbiter chose. took is false when the family is not under control
@@ -134,6 +144,11 @@ func (r *Runner) arbHoldsQuest() bool {
 		bit = arbiter.SrcLevel
 	}
 	if fam == "" || fam == arbiter.SrcQuest || !arbiter.Controlled(t.ArbiterFamilies, bit) {
+		return false
+	}
+	// The chain asked goldFarmOn and recoveryDue just above this call and both said no (the gear gate, or a board chunk
+	// that needs no gold): its rule stands, the arbiter's coarser recovery fact does not undo it.
+	if fam == arbiter.SrcGoldFarm || fam == arbiter.SrcRecovery {
 		return false
 	}
 	r.arb.ctl.Add(1)

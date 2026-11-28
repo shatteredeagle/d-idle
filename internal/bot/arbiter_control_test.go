@@ -274,3 +274,59 @@ func TestArbiterControlFarmHonoursTheLowLifeGate(t *testing.T) {
 		}
 	}
 }
+
+// A3 (fable review part 7): the loop is closed. A controlled hook that declines (chores on the trip cooldown) reports
+// the failure, so the arbiter backs the intent off and chooses something else on the next tick, and the declined
+// family does not veto the quest step. Before the fix the same tick was a 40 min "arbiter holds the quest step" slice
+// and the arbiter chose chores again. Two classes; the uncontrolled chores family (mask without bit 4) still vetoes.
+func TestArbiterControlDeclinedHookReportsAndDoesNotVeto(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		for _, tc := range []struct {
+			name string
+			mask int
+			held int64
+		}{{"chores controlled, declines", 3 | 4 | 64, 0}, {"chores not controlled", 3 | 64, 1}} {
+			g, _ := farmRig(t, 6, class)
+			g.w.set(func(w *world) { w.gold0 = 900 })
+			g.w.belt()
+			g.r.e.Tune.Bot.ArbiterShadow, g.r.e.Tune.Bot.ArbiterControl, g.r.e.Tune.Bot.ArbiterFamilies = 1, 1, tc.mask
+			g.r.setLastTrip(g.clock.Now())
+			g.r.poll()
+			g.clock.Sleep(time.Second)
+			g.r.runGoalShadowed(context.Background(), g.r.latest(), campControl())
+			d, _ := g.r.Arbiter()
+			if d.Chosen == nil || arbiter.Family(d.Chosen.Source) != "chores" {
+				t.Fatalf("%v %s: setup, the arbiter should want the refill: %+v", class, tc.name, d.Chosen)
+			}
+			if n := g.r.arb.ctl.Load(); n != tc.held {
+				t.Fatalf("%v %s: held or acted %d, want %d (why %s)", class, tc.name, n, tc.held, g.r.currentWhy())
+			}
+			if tc.held != 0 {
+				continue
+			}
+			g.r.poll()
+			g.clock.Sleep(time.Second)
+			g.r.setLastTrip(g.clock.Now())
+			g.r.runGoalShadowed(context.Background(), g.r.latest(), campControl())
+			if d, _ := g.r.Arbiter(); d.Chosen != nil && arbiter.Family(d.Chosen.Source) == "chores" {
+				t.Fatalf("%v: the declined refill was chosen again one second later (no back-off): %+v", class, d.Chosen)
+			}
+		}
+	}
+}
+
+// A3: the chain declined recovery on purpose (gear gate, or a board chunk that needs no gold: recoveryDue) before it
+// asks arbHoldsQuest; the arbiter's choice of recovery or the gold farm must not turn that chunk into a leveling slice.
+// Another family (an uncontrolled refill) still holds the quest step. Two classes.
+func TestArbiterRecoveryChoiceDoesNotVetoTheChunkTheChainAllows(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		g, _ := farmRig(t, 6, class)
+		g.r.e.Tune.Bot.ArbiterShadow, g.r.e.Tune.Bot.ArbiterControl, g.r.e.Tune.Bot.ArbiterFamilies = 1, 1, 3|64
+		for fam, want := range map[string]bool{arbiter.SrcRecovery: false, arbiter.SrcGoldFarm: false, "chores": true, arbiter.SrcQuest: false} {
+			g.r.arb.chose = fam
+			if got := g.r.arbHoldsQuest(); got != want {
+				t.Fatalf("%v: arbiter chose %s: holds the quest step %v, want %v", class, fam, got, want)
+			}
+		}
+	}
+}
