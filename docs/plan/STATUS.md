@@ -53,6 +53,7 @@
 | act2night | proposed | - | `internal/bot/`<br>`tools/provingground/scenarios/stepexec-act2chunks.json` | - |
 | townnight | proposed | - | `internal/town/`<br>`internal/supply/`<br>`tools/provingground/scenarios/townplan.json` | - |
 | led1 | in-progress | - | `data/darklaunch/`<br>`data/darklaunch.json`<br>`data/darklaunch-cap.json`<br>`tools/darklaunch/`<br>`tools/flip/`<br>`docs/process/dark-launch.md`<br>`docs/process/autoflip.md` | - |
+| fix1b | in-progress | - | `internal/vaultkeep`<br>`internal/questboard`<br>`internal/d2dctl` | - |
 | fix7b | in-progress | - | `internal/bot/`<br>`internal/arbiter/`<br>`internal/survival/`<br>`internal/combat/`<br>`cmd/d2bot/`<br>`docs/arbiter.md`<br>`docs/design/arbiter-target-and-migration.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
@@ -197,6 +198,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 13bbafe89 11-28 02:50 `Merge agent/fix1b: fix1b: vault equip by bytes etc (TASK-1114)` (fix1b)
+- 090e4434c 11-28 02:49 `Merge branch 'main' into fix1b` (-)
 - f9b1c3551 11-28 02:40 `Merge agent/nf3b: nf3b: nav seam, mapKillErr, Approach field NPC (TASK-1104/1107)` (nf3b)
 - 1315f88eb 11-28 02:39 `Merge branch 'main' into nf3b` (-)
 - 2179c58a0 11-28 02:30 `Merge agent/fix7b: fix7b: arbiter fixes N1-N6 (TASK-1115)` (fix7b)
@@ -205,6 +208,4 @@
 - 1bc4edc57 11-28 02:23 `Merge agent/road4: road4: d2shadow (TASK-1121)` (road4)
 - 14942d262 11-28 02:23 `Merge agent/vault2: vault2: atomic Reserve, merc journal (TASK-1113)` (vault2)
 - d7efb045a 11-28 02:20 `Merge branch 'main' into roadfresh` (-)
-- 2142d8f04 11-28 02:20 `Merge branch 'main' into road4` (-)
-- 0017b3d7b 11-28 02:20 `Merge branch 'main' into vault2` (-)
 <!-- statusgen:end -->

@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- fix1b: vault equip by bytes etc (TASK-1114) <!--sg:agent/fix1b-->
 - nf3b: nav seam, mapKillErr, Approach field NPC (TASK-1104/1107) <!--sg:agent/nf3b-->
 - fix7b: arbiter fixes N1-N6 (TASK-1115) <!--sg:agent/fix7b-->
 - roadfresh: roadmap refresh (TASK-1123) <!--sg:agent/roadfresh-->
