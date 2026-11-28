@@ -92,7 +92,7 @@ func scenarioHero(s scenario.Scenario, class string, tabs hero.Tables) (hero.Her
 	h := hero.Hero{Decl: hero.Decl{Profile: hero.Banked, Class: strings.ToLower(class), Build: s.Trigger.Build, Level: lvl},
 		StatPts: 5 * (lvl - 1), SkillPts: lvl - 1, AttackID: -1, AttackIndex: -1}
 	if s.HeroProfile() == scenario.HeroPlayed && lvl > 1 && tabs != nil {
-		if ph, err := hero.Resolve(hero.Decl{Profile: hero.Played, Class: class, Build: s.Trigger.Build, Level: lvl, Weapon: "none"}, tabs); err == nil {
+		if ph, err := playedHero(s, class, tabs); err == nil {
 			h = ph
 		}
 	}
@@ -161,6 +161,30 @@ func staticCheck(s scenario.Scenario, class string, su scenario.Setup, t hero.Ta
 			}
 		}
 	}
+	if len(s.Pre.Bind) == 0 && len(s.Pre.Summon) == 0 {
+		return nil
+	}
+	h, err := playedHero(s, class, t)
+	if err != nil {
+		return fmt.Errorf("%s: %w", at, err)
+	}
+	// pre.skills rows are ids the name tables cannot map, so a scenario with any is left to the prep self-check
+	unlearned := func(key, skill string) error {
+		if len(s.Pre.Skills) == 0 && h.Skills[skill] == 0 {
+			return fmt.Errorf("%s: %s: %s gets no point from build %s at clvl %d and the scenario has no pre.skills", at, key, skill, h.Build, h.Level)
+		}
+		return nil
+	}
+	for _, b := range s.Pre.Bind {
+		if err := unlearned("pre.bind", b.Skill); err != nil {
+			return err
+		}
+	}
+	for _, m := range s.Pre.Summon {
+		if err := unlearned("pre.summon", m.Skill); err != nil {
+			return err
+		}
+	}
 	return nil
 }
 
@@ -223,6 +247,12 @@ func prepSelfCheck(ctx context.Context, c *d2dctl.Client, s scenario.Scenario, c
 		}
 		o.Potions = &n
 	}
+	if h.MinMinions > 0 { // an unreadable reply leaves the row "not read", which fails
+		if m, err := c.Minions(ctx); err == nil {
+			n := len(m.Minions)
+			o.Minions = &n
+		}
+	}
 	cs := h.SelfCheckFloors(o, f)
 	failed := hero.Failed(cs)
 	if lf, err := os.OpenFile(ledger, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0o644); err == nil {
@@ -233,14 +263,86 @@ func prepSelfCheck(ctx context.Context, c *d2dctl.Client, s scenario.Scenario, c
 	return failed
 }
 
+// playedHero is the played hero of a scenario: the build table's hero plus the scenario's own hand skills (pre.bind,
+// resolved by name from the class table) and the summons its setup must leave standing (pre.summon). A name the tables
+// do not know, or a skill of another class, is an error naming it.
+func playedHero(s scenario.Scenario, class string, tabs hero.Tables) (hero.Hero, error) {
+	h, err := hero.Resolve(hero.Decl{Profile: hero.Played, Class: class, Build: s.Trigger.Build, Level: s.Pre.Level, Weapon: "none"}, tabs)
+	if err != nil {
+		return h, err
+	}
+	for _, b := range s.Pre.Bind {
+		if err := h.BindHand(b.Skill, b.HandName(), tabs); err != nil {
+			return h, fmt.Errorf("pre.bind: %w", err)
+		}
+	}
+	for _, m := range s.Pre.Summon {
+		h.MinMinions += m.Standing()
+	}
+	return h, nil
+}
+
+// summonFrames is how long the prep steps after one setup cast: a cast animation and the summon's arrival (S: a cast is
+// under a second at 25 frames a second; U on d2d for each summon skill).
+const summonFrames = 40
+
+// summonMinions is pre.summon: after the points are spent the hero casts each summon skill beside itself with the
+// player's cast command (`cmd skill`), every cast ledgered as SETUP. The id comes from the class table by name; a
+// skill the class does not have is an error. Whether the summons stand is the self-check's "minions" row.
+func summonMinions(ctx context.Context, c *d2dctl.Client, s scenario.Scenario, class string, su scenario.Setup, tabs hero.Tables, ledger string) error {
+	if len(su.Summon) == 0 {
+		return nil
+	}
+	if tabs == nil {
+		return fmt.Errorf("pre.summon needs the game tables")
+	}
+	lf, err := os.OpenFile(ledger, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0o644)
+	if err != nil {
+		return err
+	}
+	defer lf.Close()
+	enc := json.NewEncoder(lf)
+	for _, m := range su.Summon {
+		id, ok := tabs.SkillID(m.Skill)
+		if !ok {
+			return fmt.Errorf("pre.summon: skill %q is not in the tables", m.Skill)
+		}
+		if _, ok := tabs.SkillIndex(strings.ToLower(class), id); !ok {
+			return fmt.Errorf("pre.summon: skill %q (id %d) is not a %s skill", m.Skill, id, class)
+		}
+		for i := 0; i < m.Casts(); i++ {
+			pl, err := c.Players(ctx)
+			if err != nil || len(pl.Items) == 0 {
+				return fmt.Errorf("pre.summon %s: hero position not read: %v", m.Skill, err)
+			}
+			line := fmt.Sprintf("cmd skill %d %.1f %.1f", id, pl.Items[0].X+2, pl.Items[0].Y)
+			l := ledgerLine{Time: time.Now().Format(time.RFC3339), Verb: line,
+				Reason: fmt.Sprintf("SETUP: scenario %s (%s): summon %s, cast %d of %d", s.ID, class, m.Skill, i+1, m.Casts())}
+			rep, err := c.Do(ctx, line)
+			if rep != nil {
+				l.Reply = strings.Join(append([]string{rep.Rest}, rep.Lines...), " | ")
+			}
+			_ = enc.Encode(l)
+			if err != nil {
+				return fmt.Errorf("%s: %w", line, err)
+			}
+			if _, err := c.Step(ctx, summonFrames); err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
 // spendPoints is the played profile's second half: after the level verbs the hero spends its points as the build table
-// does and binds the main attack, with player commands (`cmd stat`, `cmd skillpt`, `cmd select`), each ledgered. A banked
+// does, binds the main attack and then the scenario's own hand skills (pre.bind), with player commands (`cmd stat`,
+// `cmd skillpt`, `cmd select`), each ledgered. A banked
 // scenario, or a level 1 hero, sends nothing. A hero the library cannot make is an error (BLOCKED), never a banked one.
 func spendPoints(ctx context.Context, c *d2dctl.Client, s scenario.Scenario, class string, su scenario.Setup, tabs hero.Tables, ledger string) error {
 	if su.HeroProfile != scenario.HeroPlayed || s.Pre.Level < 2 {
 		return nil
 	}
-	h, err := hero.Resolve(hero.Decl{Profile: hero.Played, Class: class, Build: s.Trigger.Build, Level: s.Pre.Level, Weapon: "none"}, tabs)
+	h, err := playedHero(s, class, tabs)
 	if err != nil {
 		return err
 	}

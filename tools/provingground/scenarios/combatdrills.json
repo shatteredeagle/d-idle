@@ -29,6 +29,12 @@
       "skill": 151,
       "points": 1
      }
+    ],
+    "bind": [
+     {
+      "skill": "Whirlwind",
+      "hand": "right"
+     }
     ]
    },
    "trigger": {
@@ -52,7 +58,7 @@
    "needs": [
     "lab-verbs-attach"
    ],
-   "provenance": "SETUP: level 30, purse 3000, class skill points by `debug points` (Whirlwind id 151, S skills.txt), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position, encounter and skill: mechanics only, never evidence about balance or play).",
+   "provenance": "SETUP: level 30, purse 3000, class skill points by `debug points` (Whirlwind id 151, S skills.txt), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position, encounter and skill: mechanics only, never evidence about balance or play). TASK-1105: the drill's skill bound by name with `cmd select` after the points (pre.bind: Whirlwind on the right hand). CHEATED setup: mechanics only.",
    "notes": "Ten Fallen (a pack) beside a clvl 30 Barbarian with Whirlwind at 1 point (reqlevel 30, S skills.txt; no build table learns it, so the point is a SETUP write). Pair: combat.whirlwind-clears.control (knob 0, same setup): no whirl line, no death. U: the main attack of the played hero and whether the right-skill slot holds Whirlwind (the driver casts the row itself); the shadow mode 1 would log `combat move shadow use=whirl`. Lab run: docs/probes/combat-drills-2026-11-27.md.",
    "assert": [
     {
@@ -111,6 +117,12 @@
       "skill": 151,
       "points": 1
      }
+    ],
+    "bind": [
+     {
+      "skill": "Whirlwind",
+      "hand": "right"
+     }
     ]
    },
    "trigger": {
@@ -134,7 +146,7 @@
    "needs": [
     "lab-verbs-attach"
    ],
-   "provenance": "SETUP: level 30, purse 3000, class skill points by `debug points` (Whirlwind id 151, S skills.txt), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position, encounter and skill: mechanics only, never evidence about balance or play).",
+   "provenance": "SETUP: level 30, purse 3000, class skill points by `debug points` (Whirlwind id 151, S skills.txt), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position, encounter and skill: mechanics only, never evidence about balance or play). TASK-1105: the drill's skill bound by name with `cmd select` after the points (pre.bind: Whirlwind on the right hand). CHEATED setup: mechanics only.",
    "notes": "Control arm of combat.whirlwind-clears: same hero and pack, combat.deliveryUpkeep 0 (rollback). Green means the knob really switches the driver off.",
    "assert": [
     {
@@ -182,7 +194,13 @@
       "n": 12
      }
     ],
-    "skills": []
+    "skills": [],
+    "bind": [
+     {
+      "skill": "Zeal",
+      "hand": "left"
+     }
+    ]
    },
    "trigger": {
     "goals": "farm:Blood Moor",
@@ -205,7 +223,7 @@
    "needs": [
     "lab-verbs-attach"
    ],
-   "provenance": "SETUP: level 24, purse 3000, class skill points by `debug points` (no extra points: the build table learns Zeal), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position, encounter and skill: mechanics only, never evidence about balance or play).",
+   "provenance": "SETUP: level 24, purse 3000, class skill points by `debug points` (no extra points: the build table learns Zeal), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position, encounter and skill: mechanics only, never evidence about balance or play). TASK-1105: the drill's skill bound by name with `cmd select` after the points (pre.bind: Zeal on the left hand). CHEATED setup: mechanics only.",
    "notes": "Twelve Fallen around a clvl 24 Paladin on the Zealot-lite table (Zeal is held, press row sliceMs 600). The card's oracle (a potion within one poll of the life line during a hold) needs a scripted life drop the scenario format has no verb for: pre.life_pct only sets the start life, so the pack does the dropping. U: both patterns, first live run fixes them.",
    "assert": [
     {
@@ -259,6 +277,12 @@
       "skill": 54,
       "points": 1
      }
+    ],
+    "bind": [
+     {
+      "skill": "Teleport",
+      "hand": "right"
+     }
     ]
    },
    "trigger": {
@@ -282,7 +306,7 @@
    "needs": [
     "lab-verbs-attach"
    ],
-   "provenance": "SETUP: level 24, purse 3000, class skill points by `debug points` (Teleport id 54, V docs), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position, encounter and skill: mechanics only, never evidence about balance or play).",
+   "provenance": "SETUP: level 24, purse 3000, class skill points by `debug points` (Teleport id 54, V docs), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position, encounter and skill: mechanics only, never evidence about balance or play). TASK-1105: the drill's skill bound by name with `cmd select` after the points (pre.bind: Teleport on the right hand). CHEATED setup: mechanics only.",
    "notes": "Fourteen Fallen around a clvl 24 Fire Sorceress with Teleport at 1 point (id 54, V docs/act2.md). Shadow mode 1 logs `combat move shadow use=escape`. The existing teleport drill D22 stays the nav check. U: a surround forms fast enough in the Blood Moor; the trigger numbers are the profile's move row.",
    "assert": [
     {
@@ -334,6 +358,18 @@
       "skill": 74,
       "points": 3
      }
+    ],
+    "bind": [
+     {
+      "skill": "Corpse Explosion",
+      "hand": "right"
+     }
+    ],
+    "summon": [
+     {
+      "skill": "Clay Golem",
+      "n": 1
+     }
     ]
    },
    "trigger": {
@@ -357,7 +393,7 @@
    "needs": [
     "lab-verbs-attach"
    ],
-   "provenance": "SETUP: level 24, purse 3000, class skill points by `debug points` (Corpse Explosion id 74, V docs), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position, encounter and skill: mechanics only, never evidence about balance or play).",
+   "provenance": "SETUP: level 24, purse 3000, class skill points by `debug points` (Corpse Explosion id 74, V docs), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position, encounter and skill: mechanics only, never evidence about balance or play). TASK-1105: the drill's skill bound by name with `cmd select` after the points (pre.bind: Corpse Explosion on the right hand); one Clay Golem cast at setup with `cmd skill` (pre.summon; the self-check wants 1 summon standing). CHEATED setup: mechanics only.",
    "notes": "Ten Fallen beside a clvl 24 Necromancer with Corpse Explosion at 3 points (id 74, V docs). The card's oracle (hits per cast at least 2, at most 2 casts with no corpse) needs a cast counter line the bot does not log yet: only the marker line is asserted. U: that the hero kills first (Blood Moor Fallen) so corpses exist.",
    "assert": [
     {
@@ -409,6 +445,12 @@
       "skill": 112,
       "points": 1
      }
+    ],
+    "bind": [
+     {
+      "skill": "Blessed Hammer",
+      "hand": "left"
+     }
     ]
    },
    "trigger": {
@@ -432,7 +474,7 @@
    "needs": [
     "lab-verbs-attach"
    ],
-   "provenance": "SETUP: level 24, purse 3000, class skill points by `debug points` (Blessed Hammer id 112, V docs/research/pal-skill-trace.md), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position and encounter, skill: mechanics only, never evidence about balance or play).",
+   "provenance": "SETUP: level 24, purse 3000, class skill points by `debug points` (Blessed Hammer id 112, V docs/research/pal-skill-trace.md), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position and encounter, skill: mechanics only, never evidence about balance or play). TASK-1105: the drill's skill bound by name with `cmd select` after the points (pre.bind: Blessed Hammer on the left hand). CHEATED setup: mechanics only.",
    "notes": "Twelve Fallen around a clvl 24 Paladin on the Hammerdin guide table (profile paladin/hammerdin carries stance insidePack standOff 2, leaveSurround 5, leaveLifePct 50, U numbers in profiles.json). Blessed Hammer 112 x1 is a SETUP point (reqlevel 18, V docs/research/pal-skill-trace.md). Pair: combat.hammer-in-pack.control (knob 0, no stance line); shadow arm: D2SCEN_KNOBS combat.deliveryUpkeep=1, expect `combat stance shadow`. U: that the hero starts outside standOff so a step appears at all; widen after the first run. GAP: no counter for casts in place or distance from the centroid; the stance line is the only evidence of the position rule.",
    "assert": [
     {
@@ -490,6 +532,12 @@
       "skill": 112,
       "points": 1
      }
+    ],
+    "bind": [
+     {
+      "skill": "Blessed Hammer",
+      "hand": "left"
+     }
     ]
    },
    "trigger": {
@@ -513,7 +561,7 @@
    "needs": [
     "lab-verbs-attach"
    ],
-   "provenance": "SETUP: level 24, purse 3000, class skill points by `debug points` (Blessed Hammer id 112, V docs/research/pal-skill-trace.md), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position and encounter, skill: mechanics only, never evidence about balance or play).",
+   "provenance": "SETUP: level 24, purse 3000, class skill points by `debug points` (Blessed Hammer id 112, V docs/research/pal-skill-trace.md), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position and encounter, skill: mechanics only, never evidence about balance or play). TASK-1105: the drill's skill bound by name with `cmd select` after the points (pre.bind: Blessed Hammer on the left hand). CHEATED setup: mechanics only.",
    "notes": "Control arm of combat.hammer-in-pack: same hero and pack, knob 0 (rollback). Green means the knob really switches the stance off.",
    "assert": [
     {
@@ -797,7 +845,13 @@
       "n": 12
      }
     ],
-    "skills": []
+    "skills": [],
+    "summon": [
+     {
+      "skill": "Clay Golem",
+      "n": 1
+     }
+    ]
    },
    "trigger": {
     "goals": "farm:Blood Moor",
@@ -820,7 +874,7 @@
    "needs": [
     "lab-verbs-attach"
    ],
-   "provenance": "SETUP: level 24, purse 3000, no extra skill points (the build table learns its skills), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position and encounter: mechanics only, never evidence about balance or play).",
+   "provenance": "SETUP: level 24, purse 3000, no extra skill points (the build table learns its skills), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position and encounter: mechanics only, never evidence about balance or play). TASK-1105: one Clay Golem cast at setup with `cmd skill` (pre.summon; the self-check wants 1 summon standing). CHEATED setup: mechanics only.",
    "notes": "Twelve Fallen against a clvl 24 summoner (profile necromancer/summoner has stance behindArmy behind 4 slack 3 bossMin 2, U numbers). No extra skill points: the build table learns the summons, so this one is not skill-CHEATED. Pair: combat.army-holds.control (knob 0, no stance line). `combat stance act=behind|retreat` is not asserted at min 1 because the hero may already stand in the line (U); retreat needs a boss. GAP: no counter for the hero-to-army distance, so `holds position` is asserted only as no death with the army raised.",
    "assert": [
     {
@@ -873,7 +927,13 @@
       "n": 12
      }
     ],
-    "skills": []
+    "skills": [],
+    "summon": [
+     {
+      "skill": "Clay Golem",
+      "n": 1
+     }
+    ]
    },
    "trigger": {
     "goals": "farm:Blood Moor",
@@ -896,7 +956,7 @@
    "needs": [
     "lab-verbs-attach"
    ],
-   "provenance": "SETUP: level 24, purse 3000, no extra skill points (the build table learns its skills), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position and encounter: mechanics only, never evidence about balance or play).",
+   "provenance": "SETUP: level 24, purse 3000, no extra skill points (the build table learns its skills), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position and encounter: mechanics only, never evidence about balance or play). TASK-1105: one Clay Golem cast at setup with `cmd skill` (pre.summon; the self-check wants 1 summon standing). CHEATED setup: mechanics only.",
    "notes": "Control arm of combat.army-holds: knob 0, the stance is off.",
    "assert": [
     {
@@ -944,7 +1004,13 @@
       "n": 12
      }
     ],
-    "skills": []
+    "skills": [],
+    "summon": [
+     {
+      "skill": "Oak Sage",
+      "n": 1
+     }
+    ]
    },
    "trigger": {
     "goals": "farm:Blood Moor",
@@ -967,7 +1033,7 @@
    "needs": [
     "lab-verbs-attach"
    ],
-   "provenance": "SETUP: level 24, purse 3000, no extra skill points (the build table learns its skills), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position and encounter: mechanics only, never evidence about balance or play).",
+   "provenance": "SETUP: level 24, purse 3000, no extra skill points (the build table learns its skills), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position and encounter: mechanics only, never evidence about balance or play). TASK-1105: one Oak Sage cast at setup with `cmd skill` (pre.summon; the self-check wants 1 summon standing). CHEATED setup: mechanics only.",
    "notes": "Twelve Fallen against a clvl 24 Fire Druid (Oak Sage from clvl 16 in the build table, S plandata). The Necromancer army is combat.army-holds. GAP: no counter for pet distance or pet deaths; asserted only that the pet driver acts and the hero takes no stance step.",
    "assert": [
     {
