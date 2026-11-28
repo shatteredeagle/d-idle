@@ -272,16 +272,16 @@
     ],
     "items": [
      {
+      "code": "cap",
+      "count": 5
+     },
+     {
       "code": "hp1",
       "count": 8
      },
      {
       "code": "mp1",
       "count": 4
-     },
-     {
-      "code": "cap",
-      "count": 10
      }
     ]
    },
@@ -305,7 +305,7 @@
     ]
    },
    "provenance": "CHEATED: level, gold and items by SETUP verbs (docs/forkcheats.md); town start, nothing written after the start. Mechanics only, never evidence about balance or play.",
-   "notes": "Invariant T2,T3 of docs/design/fable-review-2026-11-21/town-planner.md. U whether RED: expected on the keep count (I3, I4). The pack fullness setup (10 caps) is U.",
+   "notes": "Invariant T2,T3 of docs/design/fable-review-2026-11-21/town-planner.md. U whether RED: expected on the keep count (I3, I4). Pack fullness: 5 caps (2x2, S) given BEFORE the 12 potions so the large items meet an empty pack; with the two starter scrolls (U per class) that is 34 of 40 cells. The first version gave 10 caps after the potions, 52 cells, and both runs of 2026-11-27 were BLOCKED on `debug give cap pack: no room` (fix6); V on the lab d2d is still open.",
    "assert": [
     {
      "kind": "belt_at_least",

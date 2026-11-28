@@ -88,3 +88,36 @@ func TestScenarioHeroSelfCheck(t *testing.T) {
 		t.Errorf("a raw statpts write sets the expectation: %d", h.StatPts)
 	}
 }
+
+// The pack row: ten caps and twelve potions (the first town.plan.belt-refill-from-pack) cannot fit 40 cells and are
+// refused at T0, on two classes; the shipped five caps pass, and the fake d2d of the smoke prepares that hero.
+func TestStaticCheckPackRoom(t *testing.T) {
+	for _, class := range []string{"Paladin", "Sorceress"} {
+		s := fightScenario(16)
+		s.Pre.Items = []scenario.Item{{Code: "hp1", Count: 8}, {Code: "mp1", Count: 4}, {Code: "cap", Count: 10}}
+		su, err := scenario.BuildSetup(s, class, 1)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if err := staticCheck(s, class, su, hero.NameTables()); err == nil || !strings.Contains(err.Error(), "pack: the declared pack items need at least 52 cells") {
+			t.Errorf("%s: an overfull pack: %v", class, err)
+		}
+		s.Pre.Items[2].Count = 5
+		if err := staticCheck(s, class, su, hero.NameTables()); err != nil {
+			t.Errorf("%s: 32 cells: %v", class, err)
+		}
+	}
+	scs, err := loadAll(dir)
+	if err != nil {
+		t.Fatal(err)
+	}
+	s, err := findScenario(scs, "town.plan.belt-refill-from-pack")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, class := range s.Matrix.Classes {
+		if res := smokePrep(s, scenario.Run{ID: s.ID, Class: class, Seed: 11}, &smokeGame{}); res.Status == scenario.Blocked {
+			t.Errorf("%s: %s", class, res.Reason)
+		}
+	}
+}

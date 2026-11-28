@@ -285,8 +285,8 @@ step.act4.terrors_end.seals.open_seals	Paladin	60	295	59	-	-	0	79198edcaeb4
 step.act5.prison_of_ice.thaw.thaw_anya	Paladin	60	295	59	-	-	0	3e97e42cc178
 step.act5.prison_of_ice.thaw.travel_frozen_river	Paladin	60	295	59	-	-	0	b5374380eab0
 step.act5.rescue_arreat.doors.travel_frigid_highlands	Paladin	60	295	59	-	-	0	96d5e0cdd165
-town.plan.belt-refill-from-pack	Paladin	16	75	15	-	-	0	72fa48e2a241
-town.plan.belt-refill-from-pack	Sorceress	16	75	15	-	-	0	0e62e60775e2
+town.plan.belt-refill-from-pack	Paladin	16	75	15	-	-	0	3deef2d670bd
+town.plan.belt-refill-from-pack	Sorceress	16	75	15	-	-	0	463f69725c6a
 town.plan.broke-after-bank	Paladin	3	10	2	-	-	0	8c0d01cd5b62
 town.plan.broke-after-bank	Sorceress	3	10	2	-	-	0	e2559bcd56b2
 town.plan.determinism	Paladin	22	105	21	-	-	0	faf8fffd7426

@@ -37,6 +37,7 @@ type smokeGame struct {
 	levels   [30]int
 	hands    [2]int // left, right
 	pack     []string
+	belt     []string
 	used     int
 	ln       net.Listener
 	dir      string
@@ -124,6 +125,9 @@ func (g *smokeGame) handle(line string) string {
 		for i, code := range g.pack {
 			fmt.Fprintf(&b, "[%s loc=0 q=2 panel=0 id=%d size=1x1 at=%d,0]\n  item\n", code, 100+i, i)
 		}
+		for i, code := range g.belt { // U: the loc value of a belt item; the prep only asks "not worn (1), not in the stash"
+			fmt.Fprintf(&b, "[%s loc=2 q=2 panel=0 id=%d size=1x1 at=%d,0]\n  item\n", code, 200+i, i)
+		}
 		return b.String() + "ok\n"
 	case f[0] == "dump":
 		player := map[string]any{"class": strings.ToLower(g.class), "level": g.level, "exp": g.exp, "gold": g.gold, "stat_pts": g.statPts, "skill_pts": g.skillPts}
@@ -188,10 +192,16 @@ func (g *smokeGame) handle(line string) string {
 				g.used += packCells(f[2])
 				g.pack = append(g.pack, f[2])
 			}
+			if len(f) >= 4 && f[3] == "belt" {
+				g.belt = append(g.belt, f[2])
+			}
+			return "ok\n"
+		case "belt":
+			g.belt = nil
 			return "ok\n"
 		case "goto":
 			return "ok 30.5 20.5\n"
-		case "points", "wp", "warp", "spawn", "quest", "difficulty", "belt":
+		case "points", "wp", "warp", "spawn", "quest", "difficulty":
 			return "ok\n"
 		}
 	}

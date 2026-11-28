@@ -125,7 +125,7 @@ func isPotion(code string) bool {
 }
 
 // staticCheck is the T0 half of the self-check for one scenario and class: the goal is not met at the start, no ground
-// item is given before the position verb, and a hero above level 1 resolves with the build it plays and (unless the
+// item is given before the position verb, the declared pack items fit the pack, and a hero above level 1 resolves with the build it plays and (unless the
 // scenario is about points) gets its main attack at that level with quest points 0 (a quest record written by setup
 // does not grant its points).
 func staticCheck(s scenario.Scenario, class string, su scenario.Setup, t hero.Tables) error {
@@ -146,6 +146,9 @@ func staticCheck(s scenario.Scenario, class string, su scenario.Setup, t hero.Ta
 	if firstGround >= 0 && firstGround < lastPos {
 		return fmt.Errorf("%s: order: ground item %q given before the position verb", at, su.Verbs[firstGround].Line)
 	}
+	if n := packNeed(s); n > packCols*packRows { // the lab d2d answers "no room" and the run is BLOCKED (2026-11-27)
+		return fmt.Errorf("%s: pack: the declared pack items need at least %d cells, the pack has %d (give fewer or smaller items)", at, n, packCols*packRows)
+	}
 	if s.Pre.Level < 2 {
 		return nil
 	}
@@ -159,6 +162,18 @@ func staticCheck(s scenario.Scenario, class string, su scenario.Setup, t hero.Ta
 		}
 	}
 	return nil
+}
+
+// packNeed is a lower bound of the pack cells the declared pack items take (packCells: a code it does not know counts
+// one cell; the hero's starter items are not counted), so a scenario it refuses cannot be set up.
+func packNeed(s scenario.Scenario) int {
+	n := 0
+	for _, it := range append(append([]scenario.Item(nil), s.Pre.Items...), s.Pre.Pack...) {
+		if it.Where == "" || it.Where == "pack" {
+			n += packCells(it.Code) * max(it.Count, 1)
+		}
+	}
+	return n
 }
 
 // goalMet names why the run would have nothing to do: every --goals entry is a reach goal the start level already
