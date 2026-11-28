@@ -92,7 +92,7 @@ func (k *Keeper) EquipMerc(ctx context.Context, id string) (Result, bool) {
 	case !ok:
 		res.Code, res.Why = "missing", "no such item"
 		return res, true
-	case rec.State != vault.Recorded:
+	case rec.State != vault.Recorded || rec.Hold != "":
 		res.Code, res.Why = "state", "the item is not in the vault any more or is busy ("+string(rec.State)+")"
 		return res, true
 	case !rec.Identified:

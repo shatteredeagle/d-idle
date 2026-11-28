@@ -708,7 +708,8 @@ func (s *Store) dry(ev *event) error {
 		return fmt.Errorf("%w: %s is %s, event %s", ErrState, r.ID, r.State, ev.Ev)
 	}
 	// A reserved record moves only by its own order: sold by it, held again by it, or released.
-	if r.Hold != "" && ev.Ev != "release" && !((ev.Ev == "soldnow" || ev.Ev == "hold") && ev.Reason == r.Hold) {
+	// (seal and props only add decoded text to the record; they change neither its place nor its price.)
+	if r.Hold != "" && ev.Ev != "release" && ev.Ev != "seal" && ev.Ev != "props" && !((ev.Ev == "soldnow" || ev.Ev == "hold") && ev.Reason == r.Hold) {
 		return fmt.Errorf("%w: %w: %s by %s", ErrState, ErrHeld, r.ID, r.Hold)
 	}
 	switch ev.Ev {

@@ -323,7 +323,7 @@ func (k *Keeper) EquipEnqueue(ctx context.Context, id, slot string, wantNow bool
 		return res
 	}
 	k.mu.Unlock()
-	if rec.State != vault.Recorded {
+	if rec.State != vault.Recorded || rec.Hold != "" {
 		res.Code, res.Why = "state", "the item is not in the vault any more or is busy ("+string(rec.State)+")"
 		return res
 	}

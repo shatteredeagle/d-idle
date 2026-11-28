@@ -94,10 +94,12 @@ type Keeper struct {
 	SellConfirm func() int                         // loot.vaultSellConfirm
 	SaleFile    func() string                      // where the sale order is kept
 
-	smu     sync.Mutex // one sale at a time
-	smem    *SaleOrder
-	sloaded string
-	prices  sync.Map // record hash and identified flag -> gold
+	smu sync.Mutex // one sale at a time
+	// reserveHook is a test seam: it runs between a sale's quote and its reservation (the window a racing request hits).
+	reserveHook func()
+	smem        *SaleOrder
+	sloaded     string
+	prices      sync.Map // record hash and identified flag -> gold
 
 	nop    sync.Map   // record ids whose bytes decoded to no properties (BackfillProps tries them once per process)
 	pmu    sync.Mutex // serialises one gold order's unlock, payment and settle (taken before omu)

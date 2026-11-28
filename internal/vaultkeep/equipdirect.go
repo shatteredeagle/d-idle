@@ -125,7 +125,7 @@ func (k *Keeper) precheck(st *vault.Store, id, slotWord string, taken map[string
 	switch {
 	case !ok:
 		return c, "missing", "no such item"
-	case rec.State != vault.Recorded:
+	case rec.State != vault.Recorded || rec.Hold != "":
 		return c, "state", "the item is not in the vault any more or is busy (" + string(rec.State) + ")"
 	case !rec.Identified:
 		return c, "reveal", ReasonEqReveal
