@@ -86,3 +86,8 @@ Every deploy restarts the bot and contaminates the play record (18 release swaps
 - The coordinator may always deploy when the user asks: `tools/play-sandbox/deploy-window.sh request <why>` then `run`, or `run --now`.
 - Helper: `tools/play-sandbox/deploy-window.sh status|request|check|run --to <container> [--now] [--dry-run] [-- dev-update args]`. `run` calls `tools/dev-update.sh`, records the deployed commit and the time (state in `~/.cache/didle-dev/deploy-window`, override `D2_DEPLOY_STATE`) and clears the requests. Offline test (S, scratch repo, no sandbox): `tools/play-sandbox/deploy-window-test.sh`. Not run against a real sandbox (U).
 - Stamp the session record with the deployed build (the version `dev-update.sh` prints) so a log analysis can exclude the restart.
+
+## Local labrun and the printed host (TASK-1086)
+The first output line names the targeted host (`D2_SANDBOX_HOST`, else `D2_LABRUN_HOST`) and the mode. When that host is this machine
+(hostname match, or `D2_LABRUN_LOCAL=1`; `0` forces remote) labrun runs locally, so the staged `.devupdate-src.<pid>` copy is passed
+as an absolute `--src` with no clean or send step. The stage dir is per run and removed on exit. `--serve` runs on the sandbox host.

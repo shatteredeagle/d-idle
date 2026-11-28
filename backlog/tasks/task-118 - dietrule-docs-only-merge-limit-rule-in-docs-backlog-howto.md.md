@@ -1,7 +1,7 @@
 ---
 id: TASK-118
 title: 'dietrule: docs-only merge limit rule in docs/backlog-howto.md'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-07T21:57:00Z'
