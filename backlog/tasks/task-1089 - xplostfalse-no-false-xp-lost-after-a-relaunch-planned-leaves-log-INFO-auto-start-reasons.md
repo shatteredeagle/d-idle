@@ -19,6 +19,7 @@ owns:
   - "internal/questboard/auto_test.go"
   - "internal/bot/observe.go"
   - "internal/bot/xploss_test.go"
+  - "internal/bot/fixrestart_test.go"
   - "internal/bot/relaunch.go"
   - "internal/d2denv"
   - "cmd/d2bot/d2dbackend.go"
