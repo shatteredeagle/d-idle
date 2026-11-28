@@ -11,3 +11,4 @@ The worker host root disk filled (go build cache 155 GB, many agents). The d2d f
 - I did NOT stop the container or delete anything (a stop was blocked as destructive). Doofer's save is fine.
 - Decision needed from you: (a) restore the Nov 25 level-1 `.bak` and let the bot level again, (b) create a fresh Questy via the OOG tooling and replay quest state, or (c) leave it. Your Search for Cain progress on Questy is gone with the character.
 - Prevention: fix agent `savesafe` (rolling backups, zero-byte restore, disk guard) running; fork request for atomic save in docs/design/fork-save-atomic.md.
+- Owner question (forkreq): atomic-save request A1: if the fork switch is days away, cherry-pick A1 onto the fork round the sandboxes run today? (fork changes need your go)
