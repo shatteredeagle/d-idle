@@ -180,12 +180,13 @@ func (r *Runner) keySkillLevel(p *d2.Player) int {
 	if r.e.Data == nil {
 		return -1
 	}
-	ma, err := gear.MainAttackAt(r.buildName(p), p.Level)
-	if err != nil || ma.Skill == "" {
+	return keySkillLevelOf(r.buildName(p), p.Level, leveler.OwnedSkills(r.e.Data, p), func(n string) bool { return r.e.Data.SkillByName(n) != nil })
+}
+
+func keySkillLevelOf(build string, clvl int, owned map[string]int, isSkill func(string) bool) int {
+	ma, err := gear.MainAttackAt(build, clvl)
+	if err != nil || ma.Skill == "" || !isSkill(ma.Skill) {
 		return -1
 	}
-	if r.e.Data.SkillByName(ma.Skill) == nil {
-		return -1
-	}
-	return leveler.OwnedSkills(r.e.Data, p)[ma.Skill]
+	return owned[ma.Skill]
 }
