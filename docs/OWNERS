@@ -157,6 +157,7 @@ cmd/d2scenario/run.go  live-agent  pgtaps
 cmd/d2scenario/tap.go  live-agent  pgtaps
 cmd/d2scenario/tap_test.go  live-agent  pgtaps
 cmd/d2scenario/validate.go  credit-runner  pgearned
+cmd/d2shadow/  credit-runner  road4
 data/capabilities/  live-agent  dlv-stance-pack
 data/darklaunch-cap.json  credit-runner  led1
 data/darklaunch.json  credit-runner  dlv-upkeep-state
@@ -256,6 +257,7 @@ docs/research/fidelity-vendor-probe.md  live-agent  fidprobe-vendor
 docs/research/merc-gear.md  credit-runner  uib9
 docs/research/upstream-next.md  credit-runner  upstream-next
 docs/session-record.md  live-agent  sessions
+docs/shadowlog.md  credit-runner  road4
 docs/t0-variants.md  credit-runner  qdensity
 docs/tester-guide.md  credit-runner  testerpack
 docs/tester-licence.md  credit-runner  testerlicence
@@ -388,6 +390,7 @@ internal/scenario/result.go  live-agent  pgtaps
 internal/scenario/scenario.go  credit-runner  pgearned
 internal/scenario/setup.go  credit-runner  pgearned
 internal/scenario/taps.go  live-agent  pgtaps
+internal/shadowlog/  credit-runner  road4
 internal/supply  live-agent  town10
 internal/supply/  credit-runner  townnight
 internal/task  live-agent  bsmdef
