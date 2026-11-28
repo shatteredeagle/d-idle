@@ -13,6 +13,7 @@ import (
 	"d2lod-bot/internal/goals"
 	"d2lod-bot/internal/input"
 	"d2lod-bot/internal/ladder"
+	"d2lod-bot/internal/questboard"
 	"d2lod-bot/internal/repair"
 	"d2lod-bot/internal/resource"
 	"d2lod-bot/internal/supply"
@@ -370,12 +371,32 @@ func (r *Runner) holdForReward(s *d2.Snapshot, plan ChorePlan) bool {
 	if s != nil && s.Player != nil && s.Player.InTown() && !restockReason(plan.Reason) {
 		return false
 	}
-	hold, since := holdTripForReward(r.questRewardPending(s), r.loop.rewardSince, r.e.Clock.Now())
+	began := r.loop.rewardSince.IsZero()
+	hold, since := holdTripForReward(r.questRewardPending(s) && r.rewardWalkedHome(), r.loop.rewardSince, r.e.Clock.Now())
 	r.loop.rewardSince = since
-	if hold {
+	if hold && began { // once per hold: the line was written three times a second (live 2026-11-28, L4)
 		r.e.Log.Info("trip held: a quest reward is pending, the board walks home first", "reason", plan.Reason)
 	}
 	return hold
+}
+
+// rewardWalkedHome says whether somebody will walk the pending reward home, which is the only reason to hold a trip for
+// it: the board has a chunk it runs or awaits (its return step), a campaign goal, or the legacy claim list. A cleared
+// quest whose chunk the board never starts (an owner-only chunk: Search for Cain on `auto=never`) held every trip for the
+// full bound with nobody walking (live 2026-11-28, L4). With the board on but not built yet the answer is yes, as before.
+func (r *Runner) rewardWalkedHome() bool {
+	if r.control().spec.camp != nil || len(r.loop.questPending) > 0 && r.d.Quester != nil {
+		return true
+	}
+	if !r.questBoardOn() {
+		return false
+	}
+	rt := r.boardRTFor()
+	if rt == nil {
+		return true
+	}
+	d, err := rt.exec.Next()
+	return err == nil && (d.Kind == questboard.DecRun || d.Kind == questboard.DecAwait)
 }
 
 // rewardHoldMax bounds how long a restock trip waits for a pending quest reward (virtual clock).
@@ -1427,13 +1448,35 @@ func (r *Runner) travelTo(ctx context.Context, target int) error {
 		r.touchWaypointHere(ctx)
 		next := path[1]
 		if err := r.d.Mover.ExitTo(ctx, next); err != nil {
-			return fmt.Errorf("exit to %s: %w", r.areaName(next), err)
+			return &legFault{from: cur, to: next, err: fmt.Errorf("exit to %s: %w", r.areaName(next), err)}
 		}
 		if err := r.waitArea(ctx, next, 30*time.Second); err != nil {
 			return err
 		}
 	}
 	return errors.New("travel: too many hops")
+}
+
+// legFault is a travel error that names the leg that failed: the exit from one area to the next. The fault belongs to
+// that leg (often to the cell the hero stands on), not to the target the walk was for.
+type legFault struct {
+	from, to int
+	err      error
+}
+
+func (e *legFault) Error() string { return e.err.Error() }
+func (e *legFault) Unwrap() error { return e.err }
+
+// legFaultMemory is how long a failed leg is remembered as the cause of the next failure (U: judgment; the live cascade
+// charged a new target every 8 s).
+const legFaultMemory = 5 * time.Minute
+
+// sameLegAgain records a failed leg and reports whether the same leg failed last time too, inside legFaultMemory.
+func (r *Runner) sameLegAgain(f *legFault) bool {
+	l, now := &r.loop, r.e.Clock.Now()
+	again := l.legFail.from == f.from && l.legFail.to == f.to && now.Sub(l.legFailAt) <= legFaultMemory
+	l.legFail, l.legFailAt = legFault{from: f.from, to: f.to}, now
+	return again
 }
 
 // wpOnly takes the waypoint of target when no walk reaches it (the Arcane Sanctuary is linked by a portal object, not by an

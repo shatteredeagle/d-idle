@@ -188,6 +188,11 @@ func (a *Arbiter) Report(in Intent, now float64, ok bool) {
 	k, bk := in.Key(), in.backoffKey()
 	if ok {
 		delete(a.fails, bk)
+		if in.Class == Upkeep && in.NeedsArea == Town {
+			// A finished town trip did its work (repair, potions, gold spent) though the objective's progress did not
+			// move: going back to the field is not undoing it (live 2026-11-28, L5: the quest step was refused and held).
+			a.last = nil
+		}
 		for i, t := range a.temps { // a temporary intent that was done is not proposed again
 			if t.in.Key() == k {
 				a.temps = append(a.temps[:i], a.temps[i+1:]...)
