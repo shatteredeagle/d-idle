@@ -445,9 +445,9 @@ func TestExitToFindsTheStripBehindASealedFrontierPocket(t *testing.T) {
 					}
 				}
 			}
-			// a one cell pocket in the wall of the south row, nearer to the hero (29.6) than the strip cells (30.4 and more)
+			// a one cell pocket in the wall beside the south row, nearer to the hero (28.6) than the strip cells (30.4 and more)
 			hero := input.Point{X: 190, Y: 320}
-			pocket := input.Point{X: 196, Y: 349}
+			pocket := input.Point{X: 196, Y: 348}
 			cells[pocket.Y*len(rows[0])+pocket.X] = 0
 			g.SetBlock(d2map.Rect{X: ox, Y: oy, W: len(rows[0]), H: len(rows)}, cells)
 			g.SetBlock(d2map.Rect{X: ox + 100, Y: oy + 350, W: 200, H: 120}, make([]uint16, 200*120))
