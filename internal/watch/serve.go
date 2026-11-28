@@ -6,10 +6,12 @@ import (
 	"d2lod-bot/internal/buildinfo"
 	"errors"
 	"fmt"
+	"io"
 	"net"
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
 )
 
 // Loopback reports whether addr (host:port) binds only the local machine.
@@ -178,39 +180,83 @@ func (h *Hub) Serve(ctx context.Context, o ServeOptions) (Served, error) {
 
 func hostOf(addr string) string { h, _, _ := net.SplitHostPort(addr); return h }
 
-// tokenGate checks the bearer header, the ?t= query or the d2dview cookie, as d2dview does. A valid ?t= sets the cookie;
-// a page load (GET that accepts HTML) is then redirected to the same address without t, so the token does not stay in
-// the address bar, the history or a Referer. A wrong ?t= never becomes a cookie. Scripts that send ?t= on an API call
-// are served directly.
+// tokenCookieAge is how long the d2dview cookie lives: as long as a passcode session (internal/access). Without a
+// lifetime it was a session cookie, and a bookmark of the clean address stopped working when the browser dropped it.
+const tokenCookieAge = 30 * 24 * time.Hour
+
+// tokenHint is the 401 body of a page load: the clean address carries no token, so a bookmark or home-screen icon
+// whose cookie is gone must say what to do instead of a bare "unauthorized". It names no token and no address.
+const tokenHint = `<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sign-in needed</title><body style="font:16px/1.5 system-ui,sans-serif;max-width:32em;margin:3em auto;padding:0 1em">
+<h1 style="font-size:1.3em">This page needs its token again</h1>
+<p>The browser no longer has the sign-in cookie for this page (it lasts 30 days, and a home-screen icon or a private
+window keeps its own cookies).</p>
+<p>Open the link you were given once more: the address of this page with <code>?t=YOUR-TOKEN</code> at the end.
+The page then removes the token from the address and remembers this browser for 30 days.</p>
+<p>A wrong or old token gives this page too.</p></body>
+`
+
+// tokenGate checks the bearer header, the ?t= (or ?token=) query or the d2dview cookie, as d2dview does. A valid query
+// token sets the cookie for tokenCookieAge; a page load (GET that accepts HTML) is then redirected to the same address
+// without it, so the token does not stay in the address bar, the history or a Referer. A wrong query token never becomes
+// a cookie. Scripts that send it on an API call are served directly, and the handlers behind the gate never see it in
+// the query (some copy the query into a redirect or a log line). A page load without credentials gets tokenHint.
 func tokenGate(token string, next http.Handler) http.Handler {
 	if token == "" {
 		return next
 	}
+	setCookie := func(w http.ResponseWriter) {
+		http.SetCookie(w, &http.Cookie{Name: "d2dview", Value: token, Path: "/", HttpOnly: true, SameSite: http.SameSiteLaxMode,
+			MaxAge: int(tokenCookieAge / time.Second)})
+	}
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		got := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
 		q := r.URL.Query()
-		fromQuery := q.Get("t") != ""
-		if fromQuery {
-			got = q.Get("t")
-		} else if c, err := r.Cookie("d2dview"); err == nil && got == "" {
-			got = c.Value
+		qt := q.Get("t")
+		if qt == "" {
+			qt = q.Get("token")
 		}
+		fromQuery, fromCookie := qt != "", false
+		if fromQuery {
+			got = qt
+		} else if c, err := r.Cookie("d2dview"); err == nil && got == "" {
+			got, fromCookie = c.Value, true
+		}
+		page := r.Method == http.MethodGet && strings.Contains(r.Header.Get("Accept"), "text/html")
 		h := w.Header()
 		h.Set("Referrer-Policy", "no-referrer")
 		h.Set("Cache-Control", "no-store") // the default; a handler that serves cacheable art sets its own
 		if subtle.ConstantTimeCompare([]byte(got), []byte(token)) != 1 {
+			if page {
+				h.Set("Content-Type", "text/html; charset=utf-8")
+				h.Set("X-Content-Type-Options", "nosniff")
+				w.WriteHeader(http.StatusUnauthorized)
+				io.WriteString(w, tokenHint)
+				return
+			}
 			http.Error(w, "unauthorized", http.StatusUnauthorized)
 			return
 		}
 		if fromQuery {
-			http.SetCookie(w, &http.Cookie{Name: "d2dview", Value: got, Path: "/", HttpOnly: true, SameSite: http.SameSiteLaxMode})
-			if r.Method == http.MethodGet && strings.Contains(r.Header.Get("Accept"), "text/html") {
-				u := *r.URL
-				q.Del("t")
-				u.RawQuery = q.Encode()
-				http.Redirect(w, r, u.RequestURI(), http.StatusSeeOther)
+			setCookie(w)
+			q.Del("t")
+			q.Del("token")
+			u := *r.URL
+			u.RawQuery = q.Encode()
+			if page {
+				// One leading slash only: "//host/x" in a Location is another site.
+				loc := "/" + strings.TrimLeft(u.EscapedPath(), "/")
+				if u.RawQuery != "" {
+					loc += "?" + u.RawQuery
+				}
+				http.Redirect(w, r, loc, http.StatusSeeOther)
 				return
 			}
+			r = r.Clone(r.Context())
+			r.URL = &u
+			r.RequestURI = u.RequestURI()
+		} else if fromCookie && page {
+			setCookie(w) // a page that is used keeps its 30 days
 		}
 		next.ServeHTTP(w, r)
 	})
