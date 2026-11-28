@@ -1,10 +1,11 @@
 ---
 id: TASK-1080
 title: 'recoverydeath: no-potion recovery farm takes the safest area'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T23:27:00Z'
+updated_date: '2026-11-28T00:06:00Z'
 labels:
   - bot
   - bot-fix
