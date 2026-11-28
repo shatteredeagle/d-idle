@@ -66,7 +66,7 @@ func (k *Keeper) managed() map[string]bool {
 // heldByOrder says why a live record may not be sold now (true: an order holds it). Pinned records are left to the plan
 // function, which names them.
 func heldByOrder(r vault.Rec, managed map[string]bool) bool {
-	return managed[r.ID] || r.State == vault.KeepQ || (r.State == vault.SellQ && r.Ordered) || r.RevQ || r.InFlight || r.Stage != ""
+	return managed[r.ID] || r.State == vault.KeepQ || (r.State == vault.SellQ && r.Ordered) || r.RevQ || r.InFlight || r.Stage != "" || r.Hold != ""
 }
 
 // SellAllPlan works the plan out without changing anything.
@@ -198,7 +198,11 @@ func (k *Keeper) SellAll(ctx context.Context, clientID string) SellAllOutcome {
 	if o := k.saleOrder(); o.Active() {
 		return SellAllOutcome{Code: "active", Why: "a sale is still being settled: wait a moment"}
 	}
-	p := k.SellAllPlan(ctx)
+	var p SellAllPlan
+	_, held, err := k.quoteReserved(oid, true, func() SaleQuote { p = k.SellAllPlan(ctx); return p.Quote })
+	if err != nil {
+		return SellAllOutcome{Code: "busy", Why: err.Error(), Plan: p}
+	}
 	if p.Quote.Why != "" {
 		return SellAllOutcome{Code: "busy", Why: p.Quote.Why, Plan: p}
 	}
@@ -209,8 +213,13 @@ func (k *Keeper) SellAll(ctx context.Context, clientID string) SellAllOutcome {
 		}
 		return SellAllOutcome{Code: "state", Why: why, Plan: p}
 	}
+	if !held {
+		return SellAllOutcome{Code: "busy", Why: "the vault could not reserve the items: nothing was sold", Plan: p}
+	}
 	o := SaleOrder{ID: oid, Lines: p.Quote.Lines, Total: p.Quote.Total, State: SaleQueued, All: true, Skipped: p.Quote.Reasons}
-	k.saveSale(o)
+	if err := k.startSale(o); err != nil {
+		return SellAllOutcome{Code: "journal", Why: err.Error(), Plan: p}
+	}
 	k.settleSale(ctx, o)
 	return SellAllOutcome{View: k.SaleView(), Plan: p}
 }
