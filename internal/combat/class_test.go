@@ -4,6 +4,7 @@ import (
 	"context"
 	"os"
 	"slices"
+	"strings"
 	"testing"
 	"time"
 
@@ -139,24 +140,24 @@ func TestSpecFromData(t *testing.T) {
 func TestSelectProfile(t *testing.T) {
 	cat := palCatalog()
 	p := palPlayer()
-	if pr := SelectProfile(p, cat, BuildBlizzard); pr.Class != "paladin" {
+	if pr, _ := SelectProfile(p, cat, BuildBlizzard); pr.Class != "paladin" {
 		t.Fatalf("%s", pr.Class)
 	}
 	p.Class = d2.Amazon // misread class byte: the skills say Paladin
-	if pr := SelectProfile(p, cat, BuildBlizzard); pr.Class != "paladin" {
+	if pr, _ := SelectProfile(p, cat, BuildBlizzard); pr.Class != "paladin" {
 		t.Fatalf("skills must win over the class byte: %s", pr.Class)
 	}
 	// no skills.txt class info: best matching profile
 	for _, s := range cat.Skills {
 		s.Class = ""
 	}
-	if pr := SelectProfile(p, cat, BuildBlizzard); pr.Class != "paladin" {
+	if pr, _ := SelectProfile(p, cat, BuildBlizzard); pr.Class != "paladin" {
 		t.Fatalf("best match: %s", pr.Class)
 	}
 	// the Sorceress test snapshots carry class 0 and Fire Bolt only
 	sp := baseSnap().Player
 	sp.Class = d2.Amazon
-	if pr := SelectProfile(sp, testCatalog(), BuildBlizzard); pr.Class != "sorceress" {
+	if pr, _ := SelectProfile(sp, testCatalog(), BuildBlizzard); pr.Class != "sorceress" {
 		t.Fatalf("%s", pr.Class)
 	}
 }
@@ -764,5 +765,59 @@ func TestStaleAuraStateIsRepicked(t *testing.T) {
 	s, _ := g.snap()
 	if did, _ := h.f.KeepAura(context.Background(), s, &Target{}, true); did || d.popups != 0 {
 		t.Fatalf("a class without an aura profile clicked: %v %d", did, d.popups)
+	}
+}
+
+// Review 8 B1: a class without any profile is an error naming the class, never the Sorceress profile, and the
+// fighter refuses to fight.
+func TestNoProfileIsAnErrorNotTheSorceress(t *testing.T) {
+	p := &d2.Player{Class: d2.Class(99)}
+	pr, err := SelectProfile(p, testCatalog(), BuildBlizzard)
+	if err == nil || pr != nil {
+		t.Fatalf("profile %v err %v, want an error", pr, err)
+	}
+	if !strings.Contains(err.Error(), "99") {
+		t.Fatalf("error does not name the class: %v", err)
+	}
+	for _, c := range []d2.Class{d2.Paladin, d2.Assassin} { // two real classes keep their own profile
+		if pr, err := SelectProfile(&d2.Player{Class: c}, testCatalog(), ""); err != nil || pr.Class != classKey(c) {
+			t.Fatalf("%v: %v %v", c, pr, err)
+		}
+	}
+	f := &Fighter{cat: testCatalog()}
+	if f.profileFor(p) != noProfile || f.ProfileErr() == nil {
+		t.Fatal("the fighter did not record the missing profile")
+	}
+	if _, err := f.Clear(context.Background(), ClearOpts{}); err == nil || !strings.Contains(err.Error(), "combat profile") {
+		t.Fatalf("Clear fought without a profile: %v", err)
+	}
+	if err := f.Kill(context.Background(), 1); err == nil {
+		t.Fatal("Kill fought without a profile")
+	}
+	f.SetProfileErr(nil)
+	if f.ProfileErr() != nil {
+		t.Fatal("not cleared")
+	}
+}
+
+// Review 8 C3: the trap ladder is profile data. The Assassin's sentries are in its traps list and in no attack band
+// (the driver lays them); a profile without the list (a second class) gives the trap driver nothing to lay.
+func TestTrapLadderIsProfileData(t *testing.T) {
+	ap, err := LookupProfile(d2.Assassin, "")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, n := range []string{"Wake of Fire Sentry", "Lightning Sentry", "Charged Bolt Sentry", "Death Sentry"} {
+		if !slices.Contains(ap.Traps, n) || ap.Layout[n] == "" {
+			t.Errorf("%s: in traps %v, key %q", n, slices.Contains(ap.Traps, n), ap.Layout[n])
+		}
+	}
+	pp, err := LookupProfile(d2.Paladin, "")
+	if err != nil || len(pp.Traps) != 0 {
+		t.Fatalf("paladin traps %v %v", pp.Traps, err)
+	}
+	known := map[string]SkillSpec{"Wake of Fire Sentry": {Name: "Wake of Fire Sentry", Level: 1, Key: "f2"}}
+	if _, ok := planTrap(nil, input.Point{}, known, 100, []Target{{}}, nil, nil, nil, testCatalog(), func(SkillSpec) bool { return true }); ok {
+		t.Fatal("a profile without a traps list laid a trap")
 	}
 }
