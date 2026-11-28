@@ -68,7 +68,7 @@ func (f *Fighter) assassinTick(ctx context.Context, snap *d2.Snapshot) (bool, er
 	known := KnownSkills(p, f.cat, f.keys)
 	var corpses []d2.Unit
 	if _, ok := known["Death Sentry"]; ok {
-		corpses = Corpses(snap, f.cat, me, 30, f.necro.tried) // the corpse reservation is shared (aimcorpse.go)
+		corpses = Corpses(snap, f.cat, me, 30, f.takenCorpses(snap.Player.Area)) // the corpse reservation is shared (aimcorpse.go)
 	}
 	ready := func(sp SkillSpec) bool { return sp.Key != "" || p.RightSkill == sp.ID }
 	pl, ok := planTrap(me, known, p.Mana, hs, corpses, standing, f.trap.pending(now), f.cat, ready)

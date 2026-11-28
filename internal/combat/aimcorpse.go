@@ -3,6 +3,7 @@ package combat
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/input"
@@ -75,10 +76,39 @@ var (
 	corpseRowSentry  = CorpseAim{Rule: AimCorpseNearPack, Radius: ceRadius, MinHit: 1}
 )
 
-// takeCorpse reserves the corpse id for every corpse spell.
+// corpseHold is how long an aimed-at corpse stays reserved. A cast that landed consumed its corpse, so one still in the
+// snapshot after this was not used (the cast was cut or the walk failed) and is offered again. U judgment: a few cast
+// times, long enough for the corpse of a landed cast to leave the snapshot.
+const corpseHold = 4 * time.Second
+
+// takeCorpse reserves the corpse id for every corpse spell. Id 0 is no corpse (a lay point without one).
 func (f *Fighter) takeCorpse(id uint32) {
+	if id == 0 {
+		return
+	}
 	f.necro.init()
 	f.necro.tried[id] = true
+	f.necro.triedAt[id] = f.now()
+}
+
+// takenCorpses is the reservation for area: reservations older than corpseHold are released, and another area (or a
+// new game, which starts in town) drops them all, since unit ids repeat.
+func (f *Fighter) takenCorpses(area int) corpseRes {
+	n := &f.necro
+	n.init()
+	if area != n.triedArea {
+		clear(n.tried)
+		clear(n.triedAt)
+		n.triedArea = area
+	}
+	now := f.now()
+	for id, at := range n.triedAt {
+		if now.Sub(at) >= corpseHold {
+			delete(n.tried, id)
+			delete(n.triedAt, id)
+		}
+	}
+	return n.tried
 }
 
 // CorpseCounts are the corpse driver's counters: picks by a profile row (mode 2), refusals, and in shadow (mode 1) the
@@ -218,7 +248,7 @@ func (f *Fighter) corpseExplode(ctx context.Context, snap *d2.Snapshot, nd *Necr
 	if rng == 0 {
 		rng = ceReach
 	}
-	cs := Corpses(snap, f.cat, input.Point{X: p.X, Y: p.Y}, float64(rng), f.necro.tried)
+	cs := Corpses(snap, f.cat, input.Point{X: p.X, Y: p.Y}, float64(rng), f.takenCorpses(p.Area))
 	c, ok := f.corpseFor(p, nd.Explosion, corpseRowExplode, cs, hs)
 	if !ok {
 		return false, nil
