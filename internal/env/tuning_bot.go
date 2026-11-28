@@ -19,7 +19,6 @@ type BotTuning struct {
 	ClearRadius     int // radius of one clear sweep
 	ExploredPct     int // percent of a level's roam coverage points that must be visited before a clear run counts the area as explored (100 = all, docs/exploredpct.md)
 	// The farm loop (docs/farmloop.md): in a leveling zone at FarmResetPct coverage the hero takes a fresh game and comes back to the same zone when that pays.
-	FarmReset            int // 1 = on
 	FarmResetPct         int // coverage percent from which a reset is considered
 	FarmResetCooldownMin int // least minutes between two farm resets
 	ReflexDrink          int // 1: the guard sends a belt drink itself without cancelling the running action (internal/bot/safetylat.go; Fable review P3 c)
@@ -176,7 +175,7 @@ type BotTuning struct {
 func DefaultBotTuning() BotTuning {
 	return BotTuning{
 		TickMs: 100, WatchMs: 50, ReactionMs: 0, ResupplyPotions: 2, InvFullPct: 85,
-		LevelMargin: 0, LeaveSlack: 0, CorpseRetries: 3, PortalSettleMs: 600, ClearRadius: 30, ExploredPct: 100, FarmReset: 0, FarmResetPct: 85, FarmResetCooldownMin: 5, LootShadow: 1, ReflexDrink: 1, ReflexDeadlineMs: 1000,
+		LevelMargin: 0, LeaveSlack: 0, CorpseRetries: 3, PortalSettleMs: 600, ClearRadius: 30, ExploredPct: 100, FarmResetPct: 85, FarmResetCooldownMin: 5, LootShadow: 1, ReflexDrink: 1, ReflexDeadlineMs: 1000,
 		CorpseValueMin: 1000, SpiralDeaths: 4, SpiralMinutes: 15, DangerBanMin: 20, StarterBanMin: 3, QuestBlockedFarmMin: 10, ParkAfter: 2, ParkMinutes: 15, RepeatSiteBanMin: 30, RepeatSiteEscalate: 1, RepeatSiteWindowMin: 30, RepeatSiteGapSec: 180, CorpseMinValue: 50, NavSkipSec: 150, AreaIdleSec: 60, StallWarnMin: 30, StallExitMin: 30, PauseDeathsPerHour: 8, PauseCapMin: 60, StalePackHostiles: 4, StalePackMinutes: 10, StalePackMinHP: 5, StalePackMinTier: 2, PotionBurstN: 5, PotionBurstSec: 20, PotionBurstHostiles: 3, PovertyTier: 0, GoldFloor: 2000,
 		PointsRetrySec: 30, GearCheckSec: 60, GearMinGold: 150, GearBudgetPct: 70, GearReserve: 100,
 		SellMinItems: 4, DifficultyBanMin: 60, SavePointMin: 20, HeapLimitMB: 4096, FailsafeRung3Max: 6, FailsafePauseMaxSec: 3600, FlailMoves: 6, FlailWindowMin: 10, FlailHoldMin: 5,
@@ -225,10 +224,8 @@ func botKnobs() []Knob {
 			Desc: "Reach of one clear sweep: how far away a monster is noticed and fought. Smaller means more walking between sweeps; above 30 is the Aggressive stance (UNVERIFIED survival)."},
 		{Key: "bot.exploredPct", Label: "Explored share to move on", Unit: "%", Default: 100, Min: 30, Max: 100, HigherIsBetter: false, NoHandicap: true,
 			Desc: "Share of a zone's roam coverage points the hero must have visited before a clear run calls the zone explored and moves on (the planner then takes the next area or a fresh game). 100 visits every point (the old behaviour). Quest and boss runs always explore everything. Needs a roaming (fully known map) backend; others ignore it. docs/exploredpct.md."},
-		{Key: "bot.farmReset", Label: "Farm loop", Unit: "bool", Default: 0, Min: 0, Max: 1, NoHandicap: true,
-			Desc: "1: in a leveling zone, once its coverage reaches bot.farmResetPct and a fresh game pays (the zone's current XP per minute is below what a reset yields after the 15 s restart and the walk back, measured in this run), the hero goes home, takes a fresh game (monsters respawn) and returns to the same zone. Never during a fight, a quest step, a boss run, a named run, a recovery or within 180 s of one. docs/farmloop.md."},
 		{Key: "bot.farmResetPct", Label: "Farm reset at explored share", Unit: "%", Default: 85, Min: 50, Max: 100, NoHandicap: true,
-			Desc: "Share of a zone's roam coverage points that must be visited before the farm loop may reset it (bot.farmReset). Keep it at or above bot.exploredPct, which would end the clear first. A zone below this share is never reset."},
+			Desc: "Share of a zone's roam coverage points that must be visited before the farm loop may reset it (docs/farmloop.md). A zone below this share is never reset."},
 		{Key: "bot.farmResetCooldownMin", Label: "Farm reset cooldown", Unit: "min", Default: 5, Min: 1, Max: 60, NoHandicap: true,
 			Desc: "Least minutes between two farm resets: a reset that did not pay cannot repeat at once."},
 		{Key: "bot.reflexDrink", Label: "Reflex drink", Unit: "bool", Default: 1, Min: 0, Max: 1, NoHandicap: true,

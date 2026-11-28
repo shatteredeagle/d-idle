@@ -50,7 +50,7 @@ type farmLoop struct {
 	freshSec    float64   // measured time of the last reset's fresh game
 
 	fresh  []time.Time // every fresh game of the last farmCapWindow, whoever started it (the thrash cap counts them all)
-	seenOn bool        // the knob was seen on: its flip starts clean
+	seenOn bool        // the loop has started: its first call starts clean
 	off    string      // why the loop switched itself off for this session ("" = on)
 }
 
@@ -87,11 +87,7 @@ func (r *Runner) farmNote(area int) {
 		return
 	}
 	f, now := &r.loop.farm, r.e.Clock.Now()
-	if r.e.Tune.Bot.FarmReset != 1 {
-		f.seenOn = false
-		return
-	}
-	if !f.seenOn { // the knob flipped on: no visit, sample or reset history from before counts
+	if !f.seenOn { // first call: no visit, sample or reset history from before counts
 		f.seenOn = true
 		f.forgetVisit()
 		f.fresh, f.lastAt = nil, time.Time{}
@@ -123,7 +119,7 @@ func (r *Runner) farmResetDue(area int) bool {
 	s := r.latest()
 	// never in town, never outside the zone of this visit, never when the run is not a leveling slice: a stale pending or
 	// coverage from another place must not act (the sandbox thrash)
-	if t.FarmReset != 1 || !l.levelSlice || l.keepRoaming(area) || r.d.Cycler == nil || f.area != area || r.farmOffWhy() != "" ||
+	if !l.levelSlice || l.keepRoaming(area) || r.d.Cycler == nil || f.area != area || r.farmOffWhy() != "" ||
 		os.Getenv("D2BOT_RUN") != "" || s == nil || s.Player == nil || s.Player.InTown() || s.Player.Area != area || isDead(s.Player) {
 		return false
 	}
@@ -230,18 +226,14 @@ func (r *Runner) farmReturn(s *d2.Snapshot, c control, a int) int {
 	return rt
 }
 
-// FarmResetShare is the coverage percent at which the farm loop resets a zone, 0 while the loop is off (the watch's
+// FarmResetShare is the coverage percent at which the farm loop resets a zone (the watch's
 // Hero now line shows it next to the explored share).
 func (r *Runner) FarmResetShare() int {
-	if t := r.e.Tune.Bot; t.FarmReset == 1 {
-		return max(t.FarmResetPct, 50)
-	}
-	return 0
+	return max(r.e.Tune.Bot.FarmResetPct, 50)
 }
 
 // farmCapReached: farmCapN fresh games in farmCapWindow (any source) means something loops. The loop switches itself off
-// for the session, says so in the log and on the Needs you list (Status.FarmResetOff); flipping the knob off and on again
-// starts clean.
+// for the session, says so in the log and on the Needs you list (Status.FarmResetOff); a restart starts clean.
 func (r *Runner) farmCapReached(now time.Time) bool {
 	f := &r.loop.farm
 	keep := f.fresh[:0]

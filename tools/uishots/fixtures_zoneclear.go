@@ -15,7 +15,7 @@ func zoneClearFixture() http.Handler {
 	for _, k := range env.Knobs() {
 		vals[k.Key], def[k.Key] = k.Default, k.Default
 	}
-	vals["bot.farmReset"], src["bot.farmReset"] = 1, "dashboard"
+	vals["bot.farmResetPct"], src["bot.farmResetPct"] = 90, "dashboard"
 	z := &watch.ZoneClear{
 		Value: func(k string) (float64, string, error) {
 			s := src[k]

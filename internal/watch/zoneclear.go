@@ -9,7 +9,7 @@ import (
 )
 
 // The zone clear settings (docs/farmloop.md section "Dashboard"): when a clear run calls a zone explored
-// (bot.exploredPct) and the farm loop's reset share (bot.farmResetPct, bot.farmReset, bot.farmResetCooldownMin).
+// (bot.exploredPct) and the farm loop's reset share (bot.farmResetPct, bot.farmResetCooldownMin).
 // GET /api/zoneclear shows the live values with their range, default and source; POST changes them through the tuner
 // (range checks, all or nothing, saved to tuning.json next to every other dashboard edit). The bot reads the knobs at
 // its next zone decision, so a change needs no restart.
@@ -20,7 +20,7 @@ const ZoneClearRoute = "/api/zoneclear"
 const zoneClearSchema = "watch.zoneclear/1"
 
 // zoneClearKeys are the knobs of the surface, in display order.
-var zoneClearKeys = []string{"bot.exploredPct", "bot.farmReset", "bot.farmResetPct", "bot.farmResetCooldownMin"}
+var zoneClearKeys = []string{"bot.exploredPct", "bot.farmResetPct", "bot.farmResetCooldownMin"}
 
 // ZoneClear connects the surface to the tuner: Value reads a knob and its source ("default", "config", "dashboard"),
 // Set is the tuner's all-or-nothing edit (nil value resets to the default).
@@ -52,11 +52,10 @@ type ZoneClearView struct {
 
 // ZoneClearBody is the POST body: any subset of the settings, or reset. Unknown fields are refused.
 type ZoneClearBody struct {
-	ExploredPct          *int  `json:"exploredPct,omitempty"`
-	FarmReset            *bool `json:"farmReset,omitempty"`
-	FarmResetPct         *int  `json:"farmResetPct,omitempty"`
-	FarmResetCooldownMin *int  `json:"farmResetCooldownMin,omitempty"`
-	Reset                bool  `json:"reset,omitempty"` // every setting back to its default (the other fields are refused with it)
+	ExploredPct          *int `json:"exploredPct,omitempty"`
+	FarmResetPct         *int `json:"farmResetPct,omitempty"`
+	FarmResetCooldownMin *int `json:"farmResetCooldownMin,omitempty"`
+	Reset                bool `json:"reset,omitempty"` // every setting back to its default (the other fields are refused with it)
 }
 
 var errZoneClear = errors.New("zoneclear")
@@ -105,16 +104,15 @@ type zoneRefusal struct{ code, field, msg string }
 
 func (r zoneRefusal) Error() string { return r.msg }
 
-// Apply validates a body and applies it; a zoneRefusal names the field and the code (range, order, empty, reset).
+// Apply validates a body and applies it; a zoneRefusal names the field and the code (range, empty, reset).
 func (z *ZoneClear) Apply(b ZoneClearBody) error {
 	have, err := z.knobs()
 	if err != nil {
 		return err
 	}
-	cur := func(key string) float64 { v, _, _ := z.Value(key); return v }
 	over := map[string]*float64{}
 	if b.Reset {
-		if b.ExploredPct != nil || b.FarmReset != nil || b.FarmResetPct != nil || b.FarmResetCooldownMin != nil {
+		if b.ExploredPct != nil || b.FarmResetPct != nil || b.FarmResetCooldownMin != nil {
 			return zoneRefusal{"reset", "reset", "reset cannot be combined with other fields"}
 		}
 		for _, k := range zoneClearKeys {
@@ -148,27 +146,8 @@ func (z *ZoneClear) Apply(b ZoneClearBody) error {
 			return err
 		}
 	}
-	if b.FarmReset != nil {
-		on := 0.0
-		if *b.FarmReset {
-			on = 1
-		}
-		if err := set("bot.farmReset", "farmReset", on); err != nil {
-			return err
-		}
-	}
 	if n == 0 {
 		return zoneRefusal{"empty", "", "nothing to change"}
-	}
-	// the effective result must keep the order: the explored share would end the clear before the reset share is reached
-	eff := func(key string) float64 {
-		if p := over[key]; p != nil {
-			return *p
-		}
-		return cur(key)
-	}
-	if eff("bot.farmReset") == 1 && eff("bot.farmResetPct") < eff("bot.exploredPct") {
-		return zoneRefusal{"order", "farmResetPct", fmt.Sprintf("the farm reset share (%g) must be at least the explored share (%g), which would end the clear first", eff("bot.farmResetPct"), eff("bot.exploredPct"))}
 	}
 	return z.Set(over)
 }
