@@ -263,7 +263,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | bot.portalWalkMs | 3000 | 0..5000 | ms | 5000 | 1 | Walk from the cast spot into the portal used by the guard (generous upper bound, U, drill R3 measures it). Longer blocks more casts. |
 | bot.portalHitMs | 700 | 300..3000 | ms | 300 | 1 | Assumed time between two hits of one adjacent monster in the guard (its strongest attack lands every time: an upper bound, U). Shorter blocks more casts. |
 | bot.portalLifePct | 50 | 10..100 | % | 10 | 1 | The guard blocks a portal cast when the expected damage over the exposure reaches this share of current life. Lower blocks more casts. |
-| bot.tickMs | 100 | 100..1000 | ms | 1000 | 4 | How often the bot re-plans between actions. Slower means more idle gaps. |
+| bot.tickMs | 100 | 100..1000 | ms | 1000 | 5 | How often the bot re-plans between actions. Slower means more idle gaps. |
 | bot.watchMs | 50 | 50..300 | ms | 300 | 5 | How often events, hazards and death are checked while an action runs. Above 300 the bot dies on Hell packs. |
 | bot.reactionMs | 0 | 0..300 | ms | 300 | 1 | Extra delay before reacting to low life or a chicken condition. |
 | bot.resupplyPotions | 2 | 2..4 | potions | 4 | 4 | Healing potions left in the belt that trigger a town trip. Higher means more trips. |
@@ -272,7 +272,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | bot.leaveSlack | 0 | 0..6 | levels | 6 | 9 | Levels past a step's leave level before moving to the next area. Higher wastes time in easy areas. |
 | bot.corpseRetries | 3 | 0..3 | count | 0 | 3 | Attempts to recover the corpse in the field after a softcore death, whatever it is worth. After the last failed try the game is reset: the corpse moves to town and is taken there. 0 abandons the gear. |
 | bot.portalSettleMs | 600 | 600..4500 | ms | 4500 | 1 | Pause in town after chores before going back out. |
-| bot.clearRadius | 30 | 12..45 | subtiles | 12 | 35 | Reach of one clear sweep: how far away a monster is noticed and fought. Smaller means more walking between sweeps; above 30 is the Aggressive stance (UNVERIFIED survival). |
+| bot.clearRadius | 30 | 12..45 | subtiles | 12 | 36 | Reach of one clear sweep: how far away a monster is noticed and fought. Smaller means more walking between sweeps; above 30 is the Aggressive stance (UNVERIFIED survival). |
 | bot.exploredPct | 100 | 30..100 | % | 100 | 2 | Share of a zone's roam coverage points the hero must have visited before a clear run calls the zone explored and moves on (the planner then takes the next area or a fresh game). 100 visits every point (the old behaviour). Quest and boss runs always explore everything. Needs a roaming (fully known map) backend; others ignore it. docs/exploredpct.md. |
 | bot.farmResetPct | 85 | 50..100 | % | 85 | 2 | Share of a zone's roam coverage points that must be visited before the farm loop may reset it (docs/farmloop.md). A zone below this share is never reset. |
 | bot.farmResetCooldownMin | 5 | 1..60 | min | 5 | 2 | Least minutes between two farm resets: a reset that did not pay cannot repeat at once. |

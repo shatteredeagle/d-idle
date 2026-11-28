@@ -213,7 +213,7 @@
     ]
    },
    "provenance": "CHEATED: level, gold and items by SETUP verbs (docs/forkcheats.md); town start, nothing written after the start. Mechanics only, never evidence about balance or play.",
-   "notes": "Invariant T4 of docs/design/fable-review-2026-11-21/town-planner.md. RED on today's main (I10; run 20261120-184924-bb3e: the bank chore moved 6900 into the stash). Needs stage 3. 2026-11-22: the first builder run (belt of 4 healing, 8 in the pack) never visited town before leaving, carried 8000 into Underground Passage at life 55 and died: no chores visit, so no purse settle (scenario fault, not a finding). The setup now holds no healing potion, so the guard forces a restock visit first.",
+   "notes": "Invariant T4 of docs/design/fable-review-2026-11-21/town-planner.md. RED on today's main (I10; run 20261120-184924-bb3e: the bank chore moved 6900 into the stash). Needs stage 3. 2026-11-22: the first builder run (belt of 4 healing, 8 in the pack) never visited town before leaving, carried 8000 into Underground Passage at life 55 and died: no chores visit, so no purse settle (scenario fault, not a finding). The setup now holds no healing potion, so the guard forces a restock visit first. Lab night 2026-11-28 (Paladin 11): the Charsi talk is an optional greeting whose done test is the quest word reading started; talking did not move it (\"still needed (evidence 2)\", step skipped as optional, V in the bot log), and the chunk then parked on the route guard (life 180 needed for the Underground Passage road, hero max life 55), so record 3 was never going to be set: the assertion is not a finding about the Charsi talk. U: whether the setup hero needs more life, and whether record 3 bit 0 is the started or the done word.",
    "assert": [
     {
      "kind": "log_line",
@@ -634,6 +634,8 @@
    },
    "provenance": "CHEATED: level, gold and items by SETUP verbs (docs/forkcheats.md); town start, nothing written after the start. Mechanics only, never evidence about balance or play.",
    "notes": "Invariant T6 of docs/design/fable-review-2026-11-21/town-planner.md. Partly green today (potions first is built); the trace line needs stage 1 and the priority table stage 7 (card town7).",
+   "status": "pending",
+   "pending_reason": "waits for card town7 (priority table, short-gold verdict line); the lab night run 2026-11-28 also started with a belt of 4 healing and a scroll (the profile kit), so the plan saw verdict=ready and nothing short; the setup must empty the belt and drop the scroll first",
    "assert": [
     {
      "kind": "item_in_pack",

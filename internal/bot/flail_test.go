@@ -5,6 +5,7 @@ import (
 	"testing"
 	"time"
 
+	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/env"
 )
 
@@ -90,5 +91,58 @@ func TestFlailIgnoresLinearTravel(t *testing.T) {
 	}
 	if _, started, _ := g.check(now.Add(10*time.Second), 0, 6, 10*time.Minute, 5*time.Minute, func(int) string { return "a" }); started {
 		t.Fatal("a walk through new areas is not a loop")
+	}
+}
+
+// cainspin (TASK-1103, Proving Ground 20261127-232846): a flail hold that started in town carried on in Tower Cellar 3
+// after the sweep had cleared it. Every hold tick swept the cleared area again ("roam: done", "area cleared", "run
+// finished" each ~4 ms) and none of it slept, so the lockstep clock stood at 1719 s for 33 wall minutes and the
+// 5 minute hold could never end. A hold in a cleared field must let virtual time pass.
+func TestFlailHoldInClearedAreaLetsTimePass(t *testing.T) {
+	for _, class := range []d2.Class{d2.Paladin, d2.Sorceress} {
+		t.Run(class.String(), func(t *testing.T) {
+			g := newRig(t)
+			g.r.e.Tune.Bot.FlailMoves = env.DefaultTuning().Bot.FlailMoves
+			g.w.set(func(w *world) { w.area, w.class = 5, class })
+			feedFlailFixture(g)
+			g.r.poll()
+			c := levelGoalControl()
+			g.r.flailHold(context.Background(), g.r.latest(), c)
+			if g.r.loop.flail.holdUntil.IsZero() {
+				t.Fatal("the observed cycle did not start a hold")
+			}
+			g.r.loop.cleared[5] = true // the sweep emptied the area in this game
+			start := g.clock.Now()
+			for i := 0; i < 500; i++ {
+				g.r.poll()
+				if !g.r.flailHold(context.Background(), g.r.latest(), c) {
+					if g.clock.Now().Sub(start) < 4*time.Minute {
+						t.Fatalf("hold released after %v virtual, before it ran out", g.clock.Now().Sub(start))
+					}
+					return
+				}
+			}
+			t.Fatalf("hold still running after 500 ticks; virtual time moved %v (the spin of cain.chain seed 11)", g.clock.Now().Sub(start))
+		})
+	}
+}
+
+// The same freeze through any other caller: a sweep pass in an area already cleared in this game that kills nothing
+// must take at least one tick of virtual time, so every hold measured in virtual time (area done gap, board hold) ends.
+func TestSweepPassOnClearedAreaTakesATick(t *testing.T) {
+	for _, class := range []d2.Class{d2.Paladin, d2.Sorceress} {
+		t.Run(class.String(), func(t *testing.T) {
+			g := newRig(t)
+			g.w.set(func(w *world) { w.area, w.class = 5, class })
+			g.r.poll()
+			g.r.loop.cleared[5] = true
+			start := g.clock.Now()
+			if err := g.r.sweepPass(context.Background(), 5); err != nil {
+				t.Fatal(err)
+			}
+			if g.clock.Now().Sub(start) < time.Duration(g.r.e.Tune.Bot.TickMs)*time.Millisecond {
+				t.Fatalf("a pass over a cleared area took %v of virtual time", g.clock.Now().Sub(start))
+			}
+		})
 	}
 }
