@@ -187,7 +187,9 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- c2baa8c30 11-27 22:41 `Merge agent/fable-fr5: fable review 5: dark ledger process (docs)` (fable-fr5)
 - f53f63a4c 11-27 22:41 `Merge agent/fable-fr1: fable review 1: item flows (docs)` (fable-fr1)
+- 270609cdb 11-27 22:40 `Merge branch 'main' into fable-fr5` (-)
 - b7f728c74 11-27 22:40 `Merge branch 'main' into fable-fr1` (-)
 - d64efd5c7 11-27 22:36 `Merge agent/fable-fr3: fable review 3: combat, nav, survival (docs)` (fable-fr3)
 - 4b0cdccb4 11-27 22:35 `Merge branch 'main' into fable-fr3` (-)
@@ -195,6 +197,4 @@
 - 794d66c7c 11-27 22:34 `Merge branch 'main' into autoflip` (-)
 - e340dc50e 11-27 22:25 `Merge agent/darkthrottle: darkthrottle: ledger cap, by_design status, flip_plan, sandbox-first doc (TASK-1091)` (darkthrottle)
 - af5382fe3 11-27 22:24 `Merge branch 'main' into darkthrottle` (-)
-- a9fc9ca8c 11-27 22:13 `Merge agent/pgfix: pgfix: banked default hero profile, setup tags on blocked runs, hand skills in the point dump (TASK-1093)` (pgfix)
-- f8a505433 11-27 22:12 `Merge branch 'main' into pgfix` (-)
 <!-- statusgen:end -->
