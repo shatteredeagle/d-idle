@@ -283,6 +283,7 @@ func (t *Town) reorderChores(s *d2.Snapshot, a *Act, names []string, settleFirst
 	start := input.Point{X: s.Player.X, Y: s.Player.Y}
 	rc := t.routePrices(pos, start)
 	edges := routeEdges(names, settleFirst)
+	edges = closeEdges(edges)
 	res := routeOrderWith(routed, edges, pos, start, rc)
 	res.Order = reinsertChores(res.Order, unplaced, edges)
 	t.lastStops.Store(&res.Stops)
@@ -308,8 +309,27 @@ func hasStop(names []string) bool {
 	return slices.ContainsFunc(names, func(nm string) bool { return choreRole[nm] != "" })
 }
 
+// closeEdges adds the orders that follow from two others (a before m and m before b: a before b). The route orders
+// only the placed chores; without this a chore left out of it could come back after one it must precede (review 14 M5).
+func closeEdges(edges [][2]string) [][2]string {
+	out := slices.Clone(edges)
+	for grown := true; grown; {
+		grown = false
+		for _, e := range out {
+			for _, f := range out {
+				if e[1] == f[0] && e[0] != f[1] && !slices.Contains(out, [2]string{e[0], f[1]}) {
+					out = append(out, [2]string{e[0], f[1]})
+					grown = true
+				}
+			}
+		}
+	}
+	return out
+}
+
 // reinsertChores puts the chores that were left out of the route back into order, each right after the last chore it must
-// follow (at the front when it follows none), in their original relative order.
+// follow (at the front when it follows none), in their original relative order. With closed edges (closeEdges) and an
+// order that respects them, that place is also before every chore it must precede.
 func reinsertChores(order, left []string, edges [][2]string) []string {
 	order = slices.Clone(order)
 	for _, m := range left {

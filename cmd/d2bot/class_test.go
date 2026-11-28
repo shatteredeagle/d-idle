@@ -1,7 +1,11 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
+	"errors"
+	"io"
+	"log/slog"
 	"testing"
 
 	"d2lod-bot/internal/combat"
@@ -107,6 +111,35 @@ func TestDefaultTableMainAttackHasAKeyInItsProfile(t *testing.T) {
 			if _, ok := prof.Layout[m.Skill]; !ok {
 				t.Errorf("%s table %s: main attack %q has no key in profile %s", c, p.LevelerBuild, m.Skill, prof.ProfileID())
 			}
+		}
+	}
+}
+
+// Review C B1: a class-aware start that could not read the hero, or ran on a bad class read, is repeated by the
+// runner's profile check; the plan error of a real data fault (same class, same table) is not retried away.
+func TestClassStartIsRetriedAfterABadRead(t *testing.T) {
+	log := slog.New(slog.NewTextHandler(io.Discard, nil))
+	defer classRetry.Store(nil)
+	for _, c := range []d2.Class{d2.Paladin, d2.Necromancer} {
+		cb := &combat.Fighter{}
+		applyClass(context.Background(), func() (*d2.Snapshot, error) { return nil, errors.New("no game") }, cb, nil, nil, "", nil, log)
+		if classRetry.Load() == nil {
+			t.Fatalf("%v: a start without a snapshot is not owed", c)
+		}
+		retryClass(&d2.Player{Class: d2.Class(99), Level: 1}) // the first read is garbage
+		if cb.ProfileErr() == nil {
+			t.Fatalf("%v: class 99 has a profile", c)
+		}
+		retryClass(&d2.Player{Class: d2.Class(99), Level: 1})
+		if cb.ProfileErr() == nil {
+			t.Fatalf("%v: the same bad class cleared the error", c)
+		}
+		retryClass(&d2.Player{Class: c, Level: 1})
+		if err := cb.ProfileErr(); err != nil || classRetry.Load() != nil {
+			t.Fatalf("%v: the error stayed after a good read: %v", c, err)
+		}
+		if cb.GearBuild == "" {
+			t.Fatalf("%v: no leveler build set by the retried start", c)
 		}
 	}
 }

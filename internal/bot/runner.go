@@ -59,6 +59,9 @@ type Deps struct {
 	// SavedExp, if set, reads the experience stored in the character's .d2s (ok false: unreadable). Without it the
 	// exp at game entry stands in for it (xp at risk logging).
 	SavedExp func() (uint32, bool)
+	// DiskLow, if set, reports that the disk is too full to write a character file safely: no planned save point then
+	// (the game writes the file in place, so a save on a full disk can truncate it).
+	DiskLow func() bool
 	// Recycle, if set, is asked between goals (a new goal about to start, or idle), in town with nothing hostile near: it
 	// restarts the game when the recycler's policy says so (docs/soak.md). did reports a restart that happened, reason says
 	// why; an error means it half-ran (the game may be down) and is reported as a recycle_failed event.
@@ -218,6 +221,9 @@ type Runner struct {
 	drank          atomic.Int64                 // potions drunk, counted from every EvPotion event (combat emits them live; the observer's own diff is off there)
 	playerCancelNs atomic.Int64                 // clock of the last guard interrupt for a player command (playerDue)
 	stepMu         sync.Mutex                   // held for a whole loop step: the loop state is only touched under it or from the step itself (questboard.go world)
+	noProfile      atomic.Bool                  // parked in town without a combat profile (noprofile.go)
+	noProfileWhat  string                       // the park line last logged; loop goroutine only
+	holeHeld       atomic.Bool                  // the zone model's last answer was a hole hold: wait in town, no fresh game (zonemodel.go)
 	boardTraining  atomic.Bool                  // the board's last slice was its training slice: the leveling filler's own work (starvedcause.go)
 	parkedBoard    atomic.Bool                  // quest board Idle mode: standing in town on purpose, the stall watchdog stays quiet (boardmode.go)
 	noTP           atomic.Bool                  // the running task step has Constraints.NoTownPortal: no safety portal, no trip

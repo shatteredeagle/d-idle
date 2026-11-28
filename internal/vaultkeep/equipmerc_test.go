@@ -14,6 +14,15 @@ type mhand struct {
 	dhand
 	kind  string
 	hired bool
+	worn  map[int]string // the fake mercenary's slots (MercWearer); nil: the hand cannot show them
+}
+
+func (h mhand) MercWorn(context.Context) ([]string, bool) {
+	var out []string
+	for _, n := range h.worn {
+		out = append(out, n)
+	}
+	return out, h.worn != nil
 }
 
 var mercWears = map[string]map[string]string{ // kind -> item code -> merc slot
@@ -84,7 +93,7 @@ func mercRig(t *testing.T, class, kind string) (*drig, *mfake) {
 	d := directRig(t, class)
 	mf := &mfake{DirectFake: d.df, api: d.api, worn: map[int]string{}}
 	d.k.Direct = mf
-	d.k.Hand = mhand{dhand: d.h, kind: kind, hired: true}
+	d.k.Hand = mhand{dhand: d.h, kind: kind, hired: true, worn: mf.worn}
 	return d, mf
 }
 

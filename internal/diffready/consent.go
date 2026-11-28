@@ -79,6 +79,7 @@ func (c *Consent) save() {
 		Granted []Go `json:"granted"`
 	}{gs})
 	tmp := c.file + ".tmp"
+	os.Remove(tmp) // a leftover temp file would keep its own mode; the new one is created 0600
 	if os.MkdirAll(filepath.Dir(c.file), 0o755) == nil && os.WriteFile(tmp, b, 0o600) == nil {
 		os.Rename(tmp, c.file)
 	}

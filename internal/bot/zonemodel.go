@@ -208,10 +208,12 @@ func (r *Runner) zoneReachableCands(s *d2.Snapshot, cands []ZoneCand) []ZoneCand
 
 // zoneModelPick is PickOptions.Model for the goal's leveling pick; nil while the model is off.
 func (r *Runner) zoneModelPick(s *d2.Snapshot, diff string, cleared map[int]bool) func([]Step) (int, bool, bool) {
+	r.holeHeld.Store(false)
 	if !r.zoneModelOn() || s == nil || s.Player == nil {
 		return nil
 	}
 	return func(eligible []Step) (int, bool, bool) {
+		r.holeHeld.Store(false)
 		potions := -1
 		if healing, _, known := r.beltAndInv(s); known {
 			potions = healing
@@ -268,6 +270,9 @@ func (r *Runner) zoneModelPick(s *d2.Snapshot, diff string, cleared map[int]bool
 						return safe, false, true
 					}
 				}
+				// fresh=true only so that Pick reports nothing eligible; holeHeld tells freshGameToLevel to wait in town
+				// instead of starting a game for a hold a new game does not end (review 14 H4).
+				r.holeHeld.Store(true)
 				return 0, true, false
 			}
 		}

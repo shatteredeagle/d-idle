@@ -111,6 +111,28 @@ func TestAdmissionKitIsAnEntryRuleLikeTheOldJudge(t *testing.T) {
 	}
 }
 
+// Review 14 H3: both judges keep the potion half of the kit at the road's boss level; with a portal it is a trip.
+func TestOnRoadKitSkipStopsAtTheBossLevelBothJudges(t *testing.T) {
+	const lair2, lair3 = 63, 64
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		for _, admission := range []int{0, 1} {
+			g := admitRig(t, class, 30, lair2, 1400, 0, true, admission)
+			g.w.set(func(w *world) { w.maxL = 1400 })
+			g.r.poll()
+			s := g.r.latest()
+			if why, kit := g.r.earlyRouteCheck(s, lair3); why == "" || !kit {
+				t.Fatalf("%v: the old judge lets a potionless hero into the boss level: %q kit=%v", class, why, kit)
+			}
+			if got := g.r.admitEnter(s, lair3); got == "" {
+				t.Fatalf("%v admission %d: admitEnter lets a potionless hero into the boss level", class, admission)
+			}
+			if ex := g.r.admissionExplain(); ex.Differ != 0 || ex.NewOnly != 0 {
+				t.Fatalf("%v admission %d: counters %+v, want differ 0", class, admission, ex)
+			}
+		}
+	}
+}
+
 // Review 11 N8: the "both refuse with different words" cell has its own counter.
 func TestAdmissionShadowCountsTheWordsCell(t *testing.T) {
 	g := admitRig(t, d2.Paladin, 12, 2, 176, 4, true, 0)

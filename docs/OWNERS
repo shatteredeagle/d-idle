@@ -265,9 +265,11 @@ docs/tester-registry.md  credit-runner  ghcrpublish
 docs/town.md  live-agent  town11
 docs/ui/redesign-2026-11-14/stash-anywhere.md  credit-runner  stashany
 docs/upstream/bodies/monster-block-body.md  credit-runner  decomp43
+internal/admit/  credit-runner  fix14
 internal/agency/drive.go  live-agent  agencyp1b
 internal/agency/drive_test.go  live-agent  agencyp1b
 internal/arbiter  live-agent  town10
+internal/arbiter/  credit-runner  fix14
 internal/arbiter/  live-agent  arbmig
 internal/arbiter/  live-agent  live1
 internal/arbiter/replay.go  live-agent  ticklog
@@ -275,6 +277,7 @@ internal/arbiter/replay_ticklog_test.go  live-agent  ticklog
 internal/bot/  credit-runner  act2night
 internal/bot/  credit-runner  cainfix3
 internal/bot/  credit-runner  cainspin
+internal/bot/  credit-runner  fix14
 internal/bot/  credit-runner  summonerstall
 internal/bot/  live-agent  live1
 internal/bot/arbiter_control.go  live-agent  arbmig
@@ -288,6 +291,7 @@ internal/bot/guided.go  credit-runner  campaign1
 internal/bot/guided_test.go  credit-runner  campaign1
 internal/bot/leveling.go  live-agent  town5
 internal/bot/loop.go  live-agent  arbmig
+internal/bot/questboard.go  credit-runner  boardsidestart
 internal/bot/questboard.go  live-agent  bsmdef
 internal/bot/routeguard.go  live-agent  bsmdef
 internal/bot/runner.go  credit-runner  campaign1
@@ -303,6 +307,8 @@ internal/combat/  credit-runner  cainfix3
 internal/combat/  credit-runner  dlv-cleanup
 internal/combat/  credit-runner  dlv-mark
 internal/combat/  credit-runner  dlv-upkeep-state
+internal/combat/  credit-runner  drilldrivers
+internal/combat/  credit-runner  fix14
 internal/combat/  live-agent  dlv-aim-corpse
 internal/combat/  live-agent  dlv-aim-point
 internal/combat/  live-agent  dlv-move-melee
@@ -373,8 +379,11 @@ internal/plandata/build-necromancer_leveling_normal30.json  live-agent  epic-cla
 internal/plandata/build-necromancer_summoner_endgame90.json  live-agent  epic-class-necromancer
 internal/plandata/levelplan-normal.json  live-agent  epic-class-necromancer
 internal/power/  credit-runner  dlv-cleanup
+internal/quest/objective.go  credit-runner  fix14
 internal/questboard  live-agent  bsmdef
+internal/questboard/  credit-runner  boardsidestart
 internal/questboard/  credit-runner  bsmnight
+internal/questboard/  credit-runner  durieltyrael
 internal/questboard/  live-agent  cellar3gate
 internal/questboard/  live-agent  live1
 internal/questboard/def.go  credit-runner  cainfix3
@@ -396,6 +405,7 @@ internal/supply  live-agent  town10
 internal/supply/  credit-runner  townnight
 internal/survival/  live-agent  live1
 internal/task  live-agent  bsmdef
+internal/task/  credit-runner  durieltyrael
 internal/task/banote_test.go  credit-runner  cainfix3
 internal/task/campaign.go  credit-runner  campaign1
 internal/task/gate.go  credit-runner  cainfix3
@@ -404,6 +414,7 @@ internal/task/guided_test.go  credit-runner  campaign1
 internal/task/world.go  credit-runner  cainfix3
 internal/town  live-agent  town11
 internal/town  live-agent  town5
+internal/town/  credit-runner  fix14
 internal/town/  credit-runner  townnight
 internal/town/chores.go  credit-runner  inputl4
 internal/town/chores.go  live-agent  townflip
@@ -420,6 +431,7 @@ internal/town/sellplan_test.go  live-agent  townflip
 internal/town/shop.go  live-agent  townflip
 internal/town/town.go  live-agent  townflip
 internal/town/trip.go  live-agent  inputl3
+internal/vaultkeep/  credit-runner  fix14
 internal/watch/areamap_test.go  credit-runner  uis6
 internal/watch/difficultydesk.go  credit-runner  fix4
 internal/watch/difficultydesk_test.go  credit-runner  fix4
@@ -496,9 +508,11 @@ tools/provingground/scenarios/board.json  credit-runner  bsmnight
 tools/provingground/scenarios/board.json  live-agent  bsmdef
 tools/provingground/scenarios/cain.json  credit-runner  cainfix3
 tools/provingground/scenarios/cain.json  credit-runner  pgearned
+tools/provingground/scenarios/combatdrills.json  credit-runner  drilldrivers
 tools/provingground/scenarios/combatdrills.json  credit-runner  drillskills
 tools/provingground/scenarios/necro-acts.json  live-agent  epic-class-necromancer
 tools/provingground/scenarios/necro-epic.json  live-agent  epic-class-necromancer
+tools/provingground/scenarios/necro.json  credit-runner  drilldrivers
 tools/provingground/scenarios/necro.json  credit-runner  drillskills
 tools/provingground/scenarios/stepexec-act2chunks.json  credit-runner  act2night
 tools/provingground/scenarios/tiers.json  live-agent  epic-class-necromancer

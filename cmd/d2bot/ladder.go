@@ -379,7 +379,7 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 		return nil, err
 	}
 	rig.Video = vid
-	so := watch.ServeOptions{ViewAddr: l.viewAddr, AnswerAddr: l.answerAddr, Token: watchTok, Origins: l.origins, Video: vid, Fun: rig.Fun}
+	so := watch.ServeOptions{ViewAddr: l.viewAddr, AnswerAddr: l.answerAddr, Token: watchTok, Origins: l.origins, Video: vid, Fun: rig.Fun, Notices: saveNotices}
 	if os.Getenv("D2BOT_PPROF_HTTP") == "1" {
 		dir := stateDir
 		if dir == "" {

@@ -402,15 +402,20 @@ func TestPotionWantByBuildAndDifficulty(t *testing.T) {
 	mp := w.NewItem("mp4", 2) // above the Nightmare tier floor at clvl 40
 	want := func() bool { return l.EvaluateUnit(mp).Rule == "healing and mana" }
 
-	// Normal is unchanged by the build: the Barbarian has no mana column.
+	// Normal: the class default and a table that is not mana_heavy carry no mana column. The mana_heavy table does
+	// (resource.ManaNeedFor is the one mana need of kit gate, shop and belt since TASK-1117, review 8 C8 and review C B2:
+	// with the old "Normal ignores the build" rule the kit gate asked for mana potions the belt had no column for).
 	w.Player.Difficulty = d2.Normal
-	base := want()
-	l.SetBuild("barbarian_warcry_endgame90")
-	if want() != base {
-		t.Fatalf("Normal changed with the build: %v", base)
-	}
-	if base {
+	if want() {
 		t.Fatal("Normal Barbarian wants mana potions")
+	}
+	l.SetBuild("barbarian_melee_normal30")
+	if want() {
+		t.Fatal("Normal Barbarian on a table without mana_heavy wants mana potions")
+	}
+	l.SetBuild("barbarian_warcry_endgame90")
+	if !want() {
+		t.Fatalf("Normal mana-heavy build ignores mana potions: %v", l.EvaluateUnit(mp))
 	}
 	// Nightmare: War Cry carries two mana columns, so a belt with room still takes mana potions.
 	w.Player.Difficulty = d2.Nightmare
@@ -432,8 +437,10 @@ func TestPotionWantByBuildAndDifficulty(t *testing.T) {
 	}
 }
 
-// Normal is bit-for-bit the old PlanForClass behaviour: the build changes no verdict.
-func TestPotionWantNormalIgnoresBuild(t *testing.T) {
+// Normal: a table that is not mana_heavy changes no verdict, and neither does a mana_heavy table of a class whose
+// own need is already 2. The old form of this test asked that no build changes a Normal verdict; that rule is gone
+// (TASK-1117: the kit gate asks mana of a mana_heavy build in Normal, so the belt and the pickup must hold it).
+func TestPotionWantNormalBuildWithoutManaHeavy(t *testing.T) {
 	l, r := newLooter(t)
 	w := r.W
 	r.Env.Tune.Loot.PotionBuffer = 0
@@ -441,18 +448,68 @@ func TestPotionWantNormalIgnoresBuild(t *testing.T) {
 	w.Add("hp1", d2.ContBelt, 0, 0)
 	w.Player.Difficulty = d2.Normal
 	items := []d2.Unit{w.NewItem("hp3", 2), w.NewItem("mp3", 2), w.NewItem("rvl", 2)}
-	for _, c := range []d2.Class{d2.Amazon, d2.Sorceress, d2.Barbarian, d2.Paladin} {
+	for _, c := range []struct {
+		class d2.Class
+		build string
+	}{
+		{d2.Amazon, "amazon_bow_normal30"},
+		{d2.Barbarian, "barbarian_melee_normal30"},
+		{d2.Paladin, "paladin_normal30_v2"},
+		{d2.Sorceress, "sorceress_fire_normal30"},
+		{d2.Sorceress, "sorceress_blizzard_endgame90"}, // mana_heavy, class need 2 already
+	} {
 		for lvl := 1; lvl <= 99; lvl++ {
-			w.Player.Class, w.Player.Level = c, lvl
+			w.Player.Class, w.Player.Level = c.class, lvl
 			for _, it := range items {
 				l.SetBuild("")
 				a := l.EvaluateUnit(it).Rule
-				l.SetBuild("sorceress_blizzard_endgame90")
+				l.SetBuild(c.build)
 				if b := l.EvaluateUnit(it).Rule; a != b {
-					t.Fatalf("%v clvl %d: %q vs %q", c, lvl, a, b)
+					t.Fatalf("%v %s clvl %d: %q vs %q", c.class, c.build, lvl, a, b)
 				}
 			}
 		}
+	}
+}
+
+// Normal, healing in columns 0 and 1, mana in column 3, column 2 empty. A mana_heavy build keeps column 2 for mana
+// (hp, hp, mp, mp): the mana potion is wanted and the healing potion, which would take that column, is left. The
+// Paladin class default (hp, hp, hp, mp) keeps column 2 for healing, so the Hammerdin table must change the verdict.
+func TestPotionWantNormalManaHeavyColumns(t *testing.T) {
+	l, r := newLooter(t)
+	w := r.W
+	r.Env.Tune.Loot.PotionBuffer = 0
+	r.Env.Tune.Loot.PotionBufferMana = 0
+	w.Player.Difficulty = d2.Normal
+	w.Player.Level = 20
+	w.Add("hp1", d2.ContBelt, 0, 0)
+	w.Add("hp1", d2.ContBelt, 1, 0)
+	w.Add("mp1", d2.ContBelt, 3, 0)
+	hp, mp := w.NewItem("hp3", 2), w.NewItem("mp3", 2)
+	want := func(u d2.Unit) bool { return l.EvaluateUnit(u).Rule == "healing and mana" }
+	for _, c := range []struct {
+		class d2.Class
+		build string
+	}{
+		{d2.Sorceress, "sorceress_blizzard_endgame90"},
+		{d2.Paladin, "paladin_hammerdin_endgame90"},
+	} {
+		w.Player.Class = c.class
+		l.SetBuild(c.build)
+		if !want(mp) {
+			t.Errorf("%s: mana potion for the empty mana column skipped: %v", c.build, l.EvaluateUnit(mp))
+		}
+		if want(hp) {
+			t.Errorf("%s: healing potion wanted into the column kept for mana", c.build)
+		}
+	}
+	w.Player.Class = d2.Paladin
+	l.SetBuild("paladin_normal30_v2")
+	if !want(hp) {
+		t.Errorf("Paladin table without mana_heavy: healing potion for its third healing column skipped: %v", l.EvaluateUnit(hp))
+	}
+	if want(mp) {
+		t.Error("Paladin table without mana_heavy: mana potion wanted into a healing column")
 	}
 }
 
