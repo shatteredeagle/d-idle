@@ -103,9 +103,9 @@ type Pre struct {
 	Level int    `json:"level,omitempty"`
 	// FromSave starts the hero from an earned save of this milestone instead of setup verbs (earned.go; the run is EARNED).
 	FromSave string `json:"from_save,omitempty"`
-	// HeroProfile is the hero library profile of the prepared hero (internal/scenario/hero): "played" (default: the points
+	// HeroProfile is the hero library profile of the prepared hero (internal/scenario/hero): "played" (opt-in: the points
 	// are spent as the build table spends them and the main attack is bound, so the hero fights with its class skills) or
-	// "banked" (every point left unspent, for scenarios about spending points). See Scenario.HeroProfile for the default.
+	// "banked" (default: every point left unspent, as before the profile existed). See Scenario.HeroProfile for the default.
 	HeroProfile string    `json:"hero_profile,omitempty"`
 	Gold        int       `json:"gold,omitempty"`
 	Stash       int       `json:"stash,omitempty"`
@@ -490,18 +490,14 @@ const (
 	HeroBanked = "banked"
 )
 
-// HeroProfile is the profile the runner prepares the hero with: the declared pre.hero_profile; without one "played"
-// (design 6.2: a Proving Ground hero is not banked), except that a scenario that sets the level or the points with raw
-// pre.stats declares its own points, and a scenario whose every covered behaviour is about spending points needs them
-// unspent: both are "banked".
+// HeroProfile is the profile the runner prepares the hero with: the declared pre.hero_profile; without one "banked"
+// (every point unspent, the behaviour of every scenario authored before the played profile). "played" is opt-in for
+// scenarios that need the hero's real class skills (necro.*, combat drills).
 func (s Scenario) HeroProfile() string {
 	if s.Pre.HeroProfile != "" {
 		return s.Pre.HeroProfile
 	}
-	if s.rawPoints() || s.PointsScenario() {
-		return HeroBanked
-	}
-	return HeroPlayed
+	return HeroBanked
 }
 
 // rawPoints reports a raw write of the level (12), the stat points (4) or the skill points (5) in pre.stats.
