@@ -81,6 +81,49 @@ type Hero struct {
 	AttackIndex int      `json:"attack_index"`
 	Weapon      string   `json:"weapon,omitempty"`
 	Tags        []string `json:"tags"`
+	// Binds are the hand skills a run declares beside the main attack (BindHand), in order.
+	Binds []Bind `json:"binds,omitempty"`
+	// MinMinions is the number of summons the run's setup must leave standing (0: not checked).
+	MinMinions int `json:"min_minions,omitempty"`
+}
+
+// Bind is one declared hand skill: the skill a drill needs on a button instead of what the build table puts there.
+type Bind struct {
+	Skill string `json:"skill"`
+	ID    int    `json:"id"`
+	// Index is the skill's place in the dump's skills.base_levels.
+	Index int  `json:"index"`
+	Left  bool `json:"left"`
+}
+
+// BindHand puts skill (a skills.txt name, never an id) on a hand after the build's own verbs: `cmd select`, the
+// player's own command. The skill must be one of the hero's class; whether it is learned is the self-check's row,
+// since the points may come from the run's setup and not from the plan. An unknown name or class is an error.
+func (h *Hero) BindHand(skill, hand string, t Tables) error {
+	if h.Profile != Played || t == nil {
+		return fmt.Errorf("hero: binding %q needs the played profile and the game tables", skill)
+	}
+	if hand != "left" && hand != "right" {
+		return fmt.Errorf("hero: bind %q: hand %q (want left or right)", skill, hand)
+	}
+	id, ok := t.SkillID(skill)
+	if !ok {
+		return fmt.Errorf("hero: bind: skill %q is not in the tables", skill)
+	}
+	idx, ok := t.SkillIndex(h.Class, id)
+	if !ok {
+		return fmt.Errorf("hero: bind: skill %q (id %d) is not a %s skill", skill, id, h.Class)
+	}
+	b := Bind{Skill: skill, ID: id, Index: idx, Left: hand == "left"}
+	for _, o := range h.Binds {
+		if o.Left == b.Left {
+			return fmt.Errorf("hero: bind: %s and %s both on the %s hand", o.Skill, skill, hand)
+		}
+	}
+	h.Binds = append(h.Binds, b)
+	h.Verbs = append(h.Verbs, Verb{Line: fmt.Sprintf("cmd select %d %d", id, map[bool]int{true: 1, false: 0}[b.Left]),
+		Reason: fmt.Sprintf("SETUP: hero %s %s clvl %d (%s): bind the drill's skill %s on the %s hand", h.Profile, h.Class, h.Level, h.Build, skill, hand)})
+	return nil
 }
 
 // Resolve builds the hero of d. t may be nil for the banked profile only (no skill to resolve).

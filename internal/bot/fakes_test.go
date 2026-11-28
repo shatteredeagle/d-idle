@@ -102,6 +102,8 @@ func (w *world) gold(n int) { w.gold0 = n }
 
 func (w *world) set(f func(w *world)) { w.mu.Lock(); f(w); w.mu.Unlock() }
 
+func (w *world) areaNow() int { w.mu.Lock(); defer w.mu.Unlock(); return w.area }
+
 func (w *world) snapshot() (*d2.Snapshot, error) {
 	w.snaps.Add(1)
 	w.mu.Lock()
@@ -209,6 +211,7 @@ type fakeMover struct {
 	wpErr     error
 	exitBlock bool  // ExitTo never arrives
 	exitErr   error // ExitTo fails with this (a nav timeout)
+	exitErrIn int   // exitErr applies only while the hero stands in this area (0 = everywhere)
 	exploreFn func(ctx context.Context, done func() bool) error
 	routeFn   func(from, to int) ([]int, error) // overrides the graph search
 }
@@ -259,7 +262,7 @@ func (m *fakeMover) GoToUnit(ctx context.Context, id uint32) error {
 }
 func (m *fakeMover) ExitTo(ctx context.Context, l int) error {
 	m.w.call("exit %d", l)
-	if m.exitErr != nil {
+	if m.exitErr != nil && (m.exitErrIn == 0 || m.exitErrIn == m.w.areaNow()) {
 		return m.exitErr
 	}
 	if m.exitBlock {

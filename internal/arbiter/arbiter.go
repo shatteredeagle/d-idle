@@ -46,9 +46,19 @@ type Intent struct {
 	// condition in Until holds (outcome-rule syntax over View.Facts, "potions>=potions_min"), whichever is first.
 	TTL   float64
 	Until string
+	// Cause names which of the source's reasons this is (a short stable word); a failure backs off (source, kind, cause)
+	// only, so a declined "plan would buy" does not silence the same source's other reasons.
+	Cause string
+	// NoBackoff: a failure never backs this intent off (a running town trip, emergency chores).
+	NoBackoff bool
 }
 
 func (i Intent) Key() string { return i.Source + "/" + i.Kind }
+
+func (i Intent) backoffKey() string { return i.Key() + "#" + i.Cause }
+
+// backsOff says a failure of the intent may silence it: never a player order, a reflex or a NoBackoff intent.
+func (i Intent) backsOff() bool { return i.Class < Player && !i.NoBackoff }
 
 // View is everything the arbiter and its sources may look at. Progress is a
 // monotonic counter the world bumps on real progress: a kill, XP, a quest fact
@@ -172,11 +182,17 @@ func New(cfg Config, sources ...Source) *Arbiter {
 }
 
 // Report tells the arbiter how an intent ended. A failure backs the intent's
-// (source, kind) off exponentially and drops its lease; success clears it.
+// (source, kind, cause) off exponentially and drops its lease; success clears
+// it. Player orders, reflexes and NoBackoff intents are never backed off.
 func (a *Arbiter) Report(in Intent, now float64, ok bool) {
-	k := in.Key()
+	k, bk := in.Key(), in.backoffKey()
 	if ok {
-		delete(a.fails, k)
+		delete(a.fails, bk)
+		if in.Class == Upkeep && in.NeedsArea == Town {
+			// A finished town trip did its work (repair, potions, gold spent) though the objective's progress did not
+			// move: going back to the field is not undoing it (live 2026-11-28, L5: the quest step was refused and held).
+			a.last = nil
+		}
 		for i, t := range a.temps { // a temporary intent that was done is not proposed again
 			if t.in.Key() == k {
 				a.temps = append(a.temps[:i], a.temps[i+1:]...)
@@ -185,10 +201,13 @@ func (a *Arbiter) Report(in Intent, now float64, ok bool) {
 		}
 		return
 	}
-	b := a.fails[k]
+	if !in.backsOff() {
+		return
+	}
+	b := a.fails[bk]
 	if b == nil {
 		b = &backoff{}
-		a.fails[k] = b
+		a.fails[bk] = b
 	}
 	d := a.cfg.BackoffBase
 	for i := 0; i < b.n && d < a.cfg.BackoffMax; i++ {
@@ -313,7 +332,7 @@ func (a *Arbiter) refuse(in Intent, v View) string {
 	if in.Class >= Player {
 		return ""
 	}
-	if b := a.fails[in.Key()]; b != nil && v.Now < b.until {
+	if b := a.fails[in.backoffKey()]; in.backsOff() && b != nil && v.Now < b.until {
 		return fmt.Sprintf("backed off %.0fs more after %d failure(s)", b.until-v.Now, b.n)
 	}
 	if in.NeedsArea == Any || in.NeedsArea == v.Area || a.last == nil {

@@ -28,13 +28,26 @@ import check as scheme  # noqa: E402
 HERE = Path(__file__).resolve().parent
 
 
+def dq(v):
+    """`v` as a double-quoted YAML scalar on one line."""
+    return '"' + re.sub(r"\s*\n\s*", " ", str(v)).replace("\\", "\\\\").replace('"', '\\"') + '"'
+
+
+def yaml_value(v):
+    """`v` as a YAML scalar: plain when that is safe, double-quoted otherwise (': ' or ' #' inside, a leading
+    indicator, quotes, a line break). An unquoted `result:` with ': ' in it made a card the CLI could not find."""
+    v = str(v)
+    plain = v == v.strip() and v and "\n" not in v and " #" not in v and scheme.scalar_error(v) is None and v[0] not in "\"'[{"
+    return v if plain else dq(v)
+
+
 def render_keys(card, owns, exclusive, contracts, lane=None, due=None, epic=None):
-    out = [f'card: "{card}"']
+    out = [f"card: {dq(card)}"]
     for k, v in (("lane", lane), ("due", due), ("epic", epic)):
         if v:
-            out.append(f'{k}: {v}')
+            out.append(f"{k}: {yaml_value(v)}")
     for key, vals in (("owns", owns), ("exclusive", exclusive), ("contracts", contracts)):
-        out.append(f"{key}: []" if not vals else f"{key}:\n" + "\n".join(f'  - "{v}"' for v in vals))
+        out.append(f"{key}: []" if not vals else f"{key}:\n" + "\n".join(f"  - {dq(v)}" for v in vals))
     return "\n".join(out)
 
 
@@ -111,6 +124,10 @@ def main(argv, run=subprocess.run):
         return 1
     path = created_path(r.stdout)
     path.write_text(unfold_title(insert_keys(path.read_text(), render_keys(a.card, a.owns, a.exclusive, a.contracts, a.lane, a.due, a.epic))))
+    bad = scheme.yaml_findings(scheme.front_matter(path) or "")
+    if bad:
+        sys.stderr.write(f"{path}: front matter is not valid YAML: {bad}\n")
+        return 1
     print(path)
     return run([sys.executable, "-I", str(HERE / "check.py")]).returncode
 

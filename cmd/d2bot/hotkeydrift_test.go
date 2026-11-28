@@ -19,7 +19,7 @@ import (
 // the key map. A table may only lower its number; a new table starts at zero (the profile layout is the one source of truth).
 var knownHotkeyDrift = map[string]int{
 	"assassin_fireblast_normal30": 2, "assassin_sentry_endgame90": 5,
-	"paladin-normal30": 5, "paladin-normal30-v2": 4, "paladin-zealot-lite": 3, "sorceress_blizzard_endgame90": 6,
+	"paladin-normal30": 5, "paladin-normal30-v2": 4, "paladin-zealot-lite": 3, "sorceress_blizzard_endgame90": 5,
 }
 
 func classByName(name string) (d2.Class, bool) {

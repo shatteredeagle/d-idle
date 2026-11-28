@@ -568,7 +568,19 @@ func (a taskActs) tag(err error) error {
 func (a taskActs) Travel(ctx context.Context, ar task.Area) error {
 	a.r.questTravel.Store(true)
 	defer a.r.questTravel.Store(false)
-	return a.tag(a.r.travelTo(ctx, int(ar)))
+	r := a.r
+	err := r.travelTo(ctx, int(ar))
+	var leg *legFault
+	if err != nil && ctx.Err() == nil && errors.As(err, &leg) && !r.d.Plan.IsTown(leg.from) && r.d.Town != nil && !r.deadNow() && r.sameLegAgain(leg) {
+		// The retry of a quest step started from the same place and failed on the same exit (live 2026-11-28, L3: three
+		// tries from one cell beside the stairs in 27 s). Leave by town portal so the next try arrives another way.
+		r.loop.legFail = legFault{}
+		r.e.Log.Warn("quest travel: the same exit failed again, leaving by town portal before the retry", "from", r.areaName(leg.from), "to", r.areaName(leg.to), "err", err)
+		if terr := r.d.Town.ToTown(ctx); terr != nil {
+			r.e.Log.Warn("quest travel: town portal failed", "err", terr)
+		}
+	}
+	return a.tag(err)
 }
 
 // ClearAround implements task.StallRecoverer: a bounded fight around the character frees a walk stuck in a pack.
@@ -968,13 +980,18 @@ func (a taskActs) HireMerc(ctx context.Context, act int, aura string) error {
 	return a.tag(td.HireMerc(ctx, act, aura))
 }
 
-// MercAura implements task.MercAuraChooser: the class row for the snapshot's difficulty.
+// MercAura implements task.MercAuraChooser: the class row for the snapshot's difficulty, else the default row.
 func (a taskActs) MercAura() (string, bool, error) {
 	s, err := a.r.e.Snapshot()
 	if err != nil {
 		return "", false, err
 	}
-	return town.ClassMercAura(s.Player.Class, data.Difficulty(s.Player.Difficulty))
+	want, ok, err := town.HirePolicy(s.Player.Class, data.Difficulty(s.Player.Difficulty), d2.Merc{}, 0)
+	_ = ok // gold is the hire step's own check; only the aura is asked here
+	if err != nil {
+		return "", false, err
+	}
+	return want.Aura, true, nil // the class row, else the data default of this difficulty (classtraits.json)
 }
 
 // ClaimFreeMerc implements task.MercClaimer over TaskDeps.ClaimMerc. Without a backend it is a logged no-op, never an error.
@@ -1175,6 +1192,14 @@ func (a taskActs) LevelTo(ctx context.Context, n int) error {
 		// waypoint try, never reached nav, stalled 65 s each time).
 		r.setTargetArea(0)
 		err := r.travelTo(ctx, target)
+		var leg *legFault
+		if err != nil && ctx.Err() == nil && errors.As(err, &leg) && !r.d.Plan.IsTown(leg.from) && r.d.Town != nil && !r.deadNow() && r.sameLegAgain(leg) {
+			// The same exit failed for the last target too: the fault is where the hero stands, not where it wants to go.
+			// Charging it to every target in turn banned ten zones in 80 s from one cut-off cell (live 2026-11-28, L1).
+			r.loop.legFail = legFault{}
+			r.e.Log.Warn("leveling: the way out failed again, leaving by town portal", "from", r.areaName(leg.from), "to", r.areaName(leg.to), "err", err)
+			return a.tag(r.d.Town.ToTown(ctx))
+		}
 		if err != nil && ctx.Err() == nil && !errors.Is(err, errAreaGated) && !r.deadNow() {
 			// Any travel fault (no exit, nav timeout, "did not arrive") skips the target for a cool-down that doubles
 			// with each repeat, so the next slice picks another area instead of walking the same bad exit again

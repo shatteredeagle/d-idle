@@ -15,6 +15,17 @@ class T(unittest.TestCase):
         k = new_task.render_keys("c", ["a/b"], [], ["docs/contracts/x.md"])
         self.assertEqual(k, 'card: "c"\nowns:\n  - "a/b"\nexclusive: []\ncontracts:\n  - "docs/contracts/x.md"')
 
+    def test_values_with_colon_space_are_quoted(self):
+        k = new_task.render_keys('c "x"', ["a: b"], [], [], epic="epic: one", due="2026-12-01")
+        self.assertIn('card: "c \\"x\\""', k)
+        self.assertIn('epic: "epic: one"', k)
+        self.assertIn("due: 2026-12-01", k)
+        self.assertIn('  - "a: b"', k)
+        self.assertEqual(new_task.scheme.yaml_findings(k), [])
+        for v, want in (("plain words", "plain words"), ("a: b", '"a: b"'), ("x #y", '"x #y"'), ("*x", '"*x"'), ("a\nb", '"a b"'), ("", '""')):
+            self.assertEqual(new_task.yaml_value(v), want)
+            self.assertEqual(new_task.scheme.yaml_findings("result: " + new_task.yaml_value(v)), [])
+
     def test_insert_keeps_body_and_order(self):
         out = new_task.insert_keys(FM, 'card: "c"')
         self.assertEqual(out, FM.replace("ordinal: 9000\n", 'ordinal: 9000\ncard: "c"\n'))

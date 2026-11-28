@@ -45,15 +45,19 @@
 | holereach | proposed | - | `internal/bot/zonemodel.go`<br>`internal/bot/zonemodel_test.go` | - |
 | pgfix | proposed | - | `cmd/d2scenario`<br>`internal/scenario`<br>`tools/provingground/scenarios`<br>`docs/process/proving-ground.md` | - |
 | fix4 | in-progress | - | `deploy/d2d-container/tester-report.sh`<br>`deploy/d2d-container/tester_report_test.go`<br>`internal/watch/serve.go`<br>`internal/watch/serve_test.go`<br>`internal/watch/gate.go`<br>`internal/watch/web/shell.js`<br>`internal/watch/difficultydesk.go`<br>`internal/watch/difficultydesk_test.go`<br>`internal/diffready/`<br>`internal/bot/diffready.go`<br>`internal/bot/diffready_test.go`<br>`tools/flip/flip.py`<br>`tools/flip/test_flip.py`<br>`internal/logx/sink.go`<br>`internal/logx/sink_test.go`<br>`docs/ops/docker-volumes.md`<br>`docs/diffready.md` | - |
-| labtriage | in-progress | - | `docs/probes/lab-night-results-2026-11-28.md`<br>`tools/provingground/scenarios/combatdrills.json`<br>`tools/provingground/scenarios/townplan.json`<br>`backlog/tasks/task-1102 - navbarracks-no-route-from-the-Barracks-up-to-the-Outer-Cloister-when-the-hero-starts-in-the-Barracks.md`<br>`backlog/tasks/task-1103 - cainspin-cain.chain-seed-11-with-bot.portalRetryWaitSec-0-spins-on-run-finished-and-is-cut-by-the-wall.md`<br>`backlog/tasks/task-1104 - summonerstall-drill.act2.summoner.stepexec-ends-in-the-runner-watchdog-after-a-nav-stuck-loop.md`<br>`backlog/tasks/task-1105 - drillskills-combat-and-necro-drills-with-hero_profile-played-run-without-the-builds-skills-no-leveler-line-last_skill-Attack.md`<br>`backlog/tasks/task-1106 - bsmnight-board.sm.restart-mid-chain-and-stop-cascades-RED-on-both-classes-assertion-and-trigger-timing-against-the-log.md`<br>`backlog/tasks/task-1107 - act2night-three-Act-2-stepexec-drill-findings-Duriel-stall-shaft-road-without-a-portal-potion-not-drunk-in-the-cube-drill.md`<br>`backlog/tasks/task-1108 - townnight-town.plan-stage-4-and-5-REDs-of-the-lab-night-route-kept-the-list-Charsi-talk-not-credited-scroll-before-potions.md` | - |
 | navbarracks | proposed | - | `internal/nav/`<br>`internal/d2dworld/` | - |
 | cainspin | proposed | - | `internal/bot/` | - |
-| summonerstall | proposed | - | `internal/bot/`<br>`internal/nav/` | - |
-| drillskills | proposed | - | `internal/scenario/`<br>`cmd/d2scenario/`<br>`tools/provingground/scenarios/combatdrills.json`<br>`tools/provingground/scenarios/necro.json` | - |
+| summonerstall | proposed | - | `internal/bot/`<br>`internal/nav/`<br>`cmd/d2bot/boss.go`<br>`cmd/d2bot/boss_test.go`<br>`backlog/tasks/task-1107 - act2night-three-Act-2-stepexec-drill-findings-Duriel-stall-shaft-road-without-a-portal-potion-not-drunk-in-the-cube-drill.md` | - |
+| drillskills | proposed | - | `internal/scenario/`<br>`cmd/d2scenario/`<br>`tools/provingground/scenarios/combatdrills.json`<br>`tools/provingground/scenarios/necro.json`<br>`tools/provingground/golden/setup-played.tsv` | - |
 | bsmnight | proposed | - | `tools/provingground/scenarios/board.json`<br>`internal/questboard/` | - |
 | act2night | proposed | - | `internal/bot/`<br>`tools/provingground/scenarios/stepexec-act2chunks.json` | - |
 | townnight | proposed | - | `internal/town/`<br>`internal/supply/`<br>`tools/provingground/scenarios/townplan.json` | - |
+| led1 | in-progress | - | `data/darklaunch/`<br>`data/darklaunch.json`<br>`data/darklaunch-cap.json`<br>`tools/darklaunch/`<br>`tools/flip/`<br>`docs/process/dark-launch.md`<br>`docs/process/autoflip.md` | - |
+| fix7b | in-progress | - | `internal/bot/`<br>`internal/arbiter/`<br>`internal/survival/`<br>`internal/combat/`<br>`cmd/d2bot/`<br>`docs/arbiter.md`<br>`docs/design/arbiter-target-and-migration.md` | - |
+| live1 | proposed | - | `internal/bot/`<br>`internal/survival/`<br>`internal/questboard/`<br>`internal/arbiter/`<br>`cmd/d2bot/survivalwire.go`<br>`docs/live1.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
+| sweep1 | in-progress | - | `docs/probes/review-sweep-2026-11-28.md`<br>`internal/diffready/`<br>`internal/bot/diffready_test.go`<br>`internal/combat/move.go`<br>`internal/combat/whirl.go`<br>`internal/combat/fight.go`<br>`internal/combat/move_test.go`<br>`internal/watch/difficultydesk.go` | - |
+| ops4 | in-progress | - | `tools/backlog/`<br>`backlog/tasks/task-185 - unlockwire-wire-bestiary-risk-order-queue-and-atlas-into-the-live-bot.md`<br>`backlog/tasks/task-597 - vaultv7b-wire-the-ETHER-wallet-Vault-page-upgrade-UI-earn-call-sites.md`<br>`backlog/tasks/task-1100 - fix4-security-fixes-from-fable-review-4-scrubber-watch-token-difficulty-go-flip-run-check-log-tail.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
 | ghcrpublish | in-progress | - | `.github/workflows/tester-image.yml`<br>`docs/registry-publish.md`<br>`deploy/d2d-container/compose.friends.yml`<br>`docs/tester-registry.md`<br>`deploy/d2d-container/compose.tester.yml`<br>`deploy/d2d-container/context.sh`<br>`deploy/d2d-container/tester_image_test.go` | - |
@@ -196,14 +200,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
-- f8daf5458 11-28 00:29 `Merge agent/fix4: fix4: scrubber, watch token redirect, difficulty go hero scope and expiry, flip container env, tail NUL, docker volumes doc (TASK-1100)` (fix4)
-- f9fba8895 11-28 00:28 `Merge branch 'main' into fix4` (-)
-- 7ec65e945 11-28 00:28 `Merge agent/nightlog: nightlog: overnight coordinator log (docs)` (nightlog)
-- 4fdc91a46 11-28 00:25 `Merge agent/labtriage: labtriage: overnight lab triage, scenario marker fixes, 8 cards (TASK-1101..1108)` (labtriage)
-- 5f82d9b8f 11-28 00:17 `fix4: merge origin/main; the hero-scoped go is consumed when the hop starts` (fix4)
-- 2c1465fec 11-27 23:15 `Merge agent/fix6: fix6: ledger accounting, mandatory hero_profile, d2scenario smoke, stability view, pack room (TASK-1098)` (fix6)
-- 29e0120bb 11-27 23:14 `Merge branch 'main' into fix6` (-)
-- b0844c390 11-27 23:06 `Merge agent/fix2: fix2: board counters persist, rung-4 skip counts coded refusals only, resume tick for all goals, difficulty go consumed after the hop (TASK-1099)` (fix2)
-- 74ae9b205 11-27 23:06 `Merge agent/fix7: fix7: arbiter low-life gate, Report, survive reads Safety, heartbeat, admission rows (TASK-1096)` (fix7)
-- 95520db57 11-27 23:05 `Merge agent/fix1: fix1: item-flow journal, per-record in-flight 409, carry/stow intent, duplicate not filed (TASK-1095)` (fix1)
+- d80ac981d 11-28 02:57 `Merge agent/ops4: ops4: backlog check fails invalid YAML cards, quote values, repair cards (TASK-1124)` (ops4)
+- 3a2e18fbc 11-28 02:57 `Merge agent/sweep1: sweep1: review sweep, consent fix (TASK-1122)` (sweep1)
+- 4f4d93602 11-28 02:57 `Merge agent/live1: live1: live log findings L1-L6 (TASK-1119)` (live1)
+- 34ff2f56c 11-28 02:54 `Merge branch 'main' into ops4` (-)
+- 1c3f76941 11-28 02:54 `Merge branch 'main' into sweep1` (-)
+- 0f6c51cf1 11-28 02:54 `Merge branch 'main' into live1` (-)
+- 13bbafe89 11-28 02:50 `Merge agent/fix1b: fix1b: vault equip by bytes etc (TASK-1114)` (fix1b)
+- 090e4434c 11-28 02:49 `Merge branch 'main' into fix1b` (-)
+- f9b1c3551 11-28 02:40 `Merge agent/nf3b: nf3b: nav seam, mapKillErr, Approach field NPC (TASK-1104/1107)` (nf3b)
+- 1315f88eb 11-28 02:39 `Merge branch 'main' into nf3b` (-)
 <!-- statusgen:end -->

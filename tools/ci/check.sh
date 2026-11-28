@@ -88,6 +88,9 @@ if [ -n "$pg_changed" ] || [ "${PG_SMOKE:-}" = 1 ]; then
   bash tools/provingground/pgenv_test.sh >/dev/null 2>&1 || bad "tools/provingground/pgenv_test.sh"
 fi
 
+# --- build tables, combat profiles and the capability table agree (fable review 8; ratchet data/build-cap-ratchet.json) ---
+go test -count=1 ./internal/plandata -run TestBuildTablesConsistent >/dev/null 2>&1 || { go test -count=1 ./internal/plandata -run TestBuildTablesConsistent; bad "build data consistency (internal/plandata TestBuildTablesConsistent)"; }
+
 [ "${1:-}" = "--hygiene-only" ] && { [ $fail = 0 ] && echo "hygiene ok"; exit $fail; }
 
 # --- gofmt ---

@@ -24,13 +24,14 @@ type Go struct {
 // Consent holds the owner's go for a hop. The bot computes readiness and waits; it never hops on its own (user
 // decision 2026-11-27). A go is for one target and one hero, ends after GoTTL and is consumed by the hop. With Persist
 // it survives a restart of the bot (a small JSON file) until it is consumed, ends, or Keep drops it because the
-// difficulty moved on. A go that belongs to another hero or has ended is dropped with a log line, never used.
+// difficulty moved on. A go that belongs to another hero is never used and stays for its hero (logged once); an ended one is dropped.
 type Consent struct {
 	// Logf, when set, receives the line about a dropped go.
 	Logf func(msg string, args ...any)
 
 	mu      sync.Mutex
 	granted map[string]Go
+	noted   map[string]string // target -> last logged hero and reason
 	file    string
 }
 
@@ -94,44 +95,64 @@ func (c *Consent) Grant(target, hero string, now time.Time) {
 	c.save()
 }
 
-// valid reports a usable go for target and hero (caller holds mu); a go of another hero or an ended one is dropped.
-func (c *Consent) valid(target, hero string, now time.Time) bool {
-	g, ok := c.granted[target]
-	if !ok {
-		return false
-	}
-	why := ""
+// look judges the go for target and hero without changing anything (caller holds mu). why is empty for a usable go
+// and for none at all. An empty hero name is a snapshot that cannot tell who is playing: no go is usable through it
+// and none is foreign.
+func (c *Consent) look(target, hero string, now time.Time) (g Go, ok bool, why string) {
+	g, found := c.granted[target]
 	switch {
-	case g.Hero == "" || g.Hero != hero:
-		why = "it was given for another hero"
+	case !found:
 	case !now.Before(g.Expires):
 		why = "it has ended"
+	case hero == "":
+		why = "the hero is not known yet"
+	case g.Hero != hero:
+		why = "it was given for another hero"
 	default:
-		return true
+		return g, true, ""
 	}
-	delete(c.granted, target)
-	c.save()
-	if c.Logf != nil {
-		c.Logf("difficulty go ignored", "target", target, "why", why, "given_for", g.Hero, "hero", hero, "expires", g.Expires)
-	}
-	return false
+	return g, false, why
 }
 
-// Granted says whether a usable go is waiting for target and hero.
+// note logs an unusable go once per target, hero and reason (caller holds mu): Granted is polled by the page.
+func (c *Consent) note(target, hero, why string, g Go) {
+	key := hero + "\x00" + why
+	if why == "" || c.Logf == nil || c.noted[target] == key {
+		return
+	}
+	if c.noted == nil {
+		c.noted = map[string]string{}
+	}
+	c.noted[target] = key
+	c.Logf("difficulty go ignored", "target", target, "why", why, "given_for", g.Hero, "hero", hero, "expires", g.Expires)
+}
+
+// Granted says whether a usable go is waiting for target and hero. It only answers: a poll with another hero's name
+// or with no name must not erase the owner's go (fable review 12, C3). Only an ended go is dropped here, because that
+// does not depend on who asks.
 func (c *Consent) Granted(target, hero string, now time.Time) bool {
 	c.mu.Lock()
 	defer c.mu.Unlock()
-	return c.valid(target, hero, now)
+	g, ok, why := c.look(target, hero, now)
+	c.note(target, hero, why, g)
+	if why == "it has ended" {
+		delete(c.granted, target)
+		c.save()
+	}
+	return ok
 }
 
-// Take consumes the go for target and hero.
+// Take consumes the go for target and hero. A go of another, named hero is left for its hero.
 func (c *Consent) Take(target, hero string, now time.Time) bool {
 	c.mu.Lock()
 	defer c.mu.Unlock()
-	if !c.valid(target, hero, now) {
+	g, ok, why := c.look(target, hero, now)
+	c.note(target, hero, why, g)
+	if !ok {
 		return false
 	}
 	delete(c.granted, target)
+	delete(c.noted, target)
 	c.save()
 	return true
 }

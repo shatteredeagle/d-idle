@@ -23,6 +23,7 @@ type ZoneVerdict struct {
 	Area       int
 	Fresh      bool   // the best zone is cleared and a fresh game beats walking to a poorer one
 	Hole       bool   // nothing is safe: the easiest field
+	Hold       bool   // the hole's zone has no margin at all: never walked to
 	Margin     string // word
 	Line       string // the `zone choice:` log line
 	Why        string // sentence for the Status line
@@ -254,6 +255,22 @@ func (r *Runner) zoneModelPick(s *d2.Snapshot, diff string, cleared map[int]bool
 			}
 			r.e.Log.Info(fmt.Sprintf("zone reask: reason=%s k %.2f -> %.2f choice %d (%s)", reason, kBefore, v.K, v.Area, act))
 		}
+		if v.Hole && v.Area != s.Player.Area && v.Area != r.safeFarmArea(s) {
+			// A hole names the best of what is LEFT. Left after bans for the bot's own faults (or with no margin at all)
+			// that is the hardest zone, not the easiest field: Tower Cellar Level 4 after one cut-off cell banned ten
+			// zones (live 2026-11-28, L2). The hero takes the act's first field if the plan offers it, else nothing is
+			// picked (the caller waits in town; fault bans are short).
+			if why := r.holeHoldWhy(v, diff); why != "" {
+				r.zoneNoteHour(fmt.Sprintf("holehold:%d", v.Area), fmt.Sprintf("zone choice: hole fallback to area %d refused, %s; %s", v.Area, why, v.Line))
+				safe := r.safeFarmArea(s)
+				for _, st := range eligible {
+					if st.Area == safe && r.fullKit(s) {
+						return safe, false, true
+					}
+				}
+				return 0, true, false
+			}
+		}
 		if v.Hole && v.Area != s.Player.Area && !r.fullKit(s) {
 			// the first-field fallback walks a hero who is not safe here into a zone below the margin: only with the kit
 			// the plan itself asks for (potions and a town portal); otherwise the plan tables decide
@@ -278,6 +295,23 @@ func (r *Runner) zoneModelPick(s *d2.Snapshot, diff string, cleared map[int]bool
 		}
 		return v.Area, false, v.Area != 0
 	}
+}
+
+// holeHoldWhy says why a hole verdict must not be walked to ("" = it may): the zone has no margin at all, or a zone of the
+// plan is out of play only for a fault of the bot, so "nothing is safe enough" is not known to be true.
+func (r *Runner) holeHoldWhy(v ZoneVerdict, diff string) string {
+	if v.Hold {
+		return "the zone has no margin"
+	}
+	now := r.e.Clock.Now()
+	r.obMu.Lock()
+	defer r.obMu.Unlock()
+	for _, st := range r.d.Plan.Steps[diff] {
+		if until, ok := r.avoid[st.Area]; ok && until.After(now) && r.avoidWhy[st.Area] != whyDeath && st.Area != v.Area {
+			return fmt.Sprintf("%s is only skipped (%s)", r.areaName(st.Area), r.avoidWhy[st.Area])
+		}
+	}
+	return ""
 }
 
 // zoneLeaveMercDead is true while the model says the dead merc stays dead (the zone kills him, or he adds too little).

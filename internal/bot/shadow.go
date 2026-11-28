@@ -153,14 +153,16 @@ func (r *Runner) arbView(snap *d2.Snapshot, c control) (v arbiter.View, ok bool)
 	return arbiter.View{Area: area, Progress: real, Facts: f, ObjectiveArea: obj}, true
 }
 
-// inDanger is the arbiter's danger fact: the fighter's safety verdict asks for a life action (a drink, a portal, a
-// chicken, a crowd retreat). The verdict is the one danger rule; the arbiter holds no life line of its own.
+// inDanger is the arbiter's danger fact: the fighter's safety verdict asks for a life drink. The verdict is the one
+// danger rule; the arbiter holds no life line of its own. A leave verdict (portal, chicken, crowd retreat or abandon)
+// is not this fact: the survive hook fights where the hero stands, the opposite of leaving, so the guard alone carries
+// those out (review 11, N3).
 func (r *Runner) inDanger(snap *d2.Snapshot) bool {
 	if r.d.Fighter == nil {
 		return false
 	}
 	a := r.d.Fighter.Safety(snap)
-	return a != SafetyNone && a != SafetyDrinkMana
+	return a == SafetyDrinkLife || a == SafetyDrinkRejuv
 }
 
 func (r *Runner) shadowNow() float64 {
@@ -192,9 +194,7 @@ func (r *Runner) shadowTick(v arbiter.View, acted bool) {
 		r.e.Log.Info("arbiter shadow", "diverge", line)
 	}
 	if d, ok := sh.Last(); ok {
-		for _, in := range d.Starved {
-			r.inv.noteStarved(r.starvedCause(d, in))
-		}
+		r.noteStarvedAll(d)
 	}
 }
 

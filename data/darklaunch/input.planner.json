@@ -1,0 +1,10 @@
+{
+ "name": "input.planner",
+ "built_by": "inputlayer I1 (e136a3d10)",
+ "dark_since": "2026-11-19",
+ "why_off": "Skill select via planner not default.",
+ "enable_criteria": "Live skill-select drill on 2 classes",
+ "owner": "coordinator",
+ "review_by": "2026-12-09",
+ "status": "dark"
+}

@@ -67,9 +67,12 @@ type Decision struct {
 	// FreshRefused is the reason a fresh game was not taken although the numbers asked for it ("" = not refused).
 	FreshRefused string
 	Hole         bool // nothing is safe: first field, the hero needs help
-	Alts         []Alt
-	Lambda       float64
-	NeedsYou     bool
+	// Hold: the hole's best zone has no margin at all (it prints as 0.0). Walking there is not a fallback; the caller
+	// keeps the hero in town or in the act's first field (live 2026-11-28, L2: Catacombs Level 3 at margin 0.0).
+	Hold     bool
+	Alts     []Alt
+	Lambda   float64
+	NeedsYou bool
 	// CurK is k_zone x k_hero of the current zone (the picked zone when the hero is in none), for the bot's re-ask line.
 	CurK float64
 	line string
@@ -263,6 +266,7 @@ func (l *Ledger) Choose(in Input) (Decision, error) {
 		}
 		pick = best
 		d.Hole, d.NeedsYou = true, true
+		d.Hold = best.best < 0.05 && best.c.Key != in.Current
 		d.Why = Why{WhyHole, "nothing is safe enough: the easiest field, and the hero needs help"}
 	default:
 		pick = elig[0]
@@ -387,7 +391,8 @@ func (l *Ledger) unvisitedDiscount(in Input) float64 {
 
 // inBand drops the zones whose monster level is more than BandDrop[diff] below the hero's level: farming monsters that
 // far down pays next to nothing (Questy 2026-11-27: 5k against 22k to 39k XP/h). It runs on judged zones: the hero's
-// current zone always stays (the stay rule and MarkLeft need it), and nothing is dropped unless a safe zone is left.
+// current zone always stays (the stay rule and MarkLeft need it), and nothing is dropped unless a safe zone inside the
+// band is left (a current zone below the band would otherwise be the only choice: the hero pinned in the lowest zone).
 func (l *Ledger) inBand(in Input, vs []verdict) []verdict {
 	if in.Level <= 0 {
 		return vs
@@ -395,11 +400,13 @@ func (l *Ledger) inBand(in Input, vs []verdict) []verdict {
 	var out []verdict
 	safe := false
 	for _, v := range vs {
-		if k := l.P.BandDrop[v.c.Key.Diff]; k > 0 && v.c.MLvl > 0 && in.Level-v.c.MLvl > k && v.c.Key != in.Current {
+		k := l.P.BandDrop[v.c.Key.Diff]
+		below := k > 0 && v.c.MLvl > 0 && in.Level-v.c.MLvl > k
+		if below && v.c.Key != in.Current {
 			continue
 		}
 		out = append(out, v)
-		safe = safe || v.eligible
+		safe = safe || v.eligible && !below // the current zone below the band does not justify dropping its betters
 	}
 	if !safe {
 		return vs

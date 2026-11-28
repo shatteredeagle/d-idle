@@ -12,8 +12,9 @@ import (
 
 // defaultWatchdog is how long the runner loop may go without finishing an iteration before the process is restarted.
 // One action (a board, task or leveling slice) may run 40 min; inside it the heartbeat is Runner.LastStep, which also
-// moves on every observed progress fact (kills, xp, walking, gold, potions: internal/bot observer.bump), so a slice is
-// judged hung only after the limit with nothing observed (docs/design/arbiter-target-and-migration.md, A4).
+// moves on progress the acting goroutine made (kills, xp, an area change, walking away, gold, a pickup: internal/bot
+// observer.beat), never on what the guard or the monsters do meanwhile (reflex drink, monster life), so a slice is
+// judged hung after the limit without such progress (docs/design/arbiter-target-and-migration.md, A4).
 // Longest legitimate single step is a game recycle (a few minutes), so 10 min leaves margin. D2BOT_WATCHDOG_MIN
 // overrides it in minutes (0 turns the watchdog off).
 const defaultWatchdog = 10 * time.Minute
