@@ -1,7 +1,7 @@
 ---
 id: TASK-1066
 title: 'releasenotes-next: player-language notes after 0.1.3'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-27T21:22:00Z'

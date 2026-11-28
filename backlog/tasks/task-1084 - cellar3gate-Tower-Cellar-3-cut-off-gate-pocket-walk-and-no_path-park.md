@@ -1,9 +1,9 @@
 ---
 id: TASK-1084
 title: 'cellar3gate: Tower Cellar 3 cut-off gate, pocket walk and no_path park'
-status: Proposed
+status: In Progress
 assignee:
-  - credit-runner
+  - live-agent
 created_date: '2026-11-28T00:25:00Z'
 labels:
   - bot
@@ -20,7 +20,7 @@ owns:
   - "docs/probes/cellar3-gate-capture.md"
 exclusive: []
 contracts: []
-result: "Synthetic Tower Cellar 3 fixture (two maps) reproduces the logged cut-off: the pocket click was refused by the mouth gate and dropped; pocketTarget now prefers a clickable cell, errors carry cause=cut_off|exit_trigger, the board parks no_path. Offline only; real grid capture is an open live checklist (U)."
+result: "Synthetic Tower Cellar 3 fixture (two maps) reproduces the logged cut-off: the pocket click was refused by the mouth gate and dropped; pocketTarget now prefers a clickable cell, errors carry cause=cut_off|exit_trigger, the board parks no_path. Offline only; real grid capture is an open live checklist (U). Remaining (live): AC 3 capture the real Tower Cellar 3 grid (checklist in docs/probes/cellar3-gate-capture.md)."
 ---
 
 ## Description

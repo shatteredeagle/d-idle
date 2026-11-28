@@ -1,9 +1,9 @@
 ---
 id: TASK-765
 title: 'town12: SME review of the supply profile numbers (advice only)'
-status: Proposed
+status: In Progress
 assignee:
-  - credit-runner
+  - live-agent
 created_date: '2026-11-21T04:54:00Z'
 labels:
   - docs
@@ -18,7 +18,7 @@ owns:
 exclusive: []
 contracts: []
 lane: next
-result: "NOT DONE (needs a d2-sme run, which is not a worker step): the doc docs/design/fable-review-2026-11-21/town-profiles-sme.md now holds the numbers table of internal/supply/profiles.json (the card named data/supply/ by mistake, fixed in townwire; the file is embedded so it lives under internal/supply) and the exact d2-sme brief in section 2; section 3 (advice) is empty. Run the agent with that brief, then tick the box. No number changed."
+result: "NOT DONE (needs a d2-sme run, which is not a worker step): the doc docs/design/fable-review-2026-11-21/town-profiles-sme.md now holds the numbers table of internal/supply/profiles.json (the card named data/supply/ by mistake, fixed in townwire; the file is embedded so it lives under internal/supply) and the exact d2-sme brief in section 2; section 3 (advice) is empty. Run the agent with that brief, then tick the box. No number changed. Remaining (live): AC 1 run the d2-sme brief (section 2 of the doc, in flight on agent/smetown), record the advice in section 3, then tick."
 ---
 
 ## Description
