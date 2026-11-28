@@ -16,6 +16,8 @@ lane: next
 owns:
   - "internal/bot/"
   - "internal/nav/"
+  - "cmd/d2bot/boss.go"
+  - "cmd/d2bot/boss_test.go"
 exclusive: []
 contracts: []
 result: "Cause found offline (not verified live): in the Arcane Sanctuary the Summoner at 26,450 is unreachable on the nav map; each fight approach re-ran the full 900x900 search plus 24 teleport pad searches (about 0.5 s wall, almost no game time), so the boss attack slice (wall clock, gclock) ran out first, cmd/d2bot mapKillErr read that as no error, the boss fail counter never grew and the runner watchdog fired at 614 s wall with 36 s of game time. Fix: internal/nav asks a failed plan once per field (nopath.go, test TestUnreachableGoalIsSearchedOnce), so the fight fails fast and the boss runner ends after 5 failed attacks. Proposed for cmd/d2bot (not owned): mapKillErr should return the fight error even when the slice also ended. The reachability of the Summoner itself (teleport pads none usable) stays open (class D)."
