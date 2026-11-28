@@ -87,6 +87,7 @@ func solveShadow(class d2.Class, band belt.Band, slots int, c supply.Count, plan
 	}
 	in := supply.Inputs{
 		ManaNeed:   need,
+		BeltSlots:  slots,
 		Capacity:   map[supply.Line]int{supply.Healing: capHP + min(lt.PotionBuffer, kitPackReserve), supply.Mana: capMP + lt.PotionBufferMana},
 		BaseTarget: map[supply.Line]int{supply.Healing: capHP + lt.PotionBuffer, supply.Mana: capMP + lt.PotionBufferMana},
 	}

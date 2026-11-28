@@ -1,9 +1,9 @@
 ---
 id: TASK-734
 title: 'dlv-whirl: Whirlwind: channel + through + commit (PARKED)'
-status: Proposed
+status: In Progress
 assignee:
-  - credit-runner
+  - live-agent
 created_date: '2026-11-21T04:45:00Z'
 labels:
   - bot
@@ -17,7 +17,7 @@ owns:
   - "internal/combat/"
 exclusive: []
 contracts: []
-result: "Offline only, NOT verified live. Whirlwind driver: move use whirl (move.go rows, whirl.go leg planner and whirlTick after moveTick): one leg per fight tick aimed through the densest pack within range, prefers another pack than the last leg, no leg under whirlAbortLifePct (life floor), the spin is one press slice (press row, Barbarian default) so potions run between legs. Barbarian default profile carries the Whirlwind move and press rows (U planning values, spin radius waits for fidelity A6); acts only once Whirlwind is learned. Started before the A6 verdict on the coordinator brief (AC2 waived by the brief, not met). Knob combat.deliveryUpkeep 0/1/2, no new knob. No skill or class literal added in Go. Tests Barbarian plus a Paladin test row (Zeal). Live: scenario combat.whirlwind-clears and the drill commands in the task report."
+result: "Offline only, NOT verified live. Whirlwind driver: move use whirl (move.go rows, whirl.go leg planner and whirlTick after moveTick): one leg per fight tick aimed through the densest pack within range, prefers another pack than the last leg, no leg under whirlAbortLifePct (life floor), the spin is one press slice (press row, Barbarian default) so potions run between legs. Barbarian default profile carries the Whirlwind move and press rows (U planning values, spin radius waits for fidelity A6); acts only once Whirlwind is learned. Started before the A6 verdict on the coordinator brief (AC2 waived by the brief, not met). Knob combat.deliveryUpkeep 0/1/2, no new knob. No skill or class literal added in Go. Tests Barbarian plus a Paladin test row (Zeal). Live: scenario combat.whirlwind-clears and the drill commands in the task report. Remaining (live): AC 1 scenario combat.whirlwind-clears; AC 2 starts only after fidelity A6 verdict; AC 5 race gate x20 on the worker host."
 lane: next
 ---
 

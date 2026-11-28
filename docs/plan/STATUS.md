@@ -39,15 +39,13 @@
 | fid-poison-res-diag | proposed | - | `docs/research/fid-poisonres-trace.md` | - |
 | arbloop | in-progress | - | `internal/bot/goal.go`<br>`internal/bot/arbloop_test.go` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
-| diffbaal | proposed | - | `internal/quest/baaldone.go`<br>`internal/quest/baaldone_test.go` | - |
-| releasenotes-next | proposed | - | `docs/releases/next-draft.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
-| cellar3gate | proposed | - | `internal/nav/exit.go`<br>`internal/nav/cellar3gate_test.go`<br>`internal/questboard/`<br>`docs/probes/cellar3-gate-capture.md` | - |
+| cellar3gate | in-progress | - | `internal/nav/exit.go`<br>`internal/nav/cellar3gate_test.go`<br>`internal/questboard/`<br>`docs/probes/cellar3-gate-capture.md` | - |
+| townapply | proposed | - | `internal/supply`<br>`internal/town/planshadow.go` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
-| dietrule | proposed | - | `docs/backlog-howto.md` | - |
 | ghcrpublish | in-progress | - | `.github/workflows/tester-image.yml`<br>`docs/registry-publish.md`<br>`deploy/d2d-container/compose.friends.yml`<br>`docs/tester-registry.md`<br>`deploy/d2d-container/compose.tester.yml`<br>`deploy/d2d-container/context.sh`<br>`deploy/d2d-container/tester_image_test.go` | - |
 | d2d-container-soak | deferred | d2d-container-soak | `docs/d2d-container-soak.md` | `soak-slot:1` |
 | legacycharm | deferred | - | `docs/research/legacy-charm.md` | - |
@@ -72,7 +70,6 @@
 | ready-calibrate | deferred | - | `docs/probes/ready-calibrate.md` | - |
 | sessions | proposed | - | `docs/session-record.md` | - |
 | awaydrill | proposed | - | `docs/away-drill.md` | - |
-| reconnectux | proposed | - | `docs/onboarding.md`<br>`internal/watch/onboarding.go`<br>`internal/watch/web/panels/onboarding`<br>`internal/watch/onboarding_test.go`<br>`internal/watch/funwire.go`<br>`internal/watch/testdata/onboarding_dom.js`<br>`internal/watch/testdata/onboarding_dom.txt`<br>`data/onboarding/en.json` | - |
 | palprofile | deferred | - | `docs/sme/class-paladin.md`<br>`docs/sme/class-early-game.md`<br>`internal/combat/classdata` | - |
 | testerdocs | deferred | - | `docs/tester-guide.md` | - |
 | testerlicence | in-progress | - | `docs/tester-licence.md` | - |
@@ -100,7 +97,6 @@
 | fidprobe-vendor | proposed | - | `internal/fidvendor`<br>`docs/research/fidelity-vendor-probe.md` | - |
 | custom-overlay | deferred | - | `docs/research/custom-overlay-spec.md`<br>`docs/overlay.md`<br>`docs/research/custom-items.md`<br>`internal/overlay/`<br>`internal/data/`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/d2dbackend_test.go` | - |
 | custom-item-1 | deferred | - | `docs/research/custom-item-1.md` | - |
-| boardmoderace | proposed | - | `internal/bot/task.go`<br>`internal/bot/waypoints.go` | - |
 | currency-rows | deferred | - | `data/overlay/didle-v1/`<br>`internal/overlay/didlev1_test.go`<br>`internal/loot/currencymark_test.go`<br>`internal/loot/pickit_starter.json`<br>`docs/research/currency-rows.md`<br>`docs/probes/currency1.md`<br>`docs/probes/currency1-drill.py`<br>`docs/overlay.md` | - |
 | currency-slice | deferred | - | `internal/currencyflow/`<br>`docs/probes/currency-drill.md` | - |
 | cainfix3 | proposed | - | `cmd/d2bot/adapters.go`<br>`data/questboard/act1.json`<br>`docs/combat.md`<br>`docs/knobs.md`<br>`docs/questboard.md`<br>`internal/bot/`<br>`internal/combat/`<br>`internal/env/tuning_combat.go`<br>`internal/questboard/def.go`<br>`internal/task/banote_test.go`<br>`internal/task/gate.go`<br>`internal/task/world.go`<br>`tools/provingground/scenarios/cain.json` | - |
@@ -116,7 +112,7 @@
 | dlv-press | in-progress | - | `internal/combat/`<br>`internal/d2dcombat/` | - |
 | dlv-move-tele | in-progress | - | `internal/combat/`<br>`internal/nav/` | - |
 | dlv-move-melee | in-progress | - | `internal/combat/` | - |
-| dlv-whirl | proposed | - | `internal/combat/` | - |
+| dlv-whirl | in-progress | - | `internal/combat/` | - |
 | dlv-cleanup | proposed | - | `internal/combat/`<br>`internal/power/`<br>`tools/ci/` | - |
 | pgtaps | in-progress | - | `cmd/d2bot/ladder.go`<br>`cmd/d2scenario/tap.go`<br>`internal/scenario/taps.go`<br>`cmd/d2scenario/run.go`<br>`cmd/d2scenario/tap_test.go`<br>`internal/scenario/result.go` | - |
 | fid-probe-regen-speed | deferred | - | `docs/probes/fid/fid-probe-regen-speed.md` | - |
@@ -124,14 +120,12 @@
 | mgonejob | proposed | - | `docs/process/pg-ops-mgonejob.md` | - |
 | pgearned | proposed | - | `internal/scenario/earned.go`<br>`tools/provingground/earned`<br>`internal/scenario/earned_test.go`<br>`internal/scenario/setup.go`<br>`internal/scenario/scenario.go`<br>`internal/scenario/ledger.go`<br>`internal/scenario/result.go`<br>`internal/scenario/pgpage.go`<br>`cmd/d2scenario/validate.go`<br>`cmd/d2scenario/ledger.go`<br>`cmd/d2scenario/main_test.go`<br>`tools/provingground/scenarios/cain.json`<br>`docs/process/proving-ground.md` | - |
 | town5 | in-progress | - | `internal/town`<br>`internal/resource`<br>`internal/bot/broke.go`<br>`internal/bot/leveling.go`<br>`tools/provingground/scenarios/townplan.json`<br>`docs/probes/town-plan-stage3-2026-11-22.md`<br>`docs/design/fable-review-2026-11-21/town-planner-b-model.md`<br>`town-basics` | - |
-| town9 | proposed | - | `internal/watch`<br>`internal/supply` | - |
-| town10 | proposed | - | `internal/arbiter`<br>`internal/supply` | - |
-| town11 | proposed | - | `internal/town`<br>`docs/town.md`<br>`town-basics`<br>`docs/design/townflip-p5.md`<br>`backlog/tasks/task-765 - town12-SME-review-of-the-supply-profile-numbers-advice-only.md` | - |
-| town12 | proposed | - | `docs/design/fable-review-2026-11-21/town-profiles-sme.md` | - |
+| town10 | in-progress | - | `internal/arbiter`<br>`internal/supply` | - |
+| town11 | in-progress | - | `internal/town`<br>`docs/town.md`<br>`town-basics`<br>`docs/design/townflip-p5.md`<br>`backlog/tasks/task-765 - town12-SME-review-of-the-supply-profile-numbers-advice-only.md` | - |
+| town12 | in-progress | - | `docs/design/fable-review-2026-11-21/town-profiles-sme.md` | - |
 | pgledgeron | proposed | - | `docs/process/pg-ledger-ops.md`<br>`tools/provingground/run.sh`<br>`tools/provingground/pgenv.sh`<br>`tools/provingground/pgenv_test.sh` | - |
 | fid-transitions | deferred | - | `docs/probes/fid/fid-transitions.md` | - |
 | fid-missile-monster | deferred | - | `docs/probes/fid/fid-missile-monster.md` | - |
-| qdmatrix | proposed | - | `docs/probes/quest-drill-matrix-2026-11-23.md`<br>`tools/provingground/scenarios/questdrill.json`<br>`internal/power/archetype.go`<br>`internal/power/skilldamage_test.go`<br>`internal/questboard/state.go`<br>`internal/questboard/state_test.go`<br>`internal/d2dsrc/items.go`<br>`internal/d2dsrc/srv_test.go`<br>`internal/nav/nav.go`<br>`internal/task/act2.go`<br>`internal/task/act2_test.go`<br>`data/questboard/act2.json`<br>`internal/nav/act2hints.go`<br>`internal/nav/act2hints_test.go`<br>`internal/nav/exit_test.go`<br>`internal/task/act4.go`<br>`internal/bot/questboard.go`<br>`internal/bot/questboard_s7b_test.go`<br>`tools/probes/presets.py`<br>`tools/emu/am_batch.sh`<br>`tools/emu/am_model.py`<br>`internal/scenario/scenario.go`<br>`internal/scenario/setup.go`<br>`internal/scenario/setup_test.go`<br>`internal/saves/progress.go`<br>`tools/probes/objectlist.py`<br>`cmd/d2bot/task_test.go`<br>`internal/nav/exit.go`<br>`internal/nav/gatedoor.go`<br>`internal/nav/gatedoor_test.go`<br>`internal/nav/exitgoal_test.go`<br>`internal/nav/mouthgate.go`<br>`internal/bot/goal.go`<br>`internal/bot/goal_acts_test.go`<br>`cmd/d2bot/task.go`<br>`cmd/d2bot/acts_test.go`<br>`internal/talk/talk.go`<br>`internal/talk/talk_test.go` | - |
 | fid-boss-skills | deferred | - | `docs/probes/fid/fid-boss-skills.md` | - |
 | fid-sorc-upstream | deferred | - | `docs/probes/fid/fid-sorc-upstream.md` | - |
 | m1-liveproof | deferred | drills | `docs/basics-audit.md`<br>`docs/basics-live.md`<br>`docs/primitives.md`<br>`docs/probes/basics/**`<br>`cmd/d2drill/**`<br>`internal/drill/**`<br>`docs/probes/drills/**` | `soak-slot:0` |
@@ -162,7 +156,7 @@
 | fid-adapter-rows | deferred | - | `docs/probes/fid/fid-adapter-rows.md` | - |
 | ticklog | in-progress | - | `docs/design/ticklog-t4.md`<br>`docs/arbiter.md`<br>`internal/bot/ticklog.go`<br>`internal/bot/ticklog_test.go`<br>`internal/bot/shadow.go`<br>`internal/env/tuning_bot.go`<br>`internal/arbiter/replay.go`<br>`internal/arbiter/replay_ticklog_test.go`<br>`data/darklaunch.json` | - |
 | bsmdef | in-progress | - | `docs/design/boardsm-flip.md`<br>`docs/questboard.md`<br>`internal/questboard`<br>`internal/task`<br>`internal/env/tuning_quests.go`<br>`internal/env/tuning_quests_legacy_test.go`<br>`internal/bot/questboard.go`<br>`internal/bot/task.go`<br>`internal/bot/routeguard.go`<br>`tools/provingground/scenarios/board.json` | - |
-| agencyp1b | proposed | - | `docs/design/agency-p1b.md`<br>`internal/agency/drive.go`<br>`internal/agency/drive_test.go`<br>`cmd/d2bot/agencywire.go`<br>`cmd/d2bot/agencydrive_test.go`<br>`cmd/d2bot/d2dwire.go`<br>`cmd/d2bot/live.go`<br>`internal/combat/drive_test.go`<br>`internal/combat/fighter.go`<br>`internal/combat/aura.go`<br>`internal/env/tuning_agency.go` | - |
+| agencyp1b | in-progress | - | `docs/design/agency-p1b.md`<br>`internal/agency/drive.go`<br>`internal/agency/drive_test.go`<br>`cmd/d2bot/agencywire.go`<br>`cmd/d2bot/agencydrive_test.go`<br>`cmd/d2bot/d2dwire.go`<br>`cmd/d2bot/live.go`<br>`internal/combat/drive_test.go`<br>`internal/combat/fighter.go`<br>`internal/combat/aura.go`<br>`internal/env/tuning_agency.go` | - |
 | inputl3 | in-progress | - | `docs/design/input-i3.md`<br>`internal/input/useitem.go`<br>`internal/input/useitem_test.go`<br>`internal/d2dctl/use_verb.go`<br>`internal/d2dctl/use_verb_test.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dinput/useitem.go`<br>`internal/combat/portalverb.go`<br>`internal/combat/portalverb_test.go`<br>`internal/combat/fighter.go`<br>`internal/town/portalverb.go`<br>`internal/town/portalverb_test.go`<br>`internal/town/portalverb_unit_test.go`<br>`internal/town/portalverb_export_test.go`<br>`internal/town/trip.go`<br>`data/input/caps/`<br>`data/input/caps_test.go`<br>`docs/design/input-cast-verbs.md`<br>`backlog/tasks/task-726 - dlv-cast-verbs-input-caps-cast-unit-cast-point-cast-hold.md` | - |
 | inputl4 | proposed | - | `docs/design/input-i4.md`<br>`internal/input/repairverbs.go`<br>`internal/d2dctl/repair_verb.go`<br>`internal/d2dctl/use_verb_test.go`<br>`internal/d2dctl/fake/fake.go`<br>`internal/d2dinput/repairverbs.go`<br>`internal/town/repairverb.go`<br>`internal/town/repairverb_test.go`<br>`internal/town/chores.go`<br>`internal/town/portalverb_export_test.go`<br>`internal/town/portalverb_unit_test.go` | - |
 | inputl5 | proposed | - | `docs/design/input-i5-i7.md`<br>`tools/ci/pointercount.py`<br>`tools/ci/test_pointercount.py`<br>`tools/ci/pointercount-baseline.json`<br>`tools/ci/check.sh` | - |
@@ -192,14 +186,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 90dde084a 11-27 21:28 `Merge agent/townapply: townapply: SME town profile rows, beltSlots and tierFloor loader fields (TASK-1087)` (townapply)
+- 0f92b2853 11-27 21:27 `Merge branch 'main' into townapply` (-)
+- db2f6c04f 11-27 21:17 `Merge agent/smetown: smetown: SME advice on town supply profiles (TASK-765)` (smetown)
+- 912f71256 11-27 21:16 `Merge branch 'main' into smetown` (-)
+- e3ad47351 11-27 21:12 `Merge agent/cardclose4: cardclose4: card status sync after the afternoon merges` (cardclose4)
+- 263da1e33 11-27 21:10 `Merge remote-tracking branch 'origin/main' into agent/cardclose4` (-)
+- 3210c3a77 11-27 21:09 `Merge agent/devupdatefix: devupdatefix: dev-update.sh local mode, per-run stage dir, host line (TASK-1086)` (devupdatefix)
 - 1db8a65e9 11-27 19:59 `Merge agent/questautovis: questautovis: auto/waitingFor visible in ops, api and Return screen (TASK-1085)` (questautovis)
 - 715757050 11-27 19:58 `Merge branch 'main' into questautovis` (-)
 - 1542a59b7 11-27 19:53 `Merge agent/cellar3gate: cellar3gate: leave the pocket through a click the mouth gate allows, coded no_path park (TASK-1084)` (cellar3gate)
-- 63564ad8a 11-27 19:52 `Merge branch 'main' into cellar3gate` (-)
-- a115a3215 11-27 19:28 `Merge agent/chunkstart: chunkstart: why Questy chunks do not start (docs)` (chunkstart)
-- 39552a408 11-27 19:28 `Merge agent/mercgold: mercgold: dead merc with gold is a trip reason, no-merc and revive-off visibility (TASK-1083)` (mercgold)
-- fbe22468a 11-27 19:26 `Merge branch 'main' into chunkstart` (-)
-- 23e7c1750 11-27 19:26 `Merge branch 'main' into mercgold` (-)
-- 198ef5168 11-27 19:22 `Merge agent/auraflap: auraflap: hold a crowd aura through the fight, shadow agree includes aura (TASK-1082)` (auraflap)
-- 776d76832 11-27 19:21 `Merge branch 'main' into auraflap` (-)
 <!-- statusgen:end -->

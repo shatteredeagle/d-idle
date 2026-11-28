@@ -1,7 +1,7 @@
 ---
 id: TASK-762
 title: 'town9: viewer, GET /api/townplan and the Town plan card'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-21T04:53:00Z'
