@@ -79,7 +79,11 @@ pg_changed=$( { git diff --name-only "$pg_base" HEAD; git status --porcelain | c
   grep -E '^(cmd/d2scenario/|internal/scenario/|tools/provingground/|tools/ci/check\.sh$)' | head -1)
 if [ -n "$pg_changed" ] || [ "${PG_SMOKE:-}" = 1 ]; then
   out=$(go run ./cmd/d2scenario smoke 2>&1)
-  echo "$out" | grep -Eq '^smoke: static [0-9]+ scenarios, prep 4, ledger 4, blocked 0$' || bad "d2scenario smoke:"$'\n'"$out"
+  if echo "$out" | grep -Eq '^smoke: static [0-9]+ scenarios, prep 4, ledger 4, blocked 0$'; then
+    echo "pg smoke ok: $(echo "$out" | grep -E '^smoke: static' | tail -1)"
+  else
+    bad "d2scenario smoke:"$'\n'"$out"
+  fi
   bash tools/provingground/nightcheck_test.sh >/dev/null 2>&1 || bad "tools/provingground/nightcheck_test.sh"
   bash tools/provingground/pgenv_test.sh >/dev/null 2>&1 || bad "tools/provingground/pgenv_test.sh"
 fi

@@ -185,10 +185,11 @@ func hostOf(addr string) string { h, _, _ := net.SplitHostPort(addr); return h }
 const tokenCookieAge = 30 * 24 * time.Hour
 
 // tokenHint is the 401 body of a page load: the clean address carries no token, so a bookmark or home-screen icon
-// whose cookie is gone must say what to do instead of a bare "unauthorized". It names no token and no address.
+// whose cookie is gone must say what to do instead of a bare "unauthorized". It names no token and no address, and
+// has no inline style (the page CSP blocks them; tools/uilint).
 const tokenHint = `<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Sign-in needed</title><body style="font:16px/1.5 system-ui,sans-serif;max-width:32em;margin:3em auto;padding:0 1em">
-<h1 style="font-size:1.3em">This page needs its token again</h1>
+<title>Sign-in needed</title><body>
+<h1>This page needs its token again</h1>
 <p>The browser no longer has the sign-in cookie for this page (it lasts 30 days, and a home-screen icon or a private
 window keeps its own cookies).</p>
 <p>Open the link you were given once more: the address of this page with <code>?t=YOUR-TOKEN</code> at the end.
