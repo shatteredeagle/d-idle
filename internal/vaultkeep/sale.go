@@ -223,8 +223,20 @@ func (k *Keeper) putSale(o SaleOrder) error {
 	if err := os.MkdirAll(filepath.Dir(path), 0o700); err != nil {
 		return err
 	}
+	// Durable before the credit: the order file is what tells a restart that the reserved records were paid for.
 	tmp := path + ".tmp"
-	if err := os.WriteFile(tmp, b, 0o600); err != nil {
+	f, err := os.OpenFile(tmp, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0o600)
+	if err != nil {
+		return err
+	}
+	_, err = f.Write(b)
+	if err == nil {
+		err = f.Sync()
+	}
+	if cerr := f.Close(); err == nil {
+		err = cerr
+	}
+	if err != nil {
 		return err
 	}
 	return os.Rename(tmp, path)
@@ -269,6 +281,8 @@ func (k *Keeper) saleSkip(ctx context.Context, id string, rec vault.Rec, found b
 		return SaleLine{}, &SaleSkip{ID: id, Code: "state", Why: "only an item that is in the vault can be sold (it is " + string(rec.State) + ")"}
 	case rec.Stage != "":
 		return SaleLine{}, &SaleSkip{ID: id, Code: "busy", Why: "a reveal or an old sale of it is still running"}
+	case rec.Hold != "":
+		return SaleLine{}, &SaleSkip{ID: id, Code: "busy", Why: "another sale has reserved it"}
 	}
 	g, err := k.value(ctx, rec)
 	if err != nil {
@@ -424,7 +438,11 @@ func (k *Keeper) SellNow(ctx context.Context, ids []string, confirm bool) ([]Res
 		k.settleSale(ctx, *o)
 		return k.saleResults(res, k.saleOrder()), k.SaleView()
 	}
-	q := k.SaleQuote(ctx, ids)
+	oid := fmt.Sprintf("s-%d", k.now().UnixNano())
+	q, held, err := k.quoteReserved(oid, confirm, func() SaleQuote { return k.SaleQuote(ctx, ids) })
+	if err != nil {
+		return failAll("busy", err.Error())
+	}
 	if q.Why != "" {
 		return failAll("busy", q.Why)
 	}
@@ -444,10 +462,87 @@ func (k *Keeper) SellNow(ctx context.Context, ids []string, confirm bool) ([]Res
 		}
 		return res, nil
 	}
-	o := SaleOrder{ID: fmt.Sprintf("s-%d", k.now().UnixNano()), Lines: q.Lines, Total: q.Total, State: SaleQueued}
-	k.saveSale(o)
+	if !held {
+		return res, nil
+	}
+	o := SaleOrder{ID: oid, Lines: q.Lines, Total: q.Total, State: SaleQueued}
+	if err := k.startSale(o); err != nil {
+		for _, l := range q.Lines {
+			res[at[l.ID]].Code, res[at[l.ID]].Why = "journal", err.Error()
+		}
+		return res, nil
+	}
 	k.settleSale(ctx, o)
 	return k.saleResults(res, k.saleOrder()), k.SaleView()
+}
+
+// quoteReserved prices a sale and reserves its lines in the store in one compare-and-set: the reservation names the store
+// version the quote was read at, so a Keep, Pin, Discard or reveal that lands in between makes it stale and the quote is
+// read again (three tries). held false with a nil error: nothing to sell, or the confirm is still missing; nothing is held.
+// After held true the records can only be sold by order oid or released (vault.Store.Reserve), whatever any other request
+// does: the credit that follows pays for records that cannot stay.
+func (k *Keeper) quoteReserved(oid string, confirm bool, quote func() SaleQuote) (q SaleQuote, held bool, err error) {
+	st := k.store()
+	if st == nil {
+		return quote(), false, nil
+	}
+	for try := 0; try < 3; try++ {
+		ver := st.Version()
+		q = quote()
+		if q.Why != "" || len(q.Lines) == 0 || (q.NeedConfirm && !confirm) {
+			return q, false, nil
+		}
+		if k.reserveHook != nil {
+			k.reserveHook()
+		}
+		if _, err = st.Reserve(lineIDs(q.Lines), oid, ver); err == nil {
+			return q, true, nil
+		}
+		if !errors.Is(err, vault.ErrStale) {
+			return q, false, fmt.Errorf("the vault could not reserve the items (%w): nothing was sold", err)
+		}
+	}
+	return q, false, errors.New("the vault changed while the sale was priced: nothing was sold, try again")
+}
+
+// startSale writes the order down before any gold moves. An order that cannot be saved is not run: its reservation is
+// given back, because after a restart nothing would say whether the reserved records were paid for.
+func (k *Keeper) startSale(o SaleOrder) error {
+	if err := k.putSale(o); err != nil {
+		k.forgetSale(o.ID)
+		if st := k.store(); st != nil {
+			_, _ = st.Release(o.ID)
+		}
+		return fmt.Errorf("the sale order could not be written down first (%w): nothing was sold", err)
+	}
+	return nil
+}
+
+// forgetSale drops the in-memory copy of an order that never reached the file.
+func (k *Keeper) forgetSale(id string) {
+	k.omu.Lock()
+	if k.smem != nil && k.smem.ID == id {
+		k.smem, k.sloaded = nil, ""
+	}
+	k.omu.Unlock()
+}
+
+// releaseOrphans gives back every reservation no running sale owns (a stop between the reservation and the order file:
+// the credit comes after the file, so nothing was paid). The caller holds smu.
+func (k *Keeper) releaseOrphans() {
+	st := k.store()
+	if st == nil {
+		return
+	}
+	o := k.saleOrder()
+	for order, ids := range st.Held() {
+		if o.Active() && o.ID == order {
+			continue
+		}
+		if _, err := st.Release(order); err == nil {
+			k.note("sale-orphan-"+order, fmt.Sprintf("A vault sale (%s) stopped before it was paid: %d item(s) are back in the vault, no gold moved.", order, len(ids)))
+		}
+	}
 }
 
 func lineIDs(ls []SaleLine) []string {
@@ -511,6 +606,10 @@ func (k *Keeper) settleSale(ctx context.Context, o SaleOrder) {
 	end := func(state, note string) {
 		o.State, o.Note, o.Ended = state, note, k.now().Unix()
 		k.saveSale(o)
+		// The order is over: whatever it still holds (a refused credit, a record that could not leave) is free again.
+		if _, err := st.Release(o.ID); err != nil {
+			k.note("sale-release", "A finished sale could not release its items ("+err.Error()+"); it is tried again at the next step.")
+		}
 	}
 	if o.State == SaleQueued {
 		if k.measured() {
@@ -577,6 +676,7 @@ func (k *Keeper) resumeSale(ctx context.Context) []string {
 	defer k.actMu.Unlock()
 	k.smu.Lock()
 	defer k.smu.Unlock()
+	k.releaseOrphans()
 	o := k.saleOrder()
 	if !o.Active() {
 		return nil

@@ -1,6 +1,8 @@
 package bot
 
 import (
+	"context"
+	"errors"
 	"testing"
 
 	"d2lod-bot/internal/d2"
@@ -76,6 +78,69 @@ func TestRecoveryFarmWithoutPotionsOrPortalTakesTheSafestArea(t *testing.T) {
 		}
 		if ml := g.r.recoveryMLvl(a, d2.Normal); ml > tc.level-3 && a != first {
 			t.Errorf("%v clvl %d act %d, no potions, no portal: picked area %d, monster level %d above clvl-3 and not the first field %d", tc.class, tc.level, tc.act+1, a, ml, first)
+		}
+	}
+}
+
+// Review 11, N4: the floor of the no-potion rule was the first field of the hero's CURRENT act. For a hero in act 2 with
+// no potion and no scroll that field's monster level is above the limit it is the floor of (every act 2 area is). The
+// floor is then act 1's first field (the town waypoint is free). Lean (no waypoint reach) and not lean; two classes.
+// Act 1 heroes keep their floor: nothing lower exists.
+func TestNoPotionFloorIsNeverAboveTheLimit(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		for _, lean := range []int{1, 0} {
+			const level = 15
+			g := newRig(t)
+			g.r.e.Tune.Route.EarlyRoute = lean
+			g.r.e.Tune.Resource.RecoveryKitGate = 0
+			g.r.mlvlFn = func(area int, _ d2.Difficulty) int {
+				if g.r.d.Plan.Act(area) == 1 {
+					return normalMLvl[area]
+				}
+				return 12 + g.r.d.Plan.Act(area) // above clvl-3 in every later act
+			}
+			town := 0
+			for a, ar := range g.r.d.Plan.Areas {
+				if ar.Town && ar.Act == 2 {
+					town = a
+				}
+			}
+			g.w.set(func(w *world) { w.class, w.level, w.gold0, w.act, w.area = class, level, 7, 1, town })
+			g.w.belt()
+			g.r.loop.broke.on = true
+			s, _ := g.w.snapshot()
+			if g.r.resInput(s).HasTP || !g.r.noPotions(s) || town == 0 {
+				t.Fatal("the rig hero has a portal scroll or a potion, or the plan has no act 2 town")
+			}
+			g.r.activeWaypoints(s)
+			g.r.loop.task.mu.Lock()
+			for _, st := range g.r.d.Plan.Steps["normal"] {
+				if !g.r.d.Plan.IsTown(st.Area) && g.r.d.Plan.Act(st.Area) == 2 {
+					g.r.loop.task.wp[st.Area] = true
+				}
+			}
+			g.r.loop.task.mu.Unlock()
+			a, ok := g.r.recoveryArea(s)
+			if !ok {
+				continue // a refusal is allowed, farming above the limit is not
+			}
+			if ml := g.r.recoveryMLvl(a, d2.Normal); ml > level-3 {
+				t.Errorf("%v lean %d: clvl %d in act 2, no potion, no scroll: picked area %d (act %d), monster level %d above clvl-3",
+					class, lean, level, a, g.r.d.Plan.Act(a), ml)
+			}
+			// ...and the way there exists: no walk leads west, the town waypoint does
+			g.mover.routeFn = func(from, to int) ([]int, error) {
+				if g.r.d.Plan.Act(from) != g.r.d.Plan.Act(to) {
+					return nil, errors.New("no exit to that level")
+				}
+				g.w.set(func(w *world) { w.act = g.r.d.Plan.Act(from) - 1 }) // the game: arrived in the other act
+				g.r.poll()
+				return []int{to}, nil
+			}
+			g.r.poll()
+			if err := g.r.travelTo(context.Background(), a); err != nil || g.w.count("wp 1") != 1 {
+				t.Errorf("%v lean %d: travel from the act 2 town to area %d: %v (calls %s)", class, lean, a, err, g.w.log())
+			}
 		}
 	}
 }

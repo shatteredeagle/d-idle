@@ -793,8 +793,9 @@ func (r *Runner) Beat() { r.lastStep.Store(time.Now().UnixNano()) }
 
 // LastStep is the wall-clock time of the last finished Run loop iteration (zero before Run started). The loop keeps
 // iterating while paused, self-paused or in an error wait, so a stale value means a step is stuck or the loop died.
-// Observed progress inside a running action counts as a finished step too (observer.bump: a kill, xp, a level, and
-// since review part 7 A4 also walking, an area change, gold, a potion, a drop, monster life going down): one action
+// Observed progress inside a running action counts as a finished step too (observer.beat: a kill, xp, a level, and
+// since review part 7 A4 also an area change, walking beatMove away, gold gained or spent, an item picked up; since
+// review 11 N2 never a fact the guard goroutine or the monsters produce while the action hangs): one action
 // legitimately runs longer than the watchdog limit (the Den of Evil sweep, Doofer 2026-11-27, restart after 613 s with
 // 52 kills; a 40 min board slice with ten quiet minutes of walking and chores, TASK-1048).
 // The value is atomic on purpose: the watchdog must never wait on a lock a hung step holds.

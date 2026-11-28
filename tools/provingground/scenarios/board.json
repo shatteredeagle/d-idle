@@ -58,7 +58,7 @@
     },
     "api": [
      {
-      "after_s": 60,
+      "after_s": 8,
       "path": "/api/quests/search_for_cain/cancel",
       "body": {
        "chunk": "scroll",
@@ -81,7 +81,7 @@
     ]
    },
    "provenance": "Hero created fresh, clvl 17 by stat verbs, purse 5000, waypoints Cold Plains to Dark Wood, board records as the scenario says. CHEATED: waypoints and level are SETUP writes (mechanics evidence only, never balance).",
-   "notes": "D2: Stop implies dependants; the reply lists them in `changed` (field added by card 6).",
+   "notes": "D2: Stop implies dependants; after_s 8 wall because the scroll chunk is in progress only about 4 to 20 s after the start (Paladin; the Sorceress about 50 s) and the lab night run with 60 cancelled a chunk that was already done (409 done); the reply lists them in `changed` (field added by card 6).",
    "assert": [
     {
      "kind": "api_reply",
@@ -532,7 +532,7 @@
       }
      }
     ],
-    "restart_at_s": 300
+    "restart_at_s": 110
    },
    "budget": {
     "virtual_min": 30
@@ -548,13 +548,13 @@
     ]
    },
    "provenance": "Hero created fresh, clvl 17 by stat verbs, purse 5000, waypoints Cold Plains to Dark Wood, board records as the scenario says. CHEATED: waypoints and level are SETUP writes (mechanics evidence only, never balance).",
-   "notes": "trigger.restart_at_s 300: the bot is stopped (SIGTERM, save and quit) and started again on the same hero and plan file; the first leg must have taken the scroll (U: timing, tune restart_at_s).",
+   "notes": "trigger.restart_at_s 110 (wall): the bot is stopped (SIGTERM, save and quit) and started again on the same hero and plan file. The lab night 2026-11-28 used 300, longer than the whole leg (the leg ended on its virtual budget at about 150 s wall), so the restart was not mid-chain. The first leg must have taken the scroll (Paladin did at about 105 s; the Sorceress retried the tree four times and had not, so a Sorceress RED here means the precondition was not met; U: timing).",
    "assert": [
     {
      "kind": "log_line",
-     "pattern": "step Take the Inifuss bark",
+     "pattern": "quest board: starting chunk search_for_cain/scroll",
      "max": 1,
-     "why": "the step ran before the restart and is not repeated after it (I4, I6)"
+     "why": "the scroll chunk starts once per run: a step may repeat after a failed pickup, but the restart must not start the chunk again (I4, I6)"
     },
     {
      "kind": "board",

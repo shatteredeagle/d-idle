@@ -8,6 +8,7 @@ import (
 	"d2lod-bot/internal/arbiter"
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/goals"
+	"d2lod-bot/internal/supply"
 	"d2lod-bot/internal/task"
 )
 
@@ -345,7 +346,8 @@ func TestArbiterSurviveReadsTheSafetyVerdictAndYieldsToATrip(t *testing.T) {
 			survive bool
 		}{
 			{"low life, verdict none", SafetyNone, false, false},
-			{"verdict town portal", SafetyTownPortal, false, true},
+			{"verdict drink, hostile near", SafetyDrinkLife, false, true},
+			{"verdict rejuv, hostile near", SafetyDrinkRejuv, false, true},
 			{"verdict mana only", SafetyDrinkMana, false, false},
 			{"verdict chicken, trip running", SafetyChicken, true, false},
 		} {
@@ -361,6 +363,116 @@ func TestArbiterSurviveReadsTheSafetyVerdictAndYieldsToATrip(t *testing.T) {
 			}
 			if tc.trip && g.r.arb.ctl.Load() != 0 {
 				t.Fatalf("%v %s: the survive hook ran over the trip", class, tc.name)
+			}
+		}
+	}
+}
+
+// Review 11, N1: a declined refill (trip cooldown) backs the upkeep intent off. An emergency trip that then runs in
+// town, hero hurt and broke, must go on: before the fix the arbiter refused the backed-off upkeep intent, chose recovery
+// and its hook walked the hero out to farm unhealed. The direct half asks the farm hooks themselves: whatever the arbiter
+// chose, a running trip goes on and due chores start (the chain's prefix). Two classes.
+func TestArbiterControlBackoffNeverTakesARunningTrip(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		g, _ := farmRig(t, 6, class)
+		g.w.set(func(w *world) { w.gold0 = 900 })
+		g.w.belt()
+		// the upkeep source (one key for "the plan would buy" and "a trip runs") needs a town with a planner
+		g.r.d.Town = fixedPlanner{Townsman: g.r.d.Town, pl: supply.Plan{Lines: []supply.PlanLine{{Line: supply.Healing, Have: 1, Min: 3, Buy: 2}}}}
+		g.r.e.Tune.Bot.ArbiterShadow, g.r.e.Tune.Bot.ArbiterControl, g.r.e.Tune.Bot.ArbiterFamilies = 1, 1, 255
+		g.r.setLastTrip(g.clock.Now())
+		g.r.poll()
+		g.clock.Sleep(time.Second)
+		g.r.runGoalShadowed(context.Background(), g.r.latest(), campControl())
+		if d, _ := g.r.Arbiter(); d.Chosen == nil || d.Chosen.Source != arbiter.SrcUpkeep || g.r.arb.ctl.Load() != 0 {
+			t.Fatalf("%v: setup, the upkeep hook should be chosen and decline: %+v (acted %d)", class, d.Chosen, g.r.arb.ctl.Load())
+		}
+		g.w.set(func(w *world) { w.area, w.life = 1, 30 })
+		g.r.loop.broke.on = true
+		g.r.loop.trip = &trip{plan: ChorePlan{Heal: true, Reason: "test"}, emergency: true}
+		g.r.poll()
+		g.clock.Sleep(time.Second)
+		g.r.runGoalShadowed(context.Background(), g.r.latest(), campControl())
+		d, _ := g.r.Arbiter()
+		if d.Chosen == nil || arbiter.Family(d.Chosen.Source) != "chores" {
+			t.Fatalf("%v: the running emergency trip was not chosen: %+v, rejected %+v", class, d.Chosen, d.Rejected)
+		}
+		if why := g.r.currentWhy(); why == WhyFarmGold || g.w.count("chores") == 0 {
+			t.Fatalf("%v: the trip did not go on (why %s, chores %d)", class, why, g.w.count("chores"))
+		}
+	}
+}
+
+func TestArbiterFarmHooksHonourTheTripPrefix(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		for _, fam := range []string{arbiter.SrcRecovery, arbiter.SrcGoldFarm} {
+			for _, running := range []bool{true, false} {
+				g, gf := farmRig(t, 6, class)
+				g.w.set(func(w *world) { w.gold0 = 900 })
+				g.w.belt()
+				g.r.e.Tune.Bot.ArbiterShadow, g.r.e.Tune.Bot.ArbiterControl, g.r.e.Tune.Bot.ArbiterFamilies = 1, 1, 255
+				if fam == arbiter.SrcGoldFarm {
+					gf.Start()
+				} else {
+					g.r.loop.broke.on = true
+				}
+				if running {
+					g.w.set(func(w *world) { w.area, w.life = 1, 30 })
+					g.r.loop.trip = &trip{plan: ChorePlan{Heal: true, Reason: "test"}, emergency: true}
+				}
+				g.r.poll()
+				g.clock.Sleep(time.Second)
+				d := arbiter.Decision{Chosen: &arbiter.Intent{Source: fam, Kind: "farm_gold", Class: arbiter.Objective}}
+				_, took := g.r.arbAct(context.Background(), g.r.latest(), campControl(), d, 255)
+				why := g.r.currentWhy()
+				if !took || why == WhyFarmGold || g.w.count("chores")+g.w.count("totown") == 0 {
+					t.Fatalf("%v %s trip running %v: took %v why %s chores %d totown %d: the farm ran over the trip or the due chores",
+						class, fam, running, took, why, g.w.count("chores"), g.w.count("totown"))
+				}
+			}
+		}
+	}
+}
+
+// Review 11, N3: survive is "a drink verdict with a hostile near", nothing else. A quiet hurt hero (the verdict drinks
+// or asks for the portal with nothing in the snapshot) and a leave verdict (portal, chicken, crowd retreat or abandon)
+// must not get the survive hook's full sweep of the area: the chain's own step runs (a plain chores trip goes on) and
+// the guard carries the verdict out. Before the fix every case here chose survive and started a fight. Two classes.
+func TestArbiterSurviveNeedsAHostileAndNeverSweepsOnALeaveVerdict(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		for _, tc := range []struct {
+			name    string
+			verdict SafetyAction
+			quiet   bool
+			trip    bool
+		}{
+			{"quiet, drink verdict, plain trip running", SafetyDrinkLife, true, true},
+			{"quiet, portal verdict", SafetyTownPortal, true, false},
+			{"hostile, portal verdict", SafetyTownPortal, false, false},
+			{"hostile, chicken", SafetyChicken, false, false},
+			{"hostile, crowd retreat", SafetyCrowdRetreat, false, false},
+			{"hostile, crowd abandon", SafetyCrowdAbandon, false, false},
+		} {
+			g := controlRig(t, class, 1, 1)
+			g.w.set(func(w *world) {
+				w.life = 40
+				if tc.quiet {
+					w.mons = nil
+				}
+			})
+			g.w.belt(101)
+			g.fight.safety = func(*d2.Snapshot) SafetyAction { return tc.verdict }
+			if tc.trip {
+				g.r.loop.trip = &trip{plan: ChorePlan{Heal: true, Reason: "test"}}
+			}
+			g.r.poll()
+			g.r.runGoalShadowed(context.Background(), g.r.latest(), levelGoalControl())
+			d, _ := g.r.Arbiter()
+			if d.Chosen != nil && d.Chosen.Source == arbiter.SrcSurvive || g.r.arb.ctl.Load() != 0 {
+				t.Fatalf("%v %s: survive chosen (%+v), controlled ticks %d", class, tc.name, d.Chosen, g.r.arb.ctl.Load())
+			}
+			if tc.trip && (g.r.currentWhy() == WhyFight || g.w.count("totown") == 0) {
+				t.Fatalf("%v %s: the trip did not go on (why %s, calls %s)", class, tc.name, g.r.currentWhy(), g.w.log())
 			}
 		}
 	}

@@ -11,6 +11,7 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
+	"strconv"
 	"strings"
 
 	"d2lod-bot/internal/leveler"
@@ -148,7 +149,86 @@ type Pre struct {
 	// Skills are hard skill points put into a class skill after the level (`debug points <id> <n>`, V docs/d2-spike.md: only a
 	// class skill of the character is accepted). SETUP for a drill whose skill no build table learns yet (Whirlwind); the run is CHEATED.
 	Skills []SkillSet `json:"skills,omitempty"`
+	// Bind puts a class skill on a hand after the points are spent (`cmd select`, the player's own command), by skills.txt
+	// NAME: the skill the drill is about instead of the build's main attack. Played profile only; the self-check refuses a
+	// hero whose hand does not hold it or who has not learned it. SETUP of the drill: the run is CHEATED.
+	Bind []HandBind `json:"bind,omitempty"`
+	// Summon casts a summon skill at setup, after the points and the binds (`cmd skill`, the player's own command, N times
+	// beside the hero), so a minion drill starts with its army. Played profile and field start only (the handed-over game
+	// keeps the summons; a saved one would not). The self-check wants at least Min summons standing. The run is CHEATED.
+	Summon []Summon `json:"summon,omitempty"`
 }
+
+// HandBind is one Pre.Bind row: a skills.txt skill name and the hand ("right", the default, or "left").
+type HandBind struct {
+	Skill string `json:"skill"`
+	Hand  string `json:"hand,omitempty"`
+}
+
+// Summon is one Pre.Summon row: a skills.txt skill name, the casts (default 1) and the summons that must stand after
+// them (default 1: a golem recast replaces the golem, and Raise Skeleton needs a corpse, which a fresh field has not).
+type Summon struct {
+	Skill string `json:"skill"`
+	N     int    `json:"n,omitempty"`
+	Min   int    `json:"min,omitempty"`
+}
+
+// validateHandSkills checks pre.bind and pre.summon without the game tables: names (never ids), hands, counts, and the
+// profile and start they need. Whether a name is a skill of the class is the runner's check (the game tables) and
+// TestPreSkillNamesExistForTheClass over the checked-in scenarios.
+func (s Scenario) validateHandSkills() error {
+	at := "scenario " + s.ID
+	name := func(key, n string) error {
+		if strings.TrimSpace(n) == "" || strings.TrimSpace(n) != n {
+			return fmt.Errorf("%s: %s: skill name %q", at, key, n)
+		}
+		if _, err := strconv.Atoi(n); err == nil {
+			return fmt.Errorf("%s: %s: skill %q is an id; name the skill (the class table resolves it)", at, key, n)
+		}
+		return nil
+	}
+	if (len(s.Pre.Bind) > 0 || len(s.Pre.Summon) > 0) && (s.Pre.HeroProfile != HeroPlayed || s.Pre.Level < 2) {
+		return fmt.Errorf("%s: pre.bind and pre.summon need pre.hero_profile %s and pre.level 2 or more (a banked hero has learned nothing)", at, HeroPlayed)
+	}
+	hands := map[string]string{}
+	for _, b := range s.Pre.Bind {
+		if err := name("pre.bind", b.Skill); err != nil {
+			return err
+		}
+		h := b.HandName()
+		if h != "left" && h != "right" {
+			return fmt.Errorf("%s: pre.bind %s: hand %q (want left or right)", at, b.Skill, b.Hand)
+		}
+		if o, dup := hands[h]; dup {
+			return fmt.Errorf("%s: pre.bind: %s and %s both on the %s hand", at, o, b.Skill, h)
+		}
+		hands[h] = b.Skill
+	}
+	for _, m := range s.Pre.Summon {
+		if err := name("pre.summon", m.Skill); err != nil {
+			return err
+		}
+		if s.Pre.Start != StartField {
+			return fmt.Errorf("%s: pre.summon needs start field (a saved game does not keep the summons)", at)
+		}
+		if m.N < 0 || m.N > 20 || m.Min < 0 || m.Min > max(m.N, 1) {
+			return fmt.Errorf("%s: pre.summon %s: n %d min %d (n 1..20, min at most n)", at, m.Skill, m.N, m.Min)
+		}
+	}
+	return nil
+}
+
+// HandName is the hand of the bind with the default applied.
+func (b HandBind) HandName() string {
+	if b.Hand == "" {
+		return "right"
+	}
+	return b.Hand
+}
+
+// Casts and Standing are N and Min with the defaults applied.
+func (m Summon) Casts() int    { return max(m.N, 1) }
+func (m Summon) Standing() int { return max(m.Min, 1) }
 
 // SkillSet is one Pre.Skills row: a skills.txt id and the points.
 type SkillSet struct {
@@ -460,6 +540,9 @@ func (s Scenario) Validate() error {
 		return fmt.Errorf("%s: pre.hero_profile played with raw pre.stats of the level or the points (the stats declare the points; use banked or drop them)", at)
 	}
 	if err := s.validateFromSave(); err != nil {
+		return err
+	}
+	if err := s.validateHandSkills(); err != nil {
 		return err
 	}
 	if s.Pre.Level < 0 || s.Pre.Level > 99 {

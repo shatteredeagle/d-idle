@@ -1,0 +1,10 @@
+{
+ "name": "bot.arbiterControl",
+ "built_by": "arbmig stage 3 (agent/arbmig3)",
+ "dark_since": "2026-11-26",
+ "why_off": "Control path built, family list in bot.arbiterFamilies (default survive and player, bits 3). Wired families and their verdicts: survive+player (bits 1,2), chores+claim (bits 4,8; verdicts chores and claim pass offline, arbfam entry 1), goldfarm+recovery (bits 16,32; verdicts pass offline, arbfam entry 2), quest (bit 64; verdict passes offline, arbfam entry 3), level (bit 128; verdict passes offline, arbfam entry 4). Not run live; the outcome verdicts are a model of the monitor (U).",
+ "enable_criteria": "Per family: d2scenario arbiter-replay verdict passes and the incident scenario rows green on a lockstep run, then flip on ONE sandbox with bot.arbiterShadow 1, 24 h invariant-monitor watch with automatic revert on a hard breach (docs/process/dark-launch.md), owner go per family",
+ "owner": "coordinator",
+ "review_by": "2026-12-09",
+ "status": "enabled"
+}

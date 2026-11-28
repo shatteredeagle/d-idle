@@ -25,6 +25,11 @@ import (
 // moveEpsilon is the number of subtiles that count as movement for the watchdog.
 const moveEpsilon = 3
 
+// beatMove is how far (subtiles) the hero must be from where the last position heartbeat was taken before walking
+// counts as a heartbeat for the d2bot watchdog. Far above a knockback or a step a held click still finishes, so a hero
+// whose acting goroutine hangs does not keep the process alive by being pushed around (review 11, N2).
+const beatMove = 20
+
 type monTrack struct {
 	aliveSeen bool
 	counted   bool
@@ -72,6 +77,7 @@ type observer struct {
 	mons    map[uint32]monTrack
 	monLife int
 	pos     input.Point
+	beatPos input.Point // where the last position heartbeat was taken (beat)
 	inv     map[uint32]itemTrack
 	belt    map[uint32]itemTrack
 	invInit bool
@@ -83,7 +89,7 @@ type observer struct {
 	campaignAt    time.Time // last campaign progress (stall.go): kill or xp, non-town area entered, purchase, quest step
 	rearmAt       time.Time
 	real          uint64       // progress that resets the failsafe ladder
-	realWall      atomic.Int64 // wall-clock unix nanos of the last observed progress of any kind (bump; heartbeat for the d2bot watchdog, see LastStep)
+	realWall      atomic.Int64 // wall-clock unix nanos of the last progress the acting goroutine made (beat; heartbeat for the d2bot watchdog, see LastStep)
 	killXPAt      time.Time    // last kill or xp gain (drought watchdog); fieldSince: entry into the current non-town area
 	fieldSince    time.Time
 	townLeftAt    time.Time   // last departure from a town area (the farm loop measures the walk back from it)
@@ -382,18 +388,22 @@ func (o *observer) bump(now time.Time) {
 	o.lastProgress = now
 	o.progress++
 	o.stuckReason = ""
-	// The slice heartbeat (fable review part 7, A4): actions run up to 40 min, the d2bot watchdog allows 10. The facts
-	// that keep the in-process stuck check quiet (walking, an area change, gold, a potion, a drop, monster life going
-	// down) keep the process watchdog quiet too, so a quiet stretch of a slice that is getting somewhere (a long walk,
-	// town chores) is not judged hung. Observed facts only, never a timer: a step that hangs moves nothing.
-	o.realWall.Store(time.Now().UnixNano())
 }
+
+// beat is the slice heartbeat of the d2bot watchdog (fable review part 7, A4; review 11, N2): actions run up to 40 min,
+// the watchdog allows 10, so progress inside a slice keeps the process alive. Only facts the ACTING goroutine has to
+// produce count: a kill, xp, a level, an area change, the hero beatMove away from the last such point, gold gained or
+// spent in town, an item picked up or bought. Facts the guard goroutine or the monsters produce while the action hangs
+// do not: the reflex drink, a monster leaving the snapshot or bleeding, a knockback, gold lost on death. Caller holds
+// obMu.
+func (o *observer) beat() { o.realWall.Store(time.Now().UnixNano()) }
 
 // bumpReal is progress that counts for the failsafe ladder: experience, kills and levels only. Walking, area changes,
 // gold, potions, drops and damage dealt keep the watchdog quiet (bump) but a crash loop causes them too, so they must
 // not refill the restart budgets.
 func (o *observer) bumpReal(now time.Time) {
 	o.bump(now)
+	o.beat()
 	o.campaignAt = now
 	o.killXPAt = now
 	o.nkMech = ""
@@ -550,6 +560,7 @@ func (r *Runner) observe(s *d2.Snapshot, now time.Time) {
 		o.noteRoute(p.Area)
 		o.mons = map[uint32]monTrack{}
 		o.bump(now)
+		o.beat()
 		o.fieldSince = time.Time{}
 		if !r.d.Plan.IsTown(p.Area) && o.fromTown {
 			o.townLeftAt = now
@@ -582,6 +593,10 @@ func (r *Runner) observe(s *d2.Snapshot, now time.Time) {
 	if pos := (input.Point{X: p.X, Y: p.Y}); abs(pos.X-o.pos.X) >= moveEpsilon || abs(pos.Y-o.pos.Y) >= moveEpsilon {
 		o.pos = pos
 		o.bump(now)
+		if abs(pos.X-o.beatPos.X) >= beatMove || abs(pos.Y-o.beatPos.Y) >= beatMove {
+			o.beatPos = pos
+			o.beat()
+		}
 	}
 
 	if !dead && !first {
@@ -736,6 +751,9 @@ func (r *Runner) observeKills(s *d2.Snapshot, now time.Time) {
 		if p.Gold < o.gold && o.gold > 0 {
 			o.campaignAt = now // gold went down: a purchase (a death also costs gold, and a death is no stall either)
 		}
+		if p.Gold > o.gold || p.InTown() {
+			o.beat() // picked up or spent; gold lost in the field is a death, which a hung action does not prevent
+		}
 		o.gold = p.Gold
 		o.bump(now) // shopping is not progress that may refill the restart budgets
 	}
@@ -776,7 +794,7 @@ func (r *Runner) observeKills(s *d2.Snapshot, now time.Time) {
 		next[u.ID] = tr
 	}
 	o.mons = next
-	if life < o.monLife { // monsters losing life is progress while a fight is on
+	if life < o.monLife { // monsters losing life is progress while a fight is on (stuck check only, never the heartbeat)
 		o.bump(now)
 	}
 	o.monLife = life
@@ -855,12 +873,14 @@ func (r *Runner) observeItems(s *d2.Snapshot, now time.Time) {
 			if _, had := o.inv[id]; !had {
 				r.emitDrop(t)
 				o.bump(now)
+				o.beat()
 			}
 		}
 		for id, t := range belt {
 			if _, had := o.belt[id]; !had {
 				r.emitDrop(t)
 				o.bump(now)
+				o.beat()
 			}
 		}
 	}

@@ -68,6 +68,9 @@ tools/ci/gamecode_guard.sh || fail=1
 # --- watch UI panel contract: layered CSS, panel scope, no inline styles (tools/uilint, docs/ui-regression-plan.md) ---
 go run ./tools/uilint >/dev/null 2>&1 || { go run ./tools/uilint; bad "tools/uilint (watch UI panel contract)"; }
 
+# --- build tables, combat profiles and the capability table agree (fable review 8; ratchet data/build-cap-ratchet.json) ---
+go test -count=1 ./internal/plandata -run TestBuildTablesConsistent >/dev/null 2>&1 || { go test -count=1 ./internal/plandata -run TestBuildTablesConsistent; bad "build data consistency (internal/plandata TestBuildTablesConsistent)"; }
+
 [ "${1:-}" = "--hygiene-only" ] && { [ $fail = 0 ] && echo "hygiene ok"; exit $fail; }
 
 # --- gofmt ---

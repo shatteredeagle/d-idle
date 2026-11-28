@@ -39,7 +39,7 @@ func (r *Runner) kitRead(s *d2.Snapshot) (k kit, known bool) {
 	in := r.resInput(s)
 	rt := r.e.Tune.Resource
 	k = kit{TP: in.HasTP, HP: in.Belt.HP + in.Belt.RV + in.Belt.PackHP + in.Belt.PackRV, MP: in.Belt.MP, minHP: rt.KitMinHP}
-	if resource.ManaNeed(in.Class) >= 2 {
+	if resource.ManaNeedFor(in.Class, in.Build) >= 2 {
 		k.minMP = rt.KitMinMP
 	}
 	spec := resource.SpecOfEnv(rt)
