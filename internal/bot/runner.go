@@ -220,6 +220,7 @@ type Runner struct {
 	stepMu         sync.Mutex                   // held for a whole loop step: the loop state is only touched under it or from the step itself (questboard.go world)
 	noProfile      atomic.Bool                  // parked in town without a combat profile (noprofile.go)
 	noProfileWhat  string                       // the park line last logged; loop goroutine only
+	holeHeld       atomic.Bool                  // the zone model's last answer was a hole hold: wait in town, no fresh game (zonemodel.go)
 	boardTraining  atomic.Bool                  // the board's last slice was its training slice: the leveling filler's own work (starvedcause.go)
 	parkedBoard    atomic.Bool                  // quest board Idle mode: standing in town on purpose, the stall watchdog stays quiet (boardmode.go)
 	noTP           atomic.Bool                  // the running task step has Constraints.NoTownPortal: no safety portal, no trip

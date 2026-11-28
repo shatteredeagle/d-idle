@@ -1,6 +1,7 @@
 package bot
 
 import (
+	"context"
 	"errors"
 	"testing"
 	"time"
@@ -362,6 +363,23 @@ func TestZoneHoleNotWalkedAfterFaultBansOrWithoutMargin(t *testing.T) {
 				st, ok := g.r.d.Plan.Pick("normal", 12, o)
 				if got := ok && st.Area == 3; got != tc.want {
 					t.Fatalf("picked %+v ok %v, want the hole zone walked to: %v", st.Area, ok, tc.want)
+				}
+				if tc.want || ok {
+					return
+				}
+				// Review 14 H4: the hold waits in town; with an area cleared and a way to cycle no new game is asked for.
+				g.r.d.Cycler = fakeCycler{g.w}
+				g.r.syncGames()
+				g.r.loop.cleared = map[int]bool{2: true}
+				g.w.set(func(w *world) { w.area = 1 })
+				g.r.poll()
+				for i := 0; i < 3; i++ {
+					if done, err := g.r.freshGameToLevel(context.Background(), g.r.latest()); !done || err != nil {
+						t.Fatalf("hold: done %v err %v, want a wait in town", done, err)
+					}
+				}
+				if n := g.w.count("newgame normal"); n != 0 {
+					t.Fatalf("hold started %d fresh games", n)
 				}
 			})
 		}
