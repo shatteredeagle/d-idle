@@ -2,6 +2,7 @@ package questboard
 
 import (
 	"context"
+	"fmt"
 	"strings"
 	"sync"
 	"testing"
@@ -445,5 +446,38 @@ func TestPlanRoundTripsAutoFields(t *testing.T) {
 	p := a.plan()
 	if len(p.AutoLog) != 1 || p.AutoLog[0].Quest != den || !p.Accepted[0].Auto {
 		t.Fatalf("plan %+v", p)
+	}
+}
+
+// A cancelled countdown records its reason (once in the log, then in AutoState().Why) for every way it ends.
+func TestAutoCancelledCountdownRecordsReason(t *testing.T) {
+	for _, bd := range builds {
+		t.Run(bd.class, func(t *testing.T) {
+			a := newAutoRig(t, bd.class, 6, opts(20))
+			var logs []string
+			a.x.o.Log = func(msg string, kv ...any) {
+				if msg == "quest auto-start held back" {
+					logs = append(logs, fmt.Sprint(kv[1]))
+				}
+			}
+			a.opt(den)
+			a.tickAuto(calm)
+			a.x.NoteHold()
+			if w := a.x.AutoState().Why; !strings.Contains(w, "cancelled: you paused or reset") {
+				t.Fatalf("why %q", w)
+			}
+			a.tickAuto(calm) // the hold gate: must not replace or re-log the cancel reason
+			a.tickAuto(calm)
+			if len(logs) != 2 || !strings.Contains(logs[0], "cancelled") {
+				t.Fatalf("logs %q, want the cancel line then the hold line", logs)
+			}
+			a.c.add(time.Hour)
+			a.tickAuto(calm)
+			a.f.Level = 0 // the offer goes away mid-countdown
+			a.tickAuto(calm)
+			if w := a.x.AutoState().Why; !strings.Contains(w, "cancelled: the offer is gone") {
+				t.Fatalf("why %q", w)
+			}
+		})
 	}
 }

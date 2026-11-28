@@ -50,7 +50,11 @@ type observer struct {
 	exp       uint32
 	savedExp  uint32 // experience the character had when this game was entered = what its .d2s held (U: area changes may save too, then this overstates the risk)
 	savedNew  bool   // a game was entered and savedExp is not yet taken
-	xpLost    int64  // experience that vanished across game restarts (memory exp dropped to the save's)
+	xpDrop    struct {
+		set   bool
+		after uint32
+	} // a fall of the xp read, waiting for a second consistent read
+	xpLost    int64 // experience that vanished across game restarts (memory exp dropped to the save's)
 	pendingXP int64
 	am        areaAcc // per-area log counters (areametrics.go)
 	// goldPickupMin is the field gold picked up since the last minute line.
@@ -699,8 +703,22 @@ func (r *Runner) observeKills(s *d2.Snapshot, now time.Time) {
 	o := &r.ob
 	p := s.Player
 	dx := int64(p.Exp) - int64(o.exp)
-	prev := o.exp
-	o.exp = p.Exp
+	prev, unconfirmed := o.exp, false
+	// A fall is only believed when the next read repeats it: the first reads after a relaunch can be 0 while the new game
+	// loads (V Doofer audit 2026-11-28: lost=368946 after=0, the next minute line had the full xp).
+	if dx < 0 {
+		if !o.xpDrop.set || o.xpDrop.after != p.Exp {
+			o.xpDrop.set, o.xpDrop.after = true, p.Exp
+			dx, unconfirmed = 0, true // o.exp stays at the last believed value
+		} else {
+			o.xpDrop.set = false
+		}
+	} else {
+		o.xpDrop.set = false
+	}
+	if !unconfirmed {
+		o.exp = p.Exp
+	}
 	if dx > 0 {
 		o.pendingXP += dx
 		o.bumpReal(now)

@@ -41,7 +41,11 @@ type Proc struct {
 	// restart (it used to be appended to one file, D2DPACE could not tell the instances apart).
 	LogPath string
 	// Logf receives the one-line diagnosis of a channel that stopped answering (nil: silent).
-	Logf     func(string, ...any)
+	Logf func(string, ...any)
+	// InfoLogf and LeaveWhy tell a planned Save and Exit (farm reset, savepoint, recycle) from a chicken: LeaveWhy returns
+	// the relaunch reason code of the leave in progress ("" unknown). Only unknown, chicken and leave stay a WARN.
+	InfoLogf func(string, ...any)
+	LeaveWhy func() string
 	OnInGame func() // called when a (re)started game is in game: the run toggle starts at walking (d2dinput.ResetRun)
 	lastDiag string
 
@@ -301,11 +305,27 @@ func (p *Proc) SaveExit(ctx context.Context) error {
 	}
 	// This is the "socket vanished" of D2DPACE (V live, D2DSPEED): combat's Chicken calls Leave = LeaveGame, which quits
 	// a managed d2d; the socket file goes with the process and nothing restarts it until the runner notices "exited".
-	if p.Logf != nil {
-		p.Logf("d2d: Save and Exit requested (chicken / leave game): the process quits and its socket goes away")
-	}
+	p.logLeave()
 	qerr := p.C.Quit(ctx)
 	return errors.Join(serr, p.reap(10*time.Second, qerr == nil))
+}
+
+// logLeave says why the process is about to quit: a WARN for a chicken or an unknown cause, an INFO for a planned leave.
+func (p *Proc) logLeave() {
+	why := ""
+	if p.LeaveWhy != nil {
+		why = p.LeaveWhy()
+	}
+	switch why {
+	case "", "chicken", "leave":
+		if p.Logf != nil {
+			p.Logf("d2d: Save and Exit requested (chicken / leave game): the process quits and its socket goes away")
+		}
+	default:
+		if p.InfoLogf != nil {
+			p.InfoLogf("d2d: Save and Exit requested (%s): the process quits and its socket goes away", why)
+		}
+	}
 }
 
 // Stop ends a managed d2d without saving; attach mode does nothing.

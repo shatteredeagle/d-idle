@@ -75,6 +75,7 @@ func TestXPRiskIsSinceLastSaveAcrossAKill(t *testing.T) {
 	g.r.noteGameLost()
 	g.w.set(func(w *world) { w.exp = 1500 })
 	g.observeAt(now.Add(2 * time.Second))
+	g.observeAt(now.Add(3 * time.Second)) // a fall counts after a second consistent read
 	if got := risk(); got != 0 {
 		t.Fatalf("after the kill and re-entry: xpRisk %d, want 0 (the saved value)", got)
 	}
