@@ -254,6 +254,7 @@ func (r *Runner) guardedAreas(s *d2.Snapshot, ex map[int]bool) {
 }
 
 func (r *Runner) guardedAreasNoFarm(s *d2.Snapshot, ex map[int]bool) {
+	r.parkedBossAreas(ex)
 	if a := r.stalePackArea(s); a != 0 {
 		ex[a] = true // the pack we fled from is still there: level elsewhere until the kit is rebuilt
 	}

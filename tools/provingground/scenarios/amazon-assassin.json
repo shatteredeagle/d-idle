@@ -1,0 +1,649 @@
+{
+ "version": "didle.scenario/1",
+ "scenarios": [
+  {
+   "id": "points.amazon-bow-normal30-lands-at-30",
+   "title": "Amazon table amazon_bow_normal30: at clvl 30 the planned skill points are in the tree",
+   "kind": "behaviour",
+   "tier": "full",
+   "covers": [
+    "points.verb"
+   ],
+   "touches": [
+    "internal/plandata/build-amazon_bow_normal30.json",
+    "internal/leveler/",
+    "internal/points/"
+   ],
+   "pre": {
+    "hero_profile": "played",
+    "level": 30
+   },
+   "trigger": {
+    "goals": "campaign",
+    "build": "amazon_bow_normal30",
+    "knobs": {
+     "resource.pointsDecisions": 1
+    }
+   },
+   "budget": {
+    "virtual_min": 10
+   },
+   "matrix": {
+    "classes": [
+     "Amazon"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "provenance": "SETUP: level 30 with the points a played level gives (29 level points). Reachable by play. CHEATED setup: mechanics evidence only. Card cls2.",
+   "notes": "Clone of points.necro-leveling-normal30-lands-at-30 for table amazon_bow_normal30 (bow line: Fire Arrow, then Exploding Arrow from clvl 12). No per-skill assertion: the format takes numeric skill ids and the rule asks for names, so the spent total and the table marker are the evidence. NOT run yet.",
+   "assert": [
+    {
+     "kind": "stat_between",
+     "code": "skillsspent",
+     "min": 25,
+     "max": 33,
+     "why": "the table's points were spent (29 level points; the quest points are not granted by the setup)"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "class-aware start.*levelerBuild=amazon_bow_normal30",
+     "min": 1,
+     "why": "the bot played the selected table"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "NO COMBAT PROFILE",
+     "max": 0,
+     "why": "the table's class and combat keys resolve to a profile (the fighter refuses to fight otherwise)"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "id": "points.amazon-javelin-normal30-lands-at-30",
+   "title": "Amazon table amazon_javelin_normal30: at clvl 30 the planned skill points are in the tree",
+   "kind": "behaviour",
+   "tier": "full",
+   "covers": [
+    "points.verb"
+   ],
+   "touches": [
+    "internal/plandata/build-amazon_javelin_normal30.json",
+    "internal/leveler/",
+    "internal/points/"
+   ],
+   "pre": {
+    "hero_profile": "played",
+    "level": 30
+   },
+   "trigger": {
+    "goals": "campaign",
+    "build": "amazon_javelin_normal30",
+    "knobs": {
+     "resource.pointsDecisions": 1
+    }
+   },
+   "budget": {
+    "virtual_min": 10
+   },
+   "matrix": {
+    "classes": [
+     "Amazon"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "provenance": "SETUP: level 30 with the points a played level gives (29 level points). Reachable by play. CHEATED setup: mechanics evidence only. Card cls2.",
+   "notes": "Clone of points.necro-leveling-normal30-lands-at-30 for table amazon_javelin_normal30 (javelin line: Poison Javelin from 6, Lightning Bolt from 14). No per-skill assertion: the format takes numeric skill ids and the rule asks for names, so the spent total and the table marker are the evidence. NOT run yet.",
+   "assert": [
+    {
+     "kind": "stat_between",
+     "code": "skillsspent",
+     "min": 25,
+     "max": 33,
+     "why": "the table's points were spent (29 level points; the quest points are not granted by the setup)"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "class-aware start.*levelerBuild=amazon_javelin_normal30",
+     "min": 1,
+     "why": "the bot played the selected table"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "NO COMBAT PROFILE",
+     "max": 0,
+     "why": "the table's class and combat keys resolve to a profile (the fighter refuses to fight otherwise)"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "kind": "e2e",
+   "tier": "nightly",
+   "covers": [
+    "combat.fight"
+   ],
+   "touches": [
+    "internal/combat/",
+    "internal/bot/",
+    "internal/leveler/"
+   ],
+   "matrix": {
+    "classes": [
+     "Amazon"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "pre": {
+    "hero_profile": "banked"
+   },
+   "id": "amazon.level-1-30",
+   "title": "Fresh Amazon levels from clvl 1 to 30 on the default table, zero setup writes",
+   "trigger": {
+    "goals": "reach:30",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1
+    }
+   },
+   "budget": {
+    "virtual_min": 700,
+    "wall_min": 240
+   },
+   "provenance": "No setup write: a fresh level 1 hero, town start. Not CHEATED if no_writes holds.",
+   "notes": "Card cls2, shape of necro.level-1-30. Default table (amazon_bow_normal30). The bow table needs a bow and arrows bought at the first town visit (start gear is a javelin stack, docs/gear.md); the ammo path comes from the table's ammo key. NOT run yet; the ceiling and the budget are guesses (U).",
+   "assert": [
+    {
+     "kind": "level_at_least",
+     "min": 30,
+     "why": "leveling plan clvl 1 to 30"
+    },
+    {
+     "kind": "stat_between",
+     "code": "skillsspent",
+     "min": 25,
+     "max": 33,
+     "why": "every skill point spent by the plan"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "class-aware start.*levelerBuild=amazon_bow_normal30",
+     "min": 1,
+     "why": "the class default table was selected, not another class's"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 6,
+     "why": "survival gate: no death spiral (U ceiling; ADR 0005 judges by streak, the invariant monitor is the verdict)"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "kind": "e2e",
+   "tier": "nightly",
+   "covers": [
+    "combat.fight"
+   ],
+   "touches": [
+    "internal/combat/",
+    "internal/bot/",
+    "internal/leveler/"
+   ],
+   "matrix": {
+    "classes": [
+     "Amazon"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "pre": {
+    "hero_profile": "banked"
+   },
+   "id": "amazon.earned-act2",
+   "title": "Earned Acts 1 and 2: a fresh Amazon through Andariel and the Act 2 quests toward Duriel, zero setup writes",
+   "trigger": {
+    "goals": "campaign:normal_act2",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1
+    }
+   },
+   "budget": {
+    "virtual_min": 1500,
+    "wall_min": 500
+   },
+   "provenance": "No setup write: fresh hero. Not CHEATED if no_writes holds.",
+   "notes": "Card cls2, shape of necro.earned-act2. The Act 2 plan row of the class is the melee archetype (classtraits.json caster false): entries 20 to 24 and life gates 160 to 220 (S/U). The level floor is a guess (U). NOT run yet.",
+   "assert": [
+    {
+     "kind": "level_at_least",
+     "min": 24,
+     "why": "a played Act 2 reaches clvl 24 at the least (U)"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^Entered Lut Gholein",
+     "min": 1,
+     "why": "Act 2 entered"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "kind": "e2e",
+   "tier": "nightly",
+   "covers": [
+    "combat.fight"
+   ],
+   "touches": [
+    "internal/combat/",
+    "internal/bot/",
+    "internal/leveler/"
+   ],
+   "matrix": {
+    "classes": [
+     "Amazon"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "pre": {
+    "hero_profile": "played",
+    "level": 14,
+    "gold": 3000,
+    "start": "field",
+    "area": 3,
+    "items": [
+     {
+      "code": "hp1",
+      "count": 8
+     },
+     {
+      "code": "mp1",
+      "count": 8
+     }
+    ],
+    "belt": [
+     "hp1",
+     "hp1",
+     "hp1",
+     "mp1"
+    ]
+   },
+   "id": "amazon.soak-3h-kit",
+   "title": "Amazon 3 virtual hours from clvl 14: kit and economy, no death spiral",
+   "trigger": {
+    "goals": "reach:30",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1
+    }
+   },
+   "budget": {
+    "virtual_min": 180,
+    "wall_min": 70
+   },
+   "provenance": "CHEATED: level 14, gold, potions and the field start by SETUP verbs, mechanics only.",
+   "notes": "Card cls2, shape of necro.soak-3h-kit. Belt: three life and one mana column, a ranged hero that is not a caster (classtraits manaNeed 1; docs/classes/amazon.md section 7 has health 2, mana 1, rejuvenation 1, and no rejuvenation is sold at clvl 14). Report-only soak shape like soak.fault.*. NOT run yet.",
+   "assert": [
+    {
+     "kind": "level_at_least",
+     "min": 14,
+     "why": "alive and not below the start level; the invariant monitor is the verdict"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 3,
+     "why": "no death spiral in three hours (U ceiling)"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "id": "points.assassin-fireblast-normal30-lands-at-30",
+   "title": "Assassin table assassin_fireblast_normal30: at clvl 30 the planned skill points are in the tree",
+   "kind": "behaviour",
+   "tier": "full",
+   "covers": [
+    "points.verb"
+   ],
+   "touches": [
+    "internal/plandata/build-assassin_fireblast_normal30.json",
+    "internal/leveler/",
+    "internal/points/"
+   ],
+   "pre": {
+    "hero_profile": "played",
+    "level": 30
+   },
+   "trigger": {
+    "goals": "campaign",
+    "build": "assassin_fireblast_normal30",
+    "knobs": {
+     "resource.pointsDecisions": 1
+    }
+   },
+   "budget": {
+    "virtual_min": 10
+   },
+   "matrix": {
+    "classes": [
+     "Assassin"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "provenance": "SETUP: level 30 with the points a played level gives (29 level points). Reachable by play. CHEATED setup: mechanics evidence only. Card cls2.",
+   "notes": "Clone of points.necro-leveling-normal30-lands-at-30 for table assassin_fireblast_normal30 (Fire Blast, then Wake of Fire from clvl 12). No per-skill assertion: the format takes numeric skill ids and the rule asks for names, so the spent total and the table marker are the evidence. NOT run yet.",
+   "assert": [
+    {
+     "kind": "stat_between",
+     "code": "skillsspent",
+     "min": 25,
+     "max": 33,
+     "why": "the table's points were spent (29 level points; the quest points are not granted by the setup)"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "class-aware start.*levelerBuild=assassin_fireblast_normal30",
+     "min": 1,
+     "why": "the bot played the selected table"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "NO COMBAT PROFILE",
+     "max": 0,
+     "why": "the table's class and combat keys resolve to a profile (the fighter refuses to fight otherwise)"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "id": "points.assassin-sentry-endgame90-lands-at-30",
+   "title": "Assassin table assassin_sentry_endgame90: at clvl 30 the planned skill points are in the tree",
+   "kind": "behaviour",
+   "tier": "full",
+   "covers": [
+    "points.verb"
+   ],
+   "touches": [
+    "internal/plandata/build-assassin_sentry_endgame90.json",
+    "internal/leveler/",
+    "internal/points/"
+   ],
+   "pre": {
+    "hero_profile": "played",
+    "level": 30
+   },
+   "trigger": {
+    "goals": "campaign",
+    "build": "assassin_sentry_endgame90",
+    "knobs": {
+     "resource.pointsDecisions": 1
+    }
+   },
+   "budget": {
+    "virtual_min": 10
+   },
+   "matrix": {
+    "classes": [
+     "Assassin"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "provenance": "SETUP: level 30 with the points a played level gives (29 level points). Reachable by play. CHEATED setup: mechanics evidence only. Card cls2.",
+   "notes": "Clone of points.necro-leveling-normal30-lands-at-30 for table assassin_sentry_endgame90 (lightning sentry line, first 30 levels of the endgame table). No per-skill assertion: the format takes numeric skill ids and the rule asks for names, so the spent total and the table marker are the evidence. NOT run yet.",
+   "assert": [
+    {
+     "kind": "stat_between",
+     "code": "skillsspent",
+     "min": 25,
+     "max": 33,
+     "why": "the table's points were spent (29 level points; the quest points are not granted by the setup)"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "class-aware start.*levelerBuild=assassin_sentry_endgame90",
+     "min": 1,
+     "why": "the bot played the selected table"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "NO COMBAT PROFILE",
+     "max": 0,
+     "why": "the table's class and combat keys resolve to a profile (the fighter refuses to fight otherwise)"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "kind": "e2e",
+   "tier": "nightly",
+   "covers": [
+    "combat.fight"
+   ],
+   "touches": [
+    "internal/combat/",
+    "internal/bot/",
+    "internal/leveler/"
+   ],
+   "matrix": {
+    "classes": [
+     "Assassin"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "pre": {
+    "hero_profile": "banked"
+   },
+   "id": "assassin.level-1-30",
+   "title": "Fresh Assassin levels from clvl 1 to 30 on the default table, zero setup writes",
+   "trigger": {
+    "goals": "reach:30",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1
+    }
+   },
+   "budget": {
+    "virtual_min": 700,
+    "wall_min": 240
+   },
+   "provenance": "No setup write: a fresh level 1 hero, town start. Not CHEATED if no_writes holds.",
+   "notes": "Card cls2, shape of necro.level-1-30. Default table (assassin_fireblast_normal30). Traps from clvl 12 go through the trap ladder of the profile (trap planner UNVERIFIED LIVE, internal/combat/trap.go). NOT run yet; the ceiling and the budget are guesses (U).",
+   "assert": [
+    {
+     "kind": "level_at_least",
+     "min": 30,
+     "why": "leveling plan clvl 1 to 30"
+    },
+    {
+     "kind": "stat_between",
+     "code": "skillsspent",
+     "min": 25,
+     "max": 33,
+     "why": "every skill point spent by the plan"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "class-aware start.*levelerBuild=assassin_fireblast_normal30",
+     "min": 1,
+     "why": "the class default table was selected, not another class's"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^combat trap .*\\bskill=",
+     "min": 1,
+     "why": "a sentry was laid after clvl 12 (marker of internal/combat/assassin.go)"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 6,
+     "why": "survival gate: no death spiral (U ceiling; ADR 0005 judges by streak, the invariant monitor is the verdict)"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "kind": "e2e",
+   "tier": "nightly",
+   "covers": [
+    "combat.fight"
+   ],
+   "touches": [
+    "internal/combat/",
+    "internal/bot/",
+    "internal/leveler/"
+   ],
+   "matrix": {
+    "classes": [
+     "Assassin"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "pre": {
+    "hero_profile": "banked"
+   },
+   "id": "assassin.earned-act2",
+   "title": "Earned Acts 1 and 2: a fresh Assassin through Andariel and the Act 2 quests toward Duriel, zero setup writes",
+   "trigger": {
+    "goals": "campaign:normal_act2",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1
+    }
+   },
+   "budget": {
+    "virtual_min": 1500,
+    "wall_min": 500
+   },
+   "provenance": "No setup write: fresh hero. Not CHEATED if no_writes holds.",
+   "notes": "Card cls2, shape of necro.earned-act2. The Act 2 plan row of the class is the melee archetype (classtraits.json caster false): entries 20 to 24 and life gates 160 to 220 (S/U). The level floor is a guess (U). NOT run yet.",
+   "assert": [
+    {
+     "kind": "level_at_least",
+     "min": 24,
+     "why": "a played Act 2 reaches clvl 24 at the least (U)"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^Entered Lut Gholein",
+     "min": 1,
+     "why": "Act 2 entered"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  },
+  {
+   "kind": "e2e",
+   "tier": "nightly",
+   "covers": [
+    "combat.fight"
+   ],
+   "touches": [
+    "internal/combat/",
+    "internal/bot/",
+    "internal/leveler/"
+   ],
+   "matrix": {
+    "classes": [
+     "Assassin"
+    ],
+    "seeds": [
+     11
+    ]
+   },
+   "pre": {
+    "hero_profile": "played",
+    "level": 14,
+    "gold": 3000,
+    "start": "field",
+    "area": 3,
+    "items": [
+     {
+      "code": "hp1",
+      "count": 8
+     },
+     {
+      "code": "mp1",
+      "count": 8
+     }
+    ],
+    "belt": [
+     "hp1",
+     "hp1",
+     "mp1",
+     "mp1"
+    ]
+   },
+   "id": "assassin.soak-3h-kit",
+   "title": "Assassin 3 virtual hours from clvl 14: kit and economy, no death spiral",
+   "trigger": {
+    "goals": "reach:30",
+    "knobs": {
+     "quests.board": 1,
+     "resource.pointsDecisions": 1
+    }
+   },
+   "budget": {
+    "virtual_min": 180,
+    "wall_min": 70
+   },
+   "provenance": "CHEATED: level 14, gold, potions and the field start by SETUP verbs, mechanics only.",
+   "notes": "Card cls2, shape of necro.soak-3h-kit. Belt: two life and two mana columns: a trap costs 13 to 20 mana and the planner wants twice the cost in the pool (docs/sme/class-assassin.md section 3, S). Report-only soak shape like soak.fault.*. NOT run yet.",
+   "assert": [
+    {
+     "kind": "level_at_least",
+     "min": 14,
+     "why": "alive and not below the start level; the invariant monitor is the verdict"
+    },
+    {
+     "kind": "log_line",
+     "pattern": "^character died ",
+     "max": 3,
+     "why": "no death spiral in three hours (U ceiling)"
+    },
+    {
+     "kind": "no_writes"
+    }
+   ]
+  }
+ ]
+}

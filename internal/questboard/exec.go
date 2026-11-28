@@ -180,6 +180,18 @@ func (e *Exec) state(k string) *runState {
 	return r
 }
 
+// seeded is state for a chunk about to be counted or parked: a state made here starts from the stored counters of the
+// live run, so a park written after a restart does not store zeros over them (review 10 B3). Callers hold e.mu.
+func (e *Exec) seeded(quest, chunk string) *runState {
+	k := ChunkKey(quest, chunk)
+	_, known := e.rs[k]
+	rs := e.state(k)
+	if !known {
+		e.smSeed(quest, chunk, rs)
+	}
+	return rs
+}
+
 // derive builds the views for the current difficulty. Callers hold e.mu.
 func (e *Exec) derive() ([]QuestView, Plan, int, error) {
 	plan, _, err := e.st.Load()
@@ -787,11 +799,7 @@ func (e *Exec) Report(d Decision, res StepResult) {
 	e.mu.Lock()
 	defer e.mu.Unlock()
 	k := ChunkKey(d.Quest, d.Chunk)
-	_, known := e.rs[k]
-	rs := e.state(k)
-	if !known {
-		e.smSeed(d.Quest, d.Chunk, rs)
-	}
+	rs := e.seeded(d.Quest, d.Chunk)
 	f0, d0 := rs.failures, rs.deaths
 	defer func() {
 		if rs.blocked == "" && (rs.failures != f0 || rs.deaths != d0) {
@@ -958,11 +966,13 @@ func (e *Exec) HandIn(ctx context.Context, quest, chunk string) (HandInResult, e
 			return res, ctx.Err()
 		}
 		res.Attempts++
+		last = "the reward did not register after the dialogue"
 		if err := e.act.HandIn(ctx, q, c); err != nil {
 			last = err.Error()
 			e.o.Log("quest board: hand-in failed "+ChunkKey(quest, chunk), "quest", quest, "chunk", chunk, "attempt", res.Attempts, "err", err)
-			continue
 		}
+		// The evidence is read after EVERY attempt: a dialogue that paid the reward and then reported an error is done,
+		// and the next attempts would only find an NPC with nothing to say ("failed 3 times", review 2 finding 8).
 		e.mu.Lock()
 		vs, _, _, derr := e.derive()
 		e.mu.Unlock()
@@ -979,12 +989,11 @@ func (e *Exec) HandIn(ctx context.Context, quest, chunk string) (HandInResult, e
 			e.o.Log("quest board: handed in "+ChunkKey(quest, chunk), "quest", quest, "chunk", chunk, "outcome", res.Outcome, "tier", cv.Tier.String())
 			return res, nil
 		}
-		last = "the reward did not register after the dialogue"
 	}
 	res.Outcome = HandInBlocked
 	res.Why = fmt.Sprintf("hand-in failed %d times: %s", res.Attempts, last)
 	e.mu.Lock()
-	rs := e.state(ChunkKey(quest, chunk))
+	rs := e.seeded(quest, chunk)
 	rs.blocked = res.Why
 	e.smPark(quest, chunk, "handin_failed", rs)
 	e.mu.Unlock()

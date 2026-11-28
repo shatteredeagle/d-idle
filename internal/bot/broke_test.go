@@ -51,7 +51,8 @@ func TestRecoveryOffKeepsOldBehaviour(t *testing.T) {
 	defer g.finish()
 	g.r.Start(campaign())
 	g.waitFor("moves", func() bool { return g.w.count("exit") > 0 })
-	if strings.Contains(buf.String(), "recovery:") {
+	// the message, not the word: the tick line's fact map prints a recovery key
+	if strings.Contains(buf.String(), `msg="recovery:`) {
 		t.Fatalf("recovery ran while off: %s", buf.String())
 	}
 }

@@ -201,20 +201,36 @@ func (a *Arbiter) Report(in Intent, now float64, ok bool) {
 		}
 		return
 	}
+	a.fail(in, now, a.cfg.BackoffMax)
+}
+
+// DeclineMax caps the back-off of a declined intent: a hook that found nothing to do cost nothing, so it is asked
+// again after one lease at the latest, not after BackoffMax (review 11 N1c: 30 minutes without a trip). U: judgment,
+// the value of DefaultConfig().MinDwell.
+const DeclineMax = 120
+
+// Decline tells the arbiter that the chosen intent's hook had nothing to do. It backs off like a failure, capped at
+// DeclineMax.
+func (a *Arbiter) Decline(in Intent, now float64) {
+	a.fail(in, now, min(DeclineMax, a.cfg.BackoffMax))
+}
+
+func (a *Arbiter) fail(in Intent, now, most float64) {
 	if !in.backsOff() {
 		return
 	}
+	k, bk := in.Key(), in.backoffKey()
 	b := a.fails[bk]
 	if b == nil {
 		b = &backoff{}
 		a.fails[bk] = b
 	}
 	d := a.cfg.BackoffBase
-	for i := 0; i < b.n && d < a.cfg.BackoffMax; i++ {
+	for i := 0; i < b.n && d < most; i++ {
 		d *= 2
 	}
-	if d > a.cfg.BackoffMax {
-		d = a.cfg.BackoffMax
+	if d > most {
+		d = most
 	}
 	b.n++
 	b.until = now + d

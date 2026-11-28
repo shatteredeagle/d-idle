@@ -1,6 +1,6 @@
 # The intent arbiter (shadow mode)
 
-> status: amended 2026-11-27 by card fix7 (TASK-1096): survive reads the fighter's safety verdict (fact `safety`), yields to an emergency trip; controlled hooks call `Report`; recovery and the gold farm pass the low-life gate; a declined hook does not hold the quest step. Details and migration order: `docs/design/arbiter-target-and-migration.md`. Amended 2026-11-28 by card fix7b (TASK-1115): back-off per (source, kind, cause) and never for a running or emergency trip; survive needs a drink verdict with a hostile near; the watchdog heartbeat is `observer.beat` (same doc, "What fix7b changed").
+> status: amended 2026-11-27 by card fix7 (TASK-1096): survive reads the fighter's safety verdict (fact `safety`), yields to an emergency trip; controlled hooks call `Report`; recovery and the gold farm pass the low-life gate; a declined hook does not hold the quest step. Details and migration order: `docs/design/arbiter-target-and-migration.md`. Amended 2026-11-28 by card fix7b (TASK-1115): back-off per (source, kind, cause) and never for a running or emergency trip; survive needs a drink verdict with a hostile near; the watchdog heartbeat is `observer.beat` (same doc, "What fix7b changed"). Amended 2026-11-28 by card sweep2 (TASK-1128): a hook that declines is reported with `Decline`, whose back-off is capped at `arbiter.DeclineMax` (120 s, U: judgment); a failure after cost still backs off to 1800 s.
 
 > status: current. First slice of roadmap R4 (docs/design/fable-review-2026-11-19/06-roadmap.md, 05-architecture-and-overhaul-options.md section 3.1). SHADOW ONLY: nothing the hero does changes. Tags: V = a test or measurement in this branch, U = unverified.
 
@@ -54,7 +54,7 @@ Read-only data: `Runner.Arbiter()` returns the last `Decision` (for the watch AP
 
 `go run ./cmd/d2arbiter [-follow] [-trace] LOG.jsonl` feeds a JSON-lines log (`minute` lines, or `tick` lines: area, kills, xp, chain, objectiveArea, facts) to the arbiter. Without `-follow` the arbiter sees the logged hero (divergences and counters). With `-follow` the simulated hero obeys the arbiter, facts and progress still come from the log, and an intent that ran its estimated cost in place with its reason still holding is reported failed.
 
-Recorded sessions: the bot writes these `tick` lines itself with `bot.tickLogSec` above 0 (default 0); a log with tick lines replays from them only and its minute lines are skipped (docs/design/ticklog-t4.md, card ticklog).
+Recorded sessions: the bot writes these `tick` lines itself, at most one a second (always on since 2026-11-28, card grad1; it was the knob `bot.tickLogSec`); a log with tick lines replays from them only and its minute lines are skipped (docs/design/ticklog-t4.md, card ticklog).
 
 Fixture `internal/arbiter/testdata/darkwood_pingpong.jsonl`: the Dark Wood, camp, Dark Wood, Cold Plains cycle of 2026-11-18 over 12 minutes. V: the area sequence and gaps are the real ones copied from the sandbox log into `internal/bot/flail_test.go`. U: facts (belt 1 under 4, 350 pack gold, a quest step in Dark Wood, no progress) are assumed from docs/probes/treefix3-2026-11-19.md, not logged. Result (V, `TestReplayPingPong`): the chain made 412 area changes; the arbiter, obeying itself, makes 2 (one to town, one back after the back-off), refusing 359 undo trips, each with both reasons in the trace (`testdata/pingpong_replay.golden`). Limit: the log never says whether the town visit helped; a chore that stays wanted is treated as failed after its cost.
 
@@ -88,7 +88,7 @@ Questy 2026-11-26 cases (`tools/provingground/arbiter-outcomes/questy-2026-11-26
 
 ## Outcome over a recorded session (stage 4)
 
-The case files score one decision point each; a night of the bot's tick lines (`bot.tickLogSec` above 0, docs/design/ticklog-t4.md) is scored tick by tick with the same rules:
+The case files score one decision point each; a night of the bot's tick lines (docs/design/ticklog-t4.md) is scored tick by tick with the same rules:
 
 `go run ./cmd/d2scenario arbiter-replay [-strict] [-follow] -session LOG.jsonl tools/provingground/arbiter-outcomes/*.json`
 

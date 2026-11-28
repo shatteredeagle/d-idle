@@ -1241,6 +1241,36 @@
    "source": "map",
    "note": "not in the catalogue; tier nightly mapped"
   },
+  "druid.level-1-30": {
+   "tier": "T4",
+   "source": "map",
+   "note": "not in the catalogue; tier nightly mapped"
+  },
+  "druid.earned-act2": {
+   "tier": "T4",
+   "source": "map",
+   "note": "not in the catalogue; tier nightly mapped"
+  },
+  "druid.soak-3h-kit": {
+   "tier": "T4",
+   "source": "map",
+   "note": "not in the catalogue; tier nightly mapped"
+  },
+  "barbarian.level-1-30": {
+   "tier": "T4",
+   "source": "map",
+   "note": "not in the catalogue; tier nightly mapped"
+  },
+  "barbarian.earned-act2": {
+   "tier": "T4",
+   "source": "map",
+   "note": "not in the catalogue; tier nightly mapped"
+  },
+  "barbarian.soak-3h-kit": {
+   "tier": "T4",
+   "source": "map",
+   "note": "not in the catalogue; tier nightly mapped"
+  },
   "combat.corpse-explodes": {
    "tier": "T3",
    "source": "map",
@@ -1305,6 +1335,56 @@
    "tier": "T3",
    "source": "map",
    "note": "not in the catalogue; tier full mapped"
+  },
+  "points.amazon-bow-normal30-lands-at-30": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "points.amazon-javelin-normal30-lands-at-30": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "amazon.level-1-30": {
+   "tier": "T4",
+   "source": "map",
+   "note": "not in the catalogue; tier nightly mapped"
+  },
+  "amazon.earned-act2": {
+   "tier": "T4",
+   "source": "map",
+   "note": "not in the catalogue; tier nightly mapped"
+  },
+  "amazon.soak-3h-kit": {
+   "tier": "T4",
+   "source": "map",
+   "note": "not in the catalogue; tier nightly mapped"
+  },
+  "points.assassin-fireblast-normal30-lands-at-30": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "points.assassin-sentry-endgame90-lands-at-30": {
+   "tier": "T3",
+   "source": "map",
+   "note": "not in the catalogue; tier full mapped"
+  },
+  "assassin.level-1-30": {
+   "tier": "T4",
+   "source": "map",
+   "note": "not in the catalogue; tier nightly mapped"
+  },
+  "assassin.earned-act2": {
+   "tier": "T4",
+   "source": "map",
+   "note": "not in the catalogue; tier nightly mapped"
+  },
+  "assassin.soak-3h-kit": {
+   "tier": "T4",
+   "source": "map",
+   "note": "not in the catalogue; tier nightly mapped"
   }
  }
 }
