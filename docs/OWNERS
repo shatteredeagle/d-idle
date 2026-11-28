@@ -129,6 +129,7 @@ docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-extras.jsonl.gz  gaterun  gate
 .github/workflows/tester-image.yml  credit-runner  ghcrpublish
 backlog/tasks/task-726 - dlv-cast-verbs-input-caps-cast-unit-cast-point-cast-hold.md  live-agent  inputl3
 backlog/tasks/task-765 - town12-SME-review-of-the-supply-profile-numbers-advice-only.md  live-agent  town11
+cmd/d2bot/  credit-runner  fix7
 cmd/d2bot/adapters.go  credit-runner  cainfix3
 cmd/d2bot/agencydrive_test.go  live-agent  agencyp1b
 cmd/d2bot/agencywire.go  live-agent  agencyp1b
@@ -165,6 +166,7 @@ deploy/d2d-container/compose.friends.yml  credit-runner  ghcrpublish
 deploy/d2d-container/compose.tester.yml  credit-runner  ghcrpublish
 deploy/d2d-container/context.sh  credit-runner  ghcrpublish
 deploy/d2d-container/tester_image_test.go  credit-runner  ghcrpublish
+docs/arbiter.md  credit-runner  fix7
 docs/arbiter.md  live-agent  arbmig
 docs/arbiter.md  live-agent  ticklog
 docs/away-drill.md  live-agent  awaydrill
@@ -174,9 +176,11 @@ docs/combat.md  credit-runner  cainfix3
 docs/contracts/decision-queue.md  credit-runner  qqueue
 docs/design/agency-p1b.md  live-agent  agencyp1b
 docs/design/arbiter-migration-p6.md  live-agent  arbmig
+docs/design/arbiter-target-and-migration.md  credit-runner  fix7
 docs/design/boardsm-flip.md  live-agent  bsmdef
 docs/design/fable-review-2026-11-21/town-planner-b-model.md  live-agent  town5
 docs/design/fable-review-2026-11-21/town-profiles-sme.md  live-agent  town12
+docs/design/fork-order-id-spec.md  credit-runner  fix1
 docs/design/input-cast-verbs.md  live-agent  inputl3
 docs/design/input-i3.md  live-agent  inputl3
 docs/design/input-i4.md  credit-runner  inputl4
@@ -207,6 +211,7 @@ docs/knobs.md  credit-runner  cainfix3
 docs/knobs.md  credit-runner  dlv-upkeep-state
 docs/knobs.md  live-agent  arbmig
 docs/onboarding-tour.md  credit-runner  onboardtour
+docs/probes/  credit-runner  fix7
 docs/probes/cellar3-gate-capture.md  live-agent  cellar3gate
 docs/probes/checkpoint-live-drill.md  live-agent  ckptlive
 docs/probes/classorder1.md  user  classorder1
@@ -232,6 +237,7 @@ docs/process/proving-ground.md  credit-runner  pgearned
 docs/process/proving-ground.md  credit-runner  pgfix
 docs/quest-givers.md  credit-runner  campaign1
 docs/questboard.md  credit-runner  cainfix3
+docs/questboard.md  credit-runner  fix2
 docs/questboard.md  live-agent  bsmdef
 docs/registry-publish.md  credit-runner  ghcrpublish
 docs/releases/0.1.2.md  credit-runner  cut012
@@ -250,13 +256,17 @@ docs/tester-registry.md  credit-runner  ghcrpublish
 docs/town.md  live-agent  town11
 docs/ui/redesign-2026-11-14/stash-anywhere.md  credit-runner  stashany
 docs/upstream/bodies/monster-block-body.md  credit-runner  decomp43
+internal/admit/  credit-runner  fix7
 internal/agency/drive.go  live-agent  agencyp1b
 internal/agency/drive_test.go  live-agent  agencyp1b
 internal/arbiter  live-agent  town10
+internal/arbiter/  credit-runner  fix7
 internal/arbiter/  live-agent  arbmig
 internal/arbiter/replay.go  live-agent  ticklog
 internal/arbiter/replay_ticklog_test.go  live-agent  ticklog
 internal/bot/  credit-runner  cainfix3
+internal/bot/  credit-runner  fix2
+internal/bot/  credit-runner  fix7
 internal/bot/arbiter_control.go  live-agent  arbmig
 internal/bot/arbiter_control_test.go  live-agent  arbmig
 internal/bot/arbloop_test.go  live-agent  arbloop
@@ -297,6 +307,7 @@ internal/combat/fighter.go  live-agent  inputl3
 internal/combat/portalverb.go  live-agent  inputl3
 internal/combat/portalverb_test.go  live-agent  inputl3
 internal/d2dcombat/  live-agent  dlv-press
+internal/d2dctl/  credit-runner  fix1
 internal/d2dctl/fake/fake.go  credit-runner  inputl4
 internal/d2dctl/fake/fake.go  live-agent  inputl3
 internal/d2dctl/item_verbs_merc.go  credit-runner  uib9
@@ -346,6 +357,7 @@ internal/plandata/build-necromancer_summoner_endgame90.json  live-agent  epic-cl
 internal/plandata/levelplan-normal.json  live-agent  epic-class-necromancer
 internal/power/  credit-runner  dlv-cleanup
 internal/questboard  live-agent  bsmdef
+internal/questboard/  credit-runner  fix2
 internal/questboard/  live-agent  cellar3gate
 internal/questboard/def.go  credit-runner  cainfix3
 internal/resource  live-agent  town5
@@ -386,6 +398,8 @@ internal/town/sellplan_test.go  live-agent  townflip
 internal/town/shop.go  live-agent  townflip
 internal/town/town.go  live-agent  townflip
 internal/town/trip.go  live-agent  inputl3
+internal/vaultkeep/  credit-runner  fix1
+internal/watch/  credit-runner  fix1
 internal/watch/areamap_test.go  credit-runner  uis6
 internal/watch/layout.go  credit-runner  uis1
 internal/watch/layout.go  credit-runner  uis6

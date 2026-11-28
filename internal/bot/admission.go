@@ -18,14 +18,19 @@ import (
 
 // AdmissionExplain is the admission line of `ops status --why`: the last verdict and how often the function agreed with the old judge.
 type AdmissionExplain struct {
-	Mode   string    `json:"mode"` // "shadow" (old judge decides) or "control" (admit decides)
-	Agree  int       `json:"agree"`
-	Differ int       `json:"differ"`
-	Last   string    `json:"last,omitempty"` // area, purpose and the words of the last non-open verdict
-	Row    string    `json:"row,omitempty"`
-	Need   string    `json:"need,omitempty"`
-	Wake   string    `json:"wake,omitempty"`
-	Seen   time.Time `json:"seen,omitempty"`
+	Mode   string `json:"mode"` // "shadow" (old judge decides) or "control" (admit decides)
+	Agree  int    `json:"agree"`
+	Differ int    `json:"differ"`
+	// The cells behind the two counters. Only AgreeRefused is evidence that a row fired and both sides refused; a window
+	// with AgreeRefused 0 exercised no row. OldOnly and NewOnly are the mixed cells (one side refused, the other let through).
+	AgreeRefused int       `json:"agreeRefused,omitempty"`
+	OldOnly      int       `json:"oldOnly,omitempty"`
+	NewOnly      int       `json:"newOnly,omitempty"`
+	Last         string    `json:"last,omitempty"` // area, purpose and the words of the last non-open verdict
+	Row          string    `json:"row,omitempty"`
+	Need         string    `json:"need,omitempty"`
+	Wake         string    `json:"wake,omitempty"`
+	Seen         time.Time `json:"seen,omitempty"`
 }
 
 type admitState struct {
@@ -145,9 +150,21 @@ func (r *Runner) admitNote(a int, p admit.Purpose, old string, nv admit.Verdict,
 	}
 	if !extra && old == nv.Why {
 		x.st.Agree++
+		if old != "" {
+			x.st.AgreeRefused++
+		}
 		return
 	}
 	x.st.Differ++
+	cell := "words" // both refuse, for different reasons
+	switch {
+	case extra || old == "" && nv.Refused:
+		cell = "new-only"
+		x.st.NewOnly++
+	case old != "" && !nv.Refused:
+		cell = "old-only"
+		x.st.OldOnly++
+	}
 	key := fmt.Sprintf("%d|%s|%s|%s", a, p, old, nv.Why)
 	if x.logged[key] || len(x.logged) >= admitLogMax {
 		return
@@ -156,7 +173,7 @@ func (r *Runner) admitNote(a int, p admit.Purpose, old string, nv admit.Verdict,
 		x.logged = map[string]bool{}
 	}
 	x.logged[key] = true
-	r.e.Log.Info("admission shadow", "area", a, "purpose", string(p), "old", old, "new", nv.Why, "row", nv.Row, "need", nv.Need)
+	r.e.Log.Info("admission shadow", "differ", cell, "area", a, "purpose", string(p), "old", old, "new", nv.Why, "row", nv.Row, "need", nv.Need)
 }
 
 // admissionExplain is the admission line of Explain.

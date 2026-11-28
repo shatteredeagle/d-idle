@@ -79,6 +79,22 @@ type DirectEquip struct {
 	Instance  string
 	Character string
 	Measured  func() bool
+
+	jmu     sync.Mutex
+	journal func(order, raw string, res []DirectResult)
+}
+
+// ReplyJournaler is a DirectEquipper that hands every engine reply to the caller's journal BEFORE its own bookkeeping (the
+// ledger line): the reply is the only copy of the displaced items, so it must be durable before any step that can fail.
+// res is nil when the reply did not parse; raw is the reply text as received.
+type ReplyJournaler interface {
+	JournalReplies(func(order, raw string, res []DirectResult))
+}
+
+func (d *DirectEquip) JournalReplies(f func(order, raw string, res []DirectResult)) {
+	d.jmu.Lock()
+	d.journal = f
+	d.jmu.Unlock()
 }
 
 func (d *DirectEquip) ready(order string) error {
@@ -116,6 +132,12 @@ func (d *DirectEquip) run(ctx context.Context, verb, order string, params map[st
 	var res []DirectResult
 	if err == nil {
 		res, err = parse(r)
+		d.jmu.Lock()
+		j := d.journal
+		d.jmu.Unlock()
+		if j != nil {
+			j(order, strings.Join(append([]string{r.Rest}, r.Lines...), "\n"), res)
+		}
 	} else {
 		err = mapDirectErr(err)
 	}
@@ -136,9 +158,13 @@ func (d *DirectEquip) run(ctx context.Context, verb, order string, params map[st
 	return res, err
 }
 
+// one keeps the result next to an error: a swap the engine did must never be dropped because a later step failed.
 func one(res []DirectResult, err error) (DirectResult, error) {
-	if err != nil || len(res) == 0 {
+	if len(res) == 0 {
 		return DirectResult{}, err
+	}
+	if err != nil {
+		return res[0], err
 	}
 	if !res[0].OK {
 		return res[0], &DirectRefused{Code: res[0].Code, Why: res[0].Why}
@@ -309,7 +335,33 @@ type DirectFake struct {
 	Rule     func(hex, slot string) *DirectRefused // class, level, strength, dexterity, hands (nil: everything fits)
 	Pushes   func(hex, slot string) []string       // other slots a placement empties (a two-hander and the shield)
 	Calls    []string                              // "<verb> <slot> <order>" per request that reached the fork
-	next     int
+	// Injected failures AFTER the engine applied the call: DropReply loses the answer (a timeout: no result, no journal),
+	// LateFail answers the result together with this error (the ledger line after the verb could not be written).
+	DropReply bool
+	LateFail  error
+	After     func(res []DirectResult) // the game side of a placement (tests move their other fakes here)
+	journal   func(order, raw string, res []DirectResult)
+	next      int
+}
+
+func (f *DirectFake) JournalReplies(j func(order, raw string, res []DirectResult)) {
+	f.mu.Lock()
+	f.journal = j
+	f.mu.Unlock()
+}
+
+// done is the tail of a call that reached the engine; the caller holds the lock.
+func (f *DirectFake) done(order string, res []DirectResult) ([]DirectResult, error) {
+	if f.After != nil {
+		f.After(res)
+	}
+	if f.DropReply {
+		return nil, context.DeadlineExceeded
+	}
+	if f.journal != nil {
+		f.journal(order, "fake", res)
+	}
+	return res, f.LateFail
 }
 
 func (f *DirectFake) DirectCaps(context.Context) (bool, error) { return !f.FlagOff, nil }
@@ -364,7 +416,7 @@ func (f *DirectFake) EquipDirect(_ context.Context, hex, slot, order string) (Di
 	if err := f.gate("equipdirect", order); err != nil {
 		return DirectResult{}, err
 	}
-	return one([]DirectResult{f.place(hex, slot)}, nil)
+	return one(f.done(order, []DirectResult{f.place(hex, slot)}))
 }
 
 func (f *DirectFake) UnequipDirect(_ context.Context, slot, order string) (DirectResult, error) {
@@ -396,10 +448,12 @@ func (f *DirectFake) WearSet(_ context.Context, pieces []DirectPiece, order stri
 	for i, p := range pieces {
 		out[i] = f.place(p.Hex, p.Slot)
 	}
-	return out, nil
+	return f.done(order, out)
 }
 
 var (
 	_ DirectEquipper = (*DirectEquip)(nil)
 	_ DirectEquipper = (*DirectFake)(nil)
+	_ ReplyJournaler = (*DirectEquip)(nil)
+	_ ReplyJournaler = (*DirectFake)(nil)
 )

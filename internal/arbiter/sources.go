@@ -20,7 +20,8 @@ const (
 	FactGoldFarm     = "gold_farm"
 	FactObjective    = "objective"
 	FactQuestRefused = "quest_refused" // 1 while a typed refusal of the quest step stands and its wake facts have not changed
-	FactSurviveBelow = "survive_below" // life percent under which a hostile makes the hero flee or drink
+	FactSurviveBelow = "survive_below" // recordings made before FactSafety only: life percent under which a hostile meant danger
+	FactSafety       = "safety"        // 1 while the fighter's safety verdict (bot Fighter.Safety) asks for a life action; the one danger rule
 	FactSellable     = "sellable"      // pack items the town sell chore would sell now (Town.SellableCount)
 	FactAreaDry      = "area_dry"      // 1 while an area is skipped as dry (dry-recovery, kill-drought): only a new game refills it
 	// Army facts (combat.Fighter.ArmyFacts, the minion census; card dlv-stance-army). 0 for a hero without an army.
@@ -75,7 +76,19 @@ func StdSources() []Source {
 	return []Source{
 		fn(SrcSurvive, func(v View) *Intent {
 			f := v.Facts
-			if f[FactInTown] == 0 && f[FactHostile] > 0 && f[FactSurviveBelow] > 0 && f[FactLifePct] < f[FactSurviveBelow] {
+			// A running emergency trip is already the safe action: the reflex does not replace its legs with a fight
+			// (fable review part 7, A2). A plain chores trip still yields to danger (incident questy-0251).
+			if f[FactInTown] != 0 || f[FactTripEmerg] != 0 {
+				return nil
+			}
+			if _, ok := f[FactSafety]; ok {
+				if f[FactSafety] > 0 {
+					return &Intent{Kind: "drink", Class: Reflex, Urgency: 1, NeedsArea: Any, EstCost: 2,
+						Reason: fmt.Sprintf("the safety verdict asks for a life action (life %d%%)", f[FactLifePct])}
+				}
+				return nil
+			}
+			if f[FactHostile] > 0 && f[FactSurviveBelow] > 0 && f[FactLifePct] < f[FactSurviveBelow] {
 				return &Intent{Kind: "drink", Class: Reflex, Urgency: 1, NeedsArea: Any, EstCost: 2,
 					Reason: fmt.Sprintf("life %d%% under %d%% with hostiles near", f[FactLifePct], f[FactSurviveBelow])}
 			}

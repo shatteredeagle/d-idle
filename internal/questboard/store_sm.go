@@ -31,6 +31,22 @@ func (p Plan) liveOrFinished(quest, chunk, diff string) bool {
 	return false
 }
 
+// storedPark is the parked run of an accepted chunk, nil when there is none. The legacy board reads it so a park the
+// machine stored is honoured with quests.boardSM at 0.
+func (p Plan) storedPark(quest, chunk, diff string) *Run {
+	for _, a := range p.Accepted {
+		if a.Quest != quest || a.Chunk != chunk || a.Diff != diff {
+			continue
+		}
+		for i, r := range p.Runs {
+			if r.Quest == quest && r.Chunk == chunk && r.Diff == diff && r.Status == RunParked {
+				return &p.Runs[i]
+			}
+		}
+	}
+	return nil
+}
+
 // reconcile makes the runs agree with Accepted (the older code may have changed it since the runs were written) and
 // runs the D4 repair: a record without a live or finished run is imported (a record whose chunk reads done becomes a
 // finished run with a latch at the tier read, any other a queued run), a live run without a record was withdrawn and is
