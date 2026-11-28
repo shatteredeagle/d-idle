@@ -1,0 +1,10 @@
+{
+ "name": "combat.minionRead",
+ "built_by": "necro5 (5446ca28f)",
+ "dark_since": "2026-11-22",
+ "why_off": "Needs --read-combat; U until a live drill.",
+ "enable_criteria": "Necromancer live drill: census matches the fork read",
+ "owner": "coordinator",
+ "review_by": "2026-12-09",
+ "status": "dark"
+}

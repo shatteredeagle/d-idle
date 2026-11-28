@@ -49,7 +49,7 @@ func (t *Town) planCount(s *d2.Snapshot, plan ChorePlan) (supply.Plan, supply.Co
 	c := t.supplyCount(s)
 	c.Purse, c.Stash, c.StashKnown = p.Gold, p.StashGold, p.StashGold > 0
 	c.PortalCharges, c.HasTome = t.scrollCount(s, "tsc", "tbk")
-	pl, err := solveShadow(p.Class, t.plan(p), belt.Slots(t.e.Data, s.Inventory), c, plan, &t.e.Tune.Loot, &t.e.Tune.Resource)
+	pl, err := solveShadow(p.Class, t.build, t.plan(p), belt.Slots(t.e.Data, s.Inventory), c, plan, &t.e.Tune.Loot, &t.e.Tune.Resource)
 	return pl, c, err
 }
 
@@ -79,9 +79,9 @@ func (t *Town) PlanView() supply.View {
 const kitPackReserve = 2
 
 // solveShadow is planOf without the snapshot reads, so it runs on any class and band without the game tables.
-func solveShadow(class d2.Class, band belt.Band, slots int, c supply.Count, plan ChorePlan, lt *env.LootTuning, r *env.ResourceTuning) (supply.Plan, error) {
+func solveShadow(class d2.Class, build string, band belt.Band, slots int, c supply.Count, plan ChorePlan, lt *env.LootTuning, r *env.ResourceTuning) (supply.Plan, error) {
 	capHP, capMP := band.Capacity(belt.HP, slots), band.Capacity(belt.MP, slots)
-	need := resource.ManaNeed(class)
+	need := resource.ManaNeedFor(class, build)
 	if capMP == 0 {
 		need = 0 // the belt plan has no mana column: the kit asks for none
 	}

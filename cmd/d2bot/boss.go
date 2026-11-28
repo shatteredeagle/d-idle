@@ -239,9 +239,12 @@ func mapKillErr(parent, slice context.Context, err error) error {
 		return fmt.Errorf("%w: %v", boss.ErrDead, err)
 	case parent.Err() != nil:
 		return parent.Err()
-	case slice.Err() != nil:
+	case slice.Err() != nil && (errors.Is(err, context.DeadlineExceeded) || errors.Is(err, context.Canceled)):
 		return nil // the slice ran out: the script polls and attacks again
 	}
+	// A fight that failed for its own reason is an error even when the slice ended meanwhile: the slice is wall time, and a
+	// lockstep run that fails each approach in almost no game time never counted a failed attack (V lab night 2026-11-28,
+	// drill.act2.summoner.stepexec: 251 failed approaches, fail counter 0, ended by the runner watchdog).
 	return err
 }
 

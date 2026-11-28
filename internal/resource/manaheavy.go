@@ -62,15 +62,21 @@ func manaHeavyCols(level int) [4]Potion {
 	return [4]Potion{hp, mp, mp, hp}
 }
 
+// manaHeavy selects the mana-heavy belt columns and drink line, Nightmare and Hell only (U design W7: the columns
+// replace a healing column, which a Normal hero still needs).
 func (in Input) manaHeavy() bool { return in.Diff != d2.Normal && ManaHeavyBuild(in.Build) }
 
-// manaNeed is ManaNeed(class), raised to 2 for a mana-heavy build (a Barbarian with War Cry included).
-func (in Input) manaNeed() int {
-	if in.manaHeavy() {
+// ManaNeedFor is the mana need of a hero: ManaNeed(class), raised to 2 for a table that flags itself mana_heavy, in
+// every difficulty (review 8 C8: the flag was ignored in Normal, so a Hammerdin or a War Cry Barbarian got no mana
+// kit line there). The need comes from the build, the class value is only the default.
+func ManaNeedFor(c d2.Class, build string) int {
+	if ManaHeavyBuild(build) {
 		return 2
 	}
-	return ManaNeed(in.Class)
+	return ManaNeed(c)
 }
+
+func (in Input) manaNeed() int { return ManaNeedFor(in.Class, in.Build) }
 
 // PlanForBuild is PlanForDiff with the mana-heavy columns for a mana-heavy build in Nightmare and Hell. The Hell
 // rejuvenation columns of PlanForDiff do not apply to it: its own rows already carry them from clvl 31.

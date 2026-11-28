@@ -100,6 +100,13 @@ func (r *Runner) earlyRouteCheck(s *d2.Snapshot, a int) (why string, kitOnly boo
 		if min := rt.MinLife[family]; min > 0 && s.Player.MaxLife > 0 && s.Player.MaxLife < min {
 			return fmt.Sprintf("life %d needed for the %s road (max life %d)", min, rt.Name, s.Player.MaxLife), false
 		}
+		if onRoad(rt, s.Player.Area) {
+			// The kit is an entry rule: a hero already inside passed it and goes on with a kit that thinned, like the route
+			// guard. The fix (a chores trip) needs the portal that is missing, so the refusal parked the chunk and left the
+			// hero idle in the lair (V lab night 2026-11-28, drill.act2.shaft.stepexec: "no town portal for the
+			// act2_maggot_lair road" in Maggot Lair Level 1, parked after 3 tries, then "Waiting for a fresh game").
+			continue
+		}
 		if n := healingOf(in); n < rt.Kit.Healing {
 			return fmt.Sprintf("%d healing potions < %d for the %s road", n, rt.Kit.Healing, rt.Name), true
 		}
@@ -108,6 +115,15 @@ func (r *Runner) earlyRouteCheck(s *d2.Snapshot, a int) (why string, kitOnly boo
 		}
 	}
 	return "", false
+}
+
+func onRoad(rt earlyRoute, area int) bool {
+	for _, a := range rt.Areas {
+		if a == area {
+			return true
+		}
+	}
+	return false
 }
 
 // questWalkCheck is the kit rule of every quest walk into a field (earlyroutes.json questWalk): from fromLevel to below belowLevel in
