@@ -578,6 +578,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 `ops/`
 
+- [docker-volumes.md](ops/docker-volumes.md): Docker volumes on the worker host: safe removal (status: current (fix4, from fable review 4 finding 2, `docs/design/fable-review-2026-11-28/04-security-privacy.md`).)
 - [logs.md](ops/logs.md): Where the logs are (sandbox container and dev) (status: current (card logsink). Code: `internal/logx/sink.go`, `cmd/d2bot/main.go` (newLogger),...)
 - [outcomes.md](outcomes.md): Typed step outcome (knob `bot.typedOutcome`) (status: current, stage 1 (card outcome1, 2026-11-25). Source: P2 of...)
 - [overlay.md](overlay.md): Table overlay (d.idle mode): file format and rules (status: implemented, 2026-11-06, TASK-59. Fork side `--overlay-dir` on branch `d2d.lab4-overlay` of the private...)
