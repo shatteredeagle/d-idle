@@ -1,10 +1,13 @@
 package watch
 
 import (
+	"bytes"
 	"errors"
+	"log"
 	"net/http/httptest"
 	"strings"
 	"testing"
+	"time"
 )
 
 func TestDifficultySection(t *testing.T) {
@@ -64,5 +67,52 @@ func TestDifficultyPost(t *testing.T) {
 	ready = true
 	if c, _ := do("tok", "application/json", `{"target":"nightmare"}`); c != 200 {
 		t.Errorf("ready: %d", c)
+	}
+}
+
+// The page door writes an audit line for every go (no address in it) and has an hourly budget.
+func TestDifficultyPostAuditAndBudget(t *testing.T) {
+	var buf bytes.Buffer
+	old := log.Writer()
+	log.SetOutput(&buf)
+	defer log.SetOutput(old)
+	now := time.Date(2026, 11, 27, 12, 0, 0, 0, time.UTC)
+	n := 0
+	cfg := &DifficultyConfig{Now: func() time.Time { return now }, Go: func(string) (string, error) {
+		n++
+		if n == 1 {
+			return "", errors.New("a measured run is in progress")
+		}
+		return "ok", nil
+	}}
+	h := DifficultyPostHandler(cfg, AnswerOptions{Token: "tok"})
+	do := func() int {
+		req := httptest.NewRequest("POST", DifficultyPostRoute, strings.NewReader(`{"target":"hell"}`))
+		req.Header.Set("Content-Type", "application/json")
+		req.Header.Set("Authorization", "Bearer tok")
+		w := httptest.NewRecorder()
+		h.ServeHTTP(w, req)
+		return w.Code
+	}
+	if c := do(); c != 409 {
+		t.Fatalf("refused go: %d", c)
+	}
+	if l := buf.String(); !strings.Contains(l, "action=go-difficulty quest=hell") || !strings.Contains(l, "ok=false") || !strings.Contains(l, "measured run") || strings.Contains(l, "192.0.2.") {
+		t.Fatalf("audit line of a refusal: %q", l)
+	}
+	for i := 1; i < difficultyGoPerHour; i++ {
+		if c := do(); c != 200 {
+			t.Fatalf("go %d: %d", i, c)
+		}
+	}
+	if c := do(); c != 429 || n != difficultyGoPerHour {
+		t.Fatalf("over the budget: %d after %d calls", c, n)
+	}
+	if !strings.Contains(buf.String(), "code=rate_limited") {
+		t.Error("the refusal by budget is not in the audit line")
+	}
+	now = now.Add(time.Hour)
+	if c := do(); c != 200 {
+		t.Fatalf("an hour later: %d", c)
 	}
 }
