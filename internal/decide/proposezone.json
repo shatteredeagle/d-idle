@@ -14,7 +14,9 @@
   "classes": {
     "sorceress": {"lead": 1, "note": "U: low life and no armour early, wants a level more than the table minimum"},
     "necromancer": {"lead": 1, "note": "U: a caster with 130 life at clvl 16 (docs/probes/necro-readiness-2026-11-26.md, S), same lead as the Sorceress until a seed set moves it"},
-    "paladin":   {"lead": 0, "note": "U: the table minimum is the veteran paladin line"}
+    "paladin":   {"lead": 0, "note": "U: the table minimum is the veteran paladin line"},
+    "amazon":    {"lead": 1, "note": "S/U (card cls2): fragile, life +2 per level and no block without a shield (docs/probes/sme-other-classes-review-2026-11-27.md, Amazon); a level more than the table minimum until a seed set moves it"},
+    "assassin":  {"lead": 1, "note": "S/U (card cls2): average life (+2 per level) and a trap needs time to lay before a pack arrives (docs/sme/class-assassin.md sections 1 and 5); same lead as the other thin classes until a seed set moves it"}
   },
   "minPotions": 2
 }

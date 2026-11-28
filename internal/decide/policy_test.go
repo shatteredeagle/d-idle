@@ -2,6 +2,7 @@ package decide
 
 import (
 	"os"
+	"sort"
 	"strings"
 	"testing"
 )
@@ -184,15 +185,28 @@ func TestPolicyClassKnobsNameTheMissingClass(t *testing.T) {
 	row := func(ck string) string {
 		return `{"version":1,"rows":[{"id":"r","label":"L","help":"H","default":"d","options":[{"id":"d","label":"D"},{"id":"x","label":"X","classKnobs":` + ck + `}]}]}`
 	}
+	// The class sets come from the catalogue, so a new catalogue class does not edit this test.
+	names := make([]string, 0, len(cat.Classes))
+	for c := range cat.Classes {
+		names = append(names, c)
+	}
+	sort.Strings(names)
+	ck := func(cs []string) string {
+		parts := make([]string, len(cs))
+		for i, c := range cs {
+			parts[i] = `"` + c + `":{}`
+		}
+		return "{" + strings.Join(parts, ",") + "}"
+	}
 	for name, c := range map[string]struct{ ck, want string }{
-		"missing class": {`{"paladin":{"bot.clearRadius":20},"necromancer":{}}`, `"sorceress"`},
-		"unknown class": {`{"paladin":{},"sorceress":{},"necromancer":{},"barbarian":{}}`, `"barbarian"`},
+		"missing class": {ck(names[1:]), `"` + names[0] + `"`},
+		"unknown class": {ck(append(append([]string{}, names...), "mystic")), `"mystic"`},
 	} {
 		if _, err := ParsePolicy([]byte(row(c.ck)), cat); err == nil || !strings.Contains(err.Error(), c.want) {
 			t.Errorf("%s: %v", name, err)
 		}
 	}
-	if _, err := ParsePolicy([]byte(row(`{"paladin":{},"sorceress":{},"necromancer":{}}`)), cat); err != nil {
+	if _, err := ParsePolicy([]byte(row(ck(names))), cat); err != nil {
 		t.Errorf("complete table: %v", err)
 	}
 }

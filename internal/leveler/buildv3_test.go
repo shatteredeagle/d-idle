@@ -182,3 +182,19 @@ func questSum(q map[int]int) int {
 	}
 	return n
 }
+
+// Card cls2 (review 8 B6): the ammunition path is a key of the table, not a switch over table names. Two builds of
+// one class differ (bow, javelin), a class without a launcher has none, and an unknown path is refused.
+func TestTableAmmoIsData(t *testing.T) {
+	for name, want := range map[string]string{
+		"amazon_bow_normal30": "bow", "amazon_multishot_endgame90": "bow", "amazon_javelin_normal30": "javelin",
+		"assassin_fireblast_normal30": "", "assassin_sentry_endgame90": "", "no_such_table": "",
+	} {
+		if got := TableAmmo(name); got != want {
+			t.Errorf("%s: ammo %q, want %q", name, got, want)
+		}
+	}
+	if _, err := ParseBuild([]byte(`{"build":"x","class":"amazon","combat":"amazon","ammo":"sling","rows":[]}`)); err == nil {
+		t.Error("an unknown ammo path parsed")
+	}
+}
