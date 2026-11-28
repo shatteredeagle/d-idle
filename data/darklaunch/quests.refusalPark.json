@@ -6,5 +6,5 @@
  "enable_criteria": "Fake-clock tests green (go test ./internal/questboard ./internal/bot), then a 2 h flip window on one sandbox whose quests.boardSM is 1: a repeated coded refusal shows reason refused_repeatedly with its code and text in /api/quests and the Return screen's Quests paused section, no game restart for a refusal-only stall; no hard breach (docs/process/dark-launch.md).",
  "owner": "coordinator",
  "review_by": "2026-12-11",
- "status": "dark"
+ "status": "enabled"
 }
