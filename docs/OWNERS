@@ -334,7 +334,6 @@ internal/combat/portalverb.go  live-agent  inputl3
 internal/combat/portalverb_test.go  live-agent  inputl3
 internal/combat/whirl.go  credit-runner  sweep1
 internal/d2dcombat/  live-agent  dlv-press
-internal/d2dctl  credit-runner  fix1b
 internal/d2dctl/fake/fake.go  credit-runner  inputl4
 internal/d2dctl/fake/fake.go  live-agent  inputl3
 internal/d2dctl/item_verbs_merc.go  credit-runner  uib9
@@ -390,7 +389,6 @@ internal/plandata/build-necromancer_leveling_normal30.json  live-agent  epic-cla
 internal/plandata/build-necromancer_summoner_endgame90.json  live-agent  epic-class-necromancer
 internal/plandata/levelplan-normal.json  live-agent  epic-class-necromancer
 internal/power/  credit-runner  dlv-cleanup
-internal/questboard  credit-runner  fix1b
 internal/questboard  live-agent  bsmdef
 internal/questboard/  credit-runner  bsmnight
 internal/questboard/  live-agent  cellar3gate
@@ -439,7 +437,6 @@ internal/town/sellplan_test.go  live-agent  townflip
 internal/town/shop.go  live-agent  townflip
 internal/town/town.go  live-agent  townflip
 internal/town/trip.go  live-agent  inputl3
-internal/vaultkeep  credit-runner  fix1b
 internal/watch/areamap_test.go  credit-runner  uis6
 internal/watch/difficultydesk.go  credit-runner  fix4
 internal/watch/difficultydesk.go  credit-runner  sweep1
