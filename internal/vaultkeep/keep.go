@@ -122,6 +122,8 @@ type Keeper struct {
 	cb        carryBook
 
 	eq         equipBook
+	actMu      sync.Mutex // one player-ordered item move at a time (direct Equip, Wear set, merc, Carry, Stow, their repair); taken before mu
+	jonce      sync.Once
 	mu         sync.Mutex
 	promptMute time.Time
 	backedUp   bool

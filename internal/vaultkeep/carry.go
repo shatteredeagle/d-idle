@@ -4,9 +4,11 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"os"
 	"path/filepath"
 	"sort"
+	"strings"
 	"sync"
 	"time"
 
@@ -37,7 +39,18 @@ type Carried struct {
 	Code  string    `json:"code"`
 	Cells int       `json:"cells"`
 	At    time.Time `json:"at"`
+	// The journal (card fix1): State is carry-intent or stow-intent while a move is under way ("" = carried, settled); Hex
+	// is the charm's bytes (norm), by which the unit is found again after a game restart (unit ids are not stable); Tag
+	// marks the vault record a Stow wrote before it took the charm out of the pack.
+	State string `json:"state,omitempty"`
+	Hex   string `json:"hex,omitempty"`
+	Tag   string `json:"tag,omitempty"`
 }
+
+const (
+	carryIntent = "carry-intent"
+	stowIntent  = "stow-intent"
+)
 
 type carryBook struct {
 	mu     sync.Mutex
@@ -66,9 +79,9 @@ func (k *Keeper) carryLoad() {
 	}
 }
 
-func (k *Keeper) carrySave() {
+func (k *Keeper) carrySave() error {
 	if k.CarryPath == "" {
-		return
+		return nil
 	}
 	var f struct {
 		Carried []Carried `json:"carried"`
@@ -79,13 +92,121 @@ func (k *Keeper) carrySave() {
 	sort.Slice(f.Carried, func(i, j int) bool { return f.Carried[i].At.Before(f.Carried[j].At) })
 	b, err := json.MarshalIndent(f, "", " ")
 	if err != nil {
+		return err
+	}
+	if err := os.MkdirAll(filepath.Dir(k.CarryPath), 0o755); err != nil {
+		return err
+	}
+	tmp := k.CarryPath + ".tmp"
+	if err := os.WriteFile(tmp, b, 0o644); err != nil {
+		return err
+	}
+	return os.Rename(tmp, k.CarryPath)
+}
+
+// carryPut writes one journal entry (nil: remove it) and reports whether it reached the file.
+func (k *Keeper) carryPut(id string, c *Carried) error {
+	k.cb.mu.Lock()
+	defer k.cb.mu.Unlock()
+	k.carryLoad()
+	if c == nil {
+		delete(k.cb.by, id)
+	} else {
+		cp := *c
+		k.cb.by[id] = &cp
+	}
+	return k.carrySave()
+}
+
+// packUnit finds the charm of entry c on the hero by its bytes (the stored unit id first, when it still has those bytes),
+// skipping units other carried entries own. 0: not there. An entry without bytes (written before the journal) is matched
+// by unit id and item code only.
+func (k *Keeper) packUnit(c Carried, have []d2dctl.VaultRecord) int {
+	taken := map[int]bool{}
+	for _, o := range k.CarriedList() {
+		if o.ID != c.ID && o.State != carryIntent {
+			taken[o.Unit] = true
+		}
+	}
+	found := 0
+	for _, h := range have {
+		switch {
+		case taken[h.UnitID]:
+		case c.Hex == "" && h.UnitID == c.Unit && h.Code == c.Code:
+			return h.UnitID
+		case c.Hex != "" && strings.EqualFold(h.Norm, c.Hex):
+			if h.UnitID == c.Unit {
+				return h.UnitID
+			}
+			if found == 0 {
+				found = h.UnitID
+			}
+		}
+	}
+	return found
+}
+
+func taggedRec(st *vault.Store, tag, hexNorm string) (string, bool) {
+	for _, o := range st.Dump() {
+		if tag != "" && o.State == vault.Recorded && o.Found.Area == tag && strings.EqualFold(o.Raw, hexNorm) {
+			return o.ID, true
+		}
+	}
+	return "", false
+}
+
+// repairCarry completes or rolls back the Carry and Stow moves a stop left half done, by looking at the hero. The caller
+// holds actMu. A carry-intent whose charm is in the pack is completed (mark, record retired), else dropped (the record
+// stays). A stow-intent whose charm is still in the pack is rolled back (its new record retired), else completed.
+func (k *Keeper) repairCarry(ctx context.Context) {
+	st := k.store()
+	var open []Carried
+	for _, c := range k.CarriedList() {
+		if c.State != "" {
+			open = append(open, c)
+		}
+	}
+	if st == nil || len(open) == 0 || k.Hand == nil {
 		return
 	}
-	_ = os.MkdirAll(filepath.Dir(k.CarryPath), 0o755)
-	tmp := k.CarryPath + ".tmp"
-	if os.WriteFile(tmp, b, 0o644) == nil {
-		_ = os.Rename(tmp, k.CarryPath)
+	have, err := k.API.ItemFull(ctx, -1)
+	if err != nil {
+		return // cannot look: the intents stay for the next pass
 	}
+	for _, c := range open {
+		u := k.packUnit(c, have)
+		switch {
+		case c.State == carryIntent && u != 0:
+			k.Hand.Protect(uint32(u))
+			if r, ok := st.Get(c.ID); ok && r.State == vault.Recorded {
+				if err := st.Discard(c.ID, "carried to the backpack"); err != nil {
+					continue
+				}
+			}
+			c.Unit, c.State = u, ""
+			_ = k.carryPut(c.ID, &c)
+		case c.State == carryIntent:
+			_ = k.carryPut(c.ID, nil)
+		case u != 0: // stow-intent, charm still carried
+			if id, ok := taggedRec(st, c.Tag, c.Hex); ok {
+				if err := st.Discard(id, "stow rolled back: the charm is still in the backpack"); err != nil {
+					continue
+				}
+			}
+			c.Unit, c.State, c.Tag = u, "", ""
+			_ = k.carryPut(c.ID, &c)
+		default:
+			_ = k.carryPut(c.ID, nil)
+		}
+	}
+}
+
+// createAnswered: the game refused the create, so nothing was made.
+func createAnswered(err error) bool {
+	var vr *d2dctl.VaultRefused
+	return errors.As(err, &vr) || errors.Is(err, d2dctl.ErrStashFull) || errors.Is(err, d2dctl.ErrVaultState) ||
+		errors.Is(err, d2dctl.ErrVaultOff) || errors.Is(err, d2dctl.ErrVaultUnsupported) || errors.Is(err, d2dctl.ErrBusy) ||
+		errors.Is(err, d2dctl.ErrBadHex) || errors.Is(err, d2dctl.ErrVaultVersion)
 }
 
 // CarriedList is the charms the player carries, oldest first.
@@ -126,12 +247,15 @@ func (k *Keeper) Carry(ctx context.Context, id string) Result {
 		res.Code, res.Why = "missing", "there is no vault for this hero yet"
 		return res
 	}
+	k.actMu.Lock()
+	defer k.actMu.Unlock()
+	k.repairCarry(ctx)
 	rec, ok := st.Get(id)
 	switch {
 	case !ok:
 		res.Code, res.Why = "missing", "no such item"
 		return res
-	case rec.State != vault.Recorded:
+	case rec.State != vault.Recorded || rec.Stage != "":
 		res.Code, res.Why = "state", "the item is not in the vault any more or is busy ("+string(rec.State)+")"
 		return res
 	}
@@ -144,19 +268,40 @@ func (k *Keeper) Carry(ctx context.Context, id string) Result {
 		res.Code, res.Why = "reveal", ReasonCarryReveal
 		return res
 	}
-	cr, err := k.API.ItemCreate(ctx, createHex(rec), d2dctl.CreateOpts{Pack: true, Key: carryKey + id})
+	for _, c := range k.CarriedList() {
+		if c.ID == id {
+			res.Code, res.Why = CodeInFlight, ReasonInFlight
+			return res
+		}
+	}
+	// The intent is on disk before the game is touched: a stop after the create is settled at the next start by looking.
+	c := Carried{ID: id, Name: rec.Name, Code: base.Code, Cells: base.Cells(), At: k.now(), State: carryIntent, Hex: createHex(rec)}
+	if err := k.carryPut(id, &c); err != nil {
+		res.Code, res.Why = "journal", "the carry could not be written down first ("+err.Error()+"): nothing was moved"
+		return res
+	}
+	cr, err := k.API.ItemCreate(ctx, c.Hex, d2dctl.CreateOpts{Pack: true, Key: carryKey + id})
 	if err != nil {
 		res.Code, res.Why = carryErr(err)
+		if createAnswered(err) {
+			_ = k.carryPut(id, nil)
+		} else { // unanswered or "created already": the charm may be in the pack; the intent stays and the next pass looks
+			k.repairCarry(ctx)
+		}
 		return res
 	}
 	k.Hand.Protect(uint32(cr.ID))
-	k.cb.mu.Lock()
-	k.carryLoad()
-	k.cb.by[id] = &Carried{ID: id, Unit: cr.ID, Name: rec.Name, Code: base.Code, Cells: base.Cells(), At: k.now()}
-	k.carrySave()
-	k.cb.mu.Unlock()
+	c.Unit = cr.ID
+	_ = k.carryPut(id, &c)
 	if err := st.Discard(id, "carried to the backpack"); err != nil {
-		k.note("carry-"+id, "A carried charm is in your backpack and its vault record could not be retired: "+err.Error())
+		// the intent stays: the next pass retires the record, and no Sell or Equip of it is offered as carried meanwhile
+		k.note("carry-"+id, "A carried charm is in your backpack and its vault record could not be retired yet: "+err.Error())
+		res.Code, res.Why = "record", "the charm is in your backpack; its vault record is retired at the next step"
+		return res
+	}
+	c.State = ""
+	if err := k.carryPut(id, &c); err != nil {
+		k.note("carry-file", "The carried list could not be saved: "+err.Error())
 	}
 	k.save(ctx, "Carry")
 	res.OK, res.Where = true, "backpack"
@@ -166,7 +311,9 @@ func (k *Keeper) Carry(ctx context.Context, id string) Result {
 	return res
 }
 
-// Stow takes carried charm id (the old record id) out of the backpack and records it in the vault again.
+// Stow takes carried charm id (the old record id) out of the backpack and records it in the vault again. The vault record
+// is written BEFORE the charm leaves the pack (the bytes are readable while it is there), and the unit is found by the
+// charm's bytes, never by the stored id alone (a game restart renumbers units).
 func (k *Keeper) Stow(ctx context.Context, id string) Result {
 	res := Result{ID: id, Direct: true}
 	if ok, why := k.CarryReady(); !ok {
@@ -178,39 +325,74 @@ func (k *Keeper) Stow(ctx context.Context, id string) Result {
 		res.Code, res.Why = "missing", "there is no vault for this hero yet"
 		return res
 	}
-	k.cb.mu.Lock()
-	k.carryLoad()
-	c := k.cb.by[id]
-	k.cb.mu.Unlock()
+	k.actMu.Lock()
+	defer k.actMu.Unlock()
+	k.repairCarry(ctx)
+	var c *Carried
+	for _, x := range k.CarriedList() {
+		if x.ID == id {
+			c = &x
+			break
+		}
+	}
 	if c == nil {
 		res.Code, res.Why = "missing", "that charm is not carried"
+		return res
+	}
+	if c.State != "" {
+		res.Code, res.Why = CodeInFlight, ReasonInFlight
 		return res
 	}
 	if vaultRoom(st, 0) < 1 {
 		res.Code, res.Why = "room", ReasonNoRoom
 		return res
 	}
-	have, err := k.API.ItemFull(ctx, c.Unit)
+	have, err := k.API.ItemFull(ctx, -1)
 	if err != nil {
 		res.Code, res.Why = carryErr(err)
 		return res
 	}
-	if len(have) == 0 { // sold, dropped or moved by the player: nothing to stow, forget it
+	unit := k.packUnit(*c, have)
+	if unit == 0 { // sold, dropped or moved by the player: nothing to stow, forget it
 		k.forgetCarried(id)
 		res.Code, res.Why = "gone", "the charm is not in the game any more"
 		return res
 	}
-	vr, err := k.API.ItemVault(ctx, c.Unit)
-	if err != nil {
-		res.Code, res.Why = carryErr(err)
+	var vr d2dctl.VaultRecord
+	for _, h := range have {
+		if h.UnitID == unit {
+			vr = h
+		}
+	}
+	c.Unit, c.Hex, c.State, c.Tag = unit, vr.Norm, stowIntent, fmt.Sprintf("stow-%s-%d", orderTag(id), k.now().UnixMilli())
+	if err := k.carryPut(id, c); err != nil {
+		res.Code, res.Why = "journal", "the stow could not be written down first ("+err.Error()+"): nothing was moved"
 		return res
 	}
-	_, where := k.recordRemoved(ctx, st, vr.Norm, c.Name)
+	settle := func() { c.State, c.Tag = "", ""; _ = k.carryPut(id, c) }
+	_, _, filed := k.recordItem(ctx, st, vr, c.Name, c.Tag, true)
+	if !filed {
+		settle()
+		res.Code, res.Why = "room", "the vault could not take the charm (it is full or holds an identical one): it stays in your backpack"
+		return res
+	}
+	if _, err := k.API.ItemVault(ctx, unit); err != nil {
+		res.Code, res.Why = carryErr(err)
+		if createAnswered(err) { // refused: the charm is still carried, the new record goes again
+			if rid, ok := taggedRec(st, c.Tag, vr.Norm); ok {
+				_ = st.Discard(rid, "stow refused: the charm is still in the backpack")
+			}
+			settle()
+		} else {
+			k.repairCarry(ctx) // unanswered: settled by looking, now or at the next pass
+		}
+		return res
+	}
 	k.forgetCarried(id)
 	k.save(ctx, "Stow")
-	res.OK, res.Where = true, where
+	res.OK, res.Where = true, "vault"
 	if k.Notice != nil {
-		k.Notice("stow: " + c.Name + " went to the " + where)
+		k.Notice("stow: " + c.Name + " went to the vault")
 	}
 	return res
 }
@@ -218,7 +400,7 @@ func (k *Keeper) Stow(ctx context.Context, id string) Result {
 func (k *Keeper) forgetCarried(id string) {
 	k.cb.mu.Lock()
 	delete(k.cb.by, id)
-	k.carrySave()
+	_ = k.carrySave()
 	k.cb.mu.Unlock()
 }
 

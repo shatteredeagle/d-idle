@@ -117,22 +117,27 @@ const ReasonNoRoom = "the Vault has no room for the item you would take off and 
 
 // EquipOrder is one one-tap order.
 type EquipOrder struct {
-	ID        string    `json:"id"` // vault record id
-	Name      string    `json:"name"`
-	Slot      string    `json:"slot"` // auto, left, right
-	Group     []string  `json:"group,omitempty"`
-	State     string    `json:"state"`
-	Reason    string    `json:"reason,omitempty"`
-	Code      string    `json:"code,omitempty"`
-	Unit      int       `json:"unit,omitempty"`
-	Worn      string    `json:"worn,omitempty"`      // desk slot it went to
-	Displaced []string  `json:"displaced,omitempty"` // names of the items that came off
-	Where     string    `json:"where,omitempty"`     // "vault", or "backpack" when the vault had no room
-	Direct    bool      `json:"direct,omitempty"`    // done by the direct verbs (equipdirect.go)
-	Applied   bool      `json:"applied,omitempty"`   // direct: the engine did the swap; Removed still has to become vault records
-	Removed   []string  `json:"removed,omitempty"`   // direct: raw hex of what came off, kept until it is a record
-	At        time.Time `json:"at"`
-	Updated   time.Time `json:"updated"`
+	ID         string    `json:"id"` // vault record id
+	Name       string    `json:"name"`
+	Slot       string    `json:"slot"` // auto, left, right
+	Group      []string  `json:"group,omitempty"`
+	State      string    `json:"state"`
+	Reason     string    `json:"reason,omitempty"`
+	Code       string    `json:"code,omitempty"`
+	Unit       int       `json:"unit,omitempty"`
+	Worn       string    `json:"worn,omitempty"`        // desk slot it went to
+	Displaced  []string  `json:"displaced,omitempty"`   // names of the items that came off
+	Where      string    `json:"where,omitempty"`       // "vault", or "backpack" when the vault had no room
+	Direct     bool      `json:"direct,omitempty"`      // done by the direct verbs (equipdirect.go)
+	Applied    bool      `json:"applied,omitempty"`     // direct: the engine did the swap; Removed still has to become vault records
+	Removed    []string  `json:"removed,omitempty"`     // direct: raw hex of what came off, kept until it is a record
+	Order      string    `json:"order,omitempty"`       // direct: the order id (ledger, record mark)
+	Piece      int       `json:"piece,omitempty"`       // direct: index in a wearset call
+	Reply      string    `json:"reply,omitempty"`       // direct: an engine answer that did not parse, kept as received
+	BeforeUnit int       `json:"before_unit,omitempty"` // direct: the unit worn in the slot before the call
+	Before     string    `json:"before,omitempty"`      // direct: its item bytes (norm hex), the copy an unanswered swap is filed from
+	At         time.Time `json:"at"`
+	Updated    time.Time `json:"updated"`
 }
 
 func (o EquipOrder) active() bool {
@@ -150,6 +155,20 @@ type equipBook struct {
 	loaded bool
 }
 
+// unfiled: a direct order that still holds the only copy of a displaced item.
+func (o EquipOrder) unfiled() bool {
+	return o.Direct && o.active() && (len(o.Removed) > 0 || o.Reply != "" || o.Before != "")
+}
+
+// put stores the order under its record id. An earlier order of the same record that still holds a displaced item is
+// never overwritten: it moves aside under its own order id and repairDirect settles it.
+func (b *equipBook) put(o *EquipOrder) {
+	if old := b.orders[o.ID]; old != nil && old != o && old.unfiled() && old.Order != o.Order {
+		b.orders[old.ID+"#"+old.Order] = old
+	}
+	b.orders[o.ID] = o
+}
+
 func (k *Keeper) bookLocked() *equipBook {
 	if k.eq.orders == nil {
 		k.eq.orders = map[string]*EquipOrder{}
@@ -162,7 +181,7 @@ func (k *Keeper) bookLocked() *equipBook {
 				if json.Unmarshal(b, &f) == nil {
 					for i := range f.Orders {
 						o := f.Orders[i]
-						k.eq.orders[o.ID] = &o
+						k.eq.put(&o)
 					}
 				}
 			}
@@ -415,6 +434,11 @@ func (k *Keeper) EquipCancel(id string) Result {
 		res.OK, res.Already = true, true
 		return res
 	}
+	if o.Direct { // it may hold the only copy of what came off: it ends by itself, never by a cancel
+		k.mu.Unlock()
+		res.Code, res.Why = CodeInFlight, ReasonInFlight
+		return res
+	}
 	k.mu.Unlock()
 	if st := k.store(); st != nil {
 		if r, ok := st.Get(id); ok && r.State == vault.KeepQ && !r.InFlight {
@@ -553,7 +577,7 @@ func (k *Keeper) anyActive() bool {
 func (k *Keeper) equipOne(ctx context.Context, st *vault.Store, id string) string {
 	o := k.EquipOrderOf(id)
 	rec, ok := st.Get(id)
-	if o == nil || !o.active() {
+	if o == nil || !o.active() || o.Direct { // a direct order is settled by repairDirect, never by the click flow
 		return ""
 	}
 	if !ok {
