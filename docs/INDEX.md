@@ -143,6 +143,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 `design/`
 
 - [fork-order-id-spec.md](design/fork-order-id-spec.md): Fork change spec: order id on the direct item verbs (status: proposal (card fix1, 2026-11-27). Nothing here is built; no fork edit was made. Needs the fork owner and...)
+- [fork-requests-2026-11-28.md](design/fork-requests-2026-11-28.md): Fork requests of 2026-11-28: one prioritized list (status: current (card forkreq, TASK-1134, 2026-11-28). A reading list for the owner's next fork session. Nothing...)
 - [fork-save-atomic.md](design/fork-save-atomic.md): Fork request: write the character file atomically (status: request to the d2d fork, not built (card savesafe). Nothing in the fork was changed by this card. The bot...)
 
 `digest/`
