@@ -43,6 +43,7 @@
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | cellar3gate | in-progress | - | `internal/nav/exit.go`<br>`internal/nav/cellar3gate_test.go`<br>`internal/questboard/`<br>`docs/probes/cellar3-gate-capture.md` | - |
 | holereach | proposed | - | `internal/bot/zonemodel.go`<br>`internal/bot/zonemodel_test.go` | - |
+| darkthrottle | proposed | - | `data/darklaunch.json`<br>`data/darklaunch-cap.json`<br>`tools/darklaunch`<br>`docs/process/dark-launch.md`<br>`docs/process/threshold-governance.md` | - |
 | pgfix | proposed | - | `cmd/d2scenario`<br>`internal/scenario`<br>`tools/provingground/scenarios`<br>`docs/process/proving-ground.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
@@ -187,6 +188,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- e340dc50e 11-27 22:25 `Merge agent/darkthrottle: darkthrottle: ledger cap, by_design status, flip_plan, sandbox-first doc (TASK-1091)` (darkthrottle)
+- af5382fe3 11-27 22:24 `Merge branch 'main' into darkthrottle` (-)
 - a9fc9ca8c 11-27 22:13 `Merge agent/pgfix: pgfix: banked default hero profile, setup tags on blocked runs, hand skills in the point dump (TASK-1093)` (pgfix)
 - f8a505433 11-27 22:12 `Merge branch 'main' into pgfix` (-)
 - f4865d49e 11-27 22:04 `Merge agent/farmresetretire: farmresetretire: bot.farmReset graduated to always-on, knob removed (TASK-1090)` (farmresetretire)
@@ -195,6 +198,4 @@
 - 98a9c9be9 11-27 21:56 `Merge agent/xplostfalse: xplostfalse: believe an xp fall only when repeated, relaunch-aware Save and Exit level, auto-start held-back reasons (TASK-1089)` (xplostfalse)
 - f956c040e 11-27 21:53 `Merge branch 'main' into flipjson` (-)
 - da6cf18c4 11-27 21:53 `Merge branch 'main' into xplostfalse` (-)
-- d83be71b1 11-27 21:46 `Merge agent/holereach: holereach: drop unreachable hole zones, hole fallback needs the kit (TASK-1088)` (holereach)
-- b539847b9 11-27 21:45 `Merge branch 'main' into holereach` (-)
 <!-- statusgen:end -->

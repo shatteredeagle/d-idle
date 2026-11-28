@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- darkthrottle: ledger cap, by_design status, flip_plan, sandbox-first doc (TASK-1091) <!--sg:agent/darkthrottle-->
 - pgfix: banked default hero profile, setup tags on blocked runs, hand skills in the point dump (TASK-1093) <!--sg:agent/pgfix-->
 - farmresetretire: bot.farmReset graduated to always-on, knob removed (TASK-1090) <!--sg:agent/farmresetretire-->
 - flipjson: flip.py parses the first JSON document of ops status --why <!--sg:agent/flipjson-->
