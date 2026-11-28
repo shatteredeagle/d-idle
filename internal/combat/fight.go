@@ -115,6 +115,9 @@ func newFightState() *fightState {
 // until none is left, the deadline passes or the character has to leave: ErrTownPortal (a portal was opened),
 // ErrChicken (the game was left) or ErrDead are returned with the partial result.
 func (f *Fighter) Clear(ctx context.Context, o ClearOpts) (ClearResult, error) {
+	if err := f.refuseNoProfile(); err != nil {
+		return ClearResult{}, err
+	}
 	t := f.tune()
 	f.syncMap()
 	snap, err := f.read(ctx)
@@ -153,6 +156,9 @@ func (f *Fighter) syncMap() {
 // Kill fights one unit (a boss or a named monster) until it dies. The unit must be on the map within a couple of
 // seconds, else ErrTargetGone. The time limit is the Clear limit, not the per-target limit.
 func (f *Fighter) Kill(ctx context.Context, unitID uint32) error {
+	if err := f.refuseNoProfile(); err != nil {
+		return err
+	}
 	t := f.tune()
 	f.syncMap()
 	snap, err := f.read(ctx)

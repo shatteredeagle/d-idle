@@ -16,8 +16,10 @@ import (
 // refused in a measured run. Which pieces his kind may wear is the merc gear rule (Hand.MercPreview, leveler.MercSlot);
 // his level, Str and Dex are checked by the fork with the server's own rule and come back as a refusal.
 //
-// Not covered: a restart between the create and the give leaves the created copy in the backpack under no mark (the
-// record stays in the vault, so the item is duplicated until the player drops one); U live.
+// Crash journal (card vault2, mercjournal.go): an intent record with the hero's items as they were is on disk before the
+// create; a stop or a lost reply at any later step is settled at the next Run by looking (copy still in the pack: taken
+// back, the record stays; copy gone: given, the record leaves and every new wearable piece in the pack is filed under the
+// order id). U live: whether `item full` lists the mercenary's own items (the fake does not).
 
 // MercHand is the optional part of a Hand that judges a record for the mercenary without needing the hero to wear it.
 type MercHand interface {
@@ -92,7 +94,7 @@ func (k *Keeper) EquipMerc(ctx context.Context, id string) (Result, bool) {
 	case !ok:
 		res.Code, res.Why = "missing", "no such item"
 		return res, true
-	case rec.State != vault.Recorded:
+	case rec.State != vault.Recorded || rec.Hold != "":
 		res.Code, res.Why = "state", "the item is not in the vault any more or is busy ("+string(rec.State)+")"
 		return res, true
 	case !rec.Identified:
@@ -108,31 +110,67 @@ func (k *Keeper) EquipMerc(ctx context.Context, id string) (Result, bool) {
 		return res, true
 	}
 
+	k.repairMerc(ctx) // an order a stop left half done is settled before a new give can displace its piece
+	if k.mercOpen(id) {
+		res.Code, res.Why = CodeInFlight, ReasonInFlight
+		return res, true
+	}
+	if r, ok := st.Get(id); !ok || r.State != vault.Recorded { // the repair finished an earlier give of this record
+		res.Code, res.Why = "state", "the item is not in the vault any more: an earlier order gave it to the mercenary"
+		return res, true
+	}
+	// The intent is on disk before the game is touched, with the hero's items as they are now: after a stop or a lost
+	// reply the bot tells by looking whether the copy was made, whether it was given, and which item came off.
+	pre, err := k.API.ItemFull(ctx, -1)
+	if err != nil {
+		res.Code, res.Why = "busy", "the backpack could not be read first ("+err.Error()+"): nothing was moved"
+		return res, true
+	}
+	order := "eqm-" + orderTag(id) + fmt.Sprintf("-%d", k.now().UnixMilli())
+	in := mercIntent{ID: id, Order: order, Name: rec.Name, Hex: createHex(rec), Step: mercCreate, At: k.now()}
+	for _, h := range pre {
+		in.Pack = append(in.Pack, strings.ToLower(h.Norm))
+	}
+	if err := k.mercPut(id, &in); err != nil {
+		res.Code, res.Why = "journal", "the order could not be written down first ("+err.Error()+"): nothing was moved"
+		return res, true
+	}
 	// The key makes a repeated create of the same record answer "dup" instead of a second copy (per d2d process: U live).
-	cr, err := k.API.ItemCreate(ctx, createHex(rec), d2dctl.CreateOpts{Pack: true, Key: mercKey + id})
+	cr, err := k.API.ItemCreate(ctx, in.Hex, d2dctl.CreateOpts{Pack: true, Key: mercKey + id})
 	if errors.Is(err, d2dctl.ErrVaultDup) {
+		_ = k.mercPut(id, nil)
 		res.Code, res.Why = "dup", "an earlier order already took this item out of the vault: check your backpack and the mercenary"
 		k.note("eqm-dup-"+id, "Equip on mercenary: "+rec.Name+" was created by an earlier order that did not finish: check your backpack and the mercenary.")
 		return res, true
 	}
 	if err != nil {
 		res.Code, res.Why = "room", "the item could not be put in your backpack ("+err.Error()+"): make room first"
+		if createAnswered(err) {
+			_ = k.mercPut(id, nil)
+		} else { // unanswered: the copy may be in the pack; settled by looking, now or at the next pass
+			k.repairMerc(ctx)
+			res.Code, res.Why = "unknown", "the game did not answer: check your backpack"
+		}
 		return res, true
 	}
-	order := "eqm-" + orderTag(id) + fmt.Sprintf("-%d", k.now().UnixMilli())
+	in.Step, in.Unit = mercGive, cr.ID
+	if err := k.mercPut(id, &in); err != nil {
+		k.note("eqm-journal", "Equip on mercenary: the order file could not be updated ("+err.Error()+").")
+	}
 	ir, err := dm.MercEquipDirect(ctx, uint32(cr.ID), order)
 	if _, refused := d2dctl.IsItemRefusal(err); err != nil && !refused && !answered(err) && !errors.Is(err, d2dctl.ErrDirectOff) {
-		// No answer: the give may have run. The copy gone from the backpack means the mercenary wears it.
-		if have, ferr := k.API.ItemFull(ctx, cr.ID); ferr != nil || len(have) == 0 {
-			if ferr == nil {
-				if derr := st.Discard(id, "equipped on the mercenary (vault equip, unanswered)"); derr != nil {
-					k.note("eqm-rec-"+id, "Equip on mercenary: the vault record of "+rec.Name+" could not be retired ("+derr.Error()+").")
-				}
-			}
-			k.note("eqm-open-"+order, "Equip on mercenary: the game did not answer for "+rec.Name+". If he wears it, the piece he took off is in your backpack: move it yourself, the bot did not see it.")
-			res.Code, res.Why = "unknown", "the game did not answer: check the mercenary and your backpack"
-			return res, true
+		// No answer: the give may have run. The intent says what was there before; look.
+		out := k.repairMerc(ctx)[id]
+		switch {
+		case out.open:
+			k.note("eqm-open-"+order, "Equip on mercenary: the game did not answer for "+rec.Name+"; the bot looks again at the next step.")
+			res.Code, res.Why = CodeInFlight, ReasonUnknown
+		case !out.given:
+			res.Code, res.Why = "equip", "the game did not answer and nothing changed: try again"
+		default:
+			res.OK, res.Removed, res.Where = true, out.names, out.where
 		}
+		return res, true
 	}
 	if err != nil {
 		res.Code, res.Why = mercCode(err)
@@ -146,35 +184,39 @@ func (k *Keeper) EquipMerc(ctx context.Context, id string) (Result, bool) {
 			k.Hand.Protect(uint32(cr.ID))
 			k.note("eqm-"+id, "The mercenary refused the "+rec.Name+" and its copy is still in your backpack ("+verr.Error()+"): drop it.")
 		}
+		_ = k.mercPut(id, nil)
 		return res, true
 	}
 
-	if r, ok := st.Get(id); ok && r.State == vault.Recorded {
-		if derr := st.Discard(id, "equipped on the mercenary (vault equip)"); derr != nil {
-			k.note("eqm-rec-"+id, "Equip on mercenary: the vault record of "+rec.Name+" could not be retired ("+derr.Error()+").")
-		}
-	}
+	k.mercRetire(st, id, rec.Name)
 	slot := mercSlotKey[ir.Slot]
 	if slot == "" {
 		slot = fmt.Sprintf("merc slot %d", ir.Slot)
 	}
 	var names []string
 	where := "vault"
+	open := false
 	if ir.Displaced >= 0 {
-		rr, verr := k.API.ItemVault(ctx, ir.Displaced)
-		if verr != nil {
-			where = "backpack"
+		// The record is written BEFORE the piece leaves the pack (its bytes are readable while it lies there), as Stow does.
+		have, ferr := k.API.ItemFull(ctx, ir.Displaced)
+		switch {
+		case ferr != nil: // cannot look now: the intent stays and the next pass files the piece by the pack difference
+			where, open = "backpack", true
 			names = append(names, "an item")
 			k.Hand.Protect(uint32(ir.Displaced))
-			k.note("eqm-off-"+id, "The piece the mercenary took off is in your backpack: the vault could not take it ("+verr.Error()+").")
-		} else {
-			n, w, filed := k.recordItem(ctx, st, rr, "", order, false)
-			if !filed { // off the hero and no home: its bytes go to the player's notes, never silently away
-				k.note("eqm-lost-"+order, "The piece the mercenary took off could not be filed or put back; its data: "+rr.Norm)
-				w = "nowhere (see the note)"
-			}
-			names, where = append(names, n), w
+			k.note("eqm-off-"+id, "The piece the mercenary took off is in your backpack; the bot files it at the next step.")
+		case len(have) != 1:
+			where = "backpack"
+			names = append(names, "an item")
+			k.note("eqm-off-"+id, "The piece the mercenary took off could not be found in your backpack: check it.")
+		default:
+			var n string
+			n, where, open = k.mercFile(ctx, st, have[0], order)
+			names = append(names, n)
 		}
+	}
+	if !open { // an unanswered removal keeps the intent: the next pass looks
+		_ = k.mercPut(id, nil)
 	}
 	if k.Save != nil {
 		if err := k.Save(ctx); err != nil {

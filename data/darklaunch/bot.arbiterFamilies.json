@@ -1,0 +1,10 @@
+{
+ "name": "bot.arbiterFamilies",
+ "built_by": "arbfam (#1377, #1387)",
+ "dark_since": "2026-11-26",
+ "why_off": "Family mask of the arbiter control path (default 3: survive and player); takes effect only with bot.arbiterControl 1, which is dark. Flipped together with it as one bundle.",
+ "enable_criteria": "Accelerated soak green plus a 45 min live watch on one sandbox with automatic revert on a hard breach (docs/process/dark-launch.md, bundle flip)",
+ "owner": "coordinator",
+ "review_by": "2026-12-09",
+ "status": "enabled"
+}

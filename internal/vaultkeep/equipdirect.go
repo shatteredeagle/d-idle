@@ -125,7 +125,7 @@ func (k *Keeper) precheck(st *vault.Store, id, slotWord string, taken map[string
 	switch {
 	case !ok:
 		return c, "missing", "no such item"
-	case rec.State != vault.Recorded:
+	case rec.State != vault.Recorded || rec.Hold != "":
 		return c, "state", "the item is not in the vault any more or is busy (" + string(rec.State) + ")"
 	case !rec.Identified:
 		return c, "reveal", ReasonEqReveal
@@ -223,8 +223,9 @@ func (k *Keeper) directOne(ctx context.Context, id, slotWord string) (Result, bo
 	order := "eq-" + orderTag(id) + fmt.Sprintf("-%d", k.now().UnixMilli())
 	c.tag = order
 	bu, bh := k.wornBefore(ctx, c.slot)
+	ou, oh := k.wornBefore(ctx, otherHand[c.slot])
 	k.putEq(&EquipOrder{ID: id, Name: c.rec.Name, Slot: slotWord, Group: []string{c.slot}, State: EqEquipping, Direct: true,
-		Order: order, BeforeUnit: bu, Before: bh})
+		Order: order, BeforeUnit: bu, Before: bh, BeforeOffUnit: ou, BeforeOff: oh})
 	dr, err := k.Direct.EquipDirect(ctx, c.hex, c.slot, order)
 	if dr.OK { // the engine swapped: whatever failed after it, the displaced item is filed
 		k.markApplied(id, c.slot, dr)
@@ -315,9 +316,15 @@ func (k *Keeper) directOpen(id string) bool {
 	return false
 }
 
+// otherHand pairs the two hand slots of the body (the same on every class).
+var otherHand = map[string]string{"rhand": "lhand", "lhand": "rhand"}
+
 // wornBefore reads what the slot holds before the swap (unit and item bytes), so an unanswered call can be judged by looking
 // and the displaced item filed from this copy. Best effort: 0 and "" when the slot is empty or cannot be read. U live.
 func (k *Keeper) wornBefore(ctx context.Context, slot string) (int, string) {
+	if slot == "" {
+		return 0, ""
+	}
 	u := int(k.Hand.WornUnit(slot))
 	if u == 0 {
 		return 0, ""
@@ -345,22 +352,43 @@ func (k *Keeper) resolveDirect(ctx context.Context, st *vault.Store, key string,
 	if slot == "" && len(o.Group) > 0 {
 		slot = o.Group[0]
 	}
-	if o.BeforeUnit == 0 {
+	// The other hand (a two-hander pushes the shield off as well): gone from its slot and from the game means it was
+	// removed with the swap and the copy read before the call is the only one left. Still readable but off the body
+	// cannot be judged, like the main slot.
+	offGone, offOpen := false, false
+	if o.BeforeOffUnit != 0 && int(k.Hand.WornUnit(otherHand[slot])) != o.BeforeOffUnit {
+		have, err := k.API.ItemFull(ctx, o.BeforeOffUnit)
+		offGone, offOpen = err == nil && len(have) == 0, err != nil || len(have) != 0
+	}
+	open := func() {
+		k.note("equip-open-"+o.Order, "Equip: "+ReasonUnknown)
+		res.Code, res.Why = CodeInFlight, ReasonUnknown
+	}
+	var removed []string
+	switch {
+	case offOpen:
+		open()
+		return
+	case o.BeforeUnit == 0 && offGone: // an empty hand took the piece and the other hand's item left the game
+	case o.BeforeUnit == 0:
 		k.failOrder(key, "interrupted", "the game did not answer and the bot cannot tell whether the item was worn: check the Inventory page")
 		res.Code, res.Why = "interrupted", "the game did not answer: check the Inventory page"
 		return
-	}
-	if int(k.Hand.WornUnit(slot)) == o.BeforeUnit {
+	case int(k.Hand.WornUnit(slot)) == o.BeforeUnit:
 		k.failOrder(key, "equip", "the game did not answer and nothing changed: try again")
 		res.Code, res.Why = "equip", "the game did not answer and nothing changed: try again"
 		return
+	default:
+		if have, err := k.API.ItemFull(ctx, o.BeforeUnit); err != nil || len(have) != 0 {
+			open()
+			return
+		}
+		removed = append(removed, o.Before)
 	}
-	if have, err := k.API.ItemFull(ctx, o.BeforeUnit); err != nil || len(have) != 0 {
-		k.note("equip-open-"+o.Order, "Equip: "+ReasonUnknown)
-		res.Code, res.Why = CodeInFlight, ReasonUnknown
-		return
+	if offGone {
+		removed = append(removed, o.BeforeOff)
 	}
-	dr := d2dctl.DirectResult{OK: true, Slot: slot, Removed: []string{o.Before}}
+	dr := d2dctl.DirectResult{OK: true, Slot: slot, Removed: removed}
 	k.markApplied(key, slot, dr)
 	k.finishDirect(ctx, st, chosen{key: key, id: o.ID, tag: o.Order, rec: vault.Rec{Item: vault.Item{Name: o.Name}}, slot: slot}, dr, res)
 }
@@ -604,8 +632,9 @@ func (k *Keeper) directSet(ctx context.Context, ids []string) ([]Result, bool) {
 		ch.tag = order
 		pieces = append(pieces, d2dctl.DirectPiece{Hex: ch.hex, Slot: ch.slot})
 		bu, bh := k.wornBefore(ctx, ch.slot)
+		ou, oh := k.wornBefore(ctx, otherHand[ch.slot])
 		k.putEq(&EquipOrder{ID: ch.id, Name: ch.rec.Name, Slot: SlotAuto, Group: []string{ch.slot}, State: EqEquipping, Direct: true,
-			Order: order, Piece: i, BeforeUnit: bu, Before: bh})
+			Order: order, Piece: i, BeforeUnit: bu, Before: bh, BeforeOffUnit: ou, BeforeOff: oh})
 	}
 	rs, err := k.Direct.WearSet(ctx, pieces, order)
 	if errors.Is(err, d2dctl.ErrDirectOff) {
@@ -651,6 +680,7 @@ func (k *Keeper) repairDirect(ctx context.Context) {
 	defer k.actMu.Unlock()
 	k.repairDirectLocked(ctx)
 	k.repairCarry(ctx)
+	k.repairMerc(ctx)
 }
 
 func (k *Keeper) repairDirectLocked(ctx context.Context) {

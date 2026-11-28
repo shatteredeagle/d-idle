@@ -1,6 +1,6 @@
 {
  "schema": "didle.cap/2",
- "tags": "SCHEMA cap/2 (card dlv-data): this file is the ONLY hand-edited skill table. The delivery object of each row says how the skill is cast; classdata/skills.json and power's skillKinds are GENERATED from it (go run ./tools/capgen; internal/delivery tests fail when they are stale). There is no tier key: the tier is computed at load (internal/delivery TierOf): no driver = unsupported, a passive = supported, a valid delivery with a driver = experimental, supported only with a green Proving Ground row on the backend in use (proven.json). The old key delivery (melee, projectile, ...) is now shape. Rows of Amazon, Assassin and the extra Barbarian and Necromancer skills are generated from the old combat table: class is S (game knowledge, no skills.txt on the build box). reqLevel/reqSkills: V for Sorceress (docs/research/sorc-skill-matrix.md, read from skills.txt), S for Paladin (SME read, leveler/palprobe_test.go). synergies: null = not known (never 'none'); [] = none; the runtime overlay (Caps.Overlay) replaces req and synergies by skills.txt when the tables are loaded. mana.source names where the cost per level comes from: skilldamage.json (V, game.exe functions run in the emulator) or the skills.txt columns. Necromancer (necro1, 2026-11-20): reqLevel and reqSkills of all 30 rows are V, read from the patched skills.txt of the worker host (charclass nec); synergies of damage rows are its DmgSymPerCalc/EDmgSymPerCalc, of summon rows the skill() references in its calc columns; skill names are the skills.txt names (BloodGolem, IronGolem, FireGolem). Tiers are read from internal/combat necro.go, necro_corpse.go and profiles.json (docs/process/necromancer-support.md). Barbarian (barb1, 2026-11-20): reqLevel and reqSkills of all 30 rows are V, read from the patched skills.txt of the worker host (charclass bar); synergies of damage rows are its DmgSymPerCalc (only War Cry has one), of buff rows the skill() references in their aura-length calc; Iron Skin is a passive in skills.txt (row corrected from buff). Tiers are read from internal/combat and profiles.json (docs/process/barbarian-support.md). Druid (druid1, 2026-11-20): reqLevel and reqSkills of all 30 rows are V, read from the patched skills.txt of the worker host (charclass dru); synergies of damage rows are its EDmgSymPerCalc and DmgSymPerCalc, of summon rows the skill() references in their calc columns; Wearwolf, Wearbear and Shape Shifting are Werewolf, Werebear and Lycanthropy in game; Fissure is Eruption. Tiers are read from internal/combat (druid.go, classdata/skills.json and profiles.json) and docs/process/druid-support.md; no row is supported because no Druid skill ever ran live.",
+ "tags": "SCHEMA cap/2 (card dlv-data): this file is the ONLY hand-edited skill table. The delivery object of each row says how the skill is cast; classdata/skills.json and power's skillKinds are GENERATED from it (go run ./tools/capgen; internal/delivery tests fail when they are stale). There is no tier key: the tier is computed at load (internal/delivery TierOf): no driver = unsupported, a passive = supported, a valid delivery with a driver = experimental, supported only with a green Proving Ground row on the backend in use (proven.json). The old key delivery (melee, projectile, ...) is now shape. Rows of Amazon, Assassin and the extra Barbarian and Necromancer skills are generated from the old combat table: class is S (game knowledge, no skills.txt on the build box). reqLevel/reqSkills of Amazon and Assassin rows: S, copied by card fix8 from the tables of docs/sme/class-amazon.md and class-assassin.md (open rows: docs/sme/capability-gaps.md). reqLevel/reqSkills: V for Sorceress (docs/research/sorc-skill-matrix.md, read from skills.txt), S for Paladin (SME read, leveler/palprobe_test.go). synergies: null = not known (never 'none'); [] = none; the runtime overlay (Caps.Overlay) replaces req and synergies by skills.txt when the tables are loaded. mana.source names where the cost per level comes from: skilldamage.json (V, game.exe functions run in the emulator) or the skills.txt columns. Necromancer (necro1, 2026-11-20): reqLevel and reqSkills of all 30 rows are V, read from the patched skills.txt of the worker host (charclass nec); synergies of damage rows are its DmgSymPerCalc/EDmgSymPerCalc, of summon rows the skill() references in its calc columns; skill names are the skills.txt names (BloodGolem, IronGolem, FireGolem). Tiers are read from internal/combat necro.go, necro_corpse.go and profiles.json (docs/process/necromancer-support.md). Barbarian (barb1, 2026-11-20): reqLevel and reqSkills of all 30 rows are V, read from the patched skills.txt of the worker host (charclass bar); synergies of damage rows are its DmgSymPerCalc (only War Cry has one), of buff rows the skill() references in their aura-length calc; Iron Skin is a passive in skills.txt (row corrected from buff). Tiers are read from internal/combat and profiles.json (docs/process/barbarian-support.md). Druid (druid1, 2026-11-20): reqLevel and reqSkills of all 30 rows are V, read from the patched skills.txt of the worker host (charclass dru); synergies of damage rows are its EDmgSymPerCalc and DmgSymPerCalc, of summon rows the skill() references in their calc columns; Wearwolf, Wearbear and Shape Shifting are Werewolf, Werebear and Lycanthropy in game; Fissure is Eruption. Tiers are read from internal/combat (druid.go, classdata/skills.json and profiles.json) and docs/process/druid-support.md; no row is supported because no Druid skill ever ran live.",
  "mana": {
   "note": "U: a simple sustain budget, not the game's regen formula",
   "perEnergy": {
@@ -3906,6 +3906,11 @@
    "shape": "self",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 18,
+   "reqSkills": [
+    "Blade Sentinel",
+    "Wake of Fire Sentry"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -3931,6 +3936,8 @@
    "shape": "ground",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 6,
+   "reqSkills": [],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -3953,6 +3960,10 @@
    "shape": "melee",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 24,
+   "reqSkills": [
+    "Claws of Thunder"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -3977,6 +3988,10 @@
    "shape": "ground",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 12,
+   "reqSkills": [
+    "Shock Field"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -3999,6 +4014,11 @@
    "shape": "melee",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 18,
+   "reqSkills": [
+    "Power Strike",
+    "Lightning Bolt"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4022,6 +4042,10 @@
    "shape": "melee",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 18,
+   "reqSkills": [
+    "Fists of Fire"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4046,6 +4070,10 @@
    "shape": "self",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 12,
+   "reqSkills": [
+    "Psychic Hammer"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4070,6 +4098,10 @@
    "shape": "melee",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 12,
+   "reqSkills": [
+    "Tiger Strike"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4094,6 +4126,8 @@
    "shape": "projectile",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 6,
+   "reqSkills": [],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4116,6 +4150,10 @@
    "shape": "ground",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 30,
+   "reqSkills": [
+    "Lightning Sentry"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4138,6 +4176,10 @@
    "shape": "pet",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 24,
+   "reqSkills": [
+    "Slow Missiles"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4163,6 +4205,10 @@
    "shape": "melee",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 6,
+   "reqSkills": [
+    "Dragon Talon"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4187,6 +4233,10 @@
    "shape": "melee",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 18,
+   "reqSkills": [
+    "Dragon Claw"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4211,6 +4261,8 @@
    "shape": "melee",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 1,
+   "reqSkills": [],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4235,6 +4287,11 @@
    "shape": "projectile",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 12,
+   "reqSkills": [
+    "Fire Arrow",
+    "Multiple Shot"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4257,6 +4314,10 @@
    "shape": "self",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 18,
+   "reqSkills": [
+    "Quickness"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4281,6 +4342,10 @@
    "shape": "melee",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 24,
+   "reqSkills": [
+    "Impale"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4304,6 +4369,8 @@
    "shape": "projectile",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 1,
+   "reqSkills": [],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4350,6 +4417,8 @@
    "shape": "projectile",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 1,
+   "reqSkills": [],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4372,6 +4441,8 @@
    "shape": "melee",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 6,
+   "reqSkills": [],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4396,6 +4467,11 @@
    "shape": "projectile",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 18,
+   "reqSkills": [
+    "Cold Arrow",
+    "Multiple Shot"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4418,6 +4494,10 @@
    "shape": "projectile",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 18,
+   "reqSkills": [
+    "Cold Arrow"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4440,6 +4520,10 @@
    "shape": "melee",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 12,
+   "reqSkills": [
+    "Jab"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4485,6 +4569,8 @@
    "shape": "self",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 1,
+   "reqSkills": [],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4509,6 +4595,8 @@
    "shape": "melee",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 1,
+   "reqSkills": [],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4533,6 +4621,10 @@
    "shape": "projectile",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 12,
+   "reqSkills": [
+    "Poison Javelin"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4555,6 +4647,10 @@
    "shape": "projectile",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 30,
+   "reqSkills": [
+    "Plague Javelin"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4577,6 +4673,10 @@
    "shape": "ground",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 24,
+   "reqSkills": [
+    "Charged Bolt Sentry"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4599,6 +4699,10 @@
    "shape": "melee",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 30,
+   "reqSkills": [
+    "Charged Strike"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4622,6 +4726,8 @@
    "shape": "projectile",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 1,
+   "reqSkills": [],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4644,6 +4750,10 @@
    "shape": "self",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 24,
+   "reqSkills": [
+    "Cloak of Shadows"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4669,6 +4779,10 @@
    "shape": "projectile",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 6,
+   "reqSkills": [
+    "Magic Arrow"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4691,6 +4805,10 @@
    "shape": "projectile",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 18,
+   "reqSkills": [
+    "Lightning Bolt"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4713,6 +4831,8 @@
    "shape": "projectile",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 6,
+   "reqSkills": [],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4735,6 +4855,10 @@
    "shape": "melee",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 6,
+   "reqSkills": [
+    "Jab"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4758,6 +4882,10 @@
    "shape": "self",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 6,
+   "reqSkills": [
+    "Claw Mastery"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4806,6 +4934,10 @@
    "shape": "self",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 30,
+   "reqSkills": [
+    "Shadow Warrior"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4830,6 +4962,11 @@
    "shape": "self",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 18,
+   "reqSkills": [
+    "Cloak of Shadows",
+    "Weapon Block"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4854,6 +4991,10 @@
    "shape": "ground",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 6,
+   "reqSkills": [
+    "Fire Trauma"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4876,6 +5017,10 @@
    "shape": "self",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 12,
+   "reqSkills": [
+    "Inner Sight"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4900,6 +5045,10 @@
    "shape": "projectile",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 24,
+   "reqSkills": [
+    "Guided Arrow"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4922,6 +5071,8 @@
    "shape": "melee",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 1,
+   "reqSkills": [],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4946,6 +5097,11 @@
    "shape": "pet",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 30,
+   "reqSkills": [
+    "Dopplezon",
+    "Evade"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4971,6 +5127,10 @@
    "shape": "self",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 30,
+   "reqSkills": [
+    "Fade"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4995,6 +5155,10 @@
    "shape": "ground",
    "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
    "element": "",
+   "reqLevel": 12,
+   "reqSkills": [
+    "Fire Trauma"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -5017,6 +5181,10 @@
    "shape": "ground",
    "reason": "generated row: class is S (game knowledge), power kind from profiles.json skillKinds; no combat-table entry, no live evidence",
    "element": "",
+   "reqLevel": 30,
+   "reqSkills": [
+    "Blade Fury"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -5032,6 +5200,10 @@
    "shape": "projectile",
    "reason": "generated row: class is S (game knowledge), power kind from profiles.json skillKinds; no combat-table entry, no live evidence",
    "element": "",
+   "reqLevel": 30,
+   "reqSkills": [
+    "Ice Arrow"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -5047,6 +5219,10 @@
    "shape": "projectile",
    "reason": "generated row: class is S (game knowledge), power kind from profiles.json skillKinds; no combat-table entry, no live evidence",
    "element": "",
+   "reqLevel": 24,
+   "reqSkills": [
+    "Exploding Arrow"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -5062,6 +5238,10 @@
    "shape": "projectile",
    "reason": "generated row: class is S (game knowledge), power kind from profiles.json skillKinds; no combat-table entry, no live evidence",
    "element": "",
+   "reqLevel": 18,
+   "reqSkills": [
+    "Critical Strike"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -5077,6 +5257,10 @@
    "shape": "projectile",
    "reason": "generated row: class is S (game knowledge), power kind from profiles.json skillKinds; no combat-table entry, no live evidence",
    "element": "",
+   "reqLevel": 30,
+   "reqSkills": [
+    "Penetrate"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -5092,6 +5276,8 @@
    "shape": "ground",
    "reason": "generated row: class is S (game knowledge), power kind from profiles.json skillKinds; no combat-table entry, no live evidence",
    "element": "",
+   "reqLevel": 1,
+   "reqSkills": [],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -5099,6 +5285,102 @@
     "purpose": "damage",
     "power": "spell",
     "driver": "attack"
+   }
+  },
+  "Critical Strike": {
+   "class": "amazon",
+   "kind": "passive",
+   "shape": "self",
+   "reason": "passive, no engine action needed; row added by card fix8 (review 8 C1): the shipped tables buy it",
+   "reqLevel": 1,
+   "reqSkills": [],
+   "mana": {
+    "source": "none"
+   },
+   "delivery": {
+    "purpose": "passive",
+    "driver": "passive"
+   }
+  },
+  "Dodge": {
+   "class": "amazon",
+   "kind": "passive",
+   "shape": "self",
+   "reason": "passive, no engine action needed; row added by card fix8 (review 8 C1): the shipped tables buy it",
+   "reqLevel": 6,
+   "reqSkills": [],
+   "mana": {
+    "source": "none"
+   },
+   "delivery": {
+    "purpose": "passive",
+    "driver": "passive"
+   }
+  },
+  "Avoid": {
+   "class": "amazon",
+   "kind": "passive",
+   "shape": "self",
+   "reason": "passive, no engine action needed; row added by card fix8 (review 8 C1): the shipped tables buy it",
+   "reqLevel": 12,
+   "reqSkills": [
+    "Dodge"
+   ],
+   "mana": {
+    "source": "none"
+   },
+   "delivery": {
+    "purpose": "passive",
+    "driver": "passive"
+   }
+  },
+  "Evade": {
+   "class": "amazon",
+   "kind": "passive",
+   "shape": "self",
+   "reason": "passive, no engine action needed; row added by card fix8 (review 8 C1): the shipped tables buy it",
+   "reqLevel": 24,
+   "reqSkills": [
+    "Avoid"
+   ],
+   "mana": {
+    "source": "none"
+   },
+   "delivery": {
+    "purpose": "passive",
+    "driver": "passive"
+   }
+  },
+  "Claw Mastery": {
+   "class": "assassin",
+   "kind": "passive",
+   "shape": "self",
+   "reason": "passive, no engine action needed; row added by card fix8 (review 8 C1): the shipped tables buy it",
+   "reqLevel": 1,
+   "reqSkills": [],
+   "mana": {
+    "source": "none"
+   },
+   "delivery": {
+    "purpose": "passive",
+    "driver": "passive"
+   }
+  },
+  "Weapon Block": {
+   "class": "assassin",
+   "kind": "passive",
+   "shape": "self",
+   "reason": "passive, no engine action needed; row added by card fix8 (review 8 C1): the shipped tables buy it",
+   "reqLevel": 12,
+   "reqSkills": [
+    "Claw Mastery"
+   ],
+   "mana": {
+    "source": "none"
+   },
+   "delivery": {
+    "purpose": "passive",
+    "driver": "passive"
    }
   }
  },

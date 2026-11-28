@@ -1,0 +1,11 @@
+{
+ "name": "town.plan",
+ "built_by": "fabletown / ADR 0028 (1ae9e51ae)",
+ "dark_since": "2026-11-20",
+ "why_off": "Staged 0..5; stages 1 to 3 merged (town3, town4, town5), stage 0 is the old town code and the default. Needs the invariant counts (invmon) as the before/after measure; card townflip owns the flip.",
+ "enable_criteria": "Stage 2 scenario set green; scenario/drill green, then flip on the sandboxes with a 24 h invariant-monitor watch and automatic revert on a hard breach; stages 3, 4, 5 the same, one at a time (owner looks before 3 to 5, ADR 0028)",
+ "owner": "coordinator",
+ "review_by": "2026-12-09",
+ "status": "dark",
+ "note": "owner approved 2026-11-27, live on sandbox Doofer (stage 3 under ADR 0028; stage 2 was enabled 2026-11-27T00:11:21Z); 45 min flip window closed clean 2026-11-27T14:25:40Z (no hard breach), kept on trial"
+}

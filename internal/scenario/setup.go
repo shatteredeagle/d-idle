@@ -50,6 +50,10 @@ type Setup struct {
 	Unsupported []string `json:"unsupported,omitempty"`
 	// FromSave is the earned milestone the hero starts from (pre.from_save); empty for a fresh or verb-built hero.
 	FromSave string `json:"from_save,omitempty"`
+	// Bind and Summon are pre.bind and pre.summon: the runner resolves the names with the game tables and does them after
+	// the played profile's points (cmd/d2scenario), each ledgered as SETUP.
+	Bind   []HandBind `json:"bind,omitempty"`
+	Summon []Summon   `json:"summon,omitempty"`
 }
 
 // BuildSetup turns a scenario's Pre into the setup for one class and seed. The seed is only used to name the hero so
@@ -271,7 +275,16 @@ func BuildSetup(s Scenario, class string, seed int64) (Setup, error) {
 		// no verb can load a save yet: the run is BLOCKED naming it, never run from a made-up hero (card pgearned live part, U)
 		su.Unsupported = append(su.Unsupported, fmt.Sprintf("pre.from_save %s: the runner does not copy an earned save into the instance yet", p.FromSave))
 	}
-	cheated := tags["worn"] || tags["vault-records"] || tags["ether"] || tags["position"] || tags["waypoint"] || tags["given-item"] || tags["quest-word"] || tags["stat-write"] || tags["merc"] || tags["difficulty"]
+	if err := s.validateHandSkills(); err != nil {
+		return Setup{}, err
+	}
+	if su.Bind = p.Bind; len(p.Bind) > 0 {
+		tags["hand-skill"] = true
+	}
+	if su.Summon = p.Summon; len(p.Summon) > 0 {
+		tags["summon"] = true
+	}
+	cheated := tags["hand-skill"] || tags["summon"] || tags["worn"] || tags["vault-records"] || tags["ether"] || tags["position"] || tags["waypoint"] || tags["given-item"] || tags["quest-word"] || tags["stat-write"] || tags["merc"] || tags["difficulty"]
 	if cheated {
 		su.Tags = append(su.Tags, "CHEATED")
 	} else if p.FromSave != "" || (len(su.Verbs) == 0 && len(su.Seeds) == 0 && su.Ether == 0 && !su.VaultVerbs && p.Start == StartTown && len(tags) == 0) {

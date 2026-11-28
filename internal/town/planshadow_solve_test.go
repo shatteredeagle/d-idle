@@ -20,7 +20,7 @@ func TestSolveShadowTwoClasses(t *testing.T) {
 	}{{d2.Sorceress, true}, {d2.Paladin, false}} {
 		band := belt.PlanForClass(tc.class, 20)
 		c := supply.Count{Purse: 1500, StashKnown: true, PortalCharges: 2, HasTome: true}
-		pl, err := solveShadow(tc.class, band, belt.Columns, c, ChorePlan{Profile: "monastery_road"}, &lt, &rs)
+		pl, err := solveShadow(tc.class, "", band, belt.Columns, c, ChorePlan{Profile: "monastery_road"}, &lt, &rs)
 		if err != nil {
 			t.Fatalf("%v: %v", tc.class, err)
 		}
@@ -38,7 +38,7 @@ func TestSolveShadowTwoClasses(t *testing.T) {
 
 func TestSolveShadowUnknownProfile(t *testing.T) {
 	lt, rs := env.DefaultLootTuning(), env.DefaultResourceTuning()
-	_, err := solveShadow(d2.Paladin, belt.PlanForClass(d2.Paladin, 5), belt.Columns, supply.Count{}, ChorePlan{Profile: "nope"}, &lt, &rs)
+	_, err := solveShadow(d2.Paladin, "", belt.PlanForClass(d2.Paladin, 5), belt.Columns, supply.Count{}, ChorePlan{Profile: "nope"}, &lt, &rs)
 	if err == nil || !strings.Contains(err.Error(), `"nope"`) {
 		t.Fatalf("got %v", err)
 	}
@@ -52,7 +52,7 @@ func TestBossKitIsClampedToBeltPlusPackReserve(t *testing.T) {
 	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
 		band := belt.PlanForClass(class, 20)
 		capHP := band.Capacity(belt.HP, belt.Columns)
-		pl, err := solveShadow(class, band, belt.Columns, supply.Count{Purse: 3000, StashKnown: true, PortalCharges: 2, HasTome: true}, ChorePlan{Profile: "andariel"}, &lt, &rs)
+		pl, err := solveShadow(class, "", band, belt.Columns, supply.Count{Purse: 3000, StashKnown: true, PortalCharges: 2, HasTome: true}, ChorePlan{Profile: "andariel"}, &lt, &rs)
 		if err != nil {
 			t.Fatalf("%v: %v", class, err)
 		}

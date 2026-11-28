@@ -38,3 +38,22 @@ func TestMercAuraFor(t *testing.T) {
 		t.Fatal("unknown class must error")
 	}
 }
+
+// Review 8 A1/A3: the merc aura defaults are data (the "default" row), for every difficulty and the Act 1 Rogue.
+func TestDefaultMercAura(t *testing.T) {
+	for _, k := range []string{"normal", "nightmare", "hell", "rogue"} {
+		if a, err := DefaultMercAura(k); err != nil || a == "" {
+			t.Errorf("%s: %q %v", k, a, err)
+		}
+	}
+	if _, err := DefaultMercAura("inferno"); err == nil {
+		t.Error("an unknown key must be an error")
+	}
+	// two classes: the Necromancer has its own row, the Paladin has none and gets no silent class value
+	if a, ok, _ := MercAuraFor(Necromancer, "nightmare"); !ok || a == "" {
+		t.Errorf("necromancer nightmare %q %v", a, ok)
+	}
+	if _, ok, err := MercAuraFor(Paladin, "nightmare"); ok || err != nil {
+		t.Errorf("paladin has no class row: %v %v", ok, err)
+	}
+}

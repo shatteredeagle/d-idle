@@ -1,0 +1,10 @@
+{
+ "name": "quests.stepExec",
+ "built_by": "stepexec1 (TASK-976, branch agent/stepexec1)",
+ "dark_since": "2026-11-26",
+ "why_off": "Four steps ported to the generic step executor: the Cain scroll (Tree of Inifuss click and pick-up), Akara reading the scroll (talk step, card stepexec2), the Horadric Staff transmute and placing the Staff in the orifice (Act 2 rows); the scenarios cain.scroll.stepexec, cain.read.stepexec, drill.act2.assemble.stepexec and drill.act2.duriel.stepexec have not run on the lab yet.",
+ "enable_criteria": "Scenarios cain.scroll.stepexec, cain.read.stepexec, drill.act2.assemble.stepexec and drill.act2.duriel.stepexec green 2 of 3 runs each on the lab, then flip on one sandbox with a 24 h watch and auto-revert on a hard breach (docs/process/dark-launch.md); the old handler is deleted after the watch.",
+ "owner": "coordinator",
+ "review_by": "2026-12-03",
+ "status": "enabled"
+}
