@@ -187,6 +187,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- f53f63a4c 11-27 22:41 `Merge agent/fable-fr1: fable review 1: item flows (docs)` (fable-fr1)
+- b7f728c74 11-27 22:40 `Merge branch 'main' into fable-fr1` (-)
 - d64efd5c7 11-27 22:36 `Merge agent/fable-fr3: fable review 3: combat, nav, survival (docs)` (fable-fr3)
 - 4b0cdccb4 11-27 22:35 `Merge branch 'main' into fable-fr3` (-)
 - 388fd1316 11-27 22:35 `Merge agent/autoflip: autoflip: plan/run/graduate-list tool (TASK-1092)` (autoflip)
@@ -195,6 +197,4 @@
 - af5382fe3 11-27 22:24 `Merge branch 'main' into darkthrottle` (-)
 - a9fc9ca8c 11-27 22:13 `Merge agent/pgfix: pgfix: banked default hero profile, setup tags on blocked runs, hand skills in the point dump (TASK-1093)` (pgfix)
 - f8a505433 11-27 22:12 `Merge branch 'main' into pgfix` (-)
-- f4865d49e 11-27 22:04 `Merge agent/farmresetretire: farmresetretire: bot.farmReset graduated to always-on, knob removed (TASK-1090)` (farmresetretire)
-- b540e608c 11-27 22:03 `Merge branch 'main' into farmresetretire` (-)
 <!-- statusgen:end -->

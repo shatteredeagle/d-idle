@@ -386,6 +386,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 `design/fable-review-2026-11-28/`
 
+- [01-item-flows.md](design/fable-review-2026-11-28/01-item-flows.md): Fable review 2026-11-28, part 1: item flows through the Vault and the fork verbs (status: review, read-only (no code changed). Base: `origin/main` at 415b11f25. Scope: `internal/vaultkeep`,...)
 - [03-combat-nav-survival.md](design/fable-review-2026-11-28/03-combat-nav-survival.md): Fable review 3 of 8: combat, navigation and survival merged 2026-11-27 (status: review, read-only. Base `75e4c2f4e` (last commit before 2026-11-27 00:00) against `origin/main` at...)
 
 `design/`
