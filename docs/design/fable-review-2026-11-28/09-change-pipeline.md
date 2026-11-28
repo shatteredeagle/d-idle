@@ -129,7 +129,7 @@ Today (V): no row has gone from merged to knob removed in under a day by tooling
 |---|---|---|---|
 | merged to on the canary sandbox | hand deploy in rounds (3 today) | install the timer for `ops:tools/autodeploy.py` (10 min cycle, 15 min watch, rollback built in); second sandbox follows after one clean watch | 30 min |
 | on sandbox to flipped (`trial`) | hand, when remembered | `autoflip` (#1578) on a 30 min timer: picks rows with a `flip_plan` whose named scenario is green in the gate of the merge that added them, one bundle per free sandbox | 1 h |
-| `trial` to `enabled` | watcher, 2 h | keep | 2 h |
+| `trial` to `enabled` | watcher, 2 h | keep the hop, but see section 8: the installed watcher must be restarted and reload on code change first | 2 h |
 | ledger state to main | a branch through the queue; #1575 failed twice | either lane 9 plus resolver 1, or better: runtime status (`trial`, `enabled`, timestamps) moves to a state file the watcher owns outside git, and `report.py` reads both; git keeps only the row's definition | 0 to 5 min |
 | `enabled` to graduated | hand-launched agent, no fixed end state (`bot.farmReset` row still `enabled`) | graduation bot: 24 h after `enabled` with no revert, a templated card and one Sonnet agent per row (default flipped, knob and old path deleted, row `retired`), at most 2 in flight; `check.py` fails a row that is `enabled` for more than 3 days | 24 to 36 h |
 
@@ -164,6 +164,21 @@ Not recommended: a second serial worker on the same worktree model before steps 
 - The worker outage 10:14 to 13:01 and the three restarts: the watchdog log shows "restart limit (3 per hour) reached" alarms the night before. Worth one look before more automation leans on the worker.
 - Agent-done time is not recorded; add `done_at` to `mergeq add` (from the status board) so the real "done to merged" can be measured.
 
-## 8. Comparison with the other reviewers
+## 8. Comparison with review 5 (read after sections 1 to 7 were written and committed, 5f530e9f1)
 
-Not done in this run: when this was written the review folder held no other document in this worktree or in the main checkout (V, `ls`), so `05-dark-ledger-process.md` was not read and there are no disagreements to record. Points where I expect a difference of opinion: this review ranks the definition of Done (RC1) above queue speed, treats tonight's cap as necessary but insufficient (section 4), and argues against more merge workers before the shared files are fixed.
+`05-dark-ledger-process.md` was not in this worktree; it was read from its author's branch after the first commit. Sections 1 to 7 are unchanged except the two corrections marked below.
+
+**Where we agree (independently):** task cards are the dominant conflict (two writers, no resolver); the ledger needs one file per knob with runtime state outside git, and a keyed union rule as the bridge; the cap does not shrink anything and `enabled` rows must count; the ledger on main is behind reality; line-union via `.gitattributes` is wrong for JSON and YAML.
+
+**What review 5 found that this review missed (accepted):**
+1. The installed flip watcher ran old code and reverted tonight's two bundles on a parse error. I recorded only "the watcher service is active (V)" and wrote "keep" for the `trial` to `enabled` hop in 5c. Correction: that hop is broken until the unit is restarted and reloads on code change; the 30-hour target in 5c assumes that fix.
+2. "No hard breach in 2 h" is weak evidence (a parked, paused or dead hero trips nothing). This cuts against my graduation bot in 5c: "24 h after `enabled` with no revert" is not enough. Correction: the bot should fire only on review 5's evidence record (exposure and a hit count of the gated path), and the autoflip timer should not be installed before the watcher fault/breach split exists. Order: watcher fixes, then the timers.
+3. Four orphan `trial` rows and six uncommitted revert rows in the main checkout: more precise than my "main's ledger is behind".
+
+**Where we disagree, with evidence:**
+1. Review 5 says code batching is off (`MERGEQ_BATCH_CODE=0`, the default at `mergeq.py:114`) and proposes turning it on. It is on: the worker env file sets `MERGEQ_BATCH_CODE=1`, and 93 of 148 merged items today carry `batch: true` (V). It does not bisect; it rolls back all and reruns each alone (`mergeq.py:890`). So that gain is already spent, and the open issue is the flake rollback (5b row 3), not the flag.
+2. Review 5 explains the `last on origin/main: ?` log text by "spaces or a rename" and proposes a card resolver. The resolver cannot match a card until `mergeq.py:578` stops splitting paths on whitespace (2.2). That one-line fix comes first.
+3. Review 5 counts about 210 queued items; the queue file has 154 ids added today (re-attempts keep their id), about 180 attempts.
+4. Review 5 treats the pipeline as a merge-conflict problem plus weak flip evidence. This review puts the definition of Done first (RC1): with perfect resolvers and a perfect watcher, a card still closes at merge and nobody is assigned the remaining hops. Review 5's evidence record and this review's `Verify` state are complements: the record says what proof is, the state says who is still on the hook for it.
+5. Review 5 does not mention that 23 open rows fall due on 2026-12-09 and `check.py` then fails hygiene for every branch (section 4 item 2). I rank that as the nearest scheduled outage.
+6. Gate cost: review 5 names the go-whole gate as the floor. Measured here, race (262 s) is the longer pole, the test cache is off, and a ledger row forces whole-repo scope (30 merges); those three are cheaper wins than more batching.
