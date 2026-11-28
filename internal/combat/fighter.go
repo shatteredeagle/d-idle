@@ -136,8 +136,9 @@ type Fighter struct {
 	statsFn          func(uint32) (d2.Stats, error) // test seam; nil = e.Read.UnitStats
 	skipWhy          string                         // last skipped-drink reason logged (noteDrinkSkip)
 	skipAt           time.Time
-	portalBackoff    time.Time // no TownPortal safety action before this (diagMu)
-	packDrinkBackoff time.Time // no pack drink before this (packdrink.go, diagMu)
+	portalBackoff    time.Time            // no TownPortal safety action before this (diagMu)
+	packDrinkBackoff time.Time            // no pack drink before this (packdrink.go, diagMu)
+	evidAt           map[string]time.Time // last evidence line per rule and outcome (evidence.go, diagMu)
 }
 
 type resEntry struct {
@@ -314,9 +315,7 @@ func (f *Fighter) Safety(snap *d2.Snapshot) SafetyAction {
 		in.HasPortal = f.portalItem(snap) != nil
 	}
 	a := Decide(in)
-	if b, why := in.castBlocked(); b && a != TownPortal && in.InFight && decideBase(in) == TownPortal {
-		f.noteCastRefused(why, in)
-	}
+	f.noteCastGuard(in, a)
 	if a == SafetyNone && f.packDrinkWanted(snap, in) {
 		a = DrinkLife // the belt is empty: drink() falls back to the pack (packdrink.go)
 	}

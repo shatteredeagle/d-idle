@@ -556,16 +556,21 @@ func (f *Fighter) engage(ctx context.Context, snap *d2.Snapshot, tg Target, sp f
 		f.ignore(st, tg, why, fmt.Sprintf("casts %d life %d%% engaged %v", tr.casts, tg.LifePct, tr.engaged.Round(time.Second)))
 		return nil
 	}
-	if !tr.inShot && sp.only == 0 && !(t.StandOK != 0 && Stands(tg.Mon)) && tr.engaged > time.Duration(t.ReachSec)*time.Second {
-		f.ignore(st, tg, IgnoreNoShot, fmt.Sprintf("never in range with a clear line in %v, %d approaches", tr.engaged.Round(time.Second), tr.approaches))
-		return nil
+	if !tr.inShot && sp.only == 0 && tr.engaged > time.Duration(t.ReachSec)*time.Second {
+		if !standKept(t.StandOK, tg.Mon) {
+			f.ignore(st, tg, IgnoreNoShot, fmt.Sprintf("never in range with a clear line in %v, %d approaches", tr.engaged.Round(time.Second), tr.approaches))
+			return nil
+		}
+		f.evidence("standOK", "kept", "unit", tg.Unit.ID, "engaged", tr.engaged.Round(time.Second), "approaches", tr.approaches)
 	}
 
 	// missiles on top of us
 	if t.DodgeRadius > 0 && f.mv != nil && f.mayEvade() && f.evadeOK(st) && now.Sub(f.lastDodge) > 1200*time.Millisecond && st.dodges < 40 {
 		var near []input.Point
+		var inc Incoming
 		if t.ThreatDodge != 0 {
-			near = RankIncoming(snap, threatTable, float64(t.DodgeRadius), float64(t.DodgeReactMs)/1000).Dodge
+			inc = RankIncoming(snap, threatTable, float64(t.DodgeRadius), float64(t.DodgeReactMs)/1000)
+			near = inc.Dodge
 		} else {
 			for _, m := range hostileMissiles(snap) {
 				if pdist(me, m) < float64(t.DodgeRadius) {
@@ -578,8 +583,10 @@ func (f *Fighter) engage(ctx context.Context, snap *d2.Snapshot, tg Target, sp f
 			st.dodges++
 			f.decision(st, "dodge", "missile on top of us")
 			f.info("dodging", "to", pt)
+			f.noteThreat(inc, true)
 			return f.evade(ctx, me, pt)
 		}
+		f.noteThreat(inc, false)
 	}
 
 	if f.evadeOK(st) {

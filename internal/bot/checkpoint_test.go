@@ -1,7 +1,9 @@
 package bot
 
 import (
+	"bytes"
 	"context"
+	"log/slog"
 	"strings"
 	"testing"
 	"time"
@@ -230,5 +232,31 @@ func TestCheckpointArrivalCrowd(t *testing.T) {
 	g2.r.cp.st = cpReturn
 	if err := g2.r.cpArrival(context.Background()); err != nil || g2.r.cp.st != cpSet {
 		t.Errorf("quiet exit: err %v state %v", err, g2.r.cp.st)
+	}
+}
+
+// The enabled rule that casts nothing says why, once per area and reason; off, it writes nothing (two classes).
+func TestCheckpointIdleEvidence(t *testing.T) {
+	for _, c := range []d2.Class{d2.Sorceress, d2.Barbarian} {
+		g := cpRig(t, c, 2) // two scrolls: the reserve holds the cast
+		buf := &bytes.Buffer{}
+		g.r.e.Log = slog.New(slog.NewTextHandler(buf, nil))
+		for range 3 {
+			g.r.checkpointDue(g.r.poll(), g.clock.Now())
+		}
+		if n := strings.Count(buf.String(), `msg="checkpoint idle" why="scroll reserve"`); n != 1 {
+			t.Fatalf("%v: %d idle lines, want 1: %s", c, n, buf.String())
+		}
+		g.clock.Sleep(cpIdleGap + time.Second)
+		g.r.checkpointDue(g.r.poll(), g.clock.Now())
+		if n := strings.Count(buf.String(), "checkpoint idle"); n != 2 {
+			t.Fatalf("%v: %d idle lines after the gap, want 2", c, n)
+		}
+		buf.Reset()
+		g.e.Tune.Bot.CheckpointEnable = 0
+		g.r.checkpointDue(g.r.poll(), g.clock.Now())
+		if buf.Len() != 0 {
+			t.Fatalf("%v: knob 0 wrote %s", c, buf.String())
+		}
 	}
 }
