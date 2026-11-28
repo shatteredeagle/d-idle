@@ -1,10 +1,13 @@
 ---
 id: TASK-1086
-title: 'devupdatefix: dev-update works when labrun is local, stages per run, names its host'
-status: Proposed
+title: >-
+  devupdatefix: dev-update works when labrun is local, stages per run, names its
+  host
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T02:06:00Z'
+updated_date: '2026-11-28T02:15:00Z'
 labels:
   - ops
   - bug
