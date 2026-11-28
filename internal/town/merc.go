@@ -174,11 +174,19 @@ func HirePolicy(class d2.Class, diff data.Difficulty, merc d2.Merc, gold int) (M
 	if merc.Alive {
 		return MercWant{}, false, nil
 	}
-	w := MercWant{Act: 2, Diff: diff, Aura: "Defiance", Row: -1}
+	names := [...]string{"normal", "nightmare", "hell"}
+	if diff < 0 || int(diff) >= len(names) {
+		return MercWant{}, false, fmt.Errorf("town: unknown difficulty %d", int(diff))
+	}
+	def, err := d2.DefaultMercAura(names[diff]) // classtraits.json "default" row; the class row below overrides it
+	if err != nil {
+		return MercWant{}, false, err
+	}
+	w := MercWant{Act: 2, Diff: diff, Aura: def, Row: -1}
 	floor := 400 // Normal: factor 350 read 360 at merc level 9 (V docs/town.md)
 	switch diff {
 	case data.Nightmare:
-		w.Aura, floor = "Might", 8000 // U: scaled from factor 7900
+		floor = 8000 // U: scaled from factor 7900
 	case data.Hell:
 		floor = 15000 // U: scaled from factor 15000
 	}

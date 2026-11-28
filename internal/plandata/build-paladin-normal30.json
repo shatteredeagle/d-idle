@@ -1,6 +1,7 @@
 {
  "build": "paladin_normal30",
  "class": "paladin",
+ "combat": "paladin",
  "schema": "per-clvl allocation, same shape as build-primary-blizzard.json. class: the character class this table is for (leveler refuses a mismatch). hotkeys: plan for the combat agent (key, skill, hand), not executed by the leveler. respec: documented option, NOT used by the rows (rows 20-30 assume no respec).",
  "tags": "Skills 2-19: S (Maxroll Paladin leveling https://maxroll.gg/d2/guides/paladin-leveling, fetched 2026-10-28, covers up to clvl 13 explicitly, 14-19 'Holy Fire' from docs/classes/paladin.md section 3 which cites the same guide). Row 11 left empty = Maxroll 'save the point' (the planner pulls the next table skill that the game allows, so a saved point may be spent early on Holy Fire: harmless). Charge is Maxroll's mobility skill; the bot does not use it yet. Skills 20-30: U (own choice: Holy Bolt -> Blessed Hammer -> Blessed Aim -> Concentration needs no respec; prerequisites V from skills.txt on the real install: Blessed Hammer needs Holy Bolt and clvl 18, Concentration needs Blessed Aim and clvl 18). Stats: U. Maxroll says all Vitality (Energy at 12-13); this table follows the bot brief instead: Strength for gear (scepter 55, shields 25-75), Vitality, 1 Dexterity at clvl 6 as Maxroll, Dexterity later for block. Start values 25 str / 20 dex / 25 vit / 15 ene.",
  "respec": {

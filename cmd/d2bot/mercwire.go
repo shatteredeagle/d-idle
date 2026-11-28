@@ -1043,7 +1043,8 @@ func (w *mercWire) noteNoMerc(s *d2.Snapshot) {
 
 // noMercWhy is the text of noteNoMerc: the verdict ShouldHire gives a one-gold Act 1 Rogue offer, plus the missing hirer.
 func noMercWhy(c merc.Ctx, st merc.MercState, haveHirer bool) string {
-	probe := merc.HireOffer{Class: merc.ClassRogue, Aura: "Cold Arrow", Price: 1}
+	arrow, _ := d2.DefaultMercAura("rogue") // text only; the row is validated at load
+	probe := merc.HireOffer{Class: merc.ClassRogue, Aura: arrow, Price: 1}
 	line := "none at clvl " + strconv.Itoa(c.Level) + " (" + c.PlayerClass + "): act 1 rogue hire " + merc.ShouldHire(probe, st, c).Reason
 	if !haveHirer {
 		line += "; no hire window reader wired, so no paid hire can happen"

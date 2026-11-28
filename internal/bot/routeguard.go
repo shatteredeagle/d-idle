@@ -58,10 +58,12 @@ func (r *Runner) fillTower(w *task.World, rt env.RouteTuning, class d2.Class, p 
 	if class.Caster() {
 		w.BarracksMinLevel, w.BarracksMinLife = rt.BarracksMinLevelCaster, rt.BarracksMinLifeCaster
 	}
+	build := ""
 	if p != nil {
 		w.MaxLife = p.MaxLife
+		build = r.buildName(p)
 	}
-	if resource.ManaNeed(class) >= 2 {
+	if resource.ManaNeedFor(class, build) >= 2 {
 		w.TowerKitMana = rt.TowerKitMana
 	}
 }

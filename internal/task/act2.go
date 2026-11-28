@@ -2,6 +2,7 @@ package task
 
 import (
 	"context"
+	"d2lod-bot/internal/d2"
 	"time"
 )
 
@@ -445,7 +446,12 @@ func mercNodes() []Node {
 			if !ok {
 				return Errorf(KindPrereq, "the bot has no mercenary hire capability")
 			}
-			aura := "Defiance"
+			// No class preference (or an actor that cannot tell): the Normal row of the data default
+			// (classtraits.json "default"), not a literal. U: an actor without MercAuraChooser has no difficulty.
+			aura, err := d2.DefaultMercAura("normal")
+			if err != nil {
+				return Wrap(KindPrereq, err)
+			}
 			if c, ok := x.(MercAuraChooser); ok {
 				a, set, err := c.MercAura()
 				if err != nil {
