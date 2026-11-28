@@ -297,6 +297,8 @@ internal/bot/routeguard.go  live-agent  bsmdef
 internal/bot/runner.go  credit-runner  campaign1
 internal/bot/shadow.go  live-agent  arbmig
 internal/bot/shadow.go  live-agent  ticklog
+internal/bot/stepexec.go  credit-runner  durieltyrael
+internal/bot/stepexec_act2chunks_test.go  credit-runner  durieltyrael
 internal/bot/task.go  live-agent  bsmdef
 internal/bot/ticklog.go  live-agent  ticklog
 internal/bot/ticklog_test.go  live-agent  ticklog

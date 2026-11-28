@@ -56,7 +56,7 @@
 | live1 | proposed | - | `internal/bot/`<br>`internal/survival/`<br>`internal/questboard/`<br>`internal/arbiter/`<br>`cmd/d2bot/survivalwire.go`<br>`docs/live1.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | boardsidestart | proposed | - | `internal/questboard/`<br>`internal/bot/questboard.go` | - |
-| durieltyrael | proposed | - | `internal/questboard/`<br>`internal/task/` | - |
+| durieltyrael | proposed | - | `internal/questboard/`<br>`internal/task/`<br>`internal/bot/stepexec.go`<br>`internal/bot/stepexec_act2chunks_test.go` | - |
 | drilldrivers | proposed | - | `internal/combat/`<br>`tools/provingground/scenarios/combatdrills.json`<br>`tools/provingground/scenarios/necro.json` | - |
 | fix14 | proposed | - | `internal/admit/`<br>`internal/quest/objective.go`<br>`internal/bot/`<br>`internal/combat/`<br>`internal/vaultkeep/`<br>`internal/arbiter/`<br>`internal/town/` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
@@ -201,14 +201,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 9ebe774bf 11-28 06:08 `Merge agent/dur2: dur2: Tyrael door finding (fork), npc_out_of_reach, board retry count (TASK-1126/1120)` (dur2)
+- 01f0363db 11-28 06:04 `Merge branch 'main' into dur2` (-)
 - fa6164b87 11-28 05:49 `Merge agent/forkreq: forkreq: consolidated fork requests (docs)` (forkreq)
 - 8e574fdfb 11-28 05:47 `Merge branch 'main' into forkreq` (-)
 - 71b6531ce 11-28 05:43 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
+- 2fe8c0f07 11-28 05:42 `dur2: merge origin/main, cards TASK-1120 and TASK-1126 on main's base with own ticks, owns and results` (-)
 - 6e37fec73 11-28 05:11 `Merge agent/fix8b: fix8b: missing combat profile, mana need (TASK-1117)` (fix8b)
 - b2fe61651 11-28 05:10 `Merge branch 'main' into fix8b` (-)
 - 010befbd5 11-28 05:02 `Merge agent/savesafe: savesafe: rolling character save backups, zero-byte restore, disk guard (TASK-1132)` (savesafe)
 - 0da230f78 11-28 05:01 `Merge branch 'main' into savesafe` (-)
-- 0e77448d3 11-28 04:54 `Merge origin/main into fix8b` (-)
-- 91cfd35cc 11-28 04:52 `Merge agent/labops2: lab night results 2026-11-28b: reruns and ledger verdicts (docs)` (labops2)
-- dc5419a81 11-28 04:52 `Merge agent/fix14: fix14: round-3 HIGH fixes: boss-level kit, fighter reselect, hole hold, merc journal (TASK-1131)` (fix14)
 <!-- statusgen:end -->
