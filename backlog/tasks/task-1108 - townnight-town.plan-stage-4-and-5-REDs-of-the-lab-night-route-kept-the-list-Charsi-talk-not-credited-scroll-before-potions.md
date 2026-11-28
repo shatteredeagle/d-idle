@@ -19,7 +19,7 @@ owns:
   - "tools/provingground/scenarios/townplan.json"
 exclusive: []
 contracts: []
-result: "Not live-verified. one-visit: product gap fixed in internal/town/route.go (a chore whose NPC has no preset no longer drops the route to the fixed list; test TestReinsertChoresKeepsPrecedence); rerun to see the stops line. malus-errand-gold: not the Charsi talk (optional greeting, skipped), the chunk parks on the route guard (life 180 needed, max 55): scenario note records it, U setup life and which record-3 bit. gold-short-priorities: marked pending for card town7; the setup also left a belt of 4 healing and a scroll so the plan saw verdict=ready. short-gold-handover and sell-keeps-need were fixed in labtriage; rerun."
+result: "Not live-verified. one-visit: product gap fixed in internal/town/route.go (a chore whose NPC has no preset no longer drops the route to the fixed list; tests TestReinsertChoresKeepsPrecedence, TestRouteKeepsListOnlyWhenNoStopHasAPreset; a visit where NO stop has a preset still keeps the fixed list, TestChoresAct1AtRouteStage now Sorceress and Paladin; nothing build-specific); rerun to see the stops line. malus-errand-gold: not the Charsi talk (optional greeting, skipped), the chunk parks on the route guard (life 180 needed, max 55): scenario note records it, U setup life and which record-3 bit. gold-short-priorities: marked pending for card town7; the setup also left a belt of 4 healing and a scroll so the plan saw verdict=ready. short-gold-handover and sell-keeps-need were fixed in labtriage; rerun."
 ---
 
 ## Description
