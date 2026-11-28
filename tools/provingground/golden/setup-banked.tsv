@@ -19,6 +19,12 @@ act1.wp.dark-wood.layout	Paladin	17	80	16	-	-	0	9a9108f55e0f
 act1.wp.dark-wood.layout	Sorceress	17	80	16	-	-	0	ead1583877f5
 agency.plan-matches-profile	Paladin	18	85	17	-	-	0	f1ea2e6af08a
 agency.plan-matches-profile	Sorceress	18	85	17	-	-	0	a430906da99b
+amazon.earned-act2	Amazon	1	0	0	-	-	0	44a777a512d7
+amazon.level-1-30	Amazon	1	0	0	-	-	0	44a777a512d7
+assassin.earned-act2	Assassin	1	0	0	-	-	0	44a777a512d7
+assassin.level-1-30	Assassin	1	0	0	-	-	0	44a777a512d7
+barbarian.earned-act2	Barbarian	1	0	0	-	-	0	e22749426d4a
+barbarian.level-1-30	Barbarian	1	0	0	-	-	0	e22749426d4a
 belt.refill-after-fight	Paladin	10	45	9	-	-	0	d27b4326c823
 belt.refill-after-fight	Sorceress	10	45	9	-	-	0	690a6849a6f8
 board.auto.chain-safe-only	Paladin	17	80	16	-	-	0	ea55794b94b2
@@ -176,6 +182,8 @@ drill.andariel.live21.life	Sorceress	21	100	20	-	-	0	20a866068b5e
 drill.andariel.stand	Paladin	30	145	29	-	-	0	0babfd1ae00e
 drill.andariel.stand	Sorceress	30	145	29	-	-	0	de2d699b4115
 drill.tools.merc17	Paladin	24	115	23	-	-	0	8a66aa8eddc0
+druid.earned-act2	Druid	1	0	0	-	-	0	2b1af0dc1d52
+druid.level-1-30	Druid	1	0	0	-	-	0	2b1af0dc1d52
 flail.areachanges	Paladin	17	80	16	-	-	0	25c24e0c2212
 flail.areachanges	Sorceress	17	80	16	-	-	0	525cf5e312c0
 heal.town	Paladin	10	45	9	-	-	0	85d1629a4003

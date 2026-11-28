@@ -1451,8 +1451,8 @@
     "reach": 4,
     "holdMs": 500,
     "retreatLifePct": 40,
-    "surround": 4,
-    "surroundLifePct": 65,
+    "surround": 6,
+    "surroundLifePct": 50,
     "manaReserve": 4
    }
   },

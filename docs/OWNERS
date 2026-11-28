@@ -126,6 +126,7 @@ docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-minutes.jsonl.gz  gaterun  gat
 docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-extras.jsonl.gz  gaterun  gate2multi-20261107-1811-g2h
 
 # BEGIN GENERATED OWNERS (tools/sharedgen/sharedgen.py from the owns: keys of open tasks; do not edit between the markers)
+.github/workflows/ci.yml  credit-runner  ops2
 .github/workflows/tester-image.yml  credit-runner  ghcrpublish
 backlog/tasks/task-1100 - fix4-security-fixes-from-fable-review-4-scrubber-watch-token-difficulty-go-flip-run-check-log-tail.md  pro-runner  ops4
 backlog/tasks/task-1107 - act2night-three-Act-2-stepexec-drill-findings-Duriel-stall-shaft-road-without-a-portal-potion-not-drunk-in-the-cube-drill.md  credit-runner  summonerstall
@@ -163,6 +164,7 @@ cmd/d2scenario/run.go  live-agent  pgtaps
 cmd/d2scenario/tap.go  live-agent  pgtaps
 cmd/d2scenario/tap_test.go  live-agent  pgtaps
 cmd/d2scenario/validate.go  credit-runner  pgearned
+data/build-cap-ratchet.json  credit-runner  cls1
 data/capabilities/  live-agent  dlv-stance-pack
 data/darklaunch-cap.json  credit-runner  led1
 data/darklaunch.json  credit-runner  dlv-upkeep-state
@@ -184,6 +186,7 @@ docs/arbiter.md  live-agent  arbmig
 docs/arbiter.md  live-agent  ticklog
 docs/away-drill.md  live-agent  awaydrill
 docs/campaign.md  credit-runner  campaign1
+docs/classes/  credit-runner  cls1
 docs/classes/necromancer-gap-2026-11-27.md  live-agent  epic-class-necromancer
 docs/combat.md  credit-runner  cainfix3
 docs/contracts/decision-queue.md  credit-runner  qqueue
@@ -250,6 +253,7 @@ docs/process/dark-launch.md  credit-runner  led1
 docs/process/pg-ledger-ops.md  credit-runner  pgledgeron
 docs/process/pg-ops-mgonejob.md  credit-runner  mgonejob
 docs/process/proving-ground-status.md  credit-runner  pgpage
+docs/process/proving-ground.md  credit-runner  ops2
 docs/process/proving-ground.md  credit-runner  pgearned
 docs/process/proving-ground.md  credit-runner  pgfix
 docs/quest-givers.md  credit-runner  campaign1
@@ -323,6 +327,7 @@ internal/combat/  live-agent  dlv-stance-pack
 internal/combat/  live-agent  dlv-upkeep-minions
 internal/combat/  live-agent  dlv-whirl
 internal/combat/aura.go  live-agent  agencyp1b
+internal/combat/classdata/  credit-runner  cls1
 internal/combat/classdata/profiles.json  live-agent  epic-class-necromancer
 internal/combat/drive_test.go  live-agent  agencyp1b
 internal/combat/fight.go  credit-runner  sweep1
@@ -333,6 +338,8 @@ internal/combat/move_test.go  credit-runner  sweep1
 internal/combat/portalverb.go  live-agent  inputl3
 internal/combat/portalverb_test.go  live-agent  inputl3
 internal/combat/whirl.go  credit-runner  sweep1
+internal/d2/  credit-runner  cls1
+internal/d2/classtraits.json  credit-runner  cls1
 internal/d2dcombat/  live-agent  dlv-press
 internal/d2dctl/fake/fake.go  credit-runner  inputl4
 internal/d2dctl/fake/fake.go  live-agent  inputl3
@@ -346,6 +353,7 @@ internal/d2dinput/repairverbs.go  credit-runner  inputl4
 internal/d2dinput/useitem.go  live-agent  inputl3
 internal/d2dworld/  credit-runner  navbarracks
 internal/data/  credit-runner  dlv-upkeep-state
+internal/decide/  credit-runner  cls1
 internal/decide/build_test.go  live-agent  epic-class-necromancer
 internal/decide/catalogue.json  live-agent  epic-class-necromancer
 internal/decide/firsts_test.go  live-agent  epic-class-necromancer
@@ -376,6 +384,7 @@ internal/input/useitem_test.go  live-agent  inputl3
 internal/invdesk/mercverbs.go  credit-runner  uib9
 internal/invdesk/mercverbs_test.go  credit-runner  uib9
 internal/invdesk/sets.go  credit-runner  uib9
+internal/levelplan/  credit-runner  cls1
 internal/levelplan/necro_test.go  live-agent  epic-class-necromancer
 internal/logx/sink.go  credit-runner  fix4
 internal/logx/sink_test.go  credit-runner  fix4
@@ -384,6 +393,7 @@ internal/nav/  credit-runner  summonerstall
 internal/nav/  live-agent  dlv-move-tele
 internal/nav/cellar3gate_test.go  live-agent  cellar3gate
 internal/nav/exit.go  live-agent  cellar3gate
+internal/plandata/  credit-runner  cls1
 internal/plandata/act2plan.json  live-agent  epic-class-necromancer
 internal/plandata/build-necromancer_leveling_normal30.json  live-agent  epic-class-necromancer
 internal/plandata/build-necromancer_summoner_endgame90.json  live-agent  epic-class-necromancer
@@ -449,15 +459,21 @@ internal/watch/logtab.go  credit-runner  uis6
 internal/watch/logtab_test.go  credit-runner  uis6
 internal/watch/onboardingtour_test.go  credit-runner  onboardtour
 internal/watch/panels.go  credit-runner  uis6
+internal/watch/policypreview_test.go  credit-runner  cls1
 internal/watch/policypreview_test.go  live-agent  epic-class-necromancer
+internal/watch/policysheet_test.go  credit-runner  cls1
 internal/watch/policysheet_test.go  live-agent  epic-class-necromancer
 internal/watch/serve.go  credit-runner  fix4
+internal/watch/serve.go  credit-runner  ops2
 internal/watch/serve.go  credit-runner  uis6
 internal/watch/serve_test.go  credit-runner  fix4
+internal/watch/serve_test.go  credit-runner  ops2
+internal/watch/stance_test.go  credit-runner  cls1
 internal/watch/stance_test.go  live-agent  epic-class-necromancer
 internal/watch/testdata/areamap/  credit-runner  uis6
 internal/watch/testdata/logpanel/  credit-runner  uis6
 internal/watch/testdata/onboarding_tour_test.cjs  credit-runner  onboardtour
+internal/watch/unlockrisk_test.go  credit-runner  cls1
 internal/watch/unlockrisk_test.go  live-agent  epic-class-necromancer
 internal/watch/web/components.css  credit-runner  uis6
 internal/watch/web/layout.js  credit-runner  uis1
@@ -483,6 +499,7 @@ internal/watch/web/watch.html  credit-runner  onboardtour
 tools/backlog/  pro-runner  ops4
 tools/ci/  credit-runner  dlv-cleanup
 tools/ci/check.sh  credit-runner  inputl5
+tools/ci/check.sh  credit-runner  ops2
 tools/ci/pointercount-baseline.json  credit-runner  inputl5
 tools/ci/pointercount.py  credit-runner  inputl5
 tools/ci/test_pointercount.py  credit-runner  inputl5
@@ -506,11 +523,13 @@ tools/friendpack/install.sh  credit-runner  cut012
 tools/friendpack/pack_test.go  credit-runner  cut012
 tools/provingground/arbiter-outcomes/  live-agent  arbmig
 tools/provingground/earned  credit-runner  pgearned
+tools/provingground/golden/  credit-runner  cls1
 tools/provingground/golden/setup-played.tsv  credit-runner  drillskills
 tools/provingground/pgenv.sh  credit-runner  pgledgeron
 tools/provingground/pgenv_test.sh  credit-runner  pgledgeron
 tools/provingground/run.sh  credit-runner  pgledgeron
 tools/provingground/scenarios  credit-runner  pgfix
+tools/provingground/scenarios/  credit-runner  cls1
 tools/provingground/scenarios/board.json  credit-runner  bsmnight
 tools/provingground/scenarios/board.json  live-agent  bsmdef
 tools/provingground/scenarios/cain.json  credit-runner  cainfix3

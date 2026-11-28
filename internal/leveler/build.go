@@ -59,6 +59,9 @@ type Build struct {
 	// Combat names the combat line the table is made for ("lightning"; "" = the class default). Data, so a new table
 	// selects its combat profile without a Go change (BUILDV3).
 	Combat string
+	// Ammo is the ammunition path of the table's weapon line ("bow": arrows in a quiver, "javelin": a thrown stack,
+	// "" for none). Data, so a new launcher or thrown table gets its town restock without a Go change.
+	Ammo string
 	// LadderOnly names runewords the table's gear and stat targets assume that cannot be made offline (ladder-only in
 	// 1.14d, docs/points.md). They are tagged, not removed: the table is data the player may follow with other gear.
 	LadderOnly []string
@@ -78,6 +81,7 @@ type rawBuild struct {
 	Build      string   `json:"build"`
 	Class      string   `json:"class"`
 	Combat     string   `json:"combat"`
+	Ammo       string   `json:"ammo"`
 	Hotkeys    []Hotkey `json:"hotkeys"`
 	LadderOnly []string `json:"ladder_only"`
 	Rows       []struct {
@@ -107,7 +111,10 @@ func ParseBuild(b []byte) (*Build, error) {
 	if err := json.Unmarshal(b, &rb); err != nil {
 		return nil, err
 	}
-	out := &Build{Name: rb.Build, Class: strings.ToLower(rb.Class), Hotkeys: rb.Hotkeys, Combat: rb.Combat, LadderOnly: rb.LadderOnly}
+	out := &Build{Name: rb.Build, Class: strings.ToLower(rb.Class), Hotkeys: rb.Hotkeys, Combat: rb.Combat, Ammo: rb.Ammo, LadderOnly: rb.LadderOnly}
+	if !ammoPaths[rb.Ammo] {
+		return nil, fmt.Errorf("build %s: unknown ammo path %q", rb.Build, rb.Ammo)
+	}
 	if out.Class == "" {
 		out.Class = "sorceress"
 	}
@@ -203,6 +210,18 @@ func registerDataTables(fsys fs.FS) {
 			defaultBuild[c] = m.Selector
 		}
 	}
+}
+
+// ammoPaths are the ammunition paths the town knows (internal/town/ammo.go).
+var ammoPaths = map[string]bool{"": true, "bow": true, "javelin": true}
+
+// TableAmmo is the ammunition path a table declares in its data ("ammo" key), "" for none or an unknown table.
+func TableAmmo(name string) string {
+	bd, err := LoadBuild(name, "")
+	if err != nil {
+		return ""
+	}
+	return bd.Ammo
 }
 
 // TableCombat is the combat line a table declares in its data ("combat" key), "" for none or an unknown table.

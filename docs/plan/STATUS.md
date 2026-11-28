@@ -53,7 +53,9 @@
 | act2night | proposed | - | `internal/bot/`<br>`tools/provingground/scenarios/stepexec-act2chunks.json` | - |
 | townnight | proposed | - | `internal/town/`<br>`internal/supply/`<br>`tools/provingground/scenarios/townplan.json` | - |
 | led1 | in-progress | - | `data/darklaunch/`<br>`data/darklaunch.json`<br>`data/darklaunch-cap.json`<br>`tools/darklaunch/`<br>`tools/flip/`<br>`docs/process/dark-launch.md`<br>`docs/process/autoflip.md` | - |
+| cls1 | proposed | - | `internal/decide/`<br>`internal/plandata/`<br>`internal/d2/classtraits.json`<br>`internal/d2/`<br>`internal/combat/classdata/`<br>`internal/levelplan/`<br>`data/build-cap-ratchet.json`<br>`tools/provingground/scenarios/`<br>`docs/classes/`<br>`tools/provingground/golden/`<br>`internal/watch/policysheet_test.go`<br>`internal/watch/policypreview_test.go`<br>`internal/watch/stance_test.go`<br>`internal/watch/unlockrisk_test.go` | - |
 | fix7b | in-progress | - | `internal/bot/`<br>`internal/arbiter/`<br>`internal/survival/`<br>`internal/combat/`<br>`cmd/d2bot/`<br>`docs/arbiter.md`<br>`docs/design/arbiter-target-and-migration.md` | - |
+| ops2 | in-progress | - | `internal/watch/serve.go`<br>`internal/watch/serve_test.go`<br>`tools/ci/check.sh`<br>`.github/workflows/ci.yml`<br>`docs/process/proving-ground.md` | - |
 | live1 | proposed | - | `internal/bot/`<br>`internal/survival/`<br>`internal/questboard/`<br>`internal/arbiter/`<br>`cmd/d2bot/survivalwire.go`<br>`docs/live1.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | sweep1 | in-progress | - | `docs/probes/review-sweep-2026-11-28.md`<br>`internal/diffready/`<br>`internal/bot/diffready_test.go`<br>`internal/combat/move.go`<br>`internal/combat/whirl.go`<br>`internal/combat/fight.go`<br>`internal/combat/move_test.go`<br>`internal/watch/difficultydesk.go` | - |
@@ -200,14 +202,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 9fe7dbb41 11-28 03:18 `Merge agent/ops2: ops2: watch cookie, smoke wiring (TASK-1116)` (ops2)
+- 808f920da 11-28 03:18 `Merge agent/cls1: cls1: Druid and Barbarian (TASK-1111)` (cls1)
+- 0a686de8e 11-28 03:16 `Merge branch 'main' into ops2` (-)
+- c31d6dfaf 11-28 03:16 `Merge branch 'main' into cls1` (-)
+- b2003074b 11-28 03:09 `Merge origin/main into ops2 (keep both check.sh blocks)` (-)
+- 6a756b649 11-28 03:07 `Merge agent/grad1: grad1: graduate bot.tickLogSec (TASK-1112)` (grad1)
+- 8f25b5669 11-28 03:07 `Merge agent/cls2: cls2: Amazon and Assassin (TASK-1109)` (cls2)
+- 90646f9ff 11-28 03:06 `Merge branch 'main' into grad1` (-)
+- 828b9c58e 11-28 03:06 `Merge branch 'main' into cls2` (-)
 - d80ac981d 11-28 02:57 `Merge agent/ops4: ops4: backlog check fails invalid YAML cards, quote values, repair cards (TASK-1124)` (ops4)
-- 3a2e18fbc 11-28 02:57 `Merge agent/sweep1: sweep1: review sweep, consent fix (TASK-1122)` (sweep1)
-- 4f4d93602 11-28 02:57 `Merge agent/live1: live1: live log findings L1-L6 (TASK-1119)` (live1)
-- 34ff2f56c 11-28 02:54 `Merge branch 'main' into ops4` (-)
-- 1c3f76941 11-28 02:54 `Merge branch 'main' into sweep1` (-)
-- 0f6c51cf1 11-28 02:54 `Merge branch 'main' into live1` (-)
-- 13bbafe89 11-28 02:50 `Merge agent/fix1b: fix1b: vault equip by bytes etc (TASK-1114)` (fix1b)
-- 090e4434c 11-28 02:49 `Merge branch 'main' into fix1b` (-)
-- f9b1c3551 11-28 02:40 `Merge agent/nf3b: nf3b: nav seam, mapKillErr, Approach field NPC (TASK-1104/1107)` (nf3b)
-- 1315f88eb 11-28 02:39 `Merge branch 'main' into nf3b` (-)
 <!-- statusgen:end -->

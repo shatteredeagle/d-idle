@@ -145,8 +145,8 @@ func TestPolicyPreviewEmptyHistoryAndErrors(t *testing.T) {
 	if _, err := r.sheet.Preview("stance", "melt", 0); !errors.Is(err, ErrPolicyOption) || !strings.Contains(err.Error(), "melt") {
 		t.Errorf("option: %v", err)
 	}
-	r.class = "barbarian"
-	if _, err := r.sheet.Preview("stance", "cautious", 0); err == nil || !strings.Contains(err.Error(), "barbarian") {
+	r.class = "mystic"
+	if _, err := r.sheet.Preview("stance", "cautious", 0); err == nil || !strings.Contains(err.Error(), "mystic") {
 		t.Errorf("class: %v", err)
 	}
 	r.class = ""
