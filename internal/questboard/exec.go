@@ -785,7 +785,7 @@ func (e *Exec) Report(d Decision, res StepResult) {
 		} else if rs.failures >= e.o.MaxFailures {
 			rs.blocked = fmt.Sprintf("gave up after %d tries: %s", rs.failures, nonEmpty(res.Why, "the step kept failing"))
 			e.o.Log("quest board: parked "+k, "chunk", k, "why", rs.blocked)
-			e.smPark(d.Quest, d.Chunk, "gave_up", rs)
+			e.smPark(d.Quest, d.Chunk, parkCode(res.Why), rs)
 		}
 	case StepDied:
 		rs.refCode, rs.refN = "", 0
@@ -802,6 +802,15 @@ func (e *Exec) Report(d Decision, res StepResult) {
 			e.smPark(d.Quest, d.Chunk, "died_too_often", rs)
 		}
 	}
+}
+
+// parkCode is the code of a failure park: "no_path" when the step failed with a navigation refusal that names its cause
+// (nav ErrNoPath text "no path: ... (cause=...)": the exit and the cause stay in the why), else "gave_up" (card cellar3gate).
+func parkCode(why string) string {
+	if strings.Contains(why, "nav: no path") && strings.Contains(why, "cause=") {
+		return "no_path"
+	}
+	return "gave_up"
 }
 
 func nonEmpty(s, d string) string {

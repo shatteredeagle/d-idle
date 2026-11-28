@@ -127,10 +127,14 @@ func (n *Navigator) ExitTo(ctx context.Context, levelNo int) error {
 			// cell that connects to the gate instead.
 			if target, pocket := n.pocketTarget(o, levelNo); pocket {
 				n.log.Info("nav: cut off from the gate, stepping to the nearest connected cell", "to", levelNo, "from", o.pos, "cell", target)
-				if n.leavePocket(ctx, o, target) {
+				ok, refused := n.leavePocket(ctx, o, target)
+				if ok {
 					continue
 				}
-				return fmt.Errorf("%w: gate to level %d is on the map but not reachable from %v (cut off, no way out found)", ErrNoPath, levelNo, o.pos)
+				if refused {
+					return fmt.Errorf("%w: gate to level %d is on the map but not reachable from %v (cause=exit_trigger: every way to a connected cell passes an unwanted exit's trigger area)", ErrNoPath, levelNo, o.pos)
+				}
+				return fmt.Errorf("%w: gate to level %d is on the map but not reachable from %v (cause=cut_off, no way out found)", ErrNoPath, levelNo, o.pos)
 			}
 		}
 		if !ok && approached < 3 {
@@ -805,7 +809,11 @@ func (n *Navigator) pocketTarget(o *obs, levelNo int) (input.Point, bool) {
 	}
 	si := f.idx(sx, sy)
 	strip := otherStrips(o.lm, levelNo)
+	// A cell the mouth gate would refuse a click to (inside an unwanted exit's disc) is the last choice: leavePocket clicks
+	// straight toward it, a refused click moves nobody, and the nearest cell is often just across the barrier beside the stairs
+	// (card cellar3gate, Tower Cellar 3). safe is the best cell with a clickable line, best the best of all.
 	best, bestD, found := input.Point{}, math.MaxFloat64, false
+	safe, safeD, haveSafe := input.Point{}, math.MaxFloat64, false
 	for _, c := range cands {
 		gx, gy, ok := f.nearestWalkable(c.at.X, c.at.Y, 3)
 		if !ok {
@@ -826,32 +834,43 @@ func (n *Navigator) pocketTarget(o *obs, levelNo int) (input.Point, bool) {
 			if strip.near(x, y) { // a step onto another level's strip leaves the level
 				continue
 			}
-			if d := dist(o.pos, input.Point{X: x, Y: y}); d < bestD {
-				best, bestD, found = input.Point{X: x, Y: y}, d, true
+			p := input.Point{X: x, Y: y}
+			d := dist(o.pos, p)
+			if d < bestD {
+				best, bestD, found = p, d, true
+			}
+			if d < safeD && n.MouthClickOK(o.pos, p) {
+				safe, safeD, haveSafe = p, d, true
 			}
 		}
+	}
+	if haveSafe {
+		return safe, true
 	}
 	return best, found
 }
 
 // leavePocket clicks toward target in steps of at most 10 subtiles (a click on a far cell the game cannot path to
-// goes nowhere) until the character is within 1.5 of it or the level changed. It reports whether it got there.
-func (n *Navigator) leavePocket(ctx context.Context, o *obs, target input.Point) bool {
+// goes nowhere) until the character is within 1.5 of it or the level changed. It reports whether it got there, and
+// whether the mouth gate refused a click (the caller names that cause; it used to be dropped and the loop stood still).
+func (n *Navigator) leavePocket(ctx context.Context, o *obs, target input.Point) (ok, refused bool) {
 	t := n.tune()
 	for i := 0; i < 8; i++ {
 		cur, err := n.observeWait(ctx)
 		if err != nil || cur.level != o.level {
-			return err == nil
+			return err == nil, false
 		}
 		d := dist(cur.pos, target)
 		if d <= 1.5 {
-			return true
+			return true, false
 		}
 		k := math.Min(d, 10) / d
-		_ = n.in.ClickWorld(input.Point{X: cur.pos.X + int(math.Round(float64(target.X-cur.pos.X)*k)), Y: cur.pos.Y + int(math.Round(float64(target.Y-cur.pos.Y)*k))})
+		if err := n.in.ClickWorld(input.Point{X: cur.pos.X + int(math.Round(float64(target.X-cur.pos.X)*k)), Y: cur.pos.Y + int(math.Round(float64(target.Y-cur.pos.Y)*k))}); errors.Is(err, ErrMouthGate) {
+			return false, true
+		}
 		n.clk.Sleep(8 * t.Poll())
 	}
-	return false
+	return false, false
 }
 
 // stripSet is the border cells of a level toward the neighbours other than the wanted one.

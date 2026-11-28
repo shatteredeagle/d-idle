@@ -59,6 +59,7 @@ var reasonTable = []ReasonInfo{
 	{"handin_wanted", KindNeeds, RemedyPlayer, 0, "{npc} is waiting: hand in {quest}."},
 	{"paused", KindNeeds, RemedyPlayer, 0, "Paused: the hero continues when you resume."},
 	{"gave_up", KindNeeds, RemedyPlayer, 0, "{quest} is stuck: gave up after {n} tries: {why}"},
+	{"no_path", KindNeeds, RemedyPlayer, 0, "{quest} is stuck: no walkable way after {n} tries: {why}"},
 	{"refused_repeatedly", KindNeeds, RemedyPlayer, 0, "{quest} is paused: the same step was refused {n} times in a row ({code}): {why}"},
 	{"died_too_often", KindNeeds, RemedyPlayer, 0, "{quest} is stuck: the hero died {n} times on this part."},
 	{"paused_after_deaths", KindNeeds, RemedyPlayer, 0, "{quest} is paused: the hero died {n} times on this part."},

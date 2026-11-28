@@ -8,6 +8,10 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- cellar3gate: leave the pocket through a click the mouth gate allows, coded no_path park (TASK-1084) <!--sg:agent/cellar3gate-->
+- chunkstart: why Questy chunks do not start (docs) <!--sg:agent/chunkstart-->
+- mercgold: dead merc with gold is a trip reason, no-merc and revive-off visibility (TASK-1083) <!--sg:agent/mercgold-->
+- auraflap: hold a crowd aura through the fight, shadow agree includes aura (TASK-1082) <!--sg:agent/auraflap-->
 - postdeploy: sandbox post-deploy audit (docs) <!--sg:agent/postdeploy-->
 - refusalpark: quests.refusalPark dark knob, refused_repeatedly park (TASK-1081) <!--sg:agent/refusalpark-->
 - recoverydeath: no-potion recovery farm picks the safest area below clvl 8 (TASK-1080) <!--sg:agent/recoverydeath-->

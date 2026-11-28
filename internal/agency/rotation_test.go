@@ -34,3 +34,19 @@ func TestShadowDiffMatchesAgrees(t *testing.T) {
 		t.Errorf("a plan that parts from its prior must be reported once: %v", d)
 	}
 }
+
+// The shadow's agree flag includes the aura pick: the same attack with a different aura is not agreement.
+func TestAgreesIncludesAura(t *testing.T) {
+	for _, tc := range []struct {
+		plan, prior string
+		want        bool
+	}{
+		{"Might", "Holy Fire", false}, {"Might", "Might", true}, {"Might", "", true}, {"Blizzard Aura", "Might", false},
+	} {
+		pl := Plan{Attack: &Choice{Skill: "Zeal"}, Aura: &Choice{Skill: tc.plan}, PriorAura: tc.prior}
+		v := ViewOf(pl, "Zeal", nil)
+		if v.Agrees == nil || *v.Agrees != tc.want {
+			t.Errorf("aura plan %q profile %q: agrees %v, want %v", tc.plan, tc.prior, v.Agrees, tc.want)
+		}
+	}
+}

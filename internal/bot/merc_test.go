@@ -1,7 +1,10 @@
 package bot
 
 import (
+	"bytes"
 	"context"
+	"log/slog"
+	"strings"
 	"testing"
 	"time"
 
@@ -105,5 +108,42 @@ func TestDifficultyForResistGate(t *testing.T) {
 	ok := d2.Resists{Fire: 75, Cold: 75, Lightning: 75, Poison: 50}
 	if got := p.DifficultyFor(36, 0, &ok); got != "nightmare" {
 		t.Errorf("capped: %s", got)
+	}
+}
+
+// A dead merc with the revive knob off used to say nothing at all (2026-11-27: Doofer's stayed dead 22 minutes).
+func TestMercDeadReviveOffIsVisible(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		t.Run(class.String(), func(t *testing.T) {
+			rg := newRig(t)
+			var buf bytes.Buffer
+			rg.r.e.Log = slog.New(slog.NewTextHandler(&buf, nil))
+			rg.r.d.Town = &mercTownFake{fakeTown: rg.town}
+			r := rg.r
+			r.merc.known = true
+			s := townSnap(areaLutGholein, 50000)
+			s.Player.Class = class
+			r.resInput(s)
+			r.e.Clock.Sleep(mercGoneAfter + time.Second)
+			if got := r.mercWanted(s); got != "" {
+				t.Fatalf("knob off must not revive: %q", got)
+			}
+			if !strings.Contains(buf.String(), "revive off (bot.mercReviveUnverified)") || !strings.Contains(buf.String(), "merc dead since 0m") {
+				t.Errorf("no visible refusal line:\n%s", buf.String())
+			}
+			var found bool
+			for _, f := range r.Explain().Refusals {
+				found = found || f.What == "merc revive" && strings.Contains(f.Need, "bot.mercReviveUnverified=0")
+			}
+			if !found {
+				t.Errorf("no /api/explain refusal: %+v", r.Explain().Refusals)
+			}
+			n := strings.Count(buf.String(), "revive off")
+			r.e.Clock.Sleep(time.Minute)
+			r.mercWanted(s)
+			if strings.Count(buf.String(), "revive off") != n {
+				t.Error("the line repeated inside its spacing")
+			}
+		})
 	}
 }

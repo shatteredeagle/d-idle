@@ -210,7 +210,8 @@ func TestShadowLineAndLimiter(t *testing.T) {
 		t.Fatal(err)
 	}
 	line := ShadowLine(v, p)
-	for _, want := range []string{"planner shadow:", "clvl=24", "class=paladin", "plan=Blessed Hammer/", "profile=Blessed Hammer", "agree=true", "via=none"} {
+	// the attack agrees, the aura does not (planner Might, profile Concentration): the flag says so (auraflap)
+	for _, want := range []string{"planner shadow:", "clvl=24", "class=paladin", "plan=Blessed Hammer/", "profile=Blessed Hammer", "agree=false", "aura=Might auraProfile=Concentration", "via=none"} {
 		if !strings.Contains(line, want) {
 			t.Errorf("line lacks %q: %s", want, line)
 		}
