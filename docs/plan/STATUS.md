@@ -59,7 +59,6 @@
 | durieltyrael | proposed | - | `internal/questboard/`<br>`internal/task/`<br>`internal/bot/stepexec.go`<br>`internal/bot/stepexec_act2chunks_test.go` | - |
 | drilldrivers | proposed | - | `internal/combat/`<br>`tools/provingground/scenarios/combatdrills.json`<br>`tools/provingground/scenarios/necro.json`<br>`tools/provingground/golden/setup-played.tsv` | - |
 | fix14 | proposed | - | `internal/admit/`<br>`internal/quest/objective.go`<br>`internal/bot/`<br>`internal/combat/`<br>`internal/vaultkeep/`<br>`internal/arbiter/`<br>`internal/town/` | - |
-| road5 | in-progress | - | `tools/ci/`<br>`cmd/gatemark/`<br>`internal/gatemark/`<br>`internal/questspec/`<br>`data/questspec/`<br>`docs/roadmap-fable.md`<br>`docs/process/pg-ops-mgonejob.md`<br>`docs/questspec.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
 | ghcrpublish | in-progress | - | `.github/workflows/tester-image.yml`<br>`docs/registry-publish.md`<br>`deploy/d2d-container/compose.friends.yml`<br>`docs/tester-registry.md`<br>`deploy/d2d-container/compose.tester.yml`<br>`deploy/d2d-container/context.sh`<br>`deploy/d2d-container/tester_image_test.go` | - |

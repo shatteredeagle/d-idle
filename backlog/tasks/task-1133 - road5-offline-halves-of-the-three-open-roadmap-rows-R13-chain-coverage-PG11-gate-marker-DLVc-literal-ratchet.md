@@ -1,10 +1,13 @@
 ---
 id: TASK-1133
-title: 'road5: offline halves of the three open roadmap rows (R13 chain coverage, PG11 gate marker, DLVc literal ratchet)'
-status: In Progress
+title: >-
+  road5: offline halves of the three open roadmap rows (R13 chain coverage, PG11
+  gate marker, DLVc literal ratchet)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T10:12:00Z'
+updated_date: '2026-11-28T11:22:00Z'
 labels:
   - ops
   - feature

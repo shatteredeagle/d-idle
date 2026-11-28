@@ -159,7 +159,6 @@ cmd/d2scenario/run.go  live-agent  pgtaps
 cmd/d2scenario/tap.go  live-agent  pgtaps
 cmd/d2scenario/tap_test.go  live-agent  pgtaps
 cmd/d2scenario/validate.go  credit-runner  pgearned
-cmd/gatemark/  credit-runner  road5
 data/capabilities/  live-agent  dlv-stance-pack
 data/darklaunch-cap.json  credit-runner  led1
 data/darklaunch.json  credit-runner  dlv-upkeep-state
@@ -170,7 +169,6 @@ data/darklaunch/  credit-runner  led1
 data/input/caps/  live-agent  inputl3
 data/input/caps_test.go  live-agent  inputl3
 data/questboard/act1.json  credit-runner  cainfix3
-data/questspec/  credit-runner  road5
 deploy/d2d-container/compose.friends.yml  credit-runner  ghcrpublish
 deploy/d2d-container/compose.tester.yml  credit-runner  ghcrpublish
 deploy/d2d-container/context.sh  credit-runner  ghcrpublish
@@ -244,14 +242,12 @@ docs/process/autoflip.md  credit-runner  led1
 docs/process/dark-launch.md  credit-runner  led1
 docs/process/pg-ledger-ops.md  credit-runner  pgledgeron
 docs/process/pg-ops-mgonejob.md  credit-runner  mgonejob
-docs/process/pg-ops-mgonejob.md  credit-runner  road5
 docs/process/proving-ground-status.md  credit-runner  pgpage
 docs/process/proving-ground.md  credit-runner  pgearned
 docs/process/proving-ground.md  credit-runner  pgfix
 docs/quest-givers.md  credit-runner  campaign1
 docs/questboard.md  credit-runner  cainfix3
 docs/questboard.md  live-agent  bsmdef
-docs/questspec.md  credit-runner  road5
 docs/registry-publish.md  credit-runner  ghcrpublish
 docs/releases/0.1.2.md  credit-runner  cut012
 docs/research/decomp43-monster-block-trace.md  credit-runner  decomp43
@@ -261,7 +257,6 @@ docs/research/fid-poisonres-trace.md  credit-runner  fid-poison-res-diag
 docs/research/fidelity-vendor-probe.md  live-agent  fidprobe-vendor
 docs/research/merc-gear.md  credit-runner  uib9
 docs/research/upstream-next.md  credit-runner  upstream-next
-docs/roadmap-fable.md  credit-runner  road5
 docs/session-record.md  live-agent  sessions
 docs/t0-variants.md  credit-runner  qdensity
 docs/tester-guide.md  credit-runner  testerpack
@@ -367,7 +362,6 @@ internal/env/tuning_quests.go  live-agent  bsmdef
 internal/env/tuning_quests_legacy_test.go  live-agent  bsmdef
 internal/env/tuning_town.go  live-agent  townflip
 internal/fidvendor  live-agent  fidprobe-vendor
-internal/gatemark/  credit-runner  road5
 internal/input/repairverbs.go  credit-runner  inputl4
 internal/input/useitem.go  live-agent  inputl3
 internal/input/useitem_test.go  live-agent  inputl3
@@ -395,7 +389,6 @@ internal/questboard/  credit-runner  durieltyrael
 internal/questboard/  live-agent  cellar3gate
 internal/questboard/  live-agent  live1
 internal/questboard/def.go  credit-runner  cainfix3
-internal/questspec/  credit-runner  road5
 internal/resource  live-agent  town5
 internal/scenario  credit-runner  pgfix
 internal/scenario/  credit-runner  drillskills
@@ -484,7 +477,6 @@ internal/watch/web/shell.json  credit-runner  uis6
 internal/watch/web/tokens.css  credit-runner  uis1
 internal/watch/web/watch.html  credit-runner  onboardtour
 tools/ci/  credit-runner  dlv-cleanup
-tools/ci/  credit-runner  road5
 tools/ci/check.sh  credit-runner  inputl5
 tools/ci/pointercount-baseline.json  credit-runner  inputl5
 tools/ci/pointercount.py  credit-runner  inputl5
