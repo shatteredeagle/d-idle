@@ -129,6 +129,7 @@ docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-extras.jsonl.gz  gaterun  gate
 .github/workflows/tester-image.yml  credit-runner  ghcrpublish
 backlog/tasks/task-726 - dlv-cast-verbs-input-caps-cast-unit-cast-point-cast-hold.md  live-agent  inputl3
 backlog/tasks/task-765 - town12-SME-review-of-the-supply-profile-numbers-advice-only.md  live-agent  town11
+cmd/d2bot/  credit-runner  fix7b
 cmd/d2bot/adapters.go  credit-runner  cainfix3
 cmd/d2bot/agencydrive_test.go  live-agent  agencyp1b
 cmd/d2bot/agencywire.go  live-agent  agencyp1b
@@ -174,6 +175,7 @@ deploy/d2d-container/context.sh  credit-runner  ghcrpublish
 deploy/d2d-container/tester-report.sh  credit-runner  fix4
 deploy/d2d-container/tester_image_test.go  credit-runner  ghcrpublish
 deploy/d2d-container/tester_report_test.go  credit-runner  fix4
+docs/arbiter.md  credit-runner  fix7b
 docs/arbiter.md  live-agent  arbmig
 docs/arbiter.md  live-agent  ticklog
 docs/away-drill.md  live-agent  awaydrill
@@ -183,6 +185,7 @@ docs/combat.md  credit-runner  cainfix3
 docs/contracts/decision-queue.md  credit-runner  qqueue
 docs/design/agency-p1b.md  live-agent  agencyp1b
 docs/design/arbiter-migration-p6.md  live-agent  arbmig
+docs/design/arbiter-target-and-migration.md  credit-runner  fix7b
 docs/design/boardsm-flip.md  live-agent  bsmdef
 docs/design/fable-review-2026-11-21/town-planner-b-model.md  live-agent  town5
 docs/design/fable-review-2026-11-21/town-profiles-sme.md  live-agent  town12
@@ -271,12 +274,14 @@ docs/vault.md  credit-runner  vault2
 internal/agency/drive.go  live-agent  agencyp1b
 internal/agency/drive_test.go  live-agent  agencyp1b
 internal/arbiter  live-agent  town10
+internal/arbiter/  credit-runner  fix7b
 internal/arbiter/  live-agent  arbmig
 internal/arbiter/replay.go  live-agent  ticklog
 internal/arbiter/replay_ticklog_test.go  live-agent  ticklog
 internal/bot/  credit-runner  act2night
 internal/bot/  credit-runner  cainfix3
 internal/bot/  credit-runner  cainspin
+internal/bot/  credit-runner  fix7b
 internal/bot/  credit-runner  summonerstall
 internal/bot/arbiter_control.go  live-agent  arbmig
 internal/bot/arbiter_control_test.go  live-agent  arbmig
@@ -304,6 +309,7 @@ internal/combat/  credit-runner  cainfix3
 internal/combat/  credit-runner  dlv-cleanup
 internal/combat/  credit-runner  dlv-mark
 internal/combat/  credit-runner  dlv-upkeep-state
+internal/combat/  credit-runner  fix7b
 internal/combat/  live-agent  dlv-aim-corpse
 internal/combat/  live-agent  dlv-aim-point
 internal/combat/  live-agent  dlv-move-melee
@@ -395,6 +401,7 @@ internal/scenario/taps.go  live-agent  pgtaps
 internal/shadowlog/  credit-runner  road4
 internal/supply  live-agent  town10
 internal/supply/  credit-runner  townnight
+internal/survival/  credit-runner  fix7b
 internal/task  live-agent  bsmdef
 internal/task/banote_test.go  credit-runner  cainfix3
 internal/task/campaign.go  credit-runner  campaign1

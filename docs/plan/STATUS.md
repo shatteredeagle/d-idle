@@ -54,6 +54,7 @@
 | townnight | proposed | - | `internal/town/`<br>`internal/supply/`<br>`tools/provingground/scenarios/townplan.json` | - |
 | led1 | in-progress | - | `data/darklaunch/`<br>`data/darklaunch.json`<br>`data/darklaunch-cap.json`<br>`tools/darklaunch/`<br>`tools/flip/`<br>`docs/process/dark-launch.md`<br>`docs/process/autoflip.md` | - |
 | vault2 | in-progress | - | `internal/vault/`<br>`internal/vaultkeep/`<br>`internal/watch/`<br>`cmd/d2bot/opscmd.go`<br>`cmd/d2bot/opsvault_test.go`<br>`docs/design/fork-order-id-spec.md`<br>`docs/vault.md` | - |
+| fix7b | in-progress | - | `internal/bot/`<br>`internal/arbiter/`<br>`internal/survival/`<br>`internal/combat/`<br>`cmd/d2bot/`<br>`docs/arbiter.md`<br>`docs/design/arbiter-target-and-migration.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | road4 | in-progress | - | `internal/shadowlog/`<br>`cmd/d2shadow/`<br>`docs/shadowlog.md` | - |
 | roadfresh | in-progress | - | `docs/roadmap-fable.md`<br>`docs/probes/roadmap-refresh-2026-11-28.md`<br>`tools/roadmap/` | - |
@@ -199,6 +200,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 2179c58a0 11-28 02:30 `Merge agent/fix7b: fix7b: arbiter fixes N1-N6 (TASK-1115)` (fix7b)
+- 1f1c3a73a 11-28 02:29 `Merge branch 'main' into fix7b` (-)
 - e982e2703 11-28 02:23 `Merge agent/roadfresh: roadfresh: roadmap refresh (TASK-1123)` (roadfresh)
 - 1bc4edc57 11-28 02:23 `Merge agent/road4: road4: d2shadow (TASK-1121)` (road4)
 - 14942d262 11-28 02:23 `Merge agent/vault2: vault2: atomic Reserve, merc journal (TASK-1113)` (vault2)
@@ -207,6 +210,4 @@
 - 0017b3d7b 11-28 02:20 `Merge branch 'main' into vault2` (-)
 - 28216bd08 11-28 02:12 `Merge agent/nf1b: nf1b: pre.bind and pre.summon (TASK-1105)` (nf1b)
 - a02253d37 11-28 02:12 `Merge agent/nf2: nf2: flail hold and sweep in a cleared area let time pass (TASK-1103)` (nf2)
-- 5e6060a73 11-28 02:12 `Merge agent/nf4: nf4: board restart scenario timing, town route reinsertion (TASK-1106/1108)` (nf4)
-- 9e59401c9 11-28 02:09 `Merge branch 'main' into nf1b` (-)
 <!-- statusgen:end -->
