@@ -126,6 +126,7 @@ docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-minutes.jsonl.gz  gaterun  gat
 docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-extras.jsonl.gz  gaterun  gate2multi-20261107-1811-g2h
 
 # BEGIN GENERATED OWNERS (tools/sharedgen/sharedgen.py from the owns: keys of open tasks; do not edit between the markers)
+.github/workflows/ci.yml  credit-runner  ops2
 .github/workflows/tester-image.yml  credit-runner  ghcrpublish
 backlog/tasks/task-1100 - fix4-security-fixes-from-fable-review-4-scrubber-watch-token-difficulty-go-flip-run-check-log-tail.md  pro-runner  ops4
 backlog/tasks/task-1107 - act2night-three-Act-2-stepexec-drill-findings-Duriel-stall-shaft-road-without-a-portal-potion-not-drunk-in-the-cube-drill.md  credit-runner  summonerstall
@@ -261,6 +262,7 @@ docs/process/dark-launch.md  credit-runner  led1
 docs/process/pg-ledger-ops.md  credit-runner  pgledgeron
 docs/process/pg-ops-mgonejob.md  credit-runner  mgonejob
 docs/process/proving-ground-status.md  credit-runner  pgpage
+docs/process/proving-ground.md  credit-runner  ops2
 docs/process/proving-ground.md  credit-runner  pgearned
 docs/process/proving-ground.md  credit-runner  pgfix
 docs/quest-givers.md  credit-runner  campaign1
@@ -484,8 +486,10 @@ internal/watch/policypreview_test.go  live-agent  epic-class-necromancer
 internal/watch/policysheet_test.go  credit-runner  cls1
 internal/watch/policysheet_test.go  live-agent  epic-class-necromancer
 internal/watch/serve.go  credit-runner  fix4
+internal/watch/serve.go  credit-runner  ops2
 internal/watch/serve.go  credit-runner  uis6
 internal/watch/serve_test.go  credit-runner  fix4
+internal/watch/serve_test.go  credit-runner  ops2
 internal/watch/stance_test.go  credit-runner  cls1
 internal/watch/stance_test.go  live-agent  epic-class-necromancer
 internal/watch/testdata/areamap/  credit-runner  uis6
@@ -517,6 +521,7 @@ internal/watch/web/watch.html  credit-runner  onboardtour
 tools/backlog/  pro-runner  ops4
 tools/ci/  credit-runner  dlv-cleanup
 tools/ci/check.sh  credit-runner  inputl5
+tools/ci/check.sh  credit-runner  ops2
 tools/ci/pointercount-baseline.json  credit-runner  inputl5
 tools/ci/pointercount.py  credit-runner  inputl5
 tools/ci/test_pointercount.py  credit-runner  inputl5

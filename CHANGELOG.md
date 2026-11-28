@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- ops2: watch cookie, smoke wiring (TASK-1116) <!--sg:agent/ops2-->
 - cls1: Druid and Barbarian (TASK-1111) <!--sg:agent/cls1-->
 - grad1: graduate bot.tickLogSec (TASK-1112) <!--sg:agent/grad1-->
 - cls2: Amazon and Assassin (TASK-1109) <!--sg:agent/cls2-->
