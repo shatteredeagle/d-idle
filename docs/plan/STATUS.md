@@ -43,7 +43,6 @@
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | cellar3gate | in-progress | - | `internal/nav/exit.go`<br>`internal/nav/cellar3gate_test.go`<br>`internal/questboard/`<br>`docs/probes/cellar3-gate-capture.md` | - |
 | holereach | proposed | - | `internal/bot/zonemodel.go`<br>`internal/bot/zonemodel_test.go` | - |
-| xplostfalse | proposed | - | `internal/questboard/auto.go`<br>`internal/questboard/auto_test.go`<br>`internal/bot/observe.go`<br>`internal/bot/xploss_test.go`<br>`internal/bot/fixrestart_test.go`<br>`internal/bot/relaunch.go`<br>`internal/d2denv`<br>`cmd/d2bot/d2dbackend.go` | - |
 | farmresetretire | proposed | - | `internal/bot`<br>`internal/env`<br>`internal/watch`<br>`cmd/d2bot`<br>`tools/uishots`<br>`data/darklaunch.json`<br>`docs/knobs.md`<br>`docs/farmloop.md`<br>`docs/questboard.md` | - |
 | pgfix | proposed | - | `cmd/d2scenario`<br>`internal/scenario`<br>`tools/provingground/scenarios`<br>`docs/process/proving-ground.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |

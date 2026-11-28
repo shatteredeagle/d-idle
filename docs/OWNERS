@@ -135,7 +135,6 @@ cmd/d2bot/agencydrive_test.go  live-agent  agencyp1b
 cmd/d2bot/agencywire.go  live-agent  agencyp1b
 cmd/d2bot/behaviors.go  credit-runner  campaign1
 cmd/d2bot/d2dbackend.go  credit-runner  campaign1
-cmd/d2bot/d2dbackend.go  credit-runner  xplostfalse
 cmd/d2bot/d2dwire.go  live-agent  agencyp1b
 cmd/d2bot/hotkeydrift_test.go  live-agent  epic-class-necromancer
 cmd/d2bot/invverbs.go  credit-runner  uib9
@@ -268,15 +267,12 @@ internal/bot/arbiter_control.go  live-agent  arbmig
 internal/bot/arbiter_control_test.go  live-agent  arbmig
 internal/bot/arbloop_test.go  live-agent  arbloop
 internal/bot/broke.go  live-agent  town5
-internal/bot/fixrestart_test.go  credit-runner  xplostfalse
 internal/bot/goal.go  live-agent  arbloop
 internal/bot/guided.go  credit-runner  campaign1
 internal/bot/guided_test.go  credit-runner  campaign1
 internal/bot/leveling.go  live-agent  town5
 internal/bot/loop.go  live-agent  arbmig
-internal/bot/observe.go  credit-runner  xplostfalse
 internal/bot/questboard.go  live-agent  bsmdef
-internal/bot/relaunch.go  credit-runner  xplostfalse
 internal/bot/routeguard.go  live-agent  bsmdef
 internal/bot/runner.go  credit-runner  campaign1
 internal/bot/shadow.go  live-agent  arbmig
@@ -284,7 +280,6 @@ internal/bot/shadow.go  live-agent  ticklog
 internal/bot/task.go  live-agent  bsmdef
 internal/bot/ticklog.go  live-agent  ticklog
 internal/bot/ticklog_test.go  live-agent  ticklog
-internal/bot/xploss_test.go  credit-runner  xplostfalse
 internal/bot/zonemodel.go  credit-runner  holereach
 internal/bot/zonemodel_test.go  credit-runner  holereach
 internal/campaign/  credit-runner  campaign1
@@ -316,7 +311,6 @@ internal/d2dctl/repair_verb.go  credit-runner  inputl4
 internal/d2dctl/use_verb.go  live-agent  inputl3
 internal/d2dctl/use_verb_test.go  credit-runner  inputl4
 internal/d2dctl/use_verb_test.go  live-agent  inputl3
-internal/d2denv  credit-runner  xplostfalse
 internal/d2dinput/repairverbs.go  credit-runner  inputl4
 internal/d2dinput/useitem.go  live-agent  inputl3
 internal/data/  credit-runner  dlv-upkeep-state
@@ -360,8 +354,6 @@ internal/plandata/levelplan-normal.json  live-agent  epic-class-necromancer
 internal/power/  credit-runner  dlv-cleanup
 internal/questboard  live-agent  bsmdef
 internal/questboard/  live-agent  cellar3gate
-internal/questboard/auto.go  credit-runner  xplostfalse
-internal/questboard/auto_test.go  credit-runner  xplostfalse
 internal/questboard/def.go  credit-runner  cainfix3
 internal/resource  live-agent  town5
 internal/scenario  credit-runner  pgfix
