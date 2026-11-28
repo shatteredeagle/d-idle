@@ -61,6 +61,7 @@
 | sweep1 | in-progress | - | `docs/probes/review-sweep-2026-11-28.md`<br>`internal/diffready/`<br>`internal/bot/diffready_test.go`<br>`internal/combat/move.go`<br>`internal/combat/whirl.go`<br>`internal/combat/fight.go`<br>`internal/combat/move_test.go`<br>`internal/watch/difficultydesk.go` | - |
 | ops4 | in-progress | - | `tools/backlog/`<br>`backlog/tasks/task-185 - unlockwire-wire-bestiary-risk-order-queue-and-atlas-into-the-live-bot.md`<br>`backlog/tasks/task-597 - vaultv7b-wire-the-ETHER-wallet-Vault-page-upgrade-UI-earn-call-sites.md`<br>`backlog/tasks/task-1100 - fix4-security-fixes-from-fable-review-4-scrubber-watch-token-difficulty-go-flip-run-check-log-tail.md` | - |
 | sweep2 | in-progress | - | `docs/probes/review-sweep2-2026-11-28.md`<br>`docs/arbiter.md`<br>`cmd/d2bot/survivalwire.go`<br>`internal/admit/admit.go`<br>`internal/arbiter/arbiter.go`<br>`internal/arbiter/shadow.go`<br>`internal/arbiter/sweep2_test.go`<br>`internal/bot/admission.go`<br>`internal/bot/arbiter_control.go`<br>`internal/bot/earlyroute.go`<br>`internal/bot/questboard.go`<br>`internal/bot/routeguard.go`<br>`internal/bot/sweep2_test.go`<br>`internal/questboard/exec.go`<br>`internal/questboard/fake.go`<br>`internal/questboard/readiness.go`<br>`internal/questboard/sweep2_test.go`<br>`internal/vaultkeep/equip.go`<br>`internal/vaultkeep/equipdirect.go`<br>`internal/vaultkeep/sweep2_test.go` | - |
+| zone5 | proposed | - | `internal/survival/`<br>`cmd/d2bot/survivalwire.go`<br>`docs/survival/zonemodel.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
 | ghcrpublish | in-progress | - | `.github/workflows/tester-image.yml`<br>`docs/registry-publish.md`<br>`deploy/d2d-container/compose.friends.yml`<br>`docs/tester-registry.md`<br>`deploy/d2d-container/compose.tester.yml`<br>`deploy/d2d-container/context.sh`<br>`deploy/d2d-container/tester_image_test.go` | - |
@@ -203,6 +204,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 5bfdc8aa4 11-28 03:36 `Merge agent/zone5: zone5: zone prior capped by monster supply (supplyMinutes), caster archetype rows (TASK-1129)` (zone5)
+- 113323e05 11-28 03:35 `Merge branch 'main' into zone5` (-)
 - 5b3b4951e 11-28 03:26 `Merge agent/sweep2: sweep2: parked boss area, equip journal refuse, hand-in evidence, admission road floors (TASK-1128)` (sweep2)
 - 7bbd7ee07 11-28 03:25 `Merge branch 'main' into sweep2` (-)
 - 9fe7dbb41 11-28 03:18 `Merge agent/ops2: ops2: watch cookie, smoke wiring (TASK-1116)` (ops2)
@@ -211,6 +214,4 @@
 - c31d6dfaf 11-28 03:16 `Merge branch 'main' into cls1` (-)
 - b2003074b 11-28 03:09 `Merge origin/main into ops2 (keep both check.sh blocks)` (-)
 - 6a756b649 11-28 03:07 `Merge agent/grad1: grad1: graduate bot.tickLogSec (TASK-1112)` (grad1)
-- 8f25b5669 11-28 03:07 `Merge agent/cls2: cls2: Amazon and Assassin (TASK-1109)` (cls2)
-- 90646f9ff 11-28 03:06 `Merge branch 'main' into grad1` (-)
 <!-- statusgen:end -->
