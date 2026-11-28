@@ -8,6 +8,8 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- flipfix2: sandbox aliases, flip status EST, graduate-list checks (TASK-1130) <!--sg:agent/flipfix2-->
+- review 14: round-3 review of merged work (docs) <!--sg:agent/rv5-->
 - zone5: zone prior capped by monster supply (supplyMinutes), caster archetype rows (TASK-1129) <!--sg:agent/zone5-->
 - sweep2: parked boss area, equip journal refuse, hand-in evidence, admission road floors (TASK-1128) <!--sg:agent/sweep2-->
 - ops2: watch cookie, smoke wiring (TASK-1116) <!--sg:agent/ops2-->
