@@ -1,10 +1,13 @@
 ---
 id: TASK-1130
-title: 'flipfix2: flip tool sandbox aliases, status in EST with ledger state, graduate-list ledger check, graduation-ready note'
-status: In Progress
+title: >-
+  flipfix2: flip tool sandbox aliases, status in EST with ledger state,
+  graduate-list ledger check, graduation-ready note
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T08:41:00Z'
+updated_date: '2026-11-28T09:00:00Z'
 labels:
   - ops
   - bug
