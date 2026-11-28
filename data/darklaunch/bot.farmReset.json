@@ -1,0 +1,11 @@
+{
+ "name": "bot.farmReset",
+ "built_by": "farmloop (56c98f8ba)",
+ "dark_since": "2026-11-15",
+ "why_off": "WIP knobs; not verified.",
+ "enable_criteria": "levelsim -farmreset beats baseline XP/min; sandbox day",
+ "owner": "coordinator",
+ "review_by": "2026-12-09",
+ "status": "enabled",
+ "note": "2026-11-27 farmresetretire: flipped to always on and the knob gate removed (no knob, no old no-reset path); bot.farmResetPct and bot.farmResetCooldownMin stay. Evidence: the sandbox ran it since 2026-11-16 (docs/probes/farmloop-live-20261116.md), and the post-deploy audit docs/probes/sandbox-postdeploy-audit-2026-11-27.md V shows resets firing (farmreset.go:291, 85% cleared) with 0 deaths and 0 chickens in 70 min on two heroes; the earlier thrash is fixed by the guards of farmloop2. Modelled gain is small (2.5%, docs/farmloop.md section 3), so the value rule stays the gate."
+}

@@ -1,0 +1,10 @@
+{
+ "name": "input.hotkeyMap",
+ "built_by": "q13input (356efa17b)",
+ "dark_since": "2026-11-20",
+ "why_off": "Depends on input.planner.",
+ "enable_criteria": "input.planner enabled; hotkey drill",
+ "owner": "coordinator",
+ "review_by": "2026-12-09",
+ "status": "dark"
+}

@@ -1,0 +1,10 @@
+{
+ "name": "agency.planner",
+ "built_by": "agencyp1a (d21aedc66)",
+ "dark_since": "2026-11-19",
+ "why_off": "Shadow line only (mode 1).",
+ "enable_criteria": "; owner go for mode 2; then scenario/drill green, then flip on the sandboxes with a 24 h invariant-monitor watch and automatic revert on a hard breach",
+ "owner": "coordinator",
+ "review_by": "2026-12-09",
+ "status": "dark"
+}
