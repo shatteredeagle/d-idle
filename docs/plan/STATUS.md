@@ -201,6 +201,9 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- fa6164b87 11-28 05:49 `Merge agent/forkreq: forkreq: consolidated fork requests (docs)` (forkreq)
+- 8e574fdfb 11-28 05:47 `Merge branch 'main' into forkreq` (-)
+- 71b6531ce 11-28 05:43 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
 - 6e37fec73 11-28 05:11 `Merge agent/fix8b: fix8b: missing combat profile, mana need (TASK-1117)` (fix8b)
 - b2fe61651 11-28 05:10 `Merge branch 'main' into fix8b` (-)
 - 010befbd5 11-28 05:02 `Merge agent/savesafe: savesafe: rolling character save backups, zero-byte restore, disk guard (TASK-1132)` (savesafe)
@@ -208,7 +211,4 @@
 - 0e77448d3 11-28 04:54 `Merge origin/main into fix8b` (-)
 - 91cfd35cc 11-28 04:52 `Merge agent/labops2: lab night results 2026-11-28b: reruns and ledger verdicts (docs)` (labops2)
 - dc5419a81 11-28 04:52 `Merge agent/fix14: fix14: round-3 HIGH fixes: boss-level kit, fighter reselect, hole hold, merc journal (TASK-1131)` (fix14)
-- 0d31f7220 11-28 04:51 `Merge branch 'main' into labops2` (-)
-- 35d6e0b42 11-28 04:51 `Merge branch 'main' into fix14` (-)
-- 9643ebbe4 11-28 04:51 `Merge agent/nightlog: nightlog: Questy save incident (docs)` (nightlog)
 <!-- statusgen:end -->
