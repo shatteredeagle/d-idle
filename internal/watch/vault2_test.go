@@ -19,7 +19,7 @@ func (b blockCarrier) Carry(ctx context.Context, id string) VaultKeepResult {
 }
 
 // MUST FAIL when a second POST for a record reaches the keeper while the first is still inside it.
-func TestVault2SecondPostIs409WhileTheFirstRuns(t *testing.T) {
+func TestVault2InFlight409(t *testing.T) {
 	s := testVault(t, 5, 100)
 	a := vaultAPI(s, true)
 	bc := blockCarrier{&fakeCarrier{fakeEquip: fakeEquip{on: true}}, make(chan struct{}), make(chan struct{})}
