@@ -263,6 +263,8 @@ type loopState struct {
 	gen              uint64 // generation the fields below belong to
 	failures         int    // consecutive failed actions
 	stuckStage       int
+	legFail          legFault // the last travel leg that failed (L1: one cause is charged once)
+	legFailAt        time.Time
 	inLadder         bool // escalate is running: a stall inside a rung is that rung failing, not a new ladder
 	ladderProgress   uint64
 	rung3Cycles      int         // leave/re-enter cycles of rung 3 since the last real progress

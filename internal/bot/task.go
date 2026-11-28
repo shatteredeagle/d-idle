@@ -1175,6 +1175,14 @@ func (a taskActs) LevelTo(ctx context.Context, n int) error {
 		// waypoint try, never reached nav, stalled 65 s each time).
 		r.setTargetArea(0)
 		err := r.travelTo(ctx, target)
+		var leg *legFault
+		if err != nil && ctx.Err() == nil && errors.As(err, &leg) && !r.d.Plan.IsTown(leg.from) && r.d.Town != nil && !r.deadNow() && r.sameLegAgain(leg) {
+			// The same exit failed for the last target too: the fault is where the hero stands, not where it wants to go.
+			// Charging it to every target in turn banned ten zones in 80 s from one cut-off cell (live 2026-11-28, L1).
+			r.loop.legFail = legFault{}
+			r.e.Log.Warn("leveling: the way out failed again, leaving by town portal", "from", r.areaName(leg.from), "to", r.areaName(leg.to), "err", err)
+			return a.tag(r.d.Town.ToTown(ctx))
+		}
 		if err != nil && ctx.Err() == nil && !errors.Is(err, errAreaGated) && !r.deadNow() {
 			// Any travel fault (no exit, nav timeout, "did not arrive") skips the target for a cool-down that doubles
 			// with each repeat, so the next slice picks another area instead of walking the same bad exit again

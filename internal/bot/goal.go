@@ -1427,13 +1427,35 @@ func (r *Runner) travelTo(ctx context.Context, target int) error {
 		r.touchWaypointHere(ctx)
 		next := path[1]
 		if err := r.d.Mover.ExitTo(ctx, next); err != nil {
-			return fmt.Errorf("exit to %s: %w", r.areaName(next), err)
+			return &legFault{from: cur, to: next, err: fmt.Errorf("exit to %s: %w", r.areaName(next), err)}
 		}
 		if err := r.waitArea(ctx, next, 30*time.Second); err != nil {
 			return err
 		}
 	}
 	return errors.New("travel: too many hops")
+}
+
+// legFault is a travel error that names the leg that failed: the exit from one area to the next. The fault belongs to
+// that leg (often to the cell the hero stands on), not to the target the walk was for.
+type legFault struct {
+	from, to int
+	err      error
+}
+
+func (e *legFault) Error() string { return e.err.Error() }
+func (e *legFault) Unwrap() error { return e.err }
+
+// legFaultMemory is how long a failed leg is remembered as the cause of the next failure (U: judgment; the live cascade
+// charged a new target every 8 s).
+const legFaultMemory = 5 * time.Minute
+
+// sameLegAgain records a failed leg and reports whether the same leg failed last time too, inside legFaultMemory.
+func (r *Runner) sameLegAgain(f *legFault) bool {
+	l, now := &r.loop, r.e.Clock.Now()
+	again := l.legFail.from == f.from && l.legFail.to == f.to && now.Sub(l.legFailAt) <= legFaultMemory
+	l.legFail, l.legFailAt = legFault{from: f.from, to: f.to}, now
+	return again
 }
 
 // wpOnly takes the waypoint of target when no walk reaches it (the Arcane Sanctuary is linked by a portal object, not by an
