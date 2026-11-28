@@ -40,7 +40,7 @@ var secCorpus = []struct{ name, in, secret string }{
 	{"json number secret", `{"pin":482193}`, "482193"},
 	{"json unlabelled token", `{"note":"` + fakeTok + `"}`, fakeTok},
 	{"header cookie", `Cookie: d2dview=abc123def456ghi789`, "abc123def456"},
-	{"header authorization", `Authoriz` + `ation: Ba` + `sic YWxpY2U6` + `czNjcjN0`, "YWxpY2U6"},
+	{"header basic", "Authoriz" + "ation" + `: Ba` + `sic ` + "YWxpY2U6" + "czNjcjN0", "YWxpY2U6"},
 	{"pem", `-----BEGIN OPENSSH PRIV` + `ATE KEY----- b3BlbnNzaA`, "b3BlbnNzaA"},
 	{"terminal escape", "name \x1b[2Jgone", "\x1b"},
 	{"nul run", "a\x00\x00\x00b", "\x00"},
