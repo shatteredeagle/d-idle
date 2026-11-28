@@ -378,10 +378,10 @@
    "notes": "Invariant T3 of docs/design/fable-review-2026-11-21/town-planner.md. RED on today's main (I3; Countess finding 1). Needs stage 4 (sell keep).",
    "assert": [
     {
-     "kind": "item_in_pack",
-     "code": "hp1",
-     "min": 8,
-     "why": "at least the target stays"
+     "kind": "log_line",
+     "pattern": "^sell: sold .*\\bitem=[^=]*Healing Potion",
+     "max": 0,
+     "why": "no healing potion is sold while the target is not exceeded (was item_in_pack >= 8 at the end, which counted the 23 potions DRUNK in 30 virtual min as sold: lab night 2026-11-28, docs/probes/lab-night-results-2026-11-28.md)"
     },
     {
      "kind": "log_line",
@@ -722,9 +722,9 @@
    "assert": [
     {
      "kind": "log_line",
-     "pattern": "needs_attention",
+     "pattern": "needs_attention: .*\\b(gold|purse|afford)",
      "max": 0,
-     "why": "short gold is not an attention state"
+     "why": "short gold is not an attention state (narrowed 2026-11-28: the bare word also matched attention lines of the tapped quest itself, too weak or boss not found; U the gold wording)"
     },
     {
      "kind": "log_line",
