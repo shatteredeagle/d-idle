@@ -1,0 +1,19 @@
+{
+  "note": "Default plans by knob prefix (docs/process/autoflip.md). A row's own flip_plan {instance, bundle, window, value} wins. A list means log-only: both instances.",
+  "prefix_plans": {
+    "quests.": ["questy"],
+    "items.": ["questy"],
+    "loot.": ["questy"],
+    "combat.": ["doofer"],
+    "town.": ["doofer"],
+    "bot.": ["doofer"],
+    "nav.": ["doofer"],
+    "invdesk.": ["doofer"],
+    "ui.": ["doofer"],
+    "input.": ["doofer"]
+  },
+  "log_only_rows": [],
+  "max_bundle": 6,
+  "window": "2h",
+  "value": 1.0
+}
