@@ -48,6 +48,7 @@ var (
 func explainNow() any {
 	if r := opsRunner.Load(); r != nil {
 		v := r.Explain()
+		v.Notices = saveNotices()
 		if f := opsKnobs.Load(); f != nil {
 			v.Knobs = (*f)()
 		}

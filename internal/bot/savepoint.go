@@ -71,6 +71,9 @@ func (r *Runner) savePointDue(s *d2.Snapshot, c control, now time.Time) (bool, s
 	if risk <= 0 {
 		return false, "nothing to save"
 	}
+	if r.d.DiskLow != nil && r.d.DiskLow() {
+		return false, "disk low"
+	}
 	return true, ""
 }
 
