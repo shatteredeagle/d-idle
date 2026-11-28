@@ -1,10 +1,13 @@
 ---
 id: TASK-1087
-title: 'townapply: SME town profile rows as data, beltSlots condition and tierFloor field'
-status: Proposed
+title: >-
+  townapply: SME town profile rows as data, beltSlots condition and tierFloor
+  field
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T02:21:00Z'
+updated_date: '2026-11-28T02:39:00Z'
 labels:
   - bot
   - feature
