@@ -95,8 +95,9 @@ func (o Options) norm() Options {
 	return o
 }
 
-// runState is the in-memory, never persisted bookkeeping of one chunk: counters and the park reason. A restart
-// clears it; the chunk is simply tried again from the evidence.
+// runState is the in-memory bookkeeping of one chunk: counters and the park reason. With the run machine the failure
+// and death counters are stored on the live run at every count (smCount) and read back after a restart (smSeed), so a
+// restart between two deaths keeps counting; on the legacy board a restart clears them.
 type runState struct {
 	started  bool
 	failures int
@@ -146,16 +147,24 @@ func NewExec(b *Board, st *Store, env Env, act Actions, o Options) *Exec {
 // Enabled reports the knob.
 func (e *Exec) Enabled() bool { e.mu.Lock(); defer e.mu.Unlock(); return e.o.Enabled }
 
-// SetEnabled follows the knob at run time. Switching off stops the running slice but keeps the plan records.
+// SetEnabled follows the knob at run time. Switching off stops the running slice and drops the in-memory state; the
+// plan records and the stored parks stay (a knob switch is no Try again: only the player lifts a park).
 func (e *Exec) SetEnabled(on bool) {
 	e.mu.Lock()
 	was := e.o.Enabled
 	e.o.Enabled = on
 	e.mu.Unlock()
 	if was && !on {
-		e.Reset()
+		e.reset(false)
 	}
 }
+
+// SetSM follows the knob quests.boardSM at run time, like the guards that read it every tick: a knob edited from the
+// tuning page must not leave the executor on the other board (fable review 2 finding 5). Stored runs and parks stay.
+func (e *Exec) SetSM(on bool) { e.mu.Lock(); e.o.SM = on; e.mu.Unlock() }
+
+// SM reports whether the executor runs on the run machine now.
+func (e *Exec) SM() bool { e.mu.Lock(); defer e.mu.Unlock(); return e.o.SM }
 
 // SetMode records the between-chunks mode on new plan records (modes are slice S6).
 func (e *Exec) SetMode(m string) { e.mu.Lock(); e.o.Mode = m; e.mu.Unlock() }
@@ -206,6 +215,10 @@ func (e *Exec) derive() ([]QuestView, Plan, int, error) {
 			}
 			if sm != nil {
 				cf = sm.apply(q, c, cf, e.rs[k])
+			} else if run := plan.storedPark(q.ID, c.ID, Difficulties[diff]); run != nil && cf.Blocked == "" {
+				// A park the machine stored outlives the knob going back to 0 (read only): a revert never restarts
+				// the chunk that killed the hero. Try again lifts it (UnblockRuns).
+				cf.Blocked = smParkText(q, *run)
 			}
 			in.Chunks[k] = cf
 			in.Ready[k] = e.env.Ready(q, c)
@@ -596,8 +609,11 @@ func (e *Exec) CancelRuns(quest, chunk string) ([]Ref, error) {
 }
 
 // Reset cancels the running slice cleanly and forgets every counter and park. The plan records stay accepted:
-// the chunk resumes from the evidence at the next tick (the player's Reset, a new game, a knob switch off).
-func (e *Exec) Reset() {
+// the chunk resumes from the evidence at the next tick (the player's Reset).
+func (e *Exec) Reset() { e.reset(true) }
+
+// reset is Reset; without parks it keeps the stored ones (the knob quests.board going off).
+func (e *Exec) reset(parks bool) {
 	e.NoteHold()
 	e.mu.Lock()
 	vs, plan, diff, err := e.derive()
@@ -606,7 +622,7 @@ func (e *Exec) Reset() {
 		act = e.open(vs, plan, diff)
 	}
 	e.rs = map[string]*runState{}
-	if !e.boardLegacy() && err == nil {
+	if parks && !e.boardLegacy() && err == nil {
 		e.smRetryAll() // the player's Reset is the one explicit way a stored park is cleared
 	}
 	e.mu.Unlock()
@@ -635,6 +651,9 @@ func (e *Exec) UnblockRuns(quest, chunk string) []Ref {
 	if !e.boardLegacy() {
 		e.smRetry(quest, chunk)
 		return e.lastChanged
+	}
+	if plan, _, err := e.st.Load(); err == nil && plan.storedPark(quest, chunk, Difficulties[e.env.Diff()]) != nil {
+		e.smRetry(quest, chunk) // the one write the legacy board makes to the runs: the player lifts a park the machine stored
 	}
 	return []Ref{{quest, chunk}}
 }
@@ -764,7 +783,17 @@ func (e *Exec) Report(d Decision, res StepResult) {
 	e.mu.Lock()
 	defer e.mu.Unlock()
 	k := ChunkKey(d.Quest, d.Chunk)
+	_, known := e.rs[k]
 	rs := e.state(k)
+	if !known {
+		e.smSeed(d.Quest, d.Chunk, rs)
+	}
+	f0, d0 := rs.failures, rs.deaths
+	defer func() {
+		if rs.blocked == "" && (rs.failures != f0 || rs.deaths != d0) {
+			e.smCount(d.Quest, d.Chunk, rs) // a park stores its own counters (smPark)
+		}
+	}()
 	if res.Outcome != StepHeld {
 		rs.hold, rs.holdWhy, rs.holdFrom = "", "", time.Time{} // anything but a hold lifts it
 	}

@@ -15,7 +15,7 @@ func TestBoardLegacySwitchIdle(t *testing.T) {
 		for _, clvl := range []int{5, 12} {
 			var got [2]string
 			for i, sm := range []bool{false, true} {
-				r := &rig{t: t, b: mustBoard(t), dir: t.TempDir(), hero: "Testy", sm: sm}
+				r := &rig{t: t, b: mustBoard(t), dir: t.TempDir(), hero: "Testy", sm: sm, old: !sm}
 				r.f = NewFake(r.b, bd.class, clvl)
 				r.restart()
 				if r.x.boardLegacy() == sm {

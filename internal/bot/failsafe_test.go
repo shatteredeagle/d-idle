@@ -8,9 +8,11 @@ import (
 	"testing"
 	"time"
 
+	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/env"
 	"d2lod-bot/internal/goals"
 	"d2lod-bot/internal/launch"
+	"d2lod-bot/internal/task"
 )
 
 // Failsafe layer 1 (PLAN.md "Failsafes"): each test injects one stuck state with fakes and proves the ladder
@@ -302,14 +304,32 @@ func TestGameLostRestartFailureIsFatal(t *testing.T) {
 }
 
 // Card refusalpark: a stall made only of refusals skips the game restart (rung 4) and ends in the visible pause; the
-// same stall without refusals, or with the knob off, still restarts (TestFailsafeTravelWithNoProgress).
+// same stall without refusals, or with the knob off, still restarts (TestFailsafeTravelWithNoProgress). Only coded
+// refusals count: a stall of steps that failed without a code (a walk, a dialogue, a path error: the game stopped taking
+// input) still restarts with the knob on (fable review 2 finding 2, card fix2).
 func TestFailsafeRung4SkippedForRefusalOnlyStall(t *testing.T) {
-	for _, on := range []bool{true, false} {
+	coded := task.Result{Outcome: task.OutRetry, StepID: "x", Kind: task.KindDanger, Code: "needs_level", Err: task.Errorf(task.KindDanger, "not ready: too weak")}
+	uncoded := task.Result{Outcome: task.OutRetry, StepID: "x", Kind: task.KindTimeout, Err: task.Errorf(task.KindTimeout, "walk failed: no movement")}
+	for _, tc := range []struct {
+		name    string
+		class   d2.Class
+		on      bool
+		res     task.Result
+		restart bool
+	}{
+		{"coded refusals, knob on", d2.Sorceress, true, coded, false},
+		{"coded refusals, knob on, Paladin", d2.Paladin, true, coded, false},
+		{"coded refusals, knob off", d2.Sorceress, false, coded, true},
+		{"failed steps without a code, knob on", d2.Sorceress, true, uncoded, true},
+		{"failed steps without a code, knob on, Paladin", d2.Paladin, true, uncoded, true},
+	} {
+		on := tc.on
 		g := failsafeRig(t, func(c *Config, d *Deps, tu *env.Tuning) {
 			if on {
 				tu.Quests.RefusalPark = 1
 			}
 		})
+		g.w.set(func(w *world) { w.class = tc.class })
 		g.mover.exitBlock = true
 		g.run()
 		stop := make(chan struct{})
@@ -319,7 +339,7 @@ func TestFailsafeRung4SkippedForRefusalOnlyStall(t *testing.T) {
 				case <-stop:
 					return
 				default:
-					g.r.inv.noteRefusal("step x: refused")
+					g.r.noteStepRefused(tc.res)
 					time.Sleep(2 * time.Millisecond)
 				}
 			}
@@ -329,11 +349,8 @@ func TestFailsafeRung4SkippedForRefusalOnlyStall(t *testing.T) {
 		close(stop)
 		restarted := strings.Contains(g.w.log(), "restart")
 		g.finish()
-		if on && restarted {
-			t.Fatalf("knob on: the refusal-only stall restarted the game: %s", g.w.log())
-		}
-		if !on && !restarted {
-			t.Fatalf("knob off: no restart: %s", g.w.log())
+		if restarted != tc.restart {
+			t.Fatalf("%s: restarted = %v, want %v: %s", tc.name, restarted, tc.restart, g.w.log())
 		}
 	}
 }
