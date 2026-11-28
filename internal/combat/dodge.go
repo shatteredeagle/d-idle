@@ -91,18 +91,27 @@ func dangerousMissiles(snap *d2.Snapshot, me input.Point, radius int) []input.Po
 // when it moved. done is the caller's per-fight counter: at most maxMissileDodges per fight and one per 800 ms.
 func (f *Fighter) sidestepMissiles(ctx context.Context, snap *d2.Snapshot, done *int) (bool, error) {
 	t := f.tune()
-	if t.MissileDodge == 0 || f.mv == nil || !f.mayEvade() || *done >= maxMissileDodges || f.now().Sub(f.lastDodge) < 800*time.Millisecond {
+	if t.MissileDodge == 0 || f.mv == nil {
 		return false, nil
 	}
 	me := input.Point{X: snap.Player.X, Y: snap.Player.Y}
 	near := dangerousMissiles(snap, me, max(t.DodgeRadius, 6))
+	if len(near) == 0 {
+		return false, nil
+	}
+	if !f.mayEvade() || *done >= maxMissileDodges || f.now().Sub(f.lastDodge) < 800*time.Millisecond {
+		f.evidence("missileDodge", "held", "missiles", len(near), "done", *done)
+		return false, nil
+	}
 	pt, ok := awayPoint(me, near, nil, max(t.DodgeRadius, 6)+4, f.valid)
 	if !ok {
+		f.evidence("missileDodge", "no-room", "missiles", len(near))
 		return false, nil
 	}
 	f.lastDodge = f.now()
 	*done++
 	f.info("sidestepping missile", "to", pt, "missiles", len(near))
+	f.evidence("missileDodge", "sidestep", "missiles", len(near))
 	return true, f.evade(ctx, me, pt)
 }
 

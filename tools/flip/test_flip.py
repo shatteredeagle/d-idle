@@ -623,5 +623,112 @@ class ProbeTransportTest(unittest.TestCase):
         self.assertIn("D2_FLIP_RUN", str(c.exception))
 
 
+TABLE = {"doofer": {"container": "c-one", "role": "canary"}, "questy": {"container": "c-two", "role": "quest sandbox"}}
+
+
+class NamesTest(unittest.TestCase):
+    def test_alias_and_container_name_resolve_to_the_container(self):
+        n = F.Names(TABLE)
+        self.assertEqual([n.container(x) for x in ("questy", "Questy", "c-two", "other")], ["c-two", "c-two", "c-two", "other"])
+        self.assertEqual((n.alias("c-one"), n.alias("doofer"), n.alias("other")), ("doofer", "doofer", ""))
+        self.assertEqual(n.label("c-two"), "questy (c-two, quest sandbox)")
+        self.assertEqual(n.label("other"), "other")
+
+    def test_shipped_table_has_both_sandboxes_with_roles(self):
+        n = F.Names.load()
+        self.assertEqual(n.aliases(), ["doofer", "questy"])
+        self.assertEqual({a: n.table[a]["role"] for a in n.aliases()}, {"doofer": "canary", "questy": "quest sandbox"})
+        self.assertNotEqual(n.container("doofer"), n.container("questy"))
+
+    def test_bad_tables_are_refused(self):
+        for bad in ({"a": {}}, {"a": {"container": "x"}, "b": {"container": "x"}}, {"a": {"container": "b"}, "b": {"container": "y"}}):
+            with self.assertRaises(F.FlipError):
+                F.Names(bad)
+
+    def test_missing_file_means_no_alias(self):
+        self.assertEqual(F.Names.load("/nonexistent/sandboxes.json").container("questy"), "questy")
+
+    def test_sandbox_runs_docker_on_the_container(self):
+        sb = F.Sandbox("questy", {"D2_FLIP_RUN": "true"}, F.Names(TABLE))
+        self.assertEqual(sb.instance, "c-two")
+        self.assertEqual(F.Sandbox("c-two", {"D2_FLIP_RUN": "true"}, F.Names(TABLE)).instance, "c-two")
+
+
+class _Flipfix2:  # attached to FlipTest below
+    def aliased(self):
+        names = F.Names(TABLE)
+        store = F.Store(os.path.join(self.d.name, "st-alias"), names.container)
+        f = F.Flipper(lambda inst: self.sb, store, F.Ledger(self.lp), clock=self.clock, out=self.out.append,
+                      env={"D2_FLIP_VERIFY_S": "10"}, sleep=lambda s: None)
+        return names, store, f
+
+    def test_alias_flip_keeps_state_under_the_container_name(self):
+        names, store, f = self.aliased()
+        w = f.flip("questy", {"town.plan": 2.0}, "scenario green", 600)
+        self.assertEqual(w["instance"], "c-two")
+        self.assertEqual(store.all(), ["c-two"])
+        self.assertEqual(self.row()["trial_instance"], "c-two")
+        self.assertEqual(store.get("questy"), store.get("c-two"))
+        with self.assertRaises(F.FlipError):  # one window per sandbox, whatever name is typed
+            f.flip("c-two", {"bot.portalGuard": 1.0}, "again", 600)
+        self.clock.t += timedelta(minutes=11)
+        self.assertEqual(f.poll("questy"), "closed")
+        self.assertEqual(store.get_last("questy")["instance"], "c-two")
+        self.assertIn("town.plan=2", F.bisect_line(dict(store.get_last("questy"), knobs={"town.plan": {"new": 2.0}, "x.y": {"new": 1.0}}), "x.y", "2h"))
+
+    def test_clean_close_writes_the_graduation_note(self):
+        self.flip(window=600)
+        self.assertEqual(self.row().get("graduation_note"), "")
+        self.clock.t += timedelta(minutes=11)
+        self.assertEqual(self.f.poll("sb1"), "closed")
+        self.assertEqual(self.row()["graduation_note"], "graduation-ready")
+        self.assertEqual(self.f.store.get_last("sb1")["note"], "graduation-ready")
+        self.assertTrue(any(o.startswith("CLOSE ") and "graduation-ready" in o for o in self.out))
+        with open(F.Ledger(self.lp).state) as fh:  # the note is in the state file, where graduate-list reads it
+            self.assertEqual(json.load(fh)["rows"]["town.plan"]["graduation_note"], "graduation-ready")
+
+    def test_reflip_and_revert_clear_the_graduation_note(self):
+        self.flip(window=600)
+        self.clock.t += timedelta(minutes=11)
+        self.f.poll("sb1")
+        self.f.reflip = True
+        self.flip(window=600)
+        self.assertEqual(self.row()["graduation_note"], "")
+        self.sb.counts["xp-frozen"] = 1
+        self.assertEqual(self.f.poll("sb1"), "reverted")
+        self.assertEqual((self.row()["status"], self.row()["graduation_note"]), ("dark", ""))
+
+    def test_status_shows_est_minutes_left_and_ledger_state(self):
+        names, store, f = self.aliased()
+        f.flip("questy", {"town.plan": 2.0}, "scenario green", 7200)  # 12:00 UTC + 2 h = 09:00 EST
+        self.clock.t += timedelta(minutes=30, seconds=30)
+        store.beat(self.clock.t)
+        lines = F.status_lines(store, F.Ledger(self.lp), self.clock.t, names)
+        self.assertEqual(lines[0], "questy (c-two, quest sandbox) window until 2026-11-26 09:00 EST (90 min left) pending=- why: scenario green")
+        self.assertEqual(lines[1], "  town.plan=2 ledger trial criteria_met U: c")
+        self.assertEqual(lines[2], "watcher: alive")
+        self.assertEqual(len(lines), 3)
+        self.clock.t += timedelta(hours=2)
+        late = F.status_lines(store, F.Ledger(self.lp), self.clock.t, names)
+        self.assertIn("due 30 min ago", late[0])
+        self.assertTrue(late[2].startswith("watcher: NOT alive"))
+
+    def test_status_lists_closed_rows_and_trial_rows_without_a_window(self):
+        names, store, f = self.aliased()
+        f.flip("doofer", {"town.plan": 2.0, "bot.portalGuard": 1.0}, "w", 600)
+        self.clock.t += timedelta(minutes=11)
+        f.poll("doofer")
+        F.Ledger(self.lp).update("combat.standOK", status="trial", trial_started="2026-11-26T05:00:00Z", trial_instance="c-one")
+        lines = F.status_lines(store, F.Ledger(self.lp), self.clock.t, names)
+        self.assertEqual(lines[0], "no open window")
+        self.assertIn("ledger enabled town.plan since 2026-11-26 07:11 EST criteria_met U (graduation-ready)", lines)
+        self.assertTrue(any(l.startswith("ledger trial combat.standOK on doofer since 2026-11-26 00:00 EST: NO OPEN WINDOW") for l in lines))
+
+
+for _n, _m in vars(_Flipfix2).items():
+    if _n.startswith(("test_", "aliased")):
+        setattr(FlipTest, _n, _m)
+
+
 if __name__ == "__main__":
     unittest.main()

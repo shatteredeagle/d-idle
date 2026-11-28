@@ -409,6 +409,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [11-fix-review-combat-arbiter.md](design/fable-review-2026-11-28/11-fix-review-combat-arbiter.md): Fable review 2026-11-28, round 2 part B: the fixes for reviews 3 and 7 (fix3, fix7) (status: review, read-only. Tree `829337379` (origin/main). Scope: merge `46365bb12` (fix3, TASK-1094) and merge...)
 - [12-fix-review-security-pg-data-pipeline.md](design/fable-review-2026-11-28/12-fix-review-security-pg-data-pipeline.md): Fable round 2, review C: tonight's fixes for security, Proving Ground, builds as data and the pipeline (status: REVIEW, docs only (reviewer run rv3, 2026-11-28 about 00:40 EST). No code changed, no game, no sandbox...)
 - [13-sandbox-live-review.md](design/fable-review-2026-11-28/13-sandbox-live-review.md): Fable review 2026-11-28, part 13: both sandbox heroes after the fix7 deploy (live logs, read-only) (status: review, read-only. Window: 2026-11-28 05:19:03 to 05:54:28 UTC (00:19 to 00:54 EST, about 35 minutes),...)
+- [14-round3-merged-since-midnight.md](design/fable-review-2026-11-28/14-round3-merged-since-midnight.md): Review 14: round 3, code merged since 00:30 EST (2026-11-28) (status: current. Reviewer run rv5, read-only. Base `27fe88d59` (first-parent tip before 00:30 EST) to...)
 
 `design/`
 
@@ -1148,6 +1149,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 `probes/`
 
+- [evidence-logs-2026-11-28.md](probes/evidence-logs-2026-11-28.md): Evidence lines for the NOT YET knobs, 2026-11-28 (card evid1) (status: current. Follows docs/probes/graduations-2026-11-28.md section 3. Tags: V = read or run today (how is...)
 - [exitsread-2026-11-22.md](probes/exitsread-2026-11-22.md): exitsread: the engine's link table against the bot's exit data (card exitsread, 2026-11-22) (status: current. Card `exitsread` (map-knowledge review card 4). Tags: V = measured in a named run, S = source or...)
 - [farmloop-live-20261116.md](probes/farmloop-live-20261116.md): Farm loop live check in the sandbox, 2026-11-16 (status: record. Task farmlive (TASK-553). Tags: V = verified in this run (container logs, read only), U = not...)
 - [farmloop-measure.md](probes/farmloop-measure.md): Recipe: kills per minute against coverage (farm loop decay curve) (status: current. Tool `tools/farmloop/measure.py` (stdlib Python, reads stdin). Tags: V = ran once...)
