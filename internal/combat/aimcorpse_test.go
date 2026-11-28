@@ -81,11 +81,11 @@ func TestCorpseReservationShared(t *testing.T) {
 	w.corpse(20, 102, 100)
 	w.corpse(21, 103, 100)
 	me := input.Point{X: 100, Y: 100}
-	if cs := Corpses(w.snap, h.f.cat, me, 14, h.f.necro.tried); len(cs) != 2 {
+	if cs := Corpses(w.snap, h.f.cat, me, 14, h.f.takenCorpses(w.snap.Player.Area)); len(cs) != 2 {
 		t.Fatalf("free corpses: %d", len(cs))
 	}
 	h.f.takeCorpse(20)
-	if cs := Corpses(w.snap, h.f.cat, me, 14, h.f.necro.tried); len(cs) != 1 || cs[0].ID != 21 {
+	if cs := Corpses(w.snap, h.f.cat, me, 14, h.f.takenCorpses(w.snap.Player.Area)); len(cs) != 1 || cs[0].ID != 21 {
 		t.Fatalf("taken corpse still offered: %v", cs)
 	}
 	if corpseAt(w.snap.Monsters, input.Point{X: 103, Y: 100}) != 21 {
@@ -113,5 +113,36 @@ func TestValidateCorpseAims(t *testing.T) {
 	}
 	if err := validateCorpseAims([]Profile{{Class: "necromancer", CorpseAims: []CorpseAim{ok, ok}}}, sk); err == nil {
 		t.Fatal("twice")
+	}
+}
+
+// Card fix3 (review 3 finding 6): the reservation was taken on aim and never released, so one cut cast removed a corpse
+// for raise, revive, explode and Death Sentry alike. A corpse still standing after corpseHold is offered again, another
+// area drops the set (unit ids repeat), and id 0 (a lay point with no corpse) reserves nothing.
+func TestCorpseReservationReleased(t *testing.T) {
+	h, w := reviveWorld(t, nil, nil)
+	w.corpse(7, 102, 100)
+	me := input.Point{X: 100, Y: 100}
+	area := w.snap.Player.Area
+	free := func(area int) int { return len(Corpses(w.snap, h.f.cat, me, 14, h.f.takenCorpses(area))) }
+	if free(area) != 1 {
+		t.Fatal("corpse 7 not offered")
+	}
+	h.f.takeCorpse(7)
+	h.s.Sleep(corpseHold / 2)
+	if free(area) != 0 {
+		t.Fatal("the reservation lapsed inside the hold")
+	}
+	h.s.Sleep(corpseHold)
+	if free(area) != 1 {
+		t.Fatal("a cut cast removed corpse 7 for good: it still stands after the hold and is not offered")
+	}
+	h.f.takeCorpse(7)
+	if free(area+1) != 1 {
+		t.Fatal("another area kept the old reservations")
+	}
+	h.f.takeCorpse(0)
+	if len(h.f.takenCorpses(area+1)) != 0 {
+		t.Fatalf("id 0 reserved: %v", h.f.necro.tried)
 	}
 }

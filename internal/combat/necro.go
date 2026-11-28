@@ -126,8 +126,11 @@ func Corpses(snap *d2.Snapshot, cat Catalog, me input.Point, maxDist float64, sk
 type necroState struct {
 	capSeen map[string]int // kind -> minion count at which a paid cast raised nothing (the cap); cleared when the count drops
 	tried   corpseRes      // corpses a cast was aimed at (a used corpse vanishes; V a second cast spent no mana)
-	learned map[int]bool   // state numbers seen present after our own cast: proven readable
-	curseAt map[curseKey]curseRec
+	// triedAt and triedArea bound the reservation: it lapses after corpseHold and with the area (takenCorpses).
+	triedAt   map[uint32]time.Time
+	triedArea int
+	learned   map[int]bool // state numbers seen present after our own cast: proven readable
+	curseAt   map[curseKey]curseRec
 }
 
 type curseKey struct {
@@ -144,6 +147,7 @@ type curseRec struct {
 func (n *necroState) init() {
 	if n.capSeen == nil {
 		n.capSeen, n.tried, n.learned, n.curseAt = map[string]int{}, map[uint32]bool{}, map[int]bool{}, map[curseKey]curseRec{}
+		n.triedAt = map[uint32]time.Time{}
 	}
 }
 
@@ -202,7 +206,7 @@ func (f *Fighter) planSummon(snap *d2.Snapshot, nd *NecroParams, allowWalk bool)
 	if allowWalk {
 		reach = nd.corpseSearch()
 	}
-	cs := Corpses(snap, f.cat, me, reach, f.necro.tried)
+	cs := Corpses(snap, f.cat, me, reach, f.takenCorpses(snap.Player.Area))
 	if len(cs) == 0 {
 		return
 	}
