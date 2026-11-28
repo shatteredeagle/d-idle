@@ -162,7 +162,7 @@
     },
     "api": [
      {
-      "after_s": 60,
+      "after_s": 8,
       "path": "/api/quests/search_for_cain/cancel",
       "body": {
        "chunk": "scroll",
@@ -170,7 +170,7 @@
       }
      },
      {
-      "after_s": 75,
+      "after_s": 14,
       "path": "/api/quests/search_for_cain/cancel",
       "body": {
        "chunk": "scroll",
@@ -193,7 +193,7 @@
     ]
    },
    "provenance": "Hero created fresh, clvl 17 by stat verbs, purse 5000, waypoints Cold Plains to Dark Wood, board records as the scenario says. CHEATED: waypoints and level are SETUP writes (mechanics evidence only, never balance).",
-   "notes": "I7. Plan file equality is covered offline by the card 2 and 3 unit tests (a scenario cannot read the file).",
+   "notes": "I7. Plan file equality is covered offline by the card 2 and 3 unit tests (a scenario cannot read the file). labops2 2026-11-28: api trigger times moved into the first seconds (after_s is WALL seconds from the bot start; the scroll chunk starts about 4 s after it and was done before the old trigger times, so the reply was 409 `done` or a plain start; V lab run 20261128-020016).",
    "assert": [
     {
      "kind": "api_reply",
@@ -445,7 +445,7 @@
     },
     "api": [
      {
-      "after_s": 30,
+      "after_s": 8,
       "path": "/api/quests/den_of_evil/start",
       "body": {
        "chunk": "clear_den"
@@ -467,7 +467,7 @@
     ]
    },
    "provenance": "Hero created fresh, clvl 17 by stat verbs, purse 5000, waypoints Cold Plains to Dark Wood, board records as the scenario says. CHEATED: waypoints and level are SETUP writes (mechanics evidence only, never balance).",
-   "notes": "D5, Q7: one quest at a time; the refusal text names Search for Cain (checked by the card 6 unit test).",
+   "notes": "D5, Q7: one quest at a time; the refusal text names Search for Cain (checked by the card 6 unit test). labops2 2026-11-28: api trigger times moved into the first seconds (after_s is WALL seconds from the bot start; the scroll chunk starts about 4 s after it and was done before the old trigger times, so the reply was 409 `done` or a plain start; V lab run 20261128-020016).",
    "assert": [
     {
      "kind": "api_reply",
