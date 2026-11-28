@@ -27,6 +27,7 @@ instance already has an open window.
 """
 import argparse
 import base64
+import fcntl
 import hashlib
 import json
 import os
@@ -304,14 +305,17 @@ class Ledger:
         return next((it.get("status") for it in L.load_design(self.path) if it["name"] == name), None)
 
     def update(self, name, **kv):
-        if self.design_status(name) is None:
-            raise FlipError(f"{name}: no row in {os.path.basename(self.path.rstrip(os.sep))}")
+        """Never reads the checkout: a close or revert must land even when the knob's file is gone or mid-merge (flip()
+        checked the row before the window opened; state of a name without a design row is simply not shown)."""
         if "status" in kv:
             kv["state"] = kv.pop("status")
-        st = L.load_state(self.state)
-        st["rows"].setdefault(name, {}).update(kv)
-        st["log"].append(dict(kv, name=name, at=iso(now_utc())))
-        L.save_state(self.state, st)
+        os.makedirs(os.path.dirname(self.state), exist_ok=True)
+        with open(self.state + ".lock", "w") as lock:  # the watcher and a flip may write at the same moment
+            fcntl.flock(lock, fcntl.LOCK_EX)
+            st = L.load_state(self.state)
+            st["rows"].setdefault(name, {}).update(kv)
+            st["log"].append(dict(kv, name=name, at=iso(now_utc())))
+            L.save_state(self.state, st)
 
 
 class Flipper:

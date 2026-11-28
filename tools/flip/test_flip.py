@@ -493,7 +493,7 @@ class _Hardening:  # methods are attached to FlipTest below (same fixtures, no r
         row = self.f.ledger.row("town.plan")
         self.assertEqual((row["status"], row["revert_reason"]), ("dark", "test breach"))
         self.assertEqual(self.tree(d), before)  # the checkout is never written
-        self.assertEqual(os.listdir(os.path.dirname(state)), ["ledger-state.json"])
+        self.assertEqual(sorted(os.listdir(os.path.dirname(state))), ["ledger-state.json", "ledger-state.json.lock"])
         log = json.load(open(state))["log"]
         self.assertEqual([e["state"] for e in log if e["name"] == "town.plan"], ["trial", "enabled", "trial", "dark"])
 
@@ -536,11 +536,14 @@ class _Hardening:  # methods are attached to FlipTest below (same fixtures, no r
         self.f.ledger.design_status = boom
         self.assertEqual(self.f.watch(5, once=True), ["closed"])
         self.assertTrue(any("design rows unreadable" in o for o in self.out))
+        self.assertEqual(self.f.ledger.row("town.plan")["status"], "enabled")
 
     def test_unknown_knob_and_retired_row_are_refused(self):
         d, _ = self.split_ledger()
         with self.assertRaises(F.FlipError):
-            self.f.ledger.update("no.such", status="trial")
+            self.f.flip("sb1", {"no.such": 1.0}, "x", 60)
+        self.f.ledger.update("no.such", status="trial")  # state without a design row is never shown
+        self.assertNotIn("no.such", [i["name"] for i in self.f.ledger.items()])
         F.L.set_status(d, "retired", ["town.plan"])
         with self.assertRaises(F.FlipError):
             self.flip()
