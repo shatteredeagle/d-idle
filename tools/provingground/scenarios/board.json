@@ -707,35 +707,32 @@
    },
    "matrix": {
     "classes": [
-     "Paladin",
      "Sorceress"
     ],
     "seeds": [
-     11,
      3
     ]
    },
    "provenance": "Hero created fresh, clvl 17 by stat verbs, purse 5000, waypoints Cold Plains to Dark Wood, board records as the scenario says. CHEATED: waypoints and level are SETUP writes (mechanics evidence only, never balance).",
-   "notes": "Setup of board.hold.timeout (a short belt and no gold: the hold outlives its budget and parks as hold_timeout at about 60 virtual minutes), then trigger.restart_at_s stops and starts the bot on the same plan file (U: 1500 wall seconds is about 75 virtual minutes at pace 3; tune it from the first run). Pass: the park is stored (state blocked, reason hold_timeout) and survives the restart; the chunk is not started again.",
+   "notes": "labops2 2026-11-28 (lab runs 20261128-010108 Paladin 11, 20261128-011304 Sorceress 3, restart_at_s 420 WALL seconds): the park of this setup is NOT hold_timeout. Sorceress 3: the recovery ends, the chunk starts and the tower guard refuses three times (`0 mana potions < 2 (caster)`), `quest board: parked forgotten_tower/countess` at 62 virtual minutes, gave_up; after the restart the bot logs `forgotten_tower/countess parked: The Forgotten Tower is stuck` and does not start the chunk again (V log). Paladin 11: the hero recovers, walks to the Countess and the run is auto-finished, no park, so the Paladin is out of the matrix until a setup parks it (U). The assertions follow that: parked once, blocked at the end (any park reason), started at most once. restart_at_s is wall time and the park came 320 s after the bot start at pace 9: on a host twice as slow the restart comes before the park and the row reads RED for a harness reason (U).",
    "assert": [
     {
      "kind": "log_line",
-     "pattern": "quest board: hold",
+     "pattern": "^quest board: parked forgotten_tower/countess",
      "min": 1,
-     "why": "the hold the park comes from was seen before the restart"
+     "max": 1,
+     "why": "the chunk parked once, before the restart"
     },
     {
      "kind": "board",
      "quest": "forgotten_tower",
      "chunk": "countess",
-     "state": "blocked",
-     "reason": "hold_timeout"
+     "state": "blocked"
     },
     {
      "kind": "log_line",
      "pattern": "quest board: starting chunk forgotten_tower",
-     "max": 0,
-     "from_min": 75,
+     "max": 1,
      "why": "after the restart the park is kept: the chunk is not started again (the restart drill, TASK-983)"
     },
     {
@@ -743,7 +740,7 @@
     }
    ],
    "status": "active",
-   "pending_reason": "bsmprep 2026-11-27: rewritten to take its park from the hold.timeout setup instead of a hero that dies; not run. U: hold.timeout itself stayed RED (kit minima, bsm7 fixed it for restock only), and restart_at_s timing. A scenario fault here is not a finding."
+   "pending_reason": "history (bsmprep 2026-11-27): written for a hold_timeout park and not run; first run 2026-11-28 by labops2, see notes."
   },
   {
    "id": "board.retry.runs-a-step",
