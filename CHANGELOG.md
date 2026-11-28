@@ -8,6 +8,18 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- fix1b: vault equip by bytes etc (TASK-1114) <!--sg:agent/fix1b-->
+- nf3b: nav seam, mapKillErr, Approach field NPC (TASK-1104/1107) <!--sg:agent/nf3b-->
+- fix7b: arbiter fixes N1-N6 (TASK-1115) <!--sg:agent/fix7b-->
+- roadfresh: roadmap refresh (TASK-1123) <!--sg:agent/roadfresh-->
+- road4: d2shadow (TASK-1121) <!--sg:agent/road4-->
+- vault2: atomic Reserve, merc journal (TASK-1113) <!--sg:agent/vault2-->
+- nf1b: pre.bind and pre.summon (TASK-1105) <!--sg:agent/nf1b-->
+- nf2: flail hold and sweep in a cleared area let time pass (TASK-1103) <!--sg:agent/nf2-->
+- nf4: board restart scenario timing, town route reinsertion (TASK-1106/1108) <!--sg:agent/nf4-->
+- nf3: early road kit entry rule, unreachable goal searched once (TASK-1104/1107) <!--sg:agent/nf3-->
+- led1: dark ledger split: per-knob design files + runtime state outside git (TASK-1110) <!--sg:agent/led1-->
+- nf1: nav strip behind a sealed frontier pocket (TASK-1102) <!--sg:agent/nf1-->
 - fix8: build-table consistency check, capability facts, SelectProfile error, combat keys, traps list, mana_heavy in Normal (TASK-1097) <!--sg:agent/fix8-->
 - review 13: sandbox live log review (docs) <!--sg:agent/rv4-->
 - round-2 review C: security, PG, data, pipeline (docs) <!--sg:agent/rv3-->

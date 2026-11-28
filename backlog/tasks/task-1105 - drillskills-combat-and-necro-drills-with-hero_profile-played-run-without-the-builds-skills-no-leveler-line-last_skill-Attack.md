@@ -18,8 +18,10 @@ owns:
   - "cmd/d2scenario/"
   - "tools/provingground/scenarios/combatdrills.json"
   - "tools/provingground/scenarios/necro.json"
+  - "tools/provingground/golden/setup-played.tsv"
 exclusive: []
 contracts: []
+result: "NOT fixed. Premise corrected (V, lab results json of run 20261128-000130): the drill heroes DO learn skills (skillsspent 23 to 30, skill_levels set, Zeal 5, Whirlwind 1, hero_casts show Blessed Hammer, Bash, Teeth); the played hero spends points via cmd skillpt, so no leveler line is expected. The RED is the attack binding: the library binds the build's main attack (Barbarian left skill Bash, Paladin Blessed Hammer, Necromancer right Teeth/Bone Spear) while the drills expect Whirlwind, Zeal, Corpse Explosion; minions 0 for ce1/ce5 because setup casts none. Next: bind the drill's skill in trigger or pre, and give the necro setup a summon. Setup side fixed, NOT verified live (no game run). Premise corrected (V, lab results json of run 20261128-000130): the drill heroes do learn skills; the RED was the hand binding and no summon at setup. Now: pre.bind (skill NAME and hand, resolved by the class table, `cmd select` after the points) and pre.summon (skill NAME, n casts by `cmd skill` at setup, field start only), both ledgered SETUP and tagged CHEATED (tags hand-skill, summon); the prep self-check has the rows bind (learned and on the declared hand) and minions (at least min standing, `debug minions`), BLOCKED otherwise. Scenarios: whirlwind-clears and control (Whirlwind right), hold-interruptible (Zeal left), teleport-reposition (Teleport right), hammer-in-pack and control (Blessed Hammer left), corpse-explodes and necro.corpse-ce1/ce5 (Corpse Explosion right, one Clay Golem), army-holds and control (Clay Golem), pets-hold (Oak Sage). Verified offline: validate, smoke, golden regenerated, unit tests with must-fail arms on Barbarian, Paladin, Necromancer, Druid, Sorceress. U until a lab rerun: that d2d obeys `cmd select` for a skill learned by `debug points`, that a setup cast of Clay Golem or Oak Sage lands within 40 frames, and that the bot keeps the bound hand. Build-specific data lives only in the scenario files (skill names); no Go names a skill."
 ---
 
 ## Description
@@ -34,5 +36,5 @@ Ten RED rows of job 3 share one cause candidate. In all of them the bot log has 
 <!-- AC:BEGIN -->
 - [ ] #1 A combat drill log shows the skills of trigger.build learned before the first fight (leveler or setup line)
 - [ ] #2 combat.whirlwind-clears, combat.hold-interruptible, combat.teleport-reposition, combat.corpse-explodes and necro.corpse-ce1/ce5 rerun; each verdict is about the driver, not the setup
-- [ ] #3 Tested for two classes
+- [x] #3 Tested for two classes
 <!-- AC:END -->

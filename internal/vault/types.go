@@ -84,20 +84,23 @@ type Item struct {
 // Rec is a record as the index holds it.
 type Rec struct {
 	Item
-	Hash     string    `json:"hash"`
-	State    State     `json:"state"`
-	Pin      bool      `json:"pin,omitempty"`
-	InFlight bool      `json:"inflight,omitempty"` // a keep create was started and not confirmed
-	Attempts int       `json:"attempts,omitempty"`
-	Where    string    `json:"where,omitempty"`   // keep target: "" or stash, inv
-	Reason   string    `json:"reason,omitempty"`  // last failure or trim/discard reason
-	Gold     int       `json:"gold,omitempty"`    // sale price once sold
-	RevQ     bool      `json:"revq,omitempty"`    // Reveal asked: the item is identified at the next town visit (V6)
-	Stage    string    `json:"stage,omitempty"`   // in-flight step of a reveal or sale (Stage* constants), "" when idle
-	Ordered  bool      `json:"ordered,omitempty"` // sellq: the player ordered the sale; false is a mark that waits for a confirm (loot.vaultAutoTrim off)
-	GoldPre  int       `json:"goldpre,omitempty"` // purse before the sale create, for the read-back after a restart
-	Updated  time.Time `json:"updated"`
-	seq      int       // position in insertion order
+	Hash     string `json:"hash"`
+	State    State  `json:"state"`
+	Pin      bool   `json:"pin,omitempty"`
+	InFlight bool   `json:"inflight,omitempty"` // a keep create was started and not confirmed
+	Attempts int    `json:"attempts,omitempty"`
+	Where    string `json:"where,omitempty"`   // keep target: "" or stash, inv
+	Reason   string `json:"reason,omitempty"`  // last failure or trim/discard reason
+	Gold     int    `json:"gold,omitempty"`    // sale price once sold
+	RevQ     bool   `json:"revq,omitempty"`    // Reveal asked: the item is identified at the next town visit (V6)
+	Stage    string `json:"stage,omitempty"`   // in-flight step of a reveal or sale (Stage* constants), "" when idle
+	Ordered  bool   `json:"ordered,omitempty"` // sellq: the player ordered the sale; false is a mark that waits for a confirm (loot.vaultAutoTrim off)
+	GoldPre  int    `json:"goldpre,omitempty"` // purse before the sale create, for the read-back after a restart
+	// Hold is the order id that reserved the record (Store.Reserve): until that order sells it (soldnow) or releases it,
+	// every other transition (keep, pin, discard, queue sale, reveal) is refused, so a record is either sold or kept.
+	Hold    string    `json:"hold,omitempty"`
+	Updated time.Time `json:"updated"`
+	seq     int       // position in insertion order
 }
 
 // Status is the one-word view the UI shows.
@@ -122,6 +125,8 @@ var (
 	ErrInvalid       = errors.New("vault: invalid item")
 	ErrTooLarge      = errors.New("vault: import too large")
 	ErrPinned        = errors.New("vault: pinned items are never sold")
+	ErrHeld          = errors.New("vault: reserved by an order")
+	ErrStale         = errors.New("vault: changed since it was read")
 )
 
 // MissedKeep is how many of the best missed drops the vault remembers.

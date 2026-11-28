@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"errors"
+	"fmt"
 	"testing"
 
 	"d2lod-bot/internal/boss"
@@ -10,6 +11,7 @@ import (
 	"d2lod-bot/internal/combat"
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/data"
+	"d2lod-bot/internal/nav"
 	"d2lod-bot/internal/task"
 )
 
@@ -60,6 +62,12 @@ func TestMapKillErrAndBossErr(t *testing.T) {
 	cancel()
 	if err := mapKillErr(parent, slice, context.Canceled); err != nil {
 		t.Errorf("the slice running out is not an error: %v", err)
+	}
+	if err := mapKillErr(parent, slice, fmt.Errorf("slice: %w", context.DeadlineExceeded)); err != nil {
+		t.Errorf("the slice deadline is not an error: %v", err)
+	}
+	if err := mapKillErr(parent, slice, nav.ErrNoPath); !errors.Is(err, nav.ErrNoPath) {
+		t.Errorf("a fight that failed on its own stays an error when the slice also ended (the boss fail counter must grow): %v", err)
 	}
 	if err := mapKillErr(parent, parent, combat.ErrTownPortal); !errors.Is(err, boss.ErrEscaped) {
 		t.Errorf("portal: %v", err)
