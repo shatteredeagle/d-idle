@@ -196,6 +196,7 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- b5055f308 11-28 02:08 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
 - 41fb5b723 11-28 01:52 `Merge agent/nf3: nf3: early road kit entry rule, unreachable goal searched once (TASK-1104/1107)` (nf3)
 - 04bfc9149 11-28 01:51 `Merge branch 'main' into nf3` (-)
 - cded674d7 11-28 01:50 `Merge agent/led1: led1: dark ledger split: per-knob design files + runtime state outside git (TASK-1110)` (led1)
@@ -205,5 +206,4 @@
 - e9576a33f 11-28 01:29 `Merge branch 'main' into nf3` (-)
 - e4b6fc6eb 11-28 01:29 `Merge branch 'main' into led1` (-)
 - ab6763901 11-28 01:29 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
-- 317417875 11-28 01:28 `Merge branch 'main' into nightlog` (-)
 <!-- statusgen:end -->
