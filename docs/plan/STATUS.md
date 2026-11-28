@@ -195,7 +195,9 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 9da05821e 11-28 00:52 `Merge agent/rv1: round-2 review A: fix1 and fix2 (docs)` (rv1)
 - 9fd88574f 11-28 00:52 `Merge agent/rv2: round-2 review B: fix3 and fix7 (docs)` (rv2)
+- 4b7a0cd83 11-28 00:48 `Merge branch 'main' into rv1` (-)
 - cc179624e 11-28 00:48 `Merge branch 'main' into rv2` (-)
 - f8daf5458 11-28 00:29 `Merge agent/fix4: fix4: scrubber, watch token redirect, difficulty go hero scope and expiry, flip container env, tail NUL, docker volumes doc (TASK-1100)` (fix4)
 - f9fba8895 11-28 00:28 `Merge branch 'main' into fix4` (-)
@@ -203,6 +205,4 @@
 - 4fdc91a46 11-28 00:25 `Merge agent/labtriage: labtriage: overnight lab triage, scenario marker fixes, 8 cards (TASK-1101..1108)` (labtriage)
 - 5f82d9b8f 11-28 00:17 `fix4: merge origin/main; the hero-scoped go is consumed when the hop starts` (fix4)
 - 2c1465fec 11-27 23:15 `Merge agent/fix6: fix6: ledger accounting, mandatory hero_profile, d2scenario smoke, stability view, pack room (TASK-1098)` (fix6)
-- 29e0120bb 11-27 23:14 `Merge branch 'main' into fix6` (-)
-- b0844c390 11-27 23:06 `Merge agent/fix2: fix2: board counters persist, rung-4 skip counts coded refusals only, resume tick for all goals, difficulty go consumed after the hop (TASK-1099)` (fix2)
 <!-- statusgen:end -->
