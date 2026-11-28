@@ -199,6 +199,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 9643ebbe4 11-28 04:51 `Merge agent/nightlog: nightlog: Questy save incident (docs)` (nightlog)
+- 893ee2ab2 11-28 04:50 `Merge branch 'main' into nightlog` (-)
 - 0cdf10521 11-28 04:44 `Merge agent/sec2: sec2: scrub leaks (TASK-1125)` (sec2)
 - 39a32f65f 11-28 04:43 `Merge branch 'main' into sec2` (-)
 - 6a0008aab 11-28 04:35 `Merge agent/evid1: evid1: evidence logs (TASK-1118)` (evid1)
@@ -207,6 +209,4 @@
 - 48f4d1a49 11-28 04:15 `Merge agent/ledenable: ledger: refusalPark and resumeAfterDeaths enabled (clean 2 h windows)` (ledenable)
 - 037c75cbd 11-28 03:54 `Merge origin/main into evid1` (-)
 - 4c2238793 11-28 03:54 `Merge origin/main into sec2` (-)
-- 9b76a8df1 11-28 03:54 `Merge origin/main into evid1: one starved filter with both rules, tier rows unioned, setup golden regenerated` (evid1)
-- b6124a294 11-28 03:53 `Merge agent/flipfix2: flipfix2: sandbox aliases, flip status EST, graduate-list checks (TASK-1130)` (flipfix2)
 <!-- statusgen:end -->
