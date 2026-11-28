@@ -163,8 +163,8 @@ func (l *Looter) poorBelow() int {
 	return n
 }
 
-// SetBuild tells the looter which build the character plays, so potion pickup in Nightmare and Hell follows the
-// same mana-heavy belt columns the shop buys by (belt.PlanForBuild). Normal ignores it.
+// SetBuild tells the looter which build the character plays, so potion pickup follows the same belt columns the
+// shop buys by (belt.PlanForBuild): the mana-heavy rows in Nightmare and Hell, the need-2 default columns in Normal.
 func (l *Looter) SetBuild(name string) { l.build = name }
 
 // SetPickit replaces the rule set (for example one loaded from a user file).

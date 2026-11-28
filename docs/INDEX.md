@@ -143,6 +143,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 `design/`
 
 - [fork-order-id-spec.md](design/fork-order-id-spec.md): Fork change spec: order id on the direct item verbs (status: proposal (card fix1, 2026-11-27). Nothing here is built; no fork edit was made. Needs the fork owner and...)
+- [fork-save-atomic.md](design/fork-save-atomic.md): Fork request: write the character file atomically (status: request to the d2d fork, not built (card savesafe). Nothing in the fork was changed by this card. The bot...)
 
 `digest/`
 
@@ -591,6 +592,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 - [docker-volumes.md](ops/docker-volumes.md): Docker volumes on the worker host: safe removal (status: current (fix4, from fable review 4 finding 2, `docs/design/fable-review-2026-11-28/04-security-privacy.md`).)
 - [logs.md](ops/logs.md): Where the logs are (sandbox container and dev) (status: current (card logsink). Code: `internal/logx/sink.go`, `cmd/d2bot/main.go` (newLogger),...)
+- [save-backups.md](ops/save-backups.md): Character file backups, startup repair and the disk guard (status: current (card savesafe). Code: `internal/savesafe/`, `cmd/d2bot/savesafewire.go`. NOT verified live (unit...)
 - [outcomes.md](outcomes.md): Typed step outcome (knob `bot.typedOutcome`) (status: current, stage 1 (card outcome1, 2026-11-25). Source: P2 of...)
 - [overlay.md](overlay.md): Table overlay (d.idle mode): file format and rules (status: implemented, 2026-11-06, TASK-59. Fork side `--overlay-dir` on branch `d2d.lab4-overlay` of the private...)
 - [pact-away.md](pact-away.md): Pact away safety (TASK-169) (status: built and tested offline with fakes and httptest; NOT run against a live bot or a browser. Design:...)
@@ -1149,6 +1151,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 `probes/`
 
+- [evidence-logs-2026-11-28.md](probes/evidence-logs-2026-11-28.md): Evidence lines for the NOT YET knobs, 2026-11-28 (card evid1) (status: current. Follows docs/probes/graduations-2026-11-28.md section 3. Tags: V = read or run today (how is...)
 - [exitsread-2026-11-22.md](probes/exitsread-2026-11-22.md): exitsread: the engine's link table against the bot's exit data (card exitsread, 2026-11-22) (status: current. Card `exitsread` (map-knowledge review card 4). Tags: V = measured in a named run, S = source or...)
 - [farmloop-live-20261116.md](probes/farmloop-live-20261116.md): Farm loop live check in the sandbox, 2026-11-16 (status: record. Task farmlive (TASK-553). Tags: V = verified in this run (container logs, read only), U = not...)
 - [farmloop-measure.md](probes/farmloop-measure.md): Recipe: kills per minute against coverage (farm loop decay curve) (status: current. Tool `tools/farmloop/measure.py` (stdlib Python, reads stdin). Tags: V = ran once...)
@@ -1208,6 +1211,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [lab-night-commands-2026-11-27.md](probes/lab-night-commands-2026-11-27.md): Lab night commands, 2026-11-27 (23:00 to 07:00 EST): corrected, paste-ready (status: current (docs only; card nightcheck, no game, no lab run). Corrects and extends...)
 - [lab-night-plan-2026-11-27.md](probes/lab-night-plan-2026-11-27.md): Lab night plan, 2026-11-27 (23:00 to 07:00 EST) (status: current (docs only; no game, no lab run made by this card). Tags: V = read in the repo at origin/main...)
 - [lab-night-results-2026-11-28.md](probes/lab-night-results-2026-11-28.md): Lab night results, 2026-11-28: triage of the three Proving Ground jobs (status: current (card labtriage, TASK-1101; docs and scenario data only, no game run by this card). Consumer:...)
+- [lab-night-results-2026-11-28b.md](probes/lab-night-results-2026-11-28b.md): Lab night results 2026-11-28, part b: reruns after the fixes (status: current (lab operator labops2, no task card; docs and scenario data, lab slots only, no live game)....)
 - [live-queue-2026-11-27.md](probes/live-queue-2026-11-27.md): Live queue, 2026-11-27: cards waiting only on a live run (status: current (docs only; made by card cardfix2 on current main, no game, no lab run). Supersedes the unmerged...)
 - [merc-revive-live-checklist.md](probes/merc-revive-live-checklist.md): Merc revive and hire: what is wired, what is not, live checklist (card mercgold) (status: current 2026-11-27. Tags: V verified (how), S secondary, U unverified. Source:...)
 - [mercbr-2026-11-21.md](probes/mercbr-2026-11-21.md): mercbr: Blood Raven hand-in at Kashya and the free Act 1 merc (2026-11-21) (status: current. Tags: V verified (run named), S secondary, U unverified. Setups are CHEATED (quest word, level,...)

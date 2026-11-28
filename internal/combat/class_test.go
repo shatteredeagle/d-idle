@@ -2,6 +2,7 @@ package combat
 
 import (
 	"context"
+	"errors"
 	"os"
 	"slices"
 	"strings"
@@ -794,9 +795,57 @@ func TestNoProfileIsAnErrorNotTheSorceress(t *testing.T) {
 	if err := f.Kill(context.Background(), 1); err == nil {
 		t.Fatal("Kill fought without a profile")
 	}
-	f.SetProfileErr(nil)
-	if f.ProfileErr() != nil {
-		t.Fatal("not cleared")
+}
+
+// Review C B1: the selection error is not a latch. One snapshot with a bad class stops the fight, the next good
+// selection clears it (two classes); the plan error of the class-aware start stays until that start clears it.
+func TestProfileErrClearsOnGoodSelection(t *testing.T) {
+	for _, c := range []d2.Class{d2.Paladin, d2.Sorceress} {
+		f := &Fighter{cat: testCatalog()}
+		if err := f.CheckProfile(&d2.Player{Class: d2.Class(99)}); err == nil {
+			t.Fatalf("%v: a bad class read gave no error", c)
+		}
+		if err := f.refuseNoProfile(); err == nil {
+			t.Fatalf("%v: fights without a profile", c)
+		}
+		if err := f.CheckProfile(&d2.Player{Class: c}); err != nil {
+			t.Fatalf("%v: the error stayed after a good selection: %v", c, err)
+		}
+		if err := f.refuseNoProfile(); err != nil {
+			t.Fatalf("%v: still refuses to fight: %v", c, err)
+		}
+		f.SetProfileErr(errors.New("table of another class"))
+		if err := f.CheckProfile(&d2.Player{Class: c}); err == nil {
+			t.Fatalf("%v: a good selection cleared the plan error", c)
+		}
+		f.SetProfileErr(nil)
+		if f.ProfileErr() != nil {
+			t.Fatalf("%v: plan error not cleared", c)
+		}
+	}
+}
+
+// Review 14 H5: Clear and Kill select again themselves; one bad class read does not stop them until the runner's
+// next tick (two classes).
+func TestFightRetriesProfileSelection(t *testing.T) {
+	for _, c := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		good := true
+		f := &Fighter{cat: testCatalog()}
+		f.snapFn = func() (*d2.Snapshot, error) {
+			if good {
+				return &d2.Snapshot{State: d2.StateInGame, Player: &d2.Player{Class: c}}, nil
+			}
+			return &d2.Snapshot{State: d2.StateInGame, Player: &d2.Player{Class: d2.Class(99)}}, nil
+		}
+		f.profileFor(&d2.Player{Class: d2.Class(99)}) // the torn read
+		if err := f.refuseNoProfile(); err != nil {
+			t.Fatalf("%v: one bad read still refuses the fight: %v", c, err)
+		}
+		good = false
+		f.profileFor(&d2.Player{Class: d2.Class(99)})
+		if err := f.refuseNoProfile(); err == nil {
+			t.Fatalf("%v: fights while the class has no profile", c)
+		}
 	}
 }
 

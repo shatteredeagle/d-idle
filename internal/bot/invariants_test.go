@@ -237,12 +237,12 @@ func TestInvariantCountersHardAndSince(t *testing.T) {
 				got = &cs[i]
 			}
 		}
-		for _, n := range []string{"potion-not-drunk", "life-zero-alive", "refusal-storm", "xp-frozen", "mode-no-exit", "corpse-unresolved"} {
+		for _, n := range []string{"potion-not-drunk", "life-zero-alive", "refusal-storm", "xp-frozen", "mode-no-exit", "corpse-unresolved", "no-combat-profile"} {
 			if !hard[n] {
 				t.Errorf("%s: %s is not hard", h.name, n)
 			}
 		}
-		if hard["town-thrash"] || len(hard) != 6 {
+		if hard["town-thrash"] || len(hard) != 7 {
 			t.Errorf("%s: hard set %v", h.name, hard)
 		}
 		if got == nil || got.Count == 0 || got.Since.IsZero() || got.First.IsZero() || got.Last.Before(got.First) {
@@ -380,8 +380,8 @@ func TestNoEarnIgnoresAreaChanges(t *testing.T) {
 
 // Review 8 B2: a fighter without a combat profile is a counted invariant.
 func TestInvariantNoCombatProfile(t *testing.T) {
-	if r := invRowOf("no-combat-profile"); r.Hard || r.GapSec == 0 {
-		t.Fatalf("no-combat-profile is a soft, rate limited row: %+v", r)
+	if r := invRowOf("no-combat-profile"); !r.Hard || r.GapSec == 0 { // review C B1: hard, the deploy and flip watches count it
+		t.Fatalf("no-combat-profile is a hard, rate limited row: %+v", r)
 	}
 	m := &invMon{lastLog: map[string]time.Time{}, total: map[string]int{}}
 	m.noteNoProfile("no combat profile for class Paladin")

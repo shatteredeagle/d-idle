@@ -61,7 +61,7 @@ func TestVault2MercStopAfterEveryStep(t *testing.T) {
 					d, mf := mercRig(t, class, kinds[class])
 					wire := func() {
 						d.k.Direct = cmfake{mf, d.ch}
-						d.k.Hand = mhand{dhand: d.h, kind: kinds[class], hired: true}
+						d.k.Hand = mhand{dhand: d.h, kind: kinds[class], hired: true, worn: mf.worn}
 					}
 					wire()
 					old := d2dctl.FakeRecord(0, "cap", 6, 20, "oldcap")

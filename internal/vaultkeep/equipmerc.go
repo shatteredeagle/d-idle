@@ -181,7 +181,14 @@ func (k *Keeper) EquipMerc(ctx context.Context, id string) (Result, bool) {
 			k.dcapsOK = false
 			k.mu.Unlock()
 		}
-		// Nothing moved on the mercenary: take the created copy away again, the record stays in the vault.
+		// Nothing moved on the mercenary: take the created copy away again, the record stays in the vault. The step is
+		// written first, so a lost reply of the removal is read as "taken back", not "given" (review 14 H1).
+		in.Step = mercTakeback
+		if perr := k.mercPut(id, &in); perr != nil {
+			k.Hand.Protect(uint32(cr.ID))
+			k.note("eqm-"+id, "The mercenary refused the "+rec.Name+" and its copy is still in your backpack (the order file could not be updated: "+perr.Error()+"): drop it.")
+			return res, true
+		}
 		if _, verr := k.API.ItemVault(ctx, cr.ID); verr != nil {
 			if !createAnswered(verr) { // unanswered: the copy may still be there; the intent stays and blocks a retry until the next look
 				return res, true

@@ -81,7 +81,7 @@
     ]
    },
    "provenance": "Hero created fresh, clvl 17 by stat verbs, purse 5000, waypoints Cold Plains to Dark Wood, board records as the scenario says. CHEATED: waypoints and level are SETUP writes (mechanics evidence only, never balance).",
-   "notes": "D2: Stop implies dependants; after_s 8 wall because the scroll chunk is in progress only about 4 to 20 s after the start (Paladin; the Sorceress about 50 s) and the lab night run with 60 cancelled a chunk that was already done (409 done); the reply lists them in `changed` (field added by card 6).",
+   "notes": "D2: Stop implies dependants; the reply lists them in `changed` (field added by card 6). after_s 8 (labops2 2026-11-28): the trigger clock is WALL seconds from the bot start (cmd/d2scenario/tap.go) and the scroll chunk was done 23 to 57 wall seconds after the start in the lab night (Paladin 11, Sorceress 3), so the cancel at 60 got 409 `done`; the chunk starts about 4 s after the bot (V both logs). U under a loaded host: a state-tied trigger is the real fix (TASK-1106 AC 2).",
    "assert": [
     {
      "kind": "api_reply",
@@ -162,7 +162,7 @@
     },
     "api": [
      {
-      "after_s": 60,
+      "after_s": 8,
       "path": "/api/quests/search_for_cain/cancel",
       "body": {
        "chunk": "scroll",
@@ -170,7 +170,7 @@
       }
      },
      {
-      "after_s": 75,
+      "after_s": 14,
       "path": "/api/quests/search_for_cain/cancel",
       "body": {
        "chunk": "scroll",
@@ -193,7 +193,7 @@
     ]
    },
    "provenance": "Hero created fresh, clvl 17 by stat verbs, purse 5000, waypoints Cold Plains to Dark Wood, board records as the scenario says. CHEATED: waypoints and level are SETUP writes (mechanics evidence only, never balance).",
-   "notes": "I7. Plan file equality is covered offline by the card 2 and 3 unit tests (a scenario cannot read the file).",
+   "notes": "I7. Plan file equality is covered offline by the card 2 and 3 unit tests (a scenario cannot read the file). labops2 2026-11-28: api trigger times moved into the first seconds (after_s is WALL seconds from the bot start; the scroll chunk starts about 4 s after it and was done before the old trigger times, so the reply was 409 `done` or a plain start; V lab run 20261128-020016).",
    "assert": [
     {
      "kind": "api_reply",
@@ -445,7 +445,7 @@
     },
     "api": [
      {
-      "after_s": 30,
+      "after_s": 8,
       "path": "/api/quests/den_of_evil/start",
       "body": {
        "chunk": "clear_den"
@@ -467,7 +467,7 @@
     ]
    },
    "provenance": "Hero created fresh, clvl 17 by stat verbs, purse 5000, waypoints Cold Plains to Dark Wood, board records as the scenario says. CHEATED: waypoints and level are SETUP writes (mechanics evidence only, never balance).",
-   "notes": "D5, Q7: one quest at a time; the refusal text names Search for Cain (checked by the card 6 unit test).",
+   "notes": "D5, Q7: one quest at a time; the refusal text names Search for Cain (checked by the card 6 unit test). labops2 2026-11-28: api trigger times moved into the first seconds (after_s is WALL seconds from the bot start; the scroll chunk starts about 4 s after it and was done before the old trigger times, so the reply was 409 `done` or a plain start; V lab run 20261128-020016).",
    "assert": [
     {
      "kind": "api_reply",
@@ -514,6 +514,16 @@
      1,
      2,
      3
+    ],
+    "board": {
+     "quest": "search_for_cain",
+     "chunk": "scroll"
+    },
+    "board_also": [
+     {
+      "quest": "search_for_cain",
+      "chunk": "read"
+     }
     ]
    },
    "trigger": {
@@ -523,19 +533,10 @@
      "quests.boardSM": 1,
      "resource.pointsDecisions": 1
     },
-    "api": [
-     {
-      "after_s": 20,
-      "path": "/api/quests/search_for_cain/start",
-      "body": {
-       "chunk": "read"
-      }
-     }
-    ],
-    "restart_at_s": 110
+    "restart_at_s": 240
    },
    "budget": {
-    "virtual_min": 30
+    "virtual_min": 90
    },
    "matrix": {
     "classes": [
@@ -548,13 +549,13 @@
     ]
    },
    "provenance": "Hero created fresh, clvl 17 by stat verbs, purse 5000, waypoints Cold Plains to Dark Wood, board records as the scenario says. CHEATED: waypoints and level are SETUP writes (mechanics evidence only, never balance).",
-   "notes": "trigger.restart_at_s 110 (wall): the bot is stopped (SIGTERM, save and quit) and started again on the same hero and plan file. The lab night 2026-11-28 used 300, longer than the whole leg (the leg ended on its virtual budget at about 150 s wall), so the restart was not mid-chain. The first leg must have taken the scroll (Paladin did at about 105 s; the Sorceress retried the tree four times and had not, so a Sorceress RED here means the precondition was not met; U: timing).",
+   "notes": "labops2 2026-11-28, third change: restart_at_s 240 and budget 90 (were 150 and 60). The banked Sorceress has no mana and needs 145 to 150+ wall seconds for the scroll on a loaded host: GREEN at 02:07 (read awaited at 145 s), RED at 02:38 (not taken at 150 s, so the restart resumed the chunk, which is correct bot behaviour and a setup miss). labops2 2026-11-28, second change: the chain is accepted in the setup (pre.board scroll, board_also read, as stop-cascades does) instead of a start tap at 20 wall seconds. With the tap the levelling plan had already walked the Paladin into the Forgotten Tower and the chunk parked gave_up in one second (seeds 11 and 3, card boardsidestart TASK-1120); from the setup the chunk starts about 4 s after the bot, in town. labops2 2026-11-28: restart_at_s 150 and budget 60 (was 300 and 30: the 30 virtual minutes ended after about 150 WALL seconds for the Paladin, so the restart came after the budget; the scroll was read at 92 wall seconds). The assertion counts chunk starts, not step lines (a failed tree click logs the step again in the same process, V Paladin 11 log). U: a hero that has not finished the chunk at the restart starts it again and reads RED (Sorceress 3 in the lab night, out of mana): that is a setup fault, not a finding. trigger.restart_at_s: the bot is stopped (SIGTERM, save and quit) and started again on the same hero and plan file; the first leg must have taken the scroll (U: timing, tune restart_at_s).",
    "assert": [
     {
      "kind": "log_line",
      "pattern": "quest board: starting chunk search_for_cain/scroll",
      "max": 1,
-     "why": "the scroll chunk starts once per run: a step may repeat after a failed pickup, but the restart must not start the chunk again (I4, I6)"
+     "why": "the chunk started once, before the restart, and is not started again after it (I4, I6); the step line itself repeats on a retry inside one process"
     },
     {
      "kind": "board",
@@ -700,50 +701,47 @@
      "quests.boardSM": 1,
      "resource.pointsDecisions": 1
     },
-    "restart_at_s": 1500
+    "restart_at_s": 420
    },
    "budget": {
     "virtual_min": 100
    },
    "matrix": {
     "classes": [
-     "Paladin",
      "Sorceress"
     ],
     "seeds": [
-     11,
      3
     ]
    },
    "provenance": "Hero created fresh, clvl 17 by stat verbs, purse 5000, waypoints Cold Plains to Dark Wood, board records as the scenario says. CHEATED: waypoints and level are SETUP writes (mechanics evidence only, never balance).",
-   "notes": "Setup of board.hold.timeout (a short belt and no gold: the hold outlives its budget and parks as hold_timeout at about 60 virtual minutes), then trigger.restart_at_s stops and starts the bot on the same plan file (U: 1500 wall seconds is about 75 virtual minutes at pace 3; tune it from the first run). Pass: the park is stored (state blocked, reason hold_timeout) and survives the restart; the chunk is not started again.",
+   "notes": "labops2 2026-11-28 (lab runs 20261128-010108 Paladin 11, 20261128-011304 Sorceress 3, restart_at_s 420 WALL seconds): the park of this setup is NOT hold_timeout. Sorceress 3: the recovery ends, the chunk starts and the tower guard refuses three times (`0 mana potions < 2 (caster)`), `quest board: parked forgotten_tower/countess` at 62 virtual minutes, gave_up; after the restart the bot logs `forgotten_tower/countess parked: The Forgotten Tower is stuck` and does not start the chunk again (V log). Paladin 11: the hero recovers, walks to the Countess and the run is auto-finished, no park, so the Paladin is out of the matrix until a setup parks it (U). The assertions follow that: parked once, blocked at the end (any park reason), started at most once. restart_at_s is wall time and the park came 320 s after the bot start at pace 9: on a host twice as slow the restart comes before the park and the row reads RED for a harness reason (U).",
    "assert": [
     {
      "kind": "log_line",
-     "pattern": "quest board: hold",
+     "pattern": "^quest board: parked forgotten_tower/countess",
      "min": 1,
-     "why": "the hold the park comes from was seen before the restart"
+     "max": 1,
+     "why": "the chunk parked once, before the restart"
     },
     {
      "kind": "board",
      "quest": "forgotten_tower",
      "chunk": "countess",
-     "state": "blocked",
-     "reason": "hold_timeout"
+     "state": "blocked"
     },
     {
      "kind": "log_line",
      "pattern": "quest board: starting chunk forgotten_tower",
-     "max": 0,
-     "from_min": 75,
+     "max": 1,
      "why": "after the restart the park is kept: the chunk is not started again (the restart drill, TASK-983)"
     },
     {
      "kind": "no_writes"
     }
    ],
-   "status": "pending",
-   "pending_reason": "bsmprep 2026-11-27: rewritten to take its park from the hold.timeout setup instead of a hero that dies; not run. U: hold.timeout itself stayed RED (kit minima, bsm7 fixed it for restock only), and restart_at_s timing. A scenario fault here is not a finding."
+   "status": "active",
+   "pending_reason": "history (bsmprep 2026-11-27): written for a hold_timeout park and not run; first run 2026-11-28 by labops2, see notes."
   },
   {
    "id": "board.retry.runs-a-step",

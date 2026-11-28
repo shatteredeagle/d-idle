@@ -35,3 +35,28 @@ func TestDeclineBackoffIsCapped(t *testing.T) {
 		}
 	}
 }
+
+// Review 14 M1: declines and failures count apart. One real failure after six declines backs off for BackoffBase, not
+// BackoffMax. Two builds.
+func TestFailureAfterDeclinesStartsAtBase(t *testing.T) {
+	for name, mana := range map[string]int{"caster": 2, "melee": 0} {
+		facts := PlanFacts(upkeepPlan(t, mana, 5000))
+		facts[FactRecovery], facts[FactObjective] = 1, 1
+		a := New(DefaultConfig(), UpkeepSources()...)
+		now := 0.0
+		var in Intent
+		for i := 0; i < 6; i++ {
+			d := a.Decide(View{Now: now, Area: "dark_wood", Facts: facts})
+			if d.Chosen == nil || d.Chosen.Source != SrcUpkeep {
+				t.Fatalf("%s: setup at t=%v, chosen %+v", name, now, d.Chosen)
+			}
+			in = *d.Chosen
+			a.Decline(in, now)
+			now += 120
+		}
+		a.Report(in, now, false)
+		if got := a.fails[in.backoffKey()].until - now; got != DefaultConfig().BackoffBase {
+			t.Fatalf("%s: a first failure after six declines backs off %v s, want BackoffBase %v", name, got, DefaultConfig().BackoffBase)
+		}
+	}
+}

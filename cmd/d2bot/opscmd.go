@@ -15,6 +15,7 @@ import (
 	"d2lod-bot/internal/logx"
 	"d2lod-bot/internal/ops"
 	"d2lod-bot/internal/questboard"
+	"d2lod-bot/internal/support"
 	"d2lod-bot/internal/vaultkeep"
 )
 
@@ -23,6 +24,7 @@ const opsUsage = `usage: d2bot ops quest status [--json] [--why]
        d2bot ops quest start <quest> [--chunk ID] --try-anyway --why "reason"   (owner override of a readiness refusal, one attempt)
        d2bot ops quest auto <quest> --on|--off --why "reason"
        d2bot ops status --why                                 (the decision ring and standing refusals, read only)
+       d2bot ops save check [--char NAME] [--save DIR] [--state DIR]   (live character file validity and its backups, read only)
        d2bot ops hold|home --why "reason"                    (hold: stop and rest in town; home: queue a rest in town)
        d2bot ops go <area> [--minutes N] --why "reason"      (a go order, default 60 minutes)
        d2bot ops park <quest> <hours 1..24> --why "reason"   (stop the quest's chunk, refuse start and retry until then)
@@ -44,6 +46,9 @@ func opsMain(args []string, out io.Writer) (int, error) {
 	}
 	if len(args) > 0 && args[0] == "vault" {
 		return opsVault(args[1:], out)
+	}
+	if len(args) > 0 && args[0] == "save" {
+		return opsSave(args[1:], out)
 	}
 	if len(args) > 0 && args[0] != "quest" {
 		return opsHero(args, out)
@@ -303,8 +308,9 @@ func opsLog(args []string, out io.Writer) (int, error) {
 	if err != nil {
 		return 1, err
 	}
+	// the output goes to a terminal and from there into chats: no credential, no control character (review 4 finding 7)
 	for _, l := range lines {
-		fmt.Fprintln(out, l)
+		fmt.Fprintln(out, logx.Printable(support.RedactCredentials(l)))
 	}
 	return 0, nil
 }

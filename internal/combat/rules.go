@@ -88,10 +88,15 @@ var monsterRules = []monsterRule{
 	},
 }
 
-// PlanForTarget combines the affix rules and the class rules for one target. ManaNeed of the class decides who a Mana Burn
-// hurts; ranged says the character attacks from a distance (a melee build cannot keep range, it uses NoMelee to
-// leave or skip instead).
+// PlanForTarget is PlanForBuildTarget for the class default (no table named).
 func PlanForTarget(t Target, c d2.Class, diff d2.Difficulty, clvl int) Plan {
+	return PlanForBuildTarget(t, c, "", diff, clvl)
+}
+
+// PlanForBuildTarget combines the affix rules and the class rules for one target. The mana need of the hero
+// (resource.ManaNeedFor: the build's mana_heavy flag, else the class) decides who a Mana Burn hurts; a melee build
+// cannot keep range, it uses NoMelee to leave or skip instead.
+func PlanForBuildTarget(t Target, c d2.Class, build string, diff d2.Difficulty, clvl int) Plan {
 	p := Plan{Kite: true}
 	var notes []string
 	a := t.Affixes
@@ -101,7 +106,7 @@ func PlanForTarget(t Target, c d2.Class, diff d2.Difficulty, clvl int) Plan {
 		p.Kite = false
 		notes = append(notes, "no kiting (fast/teleport)")
 	}
-	if a&AffixManaBurn != 0 && resource.ManaNeed(c) > 0 {
+	if a&AffixManaBurn != 0 && resource.ManaNeedFor(c, build) > 0 {
 		p.KillFirst = true
 		p.ManaReserve = manaBurnReserve
 		p.KeepRange = max(p.KeepRange, manaBurnSpacing)
