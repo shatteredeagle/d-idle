@@ -187,14 +187,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
-- e340dc50e 11-27 22:25 `Merge agent/darkthrottle: darkthrottle: ledger cap, by_design status, flip_plan, sandbox-first doc (TASK-1091)` (darkthrottle)
-- af5382fe3 11-27 22:24 `Merge branch 'main' into darkthrottle` (-)
-- a9fc9ca8c 11-27 22:13 `Merge agent/pgfix: pgfix: banked default hero profile, setup tags on blocked runs, hand skills in the point dump (TASK-1093)` (pgfix)
-- f8a505433 11-27 22:12 `Merge branch 'main' into pgfix` (-)
-- f4865d49e 11-27 22:04 `Merge agent/farmresetretire: farmresetretire: bot.farmReset graduated to always-on, knob removed (TASK-1090)` (farmresetretire)
-- b540e608c 11-27 22:03 `Merge branch 'main' into farmresetretire` (-)
-- 4e171e621 11-27 21:56 `Merge agent/flipjson: flipjson: flip.py parses the first JSON document of ops status --why` (flipjson)
-- 98a9c9be9 11-27 21:56 `Merge agent/xplostfalse: xplostfalse: believe an xp fall only when repeated, relaunch-aware Save and Exit level, auto-start held-back reasons (TASK-1089)` (xplostfalse)
-- f956c040e 11-27 21:53 `Merge branch 'main' into flipjson` (-)
-- da6cf18c4 11-27 21:53 `Merge branch 'main' into xplostfalse` (-)
+- cc8a551ed 11-27 22:49 `Merge agent/fable-fr9: fable review 9 (docs)` (fable-fr9)
+- 861efe7b8 11-27 22:49 `Merge agent/fable-fr8: fable review 8 (docs)` (fable-fr8)
+- 64205b981 11-27 22:49 `Merge agent/fable-fr6: fable review 6 (docs)` (fable-fr6)
+- 24328a060 11-27 22:48 `Merge agent/fable-fr4: fable review 4 (docs)` (fable-fr4)
+- 4ba5b20b4 11-27 22:46 `Merge branch 'main' into fable-fr9` (-)
+- 9984d6c7c 11-27 22:46 `Merge branch 'main' into fable-fr8` (-)
+- ce257d051 11-27 22:46 `Merge branch 'main' into fable-fr6` (-)
+- ae87511ab 11-27 22:46 `Merge branch 'main' into fable-fr4` (-)
+- 4699c6551 11-27 22:44 `Merge agent/fable-fr2: fable review 2 (docs)` (fable-fr2)
+- b4b821f56 11-27 22:44 `Merge agent/ledger-bot-diffReadyV2-items-advisor-20261128-034138: ledger: diffReadyV2 + advisor bundles on both sandboxes (re-flip)` (ledger-bot-diffReadyV2-items-advisor-20261128-034138)
 <!-- statusgen:end -->

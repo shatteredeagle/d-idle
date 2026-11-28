@@ -384,6 +384,17 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [ui-unification-appendix-pages.md](design/fable-review-2026-11-22/ui-unification-appendix-pages.md): UI unification review, appendix: page and panel inventory (status: current (review of 2026-11-22, card fableui). Belongs to ui-unification.md. Docs only.)
 - [ui-unification.md](design/fable-review-2026-11-22/ui-unification.md): UI unification review: navigation, cruft and readable build pages (2026-11-22) (status: DESIGN REVIEW, nothing built (card fableui). Docs only. The user decides the open questions in section F;...)
 
+`design/fable-review-2026-11-28/`
+
+- [01-item-flows.md](design/fable-review-2026-11-28/01-item-flows.md): Fable review 2026-11-28, part 1: item flows through the Vault and the fork verbs (status: review, read-only (no code changed). Base: `origin/main` at 415b11f25. Scope: `internal/vaultkeep`,...)
+- [02-quest-board.md](design/fable-review-2026-11-28/02-quest-board.md): Fable review 2 of 8: quest board, step executor, hand-in (changes of 2026-11-27) (status: review, read-only. Base: origin/main at 415b11f25. No code was changed. Tags: V = read in the repo or run...)
+- [03-combat-nav-survival.md](design/fable-review-2026-11-28/03-combat-nav-survival.md): Fable review 3 of 8: combat, navigation and survival merged 2026-11-27 (status: review, read-only. Base `75e4c2f4e` (last commit before 2026-11-27 00:00) against `origin/main` at...)
+- [04-security-privacy.md](design/fable-review-2026-11-28/04-security-privacy.md): Fable review 4 of 8: security and privacy of what changed on 2026-11-27 (status: REVIEW, docs only. No code changed, no sandbox probed, no exploit code. Read at origin/main `415b11f25`.)
+- [05-dark-ledger-process.md](design/fable-review-2026-11-28/05-dark-ledger-process.md): Fable review 5 of 8: the dark ledger, the flip tooling and the merge pipeline (status: review, 2026-11-27 evening (branch agent/fable-fr5, base 415b11f25). Read-only review; nothing here is a...)
+- [06-proving-ground.md](design/fable-review-2026-11-28/06-proving-ground.md): Fable review 6 of 8: the Proving Ground as a safety net and as evidence (status: review, 2026-11-28, read on main 415b11f25. Docs only: no code, no lab run, no game. Tags: V = read in the...)
+- [08-builds-as-data.md](design/fable-review-2026-11-28/08-builds-as-data.md): Fable review 8 of 8: builds as data (2026-11-28) (status: review, decides nothing. Read-only pass over `origin/main` at `415b11f25`, "today" = the commits after...)
+- [09-change-pipeline.md](design/fable-review-2026-11-28/09-change-pipeline.md): Fable review 9: how a change travels, and why the dark ledger grows (status: current (reviewer run fr9, 2026-11-27 evening, docs only, nothing changed). Independent second opinion:...)
+
 `design/`
 
 - [input-cast-verbs.md](design/input-cast-verbs.md): Input: cast verbs (cast-unit, cast-point, cast-hold) (status: bot side built offline (TASK-726, card dlv-cast-verbs, 2026-11-27), dark behind `input.planner` (0). Fork...)
@@ -939,6 +950,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 `process/`
 
 - [api-credits.md](process/api-credits.md): API credits: PR review and the optional Haiku tick
+- [autoflip.md](process/autoflip.md): Autoflip
 - [backlog-board-nas.md](process/backlog-board-nas.md): Backlog.md web board on the NAS (read-only mirror) (status: DEPLOYED 2026-11-05 as a NAS Docker-tab template (variant B: own br0 address behind Nginx Proxy Manager...)
 - [barbarian-support.md](process/barbarian-support.md): Barbarian Frenzy: what the engine plays, and what a later card must build (status: current (card barb1, 2026-11-20; Fable roadmap Q8, class 4 after the Sorceress fire build, the Necromancer...)
 - [baseline-runs.md](process/baseline-runs.md): Baseline runs: the extra original-game runs (card baselineruns) (status: current, PREPARED ONLY (2026-11-01). Nothing here was run live; no game was started. The launcher is...)
