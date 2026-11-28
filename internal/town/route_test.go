@@ -150,3 +150,17 @@ func TestRouteFollowsPathCostNotStraightLine(t *testing.T) {
 		t.Errorf("penalty 0: cost %d, want the walk alone 52", c)
 	}
 }
+
+// A chore whose NPC has no preset (Cain before the rescue) no longer drops the whole route to the fixed list: it is put
+// back after the chores it must follow (lab night 2026-11-28, town.plan.one-visit).
+func TestReinsertChoresKeepsPrecedence(t *testing.T) {
+	edges := routeEdges([]string{"idtome", "identify", "sell", "shop"}, false)
+	got := reinsertChores([]string{"idtome", "sell", "shop"}, []string{"identify"}, edges)
+	want := []string{"idtome", "identify", "sell", "shop"}
+	if !slices.Equal(got, want) {
+		t.Fatalf("order %v, want %v", got, want)
+	}
+	if got := reinsertChores([]string{"sell"}, []string{"identify"}, edges); got[0] != "identify" {
+		t.Fatalf("identify follows nothing here but must stay in front of sell: %v", got)
+	}
+}

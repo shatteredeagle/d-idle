@@ -269,18 +269,44 @@ func (t *Town) routePositions(a *Act) map[string]input.Point {
 // reorderChores applies stage 5 to the visit's chore list: it returns the names in the order to run and logs the route.
 func (t *Town) reorderChores(s *d2.Snapshot, a *Act, names []string, settleFirst bool) []string {
 	pos := t.routePositions(a)
+	// A role without a preset (Deckard Cain before his rescue, a preset the map does not give) cannot be priced: its chores
+	// leave the walk and are put back after their last predecessor, so one missing NPC does not cost the whole route.
+	var routed, unplaced []string
 	for _, nm := range names {
 		if r := choreRole[nm]; r != "" && pos[r] == (input.Point{}) {
-			t.e.Log.Info(fmt.Sprintf("town plan: route kept the list (no preset position for %s, chore %s)", r, nm))
-			return names
+			t.e.Log.Info(fmt.Sprintf("town plan: route leaves out chore %s (no preset position for %s)", nm, r))
+			unplaced = append(unplaced, nm)
+			delete(pos, r)
+			continue
 		}
+		routed = append(routed, nm)
 	}
 	start := input.Point{X: s.Player.X, Y: s.Player.Y}
 	rc := t.routePrices(pos, start)
-	res := routeOrderWith(names, routeEdges(names, settleFirst), pos, start, rc)
+	edges := routeEdges(names, settleFirst)
+	res := routeOrderWith(routed, edges, pos, start, rc)
+	res.Order = reinsertChores(res.Order, unplaced, edges)
 	t.lastStops.Store(&res.Stops)
 	t.e.Log.Info(fmt.Sprintf("town plan: route stops=%s cost=%d settle-first=%v order=%s", strings.Join(res.Stops, ","), res.Cost, settleFirst, strings.Join(res.Order, ",")))
 	return res.Order
+}
+
+// reinsertChores puts the chores that were left out of the route back into order, each right after the last chore it must
+// follow (at the front when it follows none), in their original relative order.
+func reinsertChores(order, left []string, edges [][2]string) []string {
+	order = slices.Clone(order)
+	for _, m := range left {
+		at := 0
+		for i, c := range order {
+			for _, e := range edges {
+				if e[0] == c && e[1] == m {
+					at = i + 1
+				}
+			}
+		}
+		order = slices.Insert(order, at, m)
+	}
+	return order
 }
 
 // routePrices is the price list of this visit: the navigator's path length when every leg between the start and the role
