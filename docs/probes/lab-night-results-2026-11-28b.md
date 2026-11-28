@@ -97,6 +97,24 @@ Two faults: the missing way out of a level entered with 0 adjacent entries (same
 
 These touch the file card bsmnight (TASK-1106) owns; that card is Proposed and unassigned work, and the brief of this night allowed scenario fixes. TASK-1106 AC 1 and AC 2 are covered in the sense above; AC 3 (both GREEN on both classes) is not: restart-mid-chain needs TASK-1120 (Paladin) and a Sorceress setup with mana.
 
+## Batch 2 table (01:23 to 02:05 EST)
+
+Bot: main `93b181848` (fix8) for the cain pair and the park drill (V `bot_sha256` `4bae6a802e...`), main `702b6cfd5` (adds nf1, the navbarracks fix) for the rest (V `2bb15e1b13...`).
+
+| scenario | class/seed | result | vs earlier | class | evidence (V unless tagged), run dir |
+|---|---|---|---|---|---|
+| cain.chain determinism pair, second | Paladin 11 | GREEN + GREEN | batch 1: GREEN + GREEN | - | 0x2019 both; digests `cfd482943b853b60` vs `e8711c5d81f6c144`, same assert digest; first divergence BOT-SIDE at record 49152, tick 10376 (41 equal checkpoints before it); cancels 2 and 3, `portal retry` 0; wall 413 and 655 s; `20261128-012318` |
+| board.park.persist-restart (new assertions) | Sorceress 3, 3 repetitions | GREEN 3 of 3 | first run RED (b) | - | each repetition: `quest board: parked forgotten_tower/countess` 272 to 321 wall seconds after the start, restart at 420 s, then `forgotten_tower/countess parked: The Forgotten Tower is stuck` once and no second `starting chunk`; `20261128-012548` |
+| nav.barracks-return on the nf1 build, 4 arms | Paladin 11, 3 | RED x8 | same | a | nf1 did not change the lab result: `nav no usable gate from=28 to=27 exits=1 adjacent=0 borderCells=0 unproven=131 pending=1 cands=0 known=63000 fullyKnown=true badTTL=true`, `nav no exit known yet, exploring`, then 20 x `exit to Outer Cloister: nav: no exit to that level: level 27 from 28 (nothing new since the last search)` inside one second, `d2dworld: link wait over after 0s, 0 polls ... linked [27]`, `town portal did not appear` x5. TASK-1102 AC 1 stays open; `k3-014356` |
+| cain.scroll.stepexec | Paladin 11, 3 repetitions | GREEN 3 of 3 | not run in the first night | - | `20261128-014714` |
+| cain.read.stepexec | Paladin 11, 3 repetitions | GREEN 3 of 3 | 1 of 1 | - | same dir |
+| drill.act2.assemble.stepexec | Paladin 11, 3 repetitions | GREEN 3 of 3 | not run | - | same dir |
+| drill.act2.duriel.stepexec | Paladin 11, 3 repetitions | BLOCKED 0 of 3 | BLOCKED 0 of 3, but further | a | the chunk now starts and runs to the boss: `Entered Duriel's Lair`, `boss not found but dead: the kill step is done`, `Quest progress: duriel`, then 11 x `step talk_tyrael: 2 tries used: open Tyrael: town: npc not found or not reachable`, `parked seven_tombs/duriel`, campaign stall, exit. Identical in all three. New card durieltyrael (TASK-1126); `20261128-015020` |
+| drill.act2.summoner.stepexec | Paladin 11 | BLOCKED (stopped by the operator after 35 min wall) | BLOCKED (watchdog) | a | new shape: `step touch_journal: 2 tries used: interact done, but post [quest_state(summoner,done)] not observed after 4 looks`, `town: no town portal available`, `parked summoner/kill_summoner ... all steps done but the quest does not read as finished`, and from 01:18:52 a busy loop of `roam: done` and `gold ledger` in the Canyon of the Magi, 79000 of each in 31 min with no `status` line and no clock step in the journal (the last journal records are `debug players` reads at tick 74199). Same loop as cainspin (TASK-1103); the summoner cause is card summonerstall (TASK-1104, fix in nf3, not merged); `20261128-011030` |
+| town.plan.scroll-hoard, town.plan.broke-after-bank (`town.plan` 4) | Paladin 11, Sorceress 3 | GREEN x4 | GREEN (old bot; broke-after-bank was Paladin only) | - | `20261128-015337`, `20261128-015436` |
+| town.plan.belt-refill-from-pack (`town.plan` 4, class-neutral assertions) | Sorceress 3, Paladin 11 | GREEN, GREEN | Sorceress RED (b) in batch 1 | - | scenario fix here (fill line and no potion sold, in place of two end counts); `20261128-015616`, `20261128-015803` |
+| board.sm.restart-mid-chain (tap version) | Paladin 3 | RED | new seed | a | the same park in one second as seed 11 (`level 6 from 20`), so TASK-1120 is not a seed 11 accident; `20261128-015546` |
+
 ## Batch 2 and later
 
 See the sections below; they are appended as the runs finish.
