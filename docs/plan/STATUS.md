@@ -192,6 +192,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- baa3c731b 11-27 19:21 `Merge agent/postdeploy: postdeploy: sandbox post-deploy audit (docs)` (postdeploy)
+- 1ee35a2c1 11-27 19:20 `Merge branch 'main' into postdeploy` (-)
 - 8b8ab22f6 11-27 19:12 `Merge agent/refusalpark: refusalpark: quests.refusalPark dark knob, refused_repeatedly park (TASK-1081)` (refusalpark)
 - e6efa4ef6 11-27 19:11 `Merge branch 'main' into refusalpark` (-)
 - e13415294 11-27 18:52 `Merge agent/recoverydeath: recoverydeath: no-potion recovery farm picks the safest area below clvl 8 (TASK-1080)` (recoverydeath)
@@ -200,6 +202,4 @@
 - c72327077 11-27 18:39 `Merge agent/relaunches: relaunches: relaunch reason log line + minute-line counters, refusal-storm top list (TASK-1079)` (relaunches)
 - 2865b726c 11-27 18:38 `Merge branch 'main' into zonepace` (-)
 - 94912298e 11-27 18:38 `Merge branch 'main' into relaunches` (-)
-- dbbe1e8c0 11-27 18:31 `Merge agent/tuningwrite: tuningwrite: refuse tiny tuning writes, restore warn, flip verify hard-fails on zero bytes (TASK-1077)` (tuningwrite)
-- 20f13e0a4 11-27 18:31 `Merge agent/racefix: racefix: hand-in rebuilds the cached world before signalling done (TASK-1076)` (racefix)
 <!-- statusgen:end -->
