@@ -68,7 +68,9 @@ func (in Input) manaHeavy() bool { return in.Diff != d2.Normal && ManaHeavyBuild
 
 // ManaNeedFor is the mana need of a hero: ManaNeed(class), raised to 2 for a table that flags itself mana_heavy, in
 // every difficulty (review 8 C8: the flag was ignored in Normal, so a Hammerdin or a War Cry Barbarian got no mana
-// kit line there). The need comes from the build, the class value is only the default.
+// kit line there). The need comes from the build, the class value (classtraits.json manaNeed) is only the default.
+// This is the one source: the kit gate, the route guard, the belt columns (PlanForBuild), the shop rule, the town
+// trip and the Mana Burn rules all ask it; ManaNeed(class) alone is for callers that know no build.
 func ManaNeedFor(c d2.Class, build string) int {
 	if ManaHeavyBuild(build) {
 		return 2
@@ -78,12 +80,18 @@ func ManaNeedFor(c d2.Class, build string) int {
 
 func (in Input) manaNeed() int { return ManaNeedFor(in.Class, in.Build) }
 
-// PlanForBuild is PlanForDiff with the mana-heavy columns for a mana-heavy build in Nightmare and Hell. The Hell
-// rejuvenation columns of PlanForDiff do not apply to it: its own rows already carry them from clvl 31.
+// PlanForBuild is PlanForDiff with the columns of the build's mana need. A mana-heavy build gets the mana-heavy
+// columns in Nightmare and Hell (the Hell rejuvenation columns of PlanForDiff do not apply to it: its own rows already
+// carry them from clvl 31) and in Normal the default columns of need 2, which keep two healing columns: the kit gate
+// and the shop ask the same need (ManaNeedFor), so a mana minimum always has a column to sit in (review C B2).
 func PlanForBuild(c d2.Class, level int, d d2.Difficulty, build string) BeltPlan {
 	p := PlanForDiff(c, level, d)
-	if d != d2.Normal && ManaHeavyBuild(build) {
-		p.Cols = manaHeavyCols(level)
+	if ManaHeavyBuild(build) {
+		if d != d2.Normal {
+			p.Cols = manaHeavyCols(level)
+		} else {
+			p.Cols = colsForNeed(ManaNeedFor(c, build), level)
+		}
 	}
 	return p
 }

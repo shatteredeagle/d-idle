@@ -2,6 +2,7 @@ package combat
 
 import (
 	"context"
+	"errors"
 	"os"
 	"slices"
 	"strings"
@@ -794,9 +795,33 @@ func TestNoProfileIsAnErrorNotTheSorceress(t *testing.T) {
 	if err := f.Kill(context.Background(), 1); err == nil {
 		t.Fatal("Kill fought without a profile")
 	}
-	f.SetProfileErr(nil)
-	if f.ProfileErr() != nil {
-		t.Fatal("not cleared")
+}
+
+// Review C B1: the selection error is not a latch. One snapshot with a bad class stops the fight, the next good
+// selection clears it (two classes); the plan error of the class-aware start stays until that start clears it.
+func TestProfileErrClearsOnGoodSelection(t *testing.T) {
+	for _, c := range []d2.Class{d2.Paladin, d2.Sorceress} {
+		f := &Fighter{cat: testCatalog()}
+		if err := f.CheckProfile(&d2.Player{Class: d2.Class(99)}); err == nil {
+			t.Fatalf("%v: a bad class read gave no error", c)
+		}
+		if err := f.refuseNoProfile(); err == nil {
+			t.Fatalf("%v: fights without a profile", c)
+		}
+		if err := f.CheckProfile(&d2.Player{Class: c}); err != nil {
+			t.Fatalf("%v: the error stayed after a good selection: %v", c, err)
+		}
+		if err := f.refuseNoProfile(); err != nil {
+			t.Fatalf("%v: still refuses to fight: %v", c, err)
+		}
+		f.SetProfileErr(errors.New("table of another class"))
+		if err := f.CheckProfile(&d2.Player{Class: c}); err == nil {
+			t.Fatalf("%v: a good selection cleared the plan error", c)
+		}
+		f.SetProfileErr(nil)
+		if f.ProfileErr() != nil {
+			t.Fatalf("%v: plan error not cleared", c)
+		}
 	}
 }
 

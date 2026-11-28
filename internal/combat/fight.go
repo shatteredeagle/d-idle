@@ -598,7 +598,7 @@ func (f *Fighter) engage(ctx context.Context, snap *d2.Snapshot, tg Target, sp f
 	hard := p.Difficulty != d2.Normal
 	var plan Plan
 	if hard {
-		if plan = PlanForTarget(tg, p.Class, p.Difficulty, p.Level); plan.Skip {
+		if plan = PlanForBuildTarget(tg, p.Class, f.GearBuild, p.Difficulty, p.Level); plan.Skip {
 			f.ignore(st, tg, IgnoreAvoid, "plan: "+plan.Notes)
 			return nil
 		}

@@ -271,13 +271,10 @@ func PlanForClass(class d2.Class, clvl int) Band {
 }
 
 // PlanForBuild is PlanForClass with resource.PlanForBuild's columns: the mana-heavy build columns in Nightmare and
-// Hell (and the Hell rejuvenation columns of resource.PlanForDiff). In Normal it is bit-for-bit the resource.PlanFor columns.
+// Hell (and the Hell rejuvenation columns of resource.PlanForDiff), in Normal the columns of the build's mana need.
 func PlanForBuild(class d2.Class, clvl int, diff d2.Difficulty, build string) Band {
 	b := PlanFor(clvl)
-	rp := resource.PlanFor(class, clvl)
-	if diff != d2.Normal {
-		rp = resource.PlanForBuild(class, clvl, diff, build)
-	}
+	rp := resource.PlanForBuild(class, clvl, diff, build)
 	for i, k := range rp.Cols {
 		switch k {
 		case resource.PotionLife:
