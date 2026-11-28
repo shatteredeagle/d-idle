@@ -1,10 +1,13 @@
 ---
 id: TASK-1116
-title: 'ops2: watch token cookie lifetime and 401 hint, Proving Ground smoke in the hygiene gate (review 12 C1, D1)'
-status: In Progress
+title: >-
+  ops2: watch token cookie lifetime and 401 hint, Proving Ground smoke in the
+  hygiene gate (review 12 C1, D1)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T05:53:00Z'
+updated_date: '2026-11-28T08:48:00Z'
 labels:
   - watch
   - bug

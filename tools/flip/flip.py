@@ -6,7 +6,8 @@
   flip.py <instance> <knob>=<value> ... --reflip                            also accept an `enabled` row (sandbox on, code default still 0)
   flip.py watch [--interval 60] [--once] [--daemon]                         poll every open window; revert or close (--daemon: never exits, for the unit)
   flip.py watch --install-unit [--write]                                    print (or write) a systemd user unit for the watcher; never enables it
-  flip.py status                                                            list open windows
+  flip.py status                                                            open windows (end and minutes left, EST), watcher, ledger state
+<instance> is a sandbox alias (doofer, questy: tools/flip/sandboxes.json) or a container name.
 
 Stdlib only. Never prints tokens. No host is hard-coded: the transport is a command prefix from the environment or
 local.env (via tools/env.sh):
@@ -22,7 +23,7 @@ local.env (via tools/env.sh):
 Ledger (card led1): the design rows are read from data/darklaunch/<knob>.json of this checkout and never written; trial,
 enabled and revert state go to the state file only. After a close or revert the tool prints the one-line commit for the
 status word in git when that word must change.
-The container is named like the instance. Refuses while D2BOT_RUN is set (never in a measured run) and when the
+State files and the ledger keep the container name whatever name was typed. Refuses while D2BOT_RUN is set (never in a measured run) and when the
 instance already has an open window.
 """
 import argparse
@@ -30,6 +31,7 @@ import base64
 import fcntl
 import hashlib
 import json
+import math
 import os
 import shlex
 import subprocess
@@ -45,6 +47,9 @@ MAX_WRITE_B64 = 100000  # the text rides in a command line
 PROBE_S = 20  # `docker inspect` before a flip: fail fast on a wrong transport
 HEARTBEAT_STALE_S = 300  # a watcher older than this counts as dead
 HARD_MISS_LIMIT = 10  # consecutive unreadable polls before the window counts as a breach
+SANDBOXES = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sandboxes.json")
+EST = timezone(timedelta(hours=-5), "EST")  # user rule: clock times are reported in EST
+GRADUATION_READY = "graduation-ready"  # state note of a row whose window closed clean
 
 
 class FlipError(Exception):
@@ -61,6 +66,54 @@ def iso(t):
 
 def parse_iso(s):
     return datetime.strptime(s, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+
+
+def est(t):
+    return t.astimezone(EST).strftime("%Y-%m-%d %H:%M EST")
+
+
+class Names:
+    """Sandbox aliases (sandboxes.json): alias -> container name and role. A name that is no alias is taken as a
+    container name, so a sandbox that is not in the file yet still works."""
+
+    def __init__(self, table=None):
+        self.table = {}
+        for alias, v in (table or {}).items():
+            if not isinstance(v, dict) or not isinstance(v.get("container"), str) or not v["container"]:
+                raise FlipError(f"sandboxes.json: {alias} needs a container name")
+            self.table[alias.lower()] = {"container": v["container"], "role": v.get("role", "")}
+        containers = [v["container"] for v in self.table.values()]
+        clash = sorted(set(c for c in containers if containers.count(c) > 1 or c.lower() in self.table))
+        if clash:
+            raise FlipError(f"sandboxes.json: {', '.join(clash)} is named twice (two aliases, or an alias that is a container name)")
+
+    @classmethod
+    def load(cls, path=SANDBOXES):
+        try:
+            with open(path) as f:
+                return cls(json.load(f).get("sandboxes"))
+        except FileNotFoundError:
+            return cls()
+        except (ValueError, AttributeError) as e:
+            raise FlipError(f"{path}: not a sandbox table ({e})") from None
+
+    def aliases(self):
+        return sorted(self.table)
+
+    def container(self, name):
+        return self.table.get(name.lower(), {}).get("container", name)
+
+    def alias(self, name):
+        """The alias of an alias or container name, "" when the file has none."""
+        c = self.container(name)
+        return next((a for a, v in self.table.items() if v["container"] == c), "")
+
+    def label(self, name):
+        a = self.alias(name)
+        if not a:
+            return name
+        role = self.table[a]["role"]
+        return f"{a} ({self.table[a]['container']}{', ' + role if role else ''})"
 
 
 def parse_window(s):
@@ -90,8 +143,8 @@ def load_env(root=None):
 class Sandbox:
     """The four things the tool needs from a sandbox. Tests replace this class with a fake."""
 
-    def __init__(self, instance, env):
-        self.instance = instance
+    def __init__(self, instance, env, names=None):
+        self.instance = instance = (names or Names.load()).container(instance)
         run = env.get("D2_FLIP_RUN")
         if run is None:
             host = env.get("D2_LABRUN_HOST")
@@ -210,14 +263,16 @@ def set_override(text, knob, value):
 
 
 class Store:
-    """One JSON file per open window."""
+    """One JSON file per open window, named after the container. `resolve` (Names.container) lets every method take
+    a sandbox alias too."""
 
-    def __init__(self, d):
+    def __init__(self, d, resolve=None):
         self.d = d
+        self.resolve = resolve or (lambda name: name)
         os.makedirs(d, exist_ok=True)
 
     def path(self, instance):
-        return os.path.join(self.d, instance + ".json")
+        return os.path.join(self.d, self.resolve(instance) + ".json")
 
     def get(self, instance):
         try:
@@ -235,12 +290,12 @@ class Store:
     def last(self, instance, w):
         """Keep the finished window (backup text left out) so `bisect` can print its bundle after a revert."""
         rec = {k: v for k, v in w.items() if k != "backup"}
-        with open(os.path.join(self.d, instance + ".last"), "w") as f:
+        with open(os.path.join(self.d, self.resolve(instance) + ".last"), "w") as f:
             json.dump(rec, f, indent=1)
 
     def get_last(self, instance):
         try:
-            with open(os.path.join(self.d, instance + ".last")) as f:
+            with open(os.path.join(self.d, self.resolve(instance) + ".last")) as f:
                 return json.load(f)
         except FileNotFoundError:
             return None
@@ -368,6 +423,7 @@ class Flipper:
             raise FlipError("--why is required")
         if not knobs:
             raise FlipError("no knob given")
+        instance = self.store.resolve(instance)  # the window, the ledger and docker all use the container name
         if self.store.get(instance):
             raise FlipError(f"{instance} already has an open flip window (one per sandbox)")
         for knob in knobs:
@@ -429,7 +485,7 @@ class Flipper:
         self.store.put(instance, w)
         for k, v in knobs.items():
             self.ledger.update(k, status="trial", trial_started=iso(ts), trial_instance=instance, trial_value=v,
-                               trial_window=f"{window_s}s", trial_why=why, trial_bundle=names)
+                               trial_window=f"{window_s}s", trial_why=why, trial_bundle=names, graduation_note="")
         self.out(f"FLIP {instance} {names} = {list(knobs.values())} (were {list(olds.values())}) window {window_s}s until {w['end']} backup {tag}")
         return w
 
@@ -476,7 +532,7 @@ class Flipper:
         names = ",".join(w["knobs"])
         for k in w["knobs"]:
             self.ledger.update(k, status="dark", revert_reason=w["revert_reason"], reverted_at=iso(self.clock()),
-                               revert_bundle=names, revert_breach=w.get("breach", ""))
+                               revert_bundle=names, revert_breach=w.get("breach", ""), graduation_note="")
         self.store.last(w["instance"], w)
         self.store.drop(w["instance"])
         self.out(f"REVERT {w['instance']} [{names}]: {w['revert_reason']}; tuning restored from {w['tag']}, child restarted, {len(w['knobs'])} row(s) dark")
@@ -485,15 +541,18 @@ class Flipper:
 
     def close(self, w):
         for k in w["knobs"]:
-            self.ledger.update(k, status="enabled", enabled_at=iso(self.clock()))
+            self.ledger.update(k, status="enabled", enabled_at=iso(self.clock()), graduation_note=GRADUATION_READY)
+        w["note"] = GRADUATION_READY
         self.store.last(w["instance"], w)
         self.store.drop(w["instance"])  # the backup tag goes with the state file
-        self.out(f"CLOSE {w['instance']} [{','.join(w['knobs'])}]: no hard breach for {w['window_s']}s; rows enabled, backup {w['tag']} removed")
+        self.out(f"CLOSE {w['instance']} [{','.join(w['knobs'])}]: no hard breach for {w['window_s']}s; rows enabled ({GRADUATION_READY}: "
+                 f"see autoflip.py graduate-list), backup {w['tag']} removed")
         self._design_hint("enabled", w["knobs"])
 
     # --- watch --------------------------------------------------------------------------------------------
     def poll(self, instance):
         """One poll of one window. Returns 'open', 'closed' or 'reverted'."""
+        instance = self.store.resolve(instance)
         w = self.store.get(instance)
         if w is None:
             return "closed"
@@ -532,6 +591,51 @@ class Flipper:
             self.sleep(interval)
 
 
+def status_lines(store, ledger, now, names=None):
+    """What `flip.py status` prints: every open window with its end in EST and the minutes left, the ledger state and
+    enable criteria of its knobs, the watcher, then the rows the state file holds as trial or enabled."""
+    names = names or Names()
+    try:
+        rows = {r["name"]: r for r in ledger.items()}
+    except Exception as e:
+        return [f"ledger unreadable: {e}"]
+    out, in_window = [], set()
+    for n in store.all():
+        w = store.get(n)
+        end = parse_iso(w["end"])
+        left = (end - now).total_seconds()
+        rem = f"{math.ceil(left / 60)} min left" if left > 0 else f"due {int(-left // 60)} min ago, the watcher closes it"
+        out.append(f"{names.label(n)} window until {est(end)} ({rem}) pending={w['pending'] or '-'} why: {w['why']}")
+        for k, v in w["knobs"].items():
+            in_window.add(k)
+            r = rows.get(k) or {}
+            out.append(f"  {k}={v['new']:g} ledger {r.get('status', 'NO ROW')} criteria_met {r.get('criteria_met', '-')}: {_short(r.get('enable_criteria', '-'))}")
+    if not out:
+        out.append("no open window")
+    out.append("watcher: " + ("alive" if heartbeat_alive(store.d, now) else f"NOT alive (no heartbeat in {HEARTBEAT_STALE_S}s)"))
+    for r in rows.values():
+        if r["name"] in in_window or r.get("by_design"):
+            continue
+        if r.get("status") == "trial":
+            out.append(f"ledger trial {r['name']} on {names.alias(r.get('trial_instance', '')) or r.get('trial_instance', '-')} "
+                       f"since {_est_or(r.get('trial_started'))}: NO OPEN WINDOW (not watched; close or re-flip it)")
+        elif r.get("status") == "enabled":
+            note = r.get("graduation_note") or "no note"
+            out.append(f"ledger enabled {r['name']} since {_est_or(r.get('enabled_at'))} criteria_met {r.get('criteria_met', 'U')} ({note})")
+    return out
+
+
+def _short(s, n=110):
+    return s if len(s) <= n else s[:n - 3] + "..."
+
+
+def _est_or(s):
+    try:
+        return est(parse_iso(s))
+    except (TypeError, ValueError):
+        return s or "-"
+
+
 def bisect_line(w, without, window):
     """The re-flip command for the bundle of window w minus one knob (after a revert: which knob was it?)."""
     if without not in w["knobs"]:
@@ -558,10 +662,11 @@ def main(argv=None):
     ap.add_argument("--dry-run", action="store_true", help="print every step, write and restart nothing")
     a = ap.parse_args(argv)
     env = load_env()
-    store = Store(env.get("D2_FLIP_STATE") or os.path.expanduser("~/.cache/d2flip"))
     ledger = Ledger(env=env)
-    f = Flipper(lambda inst: Sandbox(inst, env), store, ledger, env=env, dry_run=a.dry_run, reflip=a.reflip)
     try:
+        names = Names.load()
+        store = Store(env.get("D2_FLIP_STATE") or os.path.expanduser("~/.cache/d2flip"), names.container)
+        f = Flipper(lambda inst: Sandbox(inst, env, names), store, ledger, env=env, dry_run=a.dry_run, reflip=a.reflip)
         if a.args[0] == "watch":
             if a.install_unit:
                 text = unit_text(a.interval)
@@ -576,9 +681,7 @@ def main(argv=None):
             else:
                 f.watch(a.interval, a.once, a.daemon)
         elif a.args[0] == "status":
-            for n in store.all():
-                w = store.get(n)
-                print(f"{n} {' '.join(k + '=' + str(v['new']) for k, v in w['knobs'].items())} until {w['end']} pending={w['pending'] or '-'}")
+            print("\n".join(status_lines(store, ledger, now_utc(), names)))
         elif a.args[0] == "bisect":
             if len(a.args) != 2 or not a.without:
                 raise FlipError("usage: flip.py bisect <instance> --without KNOB")

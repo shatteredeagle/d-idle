@@ -1,10 +1,13 @@
 ---
 id: TASK-1124
-title: 'ops4: check.py fails a card whose front matter is not valid YAML; new_task.py quotes values'
-status: In Progress
+title: >-
+  ops4: check.py fails a card whose front matter is not valid YAML; new_task.py
+  quotes values
+status: Done
 assignee:
   - pro-runner
 created_date: '2026-11-28T06:44:00Z'
+updated_date: '2026-11-28T08:48:00Z'
 labels:
   - ops
   - chore
