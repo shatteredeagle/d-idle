@@ -186,6 +186,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [builds-gear.md](sme/builds-gear.md): SME: gear, runewords, cube and vendors for a first playthrough (classic LoD 1.14d, offline SP)
 - [builds-leveling.md](sme/builds-leveling.md): SME: leveling builds for all 7 classes, clvl 1-40 (classic LoD 1.14d, offline SP, softcore)
 - [builds-open-questions.md](sme/builds-open-questions.md): SME builds: resolved open questions (classic LoD 1.14d, offline SP)
+- [capability-gaps.md](sme/capability-gaps.md): Capability table: what is filled and what is still open (card fix8) (status: current (2026-11-27). Reader: the card that next touches `data/capabilities/capabilities.json` for the...)
 - [cast-timing-sources.md](sme/cast-timing-sources.md): Cast timing (FCR) sources and verdicts, classic 1.14d
 - [class-amazon.md](sme/class-amazon.md): SME class file: Amazon (classic LoD 1.14d, offline single player, softcore)
 - [class-assassin.md](sme/class-assassin.md): SME class file: Assassin (classic LoD 1.14d, offline single player, softcore)
