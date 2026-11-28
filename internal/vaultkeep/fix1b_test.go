@@ -2,6 +2,7 @@ package vaultkeep
 
 import (
 	"context"
+	"fmt"
 	"testing"
 
 	"d2lod-bot/internal/d2dctl"
@@ -143,6 +144,100 @@ func TestFix1bOpenOrderJudgedByBytesAfterRestart(t *testing.T) {
 			d.k.EquipEnqueue(context.Background(), id, "", false)
 			if !d.k.directOpen(id) || d.retired(id) || d.live("previously worn") != 0 {
 				t.Fatalf("an order the bytes cannot judge was settled: open %v retired %v filed %d", d.k.directOpen(id), d.retired(id), d.live("previously worn"))
+			}
+		})
+	}
+}
+
+func (r *rig) stowedRecords() int {
+	n := 0
+	for _, x := range r.st.Dump() {
+		if x.State == vault.Recorded && x.Found.Zone == zoneWorn {
+			n++
+		}
+	}
+	return n
+}
+
+// N1: two and three carried charms, then a new game shifts the unit ids by one, so the first charm's new id is the id the
+// second one had. Every charm must still be stowed, one by one, and the others stay carried.
+func TestFix1bStowWithSeveralCharmsAfterRestart(t *testing.T) {
+	for _, class := range classes {
+		for _, n := range []int{2, 3} {
+			t.Run(fmt.Sprintf("%s/%d charms", class, n), func(t *testing.T) {
+				r, h := carryRig(t, class)
+				ctx := context.Background()
+				var ids []string
+				for i := 1; i <= n; i++ {
+					id := r.charm(i, "cm1", 4, true)
+					if res := r.k.Carry(ctx, id); !res.OK {
+						t.Fatalf("carry: %+v", res)
+					}
+					ids = append(ids, id)
+				}
+				l := r.k.CarriedList()
+				if l[1].Unit != l[0].Unit+1 {
+					t.Fatalf("test setup: the units must be consecutive: %+v", l)
+				}
+				renumber(r.api.VaultFake, h, 1)
+				r.open() // a bot restart on top: only the file is left
+				r.k.Hand, r.k.CarryPath = h, r.dir+"/carried.json"
+				for i, id := range ids {
+					res := r.k.Stow(ctx, id)
+					if !res.OK {
+						t.Fatalf("stow %d of %d after the restart: %+v", i+1, n, res)
+					}
+					if left := n - i - 1; len(r.k.CarriedList()) != left || r.carried(d2dctl.FakePack) != left || r.stowedRecords() != i+1 {
+						t.Fatalf("after stow %d: carried %d, pack %d, records %d", i+1, len(r.k.CarriedList()), r.carried(d2dctl.FakePack), r.stowedRecords())
+					}
+				}
+			})
+		}
+	}
+}
+
+// N1, equal bytes: an identical charm lies in the stash. A stow whose reply was lost (the charm did leave the pack) must
+// keep its new record; a carry whose create never ran must keep the vault record.
+func TestFix1bCarryRepairIgnoresATwin(t *testing.T) {
+	for _, class := range classes {
+		t.Run(class+"/stow ran, twin in the stash", func(t *testing.T) {
+			r, _ := carryRig(t, class)
+			ctx := context.Background()
+			id := r.charm(1, "cm1", 4, true)
+			rec, _ := r.st.Get(id)
+			if res := r.k.Carry(ctx, id); !res.OK {
+				t.Fatalf("%+v", res)
+			}
+			if _, err := r.api.VaultFake.ItemCreate(ctx, createHex(rec), d2dctl.CreateOpts{}); err != nil { // the twin
+				t.Fatal(err)
+			}
+			r.ch.reset()
+			r.ch.limit, r.ch.lost = 1, true // the look answers, `item vault` runs and its reply is lost, the next look fails
+			if res := r.k.Stow(ctx, id); res.OK {
+				t.Fatalf("test setup: the stow reply should be lost: %+v", res)
+			}
+			r.ch.limit, r.ch.lost = 1<<30, false
+			r.ch.reset()
+			r.k.repairDirect(ctx)
+			if r.stowedRecords() != 1 || len(r.k.CarriedList()) != 0 || r.carried(d2dctl.FakePack) != 0 {
+				t.Fatalf("the stowed charm was lost to its twin: records %d carried %d pack %d", r.stowedRecords(), len(r.k.CarriedList()), r.carried(d2dctl.FakePack))
+			}
+		})
+		t.Run(class+"/carry never ran, twin in the stash", func(t *testing.T) {
+			r, _ := carryRig(t, class)
+			ctx := context.Background()
+			id := r.charm(1, "cm1", 4, true)
+			rec, _ := r.st.Get(id)
+			if _, err := r.api.VaultFake.ItemCreate(ctx, createHex(rec), d2dctl.CreateOpts{}); err != nil {
+				t.Fatal(err)
+			}
+			r.api.failAt = map[int]error{1: errLost} // the create is unanswered and did not run
+			if res := r.k.Carry(ctx, id); res.OK {
+				t.Fatalf("test setup: %+v", res)
+			}
+			r.k.repairDirect(ctx)
+			if got, _ := r.st.Get(id); got.State != vault.Recorded || len(r.k.CarriedList()) != 0 {
+				t.Fatalf("the vault record was retired for a charm that was never made: %s carried %+v", got.State, r.k.CarriedList())
 			}
 		})
 	}
