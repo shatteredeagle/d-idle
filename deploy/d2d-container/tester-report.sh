@@ -60,7 +60,7 @@ s#<k:([^A-Za-z>]*)>#\\1#g
 s#<k:([0-9]{8}T[0-9]{6}Z)>#\\1#g
 s#<k:[^>]*>#<key>#g
 s#[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)+#<email>#g
-s#/Users/+[^/[:space:]\"'<:;)]+( [^/[:space:]\"'<:;)]+){1,2}/#<home>/#g
+s#/Users[/]+[^/[:space:]\"'<:;)]+( [^/[:space:]\"'<:;)]+){1,2}/#<home>/#g
 s#[A-Za-z]:(\\\\+|/)(Users|Documents and Settings)(\\\\+|/)+[^\\\\/\"'<:;)[:space:]]+( [^\\\\/\"'<:;)[:space:]]+){1,2}(\\\\|/|\$)#<home>\\5#g
 s#(/home|/Users)[/\\\\]+[^/\\\\[:space:]\"'<:;)]+#<home>#g
 s#[A-Za-z]:(\\\\+|/)(Users|home|Documents and Settings)(\\\\+|/)+[^\\\\/\"'<:;)[:space:]]+#<home>#g
