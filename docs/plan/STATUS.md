@@ -59,6 +59,7 @@
 | durieltyrael | proposed | - | `internal/questboard/`<br>`internal/task/`<br>`internal/bot/stepexec.go`<br>`internal/bot/stepexec_act2chunks_test.go` | - |
 | drilldrivers | proposed | - | `internal/combat/`<br>`tools/provingground/scenarios/combatdrills.json`<br>`tools/provingground/scenarios/necro.json`<br>`tools/provingground/golden/setup-played.tsv` | - |
 | fix14 | proposed | - | `internal/admit/`<br>`internal/quest/objective.go`<br>`internal/bot/`<br>`internal/combat/`<br>`internal/vaultkeep/`<br>`internal/arbiter/`<br>`internal/town/` | - |
+| road5 | in-progress | - | `tools/ci/`<br>`cmd/gatemark/`<br>`internal/gatemark/`<br>`internal/questspec/`<br>`data/questspec/`<br>`docs/roadmap-fable.md`<br>`docs/process/pg-ops-mgonejob.md`<br>`docs/questspec.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
 | ghcrpublish | in-progress | - | `.github/workflows/tester-image.yml`<br>`docs/registry-publish.md`<br>`deploy/d2d-container/compose.friends.yml`<br>`docs/tester-registry.md`<br>`deploy/d2d-container/compose.tester.yml`<br>`deploy/d2d-container/context.sh`<br>`deploy/d2d-container/tester_image_test.go` | - |
@@ -201,14 +202,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- d33d5bed4 11-28 06:08 `Merge agent/road5: road5: literal-count ratchet, gatemark, questspec pending coverage (TASK-1133)` (road5)
 - 9bdb99688 11-28 06:08 `Merge agent/drv2: drv2: combat hold driver log, drill classification (TASK-1127)` (drv2)
 - 9ebe774bf 11-28 06:08 `Merge agent/dur2: dur2: Tyrael door finding (fork), npc_out_of_reach, board retry count (TASK-1126/1120)` (dur2)
+- 951385660 11-28 06:05 `Merge branch 'main' into road5` (-)
 - 43b3a8756 11-28 06:05 `Merge branch 'main' into drv2` (-)
 - 01f0363db 11-28 06:04 `Merge branch 'main' into dur2` (-)
 - fa6164b87 11-28 05:49 `Merge agent/forkreq: forkreq: consolidated fork requests (docs)` (forkreq)
 - 8e574fdfb 11-28 05:47 `Merge branch 'main' into forkreq` (-)
+- 2c2c5d250 11-28 05:44 `road5: merge origin/main` (-)
 - 71b6531ce 11-28 05:43 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
-- 2fe8c0f07 11-28 05:42 `dur2: merge origin/main, cards TASK-1120 and TASK-1126 on main's base with own ticks, owns and results` (-)
-- 0e95194f1 11-28 05:40 `drv2: merge origin/main, card TASK-1127 on main's base with own ticks and result` (-)
-- 6e37fec73 11-28 05:11 `Merge agent/fix8b: fix8b: missing combat profile, mana need (TASK-1117)` (fix8b)
 <!-- statusgen:end -->
