@@ -53,7 +53,6 @@
 | act2night | proposed | - | `internal/bot/`<br>`tools/provingground/scenarios/stepexec-act2chunks.json` | - |
 | townnight | proposed | - | `internal/town/`<br>`internal/supply/`<br>`tools/provingground/scenarios/townplan.json` | - |
 | led1 | in-progress | - | `data/darklaunch/`<br>`data/darklaunch.json`<br>`data/darklaunch-cap.json`<br>`tools/darklaunch/`<br>`tools/flip/`<br>`docs/process/dark-launch.md`<br>`docs/process/autoflip.md` | - |
-| fix8b | proposed | - | `internal/combat/`<br>`cmd/d2bot/`<br>`internal/bot/`<br>`internal/resource/`<br>`internal/town/`<br>`internal/loot/`<br>`docs/invariants.md` | - |
 | evid1 | in-progress | - | `internal/combat/`<br>`internal/bot/`<br>`tools/provingground/scenarios/evidence.json`<br>`tools/provingground/scenarios/tiers.json`<br>`tools/provingground/golden/`<br>`docs/probes/evidence-logs-2026-11-28.md` | - |
 | live1 | proposed | - | `internal/bot/`<br>`internal/survival/`<br>`internal/questboard/`<br>`internal/arbiter/`<br>`cmd/d2bot/survivalwire.go`<br>`docs/live1.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |

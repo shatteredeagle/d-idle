@@ -140,3 +140,4 @@ Closing rule: a card closes when merged with offline acceptance proven; every op
 | TASK-1128 sweep2 | #3 | live check of the fixes on a sandbox hero | live drill on the sandbox, fresh hero, per the card result | open |
 | TASK-1129 zone5 | #4 | Live: 3-seed Sorceress A/B screen per docs/survival/zonemodel.md section 8 (live check) | live drill on the sandbox, fresh hero, per the card result | open |
 | TASK-1130 flipfix2 | #5 | live: autoflip plan reads both sandboxes after merge (watcher restart by the coordinator) | live drill on the sandbox, fresh hero, per the card result | open |
+| TASK-1117 fix8b | #4 | Live check: a mana_heavy Normal hero (Hammerdin or War Cry Barbarian) fills its two mana columns and leaves town with a complete kit | live drill on the sandbox, fresh hero, per the card result | open |

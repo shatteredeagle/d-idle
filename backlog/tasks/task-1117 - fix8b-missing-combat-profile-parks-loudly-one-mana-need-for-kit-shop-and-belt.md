@@ -1,10 +1,13 @@
 ---
 id: TASK-1117
-title: 'fix8b: missing combat profile parks loudly, one mana need for kit, shop and belt'
-status: Proposed
+title: >-
+  fix8b: missing combat profile parks loudly, one mana need for kit, shop and
+  belt
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T05:55:00Z'
+updated_date: '2026-11-28T10:23:00Z'
 labels:
   - bot
   - bot-fix
