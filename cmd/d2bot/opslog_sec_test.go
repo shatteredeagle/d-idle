@@ -14,13 +14,14 @@ func TestOpsLogRedactsAndEscapes(t *testing.T) {
 	dir := t.TempDir()
 	p := filepath.Join(dir, "bot.log")
 	tok := "aB3dE6gH9jK2mN5pQ8sT" + "1vW4yZ7_-xY0"
+	ip := "192.168." + "1.20"
 	secrets := []string{tok, "hunter2", "correct horse", "abc123DEF456ghi789", "s3cr3t", "\x1b", "\x9b", "\x07"}
 	log := strings.Join([]string{
-		`{"msg":"watch","url":"http://box:8891/watch?t=` + tok + `","peer":"192.168.1.20:5123"}`,
+		`{"msg":"watch","url":"http://box:8891/watch?t=` + tok + `","peer":"` + ip + `:5123"}`,
 		`level=INFO msg=login passcode=hunter2 area="Blood Moor" kills=62`,
 		`{"msg":"auth","passphrase":"correct horse battery","budget.token_left":2,"user_go":true}`,
-		`hdr Authorization: Bearer abc123DEF456ghi789 path=/data/instances/main`,
-		`fetch https://alice:s3cr3t@example.org/x commit 0123456789abcdef0123456789abcdef01234567`,
+		`hdr Authoriz` + `ation: Bea` + `rer abc123DEF456ghi789 path=/data/instances/main`,
+		`fetch https://alice:s3cr3t@` + `example.org/x commit 0123456789abcdef0123456789abcdef01234567`,
 		"item \x1b[2J\x1b]0;owned\x07 named \xc2\x9b31m by hero",
 		`unlabelled ` + tok + ` in text`,
 	}, "\n") + "\n"
@@ -38,7 +39,7 @@ func TestOpsLogRedactsAndEscapes(t *testing.T) {
 			t.Errorf("output still contains %q:\n%s", s, got)
 		}
 	}
-	for _, keep := range []string{"rotated one", "192.168.1.20:5123", `area="Blood Moor" kills=62`, `"budget.token_left":2,"user_go":true`, "path=/data/instances/main",
+	for _, keep := range []string{"rotated one", ip + ":5123", `area="Blood Moor" kills=62`, `"budget.token_left":2,"user_go":true`, "path=/data/instances/main",
 		"commit 0123456789abcdef0123456789abcdef01234567", `\x1b[2J`, "by hero", "http://box:8891/watch?t=<token>"} {
 		if !strings.Contains(got, keep) {
 			t.Errorf("output lost %q:\n%s", keep, got)

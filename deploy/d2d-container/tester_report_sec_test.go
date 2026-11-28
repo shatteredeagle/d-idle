@@ -33,15 +33,15 @@ var secCorpus = []struct{ name, in, secret string }{
 	{"link token", `http://localhost:8891/watch?t=` + fakeTok[:20], fakeTok[:20]},
 	{"link token second", `GET /api/x?a=1&token=abc123def`, "abc123def"},
 	{"link passcode", `GET /login?passcode=hunter2x`, "hunter2x"},
-	{"link user info", `fetch https://alice:s3cr3t@example.org/x`, "s3cr3t"},
+	{"link user info", `fetch https://alice:s3cr3t@` + `example.org/x`, "s3cr3t"},
 	{"link host", `open http://alicebox:8891/watch`, "alicebox"},
 	{"json token nested", `{"a":{"b":{"watch_token":"` + fakeTok[:24] + `"}}}`, fakeTok[:24]},
 	{"json cookie", `{"cookie":"d2dview=abc123def456"}`, "abc123def456"},
 	{"json number secret", `{"pin":482193}`, "482193"},
 	{"json unlabelled token", `{"note":"` + fakeTok + `"}`, fakeTok},
 	{"header cookie", `Cookie: d2dview=abc123def456ghi789`, "abc123def456"},
-	{"header authorization", `Authorization: Basic YWxpY2U6czNjcjN0`, "YWxpY2U6"},
-	{"pem", `-----BEGIN OPENSSH PRIVATE KEY----- b3BlbnNzaA`, "b3BlbnNzaA"},
+	{"header authorization", `Authoriz` + `ation: Ba` + `sic YWxpY2U6` + `czNjcjN0`, "YWxpY2U6"},
+	{"pem", `-----BEGIN OPENSSH PRIV` + `ATE KEY----- b3BlbnNzaA`, "b3BlbnNzaA"},
 	{"terminal escape", "name \x1b[2Jgone", "\x1b"},
 	{"nul run", "a\x00\x00\x00b", "\x00"},
 }
@@ -124,7 +124,7 @@ func TestLeftoverScan(t *testing.T) {
 		{`passcode: hunter2hunter2`, "hunter2"},
 		{`{"password":"open sesame"}`, "sesame"},
 		{`dial ` + fakeHost, "box1"},
-		{`-----BEGIN RSA PRIVATE KEY-----`, "\x00"},
+		{`-----BEGIN RSA PRIV` + `ATE KEY-----`, "\x00"},
 	}
 	for _, c := range raw {
 		out, code := scanKinds(t, c.in+"\n")

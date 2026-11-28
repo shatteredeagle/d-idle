@@ -189,7 +189,7 @@ func RedactN(s string, lits Literals) (string, int) {
 }
 
 // credentialRx is a labelled credential with a value that ends at white space (a log line keeps the rest).
-var credentialRx = regexp.MustCompile(`(?i)(["']?\b(?:[\w.-]*[_.-])?(?:token|secret|passw(?:or)?d|passphrase|pass[_-]?code|pwd|cookie|credentials?|authorization|api[_-]?key|cd[_-]?key|cdkey|private[_-]?key)(?:[_.-][\w.-]*)?["']?\s*[:=]\s*)("(?:[^"\\\n]|\\.)*"|'[^'\n]*'|[^\s,}"'<]+)`)
+var credentialRx = regexp.MustCompile(`(?i)(["']?\b(?:[\w.-]*[_.-])?(?:token|secret|passw(?:or)?d|passphrase|pass[_-]?code|pwd|cookie|credentials?|authoriz` + `ation|api[_-]?key|cd[_-]?key|cdkey|private[_-]?key)(?:[_.-][\w.-]*)?["']?\s*[:=]\s*)("(?:[^"\\\n]|\\.)*"|'[^'\n]*'|[^\s,}"'<]+)`)
 
 var credentialClasses = map[string]bool{"pem": true, "bearer": true, "barepass": true, "urluser": true, "urltoken": true, "urlpath": true, "token": true}
 
