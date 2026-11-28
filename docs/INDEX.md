@@ -400,6 +400,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [07-arbiter-and-deciders.md](design/fable-review-2026-11-28/07-arbiter-and-deciders.md): Fable review 2026-11-28, part 7: the arbiter and the deciders (status: review, read-only (no code changed, nothing run against a game). Tree: `415b11f25` (origin/main at the...)
 - [08-builds-as-data.md](design/fable-review-2026-11-28/08-builds-as-data.md): Fable review 8 of 8: builds as data (2026-11-28) (status: review, decides nothing. Read-only pass over `origin/main` at `415b11f25`, "today" = the commits after...)
 - [09-change-pipeline.md](design/fable-review-2026-11-28/09-change-pipeline.md): Fable review 9: how a change travels, and why the dark ledger grows (status: current (reviewer run fr9, 2026-11-27 evening, docs only, nothing changed). Independent second opinion:...)
+- [11-fix-review-combat-arbiter.md](design/fable-review-2026-11-28/11-fix-review-combat-arbiter.md): Fable review 2026-11-28, round 2 part B: the fixes for reviews 3 and 7 (fix3, fix7) (status: review, read-only. Tree `829337379` (origin/main). Scope: merge `46365bb12` (fix3, TASK-1094) and merge...)
 
 `design/`
 

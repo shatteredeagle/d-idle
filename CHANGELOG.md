@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- round-2 review B: fix3 and fix7 (docs) <!--sg:agent/rv2-->
 - fix4: scrubber, watch token redirect, difficulty go hero scope and expiry, flip container env, tail NUL, docker volumes doc (TASK-1100) <!--sg:agent/fix4-->
 - nightlog: overnight coordinator log (docs) <!--sg:agent/nightlog-->
 - labtriage: overnight lab triage, scenario marker fixes, 8 cards (TASK-1101..1108) <!--sg:agent/labtriage-->

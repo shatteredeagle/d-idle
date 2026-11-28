@@ -195,6 +195,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 9fd88574f 11-28 00:52 `Merge agent/rv2: round-2 review B: fix3 and fix7 (docs)` (rv2)
+- cc179624e 11-28 00:48 `Merge branch 'main' into rv2` (-)
 - f8daf5458 11-28 00:29 `Merge agent/fix4: fix4: scrubber, watch token redirect, difficulty go hero scope and expiry, flip container env, tail NUL, docker volumes doc (TASK-1100)` (fix4)
 - f9fba8895 11-28 00:28 `Merge branch 'main' into fix4` (-)
 - 7ec65e945 11-28 00:28 `Merge agent/nightlog: nightlog: overnight coordinator log (docs)` (nightlog)
@@ -203,6 +205,4 @@
 - 2c1465fec 11-27 23:15 `Merge agent/fix6: fix6: ledger accounting, mandatory hero_profile, d2scenario smoke, stability view, pack room (TASK-1098)` (fix6)
 - 29e0120bb 11-27 23:14 `Merge branch 'main' into fix6` (-)
 - b0844c390 11-27 23:06 `Merge agent/fix2: fix2: board counters persist, rung-4 skip counts coded refusals only, resume tick for all goals, difficulty go consumed after the hop (TASK-1099)` (fix2)
-- 74ae9b205 11-27 23:06 `Merge agent/fix7: fix7: arbiter low-life gate, Report, survive reads Safety, heartbeat, admission rows (TASK-1096)` (fix7)
-- 95520db57 11-27 23:05 `Merge agent/fix1: fix1: item-flow journal, per-record in-flight 409, carry/stow intent, duplicate not filed (TASK-1095)` (fix1)
 <!-- statusgen:end -->
