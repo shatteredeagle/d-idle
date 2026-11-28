@@ -43,7 +43,6 @@
 | releasenotes-next | proposed | - | `docs/releases/next-draft.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
-| refusalpark | proposed | - | `internal/questboard/`<br>`data/questboard/`<br>`internal/bot/questboard.go`<br>`internal/bot/questauto.go`<br>`internal/bot/invariants.go`<br>`internal/bot/loop.go`<br>`internal/bot/failsafe_test.go`<br>`internal/env/tuning_quests.go`<br>`data/darklaunch.json`<br>`docs/knobs.md`<br>`docs/questboard.md` | - |
 | mercgold | proposed | - | `cmd/d2bot/mercwire.go`<br>`cmd/d2bot/mercwire_test.go`<br>`internal/bot/resource.go`<br>`internal/bot/merc_test.go`<br>`docs/probes/merc-revive-live-checklist.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |

@@ -1,10 +1,13 @@
 ---
 id: TASK-1081
-title: 'refusalpark: park identical coded refusals as refused_repeatedly, skip rung 4 for refusal-only stalls'
-status: Proposed
+title: >-
+  refusalpark: park identical coded refusals as refused_repeatedly, skip rung 4
+  for refusal-only stalls
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T00:05:00Z'
+updated_date: '2026-11-28T00:38:00Z'
 labels:
   - bot
   - feature
