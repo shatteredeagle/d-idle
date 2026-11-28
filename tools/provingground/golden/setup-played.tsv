@@ -12,9 +12,9 @@ combat.hold-interruptible	Paladin	24	0	0	Blessed Hammer	left	28	4e77de0a2c61
 combat.pets-hold	Druid	24	0	0	Eruption	right	26	ba2b3bbe6462
 combat.point-spell-hits	Sorceress	30	0	0	Blizzard	right	32	e4533985383e
 combat.point-spell-hits.druid	Druid	24	0	0	Eruption	right	26	3c04da738198
-combat.teleport-reposition	Sorceress	24	0	0	Fire Bolt	left	26	ca6b1756b740
+combat.teleport-reposition	Sorceress	24	0	0	Fire Bolt	left	26	e133ec26e848
 combat.traps-stand	Assassin	30	0	0	Lightning Sentry	right	32	4fecaa1242a3
-combat.whirlwind-clears	Barbarian	30	0	0	Frenzy	left	34	d861a9f66318
+combat.whirlwind-clears	Barbarian	30	0	0	Frenzy	left	34	a3c75ac236b4
 combat.whirlwind-clears.control	Barbarian	30	0	0	Frenzy	left	34	4b9fb17aa632
 drill.act2.amulet.stepexec	Paladin	24	0	0	Blessed Hammer	left	27	ff366cb29d70
 drill.act2.amulet.stepexec	Sorceress	24	0	0	Charged Bolt	left	25	bfeb19d366f2

@@ -35,6 +35,16 @@
       "skill": "Whirlwind",
       "hand": "right"
      }
+    ],
+    "stats": [
+     {
+      "stat": 9,
+      "value": 51200
+     },
+     {
+      "stat": 8,
+      "value": 51200
+     }
     ]
    },
    "trigger": {
@@ -58,8 +68,8 @@
    "needs": [
     "lab-verbs-attach"
    ],
-   "provenance": "SETUP: level 30, purse 3000, class skill points by `debug points` (Whirlwind id 151, S skills.txt), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position, encounter and skill: mechanics only, never evidence about balance or play). TASK-1105: the drill's skill bound by name with `cmd select` after the points (pre.bind: Whirlwind on the right hand). CHEATED setup: mechanics only.",
-   "notes": "Ten Fallen (a pack) beside a clvl 30 Barbarian with Whirlwind at 1 point (reqlevel 30, S skills.txt; no build table learns it, so the point is a SETUP write). Pair: combat.whirlwind-clears.control (knob 0, same setup): no whirl line, no death. U: the main attack of the played hero and whether the right-skill slot holds Whirlwind (the driver casts the row itself); the shadow mode 1 would log `combat move shadow use=whirl`. Lab run: docs/probes/combat-drills-2026-11-27.md.",
+   "provenance": "SETUP: level 30, purse 3000, class skill points by `debug points` (Whirlwind id 151, S skills.txt), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position, encounter and skill: mechanics only, never evidence about balance or play). TASK-1105: the drill's skill bound by name with `cmd select` after the points (pre.bind: Whirlwind on the right hand). CHEATED setup: mechanics only. TASK-1127: mana and max mana written to 200 by debug stat (CHEATED stat-write).",
+   "notes": "Ten Fallen (a pack) beside a clvl 30 Barbarian with Whirlwind at 1 point (reqlevel 30, S skills.txt; no build table learns it, so the point is a SETUP write). Pair: combat.whirlwind-clears.control (knob 0, same setup): no whirl line, no death. U: the main attack of the played hero and whether the right-skill slot holds Whirlwind (the driver casts the row itself); the shadow mode 1 would log `combat move shadow use=whirl`. Lab run: docs/probes/combat-drills-2026-11-27.md. TASK-1127 (drv2): the 2026-11-28 lab run had no leg and the end state shows why (S, computed, not a logged gate): energy 10 gives a clvl 30 Barbarian about 39 mana, Battle Orders 1 and Shout 3 were cast before the pack and Bash 15 times, and a Whirlwind leg costs 25 (S skills.txt), so the move row refused on mana every tick. pre.stats now writes max mana and mana to 200 (stat 9 and 8, value x 256, S itemstatcost.txt; U whether d2d keeps a written max mana). The new `combat hold driver=whirl` line (holds.go) names the gate if the leg still does not start.",
    "assert": [
     {
      "kind": "log_line",
@@ -224,7 +234,7 @@
     "lab-verbs-attach"
    ],
    "provenance": "SETUP: level 24, purse 3000, class skill points by `debug points` (no extra points: the build table learns Zeal), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position, encounter and skill: mechanics only, never evidence about balance or play). TASK-1105: the drill's skill bound by name with `cmd select` after the points (pre.bind: Zeal on the left hand). CHEATED setup: mechanics only.",
-   "notes": "Twelve Fallen around a clvl 24 Paladin on the Zealot-lite table (Zeal is held, press row sliceMs 600). The card's oracle (a potion within one poll of the life line during a hold) needs a scripted life drop the scenario format has no verb for: pre.life_pct only sets the start life, so the pack does the dropping. U: both patterns, first live run fixes them.",
+   "notes": "Twelve Fallen around a clvl 24 Paladin on the Zealot-lite table (Zeal is held, press row sliceMs 600). The card's oracle (a potion within one poll of the life line during a hold) needs a scripted life drop the scenario format has no verb for: pre.life_pct only sets the start life, so the pack does the dropping. U: both patterns, first live run fixes them. TASK-1127 (drv2): scenario fault, still open: Fallen cannot hurt a clvl 24 hero (minlife 100 in every fight of the 2026-11-28 run), so `^combat potion` cannot fire. pre.life_pct is not set here because the offline prep test of this scenario (cmd/d2scenario TestPrepBindAndSummon, not this card's file) has no `debug hit` verb in its fake; the sibling combat.teleport-reposition carries the start-life fix.",
    "assert": [
     {
      "kind": "log_line",
@@ -283,7 +293,8 @@
       "skill": "Teleport",
       "hand": "right"
      }
-    ]
+    ],
+    "life_pct": 35
    },
    "trigger": {
     "goals": "farm:Blood Moor",
@@ -307,7 +318,7 @@
     "lab-verbs-attach"
    ],
    "provenance": "SETUP: level 24, purse 3000, class skill points by `debug points` (Teleport id 54, V docs), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position, encounter and skill: mechanics only, never evidence about balance or play). TASK-1105: the drill's skill bound by name with `cmd select` after the points (pre.bind: Teleport on the right hand). CHEATED setup: mechanics only.",
-   "notes": "Fourteen Fallen around a clvl 24 Fire Sorceress with Teleport at 1 point (id 54, V docs/act2.md). Shadow mode 1 logs `combat move shadow use=escape`. The existing teleport drill D22 stays the nav check. U: a surround forms fast enough in the Blood Moor; the trigger numbers are the profile's move row.",
+   "notes": "Fourteen Fallen around a clvl 24 Fire Sorceress with Teleport at 1 point (id 54, V docs/act2.md). Shadow mode 1 logs `combat move shadow use=escape`. The existing teleport drill D22 stays the nav check. U: a surround forms fast enough in the Blood Moor; the trigger numbers are the profile's move row. TASK-1127 (drv2): Fallen cannot hurt a clvl 24 hero (minlife 100 in every fight of the 2026-11-28 run), so the trigger could not fire; pre.life_pct 35 starts the hero under the line of the escape row (escapeLifePct of the profile's move row). U: that the life is still low when the pack closes (regeneration, a drink before the fight); `combat hold driver=escape` names the gate otherwise.",
    "assert": [
     {
      "kind": "log_line",
@@ -475,12 +486,12 @@
     "lab-verbs-attach"
    ],
    "provenance": "SETUP: level 24, purse 3000, class skill points by `debug points` (Blessed Hammer id 112, V docs/research/pal-skill-trace.md), field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position and encounter, skill: mechanics only, never evidence about balance or play). TASK-1105: the drill's skill bound by name with `cmd select` after the points (pre.bind: Blessed Hammer on the left hand). CHEATED setup: mechanics only.",
-   "notes": "Twelve Fallen around a clvl 24 Paladin on the Hammerdin guide table (profile paladin/hammerdin carries stance insidePack standOff 2, leaveSurround 5, leaveLifePct 50, U numbers in profiles.json). Blessed Hammer 112 x1 is a SETUP point (reqlevel 18, V docs/research/pal-skill-trace.md). Pair: combat.hammer-in-pack.control (knob 0, no stance line); shadow arm: D2SCEN_KNOBS combat.deliveryUpkeep=1, expect `combat stance shadow`. U: that the hero starts outside standOff so a step appears at all; widen after the first run. GAP: no counter for casts in place or distance from the centroid; the stance line is the only evidence of the position rule.",
+   "notes": "Twelve Fallen around a clvl 24 Paladin on the Hammerdin guide table (profile paladin/hammerdin carries stance insidePack standOff 2, leaveSurround 5, leaveLifePct 50, U numbers in profiles.json). Blessed Hammer 112 x1 is a SETUP point (reqlevel 18, V docs/research/pal-skill-trace.md). Pair: combat.hammer-in-pack.control (knob 0, no stance line); shadow arm: D2SCEN_KNOBS combat.deliveryUpkeep=1, expect `combat stance shadow`. U: that the hero starts outside standOff so a step appears at all; widen after the first run. GAP: no counter for casts in place or distance from the centroid; the stance line is the only evidence of the position rule. TASK-1127 (drv2): still BLOCKED at setup in the lab (S cause: the guide table buys Holy Bolt, the Blessed Hammer prerequisite, with the Den quest point and the scenario hero has no quest points; the runner passes no quest_skill_pts, not this card's file). The `act=` assertion could never hold while the profile row is not enabled; it accepts the shadow line until then.",
    "assert": [
     {
      "kind": "log_line",
-     "pattern": "^combat stance act=",
-     "why": "a stance step was taken (V marker: stance.go stanceTick logs `combat stance act=<inside|leave> to= why=`)",
+     "pattern": "^combat stance (act=|shadow )",
+     "why": "the insidePack row of paladin/hammerdin has no `enabled` (stance.go: a not-enabled row only shadows at knob 2, and it is enabled only after its live drill), so the step is logged as `combat stance shadow`; `act=` once the row carries \"enabled\": true",
      "min": 1
     },
     {

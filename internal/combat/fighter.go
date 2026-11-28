@@ -86,14 +86,15 @@ type Fighter struct {
 	lastCastName  string       // skill of lastCast: the gap before the next cast covers ITS cast length
 	lastCastSkill map[int]time.Time
 	buffAt        map[int]time.Time
-	buffTries     map[int]int // consecutive casts cut by a hit, per skill (card armorcut)
-	upk           upkeepState // the state-observed upkeep driver (upkeep.go)
-	upkCmp        upkeepCmp   // shadow comparison counts (upkeepcmp.go)
-	mark          markState   // the mark driver (mark.go)
-	aim           aimState    // the point aim driver (aim.go)
-	stance        stanceState // the army stance (stance.go)
-	moves         moveState   // move driver counters (move.go)
-	press         pressState  // press rows: shadow and gate counters (press.go)
+	buffTries     map[int]int               // consecutive casts cut by a hit, per skill (card armorcut)
+	upk           upkeepState               // the state-observed upkeep driver (upkeep.go)
+	upkCmp        upkeepCmp                 // shadow comparison counts (upkeepcmp.go)
+	mark          markState                 // the mark driver (mark.go)
+	aim           aimState                  // the point aim driver (aim.go)
+	stance        stanceState               // the army stance (stance.go)
+	moves         moveState                 // move driver counters (move.go)
+	press         pressState                // press rows: shadow and gate counters (press.go)
+	holds         map[string]map[string]int // driver -> reason -> held ticks of this fight (holds.go)
 	lastDodge     time.Time
 	diagMu        sync.Mutex // guards portalCast and casts (read from the bot's autopsy)
 	portalCast    PortalCast

@@ -118,6 +118,7 @@ func (f *Fighter) telemSummaries(st *fightState, snap *d2.Snapshot) {
 	}
 	pr := f.profileFor(snap.Player)
 	t := &st.tel
+	f.logHolds()
 	if len(pr.Aims) > 0 {
 		c := f.AimCounts()
 		var rows []string

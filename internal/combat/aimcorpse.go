@@ -248,7 +248,18 @@ func (f *Fighter) corpseExplode(ctx context.Context, snap *d2.Snapshot, nd *Necr
 		return false, nil
 	}
 	sp, ok := KnownSkills(p, f.cat, f.keys)[nd.Explosion]
-	if !ok || (sp.Key == "" && p.RightSkill != sp.ID) || sp.Cost*2 > p.Mana || len(hs) == 0 {
+	if !ok {
+		return false, nil
+	}
+	switch {
+	case sp.Key == "" && p.RightSkill != sp.ID:
+		f.hold(holdCorpse, holdUnbound)
+		return false, nil
+	case sp.Cost*2 > p.Mana:
+		f.hold(holdCorpse, MoveNoMana)
+		return false, nil
+	case len(hs) == 0:
+		f.hold(holdCorpse, holdNoHostile)
 		return false, nil
 	}
 	rng := sp.Range
@@ -258,6 +269,7 @@ func (f *Fighter) corpseExplode(ctx context.Context, snap *d2.Snapshot, nd *Necr
 	cs := Corpses(snap, f.cat, input.Point{X: p.X, Y: p.Y}, float64(rng), f.takenCorpses(p.Area))
 	c, ok := f.corpseFor(p, nd.Explosion, corpseRowExplode, cs, hs)
 	if !ok {
+		f.hold(holdCorpse, holdNoCorpse)
 		return false, nil
 	}
 	if err := f.cast(snap, sp, input.Point{X: c.X, Y: c.Y}); err != nil {
