@@ -107,7 +107,9 @@ type runState struct {
 	hold     string    // the code of the hold the head run is under (quests.boardSM), "" when none
 	holdWhy  string    // the guard's words
 	holdFrom time.Time // when the hold began; the budget of its code runs from here
-	refCode  string    // the code of the refusal streak (quests.refusalPark), refN identical ones in a row, refWhy the last text
+	pathWhy  string    // the last counted navigation refusal and when it was counted (samePathWindow)
+	pathAt   time.Time
+	refCode  string // the code of the refusal streak (quests.refusalPark), refN identical ones in a row, refWhy the last text
 	refN     int
 	refWhy   string
 }
@@ -805,8 +807,17 @@ func (e *Exec) Report(d Decision, res StepResult) {
 		rs.refCode, rs.refN = "", 0
 	case StepFailed:
 		rs.started = true
-		rs.failures++
 		rs.lastWhy = res.Why
+		if parkCode(res.Why) == "no_path" {
+			// The same navigation refusal (the text names the exit, the cause and the cell) inside samePathWindow is the
+			// same try: three retries from one cell in 27 s parked the Countess (live 2026-11-28, L3).
+			now := e.o.Now()
+			if res.Why == rs.pathWhy && now.Sub(rs.pathAt) < samePathWindow {
+				break
+			}
+			rs.pathWhy, rs.pathAt = res.Why, now
+		}
+		rs.failures++
 		if e.refusalCount(rs, res) {
 			rs.blocked = fmt.Sprintf("refused %d times in a row (%s): %s", rs.refN, rs.refCode, nonEmpty(res.Why, "the step was refused"))
 			e.o.Log("quest board: parked "+k, "chunk", k, "why", rs.blocked)
@@ -832,6 +843,9 @@ func (e *Exec) Report(d Decision, res StepResult) {
 		}
 	}
 }
+
+// samePathWindow: an identical navigation refusal inside it is not a new try (U: judgment; the live retries were 13 s apart).
+const samePathWindow = time.Minute
 
 // parkCode is the code of a failure park: "no_path" when the step failed with a navigation refusal that names its cause
 // (nav ErrNoPath text "no path: ... (cause=...)": the exit and the cause stay in the why), else "gave_up" (card cellar3gate).

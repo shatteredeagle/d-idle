@@ -568,7 +568,19 @@ func (a taskActs) tag(err error) error {
 func (a taskActs) Travel(ctx context.Context, ar task.Area) error {
 	a.r.questTravel.Store(true)
 	defer a.r.questTravel.Store(false)
-	return a.tag(a.r.travelTo(ctx, int(ar)))
+	r := a.r
+	err := r.travelTo(ctx, int(ar))
+	var leg *legFault
+	if err != nil && ctx.Err() == nil && errors.As(err, &leg) && !r.d.Plan.IsTown(leg.from) && r.d.Town != nil && !r.deadNow() && r.sameLegAgain(leg) {
+		// The retry of a quest step started from the same place and failed on the same exit (live 2026-11-28, L3: three
+		// tries from one cell beside the stairs in 27 s). Leave by town portal so the next try arrives another way.
+		r.loop.legFail = legFault{}
+		r.e.Log.Warn("quest travel: the same exit failed again, leaving by town portal before the retry", "from", r.areaName(leg.from), "to", r.areaName(leg.to), "err", err)
+		if terr := r.d.Town.ToTown(ctx); terr != nil {
+			r.e.Log.Warn("quest travel: town portal failed", "err", terr)
+		}
+	}
+	return a.tag(err)
 }
 
 // ClearAround implements task.StallRecoverer: a bounded fight around the character frees a walk stuck in a pack.
