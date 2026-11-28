@@ -55,12 +55,17 @@ func upkeepIntent(v View) *Intent {
 	if !trip && !open {
 		return nil
 	}
-	in := Intent{Kind: "upkeep", Class: Upkeep, Urgency: 0.5, NeedsArea: Town, EstCost: 60, Reason: "town trip running or chores due"}
+	// A running trip is never backed off: a declined "plan would buy" must not hand its legs to a farm (review 11, N1).
+	in := Intent{Kind: "upkeep", Class: Upkeep, Urgency: 0.5, NeedsArea: Town, EstCost: 60, Reason: "town trip running or chores due",
+		Cause: "trip", NoBackoff: trip}
 	if open {
 		in.Reason = fmt.Sprintf("plan would buy %d, a line is under its min", f[FactPlanBuy])
+		if !trip {
+			in.Cause = "plan"
+		}
 	}
 	if f[FactTripEmerg] > 0 {
-		in.Urgency, in.Reason = 0.9, "emergency chores"
+		in.Urgency, in.Reason, in.Cause = 0.9, "emergency chores", "emergency"
 		return &in
 	}
 	if f[FactPlanVerdict] == PlanShort && !trip {
@@ -68,7 +73,7 @@ func upkeepIntent(v View) *Intent {
 		if f[FactSellable] == 0 {
 			return nil
 		}
-		in.Urgency, in.Steps = 0.85, []string{"sell_junk", "buy_potions"}
+		in.Urgency, in.Steps, in.Cause = 0.85, []string{"sell_junk", "buy_potions"}, "sell"
 		in.Reason = fmt.Sprintf("short %d gold: sell %d items first", f[FactPlanShort], f[FactSellable])
 	}
 	if f[FactPlanVerdict] == PlanBlocked && !trip {

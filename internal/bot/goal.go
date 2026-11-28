@@ -1384,7 +1384,7 @@ func (r *Runner) travelTo(ctx context.Context, target int) error {
 			return nil
 		}
 		hops, err := r.d.Mover.Route(cur, target) // nav owns the exit graph, with its own seen-exit and hint fallbacks
-		if (err != nil || len(hops) == 0) && r.wpOnly(ctx, cur, target) {
+		if (err != nil || len(hops) == 0) && (r.wpOnly(ctx, cur, target) || r.wpActTown(ctx, cur, target)) {
 			continue
 		}
 		if err != nil || len(hops) == 0 {
@@ -1461,6 +1461,23 @@ func (r *Runner) wpOnly(ctx context.Context, cur, target int) bool {
 	}
 	r.markTouched(snap, cur, target)
 	return true
+}
+
+// wpActTown takes the waypoint to the town of target's act when target lies in another act and nothing else reaches it
+// (the boat only goes east: "no route from Lut Gholein"). The next hop of travelTo walks on from that town. It serves
+// the no-potion floor of a hero in a later act, which is act 1's first field (starveStepEx; review 11, N4). U: not run
+// live; a failure is remembered by wpOnly and the "no route" error stands as before.
+func (r *Runner) wpActTown(ctx context.Context, cur, target int) bool {
+	act := r.d.Plan.Act(target)
+	if act == 0 || act == r.d.Plan.Act(cur) {
+		return false
+	}
+	for a, ar := range r.d.Plan.Areas {
+		if ar.Town && ar.Act == act && a != cur {
+			return r.wpOnly(ctx, cur, a)
+		}
+	}
+	return false
 }
 
 // ---- clearing -----------------------------------------------------------------------------------
