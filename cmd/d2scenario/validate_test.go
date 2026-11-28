@@ -10,7 +10,7 @@ import (
 
 func fightScenario(level int) scenario.Scenario {
 	return scenario.Scenario{ID: "t.fight", Covers: []string{"combat.fight"},
-		Pre:     scenario.Pre{Level: level, Gold: 2000, Items: []scenario.Item{{Code: "hp1", Count: 4}, {Code: "tsc"}}, Belt: []string{"hp1", "mp1"}},
+		Pre:     scenario.Pre{HeroProfile: scenario.HeroBanked, Level: level, Gold: 2000, Items: []scenario.Item{{Code: "hp1", Count: 4}, {Code: "tsc"}}, Belt: []string{"hp1", "mp1"}},
 		Trigger: scenario.Trigger{Goals: "reach:20"}}
 }
 
@@ -55,7 +55,7 @@ func TestStaticCheckRows(t *testing.T) {
 	if err := staticCheck(nec, "Necromancer", su, hero.NameTables()); err == nil || !strings.Contains(err.Error(), "attack:") {
 		t.Errorf("summoner clvl 4 fighting without its main attack: %v", err)
 	}
-	nec.Pre.HeroProfile = "" // banked by default: no attack row
+	nec.Pre.HeroProfile = scenario.HeroBanked // banked: no attack row
 	if err := staticCheck(nec, "Necromancer", su, hero.NameTables()); err != nil {
 		t.Errorf("a points scenario is banked, no attack row: %v", err)
 	}
@@ -66,7 +66,7 @@ func TestStaticCheckRows(t *testing.T) {
 func TestScenarioHeroSelfCheck(t *testing.T) {
 	for _, class := range []string{"Sorceress", "Paladin"} {
 		s := fightScenario(12)
-		// no pre.hero_profile: banked by default, the state below is a banked hero's
+		// fightScenario is banked: the state below is a banked hero's
 		h, f := scenarioHero(s, class, hero.NameTables())
 		if f.Purse != 2000 || f.Potions != 6 {
 			t.Fatalf("floors %+v", f)

@@ -16,6 +16,7 @@
     "internal/bot/"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 22,
     "gold": 1220,
     "waypoints": [
@@ -105,6 +106,7 @@
     "internal/bot/"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 3,
     "gold": 8000
    },
@@ -167,6 +169,7 @@
     "internal/bot/"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 22,
     "gold": 8000,
     "waypoints": [
@@ -261,6 +264,7 @@
     "internal/bot/"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 16,
     "gold": 0,
     "belt": [
@@ -341,6 +345,7 @@
     "internal/bot/"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 24,
     "gold": 300,
     "items": [
@@ -404,6 +409,7 @@
     "internal/bot/"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 18,
     "gold": 600,
     "items": [
@@ -481,6 +487,7 @@
     "internal/bot/"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 18,
     "gold": 600,
     "items": [
@@ -543,6 +550,7 @@
     "internal/bot/"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 10,
     "gold": 2000
    },
@@ -601,6 +609,7 @@
     "internal/bot/"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 6,
     "gold": 130
    },
@@ -667,6 +676,7 @@
     "internal/bot/"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 12,
     "gold": 20,
     "waypoints": [
@@ -748,6 +758,7 @@
     "internal/bot/"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 20,
     "gold": 2000,
     "belt": [
@@ -820,6 +831,7 @@
     "internal/bot/"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 22,
     "gold": 1220,
     "waypoints": [

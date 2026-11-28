@@ -21,6 +21,7 @@
     "internal/d2dtown/"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 8,
     "gold": 8,
     "stash": 128000,
@@ -85,6 +86,7 @@
     "internal/bot/resource.go"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 8,
     "gold": 1500,
     "belt": []
@@ -135,6 +137,7 @@
     "town.resupply"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 10,
     "gold": 1500,
     "belt": [
@@ -192,6 +195,7 @@
     "internal/d2dtown/"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 10,
     "gold": 500,
     "belt": [
@@ -251,6 +255,7 @@
     "internal/town/"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 10,
     "gold": 5000,
     "belt": [],
@@ -316,6 +321,7 @@
     "internal/d2dsrc/"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 10,
     "gold": 300,
     "start": "field",
@@ -377,6 +383,7 @@
     "internal/bot/questboard.go"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 17,
     "gold": 500,
     "waypoints": [
@@ -431,6 +438,7 @@
     "town.repair"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 10
    },
    "budget": {
@@ -459,6 +467,7 @@
     "merc.hire"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 10
    },
    "budget": {
@@ -488,6 +497,7 @@
     "hook.ensure-difficulty"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 10
    },
    "budget": {

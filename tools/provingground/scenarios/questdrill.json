@@ -35,6 +35,7 @@
     "travel.area-transition"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 19,
     "gold": 6000,
     "waypoints": [
@@ -172,6 +173,7 @@
     "travel.area-transition"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 19,
     "gold": 6000,
     "waypoints": [
@@ -304,6 +306,7 @@
     "quest.act1_done.sail_east"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 24,
     "gold": 3000,
     "waypoints": [
@@ -412,6 +415,7 @@
     "quest.radament.radament"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "field",
     "area": 40,
     "level": 24,
@@ -577,6 +581,7 @@
     "quest.horadric_staff.cube"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "field",
     "area": 40,
     "level": 22,
@@ -749,6 +754,7 @@
     "quest.horadric_staff.shaft"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "field",
     "area": 40,
     "level": 30,
@@ -922,6 +928,7 @@
     "quest.tainted_sun.amulet"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "field",
     "area": 40,
     "level": 24,
@@ -1089,6 +1096,7 @@
     "quest.horadric_staff.assemble"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "field",
     "area": 40,
     "level": 22,
@@ -1286,6 +1294,7 @@
     "quest.summoner.kill_summoner"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "field",
     "area": 40,
     "level": 30,
@@ -1470,6 +1479,7 @@
     "quest.seven_tombs.duriel"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "field",
     "area": 40,
     "level": 30,
@@ -1662,6 +1672,7 @@
     "quest.radament.radament"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "field",
     "area": 40,
     "level": 30,
@@ -1828,6 +1839,7 @@
     "quest.radament.radament"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "field",
     "area": 40,
     "level": 24,
@@ -1955,6 +1967,7 @@
     "quest.lam_esen.tome"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "field",
     "area": 75,
     "level": 28,
@@ -2121,6 +2134,7 @@
     "quest.blade_old_religion.gidbinn"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "field",
     "area": 75,
     "level": 28,
@@ -2288,6 +2302,7 @@
     "quest.golden_bird.bird"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "field",
     "area": 75,
     "level": 28,
@@ -2458,6 +2473,7 @@
     "quest.blackened_temple.council"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "field",
     "area": 75,
     "level": 28,
@@ -2624,6 +2640,7 @@
     "quest.lam_esen.tome"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "field",
     "area": 75,
     "level": 60,
@@ -2792,6 +2809,7 @@
     "quest.blade_old_religion.gidbinn"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "field",
     "area": 75,
     "level": 60,
@@ -2962,6 +2980,7 @@
     "quest.golden_bird.bird"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "field",
     "area": 75,
     "level": 60,
@@ -3135,6 +3154,7 @@
     "quest.izual.izual"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "field",
     "area": 103,
     "level": 60,
@@ -3312,6 +3332,7 @@
     "quest.hellforge.hammer"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "field",
     "area": 103,
     "level": 60,
@@ -3497,6 +3518,7 @@
     "quest.siege_harrogath.shenk"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "field",
     "area": 109,
     "level": 60,
@@ -3685,6 +3707,7 @@
     "quest.prison_of_ice.find"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "field",
     "area": 109,
     "level": 60,
@@ -3878,6 +3901,7 @@
     "quest.betrayal_harrogath.nihlathak"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "field",
     "area": 109,
     "level": 60,
@@ -4075,6 +4099,7 @@
     "quest.rite_of_passage.ancients"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "field",
     "area": 109,
     "level": 60,
@@ -4277,6 +4302,7 @@
     "quest.eve_of_destruction.baal"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "field",
     "area": 109,
     "level": 60,
@@ -4484,6 +4510,7 @@
     "quest.sisters_to_the_slaughter.andariel"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "town",
     "level": 30,
     "gold": 15000,
@@ -4658,6 +4685,7 @@
     "travel.area-transition"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 24,
     "gold": 200,
     "stash": 500000,
@@ -4806,6 +4834,7 @@
     "quest.lam_esen.tome"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "field",
     "area": 80,
     "level": 60,
@@ -4977,6 +5006,7 @@
     "quest.sisters_to_the_slaughter.andariel"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "town",
     "level": 21,
     "gold": 6000,
@@ -5133,6 +5163,7 @@
     "quest.sisters_to_the_slaughter.andariel"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "town",
     "level": 21,
     "gold": 6000,
@@ -5289,6 +5320,7 @@
     "quest.sisters_to_the_slaughter.andariel"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "town",
     "level": 21,
     "gold": 6000,
@@ -5445,6 +5477,7 @@
     "quest.sisters_to_the_slaughter.andariel"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "town",
     "level": 21,
     "gold": 6000,
@@ -5602,6 +5635,7 @@
     "quest.sisters_to_the_slaughter.andariel"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "town",
     "level": 21,
     "gold": 6000,
@@ -5760,6 +5794,7 @@
     "quest.tainted_sun.amulet"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "field",
     "area": 40,
     "level": 24,
@@ -5929,6 +5964,7 @@
     "quest.radament.radament"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "field",
     "area": 40,
     "level": 30,

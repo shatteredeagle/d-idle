@@ -27,12 +27,13 @@ var smokeRows = []scenario.Run{
 var smokeProv = scenario.Provenance{BotCommit: "smoke", D2DSHA256: "smoke", Host: "smoke"}
 
 // cmdSmoke is the cheap tier: no game, no slot, seconds. Stage A is static over every scenario and class (the setup
-// builds, the T0 self-check, the pack holds the declared items, a BLOCKED exit is a valid ledger line); stage B runs the
+// builds and matches the setup golden files, the T0 self-check, the pack holds the declared items, a BLOCKED exit is a valid ledger line); stage B runs the
 // real prep half of exec-one (prepHero: setup verbs, point spending, prepSelfCheck) for smokeRows on a fake d2d. Any
 // failure is exit 1; success prints one marker line a merge step can require.
 func cmdSmoke(args []string, w io.Writer) error {
 	fs := newFlags("smoke")
 	dir := fs.String("dir", defaultDir, "scenario directory")
+	golden := fs.String("golden", defaultGolden, "setup golden file directory")
 	if _, err := parseArgs(fs, args); err != nil {
 		return err
 	}
@@ -41,6 +42,9 @@ func cmdSmoke(args []string, w io.Writer) error {
 		return err
 	}
 	var bad []string
+	if err := checkGolden(scs, *golden); err != nil {
+		bad = append(bad, err.Error())
+	}
 	for _, s := range scs {
 		for _, c := range s.Matrix.Classes {
 			if err := smokeStatic(s, c); err != nil {

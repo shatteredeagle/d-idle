@@ -11,7 +11,7 @@ import (
 // The smoke tier on the shipped scenarios: the marker line, with four preps and four ledger lines.
 func TestSmokeOnShippedData(t *testing.T) {
 	var b bytes.Buffer
-	if err := cmdSmoke([]string{"-dir", dir}, &b); err != nil {
+	if err := cmdSmoke([]string{"-dir", dir, "-golden", "../../" + defaultGolden}, &b); err != nil {
 		t.Fatal(err)
 	}
 	if !strings.HasPrefix(b.String(), "smoke: static ") || !strings.HasSuffix(b.String(), ", prep 4, ledger 4, blocked 0\n") {
@@ -56,4 +56,29 @@ func TestSmokeGamePackRoom(t *testing.T) {
 	if got := g.handle("debug nosuchverb"); !strings.HasPrefix(got, "err unknown verb") {
 		t.Fatalf("%q", got)
 	}
+}
+
+// The golden files follow the scenarios: flipping one scenario's profile (what a changed default did to 207 of them)
+// is named by the check, on two classes.
+func TestSetupGoldenCatchesAProfileChange(t *testing.T) {
+	scs, err := loadAll(dir)
+	if err != nil {
+		t.Fatal(err)
+	}
+	golden := "../../" + defaultGolden
+	if err := checkGolden(scs, golden); err != nil {
+		t.Fatal(err)
+	}
+	for i, s := range scs {
+		if s.ID != "town.resupply" { // Paladin and Sorceress, banked, level 8
+			continue
+		}
+		scs[i].Pre.HeroProfile = scenario.HeroPlayed
+		err := checkGolden(scs, golden)
+		if err == nil || !strings.Contains(err.Error(), "town.resupply Paladin") || !strings.Contains(err.Error(), "town.resupply Sorceress") {
+			t.Fatalf("a profile change went unseen: %v", err)
+		}
+		return
+	}
+	t.Fatal("town.resupply is gone: pick another scenario")
 }

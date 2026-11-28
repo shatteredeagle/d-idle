@@ -36,6 +36,7 @@
     "travel.area-transition"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 16,
     "gold": 8000,
     "waypoints": [
@@ -152,6 +153,7 @@
     "travel.area-transition"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 28,
     "gold": 8000,
     "waypoints": [
@@ -299,6 +301,7 @@
     "travel.area-transition"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 19,
     "gold": 200,
     "stash": 500000,
@@ -442,6 +445,7 @@
     "travel.area-transition"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 26,
     "start": "field",
     "area": 27,
@@ -579,6 +583,7 @@
     "travel.area-transition"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 26,
     "gold": 15000,
     "waypoints": [

@@ -149,7 +149,7 @@ func staticCheck(s scenario.Scenario, class string, su scenario.Setup, t hero.Ta
 	if s.Pre.Level < 2 {
 		return nil
 	}
-	profile := s.HeroProfile() // design 6.2: banked only for the points scenarios and raw point writes; no attack to learn up front
+	profile := s.HeroProfile() // the declared one (mandatory); a banked hero has no attack to learn up front
 	cs := hero.Static(hero.Decl{Profile: profile, Class: class, Build: s.Trigger.Build, Level: s.Pre.Level}, t)
 	if bad := hero.Failed(cs); bad != "" {
 		for _, c := range cs {

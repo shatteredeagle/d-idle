@@ -7,6 +7,7 @@
    "kind": "behaviour",
    "tier": "nightly",
    "pre": {
+    "hero_profile": "banked",
     "start": "field",
     "area": 3,
     "level": 8,
@@ -65,6 +66,7 @@
    "kind": "behaviour",
    "tier": "nightly",
    "pre": {
+    "hero_profile": "banked",
     "start": "field",
     "area": 4,
     "level": 8,
@@ -106,6 +108,7 @@
    "kind": "behaviour",
    "tier": "nightly",
    "pre": {
+    "hero_profile": "banked",
     "start": "field",
     "area": 5,
     "level": 8,

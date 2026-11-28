@@ -34,6 +34,7 @@
     "travel.area-transition"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 10,
     "gold": 8000,
     "items": [
@@ -127,6 +128,7 @@
     "travel.area-transition"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 24,
     "gold": 5000,
     "waypoints": [
@@ -224,6 +226,7 @@
     "travel.area-transition"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 24,
     "gold": 5000,
     "waypoints": [
