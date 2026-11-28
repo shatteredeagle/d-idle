@@ -43,6 +43,7 @@
 | releasenotes-next | proposed | - | `docs/releases/next-draft.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
+| refusalpark | proposed | - | `internal/questboard/`<br>`data/questboard/`<br>`internal/bot/questboard.go`<br>`internal/bot/questauto.go`<br>`internal/bot/invariants.go`<br>`internal/bot/loop.go`<br>`internal/bot/failsafe_test.go`<br>`internal/env/tuning_quests.go`<br>`data/darklaunch.json`<br>`docs/knobs.md`<br>`docs/questboard.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
@@ -191,14 +192,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- baa3c731b 11-27 19:21 `Merge agent/postdeploy: postdeploy: sandbox post-deploy audit (docs)` (postdeploy)
+- 1ee35a2c1 11-27 19:20 `Merge branch 'main' into postdeploy` (-)
+- 8b8ab22f6 11-27 19:12 `Merge agent/refusalpark: refusalpark: quests.refusalPark dark knob, refused_repeatedly park (TASK-1081)` (refusalpark)
+- e6efa4ef6 11-27 19:11 `Merge branch 'main' into refusalpark` (-)
 - e13415294 11-27 18:52 `Merge agent/recoverydeath: recoverydeath: no-potion recovery farm picks the safest area below clvl 8 (TASK-1080)` (recoverydeath)
 - 9d9f28b47 11-27 18:51 `Merge branch 'main' into recoverydeath` (-)
 - 0bf8865a2 11-27 18:39 `Merge agent/zonepace: zonepace: lock lapses by time, zones far below the hero dropped (under bot.zoneModel) (TASK-1078)` (zonepace)
 - c72327077 11-27 18:39 `Merge agent/relaunches: relaunches: relaunch reason log line + minute-line counters, refusal-storm top list (TASK-1079)` (relaunches)
 - 2865b726c 11-27 18:38 `Merge branch 'main' into zonepace` (-)
 - 94912298e 11-27 18:38 `Merge branch 'main' into relaunches` (-)
-- dbbe1e8c0 11-27 18:31 `Merge agent/tuningwrite: tuningwrite: refuse tiny tuning writes, restore warn, flip verify hard-fails on zero bytes (TASK-1077)` (tuningwrite)
-- 20f13e0a4 11-27 18:31 `Merge agent/racefix: racefix: hand-in rebuilds the cached world before signalling done (TASK-1076)` (racefix)
-- b50b24aa8 11-27 18:31 `Merge agent/denreward: denreward: hold every non-emergency trip while a quest reward is pending, nav.barracks-return scenario (TASK-880)` (denreward)
-- 62cd1cf1c 11-27 18:28 `Merge branch 'main' into tuningwrite` (-)
 <!-- statusgen:end -->

@@ -1,0 +1,5 @@
+{
+  "schema": "quests.refusal/1",
+  "note": "Refusal park of the quest board (card refusalpark, knob quests.refusalPark, default 0). parkAfter identical CODED refusals of one chunk in a row (same code, nothing else between them) park it as refused_repeatedly instead of counting as failures that end in gave_up. A refusal without a code keeps counting as a failure.",
+  "parkAfter": 3
+}
