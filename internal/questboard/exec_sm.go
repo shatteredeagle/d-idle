@@ -263,7 +263,45 @@ func (e *Exec) smPark(quest, chunk, code string, rs *runState) {
 	}
 }
 
-// smReleaseRetry runs once per Exec: a gave_up park (the step kept failing) stored by another bot release is retried
+// smSeed reads the stored counters of a live run into a fresh runState (the first report of a chunk in this process).
+func (e *Exec) smSeed(quest, chunk string, rs *runState) {
+	if e.boardLegacy() {
+		return
+	}
+	plan, _, err := e.st.Load()
+	if err != nil {
+		return
+	}
+	for _, r := range plan.Runs {
+		if r.Quest == quest && r.Chunk == chunk && r.Diff == Difficulties[e.env.Diff()] && r.Status.Live() && r.Status != RunParked {
+			rs.failures, rs.deaths = r.Failures, r.Deaths
+		}
+	}
+}
+
+// smCount stores the counters of a live run when they changed, so a restart before the park keeps counting (fable
+// review 2 finding 1). No-op without the machine.
+func (e *Exec) smCount(quest, chunk string, rs *runState) {
+	if e.boardLegacy() {
+		return
+	}
+	d := Difficulties[e.env.Diff()]
+	err := e.st.UpdateSM(e.smDone(), func(m *SM) error {
+		if r := m.find(quest, chunk, d); r != nil && r.Status.Live() && r.Status != RunParked {
+			r.Failures, r.Deaths = rs.failures, rs.deaths
+		}
+		return nil
+	})
+	if err != nil {
+		e.o.Log("quest board: counters not saved", "chunk", ChunkKey(quest, chunk), "err", err)
+	}
+}
+
+// releaseRetryCodes are the parks a new release retries once: the step kept failing (gave_up), and the two codes that
+// were gave_up before cards cellar3gate and refusalpark split them off (a nav fix or a guard fix ships in a release).
+var releaseRetryCodes = map[string]bool{"gave_up": true, "no_path": true, "refused_repeatedly": true}
+
+// smReleaseRetry runs once per Exec: a park of releaseRetryCodes stored by another bot release is retried
 // once, because the failure may be the old release's bug. The park keeps its history (RetriesAfterRelease) and, if the
 // step fails again, comes back stored with this release, so it cannot loop. Parks of other codes stay as the player
 // decided (Q5).
@@ -277,7 +315,7 @@ func (e *Exec) smReleaseRetry() {
 	err := e.st.UpdateSM(e.smDone(), func(m *SM) error {
 		for _, d := range Difficulties {
 			for _, r := range m.Live(e.b, d) {
-				if r.Status != RunParked || r.Code != "gave_up" || r.Release == e.o.Release {
+				if r.Status != RunParked || !releaseRetryCodes[r.Code] || r.Release == e.o.Release {
 					continue
 				}
 				old, n := r.Release, r.RetriesAfterRelease+1

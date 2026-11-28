@@ -8,7 +8,7 @@
    "tier": "full",
    "covers": ["agency.plan"],
    "touches": ["internal/agency/", "data/capabilities/", "cmd/d2bot/agencywire.go", "internal/combat/"],
-   "pre": {"level": 18},
+   "pre": {"hero_profile": "banked", "level": 18},
    "trigger": {"goals": "campaign", "knobs": {"agency.planner": 1, "resource.pointsDecisions": 1}},
    "budget": {"virtual_min": 5},
    "matrix": {"classes": ["Paladin", "Sorceress"], "seeds": [11, 3]},

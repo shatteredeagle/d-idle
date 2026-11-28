@@ -23,6 +23,7 @@ import (
 	"d2lod-bot/internal/faultproxy"
 	"d2lod-bot/internal/questboard"
 	"d2lod-bot/internal/scenario"
+	"d2lod-bot/internal/scenario/hero"
 )
 
 // cmdRun plans, then runs every run in its own lab slot (tools/d2dslot.sh), at most -parallel at once, and aggregates the
@@ -83,14 +84,16 @@ func cmdRun(args []string, w io.Writer) error {
 	}
 	self, _ := os.Executable()
 	var todo []scenario.Run
+	var unrun []scenario.Result // blocked before the start: recorded by the runner itself, once the run is real (not a dry run)
 	for _, r := range runs {
 		s := by[r.ID]
 		if why := blockedBefore(s, r); why != "" {
-			results = append(results, scenario.Result{Version: scenario.ResultVersion, Run: r, Status: scenario.Blocked, Reason: why, BudgetMin: s.Budget.VirtualMin})
+			unrun = append(unrun, scenario.Result{Version: scenario.ResultVersion, Run: r, Status: scenario.Blocked, Reason: why, BudgetMin: s.Budget.VirtualMin})
 			continue
 		}
 		todo = append(todo, r)
 	}
+	results = append(results, unrun...)
 	cmdFor := func(r scenario.Run, outDir string) []string {
 		a := execOneCmd(*slot, *dir, *bot, self, r, by[r.ID].Budget.WallMin, outDir, false)
 		if *journal {
@@ -110,6 +113,11 @@ func cmdRun(args []string, w io.Writer) error {
 	}
 	if *bot == "" || os.Getenv("D2D_BIN") == "" {
 		return fmt.Errorf("run needs -bot (or D2BOT_BIN) and D2D_BIN (the lab d2d) in the environment")
+	}
+	// Every run must leave a ledger line (review 2026-11-28 fix 1): count what the spool gains against what was run.
+	began, linesBefore, expect := time.Now(), spoolLines(*out), len(unrun)
+	for _, res := range unrun {
+		shipUnrun(res, by[res.ID], *bot, *out, began)
 	}
 	var mu sync.Mutex
 	slotLog := filepath.Join(*out, slotLogName)
@@ -146,7 +154,11 @@ func cmdRun(args []string, w io.Writer) error {
 				res, rerr := readResult(filepath.Join(o, resultName(r)))
 				if rerr != nil { // the run wrapper died before writing a result: that is a blocked run, never a pass
 					res = scenario.Result{Version: scenario.ResultVersion, Run: r, Status: scenario.Blocked, Reason: fmt.Sprintf("no result written (slot or runner failed: %v)", err), BudgetMin: by[r.ID].Budget.VirtualMin}
+					shipUnrun(res, by[r.ID], *bot, o, began)
 				}
+				mu.Lock()
+				expect++
+				mu.Unlock()
 				reps = append(reps, res)
 			}
 			res := reps[0]
@@ -168,11 +180,20 @@ func cmdRun(args []string, w io.Writer) error {
 	}
 	f.Close()
 	scenario.Report(w, results)
+	recorded := spoolLines(*out) - linesBefore
+	fmt.Fprintf(w, "results %d, ledger %d\n", expect, recorded)
+	if recorded != expect {
+		return exitErr{exitUnrecorded, fmt.Sprintf("NOT RECORDED: %d runs, %d ledger lines (refusals in %s)", expect, recorded, filepath.Join(*out, ledgerRefused))}
+	}
 	if !scenario.Gate(results) {
 		return exitErr{3, "NOT GREEN"}
 	}
 	return nil
 }
+
+// exitUnrecorded is the exit code of a run set whose results and ledger lines differ. It wins over 3 (not green): a
+// verdict nobody can find again is worth less than a red one.
+const exitUnrecorded = 4
 
 func resultName(r scenario.Run) string {
 	return strings.NewReplacer("/", "_", " ", "_").Replace(r.Key()) + ".json"
@@ -262,7 +283,7 @@ func cmdExecOne(args []string) error {
 	if err := os.WriteFile(filepath.Join(*out, resultName(r)), b, 0o644); err != nil {
 		return err
 	}
-	shipLedger(res, s.Tier, *out, start)
+	shipLedger(res, s.Tier, *out, start) // a refusal is counted by `run` (results against ledger lines)
 	return nil
 }
 
@@ -317,42 +338,15 @@ func execOne(s scenario.Scenario, r scenario.Run, out, bot string) scenario.Resu
 		return blocked("prep d2d not in game: %v", err)
 	}
 	c := prep.Controller().C
-	if caps, err := c.Caps(ctx); err != nil {
-		_ = prep.Stop()
-		return blocked("caps: %v", err)
-	} else if miss := missingCaps(s.Needs, caps); len(miss) > 0 {
-		_ = prep.Stop()
-		return blocked("the lab d2d lacks %s (the scenario needs them)", strings.Join(miss, ", "))
-	}
-	if err := applySetup(ctx, c, su, ledger); err != nil {
-		_ = prep.Stop()
-		return blocked("setup: %v", err)
-	}
 	tabs, err := heroTables(gamedata, data)
 	if err != nil {
 		_ = prep.Stop()
 		return blocked("%v", err)
 	}
-	if err := spendPoints(ctx, c, s, r.Class, su, tabs, ledger); err != nil {
+	seeded, why := prepHero(ctx, c, s, r, su, tabs, prepPaths{ledger: ledger, data: data, state: state, gamedata: gamedata, hero: hero})
+	if why != "" {
 		_ = prep.Stop()
-		return blocked("hero points: %v", err)
-	}
-	seeded, err := applySeeds(ctx, c, su, ledger, data, gameChain(data, gamedata), hero)
-	if err != nil {
-		_ = prep.Stop()
-		return blocked("seeding: %v", err)
-	}
-	if err := seedEther(state, su.Ether); err != nil {
-		_ = prep.Stop()
-		return blocked("ether seed: %v", err)
-	}
-	if _, err := c.Step(ctx, 50); err != nil {
-		_ = prep.Stop()
-		return blocked("settle: %v", err)
-	}
-	if failed := prepSelfCheck(ctx, c, s, r.Class, ledger, tabs); failed != "" { // design 6.2: refuse a hero that is not the declared one
-		_ = prep.Stop()
-		return blocked("selfcheck: %s (rows in %s)", failed, ledger)
+		return blocked("%s", why)
 	}
 	if err := writeBoardAndTuning(state, hero, su); err != nil {
 		_ = prep.Stop()
@@ -410,6 +404,40 @@ func execOne(s scenario.Scenario, r scenario.Run, out, bot string) scenario.Resu
 	addVaultFacts(&st, s, data, hero, trace, seeded)
 	res.State = &st
 	return withVerdict(res, scenario.Result{})
+}
+
+// prepPaths are the files and names the prep half writes to.
+type prepPaths struct{ ledger, data, state, gamedata, hero string }
+
+// prepHero is the prep half of execOne on a d2d that is in game: capabilities, the setup verbs, the played profile's
+// points, the seeds, a settle step and the self-check. It returns the BLOCKED reason ("" when the hero is the declared
+// one). It talks to the game through the control client only, so `d2scenario smoke` runs it against a fake d2d.
+func prepHero(ctx context.Context, c *d2dctl.Client, s scenario.Scenario, r scenario.Run, su scenario.Setup, tabs hero.Tables, p prepPaths) (seedOut, string) {
+	if caps, err := c.Caps(ctx); err != nil {
+		return seedOut{}, fmt.Sprintf("caps: %v", err)
+	} else if miss := missingCaps(s.Needs, caps); len(miss) > 0 {
+		return seedOut{}, fmt.Sprintf("the lab d2d lacks %s (the scenario needs them)", strings.Join(miss, ", "))
+	}
+	if err := applySetup(ctx, c, su, p.ledger); err != nil {
+		return seedOut{}, fmt.Sprintf("setup: %v", err)
+	}
+	if err := spendPoints(ctx, c, s, r.Class, su, tabs, p.ledger); err != nil {
+		return seedOut{}, fmt.Sprintf("hero points: %v", err)
+	}
+	seeded, err := applySeeds(ctx, c, su, p.ledger, p.data, gameChain(p.data, p.gamedata), p.hero)
+	if err != nil {
+		return seedOut{}, fmt.Sprintf("seeding: %v", err)
+	}
+	if err := seedEther(p.state, su.Ether); err != nil {
+		return seedOut{}, fmt.Sprintf("ether seed: %v", err)
+	}
+	if _, err := c.Step(ctx, 50); err != nil {
+		return seedOut{}, fmt.Sprintf("settle: %v", err)
+	}
+	if failed := prepSelfCheck(ctx, c, s, r.Class, p.ledger, tabs); failed != "" { // design 6.2: refuse a hero that is not the declared one
+		return seedOut{}, fmt.Sprintf("selfcheck: %s (rows in %s)", failed, p.ledger)
+	}
+	return seeded, ""
 }
 
 // instanceID is a stable, valid bot instance id for one run: "pg-" and 12 hex digits of the run key.

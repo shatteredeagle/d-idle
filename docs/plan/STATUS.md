@@ -187,14 +187,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
-- c2baa8c30 11-27 22:41 `Merge agent/fable-fr5: fable review 5: dark ledger process (docs)` (fable-fr5)
-- f53f63a4c 11-27 22:41 `Merge agent/fable-fr1: fable review 1: item flows (docs)` (fable-fr1)
-- 270609cdb 11-27 22:40 `Merge branch 'main' into fable-fr5` (-)
-- b7f728c74 11-27 22:40 `Merge branch 'main' into fable-fr1` (-)
-- d64efd5c7 11-27 22:36 `Merge agent/fable-fr3: fable review 3: combat, nav, survival (docs)` (fable-fr3)
-- 4b0cdccb4 11-27 22:35 `Merge branch 'main' into fable-fr3` (-)
-- 388fd1316 11-27 22:35 `Merge agent/autoflip: autoflip: plan/run/graduate-list tool (TASK-1092)` (autoflip)
-- 794d66c7c 11-27 22:34 `Merge branch 'main' into autoflip` (-)
-- e340dc50e 11-27 22:25 `Merge agent/darkthrottle: darkthrottle: ledger cap, by_design status, flip_plan, sandbox-first doc (TASK-1091)` (darkthrottle)
-- af5382fe3 11-27 22:24 `Merge branch 'main' into darkthrottle` (-)
+- 2c1465fec 11-27 23:15 `Merge agent/fix6: fix6: ledger accounting, mandatory hero_profile, d2scenario smoke, stability view, pack room (TASK-1098)` (fix6)
+- 29e0120bb 11-27 23:14 `Merge branch 'main' into fix6` (-)
+- b0844c390 11-27 23:06 `Merge agent/fix2: fix2: board counters persist, rung-4 skip counts coded refusals only, resume tick for all goals, difficulty go consumed after the hop (TASK-1099)` (fix2)
+- 74ae9b205 11-27 23:06 `Merge agent/fix7: fix7: arbiter low-life gate, Report, survive reads Safety, heartbeat, admission rows (TASK-1096)` (fix7)
+- 95520db57 11-27 23:05 `Merge agent/fix1: fix1: item-flow journal, per-record in-flight 409, carry/stow intent, duplicate not filed (TASK-1095)` (fix1)
+- 558600846 11-27 23:03 `Merge branch 'main' into fix2` (-)
+- b46c1f9c8 11-27 23:03 `Merge branch 'main' into fix7` (-)
+- c3b288ef4 11-27 23:03 `Merge branch 'main' into fix1` (-)
+- 46365bb12 11-27 22:55 `Merge agent/fix3: fix3: stance leave at low life, no-portal recovery exclusion, bandDrop keeps safe zones, driveAura, corpse reservation lapse (TASK-1094)` (fix3)
+- 585872033 11-27 22:54 `Merge branch 'main' into fix3` (-)
 <!-- statusgen:end -->

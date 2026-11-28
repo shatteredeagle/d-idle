@@ -1158,12 +1158,18 @@ func TestKillsAndXPAreAHeartbeat(t *testing.T) {
 	for _, tc := range []struct {
 		name  string
 		bump  bool
+		walk  bool
 		fresh bool
-	}{{"kill inside a long action", true, true}, {"hung step, nothing observed", false, false}} {
+	}{{"kill inside a long action", true, false, true}, {"hung step, nothing observed", false, false, false},
+		// A4 (fable review part 7): a slice that walks or shops for ten minutes without a kill is progressing, not hung.
+		{"walking inside a long slice, no kill", false, true, true}} {
 		var r Runner
 		r.lastStep.Store(old.UnixNano())
 		if tc.bump {
 			r.ob.bumpReal(time.Now())
+		}
+		if tc.walk {
+			r.ob.bump(time.Now())
 		}
 		age := time.Since(r.LastStep())
 		if got := age < time.Minute; got != tc.fresh {

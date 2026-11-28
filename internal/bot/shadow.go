@@ -134,7 +134,7 @@ func (r *Runner) arbView(snap *d2.Snapshot, c control) (v arbiter.View, ok bool)
 		arbiter.FactGoldFarm:     b(r.goldFarmOn()),
 		arbiter.FactObjective:    b(c.spec.camp != nil),
 		arbiter.FactQuestRefused: b(r.questRefusalStands(snap)),
-		arbiter.FactSurviveBelow: r.e.Tune.Combat.DrinkLifePct,
+		arbiter.FactSafety:       b(r.inDanger(snap)),
 		arbiter.FactSellable:     r.resInput(snap).Sellable,
 		arbiter.FactAreaDry:      b(len(r.dryAreas()) > 0),
 	}
@@ -151,6 +151,16 @@ func (r *Runner) arbView(snap *d2.Snapshot, c control) (v arbiter.View, ok bool)
 		obj = r.areaName(l.stepArea) // U: the area of the quest step the planner picked last
 	}
 	return arbiter.View{Area: area, Progress: real, Facts: f, ObjectiveArea: obj}, true
+}
+
+// inDanger is the arbiter's danger fact: the fighter's safety verdict asks for a life action (a drink, a portal, a
+// chicken, a crowd retreat). The verdict is the one danger rule; the arbiter holds no life line of its own.
+func (r *Runner) inDanger(snap *d2.Snapshot) bool {
+	if r.d.Fighter == nil {
+		return false
+	}
+	a := r.d.Fighter.Safety(snap)
+	return a != SafetyNone && a != SafetyDrinkMana
 }
 
 func (r *Runner) shadowNow() float64 {

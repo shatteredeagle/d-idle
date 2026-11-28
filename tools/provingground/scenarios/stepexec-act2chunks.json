@@ -717,6 +717,7 @@
     "quest.summoner.kill_summoner"
    ],
    "pre": {
+    "hero_profile": "banked",
     "start": "field",
     "area": 40,
     "level": 30,

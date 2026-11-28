@@ -1,5 +1,7 @@
 # The intent arbiter (shadow mode)
 
+> status: amended 2026-11-27 by card fix7 (TASK-1096): survive reads the fighter's safety verdict (fact `safety`), yields to an emergency trip; controlled hooks call `Report`; recovery and the gold farm pass the low-life gate; a declined hook does not hold the quest step. Details and migration order: `docs/design/arbiter-target-and-migration.md`.
+
 > status: current. First slice of roadmap R4 (docs/design/fable-review-2026-11-19/06-roadmap.md, 05-architecture-and-overhaul-options.md section 3.1). SHADOW ONLY: nothing the hero does changes. Tags: V = a test or measurement in this branch, U = unverified.
 
 ## Why

@@ -104,7 +104,8 @@ func (r *Runner) DifficultyReadiness() string {
 }
 
 // DifficultyGate is the chain's view (cmd/d2bot taskChain): active is false while the knob is 0 and the old rule
-// stands. Active and ok mean ready AND the owner said go (the go is consumed here).
+// stands. Active and ok mean ready AND the owner said go. The go is not consumed here: ensureDifficulty takes it when
+// the hop's new game has started (diffHopStarted), so a hop that cannot start yet keeps it (fable review 2 finding 4).
 func (r *Runner) DifficultyGate(next string, clvl int) (ok bool, why string, active bool) {
 	if r.e.Tune.Bot.DiffReadyV2 == 0 {
 		return false, "", false
@@ -121,7 +122,7 @@ func (r *Runner) DifficultyGate(next string, clvl int) (ok bool, why string, act
 	if !v.Ready {
 		return false, v.Why(), true
 	}
-	if !r.diffGo.Take(next, r.goHero(s), r.e.Clock.Now()) {
+	if !r.diffGo.Granted(next, r.goHero(s), r.e.Clock.Now()) {
 		return false, v.Why(), true
 	}
 	return true, "", true
@@ -170,7 +171,8 @@ func (r *Runner) diffVerdict(s *d2.Snapshot, target string) (diffready.Verdict, 
 }
 
 // wantedDifficultyV2 is wantedDifficulty under bot.diffReadyV2: the next difficulty only, only when ready, only with
-// the owner's go, honoring the ban of a failed switch. Never goes down, never hops alone.
+// the owner's go, honoring the ban of a failed switch. Never goes down, never hops alone. It only reads the go: a hero
+// in the field, a backoff or a new game that fails must not eat it (diffHopStarted consumes it).
 func (r *Runner) wantedDifficultyV2(s *d2.Snapshot) string {
 	next := nextDifficulty(s)
 	r.diffGo.Keep(next)
@@ -185,8 +187,16 @@ func (r *Runner) wantedDifficultyV2(s *d2.Snapshot) string {
 		r.e.Log.Warn("difficulty readiness failed", "err", fmt.Sprint(err))
 		return ""
 	}
-	if !v.Ready || !r.diffGo.Take(next, r.goHero(s), r.e.Clock.Now()) {
+	if !v.Ready || !r.diffGo.Granted(next, r.goHero(s), r.e.Clock.Now()) {
 		return ""
 	}
 	return next
+}
+
+// diffHopStarted consumes the owner's go for want: the new game of the hop was made (ensureDifficulty). One go, one hop.
+// s is the snapshot the hop was decided on: the go is taken for that hero only.
+func (r *Runner) diffHopStarted(want string, s *d2.Snapshot) {
+	if r.e.Tune.Bot.DiffReadyV2 != 0 {
+		r.diffGo.Take(want, r.goHero(s), r.e.Clock.Now())
+	}
 }

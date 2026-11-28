@@ -355,7 +355,7 @@
     "internal/bot/",
     "internal/campaign/"
    ],
-   "pre": {},
+   "pre": {"hero_profile": "banked"},
    "trigger": {
     "goals": "campaign:normal_act1",
     "build": "necromancer_summoner_sme",

@@ -23,6 +23,7 @@
    ],
    "build": "sandbox",
    "pre": {
+    "hero_profile": "banked",
     "level": 12,
     "gold": 500,
     "start": "field",
@@ -79,6 +80,7 @@
    ],
    "build": "sandbox",
    "pre": {
+    "hero_profile": "banked",
     "level": 18,
     "gold": 500,
     "start": "field",

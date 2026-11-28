@@ -125,3 +125,8 @@ Closing rule: a card closes when merged with offline acceptance proven; every op
 | TASK-1016 necrocorpse | #2 | Live: run the pair on seeds 11 to 13; move the default table to 1 point only if ce1 reads equal or better (live check, may stay open) | live drill on the sandbox, fresh hero, per the card result | open |
 | TASK-1069 logsink | #4 | LIVE: a sandbox on the next release shows d2bot ops log lines with inv= and tick | live drill on the sandbox, fresh hero, per the card result | open |
 | TASK-1078 zonepace | #4 | Live Questy check: picks Black Marsh or Tamoe at clvl 15-16 (needs live sandbox) | live drill on the sandbox, fresh hero, per the card result | open |
+| TASK-1094 fix3 | #6 | live: combat.hammer-in-pack drill on a build whose hammerdin row carries enabled true | live drill on the sandbox, fresh hero, per the card result | open |
+| TASK-1095 fix1 | #6 | live check on a sandbox: Equip from the Vault with a worn item, displaced item is a vault record | live drill on the sandbox, fresh hero, per the card result | open |
+| TASK-1096 fix7 | #7 | live: one control-0 recorded night scored before any family bit beyond 14 | live drill on the sandbox, fresh hero, per the card result | open |
+| TASK-1099 fix2 | #7 | Live: restart between two deaths still parks; flip, park, revert keeps the park (sandbox) | live drill on the sandbox, fresh hero, per the card result | open |
+| TASK-1098 fix6 | #6 | live: one T2 run on the lab d2d records one ledger line per result | live drill on the sandbox, fresh hero, per the card result | open |

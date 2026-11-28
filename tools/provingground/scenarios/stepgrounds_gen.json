@@ -47,6 +47,7 @@
      "quest": "den_of_evil"
     },
     "gold": 3000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp2",
@@ -169,6 +170,7 @@
      "quest": "den_of_evil"
     },
     "gold": 3000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp2",
@@ -291,6 +293,7 @@
      "quest": "sisters_burial_grounds"
     },
     "gold": 3000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp2",
@@ -412,6 +415,7 @@
      "quest": "sisters_burial_grounds"
     },
     "gold": 3000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp2",
@@ -534,6 +538,7 @@
      "quest": "sisters_burial_grounds"
     },
     "gold": 3000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp2",
@@ -661,6 +666,7 @@
      "quest": "search_for_cain"
     },
     "gold": 3000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp2",
@@ -782,6 +788,7 @@
      "quest": "search_for_cain"
     },
     "gold": 3000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp2",
@@ -909,6 +916,7 @@
      "quest": "search_for_cain"
     },
     "gold": 3000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp2",
@@ -1031,6 +1039,7 @@
      "quest": "forgotten_tower"
     },
     "gold": 3000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp2",
@@ -1153,6 +1162,7 @@
      "quest": "forgotten_tower"
     },
     "gold": 3000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp2",
@@ -1271,6 +1281,7 @@
      "hp2"
     ],
     "gold": 3000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp2",
@@ -1398,6 +1409,7 @@
      "quest": "tools_of_the_trade"
     },
     "gold": 3000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp2",
@@ -1516,6 +1528,7 @@
      "hp5"
     ],
     "gold": 15000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp5",
@@ -1670,6 +1683,7 @@
      "quest": "radament"
     },
     "gold": 6000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp5",
@@ -1826,6 +1840,7 @@
      "quest": "radament"
     },
     "gold": 6000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp5",
@@ -1984,6 +1999,7 @@
      "hp2"
     ],
     "gold": 3000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp2",
@@ -2133,6 +2149,7 @@
      "quest": "horadric_staff"
     },
     "gold": 3000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp2",
@@ -2277,6 +2294,7 @@
      "quest": "horadric_staff"
     },
     "gold": 3000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp2",
@@ -2417,6 +2435,7 @@
      "hp5"
     ],
     "gold": 6000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp5",
@@ -2574,6 +2593,7 @@
      "quest": "summoner"
     },
     "gold": 3000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp2",
@@ -2704,6 +2724,7 @@
      "quest": "seven_tombs"
     },
     "gold": 3000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp2",
@@ -2829,6 +2850,7 @@
      "hp5"
     ],
     "gold": 20000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp5",
@@ -2998,6 +3020,7 @@
      "hp5"
     ],
     "gold": 20000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp5",
@@ -3172,6 +3195,7 @@
      "quest": "guardian"
     },
     "gold": 3000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp2",
@@ -3296,6 +3320,7 @@
      "quest": "hellforge"
     },
     "gold": 20000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp5",
@@ -3473,6 +3498,7 @@
      "quest": "terrors_end"
     },
     "gold": 20000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp5",
@@ -3660,6 +3686,7 @@
      "hp5"
     ],
     "gold": 20000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp5",
@@ -3834,6 +3861,7 @@
      "hp5"
     ],
     "gold": 20000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp5",
@@ -4008,6 +4036,7 @@
      "hp5"
     ],
     "gold": 20000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp5",
@@ -4182,6 +4211,7 @@
      "hp5"
     ],
     "gold": 20000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp5",
@@ -4351,6 +4381,7 @@
      "hp5"
     ],
     "gold": 20000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp5",
@@ -4525,6 +4556,7 @@
      "quest": "terrors_end"
     },
     "gold": 3000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp2",
@@ -4650,6 +4682,7 @@
      "hp5"
     ],
     "gold": 20000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp5",
@@ -4819,6 +4852,7 @@
      "hp5"
     ],
     "gold": 20000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp5",
@@ -4987,6 +5021,7 @@
      "quest": "prison_of_ice"
     },
     "gold": 20000,
+    "hero_profile": "banked",
     "items": [
      {
       "code": "hp5",

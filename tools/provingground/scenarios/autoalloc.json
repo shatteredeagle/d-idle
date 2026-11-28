@@ -17,6 +17,7 @@
     "internal/watch/pointsapi.go"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 11
    },
    "trigger": {
@@ -96,6 +97,7 @@
     "internal/watch/pointsapi.go"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 11
    },
    "trigger": {
@@ -175,6 +177,7 @@
     "internal/watch/pointsapi.go"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 6
    },
    "trigger": {
@@ -276,6 +279,7 @@
     "internal/watch/pointsapi.go"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 4
    },
    "trigger": {
@@ -348,6 +352,7 @@
     "internal/watch/pointsapi.go"
    ],
    "pre": {
+    "hero_profile": "banked",
     "level": 30
    },
    "trigger": {

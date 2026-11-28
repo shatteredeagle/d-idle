@@ -308,6 +308,9 @@ func (r *Runner) noteStepRefused(res task.Result) {
 	}
 	key := res.StepID + ": " + res.Err.Error()
 	r.inv.noteRefusal(key)
+	if res.Code != "" || res.Hold {
+		r.inv.noteCodedRefusal()
+	}
 	l := &r.loop.task
 	if l.refused == nil {
 		l.refused = map[string]bool{}

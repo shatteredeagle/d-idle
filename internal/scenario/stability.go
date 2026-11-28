@@ -18,7 +18,7 @@ const (
 )
 
 // StableRuns is the number of consecutive equal runs (verdict D0 and assertion digest D1, one class and seed, unchanged
-// bot commit and d2d hash) that makes a candidate stable; StableParallelRuns of them must have run while another slot
+// bot BINARY and d2d hash, see sameBot) that makes a candidate stable; StableParallelRuns of them must have run while another slot
 // was busy (ledger parallel >= 2), so a scenario that only passes alone never gates (design section 2.7).
 const (
 	StableRuns         = 5
@@ -82,6 +82,22 @@ type KeyStability struct {
 	// LastGreen is the last counted GREEN run: the one a T1 state fixture is cut from once the key is stable.
 	LastGreen string       `json:"last_green,omitempty"`
 	Flakes    []FlakeEvent `json:"flakes,omitempty"`
+	// Blocked counts the BLOCKED runs of the key and BlockedNow those since its last counted run. They are reported and
+	// never evidence: a BLOCKED run neither extends nor resets a streak. A key with BlockedNow > 0 is not being judged.
+	Blocked     int    `json:"blocked,omitempty"`
+	BlockedNow  int    `json:"blocked_now,omitempty"`
+	LastBlocked string `json:"last_blocked,omitempty"`
+}
+
+// sameBot says whether two ledger lines ran the same bot: by the binary hash when both carry one (lines since fix6),
+// else by the commit. The hash is the better key: a merge that does not touch the bot's code builds the same binary
+// (tools/provingground/run.sh builds with -trimpath -buildvcs=false), so the streak survives it, where "one commit"
+// reset every streak many times a day and nothing could become stable (review 2026-11-28 E6).
+func sameBot(a, b LedgerRecord) bool {
+	if a.BotSHA256 != "" && b.BotSHA256 != "" {
+		return a.BotSHA256 == b.BotSHA256
+	}
+	return a.BotCommit == b.BotCommit
 }
 
 // counted says whether a ledger line is evidence for the N-run rule. A BLOCKED or cut run observed nothing comparable,
@@ -93,13 +109,14 @@ func counted(r LedgerRecord) bool {
 // Stability derives the state of every key from the ledger. The state is never stored by hand: it is a pure function
 // of the ledger lines (ordered by start time, ties in ledger order) and the releases, so the tool quarantines and a
 // person only releases. Rules:
-//   - a candidate becomes stable after StableRuns consecutive counted runs with equal verdict and D1 on one bot commit
-//     and d2d hash, StableParallelRuns of them at parallel 2 or more; a binary change resets the streak and is not a
+//   - a candidate becomes stable after StableRuns consecutive counted runs with equal verdict and D1 on one bot binary
+//     (sameBot) and d2d hash, StableParallelRuns of them at parallel 2 or more; a binary change resets the streak and is not a
 //     flake;
 //   - a stable key stays stable across binary changes (a new outcome on new binaries is a regression or a fix, which the
 //     verdict reports);
-//   - any verdict or D1 flip between consecutive counted runs on the same bot commit and d2d hash quarantines the key at
+//   - any verdict or D1 flip between consecutive counted runs on the same bot binary and d2d hash quarantines the key at
 //     once, whatever its state;
+//   - a BLOCKED run is counted apart (Blocked, BlockedNow) and changes no state or streak;
 //   - a release of the scenario takes its quarantined keys back to candidate; runs before the release no longer count.
 func Stability(recs []LedgerRecord, rels []Release) ([]KeyStability, error) {
 	for _, r := range rels {
@@ -125,7 +142,7 @@ func Stability(recs []LedgerRecord, rels []Release) ([]KeyStability, error) {
 		return false
 	}
 	for _, r := range ord {
-		if !counted(r) {
+		if !counted(r) && r.Verdict != Blocked {
 			continue
 		}
 		k := StabilityKey{r.Scenario, r.Class, r.Seed}
@@ -135,6 +152,13 @@ func Stability(recs []LedgerRecord, rels []Release) ([]KeyStability, error) {
 			st[k] = s
 			order = append(order, k)
 		}
+		if r.Verdict == Blocked {
+			s.Blocked++
+			s.BlockedNow++
+			s.LastBlocked = r.Run
+			continue
+		}
+		s.BlockedNow = 0
 		p, hasPrev := prev[k]
 		if hasPrev && s.State == StabilityQuarantined && released(k.Scenario, r.Started, p.Started) {
 			s.State, s.Since, s.Streak, s.StreakParallel, hasPrev = StabilityCandidate, "", 0, 0, false
@@ -144,7 +168,7 @@ func Stability(recs []LedgerRecord, rels []Release) ([]KeyStability, error) {
 		if r.Verdict == Green {
 			s.LastGreen = r.Run
 		}
-		sameBin := hasPrev && p.BotCommit == r.BotCommit && p.D2DSHA256 == r.D2DSHA256
+		sameBin := hasPrev && sameBot(p, r) && p.D2DSHA256 == r.D2DSHA256
 		switch {
 		case !sameBin:
 			s.Streak, s.StreakParallel = 1, 0
@@ -175,7 +199,7 @@ func Stability(recs []LedgerRecord, rels []Release) ([]KeyStability, error) {
 }
 
 // ScenarioStability rolls the keys up to one word per scenario: quarantined when any key is, stable when every key that
-// ran is, else candidate. A scenario with no counted run is absent (its caller reads that as candidate).
+// ran is, else candidate. A scenario with no counted and no BLOCKED run is absent (its caller reads that as candidate).
 func ScenarioStability(keys []KeyStability) map[string]string {
 	out := map[string]string{}
 	for _, k := range keys {
