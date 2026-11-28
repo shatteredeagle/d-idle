@@ -17,6 +17,7 @@ owns:
   - "internal/bot/"
 exclusive: []
 contracts: []
+result: "Cause (V, bot log of run 20261127-232846): after the Tristram failsafe ladder a flail hold (bot.flailHoldMin 5) started at 23:30:14; the hero then walked to Tower Cellar 3, cleared it, and flailHold kept calling sweep on the cleared area. Each pass (nav mouth gate holds the click, roam done, area cleared, run finished) takes no virtual time, so lockstep virtual time stood at 1719 s (pace lines, steps 14177) and the hold never ended: class A (the hold and the sweep undo each other, neither waits). The portalRetryWaitSec 0 arm only changed the road into the hold (cancelled portal, chicken, relaunches). Fix: flailHold waits 5 s in a cleared area with nothing hostile; a sweep pass over an area already cleared that kills nothing takes one tick (covers the area-done gap and board hold paths too). Must-fail tests Paladin and Sorceress (TestFlailHoldInClearedAreaLetsTimePass, TestSweepPassOnClearedAreaTakesATick). Not build-specific. NOT verified live: #2 needs a rerun of cain.chain Paladin 11 with the knob."
 ---
 
 ## Description
@@ -29,6 +30,6 @@ Run 20261127-232846: 2108 s wall, bot log 2.7 million lines, BLOCKED (cut before
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 The cause of the spin is named from the log (which loop logs roam done, area cleared, run finished without advancing virtual time)
+- [x] #1 The cause of the spin is named from the log (which loop logs roam done, area cleared, run finished without advancing virtual time)
 - [ ] #2 cain.chain Paladin 11 with bot.portalRetryWaitSec 0 ends inside its virtual budget
 <!-- AC:END -->

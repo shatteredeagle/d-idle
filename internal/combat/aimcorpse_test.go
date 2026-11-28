@@ -146,3 +146,38 @@ func TestCorpseReservationReleased(t *testing.T) {
 		t.Fatalf("id 0 reserved: %v", h.f.necro.tried)
 	}
 }
+
+// Review 11, N6: a corpse that stays in the snapshot and cannot be used (the walk to it fails, the game refuses the
+// cast) was offered again every corpseHold for the whole fight. The second aim at the same corpse is the last one in
+// the area. A Necromancer and an Assassin (Death Sentry reads the same reservation).
+func TestUnusableCorpseIsNotRetriedForever(t *testing.T) {
+	for name, world := range map[string]func() (*harness, *nworld){
+		"necromancer": func() (*harness, *nworld) { return reviveWorld(t, nil, nil) },
+		"assassin":    func() (*harness, *nworld) { return trapWorld(t, map[int]int{idDeathSent: 5}) },
+	} {
+		h, w := world()
+		w.corpse(7, 102, 100)
+		w.corpse(8, 103, 100)
+		me := input.Point{X: 100, Y: 100}
+		area := w.snap.Player.Area
+		aims := 0
+		for i := 0; i < 40; i++ { // 20 s of a fight, the corpse stays and every aim at it comes to nothing
+			for _, c := range Corpses(w.snap, h.f.cat, me, 14, h.f.takenCorpses(area)) {
+				if c.ID == 7 {
+					h.f.takeCorpse(7)
+					aims++
+				}
+			}
+			h.s.Sleep(corpseHold / 8)
+		}
+		if aims != corpseTries {
+			t.Errorf("%s: corpse 7 aimed at %d times in 20 s, want %d", name, aims, corpseTries)
+		}
+		if n := len(Corpses(w.snap, h.f.cat, me, 14, h.f.takenCorpses(area))); n != 1 {
+			t.Errorf("%s: the other corpse must stay on offer, got %d", name, n)
+		}
+		if n := len(Corpses(w.snap, h.f.cat, me, 14, h.f.takenCorpses(area+1))); n != 2 {
+			t.Errorf("%s: another area must drop the give-up (unit ids repeat), got %d", name, n)
+		}
+	}
+}

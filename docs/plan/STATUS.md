@@ -48,11 +48,12 @@
 | navbarracks | proposed | - | `internal/nav/`<br>`internal/d2dworld/` | - |
 | cainspin | proposed | - | `internal/bot/` | - |
 | summonerstall | proposed | - | `internal/bot/`<br>`internal/nav/` | - |
-| drillskills | proposed | - | `internal/scenario/`<br>`cmd/d2scenario/`<br>`tools/provingground/scenarios/combatdrills.json`<br>`tools/provingground/scenarios/necro.json` | - |
+| drillskills | proposed | - | `internal/scenario/`<br>`cmd/d2scenario/`<br>`tools/provingground/scenarios/combatdrills.json`<br>`tools/provingground/scenarios/necro.json`<br>`tools/provingground/golden/setup-played.tsv` | - |
 | bsmnight | proposed | - | `tools/provingground/scenarios/board.json`<br>`internal/questboard/` | - |
 | act2night | proposed | - | `internal/bot/`<br>`tools/provingground/scenarios/stepexec-act2chunks.json` | - |
 | townnight | proposed | - | `internal/town/`<br>`internal/supply/`<br>`tools/provingground/scenarios/townplan.json` | - |
 | led1 | in-progress | - | `data/darklaunch/`<br>`data/darklaunch.json`<br>`data/darklaunch-cap.json`<br>`tools/darklaunch/`<br>`tools/flip/`<br>`docs/process/dark-launch.md`<br>`docs/process/autoflip.md` | - |
+| fix7b | in-progress | - | `internal/bot/`<br>`internal/arbiter/`<br>`internal/survival/`<br>`internal/combat/`<br>`cmd/d2bot/`<br>`docs/arbiter.md`<br>`docs/design/arbiter-target-and-migration.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
@@ -196,14 +197,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
-- b5055f308 11-28 02:08 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
-- 41fb5b723 11-28 01:52 `Merge agent/nf3: nf3: early road kit entry rule, unreachable goal searched once (TASK-1104/1107)` (nf3)
-- 04bfc9149 11-28 01:51 `Merge branch 'main' into nf3` (-)
-- cded674d7 11-28 01:50 `Merge agent/led1: led1: dark ledger split: per-knob design files + runtime state outside git (TASK-1110)` (led1)
-- b72217682 11-28 01:48 `Merge branch 'main' into led1` (-)
-- 07762b586 11-28 01:43 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
-- f8f830352 11-28 01:42 `Merge branch 'main' into nightlog` (-)
-- e9576a33f 11-28 01:29 `Merge branch 'main' into nf3` (-)
-- e4b6fc6eb 11-28 01:29 `Merge branch 'main' into led1` (-)
-- ab6763901 11-28 01:29 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
+- 2179c58a0 11-28 02:30 `Merge agent/fix7b: fix7b: arbiter fixes N1-N6 (TASK-1115)` (fix7b)
+- 1f1c3a73a 11-28 02:29 `Merge branch 'main' into fix7b` (-)
+- e982e2703 11-28 02:23 `Merge agent/roadfresh: roadfresh: roadmap refresh (TASK-1123)` (roadfresh)
+- 1bc4edc57 11-28 02:23 `Merge agent/road4: road4: d2shadow (TASK-1121)` (road4)
+- 14942d262 11-28 02:23 `Merge agent/vault2: vault2: atomic Reserve, merc journal (TASK-1113)` (vault2)
+- d7efb045a 11-28 02:20 `Merge branch 'main' into roadfresh` (-)
+- 2142d8f04 11-28 02:20 `Merge branch 'main' into road4` (-)
+- 0017b3d7b 11-28 02:20 `Merge branch 'main' into vault2` (-)
+- 28216bd08 11-28 02:12 `Merge agent/nf1b: nf1b: pre.bind and pre.summon (TASK-1105)` (nf1b)
+- a02253d37 11-28 02:12 `Merge agent/nf2: nf2: flail hold and sweep in a cleared area let time pass (TASK-1103)` (nf2)
 <!-- statusgen:end -->

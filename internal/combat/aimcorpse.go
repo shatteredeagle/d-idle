@@ -81,6 +81,10 @@ var (
 // times, long enough for the corpse of a landed cast to leave the snapshot.
 const corpseHold = 4 * time.Second
 
+// corpseTries is how often one corpse is aimed at in an area. A corpse still there after the second aim cannot be used
+// (the walk to it fails, the game refuses the cast) and would cost a tick every corpseHold for the whole fight.
+const corpseTries = 2
+
 // takeCorpse reserves the corpse id for every corpse spell. Id 0 is no corpse (a lay point without one).
 func (f *Fighter) takeCorpse(id uint32) {
 	if id == 0 {
@@ -89,21 +93,24 @@ func (f *Fighter) takeCorpse(id uint32) {
 	f.necro.init()
 	f.necro.tried[id] = true
 	f.necro.triedAt[id] = f.now()
+	f.necro.triedN[id]++
 }
 
-// takenCorpses is the reservation for area: reservations older than corpseHold are released, and another area (or a
-// new game, which starts in town) drops them all, since unit ids repeat.
+// takenCorpses is the reservation for area: reservations older than corpseHold are released unless the corpse was
+// aimed at corpseTries times, and another area (or a new game, which starts in town) drops them all, since unit ids
+// repeat.
 func (f *Fighter) takenCorpses(area int) corpseRes {
 	n := &f.necro
 	n.init()
 	if area != n.triedArea {
 		clear(n.tried)
 		clear(n.triedAt)
+		clear(n.triedN)
 		n.triedArea = area
 	}
 	now := f.now()
 	for id, at := range n.triedAt {
-		if now.Sub(at) >= corpseHold {
+		if now.Sub(at) >= corpseHold && n.triedN[id] < corpseTries {
 			delete(n.tried, id)
 			delete(n.triedAt, id)
 		}
