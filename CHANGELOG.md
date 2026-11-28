@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- nf1: nav strip behind a sealed frontier pocket (TASK-1102) <!--sg:agent/nf1-->
 - fix8: build-table consistency check, capability facts, SelectProfile error, combat keys, traps list, mana_heavy in Normal (TASK-1097) <!--sg:agent/fix8-->
 - review 13: sandbox live log review (docs) <!--sg:agent/rv4-->
 - round-2 review C: security, PG, data, pipeline (docs) <!--sg:agent/rv3-->
