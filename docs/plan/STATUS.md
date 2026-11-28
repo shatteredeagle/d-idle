@@ -201,6 +201,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- b41ae5eb9 11-28 06:44 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
+- 8da0064ff 11-28 06:43 `Merge branch 'main' into nightlog` (-)
 - ab0b8fd6f 11-28 06:42 `Merge agent/ledenable: ledger: boardSM, refusalPark, resumeAfterDeaths enabled (clean windows)` (ledenable)
 - 021487992 11-28 06:18 `Merge agent/rv6: review 15: round-4 deploy readiness (docs)` (rv6)
 - 72ebe1f87 11-28 06:17 `Merge branch 'main' into rv6` (-)
@@ -209,6 +211,4 @@
 - 9ebe774bf 11-28 06:08 `Merge agent/dur2: dur2: Tyrael door finding (fork), npc_out_of_reach, board retry count (TASK-1126/1120)` (dur2)
 - 951385660 11-28 06:05 `Merge branch 'main' into road5` (-)
 - 43b3a8756 11-28 06:05 `Merge branch 'main' into drv2` (-)
-- 01f0363db 11-28 06:04 `Merge branch 'main' into dur2` (-)
-- fa6164b87 11-28 05:49 `Merge agent/forkreq: forkreq: consolidated fork requests (docs)` (forkreq)
 <!-- statusgen:end -->
