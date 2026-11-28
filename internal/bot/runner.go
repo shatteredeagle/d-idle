@@ -218,6 +218,7 @@ type Runner struct {
 	drank          atomic.Int64                 // potions drunk, counted from every EvPotion event (combat emits them live; the observer's own diff is off there)
 	playerCancelNs atomic.Int64                 // clock of the last guard interrupt for a player command (playerDue)
 	stepMu         sync.Mutex                   // held for a whole loop step: the loop state is only touched under it or from the step itself (questboard.go world)
+	boardTraining  atomic.Bool                  // the board's last slice was its training slice: the leveling filler's own work (starvedcause.go)
 	parkedBoard    atomic.Bool                  // quest board Idle mode: standing in town on purpose, the stall watchdog stays quiet (boardmode.go)
 	noTP           atomic.Bool                  // the running task step has Constraints.NoTownPortal: no safety portal, no trip
 	farmMu         sync.Mutex                   // guards farm

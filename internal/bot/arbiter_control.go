@@ -121,9 +121,7 @@ func (r *Runner) arbCompare(sh *arbiter.Shadow, d arbiter.Decision, now float64,
 	if line := sh.Compare(d, now, chain); line != "" {
 		r.e.Log.Info("arbiter shadow", "diverge", line)
 	}
-	for _, in := range d.Starved {
-		r.inv.noteStarved(r.starvedCause(d, in))
-	}
+	r.noteStarvedAll(d)
 }
 
 // arbHoldsQuest is the quest and level families' hook under control: the quest step defers to the arbiter's decision.
