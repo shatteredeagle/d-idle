@@ -42,7 +42,7 @@
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | cellar3gate | in-progress | - | `internal/nav/exit.go`<br>`internal/nav/cellar3gate_test.go`<br>`internal/questboard/`<br>`docs/probes/cellar3-gate-capture.md` | - |
-| townapply | proposed | - | `internal/supply`<br>`internal/town/planshadow.go` | - |
+| holereach | proposed | - | `internal/bot/zonemodel.go`<br>`internal/bot/zonemodel_test.go` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
@@ -186,14 +186,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- d83be71b1 11-27 21:46 `Merge agent/holereach: holereach: drop unreachable hole zones, hole fallback needs the kit (TASK-1088)` (holereach)
+- b539847b9 11-27 21:45 `Merge branch 'main' into holereach` (-)
+- 0f7ecea7f 11-27 21:36 `Merge agent/postdeploy2: postdeploy2: second post-deploy audit (docs)` (postdeploy2)
+- 25916ea02 11-27 21:35 `Merge branch 'main' into postdeploy2` (-)
 - 90dde084a 11-27 21:28 `Merge agent/townapply: townapply: SME town profile rows, beltSlots and tierFloor loader fields (TASK-1087)` (townapply)
 - 0f92b2853 11-27 21:27 `Merge branch 'main' into townapply` (-)
 - db2f6c04f 11-27 21:17 `Merge agent/smetown: smetown: SME advice on town supply profiles (TASK-765)` (smetown)
 - 912f71256 11-27 21:16 `Merge branch 'main' into smetown` (-)
 - e3ad47351 11-27 21:12 `Merge agent/cardclose4: cardclose4: card status sync after the afternoon merges` (cardclose4)
 - 263da1e33 11-27 21:10 `Merge remote-tracking branch 'origin/main' into agent/cardclose4` (-)
-- 3210c3a77 11-27 21:09 `Merge agent/devupdatefix: devupdatefix: dev-update.sh local mode, per-run stage dir, host line (TASK-1086)` (devupdatefix)
-- 1db8a65e9 11-27 19:59 `Merge agent/questautovis: questautovis: auto/waitingFor visible in ops, api and Return screen (TASK-1085)` (questautovis)
-- 715757050 11-27 19:58 `Merge branch 'main' into questautovis` (-)
-- 1542a59b7 11-27 19:53 `Merge agent/cellar3gate: cellar3gate: leave the pocket through a click the mouth gate allows, coded no_path park (TASK-1084)` (cellar3gate)
 <!-- statusgen:end -->
