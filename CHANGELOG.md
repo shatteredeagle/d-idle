@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- flipjson: flip.py parses the first JSON document of ops status --why <!--sg:agent/flipjson-->
 - xplostfalse: believe an xp fall only when repeated, relaunch-aware Save and Exit level, auto-start held-back reasons (TASK-1089) <!--sg:agent/xplostfalse-->
 - holereach: drop unreachable hole zones, hole fallback needs the kit (TASK-1088) <!--sg:agent/holereach-->
 - postdeploy2: second post-deploy audit (docs) <!--sg:agent/postdeploy2-->

@@ -187,7 +187,9 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 4e171e621 11-27 21:56 `Merge agent/flipjson: flipjson: flip.py parses the first JSON document of ops status --why` (flipjson)
 - 98a9c9be9 11-27 21:56 `Merge agent/xplostfalse: xplostfalse: believe an xp fall only when repeated, relaunch-aware Save and Exit level, auto-start held-back reasons (TASK-1089)` (xplostfalse)
+- f956c040e 11-27 21:53 `Merge branch 'main' into flipjson` (-)
 - da6cf18c4 11-27 21:53 `Merge branch 'main' into xplostfalse` (-)
 - d83be71b1 11-27 21:46 `Merge agent/holereach: holereach: drop unreachable hole zones, hole fallback needs the kit (TASK-1088)` (holereach)
 - b539847b9 11-27 21:45 `Merge branch 'main' into holereach` (-)
@@ -195,6 +197,4 @@
 - 25916ea02 11-27 21:35 `Merge branch 'main' into postdeploy2` (-)
 - 90dde084a 11-27 21:28 `Merge agent/townapply: townapply: SME town profile rows, beltSlots and tierFloor loader fields (TASK-1087)` (townapply)
 - 0f92b2853 11-27 21:27 `Merge branch 'main' into townapply` (-)
-- db2f6c04f 11-27 21:17 `Merge agent/smetown: smetown: SME advice on town supply profiles (TASK-765)` (smetown)
-- 912f71256 11-27 21:16 `Merge branch 'main' into smetown` (-)
 <!-- statusgen:end -->
