@@ -145,6 +145,7 @@ cmd/d2bot/live.go  credit-runner  campaign1
 cmd/d2bot/live.go  live-agent  agencyp1b
 cmd/d2bot/necroplay_test.go  live-agent  epic-class-necromancer
 cmd/d2scenario  credit-runner  pgfix
+cmd/d2scenario/  credit-runner  fix6
 cmd/d2scenario/  live-agent  arbmig
 cmd/d2scenario/ledger.go  credit-runner  pgearned
 cmd/d2scenario/ledger.go  credit-runner  pgpage
@@ -162,6 +163,7 @@ data/darklaunch.json  live-agent  ticklog
 data/input/caps/  live-agent  inputl3
 data/input/caps_test.go  live-agent  inputl3
 data/questboard/act1.json  credit-runner  cainfix3
+data/stepgrounds/steps.json  credit-runner  fix6
 deploy/d2d-container/compose.friends.yml  credit-runner  ghcrpublish
 deploy/d2d-container/compose.tester.yml  credit-runner  ghcrpublish
 deploy/d2d-container/context.sh  credit-runner  ghcrpublish
@@ -218,6 +220,7 @@ docs/probes/classorder1.md  user  classorder1
 docs/probes/flipwave2.md  live-agent  flipwave2
 docs/probes/h1-baseline.md  user  h1baseline
 docs/probes/h3-verdict.md  user  h3verdict
+docs/probes/pg-ops-handoff-2026-11-28.md  credit-runner  fix6
 docs/probes/provingground-act1more-2026-11-20.md  credit-runner  pgpage
 docs/probes/provingground-act1next-2026-11-20.md  credit-runner  pgpage
 docs/probes/provingground-cain-2026-11-19.md  credit-runner  pgpage
@@ -232,7 +235,9 @@ docs/probes/town-plan-stage3-2026-11-22.md  live-agent  town5
 docs/probes/tpreserve.md  live-agent  tpreserve-live
 docs/process/pg-ledger-ops.md  credit-runner  pgledgeron
 docs/process/pg-ops-mgonejob.md  credit-runner  mgonejob
+docs/process/proving-ground-status.md  credit-runner  fix6
 docs/process/proving-ground-status.md  credit-runner  pgpage
+docs/process/proving-ground.md  credit-runner  fix6
 docs/process/proving-ground.md  credit-runner  pgearned
 docs/process/proving-ground.md  credit-runner  pgfix
 docs/quest-givers.md  credit-runner  campaign1
@@ -362,6 +367,7 @@ internal/questboard/  live-agent  cellar3gate
 internal/questboard/def.go  credit-runner  cainfix3
 internal/resource  live-agent  town5
 internal/scenario  credit-runner  pgfix
+internal/scenario/  credit-runner  fix6
 internal/scenario/earned.go  credit-runner  pgearned
 internal/scenario/earned_test.go  credit-runner  pgearned
 internal/scenario/ledger.go  credit-runner  pgearned
@@ -437,6 +443,7 @@ internal/watch/web/shell.json  credit-runner  uis6
 internal/watch/web/tokens.css  credit-runner  uis1
 internal/watch/web/watch.html  credit-runner  onboardtour
 tools/ci/  credit-runner  dlv-cleanup
+tools/ci/check.sh  credit-runner  fix6
 tools/ci/check.sh  credit-runner  inputl5
 tools/ci/pointercount-baseline.json  credit-runner  inputl5
 tools/ci/pointercount.py  credit-runner  inputl5
@@ -455,6 +462,7 @@ tools/friendpack/compose.yml  credit-runner  cut012
 tools/friendpack/didle  credit-runner  cut012
 tools/friendpack/install.sh  credit-runner  cut012
 tools/friendpack/pack_test.go  credit-runner  cut012
+tools/provingground/  credit-runner  fix6
 tools/provingground/arbiter-outcomes/  live-agent  arbmig
 tools/provingground/earned  credit-runner  pgearned
 tools/provingground/pgenv.sh  credit-runner  pgledgeron
