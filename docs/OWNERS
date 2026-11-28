@@ -235,7 +235,6 @@ docs/ops/save-backups.md  credit-runner  savesafe
 docs/probes/cellar3-gate-capture.md  live-agent  cellar3gate
 docs/probes/checkpoint-live-drill.md  live-agent  ckptlive
 docs/probes/classorder1.md  user  classorder1
-docs/probes/evidence-logs-2026-11-28.md  credit-runner  evid1
 docs/probes/flipwave2.md  live-agent  flipwave2
 docs/probes/h1-baseline.md  user  h1baseline
 docs/probes/h3-verdict.md  user  h3verdict
@@ -291,7 +290,6 @@ internal/arbiter/replay_ticklog_test.go  live-agent  ticklog
 internal/bot/  credit-runner  act2night
 internal/bot/  credit-runner  cainfix3
 internal/bot/  credit-runner  cainspin
-internal/bot/  credit-runner  evid1
 internal/bot/  credit-runner  fix14
 internal/bot/  credit-runner  summonerstall
 internal/bot/  live-agent  live1
@@ -327,7 +325,6 @@ internal/combat/  credit-runner  dlv-cleanup
 internal/combat/  credit-runner  dlv-mark
 internal/combat/  credit-runner  dlv-upkeep-state
 internal/combat/  credit-runner  drilldrivers
-internal/combat/  credit-runner  evid1
 internal/combat/  credit-runner  fix14
 internal/combat/  live-agent  dlv-aim-corpse
 internal/combat/  live-agent  dlv-aim-point
@@ -530,7 +527,6 @@ tools/friendpack/install.sh  credit-runner  cut012
 tools/friendpack/pack_test.go  credit-runner  cut012
 tools/provingground/arbiter-outcomes/  live-agent  arbmig
 tools/provingground/earned  credit-runner  pgearned
-tools/provingground/golden/  credit-runner  evid1
 tools/provingground/golden/setup-played.tsv  credit-runner  drillskills
 tools/provingground/pgenv.sh  credit-runner  pgledgeron
 tools/provingground/pgenv_test.sh  credit-runner  pgledgeron
@@ -542,13 +538,11 @@ tools/provingground/scenarios/cain.json  credit-runner  cainfix3
 tools/provingground/scenarios/cain.json  credit-runner  pgearned
 tools/provingground/scenarios/combatdrills.json  credit-runner  drilldrivers
 tools/provingground/scenarios/combatdrills.json  credit-runner  drillskills
-tools/provingground/scenarios/evidence.json  credit-runner  evid1
 tools/provingground/scenarios/necro-acts.json  live-agent  epic-class-necromancer
 tools/provingground/scenarios/necro-epic.json  live-agent  epic-class-necromancer
 tools/provingground/scenarios/necro.json  credit-runner  drilldrivers
 tools/provingground/scenarios/necro.json  credit-runner  drillskills
 tools/provingground/scenarios/stepexec-act2chunks.json  credit-runner  act2night
-tools/provingground/scenarios/tiers.json  credit-runner  evid1
 tools/provingground/scenarios/tiers.json  live-agent  epic-class-necromancer
 tools/provingground/scenarios/townplan.json  credit-runner  townnight
 tools/provingground/scenarios/townplan.json  live-agent  town5

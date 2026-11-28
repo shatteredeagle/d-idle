@@ -1,10 +1,13 @@
 ---
 id: TASK-1118
-title: 'evid1: evidence log lines and Proving Ground scenarios for the NOT YET dark-launch knobs; arbiter-starved false positive'
-status: In Progress
+title: >-
+  evid1: evidence log lines and Proving Ground scenarios for the NOT YET
+  dark-launch knobs; arbiter-starved false positive
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T06:03:00Z'
+updated_date: '2026-11-28T10:23:00Z'
 labels:
   - bot
   - bot-fix
