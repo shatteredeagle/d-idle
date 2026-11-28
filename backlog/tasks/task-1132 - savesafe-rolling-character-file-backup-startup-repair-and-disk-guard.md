@@ -1,10 +1,11 @@
 ---
 id: TASK-1132
 title: 'savesafe: rolling character file backup, startup repair and disk guard'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T09:49:00Z'
+updated_date: '2026-11-28T10:23:00Z'
 labels:
   - bot
   - bug

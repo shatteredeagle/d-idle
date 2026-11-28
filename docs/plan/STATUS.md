@@ -59,7 +59,6 @@
 | durieltyrael | proposed | - | `internal/questboard/`<br>`internal/task/` | - |
 | drilldrivers | proposed | - | `internal/combat/`<br>`tools/provingground/scenarios/combatdrills.json`<br>`tools/provingground/scenarios/necro.json` | - |
 | fix14 | proposed | - | `internal/admit/`<br>`internal/quest/objective.go`<br>`internal/bot/`<br>`internal/combat/`<br>`internal/vaultkeep/`<br>`internal/arbiter/`<br>`internal/town/` | - |
-| savesafe | in-progress | - | `internal/savesafe/`<br>`cmd/d2bot/savesafewire.go`<br>`cmd/d2bot/savesafewire_test.go`<br>`cmd/d2bot/opscmd.go`<br>`cmd/d2bot/opswire.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/ladder.go`<br>`internal/bot/savepoint.go`<br>`internal/bot/savepoint_test.go`<br>`internal/bot/runner.go`<br>`internal/bot/explain.go`<br>`internal/watch/notices.go`<br>`internal/watch/notices_test.go`<br>`internal/watch/serve.go`<br>`internal/watch/update.go`<br>`docs/design/fork-save-atomic.md`<br>`docs/ops/save-backups.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
 | ghcrpublish | in-progress | - | `.github/workflows/tester-image.yml`<br>`docs/registry-publish.md`<br>`deploy/d2d-container/compose.friends.yml`<br>`docs/tester-registry.md`<br>`deploy/d2d-container/compose.tester.yml`<br>`deploy/d2d-container/context.sh`<br>`deploy/d2d-container/tester_image_test.go` | - |

@@ -137,21 +137,15 @@ cmd/d2bot/behaviors.go  credit-runner  campaign1
 cmd/d2bot/boss.go  credit-runner  summonerstall
 cmd/d2bot/boss_test.go  credit-runner  summonerstall
 cmd/d2bot/d2dbackend.go  credit-runner  campaign1
-cmd/d2bot/d2dbackend.go  credit-runner  savesafe
 cmd/d2bot/d2dwire.go  live-agent  agencyp1b
 cmd/d2bot/hotkeydrift_test.go  live-agent  epic-class-necromancer
 cmd/d2bot/invverbs.go  credit-runner  uib9
 cmd/d2bot/invverbs_test.go  credit-runner  uib9
 cmd/d2bot/journeywire.go  credit-runner  campaign1
-cmd/d2bot/ladder.go  credit-runner  savesafe
 cmd/d2bot/ladder.go  live-agent  pgtaps
 cmd/d2bot/live.go  credit-runner  campaign1
 cmd/d2bot/live.go  live-agent  agencyp1b
 cmd/d2bot/necroplay_test.go  live-agent  epic-class-necromancer
-cmd/d2bot/opscmd.go  credit-runner  savesafe
-cmd/d2bot/opswire.go  credit-runner  savesafe
-cmd/d2bot/savesafewire.go  credit-runner  savesafe
-cmd/d2bot/savesafewire_test.go  credit-runner  savesafe
 cmd/d2bot/survivalwire.go  live-agent  live1
 cmd/d2scenario  credit-runner  pgfix
 cmd/d2scenario/  credit-runner  drillskills
@@ -193,7 +187,6 @@ docs/design/arbiter-migration-p6.md  live-agent  arbmig
 docs/design/boardsm-flip.md  live-agent  bsmdef
 docs/design/fable-review-2026-11-21/town-planner-b-model.md  live-agent  town5
 docs/design/fable-review-2026-11-21/town-profiles-sme.md  live-agent  town12
-docs/design/fork-save-atomic.md  credit-runner  savesafe
 docs/design/input-cast-verbs.md  live-agent  inputl3
 docs/design/input-i3.md  live-agent  inputl3
 docs/design/input-i4.md  credit-runner  inputl4
@@ -227,7 +220,6 @@ docs/knobs.md  live-agent  arbmig
 docs/live1.md  live-agent  live1
 docs/onboarding-tour.md  credit-runner  onboardtour
 docs/ops/docker-volumes.md  credit-runner  fix4
-docs/ops/save-backups.md  credit-runner  savesafe
 docs/probes/cellar3-gate-capture.md  live-agent  cellar3gate
 docs/probes/checkpoint-live-drill.md  live-agent  ckptlive
 docs/probes/classorder1.md  user  classorder1
@@ -294,7 +286,6 @@ internal/bot/arbloop_test.go  live-agent  arbloop
 internal/bot/broke.go  live-agent  town5
 internal/bot/diffready.go  credit-runner  fix4
 internal/bot/diffready_test.go  credit-runner  fix4
-internal/bot/explain.go  credit-runner  savesafe
 internal/bot/goal.go  live-agent  arbloop
 internal/bot/guided.go  credit-runner  campaign1
 internal/bot/guided_test.go  credit-runner  campaign1
@@ -304,9 +295,6 @@ internal/bot/questboard.go  credit-runner  boardsidestart
 internal/bot/questboard.go  live-agent  bsmdef
 internal/bot/routeguard.go  live-agent  bsmdef
 internal/bot/runner.go  credit-runner  campaign1
-internal/bot/runner.go  credit-runner  savesafe
-internal/bot/savepoint.go  credit-runner  savesafe
-internal/bot/savepoint_test.go  credit-runner  savesafe
 internal/bot/shadow.go  live-agent  arbmig
 internal/bot/shadow.go  live-agent  ticklog
 internal/bot/task.go  live-agent  bsmdef
@@ -400,7 +388,6 @@ internal/questboard/  live-agent  cellar3gate
 internal/questboard/  live-agent  live1
 internal/questboard/def.go  credit-runner  cainfix3
 internal/resource  live-agent  town5
-internal/savesafe/  credit-runner  savesafe
 internal/scenario  credit-runner  pgfix
 internal/scenario/  credit-runner  drillskills
 internal/scenario/earned.go  credit-runner  pgearned
@@ -454,14 +441,11 @@ internal/watch/layout.go  credit-runner  uis6
 internal/watch/layout_test.go  credit-runner  uis1
 internal/watch/logtab.go  credit-runner  uis6
 internal/watch/logtab_test.go  credit-runner  uis6
-internal/watch/notices.go  credit-runner  savesafe
-internal/watch/notices_test.go  credit-runner  savesafe
 internal/watch/onboardingtour_test.go  credit-runner  onboardtour
 internal/watch/panels.go  credit-runner  uis6
 internal/watch/policypreview_test.go  live-agent  epic-class-necromancer
 internal/watch/policysheet_test.go  live-agent  epic-class-necromancer
 internal/watch/serve.go  credit-runner  fix4
-internal/watch/serve.go  credit-runner  savesafe
 internal/watch/serve.go  credit-runner  uis6
 internal/watch/serve_test.go  credit-runner  fix4
 internal/watch/stance_test.go  live-agent  epic-class-necromancer
@@ -469,7 +453,6 @@ internal/watch/testdata/areamap/  credit-runner  uis6
 internal/watch/testdata/logpanel/  credit-runner  uis6
 internal/watch/testdata/onboarding_tour_test.cjs  credit-runner  onboardtour
 internal/watch/unlockrisk_test.go  live-agent  epic-class-necromancer
-internal/watch/update.go  credit-runner  savesafe
 internal/watch/web/components.css  credit-runner  uis6
 internal/watch/web/layout.js  credit-runner  uis1
 internal/watch/web/layout.js  credit-runner  uis6
