@@ -65,3 +65,34 @@ func TestXPLostAfterReloadAndAtRisk(t *testing.T) {
 		t.Fatalf("lost %d saved %d pending %d, want 800/1000/800 (pending is the 1000->1800 gain, the reload adds nothing)", g.r.ob.xpLost, g.r.ob.savedExp, g.r.ob.pendingXP)
 	}
 }
+
+// A relaunch whose first reads are 0 (xp valid -> 0 -> valid again) is no loss; two equal low reads are; a death
+// penalty (a small fall that stays) still warns. Two classes.
+func TestXPLostIgnoresRelaunchZero(t *testing.T) {
+	for class, name := range map[d2.Class]string{d2.Sorceress: "sorceress", d2.Paladin: "paladin"} {
+		t.Run(name, func(t *testing.T) {
+			g := newRig(t)
+			g.w.set(func(w *world) { w.class = class })
+			buf := &lockedBuf{}
+			g.e.Log = slog.New(slog.NewTextHandler(buf, nil))
+			now := time.Unix(1000, 0)
+			g.w.set(func(w *world) { w.exp = 368946 })
+			g.observeAt(now)
+			g.observeAt(now.Add(time.Second))
+			g.w.set(func(w *world) { w.exp = 0 })
+			g.observeAt(now.Add(2 * time.Second))
+			g.w.set(func(w *world) { w.exp = 368957 })
+			g.observeAt(now.Add(3 * time.Second))
+			g.observeAt(now.Add(4 * time.Second))
+			if strings.Contains(buf.String(), "xp lost") {
+				t.Fatalf("false loss: %s", buf.String())
+			}
+			g.w.set(func(w *world) { w.exp = 360000 }) // death penalty, stays
+			g.observeAt(now.Add(5 * time.Second))
+			g.observeAt(now.Add(6 * time.Second))
+			if !strings.Contains(buf.String(), "lost=8957") {
+				t.Fatalf("real loss not logged: %s", buf.String())
+			}
+		})
+	}
+}

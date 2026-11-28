@@ -29,6 +29,8 @@ type relaunchLog struct {
 	total     int
 	chickenAt time.Time
 	chickenKV string
+	lastWhy   string
+	lastAt    time.Time
 }
 
 // noteRelaunch logs and counts one relaunch.
@@ -40,8 +42,21 @@ func (r *Runner) noteRelaunch(reason, cause string) {
 	}
 	rl.by[reason]++
 	rl.total++
+	rl.lastWhy, rl.lastAt = reason, r.e.Clock.Now()
 	rl.mu.Unlock()
 	r.e.Log.Info("relaunch", "reason", reason, "cause", cause)
+}
+
+// LeaveReason is the reason code of the relaunch noted last, when it is recent enough to be the Save and Exit in
+// progress ("" otherwise): the d2d backend logs a planned leave (savepoint, newgame, recycle) as INFO, not a chicken WARN.
+func (r *Runner) LeaveReason() string {
+	rl := &r.relaunch
+	rl.mu.Lock()
+	defer rl.mu.Unlock()
+	if rl.lastAt.IsZero() || r.e.Clock.Now().Sub(rl.lastAt) > chickenLeaveWindow {
+		return ""
+	}
+	return rl.lastWhy
 }
 
 // noteChicken remembers a carried-out chicken (life and area) so the Leave that follows is told as a chicken.
