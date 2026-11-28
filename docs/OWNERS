@@ -257,6 +257,7 @@ internal/arbiter/  live-agent  arbmig
 internal/arbiter/replay.go  live-agent  ticklog
 internal/arbiter/replay_ticklog_test.go  live-agent  ticklog
 internal/bot/  credit-runner  cainfix3
+internal/bot/  credit-runner  fix3
 internal/bot/arbiter_control.go  live-agent  arbmig
 internal/bot/arbiter_control_test.go  live-agent  arbmig
 internal/bot/arbloop_test.go  live-agent  arbloop
@@ -281,6 +282,7 @@ internal/combat/  credit-runner  cainfix3
 internal/combat/  credit-runner  dlv-cleanup
 internal/combat/  credit-runner  dlv-mark
 internal/combat/  credit-runner  dlv-upkeep-state
+internal/combat/  credit-runner  fix3
 internal/combat/  live-agent  dlv-aim-corpse
 internal/combat/  live-agent  dlv-aim-point
 internal/combat/  live-agent  dlv-move-melee
@@ -362,6 +364,7 @@ internal/scenario/scenario.go  credit-runner  pgearned
 internal/scenario/setup.go  credit-runner  pgearned
 internal/scenario/taps.go  live-agent  pgtaps
 internal/supply  live-agent  town10
+internal/survival/  credit-runner  fix3
 internal/task  live-agent  bsmdef
 internal/task/banote_test.go  credit-runner  cainfix3
 internal/task/campaign.go  credit-runner  campaign1

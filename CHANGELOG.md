@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- fix3: stance leave at low life, no-portal recovery exclusion, bandDrop keeps safe zones, driveAura, corpse reservation lapse (TASK-1094) <!--sg:agent/fix3-->
 - fable review 9 (docs) <!--sg:agent/fable-fr9-->
 - fable review 8 (docs) <!--sg:agent/fable-fr8-->
 - fable review 6 (docs) <!--sg:agent/fable-fr6-->
