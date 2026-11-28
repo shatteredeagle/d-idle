@@ -18,6 +18,7 @@ func controlRig(t *testing.T, class d2.Class, ctl, mask int) *rig {
 		w.mons = []d2.Unit{{ID: 9, Type: d2.TypeMonster, Class: 10, Mode: d2.MonModeStand, X: 103, Y: 100}}
 	})
 	g.r.e.Tune.Bot.ArbiterShadow, g.r.e.Tune.Bot.ArbiterControl, g.r.e.Tune.Bot.ArbiterFamilies = 1, ctl, mask
+	g.fight.safety = func(*d2.Snapshot) SafetyAction { return SafetyDrinkLife }
 	g.r.poll()
 	g.clock.Sleep(time.Second)
 	return g
@@ -326,6 +327,40 @@ func TestArbiterRecoveryChoiceDoesNotVetoTheChunkTheChainAllows(t *testing.T) {
 			g.r.arb.chose = fam
 			if got := g.r.arbHoldsQuest(); got != want {
 				t.Fatalf("%v: arbiter chose %s: holds the quest step %v, want %v", class, fam, got, want)
+			}
+		}
+	}
+}
+
+// A2 (fable review part 7): survive has one danger rule, the fighter's safety verdict, and yields to a running
+// emergency trip. Life under the old drink line with a quiet verdict is not danger; a verdict at any life is; with a trip running
+// the trip goes on (the chain's order) instead of a sweep per tick. Two classes. Before the fix the first and third case
+// chose survive.
+func TestArbiterSurviveReadsTheSafetyVerdictAndYieldsToATrip(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		for _, tc := range []struct {
+			name    string
+			verdict SafetyAction
+			trip    bool
+			survive bool
+		}{
+			{"low life, verdict none", SafetyNone, false, false},
+			{"verdict town portal", SafetyTownPortal, false, true},
+			{"verdict mana only", SafetyDrinkMana, false, false},
+			{"verdict chicken, trip running", SafetyChicken, true, false},
+		} {
+			g := controlRig(t, class, 1, 1)
+			g.fight.safety = func(*d2.Snapshot) SafetyAction { return tc.verdict }
+			if tc.trip {
+				g.r.loop.trip = &trip{plan: ChorePlan{Heal: true, Reason: "test"}, emergency: true}
+			}
+			g.r.runGoalShadowed(context.Background(), g.r.latest(), levelGoalControl())
+			d, _ := g.r.Arbiter()
+			if got := d.Chosen != nil && d.Chosen.Source == arbiter.SrcSurvive; got != tc.survive {
+				t.Fatalf("%v %s: survive chosen %v, want %v (%+v)", class, tc.name, got, tc.survive, d.Chosen)
+			}
+			if tc.trip && g.r.arb.ctl.Load() != 0 {
+				t.Fatalf("%v %s: the survive hook ran over the trip", class, tc.name)
 			}
 		}
 	}
