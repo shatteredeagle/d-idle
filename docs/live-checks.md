@@ -138,3 +138,4 @@ Closing rule: a card closes when merged with offline acceptance proven; every op
 | TASK-1115 fix7b | #8 | Live check on the canary with bot.arbiterControl 1: an emergency trip after declined refills goes on; writes after start 0 | live drill on the sandbox, fresh hero, per the card result | open |
 | TASK-1116 ops2 | #5 | live check: open the canary watch link on a phone, bookmark the clean address, reopen after closing the browser | live drill on the sandbox, fresh hero, per the card result | open |
 | TASK-1128 sweep2 | #3 | live check of the fixes on a sandbox hero | live drill on the sandbox, fresh hero, per the card result | open |
+| TASK-1129 zone5 | #4 | Live: 3-seed Sorceress A/B screen per docs/survival/zonemodel.md section 8 (live check) | live drill on the sandbox, fresh hero, per the card result | open |
