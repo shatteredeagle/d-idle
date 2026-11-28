@@ -144,6 +144,7 @@ cmd/d2bot/ladder.go  live-agent  pgtaps
 cmd/d2bot/live.go  credit-runner  agencyp1b
 cmd/d2bot/live.go  credit-runner  campaign1
 cmd/d2bot/necroplay_test.go  live-agent  epic-class-necromancer
+cmd/d2bot/opscmd.go  credit-runner  questauto-visible
 cmd/d2bot/task.go  credit-runner  qdmatrix
 cmd/d2bot/task_test.go  credit-runner  qdmatrix
 cmd/d2scenario/  live-agent  arbmig
@@ -213,6 +214,7 @@ docs/knobs.md  credit-runner  dlv-upkeep-state
 docs/knobs.md  live-agent  arbmig
 docs/onboarding-tour.md  credit-runner  onboardtour
 docs/onboarding.md  credit-runner  reconnectux
+docs/operator.md  credit-runner  questauto-visible
 docs/probes/cellar3-gate-capture.md  credit-runner  cellar3gate
 docs/probes/checkpoint-live-drill.md  live-agent  ckptlive
 docs/probes/classorder1.md  user  classorder1
@@ -362,6 +364,7 @@ internal/nav/gatedoor.go  credit-runner  qdmatrix
 internal/nav/gatedoor_test.go  credit-runner  qdmatrix
 internal/nav/mouthgate.go  credit-runner  qdmatrix
 internal/nav/nav.go  credit-runner  qdmatrix
+internal/ops/  credit-runner  questauto-visible
 internal/plandata/act2plan.json  live-agent  epic-class-necromancer
 internal/plandata/build-necromancer_leveling_normal30.json  live-agent  epic-class-necromancer
 internal/plandata/build-necromancer_summoner_endgame90.json  live-agent  epic-class-necromancer
@@ -373,6 +376,7 @@ internal/quest/baaldone.go  credit-runner  diffbaal
 internal/quest/baaldone_test.go  credit-runner  diffbaal
 internal/questboard  live-agent  bsmdef
 internal/questboard/  credit-runner  cellar3gate
+internal/questboard/  credit-runner  questauto-visible
 internal/questboard/def.go  credit-runner  cainfix3
 internal/questboard/state.go  credit-runner  qdmatrix
 internal/questboard/state_test.go  credit-runner  qdmatrix
@@ -444,6 +448,7 @@ internal/watch/testdata/logpanel/  credit-runner  uis6
 internal/watch/testdata/onboarding_dom.js  credit-runner  reconnectux
 internal/watch/testdata/onboarding_dom.txt  credit-runner  reconnectux
 internal/watch/testdata/onboarding_tour_test.cjs  credit-runner  onboardtour
+internal/watch/testdata/quests/  credit-runner  questauto-visible
 internal/watch/unlockrisk_test.go  live-agent  epic-class-necromancer
 internal/watch/web/components.css  credit-runner  uis6
 internal/watch/web/layout.js  credit-runner  uis1
