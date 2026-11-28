@@ -8,6 +8,8 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- fable review 5: dark ledger process (docs) <!--sg:agent/fable-fr5-->
+- fable review 1: item flows (docs) <!--sg:agent/fable-fr1-->
 - fable review 3: combat, nav, survival (docs) <!--sg:agent/fable-fr3-->
 - autoflip: plan/run/graduate-list tool (TASK-1092) <!--sg:agent/autoflip-->
 - darkthrottle: ledger cap, by_design status, flip_plan, sandbox-first doc (TASK-1091) <!--sg:agent/darkthrottle-->
