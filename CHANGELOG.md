@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- sec2: scrub leaks (TASK-1125) <!--sg:agent/sec2-->
 - evid1: evidence logs (TASK-1118) <!--sg:agent/evid1-->
 - ledger: refusalPark and resumeAfterDeaths enabled (clean 2 h windows) <!--sg:agent/ledenable-->
 - flipfix2: sandbox aliases, flip status EST, graduate-list checks (TASK-1130) <!--sg:agent/flipfix2-->

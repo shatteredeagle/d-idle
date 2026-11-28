@@ -146,6 +146,8 @@ cmd/d2bot/ladder.go  live-agent  pgtaps
 cmd/d2bot/live.go  credit-runner  campaign1
 cmd/d2bot/live.go  live-agent  agencyp1b
 cmd/d2bot/necroplay_test.go  live-agent  epic-class-necromancer
+cmd/d2bot/opscmd.go  credit-runner  sec2
+cmd/d2bot/opslog_sec_test.go  credit-runner  sec2
 cmd/d2bot/survivalwire.go  live-agent  live1
 cmd/d2scenario  credit-runner  pgfix
 cmd/d2scenario/  credit-runner  drillskills
@@ -173,7 +175,9 @@ deploy/d2d-container/compose.friends.yml  credit-runner  ghcrpublish
 deploy/d2d-container/compose.tester.yml  credit-runner  ghcrpublish
 deploy/d2d-container/context.sh  credit-runner  ghcrpublish
 deploy/d2d-container/tester-report.sh  credit-runner  fix4
+deploy/d2d-container/tester-report.sh  credit-runner  sec2
 deploy/d2d-container/tester_image_test.go  credit-runner  ghcrpublish
+deploy/d2d-container/tester_report_sec_test.go  credit-runner  sec2
 deploy/d2d-container/tester_report_test.go  credit-runner  fix4
 docs/arbiter.md  live-agent  arbmig
 docs/arbiter.md  live-agent  ticklog
@@ -266,6 +270,7 @@ docs/tester-registry.md  credit-runner  ghcrpublish
 docs/town.md  live-agent  town11
 docs/ui/redesign-2026-11-14/stash-anywhere.md  credit-runner  stashany
 docs/upstream/bodies/monster-block-body.md  credit-runner  decomp43
+internal/access/  credit-runner  sec2
 internal/agency/drive.go  live-agent  agencyp1b
 internal/agency/drive_test.go  live-agent  agencyp1b
 internal/arbiter  live-agent  town10
@@ -348,6 +353,8 @@ internal/decide/queue_test.go  credit-runner  qqueue
 internal/decide/variants.go  credit-runner  qdensity
 internal/decide/variants_test.go  credit-runner  qdensity
 internal/diffready/  credit-runner  fix4
+internal/diffready/consent.go  credit-runner  sec2
+internal/diffready/mode_sec_test.go  credit-runner  sec2
 internal/env/tuning_agency.go  live-agent  agencyp1b
 internal/env/tuning_bot.go  live-agent  arbmig
 internal/env/tuning_bot.go  live-agent  ticklog
@@ -364,6 +371,7 @@ internal/invdesk/mercverbs.go  credit-runner  uib9
 internal/invdesk/mercverbs_test.go  credit-runner  uib9
 internal/invdesk/sets.go  credit-runner  uib9
 internal/levelplan/necro_test.go  live-agent  epic-class-necromancer
+internal/logx/  credit-runner  sec2
 internal/logx/sink.go  credit-runner  fix4
 internal/logx/sink_test.go  credit-runner  fix4
 internal/nav/  credit-runner  navbarracks
@@ -397,6 +405,7 @@ internal/scenario/setup.go  credit-runner  pgearned
 internal/scenario/taps.go  live-agent  pgtaps
 internal/supply  live-agent  town10
 internal/supply/  credit-runner  townnight
+internal/support/  credit-runner  sec2
 internal/survival/  live-agent  live1
 internal/task  live-agent  bsmdef
 internal/task/banote_test.go  credit-runner  cainfix3
@@ -430,6 +439,7 @@ internal/watch/gate.go  credit-runner  fix4
 internal/watch/layout.go  credit-runner  uis1
 internal/watch/layout.go  credit-runner  uis6
 internal/watch/layout_test.go  credit-runner  uis1
+internal/watch/logtab.go  credit-runner  sec2
 internal/watch/logtab.go  credit-runner  uis6
 internal/watch/logtab_test.go  credit-runner  uis6
 internal/watch/onboardingtour_test.go  credit-runner  onboardtour
@@ -440,6 +450,7 @@ internal/watch/serve.go  credit-runner  fix4
 internal/watch/serve.go  credit-runner  uis6
 internal/watch/serve_test.go  credit-runner  fix4
 internal/watch/stance_test.go  live-agent  epic-class-necromancer
+internal/watch/surface_sec_test.go  credit-runner  sec2
 internal/watch/testdata/areamap/  credit-runner  uis6
 internal/watch/testdata/logpanel/  credit-runner  uis6
 internal/watch/testdata/onboarding_tour_test.cjs  credit-runner  onboardtour
