@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- nf2: flail hold and sweep in a cleared area let time pass (TASK-1103) <!--sg:agent/nf2-->
 - nf4: board restart scenario timing, town route reinsertion (TASK-1106/1108) <!--sg:agent/nf4-->
 - nf3: early road kit entry rule, unreachable goal searched once (TASK-1104/1107) <!--sg:agent/nf3-->
 - led1: dark ledger split: per-knob design files + runtime state outside git (TASK-1110) <!--sg:agent/led1-->

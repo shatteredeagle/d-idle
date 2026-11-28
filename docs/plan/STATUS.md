@@ -196,7 +196,9 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- a02253d37 11-28 02:12 `Merge agent/nf2: nf2: flail hold and sweep in a cleared area let time pass (TASK-1103)` (nf2)
 - 5e6060a73 11-28 02:12 `Merge agent/nf4: nf4: board restart scenario timing, town route reinsertion (TASK-1106/1108)` (nf4)
+- ee787a3f2 11-28 02:09 `Merge branch 'main' into nf2` (-)
 - 413084b65 11-28 02:09 `Merge branch 'main' into nf4` (-)
 - b5055f308 11-28 02:08 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
 - bb9980751 11-28 02:01 `Merge remote-tracking branch 'origin/main' into agent/nf4` (-)
@@ -204,6 +206,4 @@
 - 04bfc9149 11-28 01:51 `Merge branch 'main' into nf3` (-)
 - cded674d7 11-28 01:50 `Merge agent/led1: led1: dark ledger split: per-knob design files + runtime state outside git (TASK-1110)` (led1)
 - b72217682 11-28 01:48 `Merge branch 'main' into led1` (-)
-- 171098f06 11-28 01:43 `Merge branch 'main' into nf4` (-)
-- 07762b586 11-28 01:43 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
 <!-- statusgen:end -->
