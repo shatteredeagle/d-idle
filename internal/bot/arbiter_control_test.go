@@ -237,3 +237,40 @@ func TestArbiterControlLevel(t *testing.T) {
 		}
 	}
 }
+
+// A1 (fable review part 7): a broke hero below the resume line with an empty belt and nothing hostile near walks home
+// for the free heal under control too, as the chain's low-life gate does before recovery or the gold farm order. Before
+// the fix the controlled hook started the farm slice. Two classes; a healthy hero still farms (the gate must not eat the
+// family).
+func TestArbiterControlFarmHonoursTheLowLifeGate(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		for _, tc := range []struct {
+			name string
+			mask int
+			farm bool
+			life int
+			home bool
+		}{
+			{"recovery hurt", 3 | 32, false, 20, true},
+			{"order hurt", 3 | 16, true, 20, true},
+			{"recovery healthy", 3 | 32, false, 100, false},
+		} {
+			g, gf := farmRig(t, 10, class)
+			g.w.set(func(w *world) { w.area, w.life = 4, tc.life })
+			g.w.belt()
+			g.r.e.Tune.Bot.ArbiterShadow, g.r.e.Tune.Bot.ArbiterControl, g.r.e.Tune.Bot.ArbiterFamilies = 1, 1, tc.mask
+			if tc.farm {
+				gf.Start()
+			} else {
+				g.r.loop.broke.on = true
+			}
+			g.r.poll()
+			g.clock.Sleep(time.Second)
+			g.r.runGoalShadowed(context.Background(), g.r.latest(), campControl())
+			d, _ := g.r.Arbiter()
+			if home := g.r.currentWhy() == WhyHealTrip; home != tc.home {
+				t.Fatalf("%v %s: heal trip %v, want %v (chose %+v, why %v, totown %d)", class, tc.name, home, tc.home, d.Chosen, g.r.currentWhy(), g.w.count("totown"))
+			}
+		}
+	}
+}
