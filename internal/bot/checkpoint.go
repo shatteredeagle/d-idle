@@ -55,6 +55,11 @@ type checkpointState struct {
 	last struct { // the latest field position, for the alive trip home
 		area, x, y int
 	}
+	idle struct { // the last `checkpoint idle` line (noteIdle)
+		area int
+		why  string
+		at   time.Time
+	}
 }
 
 // cpAction is what the guard asks the main loop to do.
@@ -95,19 +100,54 @@ func cpDecide(in cpIn, t cpTune) cpAction {
 		in.Adjacent < crowdAdjacentRetreat && dist(in.X, in.Y, in.Rec.X, in.Rec.Y) <= float64(t.Reach) {
 		return cpRetreat
 	}
-	if !in.DangerArea || in.LifePct < t.MinLifePct || in.HostilesNear > 0 || in.Scrolls <= t.MinScrolls {
-		return cpNothing
-	}
-	if in.State == cpSet && in.Rec.Area == in.Area {
-		return cpNothing // already standing in this area
-	}
-	if !in.LastCast.IsZero() && in.Now.Sub(in.LastCast) < time.Duration(t.GapSec)*time.Second {
-		return cpNothing
-	}
-	if dist(in.X, in.Y, in.ArrX, in.ArrY) > float64(t.EntryDist) {
+	if cpHeld(in, t) != "" {
 		return cpNothing
 	}
 	return cpCast
+}
+
+// cpHeld names why no checkpoint is cast here ("" = cast). Only the first reason is named, in the rule's order.
+func cpHeld(in cpIn, t cpTune) string {
+	switch {
+	case !in.DangerArea:
+		return "area not in the checkpoint table"
+	case in.LifePct < t.MinLifePct:
+		return "life under the cast line"
+	case in.HostilesNear > 0:
+		return "hostiles near"
+	case in.Scrolls <= t.MinScrolls:
+		return "scroll reserve"
+	case in.State == cpSet && in.Rec.Area == in.Area:
+		return "checkpoint already set here"
+	case !in.LastCast.IsZero() && in.Now.Sub(in.LastCast) < time.Duration(t.GapSec)*time.Second:
+		return "cast gap"
+	case dist(in.X, in.Y, in.ArrX, in.ArrY) > float64(t.EntryDist):
+		return "far from the entry"
+	}
+	return ""
+}
+
+// cpIdleGap is the least time between two `checkpoint idle` lines with the same area and reason.
+const cpIdleGap = 10 * time.Minute
+
+// noteIdle writes the evidence line `checkpoint idle` when the enabled rule looked at a field snapshot and cast
+// nothing, once per area and reason and cpIdleGap: a window without any checkpoint line then means the rule never
+// ran, and one with only idle lines says why it never cast (docs/probes/graduations-2026-11-28.md).
+func (r *Runner) noteIdle(in cpIn, t cpTune) {
+	why := cpHeld(in, t)
+	if why == "" || in.NoTP || r.e.Log == nil {
+		return
+	}
+	c := &r.cp
+	c.mu.Lock()
+	same := c.idle.area == in.Area && c.idle.why == why && in.Now.Sub(c.idle.at) < cpIdleGap
+	if !same {
+		c.idle.area, c.idle.why, c.idle.at = in.Area, why, in.Now
+	}
+	c.mu.Unlock()
+	if !same {
+		r.e.Log.Info("checkpoint idle", "why", why, "area", in.Area, "life", in.LifePct, "scrolls", in.Scrolls, "hostiles", in.HostilesNear)
+	}
 }
 
 // crowdAdjacentRetreat is the adjacent count from which the retreat walk is not tried (the crowd rule's surrounded).
@@ -228,7 +268,11 @@ func (r *Runner) checkpointDue(s *d2.Snapshot, now time.Time) cpAction {
 	in.HostilesNear = r.hostileNear(s, t.SafeRadius)
 	in.Adjacent = r.hostileNear(s, r.e.Tune.Combat.CrowdAdjacent)
 	in.Scrolls = r.cpScrolls(s)
-	return cpDecide(in, t)
+	a := cpDecide(in, t)
+	if a == cpNothing {
+		r.noteIdle(in, t)
+	}
+	return a
 }
 
 // checkpointStep carries the guard's ask out in the main loop: it reports whether it acted.
