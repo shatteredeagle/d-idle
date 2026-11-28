@@ -710,7 +710,12 @@ func (k *Keeper) vaultBack(ctx context.Context, st *vault.Store, w Worn) string 
 		it.Chain = k.Chain(r.Code)
 	}
 	rec, err := st.Add(it)
-	if err != nil && !errors.Is(err, vault.ErrDuplicate) {
+	if err != nil { // a duplicate too: an identical live record is another item, so this one stays on the hero, marked
+		if errors.Is(err, vault.ErrDuplicate) {
+			k.Hand.Protect(w.Unit)
+			k.note("equip-twin-"+w.Name, "The "+w.Name+" you replaced stays in your backpack: an identical item is already in the vault, so it was not filed as a second record.")
+			return "backpack"
+		}
 		if errors.Is(err, vault.ErrFull) || errors.Is(err, vault.ErrOverCapacity) {
 			if sh, ok := k.Hand.(Stasher); ok {
 				if serr := sh.Stash(ctx, w.Unit); serr == nil {
