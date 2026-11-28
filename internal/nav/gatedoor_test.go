@@ -423,6 +423,61 @@ func TestExitToCrossesTheLiveBarracksSouthStrip(t *testing.T) {
 	}
 }
 
+// The frontier of the live Barracks run (nav.barracks-return, lab night 2026-11-28) held 131 unproven cells, not 4: a
+// sealed pocket cell that sorts before the real gap shifts its four cells to ranks 1..4, and the old "every fifth cell"
+// sample then planned only the pocket and found no target ("nav no usable gate", 44 x "no exit to that level"). Must
+// fail with the rank sample. Both classes: the geometry knows none.
+func TestExitToFindsTheStripBehindASealedFrontierPocket(t *testing.T) {
+	data, err := os.ReadFile("testdata/barracks28.grid")
+	if err != nil {
+		t.Fatal(err)
+	}
+	rows := strings.Split(strings.TrimSpace(string(data)), "\n")
+	const ox, oy = 1000, 1000
+	for _, cls := range []string{"Paladin", "Necromancer"} {
+		t.Run(cls, func(t *testing.T) {
+			g := d2map.NewGrid()
+			cells := make([]uint16, len(rows[0])*len(rows))
+			for y, r := range rows {
+				for x, c := range r {
+					if c == '#' {
+						cells[y*len(rows[0])+x] = 1
+					}
+				}
+			}
+			// a one cell pocket in the wall of the south row, nearer to the hero (29.6) than the strip cells (30.4 and more)
+			hero := input.Point{X: 190, Y: 320}
+			pocket := input.Point{X: 196, Y: 349}
+			cells[pocket.Y*len(rows[0])+pocket.X] = 0
+			g.SetBlock(d2map.Rect{X: ox, Y: oy, W: len(rows[0]), H: len(rows)}, cells)
+			g.SetBlock(d2map.Rect{X: ox + 100, Y: oy + 350, W: 200, H: 120}, make([]uint16, 200*120))
+			l28 := &simLevel{no: 28, rect: d2map.Rect{X: ox, Y: oy, W: len(rows[0]), H: len(rows)}}
+			l27 := &simLevel{no: 27, rect: d2map.Rect{X: ox + 100, Y: oy + 350, W: 200, H: 120}}
+			s := newSim(g, input.Point{X: ox + hero.X, Y: oy + hero.Y}, l28, l27)
+			s.reveal = 400
+			s.revealRooms()
+			l := s.levels[0]
+			adj := l.lm.Adjacent
+			if len(adj) == 0 {
+				t.Skip("the sim builds no adjacency for this layout")
+			}
+			strip := []d2map.Adjacent{{LevelNo: 27, Rect: adj[0].Rect, Contact: adj[0].Contact}}
+			// the pocket sorts first, the four strip cells take ranks 1..4
+			unproven := append([]d2map.Adjacent{{LevelNo: 27, Rect: adj[0].Rect, Contact: d2map.Rect{X: ox + pocket.X, Y: oy + pocket.Y, W: 1, H: 1}}}, strip...)
+			l.lm.Adjacent, l.lm.Pending, l.lm.Unproven = nil, 1, unproven
+			s.onStep = func(s *sim) { l.lm.Adjacent, l.lm.Pending = nil, 1 }
+			n := s.navigator()
+			n.exploreFn = func(context.Context, func() bool, *input.Point) error { return ErrExplored }
+			if err := n.ExitTo(ctxT(t), 27); err != nil {
+				t.Fatalf("%s: %v (at %v)", cls, err, s.pos())
+			}
+			if s.cur().no != 27 {
+				t.Fatalf("%s: still in level %d at %v", cls, s.cur().no, s.pos())
+			}
+		})
+	}
+}
+
 // A door that takes 2.5 s to open (the grid still reads it shut right after the use) is waited for, not used again: a
 // second use of an open door closes it (card qdmatrix, tomb doors of Act 2). Both classes read the same geometry.
 func TestExitToWaitsForADoorThatOpensSlowly(t *testing.T) {
