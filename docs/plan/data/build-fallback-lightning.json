@@ -1,5 +1,7 @@
 {
  "build": "lightning_chain",
+ "class": "sorceress",
+ "combat": "lightning",
  "schema": "per-clvl allocation applied on level-up (clvl = new level). skills: skill points spent that level. Quest points (see quest_points) are spent immediately on top; unspent quest points follow 'quest_point_policy'.",
  "respec": null,
  "rows": [

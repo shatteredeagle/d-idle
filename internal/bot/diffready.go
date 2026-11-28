@@ -3,10 +3,12 @@ package bot
 import (
 	"errors"
 	"fmt"
+	"os"
 	"time"
 
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/diffready"
+	"d2lod-bot/internal/gear"
 	"d2lod-bot/internal/leveler"
 	"d2lod-bot/internal/supply"
 	"d2lod-bot/internal/task"
@@ -18,10 +20,24 @@ import (
 
 // GrantDifficultyGo records the owner's go for target ("nightmare" or "hell"); the next readiness check that finds the
 // hero ready consumes it. The player-facing door is RequestDifficultyGo (operator verb go-difficulty, Return screen button).
-func (r *Runner) GrantDifficultyGo(target string) { r.diffGo.Grant(target) }
+func (r *Runner) GrantDifficultyGo(target string) {
+	r.diffGo.Grant(target, r.goHero(r.latest()), r.e.Clock.Now())
+}
 
-// PersistDifficultyGo keeps an unconsumed go in path across a restart of the bot.
-func (r *Runner) PersistDifficultyGo(path string) error { return r.diffGo.Persist(path) }
+// PersistDifficultyGo keeps an unconsumed go in path across a restart of the bot. The file carries the hero name and
+// the end of the go (diffready.GoTTL); a go for another hero or an ended one is dropped with a log line.
+func (r *Runner) PersistDifficultyGo(path string) error {
+	r.diffGo.Logf = func(msg string, args ...any) { r.e.Log.Warn(msg, args...) }
+	return r.diffGo.Persist(path)
+}
+
+// goHero is the name a go is bound to ("" without a snapshot: such a go matches nobody).
+func (r *Runner) goHero(s *d2.Snapshot) string {
+	if s == nil || s.Player == nil {
+		return ""
+	}
+	return s.Player.Name
+}
 
 // DifficultyOffer is the next difficulty with the owner-facing line and the unmet requirements.
 type DifficultyOffer struct {
@@ -54,12 +70,17 @@ func (r *Runner) DifficultyOffer() DifficultyOffer {
 	if err != nil {
 		return DifficultyOffer{Target: next, Line: err.Error()}
 	}
-	return DifficultyOffer{Target: next, Ready: v.Ready, Pending: r.diffGo.Granted(next), Line: v.Why(), Missing: v.Missing}
+	return DifficultyOffer{Target: next, Ready: v.Ready, Pending: r.diffGo.Granted(next, r.goHero(s), r.e.Clock.Now()), Line: v.Why(), Missing: v.Missing}
 }
 
 // RequestDifficultyGo is the owner's go: it is refused with the reason unless bot.diffReadyV2 is on and the hero is
-// ready for target, the next difficulty. The hop itself follows at the next check and consumes the go.
+// ready for target, the next difficulty. The hop itself follows at the next check and consumes the go. Both doors
+// (operator verb, watch page) end here, so the measured-run refusal is here: a go inside a gate or soak would change
+// the difficulty mid-run.
 func (r *Runner) RequestDifficultyGo(target string) (string, error) {
+	if os.Getenv("D2BOT_RUN") != "" {
+		return "", errors.New("a measured run is in progress (D2BOT_RUN is set): no difficulty go")
+	}
 	if r.e.Tune.Bot.DiffReadyV2 == 0 {
 		return "", errors.New("the difficulty hop is off (bot.diffReadyV2 is 0)")
 	}
@@ -72,7 +93,7 @@ func (r *Runner) RequestDifficultyGo(target string) (string, error) {
 	case !o.Ready:
 		return "", errors.New(o.Line)
 	}
-	r.diffGo.Grant(target)
+	r.GrantDifficultyGo(target)
 	return "go recorded for " + target + "; the hero hops at its next safe check", nil
 }
 
@@ -102,7 +123,7 @@ func (r *Runner) DifficultyGate(next string, clvl int) (ok bool, why string, act
 	if !v.Ready {
 		return false, v.Why(), true
 	}
-	if !r.diffGo.Granted(next) {
+	if !r.diffGo.Granted(next, r.goHero(s), r.e.Clock.Now()) {
 		return false, v.Why(), true
 	}
 	return true, "", true
@@ -123,6 +144,7 @@ func (r *Runner) diffVerdict(s *d2.Snapshot, target string) (diffready.Verdict, 
 	p := s.Player
 	h := diffready.Hero{Class: p.Class, Level: p.Level, MaxLife: p.MaxLife, Res: leveler.RawResists(p), MaxRes: p.MaxResist,
 		KeySkillLevel: -1, Healing: -1, ManaOrRejuv: -1, Portals: -1}
+	h.KeySkillLevel = r.keySkillLevel(p)
 	if s.Merc != nil {
 		h.Merc = diffready.Yes // U: a read MercSheet is taken as a living merc
 	}
@@ -167,15 +189,34 @@ func (r *Runner) wantedDifficultyV2(s *d2.Snapshot) string {
 		r.e.Log.Warn("difficulty readiness failed", "err", fmt.Sprint(err))
 		return ""
 	}
-	if !v.Ready || !r.diffGo.Granted(next) {
+	if !v.Ready || !r.diffGo.Granted(next, r.goHero(s), r.e.Clock.Now()) {
 		return ""
 	}
 	return next
 }
 
+// keySkillLevel is the base level of the build's main attack at the hero's level (the table's main_attack, data), for
+// the readiness row's key_skill_min. -1 (not read, never blocks) when the skill table is not loaded, the table has no
+// main_attack or it names a weapon attack that is not a skill. U: base points only, +skills from gear do not count.
+func (r *Runner) keySkillLevel(p *d2.Player) int {
+	if r.e.Data == nil {
+		return -1
+	}
+	return keySkillLevelOf(r.buildName(p), p.Level, leveler.OwnedSkills(r.e.Data, p), func(n string) bool { return r.e.Data.SkillByName(n) != nil })
+}
+
+func keySkillLevelOf(build string, clvl int, owned map[string]int, isSkill func(string) bool) int {
+	ma, err := gear.MainAttackAt(build, clvl)
+	if err != nil || ma.Skill == "" || !isSkill(ma.Skill) {
+		return -1
+	}
+	return owned[ma.Skill]
+}
+
 // diffHopStarted consumes the owner's go for want: the new game of the hop was made (ensureDifficulty). One go, one hop.
-func (r *Runner) diffHopStarted(want string) {
+// s is the snapshot the hop was decided on: the go is taken for that hero only.
+func (r *Runner) diffHopStarted(want string, s *d2.Snapshot) {
 	if r.e.Tune.Bot.DiffReadyV2 != 0 {
-		r.diffGo.Take(want)
+		r.diffGo.Take(want, r.goHero(s), r.e.Clock.Now())
 	}
 }

@@ -53,6 +53,33 @@ func TestScrubRemovesPrivateText(t *testing.T) {
 		{"email", `from ` + fakeMail, fakeMail},
 		{"name", `hello ` + strings.ToUpper(fakeName), fakeName},
 		{"extra name", `owner Zed`, "Zed"},
+		// fable review 4 finding 1 (fake values)
+		{"passcode kv", `login passcode=correct-horse-battery`, "correct-horse"},
+		{"passcode json", `{"passcode":"four random words here"}`, "random words"},
+		{"passcode colon", `passcode: hunter2hunter2`, "hunter2"},
+		{"passphrase json", `{"passphrase": "open sesame now"}`, "sesame"},
+		{"secret kv", `client_secret=s3cr3tvalue`, "s3cr3tvalue"},
+		{"apikey kv", `apikey=k9k9k9k9`, "k9k9k9k9"},
+		{"api_key kv", `api_key: 'k8k8k8k8'`, "k8k8k8k8"},
+		{"auth json", `{"auth":"zzTOPzz1"}`, "zzTOPzz1"},
+		{"key 16 undashed", `cdkey ABCD1234EFGH5678 plain`, "ABCD1234EFGH5678"},
+		{"hex 20", `id deadbeef00112233aabb seen`, "deadbeef00112233aabb"},
+		{"base64-ish", `blob QUJDREVGR0gxMjM0NTY3OA== end`, "QUJDREVGR0gxMjM0"},
+		{"mesh ip", `peer 100.101.102.103:51234`, "100.101.102.103"},
+		{"public ip", `from 8.8.4.4 and 9.9.9.9 ok`, "9.9.9.9"},
+		{"public ip first", `from 8.8.4.4 and 9.9.9.9 ok`, "8.8.4.4"},
+		{"ipv6 link-local", `addr fe80::1ff:fe23:4567:890a%eth0`, "fe23:4567"},
+		{"ipv6 full", `addr 2001:db8:0:0:0:0:0:1 up`, "2001:db8"},
+		{"mac", `hw aa:bb:cc:dd:ee:ff`, "bb:cc:dd"},
+		{"bare host", `ssh ` + "ven" + "us" + ` now`, "ven" + "us"},
+		{"desktop host", `host=DESKTOP-K3J2L1 x`, "K3J2L1"},
+		{"user label", `user=alice ok`, "alice"},
+		{"mnt path", `open /mnt/user/games/alice/d2`, "alice"},
+		{"media path", `open /media/alice/stick`, "alice"},
+		{"root path", `read /root/.cache/x`, "/root"},
+		{"mac home", `open ` + "/Us" + `ers/alice/Games`, "alice"},
+		{"home with space", `open ` + "/Us" + `ers/Bob Smith/Games/x.mpq`, "Smith"},
+		{"windows home with space", `C:\Users\Bob Smith\Games`, "Smith"},
 	}
 	for _, c := range cases {
 		out := scrub(t, c.in+"\n", "REPORT_NAMES=Zed")
@@ -75,6 +102,10 @@ func TestScrubKeepsUsefulText(t *testing.T) {
 		`/opt/d2lod/entrypoint.sh /data/instances/main/state/ladder/journal.jsonl`,
 		`session 20261108T100000Z-human gold 13 clvl 3 key press Return`,
 		`Paladin level 3 Cold Plains waypoint`,
+		`listen 0.0.0.0:8891 loop 127.0.0.1:99 at 10:00:00`,
+		`mount /rootfs ok, unix 1794132000123456789, seed 0x6FAB1234`,
+		`RequestDifficultyGoNow abc123def456ghi quest Jade Figurine`,
+		`build 1.27.3 patch 1.14d`,
 	}
 	for _, k := range keep {
 		if out := strings.TrimSpace(scrub(t, k+"\n")); out != k {
@@ -131,6 +162,11 @@ func TestBundle(t *testing.T) {
 		all += body
 		if strings.Contains(name, "watch.token") || strings.Contains(name, "access.json") {
 			t.Errorf("bundle contains %s", name)
+		}
+	}
+	for name, body := range files {
+		if strings.HasSuffix(name, "README.txt") && (!strings.Contains(body, "NOT replaced") || strings.Contains(body, "private host names")) {
+			t.Errorf("README must say what is not replaced and claim no more than the filter does: %q", body)
 		}
 	}
 	for _, bad := range []string{fakeTok, fakeHome, "alice", fakeHost, fakeIP, fakeMail, "game_dir", "patch_sha"} {

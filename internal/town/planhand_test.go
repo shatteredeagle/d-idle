@@ -19,7 +19,7 @@ func TestPlanTailShortGoldTwoBuilds(t *testing.T) {
 	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
 		band := belt.PlanForClass(class, 20)
 		c := supply.Count{Purse: 130, StashKnown: true}
-		pl, err := solveShadow(class, band, belt.Columns, c, ChorePlan{Profile: "countess"}, &lt, &rs)
+		pl, err := solveShadow(class, "", band, belt.Columns, c, ChorePlan{Profile: "countess"}, &lt, &rs)
 		if err != nil {
 			t.Fatal(err)
 		}
