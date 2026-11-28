@@ -177,6 +177,7 @@ docs/design/arbiter-migration-p6.md  live-agent  arbmig
 docs/design/boardsm-flip.md  live-agent  bsmdef
 docs/design/fable-review-2026-11-21/town-planner-b-model.md  live-agent  town5
 docs/design/fable-review-2026-11-21/town-profiles-sme.md  live-agent  town12
+docs/design/fork-order-id-spec.md  credit-runner  fix1
 docs/design/input-cast-verbs.md  live-agent  inputl3
 docs/design/input-i3.md  live-agent  inputl3
 docs/design/input-i4.md  credit-runner  inputl4
@@ -299,6 +300,7 @@ internal/combat/fighter.go  live-agent  inputl3
 internal/combat/portalverb.go  live-agent  inputl3
 internal/combat/portalverb_test.go  live-agent  inputl3
 internal/d2dcombat/  live-agent  dlv-press
+internal/d2dctl/  credit-runner  fix1
 internal/d2dctl/fake/fake.go  credit-runner  inputl4
 internal/d2dctl/fake/fake.go  live-agent  inputl3
 internal/d2dctl/item_verbs_merc.go  credit-runner  uib9
@@ -389,6 +391,8 @@ internal/town/sellplan_test.go  live-agent  townflip
 internal/town/shop.go  live-agent  townflip
 internal/town/town.go  live-agent  townflip
 internal/town/trip.go  live-agent  inputl3
+internal/vaultkeep/  credit-runner  fix1
+internal/watch/  credit-runner  fix1
 internal/watch/areamap_test.go  credit-runner  uis6
 internal/watch/layout.go  credit-runner  uis1
 internal/watch/layout.go  credit-runner  uis6

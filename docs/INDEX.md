@@ -140,6 +140,10 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 - [map-knowledge.md](design/fable-review-2026-11-22/map-knowledge.md): Map knowledge: would revealing the whole map fix the Countess class of stuck steps? (status: current (2026-11-21, Fable design review, small; docs only, no Go or behaviour change). Card `fablemap`....)
 
+`design/`
+
+- [fork-order-id-spec.md](design/fork-order-id-spec.md): Fork change spec: order id on the direct item verbs (status: proposal (card fix1, 2026-11-27). Nothing here is built; no fork edit was made. Needs the fork owner and...)
+
 `digest/`
 
 - [d2d-fork-lab.md](digest/d2d-fork-lab.md): Digest: d2d fork and lab (status: current (TASK-310 digest; the area doc is the authority).)

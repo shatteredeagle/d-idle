@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- fix1: item-flow journal, per-record in-flight 409, carry/stow intent, duplicate not filed (TASK-1095) <!--sg:agent/fix1-->
 - fix3: stance leave at low life, no-portal recovery exclusion, bandDrop keeps safe zones, driveAura, corpse reservation lapse (TASK-1094) <!--sg:agent/fix3-->
 - fable review 9 (docs) <!--sg:agent/fable-fr9-->
 - fable review 8 (docs) <!--sg:agent/fable-fr8-->
