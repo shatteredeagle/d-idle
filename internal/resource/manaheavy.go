@@ -11,7 +11,8 @@ import (
 
 // Mana-heavy builds (docs/builds-endgame.md W7, docs/plan/data/potions-belt.json "mana_heavy_builds", U design, needs
 // a live Hell check): War Cry and Blizzard packs drain the single mana column, so from Nightmare on these builds
-// carry two mana columns and drink at 35% instead of the normal threshold. Normal keeps the default plan.
+// carry the mana-heavy columns and drink at 35% instead of the normal threshold. In Normal they get the default
+// columns of mana need 2 (hp, hp, mp, mp: two healing columns stay) and the normal drink line (TASK-1117).
 
 // ManaHeavyDrinkPct is the mana % below which a mana-heavy build drinks (json drink_mana_below_pct).
 const ManaHeavyDrinkPct = 35
