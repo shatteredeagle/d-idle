@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- sweep1: review sweep, consent fix (TASK-1122) <!--sg:agent/sweep1-->
 - live1: live log findings L1-L6 (TASK-1119) <!--sg:agent/live1-->
 - fix1b: vault equip by bytes etc (TASK-1114) <!--sg:agent/fix1b-->
 - nf3b: nav seam, mapKillErr, Approach field NPC (TASK-1104/1107) <!--sg:agent/nf3b-->
