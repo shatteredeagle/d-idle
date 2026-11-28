@@ -195,6 +195,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 80c57400c 11-28 00:57 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
+- 813997be4 11-28 00:55 `Merge branch 'main' into nightlog` (-)
 - 767f5edba 11-28 00:53 `Merge agent/rv3: round-2 review C: security, PG, data, pipeline (docs)` (rv3)
 - 9da05821e 11-28 00:52 `Merge agent/rv1: round-2 review A: fix1 and fix2 (docs)` (rv1)
 - 9fd88574f 11-28 00:52 `Merge agent/rv2: round-2 review B: fix3 and fix7 (docs)` (rv2)
@@ -203,6 +205,4 @@
 - cc179624e 11-28 00:48 `Merge branch 'main' into rv2` (-)
 - f8daf5458 11-28 00:29 `Merge agent/fix4: fix4: scrubber, watch token redirect, difficulty go hero scope and expiry, flip container env, tail NUL, docker volumes doc (TASK-1100)` (fix4)
 - f9fba8895 11-28 00:28 `Merge branch 'main' into fix4` (-)
-- 7ec65e945 11-28 00:28 `Merge agent/nightlog: nightlog: overnight coordinator log (docs)` (nightlog)
-- 4fdc91a46 11-28 00:25 `Merge agent/labtriage: labtriage: overnight lab triage, scenario marker fixes, 8 cards (TASK-1101..1108)` (labtriage)
 <!-- statusgen:end -->
