@@ -1,10 +1,13 @@
 ---
 id: TASK-1113
-title: 'vault2: store reservation for the instant sale, merc crash journal, fix1 path tests, ops vault check'
-status: In Progress
+title: >-
+  vault2: store reservation for the instant sale, merc crash journal, fix1 path
+  tests, ops vault check
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T05:42:00Z'
+updated_date: '2026-11-28T07:39:00Z'
 labels:
   - bot
   - bot-fix

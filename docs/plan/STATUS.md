@@ -53,7 +53,6 @@
 | act2night | proposed | - | `internal/bot/`<br>`tools/provingground/scenarios/stepexec-act2chunks.json` | - |
 | townnight | proposed | - | `internal/town/`<br>`internal/supply/`<br>`tools/provingground/scenarios/townplan.json` | - |
 | led1 | in-progress | - | `data/darklaunch/`<br>`data/darklaunch.json`<br>`data/darklaunch-cap.json`<br>`tools/darklaunch/`<br>`tools/flip/`<br>`docs/process/dark-launch.md`<br>`docs/process/autoflip.md` | - |
-| vault2 | in-progress | - | `internal/vault/`<br>`internal/vaultkeep/`<br>`internal/watch/`<br>`cmd/d2bot/opscmd.go`<br>`cmd/d2bot/opsvault_test.go`<br>`docs/design/fork-order-id-spec.md`<br>`docs/vault.md` | - |
 | fix7b | in-progress | - | `internal/bot/`<br>`internal/arbiter/`<br>`internal/survival/`<br>`internal/combat/`<br>`cmd/d2bot/`<br>`docs/arbiter.md`<br>`docs/design/arbiter-target-and-migration.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | road4 | in-progress | - | `internal/shadowlog/`<br>`cmd/d2shadow/`<br>`docs/shadowlog.md` | - |
