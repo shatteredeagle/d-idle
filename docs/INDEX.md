@@ -552,6 +552,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [lifecycle.md](lifecycle.md): Game lifecycle in Go (agent LIFECYCLE)
 - [lifelog.md](lifelog.md): Life log fields
 - [live-checks.md](live-checks.md): Live checks still open
+- [live1.md](live1.md): live1: fixes from the sandbox live review of 2026-11-28 (status: current. Offline only, nothing here was run against a live game. Source of the findings: the review. Task:...)
 - [locks.md](locks.md): Lock order and rules (status: current (lock audit, 2026-11-12, after the sandbox freeze of 2026-11-12: nav.roam called done() under...)
 - [logfields.md](logfields.md): Log fields for the per-skill soak report (change logfields)
 - [loop-order.md](loop-order.md): The Loop order and its unlock (status: built offline (task uib7), not verified live. Design: `docs/ui/redesign-2026-11-14/C-orders.md` section 8....)
