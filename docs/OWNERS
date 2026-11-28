@@ -143,8 +143,6 @@ cmd/d2bot/journeywire.go  credit-runner  campaign1
 cmd/d2bot/ladder.go  live-agent  pgtaps
 cmd/d2bot/live.go  credit-runner  agencyp1b
 cmd/d2bot/live.go  credit-runner  campaign1
-cmd/d2bot/mercwire.go  credit-runner  mercgold
-cmd/d2bot/mercwire_test.go  credit-runner  mercgold
 cmd/d2bot/necroplay_test.go  live-agent  epic-class-necromancer
 cmd/d2bot/task.go  credit-runner  qdmatrix
 cmd/d2bot/task_test.go  credit-runner  qdmatrix
@@ -220,7 +218,6 @@ docs/probes/classorder1.md  user  classorder1
 docs/probes/flipwave2.md  live-agent  flipwave2
 docs/probes/h1-baseline.md  user  h1baseline
 docs/probes/h3-verdict.md  user  h3verdict
-docs/probes/merc-revive-live-checklist.md  credit-runner  mercgold
 docs/probes/provingground-act1more-2026-11-20.md  credit-runner  pgpage
 docs/probes/provingground-act1next-2026-11-20.md  credit-runner  pgpage
 docs/probes/provingground-cain-2026-11-19.md  credit-runner  pgpage
@@ -277,11 +274,9 @@ internal/bot/guided.go  credit-runner  campaign1
 internal/bot/guided_test.go  credit-runner  campaign1
 internal/bot/leveling.go  live-agent  town5
 internal/bot/loop.go  live-agent  arbmig
-internal/bot/merc_test.go  credit-runner  mercgold
 internal/bot/questboard.go  credit-runner  qdmatrix
 internal/bot/questboard.go  live-agent  bsmdef
 internal/bot/questboard_s7b_test.go  credit-runner  qdmatrix
-internal/bot/resource.go  credit-runner  mercgold
 internal/bot/routeguard.go  live-agent  bsmdef
 internal/bot/runner.go  credit-runner  campaign1
 internal/bot/shadow.go  live-agent  arbmig

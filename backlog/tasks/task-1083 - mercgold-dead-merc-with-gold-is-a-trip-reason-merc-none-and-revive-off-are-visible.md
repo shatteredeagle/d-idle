@@ -1,10 +1,13 @@
 ---
 id: TASK-1083
-title: 'mercgold: dead merc with gold is a trip reason, merc none and revive-off are visible'
-status: Proposed
+title: >-
+  mercgold: dead merc with gold is a trip reason, merc none and revive-off are
+  visible
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T00:17:00Z'
+updated_date: '2026-11-28T00:38:00Z'
 labels:
   - bot
   - bug
