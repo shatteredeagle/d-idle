@@ -188,8 +188,17 @@ func TestDifficultyGoIsPerHeroAndEnds(t *testing.T) {
 				t.Fatalf("another hero hopped on a foreign go: %q", got)
 			}
 			s.Player.Name = was
-			if g.r.DifficultyOffer().Pending {
-				t.Fatal("the foreign go was kept")
+			// Fable review 12 C3: the polled offer and the look by another hero must not erase the owner's go.
+			if !g.r.DifficultyOffer().Pending {
+				t.Fatal("a look by another hero erased the owner's go")
+			}
+			s.Player.Name = ""
+			if got := g.r.wantedDifficulty(s); got != "" {
+				t.Fatalf("a snapshot without a hero name hopped: %q", got)
+			}
+			s.Player.Name = was
+			if !g.r.DifficultyOffer().Pending {
+				t.Fatal("a snapshot without a hero name erased the owner's go")
 			}
 			if _, err := g.r.RequestDifficultyGo("nightmare"); err != nil {
 				t.Fatal(err)
