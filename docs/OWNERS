@@ -234,6 +234,7 @@ docs/probes/provingground-countess-2026-11-20.md  credit-runner  pgpage
 docs/probes/provingground-pgfix4-2026-11-20.md  credit-runner  pgpage
 docs/probes/provingground-run-2026-11-19.md  credit-runner  pgpage
 docs/probes/ready-audit.md  live-agent  ready-audit
+docs/probes/roadmap-refresh-2026-11-28.md  credit-runner  roadfresh
 docs/probes/test-characters.md  live-agent  fid-fixtures
 docs/probes/town-plan-stage3-2026-11-22.md  live-agent  town5
 docs/probes/tpreserve.md  live-agent  tpreserve-live
@@ -256,6 +257,7 @@ docs/research/fid-poisonres-trace.md  credit-runner  fid-poison-res-diag
 docs/research/fidelity-vendor-probe.md  live-agent  fidprobe-vendor
 docs/research/merc-gear.md  credit-runner  uib9
 docs/research/upstream-next.md  credit-runner  upstream-next
+docs/roadmap-fable.md  credit-runner  roadfresh
 docs/session-record.md  live-agent  sessions
 docs/shadowlog.md  credit-runner  road4
 docs/t0-variants.md  credit-runner  qdensity
@@ -506,6 +508,7 @@ tools/provingground/scenarios/tiers.json  live-agent  epic-class-necromancer
 tools/provingground/scenarios/townplan.json  credit-runner  townnight
 tools/provingground/scenarios/townplan.json  live-agent  town5
 tools/provingground/status_doc.sh  credit-runner  pgpage
+tools/roadmap/  credit-runner  roadfresh
 tools/tester-pack.sh  credit-runner  testerpack
 tools/uilint/  credit-runner  uis1
 tools/uilint/lint.go  credit-runner  uis6

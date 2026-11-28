@@ -56,6 +56,7 @@
 | vault2 | in-progress | - | `internal/vault/`<br>`internal/vaultkeep/`<br>`internal/watch/`<br>`cmd/d2bot/opscmd.go`<br>`cmd/d2bot/opsvault_test.go`<br>`docs/design/fork-order-id-spec.md`<br>`docs/vault.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | road4 | in-progress | - | `internal/shadowlog/`<br>`cmd/d2shadow/`<br>`docs/shadowlog.md` | - |
+| roadfresh | in-progress | - | `docs/roadmap-fable.md`<br>`docs/probes/roadmap-refresh-2026-11-28.md`<br>`tools/roadmap/` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
 | ghcrpublish | in-progress | - | `.github/workflows/tester-image.yml`<br>`docs/registry-publish.md`<br>`deploy/d2d-container/compose.friends.yml`<br>`docs/tester-registry.md`<br>`deploy/d2d-container/compose.tester.yml`<br>`deploy/d2d-container/context.sh`<br>`deploy/d2d-container/tester_image_test.go` | - |
@@ -198,14 +199,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- e982e2703 11-28 02:23 `Merge agent/roadfresh: roadfresh: roadmap refresh (TASK-1123)` (roadfresh)
 - 1bc4edc57 11-28 02:23 `Merge agent/road4: road4: d2shadow (TASK-1121)` (road4)
 - 14942d262 11-28 02:23 `Merge agent/vault2: vault2: atomic Reserve, merc journal (TASK-1113)` (vault2)
+- d7efb045a 11-28 02:20 `Merge branch 'main' into roadfresh` (-)
 - 2142d8f04 11-28 02:20 `Merge branch 'main' into road4` (-)
 - 0017b3d7b 11-28 02:20 `Merge branch 'main' into vault2` (-)
 - 28216bd08 11-28 02:12 `Merge agent/nf1b: nf1b: pre.bind and pre.summon (TASK-1105)` (nf1b)
 - a02253d37 11-28 02:12 `Merge agent/nf2: nf2: flail hold and sweep in a cleared area let time pass (TASK-1103)` (nf2)
 - 5e6060a73 11-28 02:12 `Merge agent/nf4: nf4: board restart scenario timing, town route reinsertion (TASK-1106/1108)` (nf4)
 - 9e59401c9 11-28 02:09 `Merge branch 'main' into nf1b` (-)
-- ee787a3f2 11-28 02:09 `Merge branch 'main' into nf2` (-)
-- 413084b65 11-28 02:09 `Merge branch 'main' into nf4` (-)
 <!-- statusgen:end -->
