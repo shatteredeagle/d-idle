@@ -1634,6 +1634,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - agent/rv2: round-2 review B: fix3 and fix7 (docs) (merged 2026-11-28) <!--sg:agent/rv2-->
 - agent/rv1: round-2 review A: fix1 and fix2 (docs) (merged 2026-11-28) <!--sg:agent/rv1-->
 - agent/rv3: round-2 review C: security, PG, data, pipeline (docs) (merged 2026-11-28) <!--sg:agent/rv3-->
+- agent/rv4: review 13: sandbox live log review (docs) (merged 2026-11-28) <!--sg:agent/rv4-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
