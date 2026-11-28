@@ -402,6 +402,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [09-change-pipeline.md](design/fable-review-2026-11-28/09-change-pipeline.md): Fable review 9: how a change travels, and why the dark ledger grows (status: current (reviewer run fr9, 2026-11-27 evening, docs only, nothing changed). Independent second opinion:...)
 - [10-fix-review-items-and-board.md](design/fable-review-2026-11-28/10-fix-review-items-and-board.md): Fable review 2026-11-28, round 2 part A: the fixes for the item flows (fix1) and the quest board (fix2) (status: review, read-only (no code changed). Base: `origin/main` at 7ec65e945. Scope: merge 95520db57 (fix1,...)
 - [11-fix-review-combat-arbiter.md](design/fable-review-2026-11-28/11-fix-review-combat-arbiter.md): Fable review 2026-11-28, round 2 part B: the fixes for reviews 3 and 7 (fix3, fix7) (status: review, read-only. Tree `829337379` (origin/main). Scope: merge `46365bb12` (fix3, TASK-1094) and merge...)
+- [12-fix-review-security-pg-data-pipeline.md](design/fable-review-2026-11-28/12-fix-review-security-pg-data-pipeline.md): Fable round 2, review C: tonight's fixes for security, Proving Ground, builds as data and the pipeline (status: REVIEW, docs only (reviewer run rv3, 2026-11-28 about 00:40 EST). No code changed, no game, no sandbox...)
 
 `design/`
 
