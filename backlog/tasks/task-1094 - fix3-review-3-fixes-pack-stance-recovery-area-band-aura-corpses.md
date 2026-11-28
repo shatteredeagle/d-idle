@@ -1,10 +1,11 @@
 ---
 id: TASK-1094
 title: 'fix3: review 3 fixes (pack stance, recovery area, band, aura, corpses)'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T03:41:00Z'
+updated_date: '2026-11-28T04:14:00Z'
 labels:
   - bot
   - bug
