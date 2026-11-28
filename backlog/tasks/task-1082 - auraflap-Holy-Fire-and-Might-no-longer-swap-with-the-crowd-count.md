@@ -1,10 +1,11 @@
 ---
 id: TASK-1082
 title: 'auraflap: Holy Fire and Might no longer swap with the crowd count'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T00:15:00Z'
+updated_date: '2026-11-28T00:35:00Z'
 labels:
   - bot
   - bug
