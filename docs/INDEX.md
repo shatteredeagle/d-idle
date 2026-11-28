@@ -578,6 +578,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 `ops/`
 
+- [docker-volumes.md](ops/docker-volumes.md): Docker volumes on the worker host: safe removal (status: current (fix4, from fable review 4 finding 2, `docs/design/fable-review-2026-11-28/04-security-privacy.md`).)
 - [logs.md](ops/logs.md): Where the logs are (sandbox container and dev) (status: current (card logsink). Code: `internal/logx/sink.go`, `cmd/d2bot/main.go` (newLogger),...)
 - [outcomes.md](outcomes.md): Typed step outcome (knob `bot.typedOutcome`) (status: current, stage 1 (card outcome1, 2026-11-25). Source: P2 of...)
 - [overlay.md](overlay.md): Table overlay (d.idle mode): file format and rules (status: implemented, 2026-11-06, TASK-59. Fork side `--overlay-dir` on branch `d2d.lab4-overlay` of the private...)
@@ -1222,6 +1223,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [necrokeys-2026-11-26.md](probes/necrokeys-2026-11-26.md): Necromancer keys beyond F8 (card necrokeys, 2026-11-26) (status: current. Closes card necrokeys with evidence: on the d2d backend the F-key limit does not apply. Tags: V...)
 - [necromancer-act1-drill-2026-11-22.md](probes/necromancer-act1-drill-2026-11-22.md): Necromancer earned Act 1 drill (card necrodrill, 2026-11-22) (status: current. Verdict: BLOCKED, NOT ready to play. Tags: V verified in a named run, S read in a log, U...)
 - [necromancer-readiness-2026-11-22.md](probes/necromancer-readiness-2026-11-22.md): Necromancer readiness audit (card necro2, 2026-11-22) (status: current; section 6 (update after the merges of the same day) supersedes sections 1 to 3 where they differ....)
+- [night-log-2026-11-28.md](probes/night-log-2026-11-28.md): Night log 2026-11-28 (coordinator, unattended) (status: living. One line per coordinator tick. Rules: memory 'OVERNIGHT RULES' of 2026-11-28 00:30 (model:...)
 - [pactnative.md](probes/pactnative.md): pactnative: do the native difficulty levers work offline on 1.14d? (TASK-170) (status: probe result of 2026-11-08 (overnight, one hidden instance). Facts for the Pact design note...)
 - [paladin-aura-audit-2026-11-26.md](probes/paladin-aura-audit-2026-11-26.md): Paladin aura audit (2026-11-26) (status: audit, read-only; no fix made. Question (owner): auras only work when selected on an active skill slot...)
 - [paladin-aura-live-2026-11-26.md](probes/paladin-aura-live-2026-11-26.md): Paladin aura state on d2d, measured live (2026-11-26) (status: probe result, read-only on the bot; no fix needed for the pick path. Follows...)
