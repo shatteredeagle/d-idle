@@ -39,8 +39,7 @@ board.hold.too-weak	Paladin	10	45	9	-	-	0	e62c969a38bd
 board.hold.too-weak	Sorceress	10	45	9	-	-	0	3b96a9118346
 board.park-retry-after-release	Paladin	6	25	5	-	-	0	9155f08e3b2a
 board.park-retry-after-release	Sorceress	6	25	5	-	-	0	a9b23315ee2f
-board.park.persist-restart	Paladin	24	115	23	-	-	0	58f4fe8e7153
-board.park.persist-restart	Sorceress	24	115	23	-	-	0	3e843d5f9779
+board.park.persist-restart	Sorceress	24	115	23	-	-	0	8c9259b1a070
 board.prereq-not-accepted	Paladin	17	80	16	-	-	0	7777c17f59ec
 board.prereq-not-accepted	Sorceress	17	80	16	-	-	0	1c879eb14cef
 board.prereq-start-tap	Paladin	17	80	16	-	-	0	d43946aa6a6a
@@ -53,8 +52,8 @@ board.sm.one-head	Paladin	17	80	16	-	-	0	f997cab861e6
 board.sm.one-head	Sorceress	17	80	16	-	-	0	b761317921de
 board.sm.regress-proxy	Paladin	17	80	16	-	-	0	18361c058a58
 board.sm.regress-proxy	Sorceress	17	80	16	-	-	0	182f247b14b3
-board.sm.restart-mid-chain	Paladin	17	80	16	-	-	0	52c2a07ce9e3
-board.sm.restart-mid-chain	Sorceress	17	80	16	-	-	0	87a9c631c0d6
+board.sm.restart-mid-chain	Paladin	17	80	16	-	-	0	7a7e471e1045
+board.sm.restart-mid-chain	Sorceress	17	80	16	-	-	0	9dd2ae745716
 board.sm.start-idempotent	Paladin	17	80	16	-	-	0	eff3420c254d
 board.sm.start-idempotent	Sorceress	17	80	16	-	-	0	f67e2bc787ee
 board.sm.stop-cascades	Paladin	17	80	16	-	-	0	0bac14e6a3a4
