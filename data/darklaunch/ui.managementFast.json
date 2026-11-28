@@ -1,0 +1,10 @@
+{
+ "name": "ui.managementFast",
+ "built_by": "mgmtfast (7052b7cbf)",
+ "dark_since": "2026-11-21",
+ "why_off": "WIP; management actions outside the goal loop.",
+ "enable_criteria": "Live check of equip/drop/stash from the viewer",
+ "owner": "coordinator",
+ "review_by": "2026-12-09",
+ "status": "dark"
+}

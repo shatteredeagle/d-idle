@@ -1,0 +1,10 @@
+{
+ "name": "quests.boardSM",
+ "built_by": "fableboard / ADR 0025 (70585056e)",
+ "dark_since": "2026-11-20",
+ "why_off": "Stored quest runs built (bsm1 to bsm9) and not enabled; legacy path still gets patches. Card bsmdef owns the flip and needs the invariant counts (invmon).",
+ "enable_criteria": "Restart drill green with boardSM 1 (a park survives); scenario/drill green, then flip on the sandboxes with a 24 h invariant-monitor watch and automatic revert on a hard breach; cleanup card one release later",
+ "owner": "coordinator",
+ "review_by": "2026-12-09",
+ "status": "dark"
+}
