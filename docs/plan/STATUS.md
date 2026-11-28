@@ -56,7 +56,6 @@
 | live1 | proposed | - | `internal/bot/`<br>`internal/survival/`<br>`internal/questboard/`<br>`internal/arbiter/`<br>`cmd/d2bot/survivalwire.go`<br>`docs/live1.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | boardsidestart | proposed | - | `internal/questboard/`<br>`internal/bot/questboard.go` | - |
-| sec2 | proposed | - | `deploy/d2d-container/tester-report.sh`<br>`deploy/d2d-container/tester_report_sec_test.go`<br>`internal/support/`<br>`internal/watch/surface_sec_test.go`<br>`internal/watch/logtab.go`<br>`internal/logx/`<br>`internal/access/`<br>`internal/diffready/consent.go`<br>`internal/diffready/mode_sec_test.go`<br>`cmd/d2bot/opscmd.go`<br>`cmd/d2bot/opslog_sec_test.go` | - |
 | durieltyrael | proposed | - | `internal/questboard/`<br>`internal/task/` | - |
 | drilldrivers | proposed | - | `internal/combat/`<br>`tools/provingground/scenarios/combatdrills.json`<br>`tools/provingground/scenarios/necro.json` | - |
 | fix14 | proposed | - | `internal/admit/`<br>`internal/quest/objective.go`<br>`internal/bot/`<br>`internal/combat/`<br>`internal/vaultkeep/`<br>`internal/arbiter/`<br>`internal/town/` | - |

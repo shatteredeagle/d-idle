@@ -1,10 +1,13 @@
 ---
 id: TASK-1125
-title: 'sec2: security follow-up to the Fable reviews: report scrubber leaks, watch surface, file modes, ops log'
-status: Proposed
+title: >-
+  sec2: security follow-up to the Fable reviews: report scrubber leaks, watch
+  surface, file modes, ops log
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T06:46:00Z'
+updated_date: '2026-11-28T10:23:00Z'
 labels:
   - watch
   - bug
