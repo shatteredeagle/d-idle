@@ -47,6 +47,7 @@
 | fix3 | in-progress | - | `internal/combat/`<br>`internal/bot/`<br>`internal/survival/` | - |
 | fix1 | proposed | - | `internal/vaultkeep/`<br>`internal/d2dctl/`<br>`internal/watch/`<br>`docs/design/fork-order-id-spec.md` | - |
 | fix7 | proposed | - | `internal/bot/`<br>`internal/arbiter/`<br>`internal/admit/`<br>`cmd/d2bot/`<br>`docs/design/arbiter-target-and-migration.md`<br>`docs/arbiter.md`<br>`docs/probes/` | - |
+| fix2 | in-progress | - | `internal/questboard/`<br>`internal/bot/`<br>`docs/questboard.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
@@ -190,14 +191,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- b0844c390 11-27 23:06 `Merge agent/fix2: fix2: board counters persist, rung-4 skip counts coded refusals only, resume tick for all goals, difficulty go consumed after the hop (TASK-1099)` (fix2)
 - 74ae9b205 11-27 23:06 `Merge agent/fix7: fix7: arbiter low-life gate, Report, survive reads Safety, heartbeat, admission rows (TASK-1096)` (fix7)
 - 95520db57 11-27 23:05 `Merge agent/fix1: fix1: item-flow journal, per-record in-flight 409, carry/stow intent, duplicate not filed (TASK-1095)` (fix1)
+- 558600846 11-27 23:03 `Merge branch 'main' into fix2` (-)
 - b46c1f9c8 11-27 23:03 `Merge branch 'main' into fix7` (-)
 - c3b288ef4 11-27 23:03 `Merge branch 'main' into fix1` (-)
 - 46365bb12 11-27 22:55 `Merge agent/fix3: fix3: stance leave at low life, no-portal recovery exclusion, bandDrop keeps safe zones, driveAura, corpse reservation lapse (TASK-1094)` (fix3)
 - 585872033 11-27 22:54 `Merge branch 'main' into fix3` (-)
 - cc8a551ed 11-27 22:49 `Merge agent/fable-fr9: fable review 9 (docs)` (fable-fr9)
 - 861efe7b8 11-27 22:49 `Merge agent/fable-fr8: fable review 8 (docs)` (fable-fr8)
-- 64205b981 11-27 22:49 `Merge agent/fable-fr6: fable review 6 (docs)` (fable-fr6)
-- 24328a060 11-27 22:48 `Merge agent/fable-fr4: fable review 4 (docs)` (fable-fr4)
 <!-- statusgen:end -->

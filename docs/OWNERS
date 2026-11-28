@@ -237,6 +237,7 @@ docs/process/proving-ground.md  credit-runner  pgearned
 docs/process/proving-ground.md  credit-runner  pgfix
 docs/quest-givers.md  credit-runner  campaign1
 docs/questboard.md  credit-runner  cainfix3
+docs/questboard.md  credit-runner  fix2
 docs/questboard.md  live-agent  bsmdef
 docs/registry-publish.md  credit-runner  ghcrpublish
 docs/releases/0.1.2.md  credit-runner  cut012
@@ -264,6 +265,7 @@ internal/arbiter/  live-agent  arbmig
 internal/arbiter/replay.go  live-agent  ticklog
 internal/arbiter/replay_ticklog_test.go  live-agent  ticklog
 internal/bot/  credit-runner  cainfix3
+internal/bot/  credit-runner  fix2
 internal/bot/  credit-runner  fix3
 internal/bot/  credit-runner  fix7
 internal/bot/arbiter_control.go  live-agent  arbmig
@@ -357,6 +359,7 @@ internal/plandata/build-necromancer_summoner_endgame90.json  live-agent  epic-cl
 internal/plandata/levelplan-normal.json  live-agent  epic-class-necromancer
 internal/power/  credit-runner  dlv-cleanup
 internal/questboard  live-agent  bsmdef
+internal/questboard/  credit-runner  fix2
 internal/questboard/  live-agent  cellar3gate
 internal/questboard/def.go  credit-runner  cainfix3
 internal/resource  live-agent  town5

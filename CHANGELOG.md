@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- fix2: board counters persist, rung-4 skip counts coded refusals only, resume tick for all goals, difficulty go consumed after the hop (TASK-1099) <!--sg:agent/fix2-->
 - fix7: arbiter low-life gate, Report, survive reads Safety, heartbeat, admission rows (TASK-1096) <!--sg:agent/fix7-->
 - fix1: item-flow journal, per-record in-flight 409, carry/stow intent, duplicate not filed (TASK-1095) <!--sg:agent/fix1-->
 - fix3: stance leave at low life, no-portal recovery exclusion, bandDrop keeps safe zones, driveAura, corpse reservation lapse (TASK-1094) <!--sg:agent/fix3-->
