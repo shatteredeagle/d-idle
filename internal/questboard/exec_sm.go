@@ -263,6 +263,40 @@ func (e *Exec) smPark(quest, chunk, code string, rs *runState) {
 	}
 }
 
+// smSeed reads the stored counters of a live run into a fresh runState (the first report of a chunk in this process).
+func (e *Exec) smSeed(quest, chunk string, rs *runState) {
+	if e.boardLegacy() {
+		return
+	}
+	plan, _, err := e.st.Load()
+	if err != nil {
+		return
+	}
+	for _, r := range plan.Runs {
+		if r.Quest == quest && r.Chunk == chunk && r.Diff == Difficulties[e.env.Diff()] && r.Status.Live() && r.Status != RunParked {
+			rs.failures, rs.deaths = r.Failures, r.Deaths
+		}
+	}
+}
+
+// smCount stores the counters of a live run when they changed, so a restart before the park keeps counting (fable
+// review 2 finding 1). No-op without the machine.
+func (e *Exec) smCount(quest, chunk string, rs *runState) {
+	if e.boardLegacy() {
+		return
+	}
+	d := Difficulties[e.env.Diff()]
+	err := e.st.UpdateSM(e.smDone(), func(m *SM) error {
+		if r := m.find(quest, chunk, d); r != nil && r.Status.Live() && r.Status != RunParked {
+			r.Failures, r.Deaths = rs.failures, rs.deaths
+		}
+		return nil
+	})
+	if err != nil {
+		e.o.Log("quest board: counters not saved", "chunk", ChunkKey(quest, chunk), "err", err)
+	}
+}
+
 // smReleaseRetry runs once per Exec: a gave_up park (the step kept failing) stored by another bot release is retried
 // once, because the failure may be the old release's bug. The park keeps its history (RetriesAfterRelease) and, if the
 // step fails again, comes back stored with this release, so it cannot loop. Parks of other codes stay as the player
