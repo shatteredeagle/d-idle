@@ -44,6 +44,7 @@
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | cellar3gate | proposed | - | `internal/nav/exit.go`<br>`internal/nav/cellar3gate_test.go`<br>`internal/questboard/`<br>`docs/probes/cellar3-gate-capture.md` | - |
+| devupdatefix | proposed | - | `tools/dev-update.sh`<br>`tools/dev-update-clean-test.sh`<br>`tools/dev-update-local-test.sh`<br>`.gitignore`<br>`docs/dev-update.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
@@ -192,6 +193,7 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 3210c3a77 11-27 21:09 `Merge agent/devupdatefix: devupdatefix: dev-update.sh local mode, per-run stage dir, host line (TASK-1086)` (devupdatefix)
 - 1db8a65e9 11-27 19:59 `Merge agent/questautovis: questautovis: auto/waitingFor visible in ops, api and Return screen (TASK-1085)` (questautovis)
 - 715757050 11-27 19:58 `Merge branch 'main' into questautovis` (-)
 - 1542a59b7 11-27 19:53 `Merge agent/cellar3gate: cellar3gate: leave the pocket through a click the mouth gate allows, coded no_path park (TASK-1084)` (cellar3gate)
@@ -201,5 +203,4 @@
 - fbe22468a 11-27 19:26 `Merge branch 'main' into chunkstart` (-)
 - 23e7c1750 11-27 19:26 `Merge branch 'main' into mercgold` (-)
 - 198ef5168 11-27 19:22 `Merge agent/auraflap: auraflap: hold a crowd aura through the fight, shadow agree includes aura (TASK-1082)` (auraflap)
-- 776d76832 11-27 19:21 `Merge branch 'main' into auraflap` (-)
 <!-- statusgen:end -->
