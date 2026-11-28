@@ -1,5 +1,5 @@
 {
-  "_comment": "Supply profiles: today's constants as rows (town-planner appendix B2). Numbers are U judgments copied from internal/task/route.go, gate.go, goal.go and resource/recovery.go; the SME review is card town12. manaNeedAtLeast: the line applies only to a build whose mana need (build profile data) is at least that.",
+  "_comment": "Supply profiles: today's constants as rows (town-planner appendix B2). Numbers are U judgments copied from internal/task/route.go, gate.go, goal.go and resource/recovery.go; the SME review is card town12. SME review 2026-11-27 (town-profiles-sme.md section 3) applied by card townapply, confidence per row in the notes object. beltSlots: min/target by belt size (largest key not above the hero belt; unknown size or a belt below every key keeps the row min, which the capacity clamp lowers). tierFloor: lowest potion tier that counts, carried to the plan as data. manaNeedAtLeast: the line applies only to a build whose mana need (build profile data) is at least that.",
   "profiles": {
     "field":              {"healing": {"min": 2}, "portal": {"min": 1}},
     "monastery_road":     {"healing": {"min": 4}, "portal": {"min": 2}, "mana": {"min": 2, "manaNeedAtLeast": 2}},
@@ -7,7 +7,7 @@
     "blood_raven":        {"healing": {"min": 4}, "portal": {"min": 2}, "mana": {"min": 2, "manaNeedAtLeast": 2}, "gold_carry": {"min": 250}},
     "tools_of_the_trade": {"healing": {"min": 4}, "portal": {"min": 1}, "mana": {"min": 2, "manaNeedAtLeast": 2}},
     "countess":           {"healing": {"min": 4}, "portal": {"min": 1}, "mana": {"min": 2, "manaNeedAtLeast": 2}},
-    "andariel":           {"healing": {"min": 8}, "portal": {"min": 1}, "mana": {"min": 3, "manaNeedAtLeast": 2}, "gold_carry": {"min": 3000}},
+    "andariel":           {"healing": {"min": 8, "beltSlots": {"12": {"min": 8}, "8": {"min": 6}}}, "portal": {"min": 1}, "mana": {"min": 3, "manaNeedAtLeast": 2, "beltSlots": {"12": {"min": 3}, "8": {"min": 2}}}, "gold_carry": {"min": 3000}},
     "den":                {"healing": {"min": 2}},
     "recovery_farm":      {"healing": {"min": 2}, "portal": {"min": 1}, "mana": {"min": 2, "manaNeedAtLeast": 2}}
   }
