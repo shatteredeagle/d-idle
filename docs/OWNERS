@@ -501,6 +501,7 @@ tools/friendpack/install.sh  credit-runner  cut012
 tools/friendpack/pack_test.go  credit-runner  cut012
 tools/provingground/arbiter-outcomes/  live-agent  arbmig
 tools/provingground/earned  credit-runner  pgearned
+tools/provingground/golden/setup-played.tsv  credit-runner  drilldrivers
 tools/provingground/golden/setup-played.tsv  credit-runner  drillskills
 tools/provingground/pgenv.sh  credit-runner  pgledgeron
 tools/provingground/pgenv_test.sh  credit-runner  pgledgeron

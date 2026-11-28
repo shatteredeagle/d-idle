@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- drv2: combat hold driver log, drill classification (TASK-1127) <!--sg:agent/drv2-->
 - dur2: Tyrael door finding (fork), npc_out_of_reach, board retry count (TASK-1126/1120) <!--sg:agent/dur2-->
 - forkreq: consolidated fork requests (docs) <!--sg:agent/forkreq-->
 - fix8b: missing combat profile, mana need (TASK-1117) <!--sg:agent/fix8b-->
