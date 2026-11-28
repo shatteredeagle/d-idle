@@ -57,7 +57,10 @@
 | evid1 | in-progress | - | `internal/combat/`<br>`internal/bot/`<br>`tools/provingground/scenarios/evidence.json`<br>`tools/provingground/scenarios/tiers.json`<br>`tools/provingground/golden/`<br>`docs/probes/evidence-logs-2026-11-28.md` | - |
 | live1 | proposed | - | `internal/bot/`<br>`internal/survival/`<br>`internal/questboard/`<br>`internal/arbiter/`<br>`cmd/d2bot/survivalwire.go`<br>`docs/live1.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
+| boardsidestart | proposed | - | `internal/questboard/`<br>`internal/bot/questboard.go` | - |
 | sec2 | proposed | - | `deploy/d2d-container/tester-report.sh`<br>`deploy/d2d-container/tester_report_sec_test.go`<br>`internal/support/`<br>`internal/watch/surface_sec_test.go`<br>`internal/watch/logtab.go`<br>`internal/logx/`<br>`internal/access/`<br>`internal/diffready/consent.go`<br>`internal/diffready/mode_sec_test.go`<br>`cmd/d2bot/opscmd.go`<br>`cmd/d2bot/opslog_sec_test.go` | - |
+| durieltyrael | proposed | - | `internal/questboard/`<br>`internal/task/` | - |
+| drilldrivers | proposed | - | `internal/combat/`<br>`tools/provingground/scenarios/combatdrills.json`<br>`tools/provingground/scenarios/necro.json` | - |
 | fix14 | proposed | - | `internal/admit/`<br>`internal/quest/objective.go`<br>`internal/bot/`<br>`internal/combat/`<br>`internal/vaultkeep/`<br>`internal/arbiter/`<br>`internal/town/` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
@@ -201,7 +204,9 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 91cfd35cc 11-28 04:52 `Merge agent/labops2: lab night results 2026-11-28b: reruns and ledger verdicts (docs)` (labops2)
 - dc5419a81 11-28 04:52 `Merge agent/fix14: fix14: round-3 HIGH fixes: boss-level kit, fighter reselect, hole hold, merc journal (TASK-1131)` (fix14)
+- 0d31f7220 11-28 04:51 `Merge branch 'main' into labops2` (-)
 - 35d6e0b42 11-28 04:51 `Merge branch 'main' into fix14` (-)
 - 9643ebbe4 11-28 04:51 `Merge agent/nightlog: nightlog: Questy save incident (docs)` (nightlog)
 - 893ee2ab2 11-28 04:50 `Merge branch 'main' into nightlog` (-)
@@ -209,6 +214,4 @@
 - 39a32f65f 11-28 04:43 `Merge branch 'main' into sec2` (-)
 - 6a0008aab 11-28 04:35 `Merge agent/evid1: evid1: evidence logs (TASK-1118)` (evid1)
 - 1f8a58ba4 11-28 04:34 `Merge branch 'main' into evid1` (-)
-- 9b31d094d 11-28 04:15 `Merge branch 'main' into sec2` (-)
-- 48f4d1a49 11-28 04:15 `Merge agent/ledenable: ledger: refusalPark and resumeAfterDeaths enabled (clean 2 h windows)` (ledenable)
 <!-- statusgen:end -->

@@ -301,6 +301,7 @@ internal/bot/guided.go  credit-runner  campaign1
 internal/bot/guided_test.go  credit-runner  campaign1
 internal/bot/leveling.go  live-agent  town5
 internal/bot/loop.go  live-agent  arbmig
+internal/bot/questboard.go  credit-runner  boardsidestart
 internal/bot/questboard.go  live-agent  bsmdef
 internal/bot/routeguard.go  live-agent  bsmdef
 internal/bot/runner.go  credit-runner  campaign1
@@ -316,6 +317,7 @@ internal/combat/  credit-runner  cainfix3
 internal/combat/  credit-runner  dlv-cleanup
 internal/combat/  credit-runner  dlv-mark
 internal/combat/  credit-runner  dlv-upkeep-state
+internal/combat/  credit-runner  drilldrivers
 internal/combat/  credit-runner  evid1
 internal/combat/  credit-runner  fix14
 internal/combat/  credit-runner  fix8b
@@ -394,7 +396,9 @@ internal/plandata/levelplan-normal.json  live-agent  epic-class-necromancer
 internal/power/  credit-runner  dlv-cleanup
 internal/quest/objective.go  credit-runner  fix14
 internal/questboard  live-agent  bsmdef
+internal/questboard/  credit-runner  boardsidestart
 internal/questboard/  credit-runner  bsmnight
+internal/questboard/  credit-runner  durieltyrael
 internal/questboard/  live-agent  cellar3gate
 internal/questboard/  live-agent  live1
 internal/questboard/def.go  credit-runner  cainfix3
@@ -418,6 +422,7 @@ internal/supply/  credit-runner  townnight
 internal/support/  credit-runner  sec2
 internal/survival/  live-agent  live1
 internal/task  live-agent  bsmdef
+internal/task/  credit-runner  durieltyrael
 internal/task/banote_test.go  credit-runner  cainfix3
 internal/task/campaign.go  credit-runner  campaign1
 internal/task/gate.go  credit-runner  cainfix3
@@ -524,10 +529,12 @@ tools/provingground/scenarios/board.json  credit-runner  bsmnight
 tools/provingground/scenarios/board.json  live-agent  bsmdef
 tools/provingground/scenarios/cain.json  credit-runner  cainfix3
 tools/provingground/scenarios/cain.json  credit-runner  pgearned
+tools/provingground/scenarios/combatdrills.json  credit-runner  drilldrivers
 tools/provingground/scenarios/combatdrills.json  credit-runner  drillskills
 tools/provingground/scenarios/evidence.json  credit-runner  evid1
 tools/provingground/scenarios/necro-acts.json  live-agent  epic-class-necromancer
 tools/provingground/scenarios/necro-epic.json  live-agent  epic-class-necromancer
+tools/provingground/scenarios/necro.json  credit-runner  drilldrivers
 tools/provingground/scenarios/necro.json  credit-runner  drillskills
 tools/provingground/scenarios/stepexec-act2chunks.json  credit-runner  act2night
 tools/provingground/scenarios/tiers.json  credit-runner  evid1
