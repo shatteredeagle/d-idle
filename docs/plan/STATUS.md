@@ -185,6 +185,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- db2f6c04f 11-27 21:17 `Merge agent/smetown: smetown: SME advice on town supply profiles (TASK-765)` (smetown)
+- 912f71256 11-27 21:16 `Merge branch 'main' into smetown` (-)
 - e3ad47351 11-27 21:12 `Merge agent/cardclose4: cardclose4: card status sync after the afternoon merges` (cardclose4)
 - 263da1e33 11-27 21:10 `Merge remote-tracking branch 'origin/main' into agent/cardclose4` (-)
 - 3210c3a77 11-27 21:09 `Merge agent/devupdatefix: devupdatefix: dev-update.sh local mode, per-run stage dir, host line (TASK-1086)` (devupdatefix)
@@ -193,6 +195,4 @@
 - 1542a59b7 11-27 19:53 `Merge agent/cellar3gate: cellar3gate: leave the pocket through a click the mouth gate allows, coded no_path park (TASK-1084)` (cellar3gate)
 - 63564ad8a 11-27 19:52 `Merge branch 'main' into cellar3gate` (-)
 - a115a3215 11-27 19:28 `Merge agent/chunkstart: chunkstart: why Questy chunks do not start (docs)` (chunkstart)
-- 39552a408 11-27 19:28 `Merge agent/mercgold: mercgold: dead merc with gold is a trip reason, no-merc and revive-off visibility (TASK-1083)` (mercgold)
-- fbe22468a 11-27 19:26 `Merge branch 'main' into chunkstart` (-)
 <!-- statusgen:end -->
