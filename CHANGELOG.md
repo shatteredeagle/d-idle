@@ -8,6 +8,8 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- nightlog: overnight coordinator log (docs) <!--sg:agent/nightlog-->
+- labtriage: overnight lab triage, scenario marker fixes, 8 cards (TASK-1101..1108) <!--sg:agent/labtriage-->
 - fix6: ledger accounting, mandatory hero_profile, d2scenario smoke, stability view, pack room (TASK-1098) <!--sg:agent/fix6-->
 - fix2: board counters persist, rung-4 skip counts coded refusals only, resume tick for all goals, difficulty go consumed after the hop (TASK-1099) <!--sg:agent/fix2-->
 - fix7: arbiter low-life gate, Report, survive reads Safety, heartbeat, admission rows (TASK-1096) <!--sg:agent/fix7-->
