@@ -6,5 +6,5 @@
  "enable_criteria": "Restart drill green with boardSM 1 (a park survives); scenario/drill green, then flip on the sandboxes with a 24 h invariant-monitor watch and automatic revert on a hard breach; cleanup card one release later",
  "owner": "coordinator",
  "review_by": "2026-12-09",
- "status": "dark"
+ "status": "enabled"
 }
