@@ -1,10 +1,11 @@
 ---
 id: TASK-1096
 title: 'fix7: arbiter A1-A4 fixes, admission differ lines, target and migration doc'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T03:45:00Z'
+updated_date: '2026-11-28T04:34:00Z'
 labels:
   - bot
   - bug
