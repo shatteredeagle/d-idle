@@ -1,0 +1,7 @@
+{
+ "note": "Sandbox aliases for tools/flip (card flipfix2). alias -> container name and role. Every flip and autoflip subcommand takes the alias or the container name; state files and the ledger keep the container name. A new sandbox: add a row here.",
+ "sandboxes": {
+  "doofer": {"container": "d2play-20261108", "role": "canary"},
+  "questy": {"container": "d2play-20261125q", "role": "quest sandbox"}
+ }
+}
