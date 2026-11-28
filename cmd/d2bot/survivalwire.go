@@ -339,5 +339,6 @@ func (w *survivalShadow) questMargin(s *d2.Snapshot, boss, diff string, potions 
 	}
 	k := w.led.KHeroFor(w.m.OffenceUnread(hero))
 	enc := questboard.EncounterFrom(b.Name, "boss", r, k)
+	enc.Area = b.Area
 	return qh, &enc, true
 }

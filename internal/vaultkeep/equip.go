@@ -195,9 +195,11 @@ func (k *Keeper) bookLocked() *equipBook {
 	return &k.eq
 }
 
-func (k *Keeper) saveBookLocked() {
+// saveBookLocked writes the order file and reports a failed write: the direct Equip journals its order here BEFORE the
+// engine call, and a journal that is not on disk cannot settle a lost reply after a restart (review 10 N4).
+func (k *Keeper) saveBookLocked() error {
 	if k.EquipPath == "" {
-		return
+		return nil
 	}
 	var f equipFile
 	f.Version = 1
@@ -216,13 +218,16 @@ func (k *Keeper) saveBookLocked() {
 	}
 	b, err := json.MarshalIndent(f, "", " ")
 	if err != nil {
-		return
+		return err
 	}
-	_ = os.MkdirAll(filepath.Dir(k.EquipPath), 0o755)
+	if err := os.MkdirAll(filepath.Dir(k.EquipPath), 0o755); err != nil {
+		return err
+	}
 	tmp := k.EquipPath + ".tmp"
-	if os.WriteFile(tmp, b, 0o644) == nil {
-		_ = os.Rename(tmp, k.EquipPath)
+	if err := os.WriteFile(tmp, b, 0o644); err != nil {
+		return err
 	}
+	return os.Rename(tmp, k.EquipPath)
 }
 
 // EquipEnabled is the gate of the feature: knob and hand present on top of the Keep gate.

@@ -27,8 +27,13 @@ func (r *Runner) runGoalControlled(ctx context.Context, snap *d2.Snapshot, c con
 	if ok && d.Chosen != nil {
 		acted, took = r.arbAct(ctx, snap, c, d, t.ArbiterFamilies)
 		if arbHooked(t.ArbiterFamilies, arbiter.Family(d.Chosen.Source)) {
-			// Close the loop (review part 7, A3): a hook that did nothing backs its intent off, one that acted clears it.
-			sh.Report(*d.Chosen, v.Now, took)
+			// Close the loop (review part 7, A3): a hook that did nothing backs its intent off (a decline, capped at
+			// arbiter.DeclineMax), one that acted clears it.
+			if took {
+				sh.Report(*d.Chosen, v.Now, true)
+			} else {
+				sh.Decline(*d.Chosen, v.Now)
+			}
 			declined = !took
 		}
 	}

@@ -103,6 +103,9 @@ type Encounter struct {
 	Best, Low     float64
 	Known         bool
 	OffenceUnread bool
+	// Area is the area a boss encounter stands in (0: not known); the bot keeps a parked boss chunk's area out of the
+	// leveling picks with it.
+	Area int
 }
 
 // Hero is the hero as readiness needs it (the adapter fills it from power.Hero).
