@@ -39,3 +39,5 @@ Flip on the sandboxes once the scenario, drill or replay passes, watch a short w
 - `ssh <host>`: works the same way (the command line is the only channel used).
 - A local wrapper script that runs the rest of the line in the container is fine; it must exit non-zero when the command fails.
 - Tests: `python3 -I tools/flip/test_flip.py` includes a transport that drops stdin and one that empties the payload.
+
+See also: [autoflip](autoflip.md) (planned flips and graduation briefs).
