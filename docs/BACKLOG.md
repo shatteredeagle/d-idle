@@ -1606,6 +1606,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - agent/cardclose4: cardclose4: card status sync after the afternoon merges (merged 2026-11-27) <!--sg:agent/cardclose4-->
 - town12: SME review of the supply profile numbers (advice only) (TASK-765, merged 2026-11-27, acceptance 0 of 1): NOT DONE (needs a d2-sme run, which is not a worker step): the doc docs/design/fable-review-2026-11-21/town-profiles-sme.md now holds the numbers table of internal/supply/profiles.json (the card named data/supply/ by mistake, fixed in townwire ... <!--sg:agent/smetown-->
 - townapply: SME town profile rows as data, beltSlots condition and tierFloor field (TASK-1087, merged 2026-11-27, acceptance 3 of 3): Applied SME review 2026-11-27 rows as data (andariel belt-size kit, blood_raven mana 4, tierFloor, duriel, catacombs, tristram, countess); offline tests only, not verified live. Skipped: antidote and thawing lines, field clvl band, merc_revive reorder. <!--sg:agent/townapply-->
+- agent/postdeploy2: postdeploy2: second post-deploy audit (docs) (merged 2026-11-27) <!--sg:agent/postdeploy2-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

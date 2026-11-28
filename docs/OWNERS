@@ -356,7 +356,6 @@ internal/scenario/result.go  live-agent  pgtaps
 internal/scenario/scenario.go  credit-runner  pgearned
 internal/scenario/setup.go  credit-runner  pgearned
 internal/scenario/taps.go  live-agent  pgtaps
-internal/supply  credit-runner  townapply
 internal/supply  live-agent  town10
 internal/task  live-agent  bsmdef
 internal/task/banote_test.go  credit-runner  cainfix3
@@ -369,7 +368,6 @@ internal/town  live-agent  town11
 internal/town  live-agent  town5
 internal/town/chores.go  credit-runner  inputl4
 internal/town/chores.go  live-agent  townflip
-internal/town/planshadow.go  credit-runner  townapply
 internal/town/portalverb.go  live-agent  inputl3
 internal/town/portalverb_export_test.go  credit-runner  inputl4
 internal/town/portalverb_export_test.go  live-agent  inputl3
