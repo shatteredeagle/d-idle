@@ -45,7 +45,6 @@
 | holereach | proposed | - | `internal/bot/zonemodel.go`<br>`internal/bot/zonemodel_test.go` | - |
 | pgfix | proposed | - | `cmd/d2scenario`<br>`internal/scenario`<br>`tools/provingground/scenarios`<br>`docs/process/proving-ground.md` | - |
 | fix6 | in-progress | - | `cmd/d2scenario/`<br>`internal/scenario/`<br>`tools/provingground/`<br>`tools/ci/check.sh`<br>`docs/process/proving-ground.md`<br>`docs/process/proving-ground-status.md`<br>`docs/probes/pg-ops-handoff-2026-11-28.md`<br>`data/stepgrounds/steps.json` | - |
-| fix2 | in-progress | - | `internal/questboard/`<br>`internal/bot/`<br>`docs/questboard.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |

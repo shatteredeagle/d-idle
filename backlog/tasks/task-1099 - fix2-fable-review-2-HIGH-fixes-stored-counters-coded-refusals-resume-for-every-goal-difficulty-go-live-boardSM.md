@@ -1,10 +1,13 @@
 ---
 id: TASK-1099
-title: 'fix2: fable review 2 HIGH fixes (stored counters, coded refusals, resume for every goal, difficulty go, live boardSM)'
-status: In Progress
+title: >-
+  fix2: fable review 2 HIGH fixes (stored counters, coded refusals, resume for
+  every goal, difficulty go, live boardSM)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T03:54:00Z'
+updated_date: '2026-11-28T04:34:00Z'
 labels:
   - bot
   - bot-fix
