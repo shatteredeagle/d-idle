@@ -81,12 +81,13 @@ func (r *Runner) arbAct(ctx context.Context, snap *d2.Snapshot, c control, d arb
 		acted = r.claimTripStep(ctx, snap, c)
 	case arbiter.SrcGoldFarm:
 		if c.spec.camp != nil && r.goldFarmOn() {
-			// the chain's low-life gate stands above both farm hooks (goal.go); a hurt hero with no potion heals first
-			acted = r.lowLifeGate(ctx, snap, c) || r.goldFarmStep(ctx, snap, c)
+			// the chain's prefix stands above both farm hooks (goal.go): a running trip goes on and due chores start
+			// whatever the arbiter backed off (review 11, N1); a hurt hero with no potion heals first
+			acted = r.arbChores(ctx, snap, c) || r.lowLifeGate(ctx, snap, c) || r.goldFarmStep(ctx, snap, c)
 		}
 	case arbiter.SrcRecovery:
 		if c.spec.camp != nil && !r.goldFarmOn() && r.recoveryDue(snap) {
-			acted = r.lowLifeGate(ctx, snap, c) || r.recoveryStep(ctx, snap, c)
+			acted = r.arbChores(ctx, snap, c) || r.lowLifeGate(ctx, snap, c) || r.recoveryStep(ctx, snap, c)
 		}
 	default:
 		return false, false

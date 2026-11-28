@@ -1,0 +1,10 @@
+{
+ "name": "ladder.enabled",
+ "built_by": "ladder (dce8867d9)",
+ "dark_since": "2026-11-05",
+ "why_off": "Decision-point store wired at two call sites, untrained defaults.",
+ "enable_criteria": "T0 slice has a trained rule that beats default on a drill",
+ "owner": "coordinator",
+ "review_by": "2026-12-09",
+ "status": "dark"
+}

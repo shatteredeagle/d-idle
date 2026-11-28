@@ -255,7 +255,7 @@ func (k *Keeper) Carry(ctx context.Context, id string) Result {
 	case !ok:
 		res.Code, res.Why = "missing", "no such item"
 		return res
-	case rec.State != vault.Recorded || rec.Stage != "":
+	case rec.State != vault.Recorded || rec.Stage != "" || rec.Hold != "":
 		res.Code, res.Why = "state", "the item is not in the vault any more or is busy ("+string(rec.State)+")"
 		return res
 	}
