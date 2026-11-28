@@ -1,10 +1,13 @@
 ---
 id: TASK-1098
-title: 'fix6: Proving Ground net from review 6: smoke tier, mandatory hero profile, every run recorded, stability by binary, pack room'
-status: In Progress
+title: >-
+  fix6: Proving Ground net from review 6: smoke tier, mandatory hero profile,
+  every run recorded, stability by binary, pack room
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T03:48:00Z'
+updated_date: '2026-11-28T04:34:00Z'
 labels:
   - bot
   - bug
