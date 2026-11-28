@@ -8,6 +8,7 @@ import (
 	"d2lod-bot/internal/arbiter"
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/goals"
+	"d2lod-bot/internal/supply"
 	"d2lod-bot/internal/task"
 )
 
@@ -361,6 +362,72 @@ func TestArbiterSurviveReadsTheSafetyVerdictAndYieldsToATrip(t *testing.T) {
 			}
 			if tc.trip && g.r.arb.ctl.Load() != 0 {
 				t.Fatalf("%v %s: the survive hook ran over the trip", class, tc.name)
+			}
+		}
+	}
+}
+
+// Review 11, N1: a declined refill (trip cooldown) backs the upkeep intent off. An emergency trip that then runs in
+// town, hero hurt and broke, must go on: before the fix the arbiter refused the backed-off upkeep intent, chose recovery
+// and its hook walked the hero out to farm unhealed. The direct half asks the farm hooks themselves: whatever the arbiter
+// chose, a running trip goes on and due chores start (the chain's prefix). Two classes.
+func TestArbiterControlBackoffNeverTakesARunningTrip(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		g, _ := farmRig(t, 6, class)
+		g.w.set(func(w *world) { w.gold0 = 900 })
+		g.w.belt()
+		// the upkeep source (one key for "the plan would buy" and "a trip runs") needs a town with a planner
+		g.r.d.Town = fixedPlanner{Townsman: g.r.d.Town, pl: supply.Plan{Lines: []supply.PlanLine{{Line: supply.Healing, Have: 1, Min: 3, Buy: 2}}}}
+		g.r.e.Tune.Bot.ArbiterShadow, g.r.e.Tune.Bot.ArbiterControl, g.r.e.Tune.Bot.ArbiterFamilies = 1, 1, 255
+		g.r.setLastTrip(g.clock.Now())
+		g.r.poll()
+		g.clock.Sleep(time.Second)
+		g.r.runGoalShadowed(context.Background(), g.r.latest(), campControl())
+		if d, _ := g.r.Arbiter(); d.Chosen == nil || d.Chosen.Source != arbiter.SrcUpkeep || g.r.arb.ctl.Load() != 0 {
+			t.Fatalf("%v: setup, the upkeep hook should be chosen and decline: %+v (acted %d)", class, d.Chosen, g.r.arb.ctl.Load())
+		}
+		g.w.set(func(w *world) { w.area, w.life = 1, 30 })
+		g.r.loop.broke.on = true
+		g.r.loop.trip = &trip{plan: ChorePlan{Heal: true, Reason: "test"}, emergency: true}
+		g.r.poll()
+		g.clock.Sleep(time.Second)
+		g.r.runGoalShadowed(context.Background(), g.r.latest(), campControl())
+		d, _ := g.r.Arbiter()
+		if d.Chosen == nil || arbiter.Family(d.Chosen.Source) != "chores" {
+			t.Fatalf("%v: the running emergency trip was not chosen: %+v, rejected %+v", class, d.Chosen, d.Rejected)
+		}
+		if why := g.r.currentWhy(); why == WhyFarmGold || g.w.count("chores") == 0 {
+			t.Fatalf("%v: the trip did not go on (why %s, chores %d)", class, why, g.w.count("chores"))
+		}
+	}
+}
+
+func TestArbiterFarmHooksHonourTheTripPrefix(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		for _, fam := range []string{arbiter.SrcRecovery, arbiter.SrcGoldFarm} {
+			for _, running := range []bool{true, false} {
+				g, gf := farmRig(t, 6, class)
+				g.w.set(func(w *world) { w.gold0 = 900 })
+				g.w.belt()
+				g.r.e.Tune.Bot.ArbiterShadow, g.r.e.Tune.Bot.ArbiterControl, g.r.e.Tune.Bot.ArbiterFamilies = 1, 1, 255
+				if fam == arbiter.SrcGoldFarm {
+					gf.Start()
+				} else {
+					g.r.loop.broke.on = true
+				}
+				if running {
+					g.w.set(func(w *world) { w.area, w.life = 1, 30 })
+					g.r.loop.trip = &trip{plan: ChorePlan{Heal: true, Reason: "test"}, emergency: true}
+				}
+				g.r.poll()
+				g.clock.Sleep(time.Second)
+				d := arbiter.Decision{Chosen: &arbiter.Intent{Source: fam, Kind: "farm_gold", Class: arbiter.Objective}}
+				_, took := g.r.arbAct(context.Background(), g.r.latest(), campControl(), d, 255)
+				why := g.r.currentWhy()
+				if !took || why == WhyFarmGold || g.w.count("chores")+g.w.count("totown") == 0 {
+					t.Fatalf("%v %s trip running %v: took %v why %s chores %d totown %d: the farm ran over the trip or the due chores",
+						class, fam, running, took, why, g.w.count("chores"), g.w.count("totown"))
+				}
 			}
 		}
 	}

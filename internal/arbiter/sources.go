@@ -109,7 +109,7 @@ func StdSources() []Source {
 			if f[FactTripEmerg] > 0 {
 				u, why = 0.9, "emergency chores"
 			}
-			return &Intent{Kind: "chores", Class: Upkeep, Urgency: u, NeedsArea: Town, EstCost: 60, Reason: why}
+			return &Intent{Kind: "chores", Class: Upkeep, Urgency: u, NeedsArea: Town, EstCost: 60, Reason: why, NoBackoff: true}
 		}),
 		fn(SrcClaim, func(v View) *Intent {
 			if v.Facts[FactClaim] == 0 {
