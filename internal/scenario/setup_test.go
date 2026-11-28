@@ -158,3 +158,47 @@ func TestSkillPointsAfterTheLevel(t *testing.T) {
 		}
 	}
 }
+
+// pre.bind and pre.summon reach the setup with the CHEATED tag, on two classes, and every malformed row is refused: an
+// id for a name, a bad hand, two skills on one hand, a banked hero, a town start for a summon, a bad count.
+func TestHandSkillsSetupAndValidation(t *testing.T) {
+	for _, class := range []string{"Necromancer", "Druid"} {
+		good := Pre{HeroProfile: HeroPlayed, Level: 24, Start: StartField, Area: 2,
+			Bind: []HandBind{{Skill: "Corpse Explosion"}, {Skill: "Teeth", Hand: "left"}}, Summon: []Summon{{Skill: "Clay Golem", N: 2, Min: 1}}}
+		su, err := BuildSetup(Scenario{ID: "x.hands", Pre: good}, class, 3)
+		if err != nil {
+			t.Fatalf("%s: %v", class, err)
+		}
+		if len(su.Bind) != 2 || len(su.Summon) != 1 || su.Bind[0].HandName() != "right" || su.Summon[0].Casts() != 2 {
+			t.Errorf("%s: setup bind %v summon %v", class, su.Bind, su.Summon)
+		}
+		for _, tag := range []string{"CHEATED", "hand-skill", "summon"} {
+			if !slices.Contains(su.Tags, tag) {
+				t.Errorf("%s: tags %v lack %s", class, su.Tags, tag)
+			}
+		}
+		for _, v := range su.Verbs { // the names are resolved by the runner with the game tables, never here
+			if strings.HasPrefix(v.Line, "cmd ") {
+				t.Errorf("%s: setup verb %q", class, v.Line)
+			}
+		}
+		for name, edit := range map[string]func(*Pre){
+			"an id for a name":        func(p *Pre) { p.Bind[0].Skill = "74" },
+			"an empty name":           func(p *Pre) { p.Summon[0].Skill = "" },
+			"a bad hand":              func(p *Pre) { p.Bind[0].Hand = "both" },
+			"two on one hand":         func(p *Pre) { p.Bind[1].Hand = "right" },
+			"a banked hero":           func(p *Pre) { p.HeroProfile = HeroBanked },
+			"a level 1 hero":          func(p *Pre) { p.Level = 1 },
+			"a summon in town":        func(p *Pre) { p.Start, p.Area = StartTown, 0 },
+			"more standing than cast": func(p *Pre) { p.Summon[0].Min = 3 },
+			"too many casts":          func(p *Pre) { p.Summon[0].N = 21 },
+		} {
+			p := good
+			p.Bind, p.Summon = slices.Clone(good.Bind), slices.Clone(good.Summon)
+			edit(&p)
+			if _, err := BuildSetup(Scenario{ID: "x.bad", Pre: p}, class, 3); err == nil {
+				t.Errorf("%s: %s accepted", class, name)
+			}
+		}
+	}
+}

@@ -1,0 +1,10 @@
+{
+ "name": "bot.portalGuard",
+ "built_by": "portalguard (42038a1c7)",
+ "dark_since": "2026-11-15",
+ "why_off": "Until drill R3 (docs/fixportalmelee.md).",
+ "enable_criteria": "Drill R3 green",
+ "owner": "coordinator",
+ "review_by": "2026-12-09",
+ "status": "enabled"
+}
