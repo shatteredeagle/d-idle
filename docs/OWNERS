@@ -396,6 +396,7 @@ internal/levelplan/necro_test.go  live-agent  epic-class-necromancer
 internal/logx/  credit-runner  sec2
 internal/logx/sink.go  credit-runner  fix4
 internal/logx/sink_test.go  credit-runner  fix4
+internal/loot/  credit-runner  fix8b
 internal/nav/  credit-runner  navbarracks
 internal/nav/  credit-runner  summonerstall
 internal/nav/  live-agent  dlv-move-tele

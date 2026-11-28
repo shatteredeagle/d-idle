@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- fix8b: missing combat profile, mana need (TASK-1117) <!--sg:agent/fix8b-->
 - savesafe: rolling character save backups, zero-byte restore, disk guard (TASK-1132) <!--sg:agent/savesafe-->
 - lab night results 2026-11-28b: reruns and ledger verdicts (docs) <!--sg:agent/labops2-->
 - fix14: round-3 HIGH fixes: boss-level kit, fighter reselect, hole hold, merc journal (TASK-1131) <!--sg:agent/fix14-->

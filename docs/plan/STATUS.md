@@ -53,7 +53,7 @@
 | act2night | proposed | - | `internal/bot/`<br>`tools/provingground/scenarios/stepexec-act2chunks.json` | - |
 | townnight | proposed | - | `internal/town/`<br>`internal/supply/`<br>`tools/provingground/scenarios/townplan.json` | - |
 | led1 | in-progress | - | `data/darklaunch/`<br>`data/darklaunch.json`<br>`data/darklaunch-cap.json`<br>`tools/darklaunch/`<br>`tools/flip/`<br>`docs/process/dark-launch.md`<br>`docs/process/autoflip.md` | - |
-| fix8b | proposed | - | `internal/combat/`<br>`cmd/d2bot/`<br>`internal/bot/`<br>`internal/resource/`<br>`internal/town/`<br>`docs/invariants.md` | - |
+| fix8b | proposed | - | `internal/combat/`<br>`cmd/d2bot/`<br>`internal/bot/`<br>`internal/resource/`<br>`internal/town/`<br>`internal/loot/`<br>`docs/invariants.md` | - |
 | evid1 | in-progress | - | `internal/combat/`<br>`internal/bot/`<br>`tools/provingground/scenarios/evidence.json`<br>`tools/provingground/scenarios/tiers.json`<br>`tools/provingground/golden/`<br>`docs/probes/evidence-logs-2026-11-28.md` | - |
 | live1 | proposed | - | `internal/bot/`<br>`internal/survival/`<br>`internal/questboard/`<br>`internal/arbiter/`<br>`cmd/d2bot/survivalwire.go`<br>`docs/live1.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
@@ -205,14 +205,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 6e37fec73 11-28 05:11 `Merge agent/fix8b: fix8b: missing combat profile, mana need (TASK-1117)` (fix8b)
+- b2fe61651 11-28 05:10 `Merge branch 'main' into fix8b` (-)
 - 010befbd5 11-28 05:02 `Merge agent/savesafe: savesafe: rolling character save backups, zero-byte restore, disk guard (TASK-1132)` (savesafe)
 - 0da230f78 11-28 05:01 `Merge branch 'main' into savesafe` (-)
+- 0e77448d3 11-28 04:54 `Merge origin/main into fix8b` (-)
 - 91cfd35cc 11-28 04:52 `Merge agent/labops2: lab night results 2026-11-28b: reruns and ledger verdicts (docs)` (labops2)
 - dc5419a81 11-28 04:52 `Merge agent/fix14: fix14: round-3 HIGH fixes: boss-level kit, fighter reselect, hole hold, merc journal (TASK-1131)` (fix14)
 - 0d31f7220 11-28 04:51 `Merge branch 'main' into labops2` (-)
 - 35d6e0b42 11-28 04:51 `Merge branch 'main' into fix14` (-)
 - 9643ebbe4 11-28 04:51 `Merge agent/nightlog: nightlog: Questy save incident (docs)` (nightlog)
-- 893ee2ab2 11-28 04:50 `Merge branch 'main' into nightlog` (-)
-- 0cdf10521 11-28 04:44 `Merge agent/sec2: sec2: scrub leaks (TASK-1125)` (sec2)
-- 39a32f65f 11-28 04:43 `Merge branch 'main' into sec2` (-)
 <!-- statusgen:end -->
