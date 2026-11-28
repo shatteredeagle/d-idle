@@ -393,6 +393,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [05-dark-ledger-process.md](design/fable-review-2026-11-28/05-dark-ledger-process.md): Fable review 5 of 8: the dark ledger, the flip tooling and the merge pipeline (status: review, 2026-11-27 evening (branch agent/fable-fr5, base 415b11f25). Read-only review; nothing here is a...)
 - [06-proving-ground.md](design/fable-review-2026-11-28/06-proving-ground.md): Fable review 6 of 8: the Proving Ground as a safety net and as evidence (status: review, 2026-11-28, read on main 415b11f25. Docs only: no code, no lab run, no game. Tags: V = read in the...)
 - [08-builds-as-data.md](design/fable-review-2026-11-28/08-builds-as-data.md): Fable review 8 of 8: builds as data (2026-11-28) (status: review, decides nothing. Read-only pass over `origin/main` at `415b11f25`, "today" = the commits after...)
+- [09-change-pipeline.md](design/fable-review-2026-11-28/09-change-pipeline.md): Fable review 9: how a change travels, and why the dark ledger grows (status: current (reviewer run fr9, 2026-11-27 evening, docs only, nothing changed). Independent second opinion:...)
 
 `design/`
 
