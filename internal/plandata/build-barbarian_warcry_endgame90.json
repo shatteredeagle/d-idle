@@ -639,7 +639,7 @@
      "points": 1
     },
     {
-     "skill": "War Cry",
+     "skill": "Battle Cry",
      "points": 1,
      "quest": "radament"
     }
@@ -705,7 +705,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Battle Cry",
+     "skill": "War Cry",
      "points": 1
     }
    ]

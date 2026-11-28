@@ -138,7 +138,7 @@
     },
     {
      "skill": "Arctic Blast",
-     "points": 2
+     "points": 1
     }
    ]
   },
@@ -151,6 +151,10 @@
    "skills": [
     {
      "skill": "Arctic Blast",
+     "points": 1
+    },
+    {
+     "skill": "Oak Sage",
      "points": 1
     }
    ]
@@ -167,7 +171,7 @@
      "points": 1
     },
     {
-     "skill": "Arctic Blast",
+     "skill": "Oak Sage",
      "points": 1,
      "quest": "den_of_evil"
     }
@@ -194,7 +198,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Oak Sage",
+     "skill": "Arctic Blast",
      "points": 1
     }
    ]
@@ -205,12 +209,7 @@
    "dexterity": 0,
    "vitality": 5,
    "energy": 0,
-   "skills": [
-    {
-     "skill": "Oak Sage",
-     "points": 1
-    }
-   ]
+   "skills": []
   },
   {
    "clvl": 12,
@@ -263,7 +262,7 @@
      "points": 1
     },
     {
-     "skill": "Cyclone Armor",
+     "skill": "Arctic Blast",
      "points": 1,
      "quest": "radament"
     }
@@ -305,6 +304,10 @@
     {
      "skill": "Cyclone Armor",
      "points": 1
+    },
+    {
+     "skill": "Twister",
+     "points": 1
     }
    ]
   },
@@ -342,7 +345,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Twister",
+     "skill": "Cyclone Armor",
      "points": 1
     }
    ]

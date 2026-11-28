@@ -170,7 +170,7 @@
   "barbarian": {
    "archetype": "melee",
    "build": "barbarian_melee_normal30",
-   "tag": "U: copied from the paladin row (gap list of SME review 2026-11-27, confidence low): nobody has judged this class's entries, exits and life gates; the build and the class name are the only changes.",
+   "tag": "S: melee archetype with the paladin's entries and exits (same legacyFloor rows). Life gates equal the melee admission road (admission.json, TestAct2PlanShape forbids a plan gate under its road); the SME's lower Barbarian floors (docs/probes/sme-other-classes-review-2026-11-27.md change 7: about 140 at the Halls, 200 at the Tombs) are therefore not applied, and they would not bind: the class has about 305 life at clvl 20 (docs/sme/class-barbarian.md section 3). U live.",
    "slices": [
     {
      "id": "dry_hills",
@@ -424,7 +424,7 @@
   "druid": {
    "archetype": "caster",
    "build": "druid_fire_normal30",
-   "tag": "U: copied from the sorceress row (gap list of SME review 2026-11-27, confidence low): nobody has judged this class's entries, exits and life gates; the build and the class name are the only changes.",
+   "tag": "S: caster archetype with the caster legacyFloor entries (same rows as the sorceress); life gates are the Druid's own, from the ready table of docs/sme/class-druid.md section 10 (life 190 at Andariel clvl 16-18, 230 at Duriel clvl 21-23), not the 150-life Sorceress floors; steps between are interpolated (U). Build is the fire table; the tornado table is an endgame opt-in with the same archetype. U live.",
    "slices": [
     {
      "id": "dry_hills",
@@ -481,7 +481,7 @@
      "way_in": "waypoint",
      "via_wp": 57,
      "why": "Halls 1-3 (SME mlvl 18-20, S); the cube chest is in Halls 3; entry equals the quest floor of the Horadric Staff row (V questboard act2.json legacyFloor 20 melee, 22 caster)",
-     "min_max_life": 90
+     "min_max_life": 190
     },
     {
      "id": "claw_viper_temple",
@@ -496,7 +496,7 @@
      "way_in": "walk",
      "via_wp": 44,
      "why": "Temple 1-2 with Fangskin (SME mlvl 20-22, S); walk from the Lost City waypoint; the Tainted Sun floor is 18 / 20 (V legacyFloor)",
-     "min_max_life": 100
+     "min_max_life": 200
     },
     {
      "id": "ancient_tunnels",
@@ -510,7 +510,7 @@
      "way_in": "walk",
      "via_wp": 44,
      "why": "entrance in the Lost City (SME mlvl 22-24, S: best density, caster 2 levels later)",
-     "min_max_life": 120
+     "min_max_life": 210
     },
     {
      "id": "arcane_sanctuary",
@@ -524,7 +524,7 @@
      "way_in": "waypoint",
      "via_wp": 74,
      "why": "after the Summoner's portal opens (SME mlvl 22-24, S: very dangerous below 23); waypoint only after the first visit (U)",
-     "min_max_life": 150
+     "min_max_life": 220
     },
     {
      "id": "tal_rasha_tombs",
@@ -544,7 +544,7 @@
      "way_in": "waypoint",
      "via_wp": 46,
      "why": "seven tombs from the Canyon waypoint; entry equals the Seven Tombs quest floor (V legacyFloor 24 melee, 26 caster); Duriel (73) is a quest slice of the journey, not a farm",
-     "min_max_life": 150
+     "min_max_life": 230
     }
    ]
   },
