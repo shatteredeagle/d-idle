@@ -49,6 +49,7 @@ func (r *Runner) runGoal(ctx context.Context, snap *d2.Snapshot, c control) bool
 		return true
 	}
 	r.noteHandInHold(snap, c)
+	r.boardResumeTick(snap)
 	if c.spec.kind == goals.Idle {
 		// An idle hero still serves the player's hand-in tap in town (it never reaches boardStep).
 		if r.boardServeHandIn(ctx, snap, c) {

@@ -774,6 +774,25 @@ func (p boardPlan) Plan(w task.World, s task.Session) task.Plan {
 	return pl
 }
 
+// boardResumeTick runs the pause policy (quests.resumeAfterDeaths) for every goal kind, at most every 10 s. It is called
+// before the goal branches: a level, farm, boss, idle or runs goal never reaches boardStep while the head run is parked,
+// and the page promises that the park lifts by itself (fable review 2 finding 3).
+func (r *Runner) boardResumeTick(snap *d2.Snapshot) {
+	if r.e.Tune.Quests.ResumeAfterDeaths == 0 || !r.questBoardOn() || snap == nil || snap.Player == nil {
+		return
+	}
+	rt := r.boardRTFor()
+	now := r.e.Clock.Now()
+	if rt == nil || now.Sub(rt.resumeAt) < 10*time.Second {
+		return
+	}
+	rt.resumeAt = now
+	rt.worldLoop()
+	if ref, ok := rt.exec.ResumeTick(r.questResumeInput(snap)); ok {
+		r.boardNote("resume "+questboard.ChunkKey(ref.Quest, ref.Chunk), "quest board: "+questboard.ChunkKey(ref.Quest, ref.Chunk)+" resumed by the pause policy")
+	}
+}
+
 // boardStep is one loop tick of a campaign goal with the board on.
 func (r *Runner) boardStep(ctx context.Context, snap *d2.Snapshot, c control) bool {
 	rt := r.qbRT()
@@ -784,12 +803,6 @@ func (r *Runner) boardStep(ctx context.Context, snap *d2.Snapshot, c control) bo
 	rt.worldLoop()
 	rt.exec.SetEnabled(true)
 	rt.exec.SetAutoOptions(r.questAutoOptions())
-	if now := r.e.Clock.Now(); r.e.Tune.Quests.ResumeAfterDeaths != 0 && now.Sub(rt.resumeAt) >= 10*time.Second {
-		rt.resumeAt = now
-		if ref, ok := rt.exec.ResumeTick(r.questResumeInput(snap)); ok {
-			r.boardNote("resume "+questboard.ChunkKey(ref.Quest, ref.Chunk), "quest board: "+questboard.ChunkKey(ref.Quest, ref.Chunk)+" resumed by the pause policy")
-		}
-	}
 	r.parkedBoard.Store(false)
 	if r.boardServeHandIn(ctx, snap, c) {
 		return true
