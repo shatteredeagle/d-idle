@@ -59,6 +59,7 @@
 | durieltyrael | proposed | - | `internal/questboard/`<br>`internal/task/` | - |
 | drilldrivers | proposed | - | `internal/combat/`<br>`tools/provingground/scenarios/combatdrills.json`<br>`tools/provingground/scenarios/necro.json` | - |
 | fix14 | proposed | - | `internal/admit/`<br>`internal/quest/objective.go`<br>`internal/bot/`<br>`internal/combat/`<br>`internal/vaultkeep/`<br>`internal/arbiter/`<br>`internal/town/` | - |
+| forkreq | proposed | - | `docs/design/fork-requests-2026-11-28.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
 | ghcrpublish | in-progress | - | `.github/workflows/tester-image.yml`<br>`docs/registry-publish.md`<br>`deploy/d2d-container/compose.friends.yml`<br>`docs/tester-registry.md`<br>`deploy/d2d-container/compose.tester.yml`<br>`deploy/d2d-container/context.sh`<br>`deploy/d2d-container/tester_image_test.go` | - |
@@ -201,6 +202,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- fa6164b87 11-28 05:49 `Merge agent/forkreq: forkreq: consolidated fork requests (docs)` (forkreq)
+- 8e574fdfb 11-28 05:47 `Merge branch 'main' into forkreq` (-)
 - 71b6531ce 11-28 05:43 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
 - 6e37fec73 11-28 05:11 `Merge agent/fix8b: fix8b: missing combat profile, mana need (TASK-1117)` (fix8b)
 - b2fe61651 11-28 05:10 `Merge branch 'main' into fix8b` (-)
@@ -209,6 +212,4 @@
 - 0e77448d3 11-28 04:54 `Merge origin/main into fix8b` (-)
 - 91cfd35cc 11-28 04:52 `Merge agent/labops2: lab night results 2026-11-28b: reruns and ledger verdicts (docs)` (labops2)
 - dc5419a81 11-28 04:52 `Merge agent/fix14: fix14: round-3 HIGH fixes: boss-level kit, fighter reselect, hole hold, merc journal (TASK-1131)` (fix14)
-- 0d31f7220 11-28 04:51 `Merge branch 'main' into labops2` (-)
-- 35d6e0b42 11-28 04:51 `Merge branch 'main' into fix14` (-)
 <!-- statusgen:end -->
