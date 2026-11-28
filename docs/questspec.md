@@ -10,6 +10,7 @@
 - Facts are `name(arg,...)`; `a|b` is a disjunction (as a post the first alternative is what the step produces, the rest is later evidence, so a durable fact can back a per-run one: `killed(x)|quest_state(q,cleared)`). `in_area` is transient and only for movement; a step whose posts are all `in_area` is `idempotent` and resumption skips it.
 - `data/questspec/caps/*.json` (`questcaps/2`, file name = backend): per backend the control `verbs` it answers, how a target can become `knowledge` (preset_list, preset_near = a row only within about 15 cells, room_rows), the fact `readers` (`tier`, `via` = the verb it needs, `volatile` = lost on restart, `note` starting `RCn:` ties it to a root cause), `item_match` and the executor's `progress_rules`.
 - `data/questspec/allow.json` (`questallow/1`): known gaps, each with owner and reason.
+- `data/questspec/pending.json` (`questpending/1`, card road5, roadmap row R13): every board quest that has NO chain yet, with the owning epic card and the reason. `TestShippedCoverage` fails when a board quest has neither a chain nor a pending row, when a row is stale (the quest got a chain), and when Act 1 or Act 2 loses a chain (V); `Coverage` returns the chained and pending quests per act. A quest leaves the list only by getting a chain. The reasons are S (copied from the epic pages), not lab reads.
 
 ## The checker (`internal/questspec`, `go test`, so the merge gate runs it)
 

@@ -1,0 +1,95 @@
+{
+ "schema": "questpending/1",
+ "pending": [
+  {
+   "quest": "arcane_sanctuary",
+   "owner": "epic-act2",
+   "why": "no chain written (U why it was left out of act2.json); the summoner chain covers the fight, its lab row is BLOCKED (S roadmap, card summonerstall)"
+  },
+  {
+   "quest": "lam_esen",
+   "owner": "epic-act3",
+   "why": "S docs/epics/epic-act3.md: `drill.act3.lam_esen` RED (Great Marsh and Flayer Jungle fights and timeouts); tome altar object class U"
+  },
+  {
+   "quest": "blade_old_religion",
+   "owner": "epic-act3",
+   "why": "S docs/epics/epic-act3.md: `drill.act3.blade` RED and `drill.act3s.blade` RED (reward word not set); the Gidbinn altar object class is U"
+  },
+  {
+   "quest": "golden_bird",
+   "owner": "epic-act3",
+   "why": "S docs/epics/epic-act3.md: `drill.act3.golden_bird` BLOCKED (chunk parked by the board); the figurine drops from a random unique (S player knowledge), `discover` rule U"
+  },
+  {
+   "quest": "blackened_temple",
+   "owner": "epic-act3",
+   "why": "S docs/epics/epic-act3.md: giver and reward U on the board; the council fight has no GREEN drill"
+  },
+  {
+   "quest": "khalims_will",
+   "owner": "epic-act3",
+   "why": "S docs/epics/epic-act3.md: five chunks over four task groups; eye, brain and heart chest classes U; no GREEN drill for the orb"
+  },
+  {
+   "quest": "guardian",
+   "owner": "epic-act3",
+   "why": "S docs/epics/epic-act3.md: `step.act3.guardian.mephisto.*` RED (travel to Durance 2 and 3)"
+  },
+  {
+   "quest": "act3_done",
+   "owner": "epic-act3",
+   "why": "S docs/epics/epic-act3.md: the red portal object after Mephisto has no step verdict; needs the guardian chain first"
+  },
+  {
+   "quest": "izual",
+   "owner": "epic-act4",
+   "why": "S docs/epics/epic-act4.md: `drill.act4.izual` RED (reward bit not set, word 0x000c)"
+  },
+  {
+   "quest": "hellforge",
+   "owner": "epic-act4",
+   "why": "S docs/epics/epic-act4.md: `drill.act4.hellforge` RED: no travel or Hammer step ran; forge and soulstone object classes U"
+  },
+  {
+   "quest": "terrors_end",
+   "owner": "epic-act4",
+   "why": "S docs/epics/epic-act4.md: the seals chunk is `unsupported` on the board (no durable evidence of seal progress); River of Flame and Chaos Sanctuary travel RED"
+  },
+  {
+   "quest": "act4_done",
+   "owner": "epic-act4",
+   "why": "S docs/epics/epic-act4.md: needs the terrors_end chain first; the Tyrael portal talk has no step verdict"
+  },
+  {
+   "quest": "siege_harrogath",
+   "owner": "epic-act5",
+   "why": "S docs/epics/epic-act5.md: `drill.act5.siege` RED: the hero leaves Harrogath through the gate and the reward bit is not set; gate and Bloody Foothills nav card open"
+  },
+  {
+   "quest": "rescue_arreat",
+   "owner": "epic-act5",
+   "why": "S docs/epics/epic-act5.md: no drill verdict for the three cages; quest words of Acts 3 to 5 are not observable in the lab (matrix note 6)"
+  },
+  {
+   "quest": "prison_of_ice",
+   "owner": "epic-act5",
+   "why": "S docs/epics/epic-act5.md: `drill.act5.prison` RED (reward bit not set); five chunks, two of them hand-in only"
+  },
+  {
+   "quest": "betrayal_harrogath",
+   "owner": "epic-act5",
+   "why": "S docs/epics/epic-act5.md: `drill.act5.betrayal` RED; the Nihlathak portal object (class 60) is not found"
+  },
+  {
+   "quest": "rite_of_passage",
+   "owner": "epic-act5",
+   "why": "S docs/epics/epic-act5.md: `drill.act5.ancients` BLOCKED: statues in view, the fight never starts"
+  },
+  {
+   "quest": "eve_of_destruction",
+   "owner": "epic-act5",
+   "why": "S docs/epics/epic-act5.md: `drill.act5.baal` RED; the throne waves have no step verdict"
+  }
+ ]
+}
