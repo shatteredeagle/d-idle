@@ -277,3 +277,25 @@ func TestTalkRowLooksForAFieldNPC(t *testing.T) {
 		}
 	}
 }
+
+// TASK-1126 (lab 2026-11-28, drill.act2.duriel.stepexec 0 of 10): on d2d Tyrael stands behind "tyrael's door" (object
+// 153), which the fork never opens, so the level walk ends without him. The row must say so (npc_out_of_reach, a text the
+// board counts as one try per minute) instead of sending the town walker after a unit that is not there. Must fail
+// without the report in Approach: the talk is tried and the error is the town adapter's.
+func TestTalkRowSaysWhenTheFieldNPCIsOutOfReach(t *testing.T) {
+	const lair = 73
+	for _, cl := range execClasses {
+		a, cw := chunkRig(t, cl)
+		cw.setWord(task.QDuriel, task.StageCleared, 0x0020)
+		cw.g.w.set(func(w *world) { w.area = lair })
+		explores := 0
+		cw.g.mover.exploreFn = func(context.Context, func() bool) error { explores++; return nil }
+		err := a.Talk(context.Background(), task.NPCTyrael, "reward")
+		if err == nil || !strings.Contains(err.Error(), npcOutOfReach) || task.Classify(err) != task.KindNotFound {
+			t.Fatalf("class %v: err %v (kind %v), want %s as not found", cl, err, task.Classify(err), npcOutOfReach)
+		}
+		if explores == 0 || len(cw.talks) != 0 {
+			t.Fatalf("class %v: explores %d talks %v, want a walk and no talk", cl, explores, cw.talks)
+		}
+	}
+}
