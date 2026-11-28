@@ -977,8 +977,14 @@ func (f *Fighter) SetProfileErr(err error) {
 	f.planErr.Store(&err)
 }
 
-// refuseNoProfile is the error Clear and Kill return instead of fighting on a guess.
+// refuseNoProfile is the error Clear and Kill return instead of fighting on a guess. A selection error alone is tried
+// again on the snapshot of now first: the caller may not be the runner whose tick clears it (review 14 H5).
 func (f *Fighter) refuseNoProfile() error {
+	if f.selErr.Load() != nil && f.planErr.Load() == nil && f.snapFn != nil {
+		if s, err := f.snapFn(); err == nil && s != nil && s.Player != nil {
+			f.profileFor(s.Player)
+		}
+	}
 	if err := f.ProfileErr(); err != nil {
 		return fmt.Errorf("combat: not fighting without a combat profile: %w", err)
 	}

@@ -188,3 +188,22 @@ func TestOtherGameEntriesCountAsSavePoints(t *testing.T) {
 		t.Fatalf("%v %q", ok, why)
 	}
 }
+
+// A full disk turns the planned save point off: the game writes the character file in place and a save without
+// space can truncate it (incident 2026-11-28). Same rule for every build.
+func TestSavePointRefusedOnLowDisk(t *testing.T) {
+	late := func(g *rig) time.Time { return g.clock.Now().Add(time.Hour) }
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		g, c := spRig(t)
+		g.w.set(func(w *world) { w.class = class })
+		low := true
+		g.r.d.DiskLow = func() bool { return low }
+		if ok, why := g.r.savePointDue(spSnap(g), c, late(g)); ok || why != "disk low" {
+			t.Fatalf("class %v: ok=%t why=%q", class, ok, why)
+		}
+		low = false
+		if ok, why := g.r.savePointDue(spSnap(g), c, late(g)); !ok {
+			t.Fatalf("class %v: space is back, still refused: %s", class, why)
+		}
+	}
+}

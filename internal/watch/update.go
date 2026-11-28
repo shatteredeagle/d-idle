@@ -7,7 +7,6 @@ import (
 	"errors"
 	"io"
 	"net/http"
-	"strconv"
 	"strings"
 
 	"d2lod-bot/internal/selfupdate"
@@ -158,25 +157,7 @@ func UpdateAnswerHandler(u Updater, o AnswerOptions) http.Handler {
 
 // withUpdateBanner adds the update script to the screens' HTML without touching the pages themselves.
 func withUpdateBanner(next http.Handler) http.Handler {
-	const tag = `<script src="/watch/sheet.js"></script><script src="/watch/update.js"></script>`
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodGet || !strings.HasPrefix(r.URL.Path, "/watch") || strings.Contains(r.URL.Path[1:], ".") {
-			next.ServeHTTP(w, r)
-			return
-		}
-		rec := &bufWriter{h: http.Header{}, code: 200}
-		next.ServeHTTP(rec, r)
-		body := rec.buf.Bytes()
-		if strings.HasPrefix(rec.h.Get("Content-Type"), "text/html") && bytes.Contains(body, []byte("</body>")) {
-			body = bytes.Replace(body, []byte("</body>"), []byte(tag+"</body>"), 1)
-		}
-		for k, v := range rec.h {
-			w.Header()[k] = v
-		}
-		w.Header().Set("Content-Length", strconv.Itoa(len(body)))
-		w.WriteHeader(rec.code)
-		w.Write(body)
-	})
+	return withScriptTag(next, `<script src="/watch/sheet.js"></script><script src="/watch/update.js"></script>`)
 }
 
 type bufWriter struct {

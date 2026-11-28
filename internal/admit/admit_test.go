@@ -261,3 +261,38 @@ func TestAct2QuestDungeonRoadsAndArrival(t *testing.T) {
 		t.Error("an open field has an arrival row")
 	}
 }
+
+// Review 14 H3: the on-road kit skip does not reach the boss or chest level of the road (Radament 49, Halls of the
+// Dead 3, Fangskin 61, Coldworm 64). The levels come from the quest handler rows, not from a list here.
+func TestOnRoadKitSkipStopsAtTheObjectiveLevel(t *testing.T) {
+	rs, err := Load()
+	if err != nil {
+		t.Fatal(err)
+	}
+	rs.KitFloor.PotionsBelow = 0 // the road rows alone (the general kit floor has its own tests)
+	for _, c := range []struct{ from, boss int }{{48, 49}, {57, 60}, {58, 61}, {63, 64}} {
+		for _, arch := range []string{"melee", "caster"} {
+			v := View{Archetype: arch, Normal: true, Level: 40, Life: 900, MaxLife: 900, Area: c.from, Healing: 0, HasTP: true}
+			if got := rs.MayEnter(v, c.boss, Boss); !got.Refused || got.Need != NeedPotions || !got.KitOnly {
+				t.Errorf("%s %d->%d potionless with a portal: %+v, want a kit-only refusal", arch, c.from, c.boss, got)
+			}
+			v.HasTP = false
+			if got := rs.MayEnter(v, c.boss, Boss); !got.Refused || got.KitOnly {
+				t.Errorf("%s %d->%d potionless without a portal: %+v, want a hold (no trip)", arch, c.from, c.boss, got)
+			}
+			v.Healing = 2 // the lab case of 2026-11-28 stays open: potions in hand, no portal
+			if got := rs.MayEnter(v, c.boss, Boss); got.Refused {
+				t.Errorf("%s %d->%d with potions, no portal: %+v, want allow", arch, c.from, c.boss, got)
+			}
+			v.Healing, v.Area = 0, c.boss // already inside: the trip rules decide
+			if got := rs.MayEnter(v, c.boss, Boss); got.Refused {
+				t.Errorf("%s standing in %d: %+v, want allow", arch, c.boss, got)
+			}
+		}
+	}
+	// an approach level of the same road is still entered with a thinned kit
+	v := View{Archetype: "melee", Normal: true, Level: 40, Life: 900, MaxLife: 900, Area: 62, Healing: 0}
+	if got := rs.MayEnter(v, 63, Boss); got.Refused {
+		t.Errorf("62->63 on the road: %+v, want allow", got)
+	}
+}

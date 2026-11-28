@@ -149,7 +149,8 @@ type change struct {
 }
 
 type backoff struct {
-	n     int
+	n     int // failures after cost
+	nd    int // declines (the hook had nothing to do): counted apart, so they never lengthen a failure's back-off
 	until float64
 }
 
@@ -201,7 +202,7 @@ func (a *Arbiter) Report(in Intent, now float64, ok bool) {
 		}
 		return
 	}
-	a.fail(in, now, a.cfg.BackoffMax)
+	a.fail(in, now, a.cfg.BackoffMax, false)
 }
 
 // DeclineMax caps the back-off of a declined intent: a hook that found nothing to do cost nothing, so it is asked
@@ -212,10 +213,12 @@ const DeclineMax = 120
 // Decline tells the arbiter that the chosen intent's hook had nothing to do. It backs off like a failure, capped at
 // DeclineMax.
 func (a *Arbiter) Decline(in Intent, now float64) {
-	a.fail(in, now, min(DeclineMax, a.cfg.BackoffMax))
+	a.fail(in, now, min(DeclineMax, a.cfg.BackoffMax), true)
 }
 
-func (a *Arbiter) fail(in Intent, now, most float64) {
+// fail backs the intent off, doubling per earlier event of the same sort: declines and failures have a counter each
+// (review 14 M1: one failure after a row of declines landed on BackoffMax).
+func (a *Arbiter) fail(in Intent, now, most float64, decline bool) {
 	if !in.backsOff() {
 		return
 	}
@@ -226,13 +229,17 @@ func (a *Arbiter) fail(in Intent, now, most float64) {
 		a.fails[bk] = b
 	}
 	d := a.cfg.BackoffBase
-	for i := 0; i < b.n && d < most; i++ {
+	n := &b.n
+	if decline {
+		n = &b.nd
+	}
+	for i := 0; i < *n && d < most; i++ {
 		d *= 2
 	}
 	if d > most {
 		d = most
 	}
-	b.n++
+	*n++
 	b.until = now + d
 	if a.cur != nil && a.cur.in.Key() == k {
 		a.cur = nil
@@ -349,7 +356,7 @@ func (a *Arbiter) refuse(in Intent, v View) string {
 		return ""
 	}
 	if b := a.fails[in.backoffKey()]; in.backsOff() && b != nil && v.Now < b.until {
-		return fmt.Sprintf("backed off %.0fs more after %d failure(s)", b.until-v.Now, b.n)
+		return fmt.Sprintf("backed off %.0fs more after %d failure(s)", b.until-v.Now, b.n+b.nd)
 	}
 	if in.NeedsArea == Any || in.NeedsArea == v.Area || a.last == nil {
 		return ""

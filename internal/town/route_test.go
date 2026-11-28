@@ -3,6 +3,7 @@ package town
 import (
 	"maps"
 	"math"
+	"math/rand/v2"
 	"slices"
 	"testing"
 
@@ -193,6 +194,50 @@ func TestRouteKeepsListOnlyWhenNoStopHasAPreset(t *testing.T) {
 		got := reinsertChores(routeOrder(routed, edges, pos, input.Point{X: 1, Y: 1}).Order, unplaced, edges)
 		if len(got) != len(names) || !satisfies(got, edges) {
 			t.Errorf("%s: order %v drops a chore or breaks a rule", build, got)
+		}
+	}
+}
+
+// Review 14 M5: a chore left out of the route comes back before every chore it must precede. Property over random edge
+// sets (no cycle: edges run forward in a random base order), random positions and random left-out sets: for every edge
+// (x, y) with both present, x comes first. Before closeEdges: with a -> m -> b and b cheaper first, m landed after b.
+func TestReinsertedChoreRespectsEveryEdge(t *testing.T) {
+	rng := rand.New(rand.NewPCG(14, 5))
+	all := slices.Sorted(maps.Keys(choreRole))
+	for round := 0; round < 400; round++ {
+		names := slices.Clone(all)
+		rng.Shuffle(len(names), func(i, j int) { names[i], names[j] = names[j], names[i] })
+		names = names[:4+rng.IntN(6)]
+		var edges [][2]string
+		for i := range names {
+			for j := i + 1; j < len(names); j++ {
+				if rng.IntN(4) == 0 {
+					edges = append(edges, [2]string{names[i], names[j]})
+				}
+			}
+		}
+		pos := map[string]input.Point{}
+		for _, r := range []string{"shop", "cain", "repair", "stash"} {
+			pos[r] = input.Point{X: 1 + rng.IntN(60), Y: 1 + rng.IntN(60)}
+		}
+		var routed, left []string
+		for _, nm := range names {
+			if rng.IntN(3) == 0 {
+				left = append(left, nm)
+			} else {
+				routed = append(routed, nm)
+			}
+		}
+		closed := closeEdges(edges)
+		res := routeOrderWith(routed, closed, pos, input.Point{}, defaultRouteCosts)
+		got := reinsertChores(res.Order, left, closed)
+		if len(got) != len(names) {
+			t.Fatalf("round %d: order %v lost a chore of %v", round, got, names)
+		}
+		for _, e := range edges {
+			if slices.Index(got, e[0]) > slices.Index(got, e[1]) {
+				t.Fatalf("round %d: %s must come before %s: order %v (left out %v, edges %v)", round, e[0], e[1], got, left, edges)
+			}
 		}
 	}
 }
