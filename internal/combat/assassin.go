@@ -71,7 +71,7 @@ func (f *Fighter) assassinTick(ctx context.Context, snap *d2.Snapshot) (bool, er
 		corpses = Corpses(snap, f.cat, me, 30, f.takenCorpses(snap.Player.Area)) // the corpse reservation is shared (aimcorpse.go)
 	}
 	ready := func(sp SkillSpec) bool { return sp.Key != "" || p.RightSkill == sp.ID }
-	pl, ok := planTrap(me, known, p.Mana, hs, corpses, standing, f.trap.pending(now), f.cat, ready)
+	pl, ok := planTrap(f.profileFor(p).Traps, me, known, p.Mana, hs, corpses, standing, f.trap.pending(now), f.cat, ready)
 	if !ok {
 		return false, nil
 	}

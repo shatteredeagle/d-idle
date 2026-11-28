@@ -17,7 +17,7 @@ func TestPlanForClassJoinsCombatAndLeveler(t *testing.T) {
 		build   combat.Build
 		lv      string
 	}{
-		{d2.Paladin, "", "paladin", combat.BuildBlizzard, "paladin-normal30"},
+		{d2.Paladin, "", "paladin", "paladin", "paladin-normal30"}, // the table names the class default profile (review 8 fix 4)
 		{d2.Sorceress, "", "sorceress/lightning", combat.BuildLightning, "fallback"},
 		{d2.Sorceress, "primary", "sorceress/blizzard", combat.BuildBlizzard, "primary"},
 	}

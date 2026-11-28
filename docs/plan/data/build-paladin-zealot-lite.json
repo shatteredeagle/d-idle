@@ -2,6 +2,7 @@
  "build": "paladin_zealot_lite",
  "selector": "paladin-zealot-lite",
  "class": "paladin",
+ "combat": "paladin",
  "schema": "per-clvl allocation, same shape as build-paladin-normal30-v2.json. selector: the name `--build` and config levelerBuild use (a data table needs no Go entry, leveler.registerDataTables). Optional metadata: endgame_for, default_for_class (a class name; only fill a class that has none). A skill entry may carry quest: <data/quest-points.json id>; it is paid by a quest bonus point, not a level point.",
  "note": "PALZEAL/PALSME: the Zealot-lite table of docs/research/paladin-act1-recon.md section 3.2 (U), revised by the SME review (docs/palsme.md) and the palzeal D2 expert review (2026-11-27): Might, Sacrifice (Zeal prerequisite), Might at clvl 4, Prayer 1 at clvl 5 (a resting aura only), Zeal 5 at clvl 12 to 16, Holy Fire 2 (Might is its prerequisite), Might 10 by clvl 18; rows 20 to 30 are the v2 rows. Opt-in by name only, never a default. Rows count level points only: an entry with a quest key (den_of_evil on row 5, radament on row 16) is bought with that quest's bonus point as soon as the point is granted, and is skipped while the character has no quest point (leveler Plan, Have.QuestPts).",
  "respec": {

@@ -168,7 +168,11 @@ func state(e *env.Env, f *combat.Fighter) {
 	fmt.Printf("player %s class %v lvl %d area %d pos (%d,%d) mode %d life %d/%d mana %d/%d left %d right %d activeAura %d (readable=%v)\n",
 		p.Name, p.Class, p.Level, p.Area, p.X, p.Y, p.Mode, p.Life, p.MaxLife, p.Mana, p.MaxMana, p.LeftSkill, p.RightSkill, aura, ok)
 	cat := combat.NewCatalog(e.Data)
-	pr := combat.SelectProfile(p, cat, f.Build)
+	pr, err := combat.SelectProfile(p, cat, f.Build)
+	if err != nil {
+		fmt.Println("no combat profile:", err)
+		return
+	}
 	fmt.Println("profile:", pr.Class, "melee:", pr.MeleeClass(), "attack:", pr.AttackNames(p.Level, func(string) bool { return true }))
 	fmt.Println("hotkeys:", f.Hotkeys(), "exp", p.Exp)
 	var on []int

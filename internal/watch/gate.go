@@ -60,6 +60,8 @@ func (a *Access) viewGate(token string, next http.Handler) http.Handler {
 			return
 		}
 		if c, err := r.Cookie(access.SessionCookie); err == nil && rec.SessionOK(c.Value) {
+			w.Header().Set("Referrer-Policy", "no-referrer")
+			w.Header().Set("Cache-Control", "no-store") // default, as in tokenGate
 			next.ServeHTTP(w, r)
 			return
 		}

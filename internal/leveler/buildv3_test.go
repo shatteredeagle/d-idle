@@ -1,6 +1,11 @@
 package leveler
 
-import "testing"
+import (
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+)
 
 // v3Req is reqlevel and required skills of the Sorceress skills a lightning table uses (Skills.txt, copied from
 // tools/emu/sk_pass_plan.py, V by sk_pass_tbl.py on the patched 1.14d tables). A table test must not need the game data.
@@ -152,8 +157,21 @@ func TestBuildV3IsOptIn(t *testing.T) {
 			t.Errorf("%s declares combat %q", n, TableCombat(n))
 		}
 	}
-	if TableCombat("fallback") != "" || TableCombat("primary") != "" {
-		t.Errorf("tables without a combat key must report none")
+	// review 8 fix 4: every table carries the key, the legacy ones too
+	if TableCombat("fallback") != "lightning" || TableCombat("primary") != "blizzard" {
+		t.Errorf("legacy tables: fallback %q primary %q", TableCombat("fallback"), TableCombat("primary"))
+	}
+	for n := range buildFiles {
+		if bd, err := LoadBuild(n, ""); err != nil || bd.Combat == "" || bd.Class == "" {
+			t.Errorf("table %s: %v (every table needs a class and a combat key)", n, err)
+		}
+	}
+	dir := t.TempDir()
+	if err := os.WriteFile(filepath.Join(dir, buildFiles["primary"]), []byte(`{"build":"x","class":"sorceress","rows":[{"clvl":2}]}`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := LoadBuild("primary", dir); err == nil || !strings.Contains(err.Error(), "combat") {
+		t.Errorf("a table without a combat key loaded: %v", err)
 	}
 }
 
