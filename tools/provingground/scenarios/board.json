@@ -533,10 +533,10 @@
      "quests.boardSM": 1,
      "resource.pointsDecisions": 1
     },
-    "restart_at_s": 150
+    "restart_at_s": 240
    },
    "budget": {
-    "virtual_min": 60
+    "virtual_min": 90
    },
    "matrix": {
     "classes": [
@@ -549,7 +549,7 @@
     ]
    },
    "provenance": "Hero created fresh, clvl 17 by stat verbs, purse 5000, waypoints Cold Plains to Dark Wood, board records as the scenario says. CHEATED: waypoints and level are SETUP writes (mechanics evidence only, never balance).",
-   "notes": "labops2 2026-11-28, second change: the chain is accepted in the setup (pre.board scroll, board_also read, as stop-cascades does) instead of a start tap at 20 wall seconds. With the tap the levelling plan had already walked the Paladin into the Forgotten Tower and the chunk parked gave_up in one second (seeds 11 and 3, card boardsidestart TASK-1120); from the setup the chunk starts about 4 s after the bot, in town. labops2 2026-11-28: restart_at_s 150 and budget 60 (was 300 and 30: the 30 virtual minutes ended after about 150 WALL seconds for the Paladin, so the restart came after the budget; the scroll was read at 92 wall seconds). The assertion counts chunk starts, not step lines (a failed tree click logs the step again in the same process, V Paladin 11 log). U: a hero that has not finished the chunk at the restart starts it again and reads RED (Sorceress 3 in the lab night, out of mana): that is a setup fault, not a finding. trigger.restart_at_s: the bot is stopped (SIGTERM, save and quit) and started again on the same hero and plan file; the first leg must have taken the scroll (U: timing, tune restart_at_s).",
+   "notes": "labops2 2026-11-28, third change: restart_at_s 240 and budget 90 (were 150 and 60). The banked Sorceress has no mana and needs 145 to 150+ wall seconds for the scroll on a loaded host: GREEN at 02:07 (read awaited at 145 s), RED at 02:38 (not taken at 150 s, so the restart resumed the chunk, which is correct bot behaviour and a setup miss). labops2 2026-11-28, second change: the chain is accepted in the setup (pre.board scroll, board_also read, as stop-cascades does) instead of a start tap at 20 wall seconds. With the tap the levelling plan had already walked the Paladin into the Forgotten Tower and the chunk parked gave_up in one second (seeds 11 and 3, card boardsidestart TASK-1120); from the setup the chunk starts about 4 s after the bot, in town. labops2 2026-11-28: restart_at_s 150 and budget 60 (was 300 and 30: the 30 virtual minutes ended after about 150 WALL seconds for the Paladin, so the restart came after the budget; the scroll was read at 92 wall seconds). The assertion counts chunk starts, not step lines (a failed tree click logs the step again in the same process, V Paladin 11 log). U: a hero that has not finished the chunk at the restart starts it again and reads RED (Sorceress 3 in the lab night, out of mana): that is a setup fault, not a finding. trigger.restart_at_s: the bot is stopped (SIGTERM, save and quit) and started again on the same hero and plan file; the first leg must have taken the scroll (U: timing, tune restart_at_s).",
    "assert": [
     {
      "kind": "log_line",

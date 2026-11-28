@@ -143,6 +143,36 @@ Bot: main `702b6cfd5` (nf1) for the rows started before 02:12, main `41fb5b723` 
 | combat.corpse-explodes (nf1b) | Necromancer 11 | RED | same | a, U | Corpse Explosion bound right, the Clay Golem of the setup stands (`combat minion skill=Clay Golem`), kills by Attack 69 and Teeth 13, no `combat corpse-explosion` line; TASK-1127; `20261128-022322` |
 | necro.corpse-ce1, ce5 (nf1b) | Necromancer 11, 12, 13 | RED x6 | was `minions 0`, now `minions 1` | a, U | the one minion is the setup's golem; Raise Skeleton has 8 points and is never cast (casts: Teeth 28 to 31, Amplify Damage 2, Bone Armor 1, Clay Golem 1) with 85 corpses made; TASK-1127; `20261128-022352`, `-022436`, `-022528` |
 
+## Batch 4 table (02:24 to 02:50 EST)
+
+Bot: main `28216bd08` (fix1 to fix3, fix6 to fix8, nf1, nf1b, nf2, nf3, nf4; V `bot_commit` `5a431443e` or `3a674388b`, both merges of that main).
+
+| scenario | class/seed | result | vs earlier | class | evidence (V unless tagged), run dir |
+|---|---|---|---|---|---|
+| cain.chain with `bot.portalRetryWaitSec` (0) | Paladin 11 | GREEN | was BLOCKED (busy loop, 2108 s wall) | - | nf2 works in the lab: 552 s wall, 23590 log lines (was 2.7 million), `virtual run length reached`, end word 0x2019, 2 x `cancelled, nothing clicked`, 0 x `portal retry`: the chain passes without the retry; `20261128-023323` |
+| town.plan.one-visit (`town.plan` 5, nf4) | Paladin 11, Sorceress 3 | RED, RED | same status, new cause | c, U | nf4 removed the old cause; now every stop lacks a position: `town plan: route leaves out chore shop (no preset position for shop)`, the same for stash, repair, bank, withdraw, then `route kept the list (no stop of this visit has a preset position)`, 6 visits. So the lab hero's town has no preset positions at all for the route (U: the lab d2d does not serve them, or the bot does not read them in this start); `20261128-022421`, `-022808` |
+| town.plan.short-gold-handover (`town.plan` 5) | Paladin 11, Sorceress 3 | GREEN, GREEN | GREEN | - | third and fourth green; same dirs |
+| town.plan.gold-short-priorities | both | PENDING | was RED (d) | d | nf4 marked it pending for card town7 |
+| town.plan.malus-errand-gold (`town.plan` 4, nf4) | Paladin 11 | RED | same | c | `tools_of_the_trade/malus: refused (route_closed): ... route guard (life 180 needed for the underground_passage road (max life 55))`, parked after 3 tries: the setup hero is too weak for the road, as the nf4 card result says; `20261128-023115` |
+| drill.act2.summoner.stepexec (full build) | Paladin 11 | BLOCKED | no busy loop any more | a | nf2 and nf3 hold (0 `roam: done` loops, no watchdog). What is left: `step touch_journal: 2 tries used: interact done, but post [quest_state(summoner,done)] not observed after 4 looks`, `town: area -1 not reached within 15s`, `quest.summoner/home ran but is still needed`, park, campaign stall, exit after 147 s wall. TASK-1104 stays open on the journal credit; `20261128-024236` |
+| board.retry.runs-a-step | Paladin 11, Sorceress 3 | RED, RED | not run before | b, U | `^quest board: step` wanted after virtual minute 3, all step lines fall before it (the chunk is over in the first minutes); `20261128-022643`, `-022313` |
+| board.stale-accept-unblocks, board.view.reason-always | Paladin 11 (rerun), Sorceress 3 | GREEN x4 | Paladin BLOCKED by the operator's merge | - | same dirs |
+| board.handin.field-tap, board.handin.without-run, board.hold.broke | Sorceress 3 | GREEN x3 | not run before | - | `20261128-022313` |
+| board.hold.restock | Sorceress 3 | RED | as Paladin | b, U | no `hold needs_potions` line |
+| board.hold.restock-stash-gold | Sorceress 3 | RED | Paladin RED on the stash count | U | `parked forgotten_tower/countess ... gave up after 3 tries` twice (the caster's mana potion guard, as in the park drill) |
+| board.sm.restart-mid-chain, board.sm.stop-cascades (confirm on the final main) | Paladin 11 | GREEN, GREEN | GREEN | - | `20261128-023336` |
+| board.sm.stop-cascades (confirm) | Sorceress 3 | GREEN | GREEN | - | `20261128-023818` |
+| board.sm.restart-mid-chain (confirm, restart at 150 s) | Sorceress 3 | RED | GREEN at 02:07 | c | the scroll was not taken at 150 wall seconds (1095 x `out of mana`), the restart resumed the chunk and finished it 60 s later; the 02:07 green had made it with 5 s to spare. The drill is marginal for the banked Sorceress; restart moved to 240 s in a 90 min budget, 3 repetitions per class in batch 5 |
+| combat.point-spell-hits, combat.point-spell-hits.druid | Sorceress 11, Druid 11 | GREEN, GREEN | first run | - | `20261128-023932`, `-024007` |
+| combat.hammer-in-pack and control | Paladin 11 | BLOCKED x2 | first run | c | setup: `build paladin_hammerdin_guide at clvl 24: main attack Blessed Hammer gets no point from the plan (banked: 0 skill points)`; `20261128-023920` |
+| combat.traps-stand | Assassin 11 | RED | first run | a, U | 28 casts of Fire Trauma, no `combat trap` line; TASK-1127; `20261128-024044` |
+| combat.army-holds.control | Necromancer 11 | GREEN | first run | - | `20261128-024117` |
+| combat.army-holds, combat.pets-hold | Necromancer 11, Druid 11 | RED, RED | first run | b, U | the stance works (`combat stance summary kind=behindArmy casts=12 in_place=9`); only `^combat minion` is missing, and these scenarios do not set `combat.minionRead` (U whether the line needs it); `20261128-024117`, `-024158` |
+| necro.upkeep-pack | Necromancer 11 | GREEN | not run in the first night | - | golem and skeletons raised, minions standing, with `combat.minionRead` (1); `20261128-024225` |
+| necro.revive-after-death | Necromancer 11 | RED | first run | U | 5 minions stand (Raise Skeleton 3, Skeletal Mage 1, golem 1), no Revive cast; the run lasted 9 wall seconds; same dir |
+| act1.wp.dark-wood, act1.wp.dark-wood.layout | Paladin 11 | GREEN, GREEN | first run | - | the waypoint step ran with and without `quests.layoutRead`; `20261128-024251` |
+| act1.wp.dark-wood, act1.wp.dark-wood.layout | Sorceress 3 | RED, RED | first run | c | both arms: `refused (route_closed): area not allowed now: Dark Wood (5): route guard`, 735 x `out of mana`: the banked Sorceress is refused by the road guard; `20261128-024405` |
+
 ## Batch 2 and later
 
 See the sections below; they are appended as the runs finish.
