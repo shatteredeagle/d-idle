@@ -355,6 +355,7 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 	runner, err := bot.New(e, deps, cfg)
 	if err == nil {
 		ref.p.Store(runner)
+		be.Proc.LeaveWhy = runner.LeaveReason
 		wireGoldFarm(ref, runner)
 		wireQuestBoard(ip.State(), ref, runner, log.Info)
 		wirePoints(ip.State(), charName, ref, runner, e, be.Client, db, pverbs)

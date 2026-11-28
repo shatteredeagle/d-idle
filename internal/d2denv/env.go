@@ -107,6 +107,7 @@ func Build(ctx context.Context, cfg Config) (*Backend, error) {
 	}
 	p.OnInGame = ctl.ResetRun
 	p.Logf = func(f string, a ...any) { cfg.Log.Warn(sprintf(f, a...)) }
+	p.InfoLogf = func(f string, a ...any) { cfg.Log.Info(sprintf(f, a...)) }
 	go traceLoop(ctx, c, clk, cfg.Log)
 	openJournal(c, cfg.Log)
 	e := &env.Env{ID: cfg.ID, Log: cfg.Log, Mem: noMem{}, Read: rd, In: ctl, Data: cfg.Data, Tune: cfg.Tune, Clock: clk}

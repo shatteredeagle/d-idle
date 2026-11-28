@@ -148,7 +148,14 @@ class Sandbox:
 
     def status(self):
         """The decision-ring view (`ops status --why`); its `invariants` list has the counters."""
-        return json.loads(self._x(["docker", "exec", self.instance, self.bin, "ops", "status", "--why"], timeout=30))
+        out = self._x(["docker", "exec", self.instance, self.bin, "ops", "status", "--why"], timeout=30)
+        # `ops status --why` prints the JSON view first and may append human lines after it ("waiting for Start: ...",
+        # "auto-start held back: ..."): read the first JSON document only.
+        start = out.find("{")
+        if start < 0:
+            raise FlipError("ops status --why printed no JSON view")
+        view, _ = json.JSONDecoder().raw_decode(out[start:])
+        return view
 
 
 def hard_counts(view):
