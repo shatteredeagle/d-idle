@@ -19,6 +19,7 @@ owns:
   - "internal/bot/questboard.go"
 exclusive: []
 contracts: []
+result: "Board side: a failure whose text is nav's 'no exit to that level' (or npc_out_of_reach, or a no-path refusal as before) repeated inside one minute is one try, also when the task layer prefixes its third report; three such tries a minute apart still park gave_up. The town fallback of box 1 is already on main since the lab run (live1 L1/L3: the repeat of a failed quest travel leg leaves by town portal; the lab bot f30206f0d predates it). Not build-specific. Unit test for both board classes, shown to fail without the change. Not verified live or on the lab (box 3)."
 ---
 
 ## Description
@@ -31,7 +32,7 @@ board.sm.restart-mid-chain Paladin 11 (lab rerun 2026-11-28, bot f30206f0d, run 
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 A chunk whose travel step fails with 'nav: no exit to that level' falls back to town (portal or waypoint) or waits and retries on a later tick, instead of three tries inside one second
-- [ ] #2 Unit test: hero in a level with 0 adjacent entries at chunk start, two classes, the chunk is not parked gave_up
+- [x] #1 A chunk whose travel step fails with 'nav: no exit to that level' falls back to town (portal or waypoint) or waits and retries on a later tick, instead of three tries inside one second
+- [x] #2 Unit test: hero in a level with 0 adjacent entries at chunk start, two classes, the chunk is not parked gave_up
 - [ ] #3 board.sm.restart-mid-chain GREEN for Paladin 11 after the fix (lab run)
 <!-- AC:END -->
