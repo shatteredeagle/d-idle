@@ -68,7 +68,9 @@
     "necromancer": {"bands": {"mana": [30, 60]}},
     "paladin":   {"bands": {"mana": [15, 40]}},
     "druid":     {"bands": {"mana": [20, 60]}},
-    "barbarian": {"bands": {"mana": [10, 30]}}
+    "barbarian": {"bands": {"mana": [10, 30]}},
+    "amazon":    {"bands": {"mana": [25, 50]}},
+    "assassin":  {"bands": {"mana": [30, 60]}}
   },
   "urgency": {
     "stage": 1,

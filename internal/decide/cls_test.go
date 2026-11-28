@@ -54,8 +54,8 @@ func TestShippedTablesKnowDruidAndBarbarian(t *testing.T) {
 		if len(o.ClassKnobs) == 0 {
 			continue
 		}
-		if _, err := o.KnobsFor("amazon"); err == nil {
-			t.Errorf("stance %s: amazon has no rows and got knobs", o.ID)
+		if _, err := o.KnobsFor("mystic"); err == nil {
+			t.Errorf("stance %s: mystic has no rows and got knobs", o.ID)
 		}
 	}
 }

@@ -19,6 +19,10 @@ act1.wp.dark-wood.layout	Paladin	17	80	16	-	-	0	9a9108f55e0f
 act1.wp.dark-wood.layout	Sorceress	17	80	16	-	-	0	ead1583877f5
 agency.plan-matches-profile	Paladin	18	85	17	-	-	0	f1ea2e6af08a
 agency.plan-matches-profile	Sorceress	18	85	17	-	-	0	a430906da99b
+amazon.earned-act2	Amazon	1	0	0	-	-	0	44a777a512d7
+amazon.level-1-30	Amazon	1	0	0	-	-	0	44a777a512d7
+assassin.earned-act2	Assassin	1	0	0	-	-	0	44a777a512d7
+assassin.level-1-30	Assassin	1	0	0	-	-	0	44a777a512d7
 barbarian.earned-act2	Barbarian	1	0	0	-	-	0	e22749426d4a
 barbarian.level-1-30	Barbarian	1	0	0	-	-	0	e22749426d4a
 belt.refill-after-fight	Paladin	10	45	9	-	-	0	d27b4326c823

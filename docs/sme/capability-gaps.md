@@ -11,16 +11,25 @@ Fable review 8 (docs/design/fable-review-2026-11-28/08-builds-as-data.md, C1) fo
 - The SME tables use display names, the capability table uses the skills.txt keys. Mapping used, each named in the repo: Fire Blast = Fire Trauma, Shock Web = Shock Field, Burst of Speed = Quickness (`docs/sme/class-assassin.md` section 2), Decoy = Dopplezon (`internal/plandata/unlocks-amazon.json`), Wake of Fire = Wake of Fire Sentry (same mana and damage row in the skill damage table).
 - V: `go test ./internal/plandata -run TestBuildTablesConsistent` now checks the required level and the prerequisites of every Amazon and Assassin row of every build table and finds none broken; `go run ./tools/capgen -check` is clean.
 
+## Closed by card cls2 (2026-11-28)
+
+Source: `internal/power/skilldamage.json`, the skills.txt extract the repo carries (131 damage skills with `id`, `req_level`, mana columns, element, hit shift). V = read from that file; S = matched to a display name through `docs/sme/class-assassin.md` section 2.
+
+| skill | class | filled | tag |
+|---|---|---|---|
+| Inferno Sentry | assassin | `reqLevel` 24 (extract id 272); `reqSkills` Wake of Fire Sentry | level V; the display name Wake of Inferno and its prerequisite are S (the only clvl 24 fire trap with 20 mana and hit shift 4 in both tables) |
+| Royal Strike | assassin | `reqLevel` 30 (extract id 280); `reqSkills` Cobra Strike, Blades of Ice | level V; the display name Phoenix Strike and its prerequisites are S (the only clvl 30 martial art with 4 mana) |
+| Fire Golem | necromancer | `reqLevel` 30, `reqSkills` IronGolem, same as the `FireGolem` row | the key `FireGolem` is V (the extract carries it, id 94); `Fire Golem` stays as an alias row because the golem ladders in `profiles.json` list both spellings, so no rename |
+
+`go test ./internal/plandata -run TestCapabilityReqLevelMatchesSkillExtract` compares the `reqLevel` of every capability row the extract knows (all classes) and fails on an Amazon or Assassin row without a level. Passives and buffs (17 Amazon and Assassin rows) are not in the extract and stay S from the SME tables.
+
 ## Still open (U)
 
 | skill | class | what is missing | why |
 |---|---|---|---|
-| Inferno Sentry | assassin | `reqLevel`, `reqSkills` | no repo doc names the display name of this key (Wake of Inferno is a guess, U) |
-| Royal Strike | assassin | `reqLevel`, `reqSkills` | same (Phoenix Strike is a guess, U) |
-| Dragon Flight | assassin | the whole row | no build table buys it and no delivery is known; a row without a driver would be new in the table |
-| Fire Golem | necromancer | row name | the review reads the key as `FireGolem` in skills.txt; not checked by this card, a rename touches profiles and tables |
+| Dragon Flight | assassin | the whole row | S values exist (`docs/sme/class-assassin.md` section 2: clvl 24, prerequisite Dragon Tail, 15 mana) but the extract has no row for it, no build table buys it and no delivery is known (a teleport kick: target unit, lands next to it); a row without a driver would be new in the table. `internal/combat/rules.go` names it as a fire fallback, which is wrong (it is a physical kick, S) and belongs to the audit's skill-literal rows |
 
-The equality test against skills.txt on the worker host (review 8 section 3.1, last sentence) is not written: this card had no tables cache in its inputs.
+The equality test against the full skills.txt on the worker host (review 8 section 3.1) is still not written: `reqSkills` and the 17 passive and buff rows have no in-repo extract to compare with.
 
 ## Per-level skill cap
 
