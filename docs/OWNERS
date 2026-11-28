@@ -127,6 +127,7 @@ docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-extras.jsonl.gz  gaterun  gate
 
 # BEGIN GENERATED OWNERS (tools/sharedgen/sharedgen.py from the owns: keys of open tasks; do not edit between the markers)
 .github/workflows/tester-image.yml  credit-runner  ghcrpublish
+.gitignore  credit-runner  devupdatefix
 backlog/tasks/task-726 - dlv-cast-verbs-input-caps-cast-unit-cast-point-cast-hold.md  live-agent  inputl3
 backlog/tasks/task-765 - town12-SME-review-of-the-supply-profile-numbers-advice-only.md  credit-runner  town11
 cmd/d2bot/acts_test.go  credit-runner  qdmatrix
@@ -189,6 +190,7 @@ docs/design/input-i5-i7.md  credit-runner  inputl5
 docs/design/ticklog-t4.md  live-agent  ticklog
 docs/design/townflip-p5.md  credit-runner  town11
 docs/design/townflip-p5.md  live-agent  townflip
+docs/dev-update.md  credit-runner  devupdatefix
 docs/epics/epic-act1.md  live-agent  epic-act1
 docs/epics/epic-act2.md  live-agent  epic-act2
 docs/epics/epic-act3.md  live-agent  epic-act3
@@ -471,6 +473,9 @@ tools/ci/check.sh  credit-runner  inputl5
 tools/ci/pointercount-baseline.json  credit-runner  inputl5
 tools/ci/pointercount.py  credit-runner  inputl5
 tools/ci/test_pointercount.py  credit-runner  inputl5
+tools/dev-update-clean-test.sh  credit-runner  devupdatefix
+tools/dev-update-local-test.sh  credit-runner  devupdatefix
+tools/dev-update.sh  credit-runner  devupdatefix
 tools/emu/am_batch.sh  credit-runner  qdmatrix
 tools/emu/am_model.py  credit-runner  qdmatrix
 tools/emu/mb_act2.py  credit-runner  decomp43
