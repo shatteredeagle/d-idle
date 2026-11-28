@@ -1,10 +1,11 @@
 ---
 id: TASK-1092
 title: 'autoflip: plan, run and graduate-list for dark knob flips'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T02:54:00Z'
+updated_date: '2026-11-28T03:40:00Z'
 labels:
   - ops
   - feature

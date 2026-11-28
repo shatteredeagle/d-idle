@@ -34,3 +34,92 @@ func TestRecoveryFarmWithoutPotionsTakesTheSafestArea(t *testing.T) {
 		}
 	}
 }
+
+// Card fix3 (review 3 finding 2): the same rule without a portal scroll (the incident hero could not own one). That
+// path left through starveStep before the no-potion exclusion ran, and the own-level pick among the waypoint areas
+// (homeBandArea) took an area of the hero's own level with an empty belt. The first field of the act is the floor.
+func TestRecoveryFarmWithoutPotionsOrPortalTakesTheSafestArea(t *testing.T) {
+	for _, tc := range []struct {
+		class      d2.Class
+		level, act int
+	}{{d2.Sorceress, 7, 0}, {d2.Paladin, 7, 0}, {d2.Sorceress, 8, 0}, {d2.Paladin, 6, 0}, {d2.Sorceress, 16, 1}, {d2.Paladin, 16, 1}, {d2.Necromancer, 2, 0}} {
+		g := newRig(t)
+		g.r.e.Tune.Route.EarlyRoute = 0 // the lean rule (early route) is not what keeps the hero on the first field
+		g.r.e.Tune.Resource.RecoveryKitGate = 0
+		g.w.set(func(w *world) { w.class, w.level, w.gold0, w.act = tc.class, tc.level, 7, tc.act })
+		g.w.belt()
+		g.r.loop.broke.on = true
+		s, _ := g.w.snapshot()
+		if g.r.resInput(s).HasTP || !g.r.noPotions(s) {
+			t.Fatal("the rig hero has a portal scroll or a potion")
+		}
+		g.r.activeWaypoints(s)
+		first, areas := 0, 0
+		g.r.loop.task.mu.Lock()
+		for _, st := range g.r.d.Plan.Steps["normal"] {
+			if g.r.d.Plan.IsTown(st.Area) || g.r.d.Plan.Act(st.Area) != tc.act+1 {
+				continue
+			}
+			if first == 0 {
+				first = st.Area
+			}
+			g.r.loop.task.wp[st.Area] = true // every area of the act has its waypoint
+			areas++
+		}
+		g.r.loop.task.mu.Unlock()
+		if areas < 2 {
+			t.Fatalf("act %d: the rig plan has %d areas, the case needs a choice", tc.act+1, areas)
+		}
+		a, ok := g.r.recoveryArea(s)
+		if !ok {
+			t.Fatalf("%v clvl %d act %d: no recovery area", tc.class, tc.level, tc.act+1)
+		}
+		if ml := g.r.recoveryMLvl(a, d2.Normal); ml > tc.level-3 && a != first {
+			t.Errorf("%v clvl %d act %d, no potions, no portal: picked area %d, monster level %d above clvl-3 and not the first field %d", tc.class, tc.level, tc.act+1, a, ml, first)
+		}
+	}
+}
+
+// With a scroll, an exclusion that empties the plan pick (the low areas are cleared) falls back the same way.
+func TestRecoveryFarmFallbackKeepsTheNoPotionRule(t *testing.T) {
+	for _, tc := range []struct {
+		class d2.Class
+		level int
+	}{{d2.Sorceress, 12}, {d2.Paladin, 12}, {d2.Sorceress, 3}, {d2.Paladin, 2}} {
+		class, level := tc.class, tc.level
+		g := newRig(t)
+		g.r.e.Tune.Route.EarlyRoute = 0
+		g.r.e.Tune.Resource.RecoveryKitGate = 0
+		g.w.set(func(w *world) {
+			w.class, w.level, w.gold0 = class, level, 7
+			w.items = append(w.items, d2.Unit{ID: 900, Type: d2.TypeItem, Class: 5, Item: &d2.Item{Where: d2.ContInventory}})
+		})
+		g.w.belt()
+		g.r.loop.broke.on = true
+		s, _ := g.w.snapshot()
+		g.r.activeWaypoints(s)
+		first := 0
+		g.r.loop.task.mu.Lock()
+		for _, st := range g.r.d.Plan.Steps["normal"] {
+			if g.r.d.Plan.IsTown(st.Area) || g.r.d.Plan.Act(st.Area) != 1 {
+				continue
+			}
+			if first == 0 {
+				first = st.Area
+				continue
+			}
+			g.r.loop.task.wp[st.Area] = true
+			if g.r.recoveryMLvl(st.Area, d2.Normal) <= level-3 {
+				g.r.loop.cleared[st.Area] = true // the allowed low areas are spent
+			}
+		}
+		g.r.loop.task.mu.Unlock()
+		a, ok := g.r.recoveryArea(s)
+		if !ok {
+			t.Fatalf("%v: no recovery area", class)
+		}
+		if ml := g.r.recoveryMLvl(a, d2.Normal); ml > level-3 && a != first {
+			t.Errorf("%v clvl %d, low areas cleared: picked area %d, monster level %d, not the first field %d", class, level, a, ml, first)
+		}
+	}
+}
