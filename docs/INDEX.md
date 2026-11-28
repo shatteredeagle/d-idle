@@ -1186,6 +1186,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 - [fidprobe.md](probes/fidprobe.md): d2fidprobe run recipe (same-save probe, slice 1) (status: first live run done 2026-11-07 (scenarios 1 to 4, see the last section); the recipe below is VERIFIED LIVE...)
 - [firsthour.md](probes/firsthour.md): First hour: fresh hero, 60 realtime minutes at 1x
+- [fork-rebase-20261128.md](probes/fork-rebase-20261128.md): Fork rebase round 2026-11-28 (branch pushed, built, tested; nothing switched) (status: current (2026-11-28, round `didle/rebase-20261128` of docs/process/fork-sync-cadence.md; user go for the...)
 - [gridwhole-2026-11-22.md](probes/gridwhole-2026-11-22.md): gridwhole: is `debug grid 5` whole at arrival? (card gridwhole, 2026-11-22) (status: current. Card `gridwhole` (first slice of `docs/design/fable-review-2026-11-22/map-knowledge.md`, user...)
 - [hero14-analysis-2026-11-14.md](probes/hero14-analysis-2026-11-14.md): Hero Doofer (Paladin clvl 14 to 15): why it is poor and slow (2026-11-14) (status: analysis, docs only (task hero14). Tags: V verified (how is said), S secondary, U unverified. No code, no...)
 - [hotkeydrift-2026-11-26.md](probes/hotkeydrift-2026-11-26.md): Build hotkeys versus profile layout (card hotkeydrift, 2026-11-26) (status: current. Tags: V verified (how said), S read in code or data, U unverified.)
