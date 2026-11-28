@@ -170,11 +170,21 @@ func writeAtomic(dir, base string, b []byte) error {
 }
 
 func low(free FreeFunc, path string) bool {
-	if free == nil {
+	if free == nil || path == "" {
 		return false
 	}
 	n, err := free(path)
 	return err == nil && n < MinFree
+}
+
+// Low reports whether any of the paths has less than MinFree left. A path that cannot be probed counts as fine.
+func Low(free FreeFunc, paths ...string) bool {
+	for _, p := range paths {
+		if low(free, p) {
+			return true
+		}
+	}
+	return false
 }
 
 // Result of Save.
@@ -507,5 +517,5 @@ func (g *Guard) Observe(inTown bool) {
 
 // DiskLow reports whether the state folder or the save folder has less than MinFree left.
 func (g *Guard) DiskLow() bool {
-	return low(g.Free, g.State) || low(g.Free, g.SaveDir())
+	return Low(g.Free, g.State, g.SaveDir())
 }

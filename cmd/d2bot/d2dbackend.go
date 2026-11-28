@@ -147,11 +147,16 @@ var openTables = data.Open
 // "not yet" stubs.
 var d2dSeams d2denv.Seams
 
-func d2dConfig(o options, log *slog.Logger, tune *env.Tuning, db *data.DB, home string) d2denv.Config {
-	name := o.char
-	if name == "" {
-		name = "D2dbot"
+// d2dCharName is the hero a managed d2d plays.
+func d2dCharName(o options) string {
+	if o.char == "" {
+		return "D2dbot"
 	}
+	return o.char
+}
+
+func d2dConfig(o options, log *slog.Logger, tune *env.Tuning, db *data.DB, home string) d2denv.Config {
+	name := d2dCharName(o)
 	class := o.d2d.class
 	if o.managed {
 		class = classForStart(class, home, name, log)
@@ -243,6 +248,9 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 			return err
 		}
 	}
+	if o.managed { // before d2dConfig: classForStart reads an empty save as "create a new hero"
+		repairSaveAtStart(filepath.Join(ip.Dir(), "d2d"), ip.State(), d2dCharName(o), log)
+	}
 	be, err := d2denv.Build(ctx, d2dConfig(o, log, &tune, db, filepath.Join(ip.Dir(), "d2d")))
 	if err != nil {
 		return err
@@ -300,6 +308,9 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 	ref.aw = wireAgency(db, e, func() string { return charName }, be.Clock.Now, log)
 	deps := bot.Deps{SavedExp: savedExp, Mover: moverAdapter{nv}, Cycler: be.Cycler, CorpseTake: d2dCorpse{be.Client}, Catalog: cat, Health: d2dHealth(be.Proc, be.Beat, func() bool { return be.Clock.Lockstep() || ref.frozen() }, be.Clock.LastStep, log),
 		OnSnapshot: chainSnap(disp.OnSnapshot, ref.aw.OnSnapshot), Bus: bus, Restart: func(ctx context.Context) error { return be.Cycler.NewGame(ctx, "") }}
+	if o.managed {
+		deps.DiskLow = saveDiskGuard(filepath.Join(ip.Dir(), "d2d"), ip.State(), log)
+	}
 	if os.Getenv("D2BOT_RUN") == "" { // a measured run is never paused (docs/pause.md)
 		deps.Freezer = d2denv.NewFreezer(be.Client, be.Clock)
 	}
@@ -504,6 +515,9 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 	runnerDone := make(chan error, 1)
 	if lim := watchdogLimit(); lim > 0 {
 		go goSafe(runCtx, log, "watchdog", func() { newWatchdog(log, runner.LastStep, lim).run(runCtx) })
+	}
+	if o.managed {
+		startSaveGuard(runCtx, filepath.Join(ip.Dir(), "d2d"), ip.State(), charName, runner.LastSnapshot, log)
 	}
 	runnerFinished := make(chan struct{})
 	go func() {
