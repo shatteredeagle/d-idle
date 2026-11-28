@@ -55,6 +55,7 @@
 | led1 | in-progress | - | `data/darklaunch/`<br>`data/darklaunch.json`<br>`data/darklaunch-cap.json`<br>`tools/darklaunch/`<br>`tools/flip/`<br>`docs/process/dark-launch.md`<br>`docs/process/autoflip.md` | - |
 | live1 | proposed | - | `internal/bot/`<br>`internal/survival/`<br>`internal/questboard/`<br>`internal/arbiter/`<br>`cmd/d2bot/survivalwire.go`<br>`docs/live1.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
+| flipfix2 | in-progress | - | `tools/flip/`<br>`tools/darklaunch/ledger.py`<br>`docs/process/autoflip.md`<br>`docs/process/dark-launch.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
 | ghcrpublish | in-progress | - | `.github/workflows/tester-image.yml`<br>`docs/registry-publish.md`<br>`deploy/d2d-container/compose.friends.yml`<br>`docs/tester-registry.md`<br>`deploy/d2d-container/compose.tester.yml`<br>`deploy/d2d-container/context.sh`<br>`deploy/d2d-container/tester_image_test.go` | - |
@@ -197,6 +198,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- b6124a294 11-28 03:53 `Merge agent/flipfix2: flipfix2: sandbox aliases, flip status EST, graduate-list checks (TASK-1130)` (flipfix2)
+- 8218c38ea 11-28 03:51 `Merge branch 'main' into flipfix2` (-)
 - ab797f0cc 11-28 03:51 `Merge agent/rv5: review 14: round-3 review of merged work (docs)` (rv5)
 - 90ad67495 11-28 03:50 `Merge branch 'main' into rv5` (-)
 - d318b165a 11-28 03:50 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
@@ -205,6 +208,4 @@
 - 113323e05 11-28 03:35 `Merge branch 'main' into zone5` (-)
 - 5b3b4951e 11-28 03:26 `Merge agent/sweep2: sweep2: parked boss area, equip journal refuse, hand-in evidence, admission road floors (TASK-1128)` (sweep2)
 - 7bbd7ee07 11-28 03:25 `Merge branch 'main' into sweep2` (-)
-- 9fe7dbb41 11-28 03:18 `Merge agent/ops2: ops2: watch cookie, smoke wiring (TASK-1116)` (ops2)
-- 808f920da 11-28 03:18 `Merge agent/cls1: cls1: Druid and Barbarian (TASK-1111)` (cls1)
 <!-- statusgen:end -->
