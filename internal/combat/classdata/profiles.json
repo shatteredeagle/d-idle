@@ -1052,6 +1052,12 @@
      ]
     }
    ],
+   "traps": [
+    "Death Sentry",
+    "Wake of Fire Sentry",
+    "Lightning Sentry",
+    "Charged Bolt Sentry"
+   ],
    "buffs": [
     [
      "Quickness",
