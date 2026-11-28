@@ -18,6 +18,7 @@ owns:
   - "internal/d2dworld/"
 exclusive: []
 contracts: []
+result: "Cause found offline, NOT verified live: unprovenTarget planned only every fifth cell of a 131 cell frontier, so a sealed pocket sorting before the 4 real strip cells hid them (live error reproduced by TestExitToFindsTheStripBehindASealedFrontierPocket, fails on the old code); fixed, plus stage 2 skips unreachable pockets. AC #1 needs the lab rerun (knobs3way barracks-return Paladin 11 3); U whether warp 38 64 lies inside the real 63000 cell grid."
 ---
 
 ## Description
@@ -31,5 +32,5 @@ nav.barracks-return RED in all four knob arms (off, grid, gridwarp, all), identi
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
 - [ ] #1 nav.barracks-return GREEN for Paladin seeds 11 and 3 with the knobs off and with nav.fullGrid, nav.warpRead, quests.layoutRead on
-- [ ] #2 A unit test covers a field start in level 28 with 0 adjacent entries
+- [x] #2 A unit test covers a field start in level 28 with 0 adjacent entries
 <!-- AC:END -->
