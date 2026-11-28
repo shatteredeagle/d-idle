@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 	"sync"
 	"testing"
@@ -16,8 +17,8 @@ import (
 
 // Card necroepic, strengthened by fable review 8 (C3, C4): every plan table of every class resolves to a combat
 // profile, and each skill the table uses as a main attack has a key in the profile's layout AND is an attack of one of
-// its bands (a key alone is not enough: the Assassin's sentries had keys and were in no band, so only the Go trap driver
-// ever reached them). A table without main_attack is not skipped: one of the skills it buys must be a keyed band attack
+// its bands (a key alone is not enough: the Assassin's sentries had keys and were in no band and no data list, only in a Go
+// literal of the trap driver; they are the profile's traps list now). A table without main_attack is not skipped: one of the skills it buys must be a keyed band attack
 // of its profile. mainAttackDebt is the ratchet of today's known gaps: a listed gap that is fixed must be removed.
 var mainAttackDebt = map[string]string{
 	"necromancer_summoner_endgame90/Corpse Explosion": "cast by the corpse driver (corpseAims), not a band attack",
@@ -131,7 +132,7 @@ func TestMainAttackSkillsHaveAKey(t *testing.T) {
 	}
 }
 
-// keyedBandAttack reports whether skill is an attack of a band of p and can be selected: a right-hand skill needs a
+// keyedBandAttack reports whether skill is an attack of a band of p (or a trap of its traps list) and can be selected: a right-hand skill needs a
 // key in the layout, a left-hand skill (capabilities.json delivery.use.hand) is picked in the left skill list and
 // needs none (hotkeys only ever select the right skill, classdata.go Hand).
 func keyedBandAttack(p *combat.Profile, skill string) bool {
@@ -145,7 +146,7 @@ func keyedBandAttack(p *combat.Profile, skill string) bool {
 			}
 		}
 	}
-	return false
+	return slices.Contains(p.Traps, skill) // laid by the trap driver from the profile's traps list
 }
 
 var leftHandSkills = sync.OnceValue(func() map[string]bool {

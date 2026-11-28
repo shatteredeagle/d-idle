@@ -378,10 +378,10 @@ func TestNoEarnIgnoresAreaChanges(t *testing.T) {
 	}
 }
 
-// Review 8 B2: a fighter without a combat profile is a hard, counted invariant.
+// Review 8 B2: a fighter without a combat profile is a counted invariant.
 func TestInvariantNoCombatProfile(t *testing.T) {
-	if r := invRowOf("no-combat-profile"); !r.Hard {
-		t.Fatal("no-combat-profile must be a hard row")
+	if r := invRowOf("no-combat-profile"); r.Hard || r.GapSec == 0 {
+		t.Fatalf("no-combat-profile is a soft, rate limited row: %+v", r)
 	}
 	m := &invMon{lastLog: map[string]time.Time{}, total: map[string]int{}}
 	m.noteNoProfile("no combat profile for class Paladin")

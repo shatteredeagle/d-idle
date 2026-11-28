@@ -799,3 +799,25 @@ func TestNoProfileIsAnErrorNotTheSorceress(t *testing.T) {
 		t.Fatal("not cleared")
 	}
 }
+
+// Review 8 C3: the trap ladder is profile data. The Assassin's sentries are in its traps list and in no attack band
+// (the driver lays them); a profile without the list (a second class) gives the trap driver nothing to lay.
+func TestTrapLadderIsProfileData(t *testing.T) {
+	ap, err := LookupProfile(d2.Assassin, "")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, n := range []string{"Wake of Fire Sentry", "Lightning Sentry", "Charged Bolt Sentry", "Death Sentry"} {
+		if !slices.Contains(ap.Traps, n) || ap.Layout[n] == "" {
+			t.Errorf("%s: in traps %v, key %q", n, slices.Contains(ap.Traps, n), ap.Layout[n])
+		}
+	}
+	pp, err := LookupProfile(d2.Paladin, "")
+	if err != nil || len(pp.Traps) != 0 {
+		t.Fatalf("paladin traps %v %v", pp.Traps, err)
+	}
+	known := map[string]SkillSpec{"Wake of Fire Sentry": {Name: "Wake of Fire Sentry", Level: 1, Key: "f2"}}
+	if _, ok := planTrap(nil, input.Point{}, known, 100, []Target{{}}, nil, nil, nil, testCatalog(), func(SkillSpec) bool { return true }); ok {
+		t.Fatal("a profile without a traps list laid a trap")
+	}
+}

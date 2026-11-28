@@ -111,6 +111,9 @@ type Profile struct {
 	Presses []PressRule `json:"presses,omitempty"`
 	// Aims are the point aim rows (aim.go); a point skill without a row is cast at its target's cell.
 	Aims []AimRule `json:"aims,omitempty"`
+	// Traps is the trap driver's ladder (trap.go): the trap skills it lays, in tie-break order for equal levels. A
+	// trap is never a band attack (the driver lays it, the band fills the time between); empty = the driver is idle.
+	Traps []string `json:"traps,omitempty"`
 	// CorpseAims are the corpse aim rows (aimcorpse.go); a corpse skill without a row takes the corpse its caller always did.
 	CorpseAims []CorpseAim `json:"corpseAims,omitempty"`
 }

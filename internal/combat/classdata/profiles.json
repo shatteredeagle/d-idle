@@ -1046,31 +1046,17 @@
    },
    "bands": [
     {
-     "minLevel": 24,
-     "requires": "Lightning Sentry",
-     "attack": [
-      "Fire Trauma",
-      "Lightning Sentry",
-      "Charged Bolt Sentry",
-      "Wake of Fire Sentry",
-      "Attack"
-     ]
-    },
-    {
-     "minLevel": 12,
-     "attack": [
-      "Fire Trauma",
-      "Wake of Fire Sentry",
-      "Charged Bolt Sentry",
-      "Attack"
-     ]
-    },
-    {
      "attack": [
       "Fire Trauma",
       "Attack"
      ]
     }
+   ],
+   "traps": [
+    "Death Sentry",
+    "Wake of Fire Sentry",
+    "Lightning Sentry",
+    "Charged Bolt Sentry"
    ],
    "buffs": [
     [
