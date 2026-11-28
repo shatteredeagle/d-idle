@@ -1,8 +1,12 @@
 package diffready
 
 import (
+	"fmt"
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 
 	"d2lod-bot/internal/d2"
 )
@@ -115,11 +119,59 @@ func TestAllClassesHaveBothRows(t *testing.T) {
 
 func TestConsent(t *testing.T) {
 	var c Consent
-	if c.Take("nightmare") {
+	now := time.Date(2026, 11, 27, 12, 0, 0, 0, time.UTC)
+	if c.Take("nightmare", "Ann", now) {
 		t.Error("no go yet")
 	}
-	c.Grant("nightmare")
-	if !c.Granted("hell") == false || !c.Granted("nightmare") || !c.Take("nightmare") || c.Take("nightmare") {
+	c.Grant("nightmare", "Ann", now)
+	if c.Granted("hell", "Ann", now) || !c.Granted("nightmare", "Ann", now) || !c.Take("nightmare", "Ann", now) || c.Take("nightmare", "Ann", now) {
 		t.Error("go is per target and consumed once")
+	}
+}
+
+// A go is for one hero and ends after GoTTL; the file carries both, and a foreign or ended go is dropped with a line.
+func TestConsentHeroAndExpiry(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "diffgo.json")
+	now := time.Date(2026, 11, 27, 12, 0, 0, 0, time.UTC)
+	var lines []string
+	c := Consent{Logf: func(msg string, args ...any) { lines = append(lines, fmt.Sprint(append([]any{msg}, args...)...)) }}
+	if err := c.Persist(path); err != nil {
+		t.Fatal(err)
+	}
+	c.Grant("nightmare", "Ann", now)
+	b, _ := os.ReadFile(path)
+	if !strings.Contains(string(b), `"hero":"Ann"`) || !strings.Contains(string(b), `"expires":"2026-12-04T12:00:00Z"`) {
+		t.Fatalf("file lacks the hero or the 7-day end: %s", b)
+	}
+	if c.Take("nightmare", "Bob", now) {
+		t.Fatal("another hero used the go")
+	}
+	if len(lines) != 1 || !strings.Contains(lines[0], "another hero") {
+		t.Fatalf("log lines %q", lines)
+	}
+	if c.Granted("nightmare", "Ann", now) {
+		t.Fatal("a go dropped for the wrong hero must not come back")
+	}
+	if _, err := os.Stat(path); err == nil {
+		t.Fatal("dropped go left its file")
+	}
+	c.Grant("hell", "Ann", now)
+	var c2 Consent // a restart
+	c2.Logf = c.Logf
+	if err := c2.Persist(path); err != nil {
+		t.Fatal(err)
+	}
+	if !c2.Granted("hell", "Ann", now.Add(GoTTL-time.Second)) {
+		t.Fatal("a go inside its week was lost")
+	}
+	if c2.Take("hell", "Ann", now.Add(GoTTL)) || len(lines) != 2 || !strings.Contains(lines[1], "ended") {
+		t.Fatalf("an ended go was used or not logged: %q", lines)
+	}
+	if err := os.WriteFile(path, []byte(`{"granted":["nightmare"]}`), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	var c3 Consent
+	if err := c3.Persist(path); err == nil || c3.Granted("nightmare", "Ann", now) {
+		t.Fatal("the old file shape (no hero, no end) must not count as a go")
 	}
 }

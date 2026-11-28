@@ -12,7 +12,7 @@ func TestDruidFireBuildSelectableAndDefaultsUnchanged(t *testing.T) {
 	if lb.Class != "druid" || lb.Combat != "fire" {
 		t.Fatalf("class %q combat %q", lb.Class, lb.Combat)
 	}
-	if TableCombat("druid_fire_guide") != "fire" || TableCombat("druid_fire_normal30") != "" {
+	if TableCombat("druid_fire_guide") != "fire" || TableCombat("druid_fire_normal30") != "druid" {
 		t.Errorf("combat lines: guide %q, normal30 %q", TableCombat("druid_fire_guide"), TableCombat("druid_fire_normal30"))
 	}
 	got := map[string]int{}

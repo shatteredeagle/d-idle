@@ -2,6 +2,7 @@ package logx
 
 import (
 	"bufio"
+	"bytes"
 	"fmt"
 	"io"
 	"os"
@@ -103,6 +104,41 @@ func (t tee) Write(p []byte) (int, error) {
 	return len(p), nil
 }
 
+// maxTailLine caps one line of Tail; the rest of a longer line is dropped, the read goes on.
+const maxTailLine = 4 << 20
+
+// eachLine calls fn for every line of r with NUL bytes and the line end removed. A crash can leave a hole of NUL bytes
+// of any size with no newline in it: the bytes are skipped as they are read, so such a run costs no memory and never
+// ends the read (a Scanner stops with "token too long" and loses every newer line).
+func eachLine(r io.Reader, fn func(string)) error {
+	br := bufio.NewReaderSize(r, 64<<10)
+	var line []byte
+	for {
+		chunk, err := br.ReadSlice('\n')
+		for len(chunk) > 0 && len(line) < maxTailLine {
+			i := bytes.IndexByte(chunk, 0)
+			if i < 0 {
+				i = len(chunk)
+			}
+			line = append(line, chunk[:min(i, maxTailLine-len(line))]...)
+			chunk = bytes.TrimLeft(chunk[i:], "\x00")
+		}
+		if err == bufio.ErrBufferFull {
+			continue
+		}
+		if err == nil || len(line) > 0 {
+			fn(strings.TrimRight(string(line), "\r\n"))
+		}
+		line = line[:0]
+		if err == io.EOF {
+			return nil
+		}
+		if err != nil {
+			return err
+		}
+	}
+}
+
 // Tail returns the last n lines (0 = all) of the log at path and its rotations (oldest first) whose text matches re
 // (nil = all). Read only.
 func Tail(path string, n int, re *regexp.Regexp) ([]string, error) {
@@ -122,20 +158,17 @@ func Tail(path string, n int, re *regexp.Regexp) ([]string, error) {
 			return nil, err
 		}
 		found = true
-		sc := bufio.NewScanner(fh)
-		sc.Buffer(make([]byte, 64<<10), 4<<20)
-		for sc.Scan() {
-			l := strings.TrimRight(strings.ReplaceAll(sc.Text(), "\x00", ""), "\r")
+		err = eachLine(fh, func(l string) {
 			if l == "" || (re != nil && !re.MatchString(l)) {
-				continue
+				return
 			}
 			out = append(out, l)
 			if n > 0 && len(out) > 4*n+1024 { // bound memory on a long file
 				out = append(out[:0], out[len(out)-n:]...)
 			}
-		}
+		})
 		fh.Close()
-		if err := sc.Err(); err != nil {
+		if err != nil {
 			return out, err
 		}
 	}

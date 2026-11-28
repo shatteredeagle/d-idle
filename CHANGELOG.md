@@ -8,6 +8,14 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- nf1: nav strip behind a sealed frontier pocket (TASK-1102) <!--sg:agent/nf1-->
+- fix8: build-table consistency check, capability facts, SelectProfile error, combat keys, traps list, mana_heavy in Normal (TASK-1097) <!--sg:agent/fix8-->
+- review 13: sandbox live log review (docs) <!--sg:agent/rv4-->
+- round-2 review C: security, PG, data, pipeline (docs) <!--sg:agent/rv3-->
+- round-2 review A: fix1 and fix2 (docs) <!--sg:agent/rv1-->
+- round-2 review B: fix3 and fix7 (docs) <!--sg:agent/rv2-->
+- fix4: scrubber, watch token redirect, difficulty go hero scope and expiry, flip container env, tail NUL, docker volumes doc (TASK-1100) <!--sg:agent/fix4-->
+- nightlog: overnight coordinator log (docs) <!--sg:agent/nightlog-->
 - labtriage: overnight lab triage, scenario marker fixes, 8 cards (TASK-1101..1108) <!--sg:agent/labtriage-->
 - fix6: ledger accounting, mandatory hero_profile, d2scenario smoke, stability view, pack room (TASK-1098) <!--sg:agent/fix6-->
 - fix2: board counters persist, rung-4 skip counts coded refusals only, resume tick for all goals, difficulty go consumed after the hop (TASK-1099) <!--sg:agent/fix2-->

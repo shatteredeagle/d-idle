@@ -28,9 +28,6 @@ const (
 // makes it. Empty: UNVERIFIED, filled by learning. A live run fills this from `trap learned` log lines.
 var trapClassGuess = map[int]string{}
 
-// trapLadder is the tie-break order of trap skills of equal level (learned and bound ones only).
-var trapLadder = []string{"Death Sentry", "Wake of Fire Sentry", "Lightning Sentry", "Charged Bolt Sentry"}
-
 type trapLay struct {
 	skill string
 	at    time.Time
@@ -180,10 +177,10 @@ func packCentre(me input.Point, t Target, hs []Target, rng int) input.Point {
 // planTrap picks the next trap. Skills are tried by skill level (highest first, ladder order on ties); one at its
 // cap of five is skipped. Death Sentry needs a corpse next to hostiles and is laid on the corpse. Others go to the
 // pack (pickTrapTarget) and are cast at its centre. Pure.
-func planTrap(me input.Point, known map[string]SkillSpec, mana int, hs []Target, corpses []d2.Unit,
+func planTrap(ladder []string, me input.Point, known map[string]SkillSpec, mana int, hs []Target, corpses []d2.Unit,
 	st []standingTrap, pend []trapLay, cat Catalog, ready func(SkillSpec) bool) (trapPlan, bool) {
 	var order []SkillSpec
-	for _, name := range trapLadder {
+	for _, name := range ladder { // the profile's traps list (data): tie-break order of equal levels, learned and bound ones only
 		if sp, ok := known[name]; ok && ready(sp) && sp.Cost*2 <= mana {
 			order = append(order, sp)
 		}
