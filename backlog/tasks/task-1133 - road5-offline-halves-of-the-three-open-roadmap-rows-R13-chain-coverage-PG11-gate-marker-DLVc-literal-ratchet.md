@@ -21,9 +21,10 @@ owns:
   - "data/questspec/"
   - "docs/roadmap-fable.md"
   - "docs/process/pg-ops-mgonejob.md"
-  - "docs/probes/road5-leftovers-2026-11-28.md"
+  - "docs/questspec.md"
 exclusive: []
 contracts: []
+result: "Offline only, NOT verified live and nothing installed in the ops repo. DLVc: tools/ci/literalcount.py ratchet in check.sh (fails on a rise; class and skill names read from the class table and the capability table, none in the tool). PG11: cmd/gatemark (ran-marker by package count, failure record with tail, flake ledger, quarantine rows); wiring list docs/process/pg-ops-mgonejob.md. R13: data/questspec/pending.json plus TestShippedCoverage; no chain written for Acts 3 to 5 (lab verdicts RED or BLOCKED, a chain is live behaviour). No knob. Build-specific: nothing; the literal names live in internal/d2 classNames and data/capabilities."
 ---
 
 ## Description
@@ -36,9 +37,9 @@ Build what the three open rows allow offline; no knob, no live game, no ops repo
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 DLVc: class and skill literal ratchet for internal/combat and internal/power in tools/ci/check.sh, must-fail test with two classes
-- [ ] #2 PG11: gatemark reads go test -json, prints a positive ran-marker, stores failing tests and tail, appends a flake ledger; must-fail tests
-- [ ] #3 R13: every board quest has a step chain or a pending row with a reason; must-fail test
-- [ ] #4 roadmap rows R13, PG11, DLVc updated; tools/roadmap/check.py without warnings
-- [ ] #5 Live or ops-side remainder written precisely (not run by this card)
+- [x] #1 DLVc: class and skill literal ratchet for internal/combat and internal/power in tools/ci/check.sh, must-fail test with two classes
+- [x] #2 PG11: gatemark reads go test -json, prints a positive ran-marker, stores failing tests and tail, appends a flake ledger; must-fail tests
+- [x] #3 R13: every board quest has a step chain or a pending row with a reason; must-fail test
+- [x] #4 roadmap rows R13, PG11, DLVc updated; tools/roadmap/check.py without warnings
+- [x] #5 Live or ops-side remainder written precisely (not run by this card)
 <!-- AC:END -->
