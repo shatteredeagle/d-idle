@@ -6,5 +6,5 @@
  "enable_criteria": "Flip on one sandbox whose quests.boardSM is 1 with a 24 h watch: a death park shows reason paused_after_deaths with its clears text in /api/quests, lifts itself after afterMin quiet minutes at the policy life, and a second park on the same chunk stays until Try again; at least one resume seen in the window, no hard breach (docs/process/dark-launch.md).",
  "owner": "coordinator",
  "review_by": "2026-12-11",
- "status": "dark"
+ "status": "enabled"
 }
