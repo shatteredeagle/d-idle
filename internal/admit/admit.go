@@ -8,7 +8,11 @@
 // keeps the two in step. This package does not import the bot, so the table stays there and nothing is forked.
 package admit
 
-import "fmt"
+import (
+	"fmt"
+
+	"d2lod-bot/internal/quest"
+)
 
 // Purpose is why the hero wants to move; the rows exempt or tighten by it.
 type Purpose string
@@ -140,7 +144,16 @@ func (r Rows) MayEnter(v View, area int, p Purpose) Verdict {
 	// life by a later row of the same area (review 11 N8). It is an entry rule: a hero on the road passed it and goes
 	// on with a kit that thinned, as the old judge does (earlyRouteCheck).
 	for _, rd := range r.Roads {
-		if !r.has(rd.Areas, area) || r.has(rd.Areas, v.Area) {
+		if !r.has(rd.Areas, area) {
+			continue
+		}
+		if r.has(rd.Areas, v.Area) {
+			// The exception to the entry rule (review 14 H3): the boss or chest level of the road (a quest handler row
+			// works there) keeps the potion half. With a portal a trip restocks; without one the refusal is a hold, the
+			// trip rules walk the hero out (U: not shown live).
+			if area != v.Area && quest.ObjectiveAreas()[area] && v.Healing < rd.Kit.Healing {
+				return refuse(rd.ID, NeedPotions, fmt.Sprintf("%d healing potions < %d for the %s road's objective level", v.Healing, rd.Kit.Healing, rd.ID), v.HasTP)
+			}
 			continue
 		}
 		if v.Healing < rd.Kit.Healing {

@@ -94,7 +94,7 @@ func (t *Town) tripReasons(s *d2.Snapshot) []tripReason {
 	// A caster that has reached the kit gate level wants the first mana potions (MPFirst, the route kit's two) in the belt,
 	// not just one; the trip needs the gold of one potion, or it could not fix anything (TASK-A).
 	minMP := tn.TripMinMPPotions
-	if resource.ManaNeed(p.Class) >= 2 && p.Level >= t.e.Tune.Resource.KitGateLevel && p.Gold >= mpPriceEstimate {
+	if resource.ManaNeedFor(p.Class, t.build) >= 2 && p.Level >= t.e.Tune.Resource.KitGateLevel && p.Gold >= mpPriceEstimate {
 		minMP = max(minMP, t.e.Tune.Resource.MPFirst)
 	}
 	if mpTrips && band.Capacity(belt.MP, st.Slots) > 0 && minMP > 0 && st.Count[belt.MP]+belt.PackCount(t.e.Data, inv, belt.MP) < minMP {

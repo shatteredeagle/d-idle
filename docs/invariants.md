@@ -30,13 +30,13 @@
 | `arbiter-starved` | an arbiter intent outranked for 600 s or more (soft; only with the arbiter knobs on) |
 | `aura-off` | soft: in the field with an aura skill learned and the d2d state line reading `aura=0` for 10 s (V live: a pick sets it at once, docs/probes/paladin-aura-live-2026-11-26.md) |
 | `summon-missing` | soft: in the field, hostiles near, a summon skill learned (skills.txt `summon` column, any class) with its mana in hand, and the d2d state line reading `pets=0` for 10 s. The minute line carries `minions=N` (S: `pets=` documented in docs/d2d-backend.md, never read on a live line, so the row stays soft: U whether the count includes the mercenary) |
-| `no-combat-profile` | soft (a data error, not a knob effect): the fighter has no combat profile for the class and build (`Fighter.ProfileErr`, set by the class-aware start or a failed selection); `Clear` and `Kill` refuse, counted every tick, logged every 5 min |
+| `no-combat-profile` | hard (review C B1: a deploy or flip that loses a profile must not pass its watch): the fighter has no combat profile for the class and build (`Fighter.ProfileErr`: the plan error of the class-aware start, else the last failed selection, which the next good selection clears); `Clear` and `Kill` refuse, the runner parks the hero in town with the status and ops log line `no combat profile for <class>/<build>` (`internal/bot/noprofile.go`), counted every tick, logged every 5 min |
 | `economy-stall` | purse and stash gold under 100 for 2 h while kills continue |
 
 Not yet rows (need the reflex lane, P3): safety latency (verdict to potion) and cancellation latency.
 
 ## Hard counters (card autorevert1)
-Rows with `Hard: true` (potion-not-drunk, life-zero-alive, refusal-storm, xp-frozen, mode-no-exit, corpse-unresolved) are what the flip watcher reverts on. `GET /api/explain` and `d2bot ops status --why` carry `invariants`: per row `name`, `hard`, `count` (lifetime of the process), `since` (first tick of this process, so a restart shows as a new since), `first`, `last`. V: `go test -run InvariantCounters ./internal/bot`. Tool and rule: docs/process/dark-launch.md.
+Rows with `Hard: true` (potion-not-drunk, life-zero-alive, refusal-storm, xp-frozen, mode-no-exit, corpse-unresolved, no-combat-profile) are what the flip watcher reverts on. `GET /api/explain` and `d2bot ops status --why` carry `invariants`: per row `name`, `hard`, `count` (lifetime of the process), `since` (first tick of this process, so a restart shows as a new since), `first`, `last`. V: `go test -run InvariantCounters ./internal/bot`. Tool and rule: docs/process/dark-launch.md.
 
 ## Oracle use
 `Deps.OnInvariant(name, detail)` is called for every logged hit. A lockstep or Proving Ground runner sets it (or reads `InvariantHits()` at the end) and fails the run when anything fired. The hook point is in place; wiring it into `cmd/d2scenario` is a follow-up in the ops-side runner (U: not run).

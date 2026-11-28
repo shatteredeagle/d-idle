@@ -7,6 +7,7 @@ import (
 	"net"
 	"regexp"
 	"strings"
+	"unicode"
 )
 
 // rule is one redaction step. fix, when set, decides per match: the replacement and whether to change it at all.
@@ -18,12 +19,15 @@ type rule struct {
 }
 
 // secret names, as whole words inside identifiers (watch_token, apiKey, passPhrase, x-auth-header ...)
-const secretWords = `(?:token|secret|passw(?:or)?d|passphrase|pass|pwd|pw|cookie|credentials?|auth(?:orization)?|api[_-]?key|cd[_-]?key|cdkey|private[_-]?key|license[_-]?key|access[_-]?key|session|key)`
+const secretWords = `(?:token|secret|passw(?:or)?d|passphrase|pass[_-]?code|pass|pwd|pw|pin|user(?:name)?|hostname|cookie|credentials?|auth(?:orization)?|api[_-]?key|cd[_-]?key|cdkey|private[_-]?key|license[_-]?key|access[_-]?key|session|key)`
 
 var publicHosts = map[string]bool{"github.com": true, "api.github.com": true, "raw.githubusercontent.com": true, "ghcr.io": true, "docker.io": true,
 	"localhost": true, "example.com": true, "example.org": true, "example.net": true}
 
 var secretRx = regexp.MustCompile(`(?i)(["']?\b(?:[\w.-]*[_.-])?` + secretWords + `(?:[_.-][\w.-]*)?["']?\s*[:=]\s*)("(?:[^"\\\n]|\\.)*"|'[^'\n]*'|[^\n]*)`)
+
+// the word alone labels a phrase ("passcode four random words"); it runs to the next quote or the end of the line
+var barePassRx = regexp.MustCompile(`(?i)\b(pass[_-]?code|passphrase|password)(\s+)([^\s<:="'][^"\n]*)`)
 var keywordRx = regexp.MustCompile(`(?i)\b((?:cd[ _-]?)?key\s+)([A-Za-z0-9-]{8,})\b`)
 
 var rules = []rule{
@@ -32,13 +36,18 @@ var rules = []rule{
 	// name = value, name: value, "name": "value": a quoted value goes whole, an unquoted one to the end of the line
 	// (passphrases have spaces); the name stays
 	{"secret", secretRx, "", redactSecret},
+	{"barepass", barePassRx, "${1}${2}<secret>", nil},
 	{"keyword", keywordRx, "", keywordFix},
 	{"urluser", regexp.MustCompile(`(?i)(://)[^/\s@"']+@`), "${1}<cred>@", nil},
-	{"urltoken", regexp.MustCompile(`(?i)([?&](?:token|t|key|auth|sig|code|access_token|pass|password)=)[^&\s"'<]+`), `${1}<token>`, nil},
+	{"urltoken", regexp.MustCompile(`(?i)([?&](?:token|t|key|auth|sig|code|access_token|pass|password|passcode)=)[^&\s"'<]+`), `${1}<token>`, nil},
 	{"urlpath", regexp.MustCompile(`/p/[A-Za-z0-9_-]{12,}`), `/p/<token>`, nil},
 	{"uuid", regexp.MustCompile(`(?i)\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b`), "<uuid>", nil},
 	{"cdkey", regexp.MustCompile(`\b[A-Z0-9]{4,6}(?:-[A-Z0-9]{4,6}){2,4}\b|\b[A-Z0-9]{26}\b|\b[A-Z0-9]{16}\b`), "<cdkey>", func(m string) (string, bool) {
 		return "<cdkey>", strings.ContainsAny(m, "0123456789") && strings.ContainsAny(m, "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+	}},
+	// any case with dashes, upper case with spaces; a digit and a letter are both needed (words and number columns stay)
+	{"cdkey-loose", regexp.MustCompile(`\b[A-Za-z0-9]{4,6}(?:-[A-Za-z0-9]{4,6}){2,4}\b|\b[A-Z0-9]{4,6}(?: [A-Z0-9]{4,6}){2,4}\b`), "<cdkey>", func(m string) (string, bool) {
+		return "<cdkey>", strings.ContainsAny(m, "0123456789") && strings.IndexFunc(m, unicode.IsLetter) >= 0
 	}},
 	{"keyfile", regexp.MustCompile(`(?i)[\w.-]*\.key\b`), "<keyfile>", nil},
 	{"savefile", regexp.MustCompile(`(?i)[\w.-]+\.d2s\b`), "<save>.d2s", func(m string) (string, bool) { return "<save>.d2s", !strings.EqualFold(m, "<save>.d2s") }},
@@ -177,4 +186,42 @@ func RedactN(s string, lits Literals) (string, int) {
 		})
 	}
 	return s, n
+}
+
+// credentialRx is a labelled credential with a value that ends at white space (a log line keeps the rest).
+var credentialRx = regexp.MustCompile(`(?i)(["']?\b(?:[\w.-]*[_.-])?(?:token|secret|passw(?:or)?d|passphrase|pass[_-]?code|pwd|cookie|credentials?|authoriz` + `ation|api[_-]?key|cd[_-]?key|cdkey|private[_-]?key)(?:[_.-][\w.-]*)?["']?\s*[:=]\s*)("(?:[^"\\\n]|\\.)*"|'[^'\n]*'|[^\s,}"'<]+)`)
+
+var credentialClasses = map[string]bool{"pem": true, "bearer": true, "barepass": true, "urluser": true, "urltoken": true, "urlpath": true, "token": true}
+
+var plainValue = regexp.MustCompile(`^(?:true|false|null|\d{1,7})$`)
+
+// RedactCredentials hides only what lets someone in (tokens, passcodes, keys in links and headers) and keeps hosts,
+// addresses, paths and ids: it is for the operator's own terminal (`d2bot ops log`), where the output is read for
+// diagnosis and then pasted into a chat. The rules are the bundle's own, by class, plus the labelled form.
+func RedactCredentials(s string) string {
+	for _, r := range rules {
+		if !credentialClasses[r.class] {
+			continue
+		}
+		s = r.rx.ReplaceAllStringFunc(s, func(m string) string {
+			if r.fix != nil {
+				if out, ok := r.fix(m); ok {
+					return out
+				}
+				return m
+			}
+			return r.rx.ReplaceAllString(m, r.repl)
+		})
+	}
+	s = credentialRx.ReplaceAllStringFunc(s, func(m string) string {
+		sub := credentialRx.FindStringSubmatch(m)
+		if plainValue.MatchString(sub[2]) {
+			return m
+		}
+		if strings.HasPrefix(sub[2], `"`) {
+			return sub[1] + `"<secret>"`
+		}
+		return sub[1] + "<secret>"
+	})
+	return s
 }

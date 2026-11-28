@@ -1229,6 +1229,16 @@ func (r *Runner) setTargetArea(a int) {
 // start a new game (monsters respawn) rather than farm areas far below the character for no experience. done is false
 // when that is not possible (no out-of-game flow, or nothing was cleared, so the lack of a target has another cause).
 func (r *Runner) freshGameToLevel(ctx context.Context, s *d2.Snapshot) (done bool, err error) {
+	if r.holeHeld.Load() {
+		// The zone model holds (no zone with margin, or a fault ban left only the hard ones): a new game ends neither,
+		// so the hero waits in town; the bans are short and the model is asked again next slice (review 14 H4).
+		if !s.Player.InTown() && r.d.Town != nil {
+			return true, r.d.Town.ToTown(ctx)
+		}
+		r.pause(ctx, 5*time.Second)
+		r.Beat()
+		return true, ctx.Err()
+	}
 	dry := len(r.dryAreas()) > 0
 	if r.d.Cycler == nil || len(r.loop.cleared) == 0 && !dry {
 		return false, nil

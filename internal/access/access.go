@@ -179,6 +179,7 @@ func (s *Store) Save(r Record) error {
 		return err
 	}
 	tmp := s.Path + ".tmp"
+	os.Remove(tmp) // a leftover (or planted) temp file would keep its own mode or target; the new one is created 0600
 	if err := os.WriteFile(tmp, append(b, '\n'), 0o600); err != nil {
 		return err
 	}

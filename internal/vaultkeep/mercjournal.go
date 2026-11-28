@@ -20,7 +20,43 @@ import (
 const (
 	mercCreate = "create" // the copy is about to be created in the backpack (it may or may not exist)
 	mercGive   = "give"   // the copy exists (Unit); the give is about to be sent (it may or may not have run)
+	// mercTakeback: the give did not run and the copy is about to be removed again. A copy that is gone in this step went
+	// back, it was not given: the record stays in the vault (review 14 H1).
+	mercTakeback = "takeback"
 )
+
+// MercWearer is the optional Hand part that shows what the mercenary wears: the norm hex of every worn piece, known
+// false when it cannot be read now. Without it (or unknown) a copy that left the pack is never judged "given": the
+// record stays in the vault and a notice asks the player to look (a possible second copy, never a lost item).
+type MercWearer interface {
+	MercWorn(ctx context.Context) (norms []string, known bool)
+}
+
+// mercWears says whether the mercenary's slots show the piece (proof of a give).
+func (k *Keeper) mercWears(ctx context.Context, hex string) bool {
+	mw, ok := k.Hand.(MercWearer)
+	if !ok {
+		return false
+	}
+	norms, known := mw.MercWorn(ctx)
+	for _, n := range norms {
+		if known && strings.EqualFold(n, hex) {
+			return true
+		}
+	}
+	return false
+}
+
+// heroWears says whether the hand reports the item as worn by the hero (its own preview of the slots the item fits):
+// such a piece is never filed.
+func (k *Keeper) heroWears(h d2dctl.VaultRecord) bool {
+	for _, sv := range k.Hand.Preview(vault.Rec{Item: vault.Item{Code: h.Code, Identified: true}}).Slots {
+		if sv.Worn != nil && int(sv.Worn.Unit) == h.UnitID {
+			return true
+		}
+	}
+	return false
+}
 
 type mercIntent struct {
 	ID    string    `json:"id"`    // vault record id
@@ -215,6 +251,10 @@ func (k *Keeper) settleMerc(ctx context.Context, st *vault.Store, in mercIntent,
 				unit = h.UnitID
 			}
 		}
+		in.Step = mercTakeback // written first: an unanswered removal must not read "gone = given" at the next pass
+		if err := k.mercPut(in.ID, &in); err != nil {
+			return mercOutcome{open: true}
+		}
 		if _, err := k.API.ItemVault(ctx, unit); err != nil {
 			if !createAnswered(err) {
 				return mercOutcome{open: true}
@@ -225,26 +265,41 @@ func (k *Keeper) settleMerc(ctx context.Context, st *vault.Store, in mercIntent,
 		_ = k.mercPut(in.ID, nil)
 		return mercOutcome{}
 	}
-	if in.Step == mercCreate { // never made
+	if in.Step == mercCreate || in.Step == mercTakeback { // never made, or taken back: the record is the only copy
 		_ = k.mercPut(in.ID, nil)
 		return mercOutcome{}
 	}
-	// The copy left the pack: the mercenary wears it. Whatever wearable piece is new on the hero came off him.
+	if !k.mercWears(ctx, hex) {
+		// The copy left the pack and the mercenary's slots do not show it (or cannot be read): not proof of a give. The
+		// record stays; nothing of the hero is filed.
+		_ = k.mercPut(in.ID, nil)
+		k.note("eqm-unproven-"+in.ID, "Equip on mercenary: the game did not confirm that the mercenary took "+in.Name+". It stays in the vault: check the mercenary and your backpack.")
+		return mercOutcome{}
+	}
+	// The mercenary wears it. The piece that came off is new in the backpack and of the slot the copy went to: at most
+	// that one piece is filed, never a piece the hero wears (review 14 H2: the list is the whole hero).
 	o := mercOutcome{given: true, where: "vault"}
-	k.mercRetire(st, in.ID, in.Name)
 	mh, _ := k.Hand.(MercHand)
+	slot := ""
+	if rec, ok := st.Get(in.ID); ok && mh != nil {
+		slot = mh.MercPreview(rec).Slot
+	}
+	k.mercRetire(st, in.ID, in.Name)
 	for _, h := range have {
 		n := strings.ToLower(h.Norm)
-		if extra[n] <= 0 || mh == nil || !mh.MercPreview(vault.Rec{Item: vault.Item{Code: h.Code, Identified: true}}).Can {
+		if extra[n] <= 0 || slot == "" || k.heroWears(h) {
 			continue
 		}
-		extra[n]--
+		if side := mh.MercPreview(vault.Rec{Item: vault.Item{Code: h.Code, Identified: true}}); !side.Can || side.Slot != slot {
+			continue
+		}
 		name, where, open := k.mercFile(ctx, st, h, in.Order)
 		o.names = append(o.names, name)
 		if where != "vault" {
 			o.where = where
 		}
 		o.open = o.open || open
+		break
 	}
 	if !o.open {
 		_ = k.mercPut(in.ID, nil)

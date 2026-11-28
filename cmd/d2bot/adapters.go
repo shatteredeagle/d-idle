@@ -54,7 +54,15 @@ type fighterAdapter struct{ f *combat.Fighter }
 func (a fighterAdapter) IsIgnored(id uint32, dist float64) bool { return a.f.IsIgnored(id, dist) }
 
 // ProfileErr feeds the invariant monitor (no-combat-profile).
-func (a fighterAdapter) ProfileErr() error          { return a.f.ProfileErr() }
+func (a fighterAdapter) ProfileErr() error { return a.f.ProfileErr() }
+
+// CheckProfile is the runner's question every tick: the class-aware start is repeated when it could not run or ran on
+// another class (classRetry), then the fighter selects the profile for p.
+func (a fighterAdapter) CheckProfile(p *d2.Player) error {
+	retryClass(p)
+	return a.f.CheckProfile(p)
+}
+
 func (a fighterAdapter) UpkeepCompareField() string { return a.f.UpkeepCompareField() }
 
 func (a fighterAdapter) Clear(ctx context.Context, o bot.ClearOpts) (bot.ClearResult, error) {

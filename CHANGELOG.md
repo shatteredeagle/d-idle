@@ -8,6 +8,10 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- lab night results 2026-11-28b: reruns and ledger verdicts (docs) <!--sg:agent/labops2-->
+- fix14: round-3 HIGH fixes: boss-level kit, fighter reselect, hole hold, merc journal (TASK-1131) <!--sg:agent/fix14-->
+- sec2: scrub leaks (TASK-1125) <!--sg:agent/sec2-->
+- evid1: evidence logs (TASK-1118) <!--sg:agent/evid1-->
 - ledger: refusalPark and resumeAfterDeaths enabled (clean 2 h windows) <!--sg:agent/ledenable-->
 - flipfix2: sandbox aliases, flip status EST, graduate-list checks (TASK-1130) <!--sg:agent/flipfix2-->
 - review 14: round-3 review of merged work (docs) <!--sg:agent/rv5-->

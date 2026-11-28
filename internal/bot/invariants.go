@@ -50,7 +50,7 @@ var invRows = []invRow{
 	{Name: "arbiter-starved", GapSec: 600, Why: "an arbiter intent was outranked for 600 s or more (docs/arbiter.md); only with the arbiter knobs on"},
 	{Name: "aura-off", Secs: 10, Why: "in the field with an aura skill learned and the state line reading no active aura (aura=0) for Secs; only where the backend reports the aura (d2d)"},
 	{Name: "summon-missing", Secs: 10, Why: "in the field with hostiles near, a summon skill learned and its mana in hand, and the state line reading no own minion (pets=0) for Secs; only where the backend reports the count (d2d); soft: the count rule is unverified live"},
-	{Name: "no-combat-profile", GapSec: 300, Why: "soft (a data error, no knob to revert): the fighter has no combat profile for the hero's class and build (Fighter.ProfileErr): it refuses to fight instead of using another class's profile"},
+	{Name: "no-combat-profile", Hard: true, GapSec: 300, Why: "the fighter has no combat profile for the hero's class and build (Fighter.ProfileErr): it refuses to fight instead of using another class's profile and the runner parks the hero in town; hard, so a deploy or flip that loses a profile does not pass its watch"},
 	{Name: "economy-stall", Secs: 7200, Count: 100, Why: "gold in purse and stash under Count for Secs while kills continue"},
 }
 
@@ -492,7 +492,7 @@ func (r *Runner) invTick(snap *d2.Snapshot, c control) {
 	p := snap.Player
 	now := r.e.Clock.Now()
 	t := r.e.Tune
-	f := invFacts{now: now, inTown: p.InTown(), dead: isDead(p), paused: c.paused, parked: r.parkedBoard.Load(),
+	f := invFacts{now: now, inTown: p.InTown(), dead: isDead(p), paused: c.paused, parked: r.parkedBoard.Load() || r.noProfile.Load(),
 		area: p.Area, life: p.Life, maxLife: p.MaxLife, lifePct: p.LifePct(), xp: p.Exp, gold: p.Gold + p.StashGold,
 		drank: r.drank.Load(), drinkPct: t.Combat.DrinkLifePct, chickenPct: t.Combat.ChickenPct}
 	r.mu.Lock()
@@ -518,10 +518,8 @@ func (r *Runner) invTick(snap *d2.Snapshot, c control) {
 			}
 		}
 	}
-	if pe, ok := r.d.Fighter.(interface{ ProfileErr() error }); ok {
-		if err := pe.ProfileErr(); err != nil {
-			r.inv.noteNoProfile(err.Error())
-		}
+	if err := r.profileErr(p); err != nil {
+		r.inv.noteNoProfile(err.Error())
 	}
 	for _, h := range r.inv.tick(f) {
 		r.e.Log.Warn("invariant "+h.Name, "detail", h.Detail)

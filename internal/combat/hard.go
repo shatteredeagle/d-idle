@@ -53,10 +53,10 @@ const manaBurnReach = defaultMeleeRange
 // same pack; the goal's reentry limit would otherwise pause it). R: not measured.
 const manaChickenCooldown = 10 * time.Minute
 
-// manaBurnClose reports whether the mana-burn watch applies: a caster (ManaNeed > 0, the same gate as the potion
+// manaBurnClose reports whether the mana-burn watch applies: a mana user (ManaNeedFor > 0, the same gate as the potion
 // policy) with a Mana Burn monster in melee reach.
 func (f *Fighter) manaBurnClose(p *d2.Player, hs []Target) bool {
-	if p.MaxMana <= 0 || resource.ManaNeed(p.Class) <= 0 {
+	if p.MaxMana <= 0 || resource.ManaNeedFor(p.Class, f.GearBuild) <= 0 {
 		return false
 	}
 	for _, t := range hs {
