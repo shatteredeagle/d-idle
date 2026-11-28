@@ -67,9 +67,12 @@ type Decision struct {
 	// FreshRefused is the reason a fresh game was not taken although the numbers asked for it ("" = not refused).
 	FreshRefused string
 	Hole         bool // nothing is safe: first field, the hero needs help
-	Alts         []Alt
-	Lambda       float64
-	NeedsYou     bool
+	// Hold: the hole's best zone has no margin at all (it prints as 0.0). Walking there is not a fallback; the caller
+	// keeps the hero in town or in the act's first field (live 2026-11-28, L2: Catacombs Level 3 at margin 0.0).
+	Hold     bool
+	Alts     []Alt
+	Lambda   float64
+	NeedsYou bool
 	// CurK is k_zone x k_hero of the current zone (the picked zone when the hero is in none), for the bot's re-ask line.
 	CurK float64
 	line string
@@ -263,6 +266,7 @@ func (l *Ledger) Choose(in Input) (Decision, error) {
 		}
 		pick = best
 		d.Hole, d.NeedsYou = true, true
+		d.Hold = best.best < 0.05 && best.c.Key != in.Current
 		d.Why = Why{WhyHole, "nothing is safe enough: the easiest field, and the hero needs help"}
 	default:
 		pick = elig[0]

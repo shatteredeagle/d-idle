@@ -147,7 +147,7 @@ func TestGapClose(t *testing.T) {
 				t.Fatalf("profile %s has no move row", pr.ProfileID())
 			}
 			tg := Target{Unit: mon(300, 1, 110, 100), Dist: 10, Name: "Fallen"}
-			aimed, err := h.f.gapClose(w.snap, tg)
+			aimed, err := h.f.gapClose(w.snap, tg, nil)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -169,12 +169,12 @@ func TestGapClose(t *testing.T) {
 		}
 		h, w := moveWorld(t, c.class, "", 2, c.skill)
 		for _, d := range []float64{3, 40} { // inside minGap, beyond the range
-			if aimed, _ := h.f.gapClose(w.snap, Target{Unit: mon(300, 1, 100+int(d), 100), Dist: d}); aimed || len(w.casts) > 0 {
+			if aimed, _ := h.f.gapClose(w.snap, Target{Unit: mon(300, 1, 100+int(d), 100), Dist: d}, nil); aimed || len(w.casts) > 0 {
 				t.Fatalf("%v cast at distance %v", c.class, d)
 			}
 		}
 		h, w = moveWorld(t, c.class, "", 2) // skill not learned: refused, counted
-		if aimed, _ := h.f.gapClose(w.snap, Target{Unit: mon(300, 1, 110, 100), Dist: 10}); aimed {
+		if aimed, _ := h.f.gapClose(w.snap, Target{Unit: mon(300, 1, 110, 100), Dist: 10}, nil); aimed {
 			t.Fatalf("%v cast an unknown skill", c.class)
 		}
 	}
@@ -198,3 +198,39 @@ func (m *moveIn) Swing(skill int, at input.Point) error {
 }
 
 func (m *moveIn) CastAt(key string, at input.Point) error { return m.w.CastAt(key, at) }
+
+// mouthAt is a mover whose cave-mouth guard covers the points within r subtiles of c.
+type mouthAt struct {
+	Mover
+	c input.Point
+	r float64
+}
+
+func (m *mouthAt) NearMouth(p input.Point) bool { return pdist(p, m.c) <= m.r }
+
+// Fable review 3 finding 5: a gap landing (Leap Attack, Charge) is a movement and must not end in a cave mouth's
+// trigger area; a gap cast and a whirl leg count as casts of the fight. Two classes for the gap, one whirl build.
+func TestGapAndWhirlAskTheMouthGateAndCountAsCasts(t *testing.T) {
+	for _, c := range []struct {
+		class d2.Class
+		skill int
+	}{{d2.Barbarian, idLeap}, {d2.Paladin, idCharge}} {
+		h, w := moveWorld(t, c.class, "", 2, c.skill)
+		h.f.mv = &mouthAt{Mover: h.f.mv, c: input.Point{X: 110, Y: 100}, r: 3}
+		tg := Target{Unit: mon(300, 1, 110, 100), Dist: 10, Name: "Fallen"}
+		st := newFightState()
+		if aimed, err := h.f.gapClose(w.snap, tg, st); aimed || err != nil || len(w.casts) > 0 {
+			t.Fatalf("%v: gap cast into a cave mouth: aimed %v err %v casts %v", c.class, aimed, err, w.casts)
+		}
+		h.f.mv = &mouthAt{Mover: h.f.mv, c: input.Point{X: 300, Y: 300}, r: 3}
+		if aimed, err := h.f.gapClose(w.snap, tg, st); !aimed || err != nil || st.casts != 1 {
+			t.Fatalf("%v: gap away from the mouth: aimed %v err %v fight casts %d, want one counted cast", c.class, aimed, err, st.casts)
+		}
+	}
+	h, w := moveWorld(t, d2.Barbarian, "", 2, idWhirl)
+	packAt(w, 107, 100, 5)
+	st := newFightState()
+	if acted, err := h.f.whirlTick(w.snap, st); !acted || err != nil || st.casts != 1 {
+		t.Fatalf("whirl leg: acted %v err %v fight casts %d, want one counted cast", acted, err, st.casts)
+	}
+}

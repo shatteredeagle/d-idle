@@ -30,7 +30,7 @@ owns:
   - "docs/unlock-atlas.md"
 exclusive: []
 contracts: []
-result: wired offline and tested on fixtures (cmd/d2bot unlockwire_test.go, two classes); not run against a live game. Missing: alerts row (not merged), ResistGap (no zone resist table), real-table kind-name check.
+result: "wired offline and tested on fixtures (cmd/d2bot unlockwire_test.go, two classes); not run against a live game. Missing: alerts row (not merged), ResistGap (no zone resist table), real-table kind-name check."
 ---
 
 ## Description

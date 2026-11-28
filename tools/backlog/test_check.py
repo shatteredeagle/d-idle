@@ -120,6 +120,24 @@ class T(unittest.TestCase):
         self.assertTrue(any("no owns" in x for x in out))
         self.assertTrue(any("already used" in x for x in out))
 
+    def test_invalid_yaml_front_matter_is_named(self):
+        # the two real defects (TASK-185: unquoted result with ': '; TASK-597: two keys glued on one line)
+        colon = task(185, "a", extra="result: built offline. Missing: alerts row\n")
+        glued = task(597, "b").replace("  - a/b\n", '  - "a/b"exclusive: []\n')
+        out = self.run_dir([colon, glued, task(3, "c", extra='result: "ok. Missing: nothing"\n')])
+        self.assertEqual(len(out), 2, out)
+        self.assertIn("TASK-185 front matter is not valid YAML at line", out[0])
+        self.assertIn("key result", out[0])
+        self.assertIn("TASK-597 front matter is not valid YAML", out[1])
+
+    def test_yaml_findings_shapes(self):
+        ok = ("id: TASK-1\ntitle: >-\n  a: x\n  more: words\nallow-adr: true\nlabels:\n  - bot\n  - 'it''s'\n"
+              "owns: [\"a\", b]\nresult: \"a \\\"q\\\": b\"\nnote: 'x: y'\nempty:\ndeps: []\nlong: \"first\n  second: line\"\nplain: one\n  two")
+        self.assertEqual(check.yaml_findings(ok), [])
+        for bad in ("result: a: b", "result: ends:", 'result: "open', "result: 'a'b", "result: \"a\" b", "x: []y: []",
+                    "labels:\n  - \"a\"b: c", "x: *star", "junk line", "result: \"open\nnext: 1"):
+            self.assertTrue(check.yaml_findings(bad), bad)
+
 
 if __name__ == "__main__":
     unittest.main()

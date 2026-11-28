@@ -149,12 +149,27 @@ func TestConsentHeroAndExpiry(t *testing.T) {
 	if len(lines) != 1 || !strings.Contains(lines[0], "another hero") {
 		t.Fatalf("log lines %q", lines)
 	}
-	if c.Granted("nightmare", "Ann", now) {
-		t.Fatal("a go dropped for the wrong hero must not come back")
+	// Fable review 12 C3: a look by another hero, or by a snapshot with no name, never erases the owner's go, and the
+	// polled read logs the same refusal once.
+	for i := 0; i < 3; i++ {
+		if c.Granted("nightmare", "Bob", now) {
+			t.Fatal("a foreign look used the go")
+		}
 	}
-	if _, err := os.Stat(path); err == nil {
-		t.Fatal("dropped go left its file")
+	if len(lines) != 1 {
+		t.Fatalf("a polled foreign look must log once, got %q", lines)
 	}
+	if c.Granted("nightmare", "", now) {
+		t.Fatal("a snapshot without a hero name used the go")
+	}
+	if !c.Granted("nightmare", "Ann", now) {
+		t.Fatal("a look with another or no hero name erased the owner's go")
+	}
+	if _, err := os.Stat(path); err != nil {
+		t.Fatal("the go's file was removed by a read")
+	}
+	lines = nil
+	c.Keep("")
 	c.Grant("hell", "Ann", now)
 	var c2 Consent // a restart
 	c2.Logf = c.Logf
@@ -164,7 +179,7 @@ func TestConsentHeroAndExpiry(t *testing.T) {
 	if !c2.Granted("hell", "Ann", now.Add(GoTTL-time.Second)) {
 		t.Fatal("a go inside its week was lost")
 	}
-	if c2.Take("hell", "Ann", now.Add(GoTTL)) || len(lines) != 2 || !strings.Contains(lines[1], "ended") {
+	if c2.Take("hell", "Ann", now.Add(GoTTL)) || len(lines) != 1 || !strings.Contains(lines[0], "ended") {
 		t.Fatalf("an ended go was used or not logged: %q", lines)
 	}
 	if err := os.WriteFile(path, []byte(`{"granted":["nightmare"]}`), 0o600); err != nil {

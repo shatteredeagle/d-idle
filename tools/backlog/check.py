@@ -12,6 +12,8 @@ Rules, for every card in backlog/tasks (archived cards live elsewhere):
   - optional planning keys (all cards, keys may be absent): `lane` one of now next later blocked waiting-owner parked; `due` a real YYYY-MM-DD date;
     `epic` a non-empty card id; a parked or waiting-owner card (not Done) carries a `lane_note` reason line
   - card ids (the part of the title before the first colon) are unique; task ids (TASK-N) are unique
+  - the front matter is valid YAML (yaml_findings: an unquoted value with ': ' in it, an unclosed quote, two keys glued on one
+    line); the Backlog CLI answers "Task N not found" for such a card, so it can never be closed
 Exit 0 when clean, 1 when there are findings. Standard library only.
 """
 import re
@@ -67,6 +69,93 @@ def parse(path):
     return fm
 
 
+PLAIN_BAD_START = re.compile(r"[&*!|>%@`#,\]}]|[-?:](\s|$)")
+DQ = re.compile(r'"(?:[^"\\]|\\.)*"\s*(#.*)?')
+SQ = re.compile(r"'(?:[^']|'')*'\s*(#.*)?")
+
+
+def scalar_error(v):
+    """Why `v` (one line, after `key: ` or `- `) is not a YAML scalar; None when it is."""
+    v = v.strip()
+    if not v:
+        return None
+    if v[0] == '"':
+        return None if DQ.fullmatch(v) else "double-quoted value is not closed, or text follows the closing quote"
+    if v[0] == "'":
+        return None if SQ.fullmatch(v) else "single-quoted value is not closed, or text follows the closing quote"
+    if v[0] in "[{":
+        ok = re.fullmatch(r"\[[^\[\]]*\]\s*(#.*)?|\{[^{}]*\}\s*(#.*)?", v)
+        return None if ok else "flow value is not closed, is nested, or text follows it"
+    if PLAIN_BAD_START.match(v):
+        return f"unquoted value starts with {v[0]!r}"
+    if ": " in v or v.endswith(":"):
+        return "unquoted value contains ': ' (quote the whole value)"
+    return None
+
+
+def yaml_findings(fm_text):
+    """Lines of a card's front matter that are not valid YAML, as (line number, key, reason). Covers the subset the
+    Backlog CLI and our tools write: `key: scalar`, `key:` plus `- item` lines, block scalars (`>-`, `|`) and
+    indented continuation lines. Standard library only, so it is stricter than YAML where that is cheap."""
+    out, key, mode, open_q = [], None, None, None
+    for n, line in enumerate(fm_text.splitlines(), 2):  # line 1 of the file is the opening ---
+        if open_q:  # inside a quoted scalar that spans lines
+            body = line.strip()
+            closed = re.fullmatch(r'(?:[^"\\]|\\.)*"\s*(#.*)?', body) if open_q == '"' else re.fullmatch(r"(?:[^']|'')*'\s*(#.*)?", body)
+            if closed:
+                open_q = None
+            elif not line.startswith(" ") and line.strip():
+                out.append((n, key, "quoted value is not closed before the next key"))
+                open_q = None
+            else:
+                continue
+            if closed:
+                continue
+        if not line.strip():
+            continue
+        km = re.match(r"^([A-Za-z_][\w-]*):(?:[ \t]+(.*))?$", line)
+        if km:
+            key, val = km.group(1), (km.group(2) or "").strip()
+            if re.fullmatch(r"[>|][-+]?\d?", val):
+                mode = "block"
+                continue
+            mode = "list" if not val else "scalar"
+            if val[:1] in ("'", '"') and scalar_error(val):
+                rest = val[1:]
+                opened = not re.search(r'(?<!\\)"', rest) if val[0] == '"' else "'" not in rest.replace("''", "")
+                if opened:
+                    open_q = val[0]
+                    continue
+            err = scalar_error(val)
+            if err:
+                out.append((n, key, err))
+            continue
+        if key is None:
+            out.append((n, None, "not a 'key: value' line"))
+            continue
+        if mode == "block" and line.startswith(" "):
+            continue
+        li = re.match(r"^\s*- (.*)$", line)
+        if li and mode == "list":
+            err = scalar_error(li.group(1))
+            if err:
+                out.append((n, key, "list item: " + err))
+            continue
+        if mode == "scalar" and line.startswith(" "):  # plain scalar continued on the next line
+            if ": " in line or line.rstrip().endswith(":"):
+                out.append((n, key, "continuation line contains ': '"))
+            continue
+        out.append((n, key, "not a 'key: value' line, a list item or a continuation"))
+    if open_q:
+        out.append((n, key, "quoted value is never closed"))
+    return out
+
+
+def front_matter(path):
+    m = re.match(r"---\n(.*?)\n---\n", Path(path).read_text(), re.S)
+    return m.group(1) if m else None
+
+
 def first_desc_line(path):
     m = re.search(r"<!-- SECTION:DESCRIPTION:BEGIN -->\n(.*?)\n", Path(path).read_text(), re.S)
     return m.group(1).strip() if m else ""
@@ -106,6 +195,8 @@ def check(tasks_dir):
             findings.append(f"{f.name}: no frontmatter")
             continue
         tid = fm.get("id", "").upper()
+        for n, key, why in yaml_findings(front_matter(f) or ""):
+            findings.append(f"{f.name}: {tid or 'task'} front matter is not valid YAML at line {n}" + (f" (key {key})" if key else "") + f": {why}")
         if tid and tid in ids:
             findings.append(f"{f.name}: task id {tid} already used by {ids[tid]}")
         ids[tid] = f.name

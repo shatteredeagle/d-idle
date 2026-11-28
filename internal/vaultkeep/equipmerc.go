@@ -111,8 +111,8 @@ func (k *Keeper) EquipMerc(ctx context.Context, id string) (Result, bool) {
 	}
 
 	k.repairMerc(ctx) // an order a stop left half done is settled before a new give can displace its piece
-	if k.mercOpen(id) {
-		res.Code, res.Why = CodeInFlight, ReasonInFlight
+	if by := k.heldBy(id); by != "" {
+		res.Code, res.Why = CodeInFlight, ReasonHeld(by)
 		return res, true
 	}
 	if r, ok := st.Get(id); !ok || r.State != vault.Recorded { // the repair finished an earlier give of this record
@@ -135,8 +135,10 @@ func (k *Keeper) EquipMerc(ctx context.Context, id string) (Result, bool) {
 		res.Code, res.Why = "journal", "the order could not be written down first ("+err.Error()+"): nothing was moved"
 		return res, true
 	}
-	// The key makes a repeated create of the same record answer "dup" instead of a second copy (per d2d process: U live).
-	cr, err := k.API.ItemCreate(ctx, in.Hex, d2dctl.CreateOpts{Pack: true, Key: mercKey + id})
+	// The key is per attempt (the order id), not per record (card fix1b, review N5): the fork keeps a key for the life of
+	// its process (U live), so a per-record key made every retry after a refusal answer "dup". A second copy is prevented
+	// by the intent instead: it is open until this attempt is settled, and a settled success retires the record.
+	cr, err := k.API.ItemCreate(ctx, in.Hex, d2dctl.CreateOpts{Pack: true, Key: mercKey + order})
 	if errors.Is(err, d2dctl.ErrVaultDup) {
 		_ = k.mercPut(id, nil)
 		res.Code, res.Why = "dup", "an earlier order already took this item out of the vault: check your backpack and the mercenary"
@@ -181,6 +183,9 @@ func (k *Keeper) EquipMerc(ctx context.Context, id string) (Result, bool) {
 		}
 		// Nothing moved on the mercenary: take the created copy away again, the record stays in the vault.
 		if _, verr := k.API.ItemVault(ctx, cr.ID); verr != nil {
+			if !createAnswered(verr) { // unanswered: the copy may still be there; the intent stays and blocks a retry until the next look
+				return res, true
+			}
 			k.Hand.Protect(uint32(cr.ID))
 			k.note("eqm-"+id, "The mercenary refused the "+rec.Name+" and its copy is still in your backpack ("+verr.Error()+"): drop it.")
 		}

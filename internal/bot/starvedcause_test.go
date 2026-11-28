@@ -29,3 +29,32 @@ func TestStarvedTextNamesTheCause(t *testing.T) {
 		t.Errorf("no winner: %q", got)
 	}
 }
+
+// L6 (live review 2026-11-28): the leveling filler outranked by the quest step is not starved while that step is the
+// board's training slice; outranked by a real quest step, or another source outranked, it still is.
+func TestTrainingStepDoesNotStarveTheLevelingFiller(t *testing.T) {
+	g, _ := boardRig(t, true)
+	level := arbiter.Intent{Source: arbiter.SrcLevel, Kind: "sweep", Reason: "nothing else wanted: level the hero"}
+	d := arbiter.Decision{Chosen: &arbiter.Intent{Source: arbiter.SrcQuest, Kind: "step", Reason: "quest step in Tamoe Highland"}, Starved: []arbiter.Intent{level}}
+	hits := func() int {
+		g.r.inv.mu.Lock()
+		defer g.r.inv.mu.Unlock()
+		n := len(g.r.inv.pending)
+		g.r.inv.pending = nil
+		return n
+	}
+	g.r.noteStarvedAll(d)
+	if n := hits(); n != 1 {
+		t.Fatalf("a real quest step outranks the filler for the limit: want one hit, got %d", n)
+	}
+	g.r.boardTraining.Store(true) // set by boardTrain, cleared when the board runs or awaits a chunk
+	g.r.noteStarvedAll(d)
+	if n := hits(); n != 0 {
+		t.Fatalf("the quest step is the training slice: want no hit, got %d", n)
+	}
+	d.Starved = []arbiter.Intent{{Source: arbiter.SrcGoldFarm, Kind: "farm", Reason: "gold"}}
+	g.r.noteStarvedAll(d)
+	if n := hits(); n != 1 {
+		t.Fatalf("another source is still starved while training: got %d", n)
+	}
+}
