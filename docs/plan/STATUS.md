@@ -43,6 +43,7 @@
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | cellar3gate | in-progress | - | `internal/nav/exit.go`<br>`internal/nav/cellar3gate_test.go`<br>`internal/questboard/`<br>`docs/probes/cellar3-gate-capture.md` | - |
 | holereach | proposed | - | `internal/bot/zonemodel.go`<br>`internal/bot/zonemodel_test.go` | - |
+| xplostfalse | proposed | - | `internal/questboard/auto.go`<br>`internal/questboard/auto_test.go`<br>`internal/bot/observe.go`<br>`internal/bot/xploss_test.go`<br>`internal/bot/fixrestart_test.go`<br>`internal/bot/relaunch.go`<br>`internal/d2denv`<br>`cmd/d2bot/d2dbackend.go` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
@@ -186,6 +187,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 98a9c9be9 11-27 21:56 `Merge agent/xplostfalse: xplostfalse: believe an xp fall only when repeated, relaunch-aware Save and Exit level, auto-start held-back reasons (TASK-1089)` (xplostfalse)
+- da6cf18c4 11-27 21:53 `Merge branch 'main' into xplostfalse` (-)
 - d83be71b1 11-27 21:46 `Merge agent/holereach: holereach: drop unreachable hole zones, hole fallback needs the kit (TASK-1088)` (holereach)
 - b539847b9 11-27 21:45 `Merge branch 'main' into holereach` (-)
 - 0f7ecea7f 11-27 21:36 `Merge agent/postdeploy2: postdeploy2: second post-deploy audit (docs)` (postdeploy2)
@@ -194,6 +197,4 @@
 - 0f92b2853 11-27 21:27 `Merge branch 'main' into townapply` (-)
 - db2f6c04f 11-27 21:17 `Merge agent/smetown: smetown: SME advice on town supply profiles (TASK-765)` (smetown)
 - 912f71256 11-27 21:16 `Merge branch 'main' into smetown` (-)
-- e3ad47351 11-27 21:12 `Merge agent/cardclose4: cardclose4: card status sync after the afternoon merges` (cardclose4)
-- 263da1e33 11-27 21:10 `Merge remote-tracking branch 'origin/main' into agent/cardclose4` (-)
 <!-- statusgen:end -->
