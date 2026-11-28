@@ -130,7 +130,6 @@ docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-extras.jsonl.gz  gaterun  gate
 backlog/tasks/task-1107 - act2night-three-Act-2-stepexec-drill-findings-Duriel-stall-shaft-road-without-a-portal-potion-not-drunk-in-the-cube-drill.md  credit-runner  summonerstall
 backlog/tasks/task-726 - dlv-cast-verbs-input-caps-cast-unit-cast-point-cast-hold.md  live-agent  inputl3
 backlog/tasks/task-765 - town12-SME-review-of-the-supply-profile-numbers-advice-only.md  live-agent  town11
-cmd/d2bot/  credit-runner  fix8b
 cmd/d2bot/adapters.go  credit-runner  cainfix3
 cmd/d2bot/agencydrive_test.go  live-agent  agencyp1b
 cmd/d2bot/agencywire.go  live-agent  agencyp1b
@@ -147,8 +146,6 @@ cmd/d2bot/ladder.go  live-agent  pgtaps
 cmd/d2bot/live.go  credit-runner  campaign1
 cmd/d2bot/live.go  live-agent  agencyp1b
 cmd/d2bot/necroplay_test.go  live-agent  epic-class-necromancer
-cmd/d2bot/opscmd.go  credit-runner  sec2
-cmd/d2bot/opslog_sec_test.go  credit-runner  sec2
 cmd/d2bot/survivalwire.go  live-agent  live1
 cmd/d2scenario  credit-runner  pgfix
 cmd/d2scenario/  credit-runner  drillskills
@@ -176,9 +173,7 @@ deploy/d2d-container/compose.friends.yml  credit-runner  ghcrpublish
 deploy/d2d-container/compose.tester.yml  credit-runner  ghcrpublish
 deploy/d2d-container/context.sh  credit-runner  ghcrpublish
 deploy/d2d-container/tester-report.sh  credit-runner  fix4
-deploy/d2d-container/tester-report.sh  credit-runner  sec2
 deploy/d2d-container/tester_image_test.go  credit-runner  ghcrpublish
-deploy/d2d-container/tester_report_sec_test.go  credit-runner  sec2
 deploy/d2d-container/tester_report_test.go  credit-runner  fix4
 docs/arbiter.md  live-agent  arbmig
 docs/arbiter.md  live-agent  ticklog
@@ -218,7 +213,6 @@ docs/epics/epic-nightmare.md  live-agent  epic-nightmare
 docs/epics/epic-normal.md  live-agent  epic-normal
 docs/friend-checklist-0.1.2.md  credit-runner  cut012
 docs/friend-guide.md  credit-runner  cut012
-docs/invariants.md  credit-runner  fix8b
 docs/inventory-actions.md  credit-runner  campaign1
 docs/knobs.md  credit-runner  cainfix3
 docs/knobs.md  credit-runner  dlv-upkeep-state
@@ -229,7 +223,6 @@ docs/ops/docker-volumes.md  credit-runner  fix4
 docs/probes/cellar3-gate-capture.md  live-agent  cellar3gate
 docs/probes/checkpoint-live-drill.md  live-agent  ckptlive
 docs/probes/classorder1.md  user  classorder1
-docs/probes/evidence-logs-2026-11-28.md  credit-runner  evid1
 docs/probes/flipwave2.md  live-agent  flipwave2
 docs/probes/h1-baseline.md  user  h1baseline
 docs/probes/h3-verdict.md  user  h3verdict
@@ -272,7 +265,6 @@ docs/tester-registry.md  credit-runner  ghcrpublish
 docs/town.md  live-agent  town11
 docs/ui/redesign-2026-11-14/stash-anywhere.md  credit-runner  stashany
 docs/upstream/bodies/monster-block-body.md  credit-runner  decomp43
-internal/access/  credit-runner  sec2
 internal/admit/  credit-runner  fix14
 internal/agency/drive.go  live-agent  agencyp1b
 internal/agency/drive_test.go  live-agent  agencyp1b
@@ -285,9 +277,7 @@ internal/arbiter/replay_ticklog_test.go  live-agent  ticklog
 internal/bot/  credit-runner  act2night
 internal/bot/  credit-runner  cainfix3
 internal/bot/  credit-runner  cainspin
-internal/bot/  credit-runner  evid1
 internal/bot/  credit-runner  fix14
-internal/bot/  credit-runner  fix8b
 internal/bot/  credit-runner  summonerstall
 internal/bot/  live-agent  live1
 internal/bot/arbiter_control.go  live-agent  arbmig
@@ -318,9 +308,7 @@ internal/combat/  credit-runner  dlv-cleanup
 internal/combat/  credit-runner  dlv-mark
 internal/combat/  credit-runner  dlv-upkeep-state
 internal/combat/  credit-runner  drilldrivers
-internal/combat/  credit-runner  evid1
 internal/combat/  credit-runner  fix14
-internal/combat/  credit-runner  fix8b
 internal/combat/  live-agent  dlv-aim-corpse
 internal/combat/  live-agent  dlv-aim-point
 internal/combat/  live-agent  dlv-move-melee
@@ -363,8 +351,6 @@ internal/decide/queue_test.go  credit-runner  qqueue
 internal/decide/variants.go  credit-runner  qdensity
 internal/decide/variants_test.go  credit-runner  qdensity
 internal/diffready/  credit-runner  fix4
-internal/diffready/consent.go  credit-runner  sec2
-internal/diffready/mode_sec_test.go  credit-runner  sec2
 internal/env/tuning_agency.go  live-agent  agencyp1b
 internal/env/tuning_bot.go  live-agent  arbmig
 internal/env/tuning_bot.go  live-agent  ticklog
@@ -381,7 +367,6 @@ internal/invdesk/mercverbs.go  credit-runner  uib9
 internal/invdesk/mercverbs_test.go  credit-runner  uib9
 internal/invdesk/sets.go  credit-runner  uib9
 internal/levelplan/necro_test.go  live-agent  epic-class-necromancer
-internal/logx/  credit-runner  sec2
 internal/logx/sink.go  credit-runner  fix4
 internal/logx/sink_test.go  credit-runner  fix4
 internal/nav/  credit-runner  navbarracks
@@ -403,7 +388,6 @@ internal/questboard/  live-agent  cellar3gate
 internal/questboard/  live-agent  live1
 internal/questboard/def.go  credit-runner  cainfix3
 internal/resource  live-agent  town5
-internal/resource/  credit-runner  fix8b
 internal/scenario  credit-runner  pgfix
 internal/scenario/  credit-runner  drillskills
 internal/scenario/earned.go  credit-runner  pgearned
@@ -419,7 +403,6 @@ internal/scenario/setup.go  credit-runner  pgearned
 internal/scenario/taps.go  live-agent  pgtaps
 internal/supply  live-agent  town10
 internal/supply/  credit-runner  townnight
-internal/support/  credit-runner  sec2
 internal/survival/  live-agent  live1
 internal/task  live-agent  bsmdef
 internal/task/  credit-runner  durieltyrael
@@ -432,7 +415,6 @@ internal/task/world.go  credit-runner  cainfix3
 internal/town  live-agent  town11
 internal/town  live-agent  town5
 internal/town/  credit-runner  fix14
-internal/town/  credit-runner  fix8b
 internal/town/  credit-runner  townnight
 internal/town/chores.go  credit-runner  inputl4
 internal/town/chores.go  live-agent  townflip
@@ -457,7 +439,6 @@ internal/watch/gate.go  credit-runner  fix4
 internal/watch/layout.go  credit-runner  uis1
 internal/watch/layout.go  credit-runner  uis6
 internal/watch/layout_test.go  credit-runner  uis1
-internal/watch/logtab.go  credit-runner  sec2
 internal/watch/logtab.go  credit-runner  uis6
 internal/watch/logtab_test.go  credit-runner  uis6
 internal/watch/onboardingtour_test.go  credit-runner  onboardtour
@@ -468,7 +449,6 @@ internal/watch/serve.go  credit-runner  fix4
 internal/watch/serve.go  credit-runner  uis6
 internal/watch/serve_test.go  credit-runner  fix4
 internal/watch/stance_test.go  live-agent  epic-class-necromancer
-internal/watch/surface_sec_test.go  credit-runner  sec2
 internal/watch/testdata/areamap/  credit-runner  uis6
 internal/watch/testdata/logpanel/  credit-runner  uis6
 internal/watch/testdata/onboarding_tour_test.cjs  credit-runner  onboardtour
@@ -519,7 +499,6 @@ tools/friendpack/install.sh  credit-runner  cut012
 tools/friendpack/pack_test.go  credit-runner  cut012
 tools/provingground/arbiter-outcomes/  live-agent  arbmig
 tools/provingground/earned  credit-runner  pgearned
-tools/provingground/golden/  credit-runner  evid1
 tools/provingground/golden/setup-played.tsv  credit-runner  drillskills
 tools/provingground/pgenv.sh  credit-runner  pgledgeron
 tools/provingground/pgenv_test.sh  credit-runner  pgledgeron
@@ -531,13 +510,11 @@ tools/provingground/scenarios/cain.json  credit-runner  cainfix3
 tools/provingground/scenarios/cain.json  credit-runner  pgearned
 tools/provingground/scenarios/combatdrills.json  credit-runner  drilldrivers
 tools/provingground/scenarios/combatdrills.json  credit-runner  drillskills
-tools/provingground/scenarios/evidence.json  credit-runner  evid1
 tools/provingground/scenarios/necro-acts.json  live-agent  epic-class-necromancer
 tools/provingground/scenarios/necro-epic.json  live-agent  epic-class-necromancer
 tools/provingground/scenarios/necro.json  credit-runner  drilldrivers
 tools/provingground/scenarios/necro.json  credit-runner  drillskills
 tools/provingground/scenarios/stepexec-act2chunks.json  credit-runner  act2night
-tools/provingground/scenarios/tiers.json  credit-runner  evid1
 tools/provingground/scenarios/tiers.json  live-agent  epic-class-necromancer
 tools/provingground/scenarios/townplan.json  credit-runner  townnight
 tools/provingground/scenarios/townplan.json  live-agent  town5

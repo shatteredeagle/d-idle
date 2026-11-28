@@ -61,6 +61,8 @@ type ExplainView struct {
 	Invariants []InvCounter `json:"invariants"`
 	// Knobs are the live values of every knob (set by the wiring, not by the runner); tools/flip --verify reads the flipped one.
 	Knobs map[string]float64 `json:"knobs,omitempty"`
+	// Notices are standing operator warnings (a repaired character file, low disk space); set by the wiring.
+	Notices []string `json:"notices,omitempty"`
 }
 
 type explainState struct {
