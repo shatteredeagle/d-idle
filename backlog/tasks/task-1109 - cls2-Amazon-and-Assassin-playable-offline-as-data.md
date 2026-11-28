@@ -1,10 +1,11 @@
 ---
 id: TASK-1109
 title: 'cls2: Amazon and Assassin playable offline as data'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T05:30:00Z'
+updated_date: '2026-11-28T08:24:00Z'
 labels:
   - bot
   - bot-fix

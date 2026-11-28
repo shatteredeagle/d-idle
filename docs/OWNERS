@@ -134,7 +134,6 @@ backlog/tasks/task-185 - unlockwire-wire-bestiary-risk-order-queue-and-atlas-int
 backlog/tasks/task-597 - vaultv7b-wire-the-ETHER-wallet-Vault-page-upgrade-UI-earn-call-sites.md  pro-runner  ops4
 backlog/tasks/task-726 - dlv-cast-verbs-input-caps-cast-unit-cast-point-cast-hold.md  live-agent  inputl3
 backlog/tasks/task-765 - town12-SME-review-of-the-supply-profile-numbers-advice-only.md  live-agent  town11
-cmd/d2bot/  credit-runner  cls2
 cmd/d2bot/  credit-runner  fix7b
 cmd/d2bot/adapters.go  credit-runner  cainfix3
 cmd/d2bot/agencydrive_test.go  live-agent  agencyp1b
@@ -167,7 +166,6 @@ cmd/d2scenario/tap.go  live-agent  pgtaps
 cmd/d2scenario/tap_test.go  live-agent  pgtaps
 cmd/d2scenario/validate.go  credit-runner  pgearned
 data/build-cap-ratchet.json  credit-runner  cls1
-data/capabilities/  credit-runner  cls2
 data/capabilities/  live-agent  dlv-stance-pack
 data/darklaunch-cap.json  credit-runner  led1
 data/darklaunch.json  credit-runner  dlv-upkeep-state
@@ -192,7 +190,6 @@ docs/arbiter.md  live-agent  ticklog
 docs/away-drill.md  live-agent  awaydrill
 docs/campaign.md  credit-runner  campaign1
 docs/classes/  credit-runner  cls1
-docs/classes/  credit-runner  cls2
 docs/classes/necromancer-gap-2026-11-27.md  live-agent  epic-class-necromancer
 docs/combat.md  credit-runner  cainfix3
 docs/contracts/decision-queue.md  credit-runner  qqueue
@@ -278,7 +275,6 @@ docs/research/fidelity-vendor-probe.md  live-agent  fidprobe-vendor
 docs/research/merc-gear.md  credit-runner  uib9
 docs/research/upstream-next.md  credit-runner  upstream-next
 docs/session-record.md  live-agent  sessions
-docs/sme/capability-gaps.md  credit-runner  cls2
 docs/t0-variants.md  credit-runner  qdensity
 docs/tester-guide.md  credit-runner  testerpack
 docs/tester-licence.md  credit-runner  testerlicence
@@ -329,7 +325,6 @@ internal/bot/zonemodel.go  credit-runner  holereach
 internal/bot/zonemodel_test.go  credit-runner  holereach
 internal/campaign/  credit-runner  campaign1
 internal/combat/  credit-runner  cainfix3
-internal/combat/  credit-runner  cls2
 internal/combat/  credit-runner  dlv-cleanup
 internal/combat/  credit-runner  dlv-mark
 internal/combat/  credit-runner  dlv-upkeep-state
@@ -355,7 +350,6 @@ internal/combat/portalverb.go  live-agent  inputl3
 internal/combat/portalverb_test.go  live-agent  inputl3
 internal/combat/whirl.go  credit-runner  sweep1
 internal/d2/  credit-runner  cls1
-internal/d2/  credit-runner  cls2
 internal/d2/classtraits.json  credit-runner  cls1
 internal/d2dcombat/  live-agent  dlv-press
 internal/d2dctl/fake/fake.go  credit-runner  inputl4
@@ -371,7 +365,6 @@ internal/d2dinput/useitem.go  live-agent  inputl3
 internal/d2dworld/  credit-runner  navbarracks
 internal/data/  credit-runner  dlv-upkeep-state
 internal/decide/  credit-runner  cls1
-internal/decide/  credit-runner  cls2
 internal/decide/build_test.go  live-agent  epic-class-necromancer
 internal/decide/catalogue.json  live-agent  epic-class-necromancer
 internal/decide/firsts_test.go  live-agent  epic-class-necromancer
@@ -404,7 +397,6 @@ internal/input/useitem_test.go  live-agent  inputl3
 internal/invdesk/mercverbs.go  credit-runner  uib9
 internal/invdesk/mercverbs_test.go  credit-runner  uib9
 internal/invdesk/sets.go  credit-runner  uib9
-internal/leveler/  credit-runner  cls2
 internal/levelplan/  credit-runner  cls1
 internal/levelplan/necro_test.go  live-agent  epic-class-necromancer
 internal/logx/sink.go  credit-runner  fix4
@@ -415,7 +407,6 @@ internal/nav/  live-agent  dlv-move-tele
 internal/nav/cellar3gate_test.go  live-agent  cellar3gate
 internal/nav/exit.go  live-agent  cellar3gate
 internal/plandata/  credit-runner  cls1
-internal/plandata/  credit-runner  cls2
 internal/plandata/act2plan.json  live-agent  epic-class-necromancer
 internal/plandata/build-necromancer_leveling_normal30.json  live-agent  epic-class-necromancer
 internal/plandata/build-necromancer_summoner_endgame90.json  live-agent  epic-class-necromancer
@@ -543,7 +534,6 @@ tools/friendpack/compose.yml  credit-runner  cut012
 tools/friendpack/didle  credit-runner  cut012
 tools/friendpack/install.sh  credit-runner  cut012
 tools/friendpack/pack_test.go  credit-runner  cut012
-tools/provingground/  credit-runner  cls2
 tools/provingground/arbiter-outcomes/  live-agent  arbmig
 tools/provingground/earned  credit-runner  pgearned
 tools/provingground/golden/  credit-runner  cls1
