@@ -124,6 +124,7 @@ type Fighter struct {
 	auraDirty    bool           // death or area change: the aura must be applied again
 	auraPotions  int            // healing and rejuvenation potions in the belt, read by keepAura
 	auraPotKnown bool           // the snapshot had an inventory
+	auraFightAt  time.Time      // the last keepAura call with a target (auraHold)
 	auraCrowd    int            // hostiles close, set by the fight loop before KeepAura (AuraPref.NeedsCrowd)
 	lifePrice    lifePriceState // noteLifePrice, read by attackSkills
 	necro        necroState
