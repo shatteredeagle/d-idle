@@ -241,7 +241,6 @@ docs/probes/provingground-countess-2026-11-20.md  credit-runner  pgpage
 docs/probes/provingground-pgfix4-2026-11-20.md  credit-runner  pgpage
 docs/probes/provingground-run-2026-11-19.md  credit-runner  pgpage
 docs/probes/ready-audit.md  live-agent  ready-audit
-docs/probes/review-sweep-2026-11-28.md  credit-runner  sweep1
 docs/probes/review-sweep2-2026-11-28.md  credit-runner  sweep2
 docs/probes/test-characters.md  live-agent  fid-fixtures
 docs/probes/town-plan-stage3-2026-11-22.md  live-agent  town5
@@ -298,7 +297,6 @@ internal/bot/arbloop_test.go  live-agent  arbloop
 internal/bot/broke.go  live-agent  town5
 internal/bot/diffready.go  credit-runner  fix4
 internal/bot/diffready_test.go  credit-runner  fix4
-internal/bot/diffready_test.go  credit-runner  sweep1
 internal/bot/earlyroute.go  credit-runner  sweep2
 internal/bot/goal.go  live-agent  arbloop
 internal/bot/guided.go  credit-runner  campaign1
@@ -334,14 +332,10 @@ internal/combat/  live-agent  dlv-whirl
 internal/combat/aura.go  live-agent  agencyp1b
 internal/combat/classdata/profiles.json  live-agent  epic-class-necromancer
 internal/combat/drive_test.go  live-agent  agencyp1b
-internal/combat/fight.go  credit-runner  sweep1
 internal/combat/fighter.go  live-agent  agencyp1b
 internal/combat/fighter.go  live-agent  inputl3
-internal/combat/move.go  credit-runner  sweep1
-internal/combat/move_test.go  credit-runner  sweep1
 internal/combat/portalverb.go  live-agent  inputl3
 internal/combat/portalverb_test.go  live-agent  inputl3
-internal/combat/whirl.go  credit-runner  sweep1
 internal/d2dcombat/  live-agent  dlv-press
 internal/d2dctl/fake/fake.go  credit-runner  inputl4
 internal/d2dctl/fake/fake.go  live-agent  inputl3
@@ -369,7 +363,6 @@ internal/decide/queue_test.go  credit-runner  qqueue
 internal/decide/variants.go  credit-runner  qdensity
 internal/decide/variants_test.go  credit-runner  qdensity
 internal/diffready/  credit-runner  fix4
-internal/diffready/  credit-runner  sweep1
 internal/env/tuning_agency.go  live-agent  agencyp1b
 internal/env/tuning_bot.go  live-agent  arbmig
 internal/env/tuning_bot.go  live-agent  ticklog
@@ -455,7 +448,6 @@ internal/vaultkeep/equipdirect.go  credit-runner  sweep2
 internal/vaultkeep/sweep2_test.go  credit-runner  sweep2
 internal/watch/areamap_test.go  credit-runner  uis6
 internal/watch/difficultydesk.go  credit-runner  fix4
-internal/watch/difficultydesk.go  credit-runner  sweep1
 internal/watch/difficultydesk_test.go  credit-runner  fix4
 internal/watch/gate.go  credit-runner  fix4
 internal/watch/layout.go  credit-runner  uis1
