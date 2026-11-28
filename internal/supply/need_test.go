@@ -48,3 +48,33 @@ func jsonDecoder(s string) *json.Decoder {
 	d.DisallowUnknownFields()
 	return d
 }
+
+// SME review 2026-11-27: blood_raven mana 4 (high), duriel, catacombs, tristram, countess (medium), andariel tier floor (medium).
+func TestSMEProfileRows(t *testing.T) {
+	type want struct{ heal, portal, mana, gold, tier int }
+	cases := map[string]want{
+		"blood_raven": {4, 2, 4, 250, 0},
+		"duriel":      {8, 2, 4, 4500, 0},
+		"catacombs":   {6, 2, 2, 0, 0},
+		"tristram":    {4, 2, 0, 0, 0},
+		"countess":    {6, 2, 2, 0, 0},
+		"andariel":    {8, 1, 3, 3000, 2},
+	}
+	for prof, w := range cases {
+		for name, in := range builds {
+			in.BeltSlots = 12
+			n, err := NeedFor("x", prof, in)
+			if err != nil {
+				t.Fatalf("%s: %v", prof, err)
+			}
+			mana := w.mana
+			if name == "pal" || prof == "tristram" {
+				mana = 0 // mana line applies only to a build that uses mana potions
+			}
+			got := want{n.Lines[Healing].Min, n.Lines[Portal].Min, n.Lines[Mana].Min, n.Lines[GoldCarry].Min, n.Lines[Healing].TierFloor}
+			if got != (want{w.heal, w.portal, mana, w.gold, w.tier}) {
+				t.Errorf("%s/%s: got %+v", prof, name, got)
+			}
+		}
+	}
+}
