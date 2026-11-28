@@ -1,8 +1,10 @@
 package bot
 
 import (
+	"strings"
 	"testing"
 
+	"d2lod-bot/internal/admit"
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/questboard"
 )
@@ -59,5 +61,60 @@ func TestParkedBossChunkAreaIsNoLevelingCandidate(t *testing.T) {
 				t.Fatal("Try again must give the area back")
 			}
 		})
+	}
+}
+
+// Review 11 N8 (card sweep2): every road row's level and life floor is asked before any row's kit. Before: a caster under
+// Duriel's life floor and short of potions was told "kit" by the tombs row, made the trip and was then refused for life.
+// The function beside the old judge answers the same (shadow differ 0). The melee floor sits on the first row: control.
+func TestEarlyRoadAsksEveryFloorBeforeAnyKit(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		g := admitRig(t, class, 30, 46, 176, 0, false, 0)
+		s := g.r.latest()
+		why, kitOnly := g.r.earlyRouteCheck(s, 73)
+		if !strings.Contains(why, "life 220 needed") || kitOnly {
+			t.Fatalf("%v: want the life floor and no kit trip, got %q kitOnly=%v", class, why, kitOnly)
+		}
+		if got := g.r.admitEnter(s, 73); got != why {
+			t.Fatalf("%v: admitEnter %q, old %q", class, got, why)
+		}
+		if ex := g.r.admissionExplain(); ex.Differ != 0 {
+			t.Fatalf("%v: counters %+v, want differ 0", class, ex)
+		}
+	}
+}
+
+// Review 7 admission (card sweep2): the kit of an early road is an entry rule in the function too. Before: the old judge
+// let a hero inside the Maggot Lair go on with a thinned kit and the function refused it (a new-only cell at every ask),
+// so bot.admission 1 would have brought back the park of the 2026-11-28 lab night.
+func TestAdmissionKitIsAnEntryRuleLikeTheOldJudge(t *testing.T) {
+	const lair1, lair3 = 62, 64
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		for _, admission := range []int{0, 1} {
+			g := admitRig(t, class, 30, lair1, 1400, 4, false, admission)
+			g.w.set(func(w *world) { w.maxL = 1400 })
+			g.r.poll()
+			s := g.r.latest()
+			if old := g.r.earlyRouteWhy(s, lair3); old != "" {
+				t.Fatalf("%v: the old judge closes the road from inside: %q", class, old)
+			}
+			if got := g.r.admitEnter(s, lair3); got != "" {
+				t.Fatalf("%v admission %d: admitEnter refuses a hero on the road: %q", class, admission, got)
+			}
+			if ex := g.r.admissionExplain(); ex.Differ != 0 || ex.NewOnly != 0 {
+				t.Fatalf("%v admission %d: counters %+v, want differ 0", class, admission, ex)
+			}
+		}
+	}
+}
+
+// Review 11 N8: the "both refuse with different words" cell has its own counter.
+func TestAdmissionShadowCountsTheWordsCell(t *testing.T) {
+	g := admitRig(t, d2.Paladin, 12, 2, 176, 4, true, 0)
+	ref := admit.Verdict{Refused: true, Why: "new words", Row: "row", Need: "needs_potions"}
+	g.r.admitNote(3, admit.Level, "old words", ref, false)
+	g.r.admitNote(3, admit.Level, "", ref, false)
+	if ex := g.r.admissionExplain(); ex.Words != 1 || ex.Differ != 2 || ex.NewOnly != 1 {
+		t.Fatalf("counters %+v", ex)
 	}
 }
