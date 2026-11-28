@@ -250,7 +250,7 @@ func (w *survivalShadow) judge(s *d2.Snapshot, area int, diff string, potions in
 		return bot.ZoneVerdict{}, err
 	}
 	lines := d.Line()
-	v := bot.ZoneVerdict{Area: d.Area, Fresh: d.Fresh, Hole: d.Hole, Margin: d.Margin, Why: d.Why.Text, K: d.CurK}
+	v := bot.ZoneVerdict{Area: d.Area, Fresh: d.Fresh, Hole: d.Hole, Hold: d.Hold, Margin: d.Margin, Why: d.Why.Text, K: d.CurK}
 	var merc *survival.ReviveDecision
 	if mercDead {
 		alive := hero
