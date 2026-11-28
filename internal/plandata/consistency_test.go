@@ -71,7 +71,7 @@ func TestBuildTablesConsistent(t *testing.T) {
 	if err := json.Unmarshal(capdata.JSON, &caps); err != nil {
 		t.Fatal(err)
 	}
-	var capHits, hits []string
+	capHits, hits := []string{}, []string{}
 	seen := map[string]bool{}
 	add := func(list *[]string, format string, a ...any) {
 		s := fmt.Sprintf(format, a...)
