@@ -217,6 +217,23 @@ Run with its own work directory (`FS_DIR`), bot built from this tree (V `d2bot s
 
 Correction to the first night's doc: its arbiter row was not on bot `2f2e092c3`. `featuresoak.py run` does not build; it runs `d2bot.base` of the shared soak directory, whose file date is 2026-11-26 16:46, and the first night's soak logs say `version=dev` (V both; S that nothing rebuilt and restored the file in between). So the first night compared the arbiter on a two day old bot.
 
+## Final sweep on the head of main (03:45 to 04:30 EST)
+
+Bot: main `20d1fc70f` (adds sweep2, zone5, cls2, grad1 after nf3b; V `bot_commit` `dbc5c7fe0`, the merge of it). One run per row, to see that the rows the flip lines cite still hold on the newest main.
+
+| scenario | class/seed | result | run dir |
+|---|---|---|---|
+| board.sm.restart-mid-chain, stop-cascades, stop-idempotent, busy-second-quest, start-idempotent, one-head | Paladin 11 | GREEN x6 | `20261128-034453` |
+| the same six, and board.park.persist-restart | Sorceress 3 | GREEN x7 (second pass) | `20261128-041229` |
+| town.plan belt-refill-from-pack, sell-keeps-need, scroll-hoard, broke-after-bank (`town.plan` 4) | Paladin 11, Sorceress 3 | GREEN x8 | `20261128-034520`, `20261128-035002` |
+| cain.chain | Paladin 11 | GREEN (459 s wall) | `20261128-035420` |
+| cain.scroll.stepexec, cain.read.stepexec, drill.act2.assemble.stepexec, drill.act2.cube.stepexec, drill.act2.shaft.stepexec | Paladin 11 | GREEN x5 | `20261128-034550` |
+| drill.act2.duriel.stepexec | Paladin 11 | BLOCKED (0 of 10 this night) | same dir |
+| drill.act2.summoner.stepexec | Paladin 11 | BLOCKED | third shape: after the journal step `auto-finish summoner/kill_summoner: the quest reads done, the stale run was closed`, then the campaign stalls (no fresh game in an attached lab game) and the bot exits, so the row reads BLOCKED although the chunk closed. The three runs of this drill on three builds ended three ways (busy loop, RED on the word 0x2006, BLOCKED after an auto-finish); `20261128-035244` |
+| nav.barracks-return, knobs off | Paladin 11 | RED | `k3-035512` |
+
+The first Sorceress pass of this sweep (`20261128-035802`) is void: the root file system of the host ran full at about 04:05 (`no space left on device` on every result file), see the operator notes.
+
 ## What the fixes turned green (summary)
 
 | fix | lab result |
@@ -238,10 +255,10 @@ cain.chain Paladin 11: 5 GREEN of 5 this night over three bot builds (two pairs 
 
 | row | criteria | evidence of this night | verdict |
 |---|---|---|---|
-| `quests.boardSM` | Restart drill green with boardSM 1 (a park survives); scenario/drill green | board.park.persist-restart Sorceress 3: 6 GREEN of 6 (`20261128-012548`, `20261128-024538`), the park is kept after the restart. board.sm.restart-mid-chain: GREEN 3 of 3 Paladin 11 (`20261128-032256`) and 3 of 3 Sorceress 3 (`20261128-024619`), plus Paladin 12 and 13. The six active board.sm rows GREEN on both classes. Also GREEN on both classes: handin.field-tap, handin.without-run, hold.broke, stale-accept-unblocks, view.reason-always | MET for the restart drill, with four caveats the coordinator must weigh: (1) the assertions and trigger times of five board rows were changed this same night by the operator who ran them; (2) the surviving park is a `gave_up` park of one class, the Paladin setup never parks; (3) board.hold.restock, hold.restock-stash-gold and retry.runs-a-step are RED on both classes and not triaged to a cause; (4) TASK-1120 is open |
-| `town.plan` stage 4 | stage scenario set green (owner looks before stages 3 to 5, ADR 0028) | belt-refill-from-pack, sell-keeps-need, scroll-hoard, broke-after-bank: GREEN on Paladin 11 and Sorceress 3 on fix-level main (`20261128-003041`, `-004424`, `-015337`, `-015436`, `-015616`, `-015803`). malus-errand-gold RED for a setup reason (hero too weak for the road) | MET for the four stage 4 scenarios; the owner's look of ADR 0028 comes first |
+| `quests.boardSM` | Restart drill green with boardSM 1 (a park survives); scenario/drill green | board.park.persist-restart Sorceress 3: 7 GREEN of 7 over four bot builds (`20261128-012548`, `20261128-024538`, `20261128-041229`), the park is kept after the restart. board.sm.restart-mid-chain: GREEN 3 of 3 Paladin 11 (`20261128-032256`) and 3 of 3 Sorceress 3 (`20261128-024619`), plus Paladin 12 and 13. The six active board.sm rows GREEN on both classes, again on the head of main (final sweep). Also GREEN on both classes: handin.field-tap, handin.without-run, hold.broke, stale-accept-unblocks, view.reason-always | MET for the restart drill, with four caveats the coordinator must weigh: (1) the assertions and trigger times of five board rows were changed this same night by the operator who ran them; (2) the surviving park is a `gave_up` park of one class, the Paladin setup never parks; (3) board.hold.restock, hold.restock-stash-gold and retry.runs-a-step are RED on both classes and not triaged to a cause; (4) TASK-1120 is open |
+| `town.plan` stage 4 | stage scenario set green (owner looks before stages 3 to 5, ADR 0028) | belt-refill-from-pack, sell-keeps-need, scroll-hoard, broke-after-bank: GREEN on Paladin 11 and Sorceress 3 (`20261128-003041`, `-004424`, `-015337`, `-015436`, `-015616`, `-015803`), and all eight again on the head of main (`20261128-034520`, `-035002`). malus-errand-gold RED for a setup reason (hero too weak for the road) | MET for the four stage 4 scenarios; the owner's look of ADR 0028 comes first |
 | `town.plan` stage 5 | stage scenario set green | short-gold-handover GREEN x4; one-visit RED x4; gold-short-priorities pending | NOT met |
-| `quests.stepExec` | four scenarios green 2 of 3 each | cain.scroll.stepexec 3 of 3, cain.read.stepexec 3 of 3, drill.act2.assemble.stepexec 3 of 3 (`20261128-014714`); drill.act2.duriel.stepexec 0 of 9 | NOT met (3 of 4; TASK-1126) |
+| `quests.stepExec` | four scenarios green 2 of 3 each | cain.scroll.stepexec 3 of 3, cain.read.stepexec 3 of 3, drill.act2.assemble.stepexec 3 of 3 (`20261128-014714`); drill.act2.duriel.stepexec 0 of 10 | NOT met (3 of 4; TASK-1126) |
 | `nav.fullGrid` | A/B nav drill: no stuck regressions on 5 areas | two passes, two seeds: 4 areas GREEN in both arms, the fifth RED in both arms; `nav stuck` lines up on hop 33-34 (32 to 36, 14 to 20), down on hop 34-35 seed 3 (14 to 9), equal elsewhere | NOT met (4 of 5 areas; and the hop 33-34 count needs a reading) |
 | `nav.warpRead` | Warp drill across 5 areas with the read on | read proven on in 5 areas on both seeds, 4 GREEN | NOT met (4 of 5) |
 | `quests.layoutRead` | quest objects found by read in 3 areas | act1.wp.dark-wood.layout GREEN for the Paladin (one area; its plain arm is GREEN too) | NOT met (1 of 3, and the Sorceress setup is refused by the road guard) |
@@ -264,7 +281,7 @@ For later, when their blockers close (not now): `quests.stepExec=1` after TASK-1
 |---|---|---|
 | a, product bug | nav.barracks-return (all arms, both seeds, after nf1) | TASK-1102, AC 1 still open; new evidence line `nav no usable gate ... unproven=131 cands=0` |
 | a | board chunk parks `gave_up` in one second from a side level (Paladin 11 and 3, tap version) | TASK-1120 (new) |
-| a, U | drill.act2.duriel.stepexec: Tyrael not found, 0 of 9 | TASK-1126 (new) |
+| a, U | drill.act2.duriel.stepexec: Tyrael not found, 0 of 10 | TASK-1126 (new) |
 | a or b, U | drill.act2.summoner.stepexec: word 0x2006, journal not credited; fast sweep after the park | TASK-1104, TASK-1103 |
 | a, U | combat.whirlwind-clears, combat.corpse-explodes, combat.traps-stand, necro.corpse-ce1/ce5 x6: the driver or the summon never fires | TASK-1127 (new) |
 | b, scenario | combat.hold-interruptible, combat.teleport-reposition (no life drop possible), combat.army-holds, combat.pets-hold (minion line, knob), board.hold.restock, board.retry.runs-a-step | TASK-1127 for the combat four; the two board rows have no card (U cause) |
@@ -288,7 +305,7 @@ All trigger times in these rows are WALL seconds (the runner has no other clock 
 ## Operator notes
 
 1. Load: the host ran at load 10 to 45 all night from other agents' merge gates; the brief's rule (start a batch only under load 12) could not be kept literally, so lanes were only replaced, never added (at most 3 `run.sh` chains). No run was cut by load.
-2. Disk: the root file system had 11 GB free at 01:38; finished journals were compressed in place. `provingground-out/` of this lab checkout holds about 1 GB.
+2. Disk: the root file system had 11 GB free at 01:38 and ran FULL at about 04:05 (`no space left on device` in the runner; seven result files of the final sweep lost). At 04:10 it showed 155 GB free again, so something else filled and freed about 150 GB in between; this lab checkout's `provingground-out/` held 1.6 GB at that time (0.6 GB after compressing the journals) and the three build directories 55 MB each. U what filled the disk and whether other agents' runs or commits were hit in those minutes.
 3. Three BLOCKED board rows at 02:21 were the operator's merge (conflict markers in `board.json` for about a minute); rerun, see batch 4.
 4. One run was stopped by hand: the first summoner drill of batch 2 (the operator's own process group), after 35 min in the busy loop.
 5. `knobs3way.sh` still prints only the last three lines per arm; the tables above are from each arm's `results.json`.
