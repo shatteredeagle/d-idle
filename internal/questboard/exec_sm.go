@@ -83,6 +83,9 @@ func smParkText(q Quest, r Run) string {
 	if r.Code == "died_too_often" {
 		n = r.Deaths
 	}
+	if r.Code == "refused_repeatedly" {
+		return Sentence(r.Code, refusalArgs(q.Title, r))
+	}
 	if r.Code == "hold_timeout" {
 		return holdTimeoutText(r.Hold, r.HoldWhy, r.HoldMin)
 	}
@@ -249,6 +252,9 @@ func (e *Exec) smPark(quest, chunk, code string, rs *runState) {
 			if code == "hold_timeout" {
 				r.Hold, r.HoldWhy, r.HoldMin = rs.hold, rs.holdWhy, holdBudget(rs.hold)
 			}
+			if code == "refused_repeatedly" {
+				r.RefusalCode, r.RefusalWhy, r.Failures = rs.refCode, rs.refWhy, rs.refN
+			}
 		}
 		return nil
 	})
@@ -407,3 +413,8 @@ func (e *Exec) smAutoFinish(vs []QuestView, diff int) bool {
 // boardLegacy is the one switch between the old derive-every-tick board and the run machine (knob quests.boardSM 0).
 // Removal of the old path deletes every branch that reads it (docs/questboard.md, "boardSM legacy removal").
 func (e *Exec) boardLegacy() bool { return !e.o.SM }
+
+// refusalArgs are the placeholders of the refused_repeatedly sentence: the stored guard code and text.
+func refusalArgs(quest string, r Run) map[string]string {
+	return map[string]string{"quest": quest, "n": fmt.Sprint(max(r.Failures, 1)), "code": r.RefusalCode, "why": nonEmpty(r.RefusalWhy, "the step was refused")}
+}

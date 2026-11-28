@@ -634,6 +634,9 @@ func (r *Runner) restartCapHit() bool {
 // restartTimeout covers Leave, Shutdown, helper start, Launch and Login of a recycle (about 200 s, more on a loaded box).
 func (r *Runner) restartTimeout() time.Duration { return 3 * sec(r.cfg.TownTimeoutSec) }
 
+// refusalStallMin is how many refused steps since the last progress make a stall "refusals only" for rung 4.
+const refusalStallMin = 3
+
 // rung3Burst records one more rung-3 cycle and reports whether bot.rung3WindowMax cycles already happened within
 // bot.rung3WindowMin virtual minutes. Progress does not clear the list, only time does.
 func (r *Runner) rung3Burst() bool {
@@ -757,6 +760,13 @@ func (r *Runner) escalate(ctx context.Context, c control, what string, err error
 				// The old process exiting is the plan: without this the guard saw the exit and ended the run with
 				// "the game is gone" (V: soaks livebot/20261029-032705-d2bot 03:41:29 and -021327, docs/stallfatal.md).
 				if r.restartCapHit() {
+					l.stuckStage = 4 // the next rung is the visible pause
+					break
+				}
+				if r.e.Tune.Quests.RefusalPark != 0 && r.inv.refusalOnlyStall(refusalStallMin) {
+					// the game is fine, a guard keeps refusing: a restart changes nothing and costs the session (card refusalpark)
+					r.e.Log.Warn("failsafe: rung 4 skipped, the stall is refusals only", "what", what, "restarts", l.restarts)
+					l.restarts--
 					l.stuckStage = 4 // the next rung is the visible pause
 					break
 				}

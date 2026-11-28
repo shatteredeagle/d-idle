@@ -42,6 +42,20 @@ func (r *Runner) questResumeOptions() questboard.ResumeOptions {
 	return questboard.ResumeOptions{Enabled: true, Policy: p}
 }
 
+// questRefusalParkAfter is the number of identical coded refusals that park a chunk (quests.refusalPark, table in
+// data/questboard/refusal.json). A table that does not parse leaves the rule off.
+func (r *Runner) questRefusalParkAfter() int {
+	if r.e.Tune.Quests.RefusalPark == 0 {
+		return 0
+	}
+	p, err := questboard.LoadRefusal()
+	if err != nil {
+		r.boardNote("refusal", "quest board: refusal park off: "+err.Error())
+		return 0
+	}
+	return p.ParkAfter
+}
+
 // questResumeInput is what the pause policy needs from the hero now.
 func (r *Runner) questResumeInput(snap *d2.Snapshot) questboard.ResumeInput {
 	r.obMu.Lock()
