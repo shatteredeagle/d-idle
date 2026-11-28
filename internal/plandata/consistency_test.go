@@ -94,6 +94,7 @@ func TestBuildTablesConsistent(t *testing.T) {
 		t.Fatal(err)
 	}
 	tables := 0
+	combatOf := map[string][2]string{} // table: class, combat key
 	for _, e := range ents {
 		if !strings.HasPrefix(e.Name(), "build-") || e.Name() == plandata.CatalogFile {
 			continue
@@ -111,6 +112,10 @@ func TestBuildTablesConsistent(t *testing.T) {
 			add(&hits, "table %s: no class key", name)
 			continue
 		}
+		if b.Combat == "" {
+			add(&hits, "table %s: no combat key", name)
+		}
+		combatOf[name] = [2]string{class, b.Combat}
 		for _, h := range b.Hotkeys {
 			if !known(class, h.Skill) {
 				add(&hits, "table %s: hotkey skill %q is not a %s skill in capabilities.json", name, h.Skill, class)
@@ -200,6 +205,17 @@ func TestBuildTablesConsistent(t *testing.T) {
 			if !known(p.Class, n) {
 				add(&hits, "profile %s: skill %q is not a %s skill in capabilities.json", id, n, p.Class)
 			}
+		}
+	}
+	for name, cc := range combatOf {
+		found := cc[1] == ""
+		for _, p := range profiles.Profiles {
+			if p.Class == cc[0] && (p.Build == cc[1] || (p.Build == "" && cc[1] == cc[0])) {
+				found = true
+			}
+		}
+		if !found {
+			add(&hits, "table %s: combat %q is not a profile of class %s", name, cc[1], cc[0])
 		}
 	}
 	sort.Strings(hits)

@@ -1,6 +1,7 @@
 {
  "build": "barbarian_melee_normal30",
  "class": "barbarian",
+ "combat": "barbarian",
  "schema": "per-clvl allocation, same shape as build-paladin-normal30.json (leveler.ParseBuild). main_attack: extra, for combat: skill to use as main attack per clvl range, weapon says which equipped weapon type it needs ('any' = none). Quest points (Den, Radament, Izual) are skill entries with a quest key on the row where the guide spends them: rows count level points only, and a tagged point is bought as soon as its quest point is granted.",
  "tags": "Skills: V Maxroll Barbarian leveling https://maxroll.gg/d2/guides/barbarian-leveling (docs/classes/barbarian.md): Bash then Double Swing, Howl/Shout/Battle Orders, masteries, Double Throw only as the prerequisite of Frenzy (reqlevel 24). U: the exact row order is this agent's reading of the guide (BARBLIVE), Axe Mastery instead of the guide's Mace Mastery because the starting weapon is an axe (U, check live), the Whirlwind/War Cry respec at 30+ is not used (needs a physical-immune answer, docs/classes/barbarian.md section 1). Quest points (Den, Radament, Izual) tagged (quest key) on rows 5 Den, 15 Radament, 21 Izual. Stats: V Maxroll (mostly Vitality, Dexterity then Strength early); the 5-point rows are U. Weapon: any melee weapon (Bash/Double Swing/Frenzy itypea mele, V skills.txt). Prerequisites and reqlevels checked by gen_builds.py against skills.txt (V Patch_D2.mpq).",
  "respec": {

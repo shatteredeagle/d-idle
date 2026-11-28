@@ -94,8 +94,6 @@
   "table amazon_multishot_endgame90: row skill \"Evade\" is not a amazon skill in capabilities.json",
   "table assassin_fireblast_normal30: row skill \"Claw Mastery\" is not a assassin skill in capabilities.json",
   "table assassin_sentry_endgame90: row skill \"Claw Mastery\" is not a assassin skill in capabilities.json",
-  "table assassin_sentry_endgame90: row skill \"Weapon Block\" is not a assassin skill in capabilities.json",
-  "table fallback-lightning: no class key",
-  "table primary-blizzard: no class key"
+  "table assassin_sentry_endgame90: row skill \"Weapon Block\" is not a assassin skill in capabilities.json"
  ]
 }
