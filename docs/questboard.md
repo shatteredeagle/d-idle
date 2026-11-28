@@ -229,7 +229,7 @@ Between chunks the hero is in the mode the player picked (`POST /api/quests/mode
 | mode | what the loop does | notes |
 |---|---|---|
 | train | the leveling slice (one `StepLevel(clvl+1)` per tick, so the zone is the plan table's pick for the level, or the zone model's pick when `bot.zoneModel` is 1) with the pinned target: `NextTarget` = the lowest-order open story quest (then optional, then unlock) whose chunk is Available or Ready | the pin names the goal in the log and the meter; it never starts the quest. It does not bias the zone model (U: the model has no target term yet, so with `bot.zoneModel` 1 the model's pick stands and the meter is the readiness line) |
-| idle | `rest`: home when in the field, then the normal town chores; no leveling slice, no farm loop, no `farmReset` | parked on purpose: `Runner.parkedBoard` keeps the state watchdog (`stuckCheck`), the campaign stall ladder (`campaignStall`) and the kill drought (`droughtStage`) quiet, the same idea as Pause. Cleared at the start of every other board tick |
+| idle | `rest`: home when in the field, then the normal town chores; no leveling slice, no farm loop | parked on purpose: `Runner.parkedBoard` keeps the state watchdog (`stuckCheck`), the campaign stall ladder (`campaignStall`) and the kill drought (`droughtStage`) quiet, the same idea as Pause. Cleared at the start of every other board tick |
 | farm | the leveling slice with the farm-gold area choice (`goldFarmTarget`, `Plan.FarmRung`: one rung below the zone the level is ready for, the same safe list, bans, guards and gear gate as the player's Farm gold order, so never above the readiness line) | `Runner.boardFarming` is true only inside a farm slice, so a quest step that levels is not bent. `bot.farmReset` keeps its own rules in Farm (only the player's gold order suppresses it). Loot rules are unchanged |
 
 Rules (V by `internal/bot/boardmode_test.go`, two classes: Sorceress, Paladin):
@@ -242,7 +242,7 @@ Rules (V by `internal/bot/boardmode_test.go`, two classes: Sorceress, Paladin):
 Live checklist (NOT run; hidden instance, `quests.board` 1, a throwaway hero at clvl 3 to 6):
 1. Train, 30 min: the log has `quest board: Training toward ...`; the hero levels in the plan's zone; `GET /api/quests` `meter.line` falls from "N levels to go" to "ready; tap Start" as the clvl passes the floor; nothing starts by itself.
 2. Idle, 30 min: set the mode with the hero in the field; it finishes the fight, goes home, does the chores and stands in town; no area change, no `kill drought`, `no progress` or `campaign stalled` line in the log; `meter.applied` reads idle.
-3. Farm, 30 min: the log has `goldfarm: farming for the quest board farm mode`; the zone is one rung below the level's pick; gold and drops rise; `farm reset:` lines only if `bot.farmReset` is 1.
+3. Farm, 30 min: the log has `goldfarm: farming for the quest board farm mode`; the zone is one rung below the level's pick; gold and drops rise; `farm reset:` lines when a zone passes `bot.farmResetPct`.
 4. Switch train, idle, farm and back while a fight is on; tap Start in idle (the chunk runs, the hero waits at the NPC, Hand in, back to parked).
 5. `d2cheat ledger` shows no writes (the modes only read).
 
