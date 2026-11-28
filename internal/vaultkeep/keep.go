@@ -124,6 +124,7 @@ type Keeper struct {
 
 	CarryPath string // the carried charms file (carry.go); empty: memory only
 	cb        carryBook
+	mb        mercBook // the merc intents (mercjournal.go)
 
 	eq         equipBook
 	actMu      sync.Mutex // one player-ordered item move at a time (direct Equip, Wear set, merc, Carry, Stow, their repair); taken before mu

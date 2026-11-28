@@ -651,6 +651,7 @@ func (k *Keeper) repairDirect(ctx context.Context) {
 	defer k.actMu.Unlock()
 	k.repairDirectLocked(ctx)
 	k.repairCarry(ctx)
+	k.repairMerc(ctx)
 }
 
 func (k *Keeper) repairDirectLocked(ctx context.Context) {
