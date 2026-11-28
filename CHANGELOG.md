@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- mercgold: dead merc with gold is a trip reason, no-merc and revive-off visibility (TASK-1083) <!--sg:agent/mercgold-->
 - auraflap: hold a crowd aura through the fight, shadow agree includes aura (TASK-1082) <!--sg:agent/auraflap-->
 - postdeploy: sandbox post-deploy audit (docs) <!--sg:agent/postdeploy-->
 - refusalpark: quests.refusalPark dark knob, refused_repeatedly park (TASK-1081) <!--sg:agent/refusalpark-->
