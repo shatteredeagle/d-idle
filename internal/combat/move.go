@@ -203,6 +203,9 @@ func (f *Fighter) escapePlan(snap *d2.Snapshot) (r *MoveRule, sp SkillSpec, to i
 	}
 	var why0 string
 	if r, sp, why0 = f.moveRow(p, MoveEscape); r == nil || why0 != "" {
+		if r != nil && f.learned(p, r.Name) {
+			f.hold(holdEscape, why0)
+		}
 		return nil, sp, to, why0, false
 	}
 	me := input.Point{X: p.X, Y: p.Y}
@@ -218,10 +221,12 @@ func (f *Fighter) escapePlan(snap *d2.Snapshot) (r *MoveRule, sp SkillSpec, to i
 		}
 	}
 	if contact < r.EscapeSurround || pct(p.Life, p.MaxLife) >= r.EscapeLifePct {
+		f.hold(holdEscape, holdNoTrigger)
 		return nil, sp, to, "", false
 	}
 	to, found := escapeCell(me, near, r, f.valid)
 	if !found {
+		f.hold(holdEscape, holdNoCell)
 		return nil, sp, to, "", false
 	}
 	return r, sp, to, fmt.Sprintf("%d in contact, life %d%%, %s to %v", contact, pct(p.Life, p.MaxLife), r.Name, to), true

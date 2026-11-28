@@ -17,8 +17,11 @@ lane: next
 owns:
   - "internal/questboard/"
   - "internal/task/"
+  - "internal/bot/stepexec.go"
+  - "internal/bot/stepexec_act2chunks_test.go"
 exclusive: []
 contracts: []
+result: "Root cause found offline (V: the fork's drlg-dump and Objects.txt on the game data, level 73; bot logs of 10 runs): Tyrael's preset is at subtile 78,88; the arena's only way to him is the 1x5 opening at 110,207 closed by object 153 (tyrael's door: collision in modes 0 and 1, not selectable, no operate function), which game.exe opens at Duriel's death and the d2d fork never does (its own note: Tyrael's prison is not opened), so the hero's walk ends in the arena (12 coverage points, x 136 to 150, y 189 to 216 in every run) and his room never comes up. The fix at the cause is in the fork (open object 153 at Duriel's death), outside this card's owns. Bot side, all builds alike (no build-specific data): the talk row's Approach now fails with npc_out_of_reach (not found) plus a diagnostic line instead of sending the town walker, and the board counts that text once per minute, so the park reason names the cause. Tests for Sorceress and Paladin, shown to fail without the change. Box 2 is a synthetic lair state, not a recorded one. Not verified live or on the lab; box 3 needs the fork fix."
 ---
 
 ## Description
@@ -31,7 +34,7 @@ drill.act2.duriel.stepexec Paladin 11, 3 of 3 BLOCKED on the lab (bot main 702b6
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 The talk_tyrael step finds Tyrael in Duriel's Lair (not through the town NPC road) or reports a coded reason the board can show
+- [x] #1 The talk_tyrael step finds Tyrael in Duriel's Lair (not through the town NPC road) or reports a coded reason the board can show
 - [ ] #2 Unit test for the step with a recorded Duriel's Lair state, two classes
 - [ ] #3 drill.act2.duriel.stepexec GREEN 2 of 3 on the lab (Paladin 11), then the quests.stepExec ledger row is re-read
 <!-- AC:END -->

@@ -169,7 +169,7 @@ type execBackend struct {
 // an NPC the snapshot lists. An NPC of the field that is out of sight (V lab night 2026-11-28, drill.act2.duriel.stepexec,
 // 3 of 3 runs: Tyrael in Duriel's Lair right after the kill, "npc: walk failed seen=false" on every try, the row's tries
 // and the chunk's three were spent in 0.2 s and the chunk parked) is looked for first: the level is walked until the
-// snapshot lists him. U that the walk reaches his chamber on d2d (no run since). A town NPC is the town adapter's job.
+// snapshot lists him. On d2d the walk does not reach his chamber (below). A town NPC is the town adapter's job.
 func (b *execBackend) Approach(ctx context.Context, t questspec.Target, _ int) error {
 	r := b.a.r
 	if t.Kind != "npc" || t.Class == 0 || r.d.Mover == nil {
@@ -194,8 +194,27 @@ func (b *execBackend) Approach(ctx context.Context, t questspec.Target, _ int) e
 	if err := r.d.Mover.Explore(ctx, seen); err != nil && ctx.Err() != nil {
 		return b.a.tag(err)
 	}
-	return nil // seen or not, the talk says which
+	if seen() {
+		return nil
+	}
+	// Not in the part of the level the hero can walk. V offline 2026-11-28 (TASK-1126, the fork's drlg-dump on the game
+	// data, level 73): Tyrael's preset is at subtile 78,88, the arena's only way to him is the 1x5 opening at 110,207 that
+	// "tyrael's door" (object 153: collision in modes 0 and 1, not selectable, no operate function) closes until Duriel
+	// dies; the d2d fork does not open it, so the walk ends in the arena (12 coverage points in every lab run). The talk
+	// cannot work from here: say so in words the board keeps apart from a hero's failure (questboard sameTryMarks).
+	at, area, objs := [2]int{}, 0, map[int]int{}
+	if s := r.latest(); s != nil && s.Player != nil {
+		at, area = [2]int{s.Player.X, s.Player.Y}, s.Player.Area
+		for i := range s.Objects {
+			objs[s.Objects[i].Class]++
+		}
+	}
+	r.e.Log.Warn("step executor: npc not in sight after the walk", "class", t.Class, "area", area, "at", at, "objectsByClass", fmt.Sprint(objs))
+	return task.Wrap(task.KindNotFound, fmt.Errorf("%s: npc class %d is not in the part of area %d the hero can walk", npcOutOfReach, t.Class, area))
 }
+
+// npcOutOfReach marks the failure of a talk row whose field NPC is not in the walkable part of the level.
+const npcOutOfReach = "npc_out_of_reach"
 
 func (b *execBackend) Act(ctx context.Context, verb string, t questspec.Target, args questspec.ActArgs) error {
 	a := b.a

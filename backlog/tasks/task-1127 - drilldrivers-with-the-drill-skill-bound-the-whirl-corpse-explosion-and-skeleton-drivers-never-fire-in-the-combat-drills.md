@@ -18,8 +18,10 @@ owns:
   - "internal/combat/"
   - "tools/provingground/scenarios/combatdrills.json"
   - "tools/provingground/scenarios/necro.json"
+  - "tools/provingground/golden/setup-played.tsv"
 exclusive: []
 contracts: []
+result: "drv2, offline only, NOT verified live or in the lab (no rerun). Built: one `combat hold driver=<whirl|escape|minion|corpse-explosion> ticks=N why=<reason:ticks>` line per fight at knob 2 (internal/combat/holds.go; tests Barbarian and Necromancer, not build-specific, no data added). Classified from the 2026-11-28 run dirs: whirlwind-clears = setup (S: about 39 mana, buffs and Bash paid first, a leg costs 25; scenario now writes mana 200, U); corpse-explodes, necro.corpse-ce1/ce5 and army-holds = bot defect, open (V logs: Teeth 28 to 33 casts, mana 0 to 6 percent at every fight end, so no raise and no explosion is ever affordable; the summoner tables with a Teeth point starve the army, the sme table without Teeth is GREEN; fix proposed: the attack leaves the mana of the next wanted summon, a profile field); hold-interruptible and teleport-reposition = scenario fault (teleport-reposition gets pre.life_pct 35, U; hold-interruptible stays open: its offline prep test has no debug hit verb); pets-hold = same assertion as army-holds, not triaged; hammer-in-pack = setup BLOCKED outside this card (no quest point for Holy Bolt) and the act= assertion needs the profile row enabled, shadow line accepted. Arbiter soak 14 against 9: expected, see notes."
 ---
 
 ## Description
@@ -32,9 +34,13 @@ Lab reruns 2026-11-28 on main 28216bd08 (nf1b pre.bind and pre.summon merged; ru
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 A fight in mode 2 logs why a learned move or corpse row holds (one line per fight, not per tick), so a silent driver can be read from the log
+- [x] #1 A fight in mode 2 logs why a learned move or corpse row holds (one line per fight, not per tick), so a silent driver can be read from the log
 - [ ] #2 combat.whirlwind-clears shows at least one 'combat move ... use=whirl' leg, or the card names the gate that holds it with the log line
 - [ ] #3 combat.corpse-explodes shows a 'combat corpse-explosion' line and necro.corpse-ce1/ce5 end with at least 2 minions, or the scenario expectation is corrected with evidence
 - [ ] #4 combat.hold-interruptible and combat.teleport-reposition get an encounter that lowers the hero's life (their potion and escape triggers cannot fire at minlife 100)
-- [ ] #5 Tested for two classes
+- [x] #5 Tested for two classes
 <!-- AC:END -->
+
+## Notes (drv2, 2026-11-28)
+
+Arbiter soak 14 against 9 (V both logs of the lab soak `out-arbiter255`, Sorceress 201, one seed): the five extra lines are 2 `field-entry-no-kit` and 3 `arbiter-starved`. The arbiter arm made 11 town trips against 8 and 380 kills against 215, so it entered the field more often with the same poor kit: 11 lines in 11 trips against 9 in 8, the rate did not rise. `arbiter-starved` is a soft row that exists only with the arbiter knobs on (the base arm cannot log it): `level/sweep` (the filler, `nothing else wanted`) outranked for 600 s by `recovery/farm_gold` (broke) and by `upkeep/upkeep`, and `level/level_up` by `quest/step`. Recovery, upkeep and a quest step outranking the levelling filler is the designed order, not a family bit or admission fault. Proposed (internal/bot, not this card): do not count the filler intent as starved, and judge the flip criterion `no new hit kinds` without the arbiter-only row.

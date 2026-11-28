@@ -185,14 +185,27 @@ func (f *Fighter) planMinion(snap *d2.Snapshot, pr *Profile, inFight, allowWalk 
 		}
 		var sp SkillSpec
 		found := false
+		refused := ""
 		for _, name := range g.Skills {
 			s, ok := known[name]
-			if ok && (s.Key != "" || p.RightSkill == s.ID) && s.Cost <= p.Mana-p.MaxMana/10 {
-				sp, found = s, true
-				break
+			if !ok {
+				continue
 			}
+			if s.Key == "" && p.RightSkill != s.ID {
+				refused = holdUnbound
+				continue
+			}
+			if s.Cost > p.Mana-p.MaxMana/10 {
+				refused = MoveNoMana
+				continue
+			}
+			sp, found = s, true
+			break
 		}
 		if !found {
+			if inFight && refused != "" {
+				f.hold(holdMinion, g.Name+" "+refused)
+			}
 			continue
 		}
 		want := 1
@@ -216,6 +229,9 @@ func (f *Fighter) planMinion(snap *d2.Snapshot, pr *Profile, inFight, allowWalk 
 			corpses, corpsesRead = Corpses(snap, f.cat, me, reach, f.takenCorpses(snap.Player.Area)), true
 		}
 		if len(corpses) == 0 {
+			if inFight {
+				f.hold(holdMinion, g.Name+" "+holdNoCorpse)
+			}
 			continue
 		}
 		row := corpseRowNearest

@@ -67,13 +67,18 @@ func (f *Fighter) whirlPlan(snap *d2.Snapshot) (r *MoveRule, sp SkillSpec, to in
 	}
 	var why0 string
 	if r, sp, why0 = f.moveRow(p, MoveWhirl); r == nil || why0 != "" {
+		if r != nil && f.learned(p, r.Name) {
+			f.hold(holdWhirl, why0)
+		}
 		return nil, sp, to, why0, false
 	}
 	if pct(p.Life, p.MaxLife) < r.WhirlAbortLifePct {
 		f.moves.aborts++
+		f.hold(holdWhirl, holdLifeFloor)
 		return nil, sp, to, "", false
 	}
 	if !f.pressMayStart(p, sp) {
+		f.hold(holdWhirl, holdCommit)
 		return nil, sp, to, "", false
 	}
 	me := input.Point{X: p.X, Y: p.Y}
@@ -83,6 +88,7 @@ func (f *Fighter) whirlPlan(snap *d2.Snapshot) (r *MoveRule, sp SkillSpec, to in
 	}
 	to, pack, found := whirlLeg(me, pts, r, f.moves.legEnd, f.valid, func(h input.Point) bool { return f.los(me, h) })
 	if !found {
+		f.hold(holdWhirl, holdNoPack)
 		return nil, sp, to, "", false
 	}
 	return r, sp, to, fmt.Sprintf("%d in the pack, life %d%%, %s leg to %v", pack, pct(p.Life, p.MaxLife), r.Name, to), true

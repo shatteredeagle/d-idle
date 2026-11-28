@@ -818,11 +818,13 @@ func (e *Exec) Report(d Decision, res StepResult) {
 	case StepFailed:
 		rs.started = true
 		rs.lastWhy = res.Why
-		if parkCode(res.Why) == "no_path" {
-			// The same navigation refusal (the text names the exit, the cause and the cell) inside samePathWindow is the
-			// same try: three retries from one cell in 27 s parked the Countess (live 2026-11-28, L3).
+		if sameTryKind(res.Why) {
+			// The same refusal of the world (the text names the exit, the cause and the cell, or the NPC) inside samePathWindow
+			// is the same try: three retries from one cell in 27 s parked the Countess (live 2026-11-28, L3); three "no exit"
+			// in 0.9 s parked the Cain scroll chunk from a side level (lab 2026-11-28, TASK-1120) and six "npc not found" in
+			// 0.2 s the Duriel chunk (TASK-1126). The task layer prefixes its third report, hence the suffix match.
 			now := e.o.Now()
-			if res.Why == rs.pathWhy && now.Sub(rs.pathAt) < samePathWindow {
+			if rs.pathWhy != "" && strings.HasSuffix(res.Why, rs.pathWhy) && now.Sub(rs.pathAt) < samePathWindow {
 				break
 			}
 			rs.pathWhy, rs.pathAt = res.Why, now
@@ -864,6 +866,23 @@ func parkCode(why string) string {
 		return "no_path"
 	}
 	return "gave_up"
+}
+
+// sameTryMarks are the failure texts that say the world refused, not the hero: a navigation refusal that names its cause,
+// a level with no known exit to the next one (nav.ErrNoExit) and an NPC that is not in the reachable part of the level
+// (the step executor's Approach). Repeating the step at once cannot change any of them.
+var sameTryMarks = []string{"nav: no exit to that level", "npc_out_of_reach"}
+
+func sameTryKind(why string) bool {
+	if parkCode(why) == "no_path" {
+		return true
+	}
+	for _, m := range sameTryMarks {
+		if strings.Contains(why, m) {
+			return true
+		}
+	}
+	return false
 }
 
 func nonEmpty(s, d string) string {
