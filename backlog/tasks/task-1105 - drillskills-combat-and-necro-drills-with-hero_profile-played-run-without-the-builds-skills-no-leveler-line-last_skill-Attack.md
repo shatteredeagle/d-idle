@@ -20,6 +20,7 @@ owns:
   - "tools/provingground/scenarios/necro.json"
 exclusive: []
 contracts: []
+result: "NOT fixed. Premise corrected (V, lab results json of run 20261128-000130): the drill heroes DO learn skills (skillsspent 23 to 30, skill_levels set, Zeal 5, Whirlwind 1, hero_casts show Blessed Hammer, Bash, Teeth); the played hero spends points via cmd skillpt, so no leveler line is expected. The RED is the attack binding: the library binds the build's main attack (Barbarian left skill Bash, Paladin Blessed Hammer, Necromancer right Teeth/Bone Spear) while the drills expect Whirlwind, Zeal, Corpse Explosion; minions 0 for ce1/ce5 because setup casts none. Next: bind the drill's skill in trigger or pre, and give the necro setup a summon."
 ---
 
 ## Description
