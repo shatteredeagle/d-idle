@@ -75,3 +75,37 @@ func TestSweep2OrderWithUnreadReplyIsSettledByTheLook(t *testing.T) {
 		})
 	}
 }
+
+// Review 10 N6 (card sweep2): "this order filed it" holds for a record in any state. Before: only a live record counted,
+// so a displaced item filed before a stop and sold before the repair was filed a second time.
+func TestSweep2DisplacedItemIsFiledOncePerOrderInAnyState(t *testing.T) {
+	ctx := context.Background()
+	for _, class := range classes {
+		t.Run(class, func(t *testing.T) {
+			d := directRig(t, class)
+			rec := d2dctl.FakeRecord(3, "cap", 6, 20, "displaced")
+			const tag = "eq-x-1"
+			if _, where, ok := d.k.recordItem(ctx, d.st, rec, "Old Cap", tag, false); !ok || where != "vault" {
+				t.Fatalf("not filed: %s %v", where, ok)
+			}
+			var id string
+			for _, r := range d.st.Dump() {
+				if r.Found.Area == tag {
+					id = r.ID
+				}
+			}
+			if err := d.st.Discard(id, "test: the player let it go"); err != nil {
+				t.Fatal(err)
+			}
+			if _, where, ok := d.k.recordItem(ctx, d.st, rec, "Old Cap", tag, false); !ok || where != "vault" {
+				t.Fatalf("the second pass: %s %v", where, ok)
+			}
+			if n := d.live("previously worn"); n != 0 {
+				t.Fatalf("the second pass of one order filed the item again: %d live", n)
+			}
+			if _, _, ok := d.k.recordItem(ctx, d.st, rec, "Old Cap", "eq-y-2", false); !ok || d.live("previously worn") != 1 {
+				t.Fatal("another order that displaces an equal item files it")
+			}
+		})
+	}
+}

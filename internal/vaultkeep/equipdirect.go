@@ -530,16 +530,18 @@ func (k *Keeper) recordItem(ctx context.Context, st *vault.Store, r d2dctl.Vault
 	if k.Chain != nil {
 		it.Chain = k.Chain(r.Code)
 	}
+	if tag != "" {
+		// This order filed it on an earlier pass, whatever became of the record since: a record the player sold or kept
+		// between a stop and the repair must not be filed a second time (review 10 N6).
+		for _, o := range st.Dump() {
+			if o.Found.Area == tag && strings.EqualFold(o.Raw, r.Norm) {
+				return name, "vault", true
+			}
+		}
+	}
 	_, err := st.Add(it)
 	if err == nil {
 		return name, "vault", true
-	}
-	if errors.Is(err, vault.ErrDuplicate) && tag != "" {
-		for _, o := range st.Dump() {
-			if o.State == vault.Recorded && o.Found.Area == tag && strings.EqualFold(o.Raw, r.Norm) {
-				return name, "vault", true // this order filed it on an earlier pass
-			}
-		}
 	}
 	w, ok := k.createBack(ctx, r.Norm, tag, quiet)
 	if ok {
