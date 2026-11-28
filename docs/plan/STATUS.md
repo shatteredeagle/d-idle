@@ -45,6 +45,7 @@
 | holereach | proposed | - | `internal/bot/zonemodel.go`<br>`internal/bot/zonemodel_test.go` | - |
 | xplostfalse | proposed | - | `internal/questboard/auto.go`<br>`internal/questboard/auto_test.go`<br>`internal/bot/observe.go`<br>`internal/bot/xploss_test.go`<br>`internal/bot/fixrestart_test.go`<br>`internal/bot/relaunch.go`<br>`internal/d2denv`<br>`cmd/d2bot/d2dbackend.go` | - |
 | farmresetretire | proposed | - | `internal/bot`<br>`internal/env`<br>`internal/watch`<br>`cmd/d2bot`<br>`tools/uishots`<br>`data/darklaunch.json`<br>`docs/knobs.md`<br>`docs/farmloop.md`<br>`docs/questboard.md` | - |
+| pgfix | proposed | - | `cmd/d2scenario`<br>`internal/scenario`<br>`tools/provingground/scenarios`<br>`docs/process/proving-ground.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
@@ -188,6 +189,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- a9fc9ca8c 11-27 22:13 `Merge agent/pgfix: pgfix: banked default hero profile, setup tags on blocked runs, hand skills in the point dump (TASK-1093)` (pgfix)
+- f8a505433 11-27 22:12 `Merge branch 'main' into pgfix` (-)
 - f4865d49e 11-27 22:04 `Merge agent/farmresetretire: farmresetretire: bot.farmReset graduated to always-on, knob removed (TASK-1090)` (farmresetretire)
 - b540e608c 11-27 22:03 `Merge branch 'main' into farmresetretire` (-)
 - 4e171e621 11-27 21:56 `Merge agent/flipjson: flipjson: flip.py parses the first JSON document of ops status --why` (flipjson)
@@ -196,6 +199,4 @@
 - da6cf18c4 11-27 21:53 `Merge branch 'main' into xplostfalse` (-)
 - d83be71b1 11-27 21:46 `Merge agent/holereach: holereach: drop unreachable hole zones, hole fallback needs the kit (TASK-1088)` (holereach)
 - b539847b9 11-27 21:45 `Merge branch 'main' into holereach` (-)
-- 0f7ecea7f 11-27 21:36 `Merge agent/postdeploy2: postdeploy2: second post-deploy audit (docs)` (postdeploy2)
-- 25916ea02 11-27 21:35 `Merge branch 'main' into postdeploy2` (-)
 <!-- statusgen:end -->

@@ -145,6 +145,7 @@ cmd/d2bot/ladder.go  live-agent  pgtaps
 cmd/d2bot/live.go  credit-runner  campaign1
 cmd/d2bot/live.go  live-agent  agencyp1b
 cmd/d2bot/necroplay_test.go  live-agent  epic-class-necromancer
+cmd/d2scenario  credit-runner  pgfix
 cmd/d2scenario/  live-agent  arbmig
 cmd/d2scenario/ledger.go  credit-runner  pgearned
 cmd/d2scenario/ledger.go  credit-runner  pgpage
@@ -233,6 +234,7 @@ docs/process/pg-ledger-ops.md  credit-runner  pgledgeron
 docs/process/pg-ops-mgonejob.md  credit-runner  mgonejob
 docs/process/proving-ground-status.md  credit-runner  pgpage
 docs/process/proving-ground.md  credit-runner  pgearned
+docs/process/proving-ground.md  credit-runner  pgfix
 docs/quest-givers.md  credit-runner  campaign1
 docs/questboard.md  credit-runner  cainfix3
 docs/questboard.md  credit-runner  farmresetretire
@@ -362,6 +364,7 @@ internal/questboard/auto.go  credit-runner  xplostfalse
 internal/questboard/auto_test.go  credit-runner  xplostfalse
 internal/questboard/def.go  credit-runner  cainfix3
 internal/resource  live-agent  town5
+internal/scenario  credit-runner  pgfix
 internal/scenario/earned.go  credit-runner  pgearned
 internal/scenario/earned_test.go  credit-runner  pgearned
 internal/scenario/ledger.go  credit-runner  pgearned
@@ -459,6 +462,7 @@ tools/provingground/earned  credit-runner  pgearned
 tools/provingground/pgenv.sh  credit-runner  pgledgeron
 tools/provingground/pgenv_test.sh  credit-runner  pgledgeron
 tools/provingground/run.sh  credit-runner  pgledgeron
+tools/provingground/scenarios  credit-runner  pgfix
 tools/provingground/scenarios/board.json  live-agent  bsmdef
 tools/provingground/scenarios/cain.json  credit-runner  cainfix3
 tools/provingground/scenarios/cain.json  credit-runner  pgearned

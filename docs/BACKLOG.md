@@ -1611,6 +1611,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - xplostfalse: no false xp lost after a relaunch, planned leaves log INFO, auto-start reasons (TASK-1089, merged 2026-11-27, acceptance 3 of 3): xp fall confirmed by a second read (two-class test); planned Save and Exit logs INFO with relaunch reason; auto-start held-back/cancelled reasons log once and show in ops status --why. Offline only, not verified live. <!--sg:agent/xplostfalse-->
 - agent/flipjson: flipjson: flip.py parses the first JSON document of ops status --why (merged 2026-11-27) <!--sg:agent/flipjson-->
 - farmresetretire: farm loop always on (flip bot.farmReset to default, remove the gate) (TASK-1090, merged 2026-11-27, acceptance 3 of 3): DECISION: FLIP-TO-DEFAULT, not retire. The premise of docs/probes/dark-queue-final-2026-11-27.md (retire-farmreset: 'farm reset never fired', 45 min) is stale: V docs/probes/sandbox-postdeploy-audit-2026-11-27.md shows resets firing on both sandbox heroes ... <!--sg:agent/farmresetretire-->
+- pgfix: legacy scenarios banked by default, ledger tag for blocked runs (TASK-1093, merged 2026-11-27, acceptance 2 of 2) <!--sg:agent/pgfix-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
