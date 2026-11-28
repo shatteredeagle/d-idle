@@ -129,3 +129,36 @@ func TestNoPathParkNamesTheExitAndCause(t *testing.T) {
 		})
 	}
 }
+
+// TASK-1120 (lab 2026-11-28, board.sm.restart-mid-chain): a chunk started while the hero stood in a side level with no
+// known exit failed its travel step three times in 0.9 s ("nav: no exit to that level", the third report prefixed by the
+// task layer) and parked gave_up. TASK-1126: the same with an NPC that is not in the walkable part of the level. The world
+// refused, not the hero: inside samePathWindow it is one try; a minute apart each counts. Must fail without sameTryKind.
+func TestWorldRefusalsInOneSecondAreOneTry(t *testing.T) {
+	for _, base := range []string{
+		"exit to Black Marsh: nav: no exit to that level: level 6 from 20",
+		"step talk_tyrael: 2 tries used: npc_out_of_reach: npc class 251 is not in the part of area 73 the hero can walk",
+	} {
+		for _, class := range smClasses {
+			t.Run(class+"/"+base[:12], func(t *testing.T) {
+				r := refusalRig(t, class, 0)
+				c := StepResult{Outcome: StepFailed, Why: base}
+				third := StepResult{Outcome: StepFailed, Why: "needs_attention: quest.x/step: " + base}
+				now := time.Unix(1_800_000_000, 0)
+				r.x.o.Now = func() time.Time { return now }
+				r.f.Script = []StepResult{c, c, third, c, c}
+				r.tick(3)
+				if v := r.chunk(den, clr); v.State == Blocked {
+					t.Fatalf("three identical refusals at one instant parked the chunk: %+v", v)
+				}
+				for i := 0; i < 2; i++ {
+					now = now.Add(samePathWindow + time.Second)
+					r.tick(1)
+				}
+				if run := r.x.runOf(t, den, clr); run.Code != "gave_up" {
+					t.Fatalf("three tries a minute apart did not park: %+v", run)
+				}
+			})
+		}
+	}
+}
