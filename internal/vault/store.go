@@ -70,6 +70,7 @@ type Store struct {
 	pins     int
 	ix       index
 	missed   Missed
+	ro       bool // Inspect: replay only, never write
 	anomaly  int  // log lines skipped on replay
 	repaired bool // a torn tail was cut on open
 
@@ -111,6 +112,27 @@ func Open(dir, hero string, opt Options) (*Store, error) {
 		return nil, err
 	}
 	return s, nil
+}
+
+// Inspect replays the whole log of the vault in dir into memory and returns its records with the replay findings (lines
+// skipped, a torn last line). It is read-only: no file is created, cut or written and the snapshot is not used, so it is
+// safe next to a running bot (the ops check uses it).
+func Inspect(dir string) (recs []Rec, anomalies int, torn bool, err error) {
+	if _, err := os.Stat(filepath.Join(dir, LogFile)); err != nil {
+		return nil, 0, false, err
+	}
+	s := &Store{dir: dir, ro: true, opt: Options{Now: time.Now}}
+	if s.opt.Tiers, err = DefaultTiers(); err != nil {
+		return nil, 0, false, err
+	}
+	if s.opt.Values, err = DefaultValues(); err != nil {
+		return nil, 0, false, err
+	}
+	s.reset()
+	if err := s.load(); err != nil {
+		return nil, 0, false, err
+	}
+	return s.Dump(), s.anomaly, s.repaired, nil
 }
 
 // HeroDir is the per-hero directory under root: root/<hero>/vault.
@@ -220,8 +242,10 @@ func (s *Store) load() error {
 		return err
 	}
 	start := int64(0)
-	if snap, ok := s.loadSnapshot(path, fi.Size()); ok {
-		start = snap
+	if !s.ro {
+		if snap, ok := s.loadSnapshot(path, fi.Size()); ok {
+			start = snap
+		}
 	}
 	fh, err := os.Open(path)
 	if err != nil {
@@ -255,7 +279,7 @@ func (s *Store) load() error {
 		}
 	}
 	s.size = off
-	if s.repaired {
+	if s.repaired && !s.ro {
 		if err := os.Truncate(path, off); err != nil {
 			return err
 		}
