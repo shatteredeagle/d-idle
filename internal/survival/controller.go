@@ -387,7 +387,8 @@ func (l *Ledger) unvisitedDiscount(in Input) float64 {
 
 // inBand drops the zones whose monster level is more than BandDrop[diff] below the hero's level: farming monsters that
 // far down pays next to nothing (Questy 2026-11-27: 5k against 22k to 39k XP/h). It runs on judged zones: the hero's
-// current zone always stays (the stay rule and MarkLeft need it), and nothing is dropped unless a safe zone is left.
+// current zone always stays (the stay rule and MarkLeft need it), and nothing is dropped unless a safe zone inside the
+// band is left (a current zone below the band would otherwise be the only choice: the hero pinned in the lowest zone).
 func (l *Ledger) inBand(in Input, vs []verdict) []verdict {
 	if in.Level <= 0 {
 		return vs
@@ -395,11 +396,13 @@ func (l *Ledger) inBand(in Input, vs []verdict) []verdict {
 	var out []verdict
 	safe := false
 	for _, v := range vs {
-		if k := l.P.BandDrop[v.c.Key.Diff]; k > 0 && v.c.MLvl > 0 && in.Level-v.c.MLvl > k && v.c.Key != in.Current {
+		k := l.P.BandDrop[v.c.Key.Diff]
+		below := k > 0 && v.c.MLvl > 0 && in.Level-v.c.MLvl > k
+		if below && v.c.Key != in.Current {
 			continue
 		}
 		out = append(out, v)
-		safe = safe || v.eligible
+		safe = safe || v.eligible && !below // the current zone below the band does not justify dropping its betters
 	}
 	if !safe {
 		return vs

@@ -188,22 +188,28 @@ func (r *Runner) starveStep(s *d2.Snapshot, diff string) (int, bool) {
 	return r.starveStepEx(s, diff, nil)
 }
 
-// starveStepEx is starveStep with areas the own-level pick must not take (the recovery no-potion rule); the first field
-// stays the floor whatever ban says.
+// starveStepEx is starveStep with areas the own-level pick must not take (the recovery no-potion rule). The floor is the
+// first field of the hero's act; when ban holds that field (a hero in act 2 or later with no potion: every area of the
+// act is above the limit, review 11 N4) it is the first field of the difficulty, which stays the floor whatever ban
+// says. Only a hero standing in town gets the lower floor: the way there is the town waypoint (travelTo, wpActTown), and
+// a hero already in the field of the later act has no route west. U: that trip is not run live.
 func (r *Runner) starveStepEx(s *d2.Snapshot, diff string, ban map[int]bool) (int, bool) {
 	act := s.Player.Act + 1
-	var first int
+	var first, lowest int
 	for _, st := range r.d.Plan.Steps[diff] {
 		if r.d.Plan.IsTown(st.Area) {
 			continue
+		}
+		if lowest == 0 {
+			lowest = st.Area
 		}
 		if r.d.Plan.Act(st.Area) == act {
 			first = st.Area
 			break
 		}
-		if first == 0 {
-			first = st.Area
-		}
+	}
+	if first == 0 || ban[first] && r.d.Plan.IsTown(s.Player.Area) {
+		first = lowest
 	}
 	if first == 0 || r.loop.cleared[first] || r.banned(first) {
 		return 0, false
