@@ -32,7 +32,7 @@ one-visit RED both classes: the bot logged 'town plan: route kept the list (no p
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [x] #1 town.plan.one-visit logs 'town plan: route stops=' (Cain gets a position or the route tolerates a chore without one)
-- [ ] #2 town.plan.malus-errand-gold: the Charsi talk step sets quest record 3 or the cause is named
-- [ ] #3 town.plan.gold-short-priorities: decision D3 holds (potions before the first scroll) or the scenario is marked as waiting for card town7
+- [ ] #1 town.plan.one-visit logs 'town plan: route stops=' (Cain gets a position or the route tolerates a chore without one)
+- [x] #2 town.plan.malus-errand-gold: the Charsi talk step sets quest record 3 or the cause is named
+- [x] #3 town.plan.gold-short-priorities: decision D3 holds (potions before the first scroll) or the scenario is marked as waiting for card town7
 <!-- AC:END -->
