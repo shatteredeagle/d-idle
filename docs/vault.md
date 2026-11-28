@@ -264,6 +264,27 @@ The bot lists the records itself under the sale lock (`Keeper.SellAll`, plan `Se
 
 **Tests.** `internal/vaultkeep/sale_test.go` (Paladin and Sorceress: exact credit and records gone, unidentified vs revealed price, lost reply and restart, credited-then-restart, partial on a full stash, pinned refused, measured and fork-missing fallback, refused credit keeps records, confirm threshold, queued orders flushed and marks left, quote reasons add up), `internal/d2dctl/credit_test.go`, `internal/vault` (via the keeper tests), `internal/watch/vaultsale_test.go` (routes), node `vault_sell.mjs` (two fixture states of the 260-selected screenshot, must fail on the old page: checked against `origin/main`'s vault.js), `internal/scenario` (`vault_sold` exact against the reply). Scenario `vault.sell-instant` (`tools/provingground/scenarios/vaultsell.json`): six bare unidentified magic records, the order posted to `/api/vault/sell`, expects the records sold and `sale.gold` = the records' gold = the stash read-back difference. It is an UNMEASURED run (real time with `--vault-pay`, like `vault.reveal-gold`); setup is CHEATED (level, gold, stash by stat verbs): mechanics only.
 
+## Reservation, merc journal and the vault check (card vault2, 2026-11-28; offline tests only, NOT verified live)
+
+- **A sale reserves before it credits.** `Store.Reserve(ids, order, ver)` is a compare-and-set: all ids become held by the
+  order in one logged batch (event `hold`), or none; `ver` is the `Version` the quote was read at and a store that changed
+  since answers `ErrStale` (the keeper prices again, three tries). A held record (`Rec.Hold`) refuses every transition
+  (`keepq`, `pin`, `discard`, `sellq`, `revq`, `rstage`, `reveal`, another order's `soldnow`) with `ErrHeld`; only `soldnow`
+  of the same order or `Release(order)` (event `release`) moves it. `SellNow` and `Sell all` reserve, then write the order
+  file (fsynced; a sale whose file cannot be written is not run), then credit, then `SellNowBatch`. A refused credit
+  releases; an unanswered one keeps the hold across a restart until the same order id settles. `resumeSale` releases a
+  hold no running sale owns (the stop was before the order file, so before the credit). An older bot binary skips the
+  two new log events as anomalies (it then sees those records as free).
+- **Equip on merc has a crash journal** (`merc-intents.json`): see docs/design/fork-order-id-spec.md, "What the bot does
+  until the fork has it". The displaced piece is recorded before it is removed from the pack.
+- **`d2bot ops vault check --dir <data>/vaults/<hero>/vault [--items FILE] [--json]`** is the dry run of a repair: it
+  replays the log read-only (`vault.Inspect`: no snapshot, no truncate, no write) and reads `sale.json`, `equip.json`,
+  `carried.json`, `merc-intents.json`. Findings: `orphan-intent` (a carry, stow, merc, direct-equip or sale order that was
+  not settled), `duplicate` (a carried charm whose record is still live; item bytes on the hero equal to a live record:
+  the hero's bytes come from the carried list, or from `--items`, one norm hex a line), `unreserved` (a sale that lists
+  or paid for a record it does not hold), `orphan-hold`, `log`. Exit 0 clean, 1 findings, 2 usage. It needs no socket
+  and changes nothing; the repair itself is the keeper's next town step.
+
 ## Wallet (V7)
 
 The account wallet is ETHER, implemented in `internal/ether` and described in [ether.md](ether.md): it implements `vault.Account` and `vault.Wallet`, derives the owned capacity steps and the balance by ledger replay, and serves `GET /api/ether`, `POST /api/vault/upgrade` and `POST /api/vault/downgrade` (`internal/watch/etherapi.go`). The store's `Options.Capacity` is `wallet.Capacity(override)`; shrinking (refund of the last step) is allowed only while the active hero's count fits the lower tier. Wired into the bot in V7b behind `loot.vault` (docs/ether.md "Wiring"); not run live.
