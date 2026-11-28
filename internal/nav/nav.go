@@ -394,12 +394,16 @@ func (n *Navigator) plan(lm *d2map.LevelMap, start, goal input.Point, tol float6
 
 func (n *Navigator) planSearch(lm *d2map.LevelMap, start, goal input.Point, tol float64, units []d2.Unit, ignore uint32) (planResult, error) {
 	res, err := n.planHard(lm, start, goal, tol, units, ignore, true)
-	if res.partial && gridWhole(lm) && n.tune().FullGrid {
-		// A whole grid says the goal is cut off: before giving up try the diagonal seams (narrow floors that meet at corners).
+	// A whole grid says the goal is cut off: before giving up try the diagonal seams (narrow floors that meet at corners).
+	seams := gridWhole(lm) && n.tune().FullGrid
+	withSeams := func(hard bool) (planResult, bool) {
 		n.seamsOnce = true
-		r2, e2 := n.planHard(lm, start, goal, tol, units, ignore, true)
+		r2, e2 := n.planHard(lm, start, goal, tol, units, ignore, hard)
 		n.seamsOnce = false
-		if e2 == nil && !r2.partial {
+		return r2, e2 == nil && !r2.partial
+	}
+	if res.partial && seams {
+		if r2, ok := withSeams(true); ok {
 			return r2, nil
 		}
 	}
@@ -407,6 +411,15 @@ func (n *Navigator) planSearch(lm *d2map.LevelMap, start, goal input.Point, tol 
 		// the hard blocks may have cut the only way: better to try the old way again than to give up
 		if r2, e2 := n.planHard(lm, start, goal, tol, units, ignore, false); e2 == nil && !r2.partial {
 			return r2, nil
+		}
+		// The only way may need both: a seam, and cells a stall blocked. V lab night 2026-11-28, drill.act2.summoner.stepexec:
+		// the hero walked to the Summoner's platform twice, the stalls of those walks blocked cells at (102,503), (83,462),
+		// (48,455) and (50,458), and the third walk found {26 450} unreachable for the rest of the run (U that those cells
+		// are on a seam route: the level's grid was not kept; the two retries never ran together).
+		if seams {
+			if r2, ok := withSeams(false); ok {
+				return r2, nil
+			}
 		}
 	}
 	return res, err

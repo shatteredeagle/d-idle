@@ -127,6 +127,7 @@ docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-extras.jsonl.gz  gaterun  gate
 
 # BEGIN GENERATED OWNERS (tools/sharedgen/sharedgen.py from the owns: keys of open tasks; do not edit between the markers)
 .github/workflows/tester-image.yml  credit-runner  ghcrpublish
+backlog/tasks/task-1107 - act2night-three-Act-2-stepexec-drill-findings-Duriel-stall-shaft-road-without-a-portal-potion-not-drunk-in-the-cube-drill.md  credit-runner  summonerstall
 backlog/tasks/task-726 - dlv-cast-verbs-input-caps-cast-unit-cast-point-cast-hold.md  live-agent  inputl3
 backlog/tasks/task-765 - town12-SME-review-of-the-supply-profile-numbers-advice-only.md  live-agent  town11
 cmd/d2bot/  credit-runner  fix7b
@@ -134,6 +135,8 @@ cmd/d2bot/adapters.go  credit-runner  cainfix3
 cmd/d2bot/agencydrive_test.go  live-agent  agencyp1b
 cmd/d2bot/agencywire.go  live-agent  agencyp1b
 cmd/d2bot/behaviors.go  credit-runner  campaign1
+cmd/d2bot/boss.go  credit-runner  summonerstall
+cmd/d2bot/boss_test.go  credit-runner  summonerstall
 cmd/d2bot/d2dbackend.go  credit-runner  campaign1
 cmd/d2bot/d2dwire.go  live-agent  agencyp1b
 cmd/d2bot/hotkeydrift_test.go  live-agent  epic-class-necromancer
