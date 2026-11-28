@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- ledger: refusalPark and resumeAfterDeaths enabled (clean 2 h windows) <!--sg:agent/ledenable-->
 - flipfix2: sandbox aliases, flip status EST, graduate-list checks (TASK-1130) <!--sg:agent/flipfix2-->
 - review 14: round-3 review of merged work (docs) <!--sg:agent/rv5-->
 - zone5: zone prior capped by monster supply (supplyMinutes), caster archetype rows (TASK-1129) <!--sg:agent/zone5-->
