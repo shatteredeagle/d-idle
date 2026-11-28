@@ -6,6 +6,7 @@ import (
 
 	"d2lod-bot/internal/admit"
 	"d2lod-bot/internal/d2"
+	"d2lod-bot/internal/quest"
 	"d2lod-bot/internal/task"
 )
 
@@ -109,6 +110,11 @@ func (r *Runner) earlyRouteCheck(s *d2.Snapshot, a int) (why string, kitOnly boo
 			// guard. The fix (a chores trip) needs the portal that is missing, so the refusal parked the chunk and left the
 			// hero idle in the lair (V lab night 2026-11-28, drill.act2.shaft.stepexec: "no town portal for the
 			// act2_maggot_lair road" in Maggot Lair Level 1, parked after 3 tries, then "Waiting for a fresh game").
+			// Not for the road's boss or chest level (a quest handler row works there, review 14 H3): it keeps the
+			// potion half; without a portal the refusal is a hold, not a trip (admit.MayEnter has the same rule).
+			if n := healingOf(in); a != s.Player.Area && quest.ObjectiveAreas()[a] && n < rt.Kit.Healing {
+				return fmt.Sprintf("%d healing potions < %d for the %s road's objective level", n, rt.Kit.Healing, rt.Name), in.HasTP
+			}
 			continue
 		}
 		if n := healingOf(in); n < rt.Kit.Healing {
