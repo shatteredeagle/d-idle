@@ -2,6 +2,7 @@
  "build": "amazon_multishot_endgame90",
  "class": "amazon",
  "combat": "multishot",
+ "ammo": "bow",
  "schema": "per-clvl allocation, same shape as internal/gear/builds/*.json (leveler.ParseBuild) plus main_attack; rows clvl 2..90, NO respec. A row with no skills means the point is saved (no unlocked plan skill); the planner spends it in the row where the skill unlocks. Quest points (Den, Radament, Izual in each difficulty) are skill entries with a quest key (rows 8 Den, 15 Radament, 26 Izual, 38 Den, 44 Radament, 56 Izual, 68 Den, 72 Radament, 82 Izual; U timing): rows count level points only, and a tagged point is bought as soon as its quest point is granted.",
  "tags": "Skills: V end state direction Maxroll Multiple Shot Amazon (fetched 2026-10-29): 1 each Dodge, Evade, Avoid, Valkyrie; max Pierce, Multiple Shot, Critical Strike, Penetrate, Guided Arrow, Magic Arrow, Strafe (Strafe for a D2R unique, not taken). U: Pierce 10 (the guide's 'until 69%' is D2R Buriza-less math, not recomputed), Guided Arrow from 18, Critical Strike/Penetrate 12 for attack rating (U). Valkyrie needs Decoy (Dopplezon) <- Slow Missiles <- Inner Sight and Evade <- Avoid <- Dodge (V skills.txt). Stats: Dex 152 and Str 108 (Grand Matron Bow, V data.json, clvl 58; Treachery in a Mage Plate needs 55, V), computed from internal/gear/milestones.json, staged for Ceremonial Bow (73/110, clvl 35) first, rest Vitality.",
  "respec": {

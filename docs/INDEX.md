@@ -284,7 +284,9 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 `classes/`
 
 - [classes/README.md](classes/README.md): Class research index (docs only)
+- [amazon-gap-2026-11-28.md](classes/amazon-gap-2026-11-28.md): Amazon gap list against TASK-941 (card cls2, 2026-11-28) (status: current offline audit. Tags V (verified: a test or a code read this run), S (secondary: an SME doc of this...)
 - [amazon.md](classes/amazon.md): Amazon plan (D2 LoD 1.14d, offline softcore, unattended)
+- [assassin-gap-2026-11-28.md](classes/assassin-gap-2026-11-28.md): Assassin gap list against TASK-947 (card cls2, 2026-11-28) (status: current offline audit. Tags V (verified: a test or a code read this run), S (secondary: an SME doc of this...)
 - [assassin.md](classes/assassin.md): Assassin plan (D2 LoD 1.14d, offline softcore, unattended)
 - [barbarian.md](classes/barbarian.md): Barbarian plan (D2 LoD 1.14d, offline softcore, unattended)
 - [druid.md](classes/druid.md): Druid plan (D2 LoD 1.14d, offline softcore, unattended)

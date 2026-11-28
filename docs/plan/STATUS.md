@@ -52,6 +52,7 @@
 | bsmnight | proposed | - | `tools/provingground/scenarios/board.json`<br>`internal/questboard/` | - |
 | act2night | proposed | - | `internal/bot/`<br>`tools/provingground/scenarios/stepexec-act2chunks.json` | - |
 | townnight | proposed | - | `internal/town/`<br>`internal/supply/`<br>`tools/provingground/scenarios/townplan.json` | - |
+| cls2 | in-progress | - | `internal/plandata/`<br>`internal/d2/`<br>`internal/decide/`<br>`data/capabilities/`<br>`internal/combat/`<br>`cmd/d2bot/`<br>`tools/provingground/`<br>`internal/leveler/`<br>`docs/classes/`<br>`docs/sme/capability-gaps.md` | - |
 | led1 | in-progress | - | `data/darklaunch/`<br>`data/darklaunch.json`<br>`data/darklaunch-cap.json`<br>`tools/darklaunch/`<br>`tools/flip/`<br>`docs/process/dark-launch.md`<br>`docs/process/autoflip.md` | - |
 | fix7b | in-progress | - | `internal/bot/`<br>`internal/arbiter/`<br>`internal/survival/`<br>`internal/combat/`<br>`cmd/d2bot/`<br>`docs/arbiter.md`<br>`docs/design/arbiter-target-and-migration.md` | - |
 | live1 | proposed | - | `internal/bot/`<br>`internal/survival/`<br>`internal/questboard/`<br>`internal/arbiter/`<br>`cmd/d2bot/survivalwire.go`<br>`docs/live1.md` | - |
@@ -200,6 +201,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 8f25b5669 11-28 03:07 `Merge agent/cls2: cls2: Amazon and Assassin (TASK-1109)` (cls2)
+- 828b9c58e 11-28 03:06 `Merge branch 'main' into cls2` (-)
 - d80ac981d 11-28 02:57 `Merge agent/ops4: ops4: backlog check fails invalid YAML cards, quote values, repair cards (TASK-1124)` (ops4)
 - 3a2e18fbc 11-28 02:57 `Merge agent/sweep1: sweep1: review sweep, consent fix (TASK-1122)` (sweep1)
 - 4f4d93602 11-28 02:57 `Merge agent/live1: live1: live log findings L1-L6 (TASK-1119)` (live1)
@@ -208,6 +211,4 @@
 - 0f6c51cf1 11-28 02:54 `Merge branch 'main' into live1` (-)
 - 13bbafe89 11-28 02:50 `Merge agent/fix1b: fix1b: vault equip by bytes etc (TASK-1114)` (fix1b)
 - 090e4434c 11-28 02:49 `Merge branch 'main' into fix1b` (-)
-- f9b1c3551 11-28 02:40 `Merge agent/nf3b: nf3b: nav seam, mapKillErr, Approach field NPC (TASK-1104/1107)` (nf3b)
-- 1315f88eb 11-28 02:39 `Merge branch 'main' into nf3b` (-)
 <!-- statusgen:end -->
