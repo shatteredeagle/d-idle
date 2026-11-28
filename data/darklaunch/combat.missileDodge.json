@@ -1,0 +1,10 @@
+{
+ "name": "combat.missileDodge",
+ "built_by": "initial snapshot (b030e4fbf)",
+ "dark_since": "2026-10-30",
+ "why_off": "Unverified live.",
+ "enable_criteria": "Live drill: dodge succeeds vs fire wall, lightning, hydra; no flail",
+ "owner": "coordinator",
+ "review_by": "2026-12-09",
+ "status": "enabled"
+}
