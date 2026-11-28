@@ -127,7 +127,10 @@ docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-extras.jsonl.gz  gaterun  gate
 
 # BEGIN GENERATED OWNERS (tools/sharedgen/sharedgen.py from the owns: keys of open tasks; do not edit between the markers)
 .github/workflows/tester-image.yml  credit-runner  ghcrpublish
+backlog/tasks/task-1100 - fix4-security-fixes-from-fable-review-4-scrubber-watch-token-difficulty-go-flip-run-check-log-tail.md  pro-runner  ops4
 backlog/tasks/task-1107 - act2night-three-Act-2-stepexec-drill-findings-Duriel-stall-shaft-road-without-a-portal-potion-not-drunk-in-the-cube-drill.md  credit-runner  summonerstall
+backlog/tasks/task-185 - unlockwire-wire-bestiary-risk-order-queue-and-atlas-into-the-live-bot.md  pro-runner  ops4
+backlog/tasks/task-597 - vaultv7b-wire-the-ETHER-wallet-Vault-page-upgrade-UI-earn-call-sites.md  pro-runner  ops4
 backlog/tasks/task-726 - dlv-cast-verbs-input-caps-cast-unit-cast-point-cast-hold.md  live-agent  inputl3
 backlog/tasks/task-765 - town12-SME-review-of-the-supply-profile-numbers-advice-only.md  live-agent  town11
 cmd/d2bot/  credit-runner  fix7b
@@ -480,6 +483,7 @@ internal/watch/web/shell.json  credit-runner  uis1
 internal/watch/web/shell.json  credit-runner  uis6
 internal/watch/web/tokens.css  credit-runner  uis1
 internal/watch/web/watch.html  credit-runner  onboardtour
+tools/backlog/  pro-runner  ops4
 tools/ci/  credit-runner  dlv-cleanup
 tools/ci/check.sh  credit-runner  inputl5
 tools/ci/pointercount-baseline.json  credit-runner  inputl5

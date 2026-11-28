@@ -58,6 +58,7 @@
 | live1 | proposed | - | `internal/bot/`<br>`internal/survival/`<br>`internal/questboard/`<br>`internal/arbiter/`<br>`cmd/d2bot/survivalwire.go`<br>`docs/live1.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | sweep1 | in-progress | - | `docs/probes/review-sweep-2026-11-28.md`<br>`internal/diffready/`<br>`internal/bot/diffready_test.go`<br>`internal/combat/move.go`<br>`internal/combat/whirl.go`<br>`internal/combat/fight.go`<br>`internal/combat/move_test.go`<br>`internal/watch/difficultydesk.go` | - |
+| ops4 | in-progress | - | `tools/backlog/`<br>`backlog/tasks/task-185 - unlockwire-wire-bestiary-risk-order-queue-and-atlas-into-the-live-bot.md`<br>`backlog/tasks/task-597 - vaultv7b-wire-the-ETHER-wallet-Vault-page-upgrade-UI-earn-call-sites.md`<br>`backlog/tasks/task-1100 - fix4-security-fixes-from-fable-review-4-scrubber-watch-token-difficulty-go-flip-run-check-log-tail.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
 | ghcrpublish | in-progress | - | `.github/workflows/tester-image.yml`<br>`docs/registry-publish.md`<br>`deploy/d2d-container/compose.friends.yml`<br>`docs/tester-registry.md`<br>`deploy/d2d-container/compose.tester.yml`<br>`deploy/d2d-container/context.sh`<br>`deploy/d2d-container/tester_image_test.go` | - |
@@ -200,14 +201,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- d80ac981d 11-28 02:57 `Merge agent/ops4: ops4: backlog check fails invalid YAML cards, quote values, repair cards (TASK-1124)` (ops4)
 - 3a2e18fbc 11-28 02:57 `Merge agent/sweep1: sweep1: review sweep, consent fix (TASK-1122)` (sweep1)
 - 4f4d93602 11-28 02:57 `Merge agent/live1: live1: live log findings L1-L6 (TASK-1119)` (live1)
+- 34ff2f56c 11-28 02:54 `Merge branch 'main' into ops4` (-)
 - 1c3f76941 11-28 02:54 `Merge branch 'main' into sweep1` (-)
 - 0f6c51cf1 11-28 02:54 `Merge branch 'main' into live1` (-)
 - 13bbafe89 11-28 02:50 `Merge agent/fix1b: fix1b: vault equip by bytes etc (TASK-1114)` (fix1b)
 - 090e4434c 11-28 02:49 `Merge branch 'main' into fix1b` (-)
 - f9b1c3551 11-28 02:40 `Merge agent/nf3b: nf3b: nav seam, mapKillErr, Approach field NPC (TASK-1104/1107)` (nf3b)
 - 1315f88eb 11-28 02:39 `Merge branch 'main' into nf3b` (-)
-- 2179c58a0 11-28 02:30 `Merge agent/fix7b: fix7b: arbiter fixes N1-N6 (TASK-1115)` (fix7b)
-- 1f1c3a73a 11-28 02:29 `Merge branch 'main' into fix7b` (-)
 <!-- statusgen:end -->
