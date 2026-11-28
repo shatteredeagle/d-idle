@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- holereach: drop unreachable hole zones, hole fallback needs the kit (TASK-1088) <!--sg:agent/holereach-->
 - postdeploy2: second post-deploy audit (docs) <!--sg:agent/postdeploy2-->
 - townapply: SME town profile rows, beltSlots and tierFloor loader fields (TASK-1087) <!--sg:agent/townapply-->
 - smetown: SME advice on town supply profiles (TASK-765) <!--sg:agent/smetown-->

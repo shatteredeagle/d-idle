@@ -258,3 +258,71 @@ func TestZoneMercReviveLoopBreaker(t *testing.T) {
 		t.Fatal("N 0 is off")
 	}
 }
+
+// holereach: the picker never offers an area the hero cannot reach, and a hole fallback needs the kit and logs once an hour.
+func TestZoneModelDropsUnreachableCandidates(t *testing.T) {
+	for _, cl := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		t.Run(cl.String(), func(t *testing.T) {
+			var offered []ZoneCand
+			g, _ := modelRig(t, cl, func(area int, c []ZoneCand) (ZoneVerdict, error) {
+				offered = c
+				return ZoneVerdict{Area: 2, Margin: "safe", Line: "zone choice: test"}, nil
+			})
+			want := legacy(g, 12).Area
+			g.mover.routeFn = func(from, to int) ([]int, error) {
+				if to == want && from != to {
+					return nil, errors.New("no route")
+				}
+				return covMoverRoute(g, from, to)
+			}
+			g.modelPick(12, nil)
+			for _, c := range offered {
+				if c.Area == want && want != g.r.latest().Player.Area {
+					t.Fatalf("unreachable area %d was offered: %v", want, offered)
+				}
+			}
+		})
+	}
+}
+
+func covMoverRoute(g *rig, from, to int) ([]int, error) {
+	if from == to {
+		return nil, nil
+	}
+	return []int{to}, nil
+}
+
+func TestZoneHoleNeedsKitAndLogsOncePerHour(t *testing.T) {
+	for _, cl := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		t.Run(cl.String(), func(t *testing.T) {
+			g, _ := modelRig(t, cl, func(area int, c []ZoneCand) (ZoneVerdict, error) {
+				return ZoneVerdict{Area: 3, Hole: true, Margin: "too hard", Line: "zone choice: hole test"}, nil
+			})
+			g.w.set(func(w *world) { w.area = 2 })
+			g.r.poll()
+			g.w.belt()
+			g.r.poll()
+			if g.r.fullKit(g.r.latest()) {
+				t.Skip("rig cannot express a short kit")
+			}
+			if st, ok := g.modelPick(12, nil); ok && st.Area == 3 {
+				t.Fatalf("hole fallback to area 3 with a short kit must not be chosen")
+			}
+			if _, ok := g.r.zst.noted1["holekit:3"]; !ok {
+				t.Fatal("refusal not noted")
+			}
+			g.r.zoneNoteHour("hole:3", "x")
+			n := len(g.r.zst.noted1)
+			g.r.zoneNoteHour("hole:3", "x")
+			if len(g.r.zst.noted1) != n {
+				t.Fatal("repeat within the hour must be silent")
+			}
+			g.clock.Sleep(61 * time.Minute)
+			at := g.r.zst.noted1["hole:3"]
+			g.r.zoneNoteHour("hole:3", "x")
+			if !g.r.zst.noted1["hole:3"].After(at) {
+				t.Fatal("note after an hour must log again")
+			}
+		})
+	}
+}
