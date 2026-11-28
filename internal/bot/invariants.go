@@ -159,7 +159,8 @@ type invMon struct {
 	poorSince             time.Time
 	poorKills             int
 	refusals, refusalBase int
-	refStall              int            // refusals since the last kill, xp or area change; not cleared by a storm hit (failsafe rung 4, quests.refusalPark)
+	refStall              int            // coded refusals since the last kill, xp or area change; not cleared by a storm hit (failsafe rung 4, quests.refusalPark)
+	refFault              bool           // a real failure (no refusal) happened in the same stretch: the stall is not refusals only
 	refWhy                map[string]int // refusal reason -> count since the last progress (refusal-storm top list)
 	progKey               string
 }
@@ -183,13 +184,28 @@ func (r invRow) dur() time.Duration { return time.Duration(r.Secs) * time.Second
 func (m *invMon) noteRefusal(why string) {
 	m.mu.Lock()
 	m.refusals++
-	m.refStall++
 	if m.refWhy == nil {
 		m.refWhy = map[string]int{}
 	}
 	if len(m.refWhy) < 64 || m.refWhy[why] > 0 {
 		m.refWhy[why]++
 	}
+	m.mu.Unlock()
+}
+
+// noteCodedRefusal counts a step a guard refused with a reason code or a hold (task.Result.Code, Hold): the only thing
+// that makes a stall "refusals only". A step that failed without a code (a walk, a dialogue, a path error) is no refusal.
+func (m *invMon) noteCodedRefusal() {
+	m.mu.Lock()
+	m.refStall++
+	m.mu.Unlock()
+}
+
+// noteFault records a real failure of an action; until the next progress the stall is not refusals only, so rung 4
+// still restarts a game that stopped taking input (fable review 2 finding 2).
+func (m *invMon) noteFault() {
+	m.mu.Lock()
+	m.refFault = true
 	m.mu.Unlock()
 }
 
@@ -378,7 +394,7 @@ func (m *invMon) tick(f invFacts) []invHit {
 
 	r = invRowOf("refusal-storm")
 	if pk := fmt.Sprintf("%d|%d|%d", f.kills, f.xp, f.area); pk != m.progKey || f.parked || f.paused {
-		m.progKey, m.refusalBase, m.refStall = pk, m.refusals, 0
+		m.progKey, m.refusalBase, m.refStall, m.refFault = pk, m.refusals, 0, false
 		m.refWhy = nil
 	}
 	if n := m.refusals - m.refusalBase; n >= r.Count {
@@ -584,10 +600,10 @@ func petsKV(p *d2.Player) []any {
 	return nil
 }
 
-// refusalOnlyStall reports whether the stall so far is made of refusals: at least min refused steps since the last kill,
-// xp or area change (the same progress the refusal-storm row watches).
+// refusalOnlyStall reports whether the stall so far is made of refusals: at least min coded refusals and no real
+// failure since the last kill, xp or area change (the same progress the refusal-storm row watches).
 func (m *invMon) refusalOnlyStall(min int) bool {
 	m.mu.Lock()
 	defer m.mu.Unlock()
-	return m.refStall >= min
+	return m.refStall >= min && !m.refFault
 }
