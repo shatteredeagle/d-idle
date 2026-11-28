@@ -4,7 +4,7 @@
 DESIGN (git): one file per knob, data/darklaunch/<knob name>.json, with the fields a card decides (DESIGN_FIELDS,
 flip_plan, note). The status word in git is the design intent: dark, enabled, default-on, retired, by_design.
 RUNTIME (not git): one state file owned by the flip tool, {"version", "rows": {knob: {state, trial_*, enabled_at,
-revert_*, reverted_at, criteria_met}}, "log": [...]}. Only tools/flip writes it; no checkout is ever written.
+revert_*, reverted_at, graduation_note, criteria_met}}, "log": [...]}. Only tools/flip writes it; no checkout is ever written.
 The merged view (rows()) is what the old one-file ledger was: design fields plus the runtime fields, with `status`
 derived (a dark or enabled row takes the runtime `state`: trial, enabled, dark).
 
@@ -38,7 +38,7 @@ LOG_KEEP = 300
 
 
 def is_runtime(key):
-    return key in ("state", "criteria_met", "enabled_at", "reverted_at") or key.startswith(("trial_", "revert_"))
+    return key in ("state", "criteria_met", "enabled_at", "reverted_at") or key.startswith(("trial_", "revert_", "graduation_"))
 
 
 def default_source(root=ROOT):
