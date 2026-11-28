@@ -108,7 +108,7 @@ func TestLifePriceOnlyPaladin(t *testing.T) {
 	}
 }
 
-// B2: Holy Fire needs combat.holyFireMinMonsters hostiles close; Might otherwise; once on it stays one monster longer.
+// B2: Holy Fire needs combat.holyFireMinMonsters hostiles close; Might otherwise; once on once on it is held through the fight.
 func TestHolyFireCrowdCrossover(t *testing.T) {
 	h, g := newHandGame(t)
 	p := g.p
@@ -135,8 +135,16 @@ func TestHolyFireCrowdCrossover(t *testing.T) {
 	if got := pick(min-1, &Target{}); got != "Holy Fire" {
 		t.Errorf("hysteresis: %s", got)
 	}
-	if got := pick(min-2, &Target{}); got != "Might" {
-		t.Errorf("pack gone: %s", got)
+	if got := pick(0, &Target{}); got != "Holy Fire" { // held for the whole fight, whatever the count (auraflap)
+		t.Errorf("held in the fight: %s", got)
+	}
+	h.f.auraFightAt = h.f.now()
+	if got := pick(0, nil); got != "Holy Fire" { // and for auraHold after it
+		t.Errorf("held after the fight: %s", got)
+	}
+	h.f.auraFightAt = h.f.now().Add(-2 * auraHold)
+	if got := pick(0, nil); got != "Might" {
+		t.Errorf("pack long gone: %s", got)
 	}
 	h.f.e.Tune.Combat.HolyFireMinMonsters = 1
 	g.aura, p.RightSkill = 98, 98

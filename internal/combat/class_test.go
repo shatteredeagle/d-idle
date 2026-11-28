@@ -457,7 +457,9 @@ func TestPaladinFightsWithLeftHand(t *testing.T) {
 	if g.holds == 0 {
 		t.Fatal("Zeal is held, not clicked")
 	}
-	if g.aura != 98 || g.p.RightSkill != 98 { // one monster in reach at a time: Might, not Holy Fire (palprofile B2)
+	// Might while the pack is thin (palprofile B2); a Holy Fire that came up with the pack is held after the kills
+	// (auraflap), so the aura never swaps back and forth.
+	if (g.aura != 98 && g.aura != 102) || g.p.RightSkill != g.aura {
 		t.Fatalf("aura %d right %d", g.aura, g.p.RightSkill)
 	}
 	if h.s.casts != 0 {

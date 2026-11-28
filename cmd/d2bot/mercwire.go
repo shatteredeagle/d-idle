@@ -210,6 +210,7 @@ type mercWire struct {
 	reviveFailAt time.Time       // last failed revive attempt: no new attempt for mercSkipGap (no loop on an unreachable NPC)
 	quoteLogAt   time.Time       // last unreadable-quote line written (once per town visit)
 	shortFirst   bool            // the pre-shop revive was refused for gold (the chores then sell junk first)
+	noMercAt     time.Time       // last `merc: none` explanation
 	waitNeed     int             // need of the last logged `merc: gold wait`; 0 = none pending
 
 	pr       *merc.PlayerRevive  // the player's Revive mercenary request (mercplayer.go)
@@ -976,7 +977,78 @@ func (t *mercTown) TakeTPBought() int {
 func (t *mercTown) NeedsTrip(s *d2.Snapshot) (bool, string) {
 	t.w.Tick()
 	t.w.noteSnap(s)
+	t.w.noteNoMerc(s)
+	if ok, why := t.w.reviveTrip(s); ok {
+		return true, why
+	}
 	return t.Townsman.NeedsTrip(s)
+}
+
+// reviveTrip asks for a town visit while the merc is dead and the revive policy would pay now. The legacy merc chore
+// (bot.mercWanted) cannot see through this wrapper, so before this a dead merc waited for the next trip of another
+// reason (Doofer: 22 minutes dead with 98k in the stash). The step itself is reviveStep, so the bar, the hourly cap and
+// the failure backoff are the policy's own; a failed attempt (reviveFailAt) holds the trip back for mercSkipGap.
+func (w *mercWire) reviveTrip(s *d2.Snapshot) (bool, string) {
+	if s == nil || s.Player == nil || w.rev == nil {
+		return false, ""
+	}
+	st, err := w.State()
+	if err != nil || !st.Known || !st.Owned || st.Alive {
+		return false, ""
+	}
+	c := mercCtx(w, s)
+	w.mu.Lock()
+	backoff := !w.reviveFailAt.IsZero() && w.now().Sub(w.reviveFailAt) < mercSkipGap
+	quote := w.quoteFor(st.Level)
+	w.mu.Unlock()
+	if backoff {
+		return false, ""
+	}
+	if dec, price := merc.ShouldRevive(st, c, quote); dec.Do {
+		return true, "merc dead, revive due (gold " + strconv.Itoa(c.Gold) + ", need " + strconv.Itoa(merc.ReviveNeed(c, price)) + ")"
+	}
+	return false, ""
+}
+
+// noMercEvery spaces the `merc: none` explanation.
+const noMercEvery = 10 * time.Minute
+
+// noteNoMerc says why a character with no merc has none, once per noMercEvery: the policy's own verdict on the Act 1
+// Rogue (the paid hire waits for Blood Raven unless the class trait allows it early) and whether a hire window reader
+// exists at all (production leaves hirer nil: nothing can hire, so a Paladin stayed unhired for hours, 2026-11-27).
+func (w *mercWire) noteNoMerc(s *d2.Snapshot) {
+	if s == nil || s.Player == nil {
+		return
+	}
+	st, err := w.State()
+	if err != nil || !st.Known || st.Owned {
+		return
+	}
+	now := w.now()
+	w.mu.Lock()
+	due := w.noMercAt.IsZero() || now.Sub(w.noMercAt) >= noMercEvery
+	if due {
+		w.noMercAt = now
+	}
+	w.mu.Unlock()
+	if !due {
+		return
+	}
+	line := noMercWhy(mercCtx(w, s), st, w.hirer != nil)
+	w.mu.Lock()
+	w.lastDec = line
+	w.mu.Unlock()
+	w.log.Info(merc.Prefix + line)
+}
+
+// noMercWhy is the text of noteNoMerc: the verdict ShouldHire gives a one-gold Act 1 Rogue offer, plus the missing hirer.
+func noMercWhy(c merc.Ctx, st merc.MercState, haveHirer bool) string {
+	probe := merc.HireOffer{Class: merc.ClassRogue, Aura: "Cold Arrow", Price: 1}
+	line := "none at clvl " + strconv.Itoa(c.Level) + " (" + c.PlayerClass + "): act 1 rogue hire " + merc.ShouldHire(probe, st, c).Reason
+	if !haveHirer {
+		line += "; no hire window reader wired, so no paid hire can happen"
+	}
+	return line
 }
 
 // claimVerify bounds the read-back after a claim: claimTries reads, claimPause apart. A var so tests do not sleep.

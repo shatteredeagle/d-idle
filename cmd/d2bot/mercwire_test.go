@@ -1263,3 +1263,77 @@ func TestHiredAuraIsKept(t *testing.T) {
 		t.Errorf("a different merc class got the aura %q", st.Aura)
 	}
 }
+
+type noTripTown struct{ bot.Townsman }
+
+func (noTripTown) NeedsTrip(*d2.Snapshot) (bool, string) { return false, "" }
+
+// Doofer 2026-11-27: the merc died, the stash held 98k and nothing went home for 22 minutes, because only an
+// unrelated trip ran the revive step. A dead merc the policy would pay for now is a trip reason.
+func TestDeadMercWithGoldIsATripReason(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		t.Run(class.String(), func(t *testing.T) {
+			rd := &fakeReader{st: merc.MercState{Known: true, Owned: true, Alive: false, Level: 17, FreeCells: -1}}
+			rev := &fakeReviver{paid: 1680}
+			w, _, clk := testWire(t, rd, rev)
+			mt := &mercTown{Townsman: noTripTown{}, w: w}
+			s := townSnap(1150, true)
+			s.Player.Class, s.Player.Level, s.Player.StashGold, s.Player.Area = class, 17, 98000, 2 // field
+			if ok, why := mt.NeedsTrip(s); !ok || !strings.Contains(why, "revive due") {
+				t.Fatalf("dead merc with 99k gold: trip=%v %q", ok, why)
+			}
+			// poor: no trip for nothing
+			poor := townSnap(100, true)
+			poor.Player.Class, poor.Player.Level, poor.Player.Area = class, 17, 2
+			if ok, _ := mt.NeedsTrip(poor); ok {
+				t.Error("trip with a purse that cannot pay")
+			}
+			// a failed attempt holds the trip back for the backoff, then it comes again
+			w.reviveFailAt = clk.t
+			if ok, _ := mt.NeedsTrip(s); ok {
+				t.Error("trip inside the failure backoff")
+			}
+			clk.t = clk.t.Add(mercSkipGap + time.Second)
+			if ok, _ := mt.NeedsTrip(s); !ok {
+				t.Error("no trip after the backoff")
+			}
+			// alive: nothing
+			rd.set(merc.MercState{Known: true, Owned: true, Alive: true, Level: 17})
+			clk.t = clk.t.Add(time.Minute)
+			if ok, _ := mt.NeedsTrip(s); ok {
+				t.Error("trip for a living merc")
+			}
+		})
+	}
+}
+
+// Questy 2026-11-27: Paladin clvl 16, no merc, no hire line, nothing said why. The line names the policy's verdict
+// and the missing hire window reader; a class whose trait allows the early Rogue reads differently.
+func TestNoMercSaysWhy(t *testing.T) {
+	for _, c := range []struct {
+		class d2.Class
+		want  string
+	}{{d2.Paladin, "free rogue pending"}, {d2.Necromancer, "hire ok"}} {
+		t.Run(c.class.String(), func(t *testing.T) {
+			rd := &fakeReader{st: merc.MercState{Known: true}}
+			w, buf, clk := testWire(t, rd, nil)
+			mt := &mercTown{Townsman: noTripTown{}, w: w}
+			s := townSnap(5000, true)
+			s.Player.Class, s.Player.Level = c.class, 16
+			mt.NeedsTrip(s)
+			if got := buf.String(); !strings.Contains(got, "none at clvl 16 ("+c.class.String()+")") || !strings.Contains(got, c.want) || !strings.Contains(got, "no hire window reader") {
+				t.Fatalf("line:\n%s", got)
+			}
+			if st := w.Status(); !strings.Contains(st["lastDecision"].(string), c.want) {
+				t.Errorf("status lastDecision %v", st["lastDecision"])
+			}
+			n := strings.Count(buf.String(), "merc: none")
+			mt.NeedsTrip(s)
+			clk.t = clk.t.Add(noMercEvery + time.Second)
+			mt.NeedsTrip(s)
+			if got := strings.Count(buf.String(), "merc: none"); got != n+1 {
+				t.Errorf("lines %d -> %d, want once per %v", n, got, noMercEvery)
+			}
+		})
+	}
+}

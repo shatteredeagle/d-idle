@@ -2,6 +2,7 @@ package bot
 
 import (
 	"context"
+	"fmt"
 	"strings"
 	"sync"
 	"time"
@@ -318,6 +319,8 @@ type mercState struct {
 	known     bool      // a merc was seen or hired this run (a dead one may vanish from the unit table, U)
 	goneSince time.Time // known merc first missing in town, zero while present or in the field
 	next      time.Time // earliest next chore attempt
+	deadSince time.Time // known merc first seen dead or gone; zero while he lives
+	offNoted  time.Time // last `revive off` line
 }
 
 // observe records what the snapshot shows and returns the sticky known flag.
@@ -376,7 +379,16 @@ func (r *Runner) mercLegacy(s *d2.Snapshot) string {
 		}
 		return ""
 	}
-	if !t.MercReviveUnverified || !(gone || mc.Present && !mc.Alive) {
+	dead := gone || mc.Present && !mc.Alive
+	if !dead {
+		m.deadSince = time.Time{}
+		return ""
+	}
+	if m.deadSince.IsZero() {
+		m.deadSince = now
+	}
+	if !t.MercReviveUnverified {
+		r.noteMercReviveOff(s, now.Sub(m.deadSince), now)
 		return ""
 	}
 	in := resource.Input{Gold: s.Player.Gold}
@@ -385,6 +397,23 @@ func (r *Runner) mercLegacy(s *d2.Snapshot) string {
 		return "revive"
 	}
 	return ""
+}
+
+// mercOffEvery spaces the `revive off` line. Caller holds r.merc.mu.
+const mercOffEvery = 5 * time.Minute
+
+// noteMercReviveOff makes the refusal visible: a dead merc stays dead while the unverified revive knob is off, and
+// without a line nobody can tell that from a bug (2026-11-27: Doofer's merc stayed dead 22 minutes). Caller holds
+// r.merc.mu; when the gold would pay it also records a standing refusal for /api/explain.
+func (r *Runner) noteMercReviveOff(s *d2.Snapshot, dead time.Duration, now time.Time) {
+	m := &r.merc
+	if !m.offNoted.IsZero() && now.Sub(m.offNoted) < mercOffEvery {
+		return
+	}
+	m.offNoted = now
+	mins := int(dead / time.Minute)
+	r.e.Log.Info(fmt.Sprintf("merc dead since %dm, revive off (bot.mercReviveUnverified)", mins), "gold", s.Player.Gold)
+	r.noteStanding("merc revive", fmt.Sprintf("merc dead since %dm; bot.mercReviveUnverified=0 (revive dialog unverified live, docs/probes/merc-revive-live-checklist.md)", mins))
 }
 
 // askMerc is point t2.mercenary (docs/t0-slice.md), asked only where the legacy gate already says hire or revive: the
