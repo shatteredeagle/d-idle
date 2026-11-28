@@ -14,7 +14,9 @@
   "classes": {
     "sorceress": {"lead": 1, "note": "U: low life and no armour early, wants a level more than the table minimum"},
     "necromancer": {"lead": 1, "note": "U: a caster with 130 life at clvl 16 (docs/probes/necro-readiness-2026-11-26.md, S), same lead as the Sorceress until a seed set moves it"},
-    "paladin":   {"lead": 0, "note": "U: the table minimum is the veteran paladin line"}
+    "paladin":   {"lead": 0, "note": "U: the table minimum is the veteran paladin line"},
+    "druid":     {"lead": 1, "note": "S: the weakest class of the first 20 levels (life +1.5 and mana +2 per clvl, docs/sme/class-druid.md section 0), so a level more than the table minimum like the other casters; U live"},
+    "barbarian": {"lead": 0, "note": "S: the biggest life pool and the easiest class to keep alive at clvl 1-12 (docs/sme/class-barbarian.md section 0 and 3), so the table minimum like the Paladin; U live"}
   },
   "minPotions": 2
 }

@@ -61,7 +61,7 @@ func TestPolicyTableErrors(t *testing.T) {
 		"unknown point":  {row(`"options":[{"id":"d","label":"D"},{"id":"x","label":"X","rules":[{"point":"t9.nope","answer":"a"}]}]`), "t9.nope"},
 		"unknown answer": {row(`"options":[{"id":"d","label":"D"},{"id":"x","label":"X","rules":[{"point":"t1.repair","answer":"melt"}]}]`), `"melt"`},
 		"unknown field":  {row(`"options":[{"id":"d","label":"D"},{"id":"x","label":"X","rules":[{"point":"t1.repair","when":{"zzz":"1"},"answer":"skip"}]}]`), `"zzz"`},
-		"unknown class":  {row(`"classes":["druid"],"options":[{"id":"d","label":"D"}]`), `"druid"`},
+		"unknown class":  {row(`"classes":["assassin"],"options":[{"id":"d","label":"D"}]`), `"assassin"`},
 		"no default":     {row(`"options":[{"id":"x","label":"X"}]`), `no option "d"`},
 		"default acts":   {row(`"options":[{"id":"d","label":"D","rules":[{"point":"t1.repair","answer":"skip"}]}]`), "change nothing"},
 		"no risk":        {row(`"options":[{"id":"d","label":"D"},{"id":"x","label":"X","suboptimal":true}]`), "risk line"},
@@ -90,7 +90,7 @@ func TestRowsForClass(t *testing.T) {
 			t.Fatalf("%s: %v %d", c, err, len(rows))
 		}
 	}
-	if _, err := tbl.RowsFor(cat, "barbarian"); err == nil || !strings.Contains(err.Error(), `"barbarian"`) {
+	if _, err := tbl.RowsFor(cat, "amazon"); err == nil || !strings.Contains(err.Error(), `"amazon"`) {
 		t.Fatalf("unknown class: %v", err)
 	}
 	if _, err := tbl.Row("nope"); err == nil || !strings.Contains(err.Error(), `"nope"`) {
@@ -185,14 +185,14 @@ func TestPolicyClassKnobsNameTheMissingClass(t *testing.T) {
 		return `{"version":1,"rows":[{"id":"r","label":"L","help":"H","default":"d","options":[{"id":"d","label":"D"},{"id":"x","label":"X","classKnobs":` + ck + `}]}]}`
 	}
 	for name, c := range map[string]struct{ ck, want string }{
-		"missing class": {`{"paladin":{"bot.clearRadius":20},"necromancer":{}}`, `"sorceress"`},
-		"unknown class": {`{"paladin":{},"sorceress":{},"necromancer":{},"barbarian":{}}`, `"barbarian"`},
+		"missing class": {`{"paladin":{"bot.clearRadius":20},"necromancer":{},"druid":{},"barbarian":{}}`, `"sorceress"`},
+		"unknown class": {`{"paladin":{},"sorceress":{},"necromancer":{},"druid":{},"barbarian":{},"amazon":{}}`, `"amazon"`},
 	} {
 		if _, err := ParsePolicy([]byte(row(c.ck)), cat); err == nil || !strings.Contains(err.Error(), c.want) {
 			t.Errorf("%s: %v", name, err)
 		}
 	}
-	if _, err := ParsePolicy([]byte(row(`{"paladin":{},"sorceress":{},"necromancer":{}}`)), cat); err != nil {
+	if _, err := ParsePolicy([]byte(row(`{"paladin":{},"sorceress":{},"necromancer":{},"druid":{},"barbarian":{}}`)), cat); err != nil {
 		t.Errorf("complete table: %v", err)
 	}
 }

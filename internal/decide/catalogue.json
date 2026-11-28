@@ -66,7 +66,9 @@
   "classes": {
     "sorceress": {"bands": {"mana": [30, 60]}},
     "necromancer": {"bands": {"mana": [30, 60]}},
-    "paladin":   {"bands": {"mana": [15, 40]}}
+    "paladin":   {"bands": {"mana": [15, 40]}},
+    "druid":     {"bands": {"mana": [20, 60]}},
+    "barbarian": {"bands": {"mana": [10, 30]}}
   },
   "urgency": {
     "stage": 1,
