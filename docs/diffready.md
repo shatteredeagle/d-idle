@@ -16,3 +16,10 @@ User decisions 2026-11-27: Hell has no resist gate (clvl, Baal dead and the surv
 2. Set bot.diffReadyV2 1 on a sandbox; ops why shows "ready for nightmare ... waiting for your go" and no new game starts.
 3. Grant the go; one Nightmare new game starts, verifyDifficulty passes; a second ready check does not hop again.
 4. Check the post-penalty resists against the character sheet (TASK-216 basis).
+
+## The go: scope, end, doors (fix4, fable review 4 finding 4)
+
+- `state/diffgo.json` holds `{"granted":[{"target","hero","at","expires"}]}`. A go belongs to the hero that was in the game when it was given and ends after 7 days (`diffready.GoTTL`). A go for another hero, an ended go and the old file shape (no hero) are never used; the first two are dropped with the log line `difficulty go ignored`. (V: `go test ./internal/diffready ./internal/bot -run 'Consent|Difficult'`; not verified live.)
+- Both doors (operator verb `go-difficulty`, `POST /api/difficulty/go`) end in `Runner.RequestDifficultyGo`, which refuses while `D2BOT_RUN` is set (a measured run).
+- The page door writes the audit log line `quests: action=go-difficulty quest=<target> ...` (client class and agent family, never an address) and allows 6 requests an hour (429 `rate_limited` after that). It does not write the quest board's audit journal; the operator verb does.
+- Open: a cancel route and a second tap (review finding 4) are not built.
