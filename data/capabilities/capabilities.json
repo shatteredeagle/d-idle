@@ -4391,8 +4391,12 @@
    "class": "necromancer",
    "kind": "summon",
    "shape": "pet",
-   "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
+   "reason": "card cls2: display spelling of the skills.txt key FireGolem (V: internal/power/skilldamage.json carries the extract key FireGolem, id 94, req_level 30); kept as an alias row because the golem ladders of profiles.json list both spellings; same level and prerequisite as the FireGolem row; never raised live, U",
    "element": "",
+   "reqLevel": 30,
+   "reqSkills": [
+    "IronGolem"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4545,8 +4549,12 @@
    "class": "assassin",
    "kind": "damage",
    "shape": "ground",
-   "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
+   "reason": "card cls2: reqLevel V from internal/power/skilldamage.json (skills.txt extract: id 272, req_level 24, mana 20, fire, hit shift 4); the display name is Wake of Inferno and the prerequisite Wake of Fire is S (docs/sme/class-assassin.md section 2, the only clvl 24 fire trap with 20 mana and hit shift 4); delivery from the old combat table, no live evidence",
    "element": "",
+   "reqLevel": 24,
+   "reqSkills": [
+    "Wake of Fire Sentry"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },
@@ -4908,8 +4916,13 @@
    "class": "assassin",
    "kind": "damage",
    "shape": "melee",
-   "reason": "generated row: class is S (game knowledge, no skills.txt on the build box), delivery from the old combat table; no live evidence",
+   "reason": "card cls2: reqLevel V from internal/power/skilldamage.json (skills.txt extract: id 280, req_level 30, mana 4); the display name is Phoenix Strike and the prerequisites Cobra Strike and Blades of Ice are S (docs/sme/class-assassin.md section 2, the only clvl 30 martial art with 4 mana); delivery from the old combat table, no live evidence",
    "element": "",
+   "reqLevel": 30,
+   "reqSkills": [
+    "Cobra Strike",
+    "Blades of Ice"
+   ],
    "mana": {
     "source": "skills.txt:mana,lvlmana,manashift,minmana"
    },

@@ -164,8 +164,8 @@ func TestFirsts_ClassDataAndErrors(t *testing.T) {
 	}
 	cat, _ := mustCat(t).WithFirsts(tbl)
 	st, _ := New(cat, "p1", &ManualClock{})
-	_, err := NewTracker(tbl, cat, st, NewCodex("p1"), &ManualClock{}, Who{Class: "barbarian", Diff: "normal"})
-	if err == nil || !strings.Contains(err.Error(), "barbarian") {
+	_, err := NewTracker(tbl, cat, st, NewCodex("p1"), &ManualClock{}, Who{Class: "mystic", Diff: "normal"})
+	if err == nil || !strings.Contains(err.Error(), "mystic") {
 		t.Fatalf("unknown class: %v", err)
 	}
 	if _, err := NewTracker(tbl, mustCat(t), st, NewCodex("p1"), &ManualClock{}, Who{Class: "sorceress", Diff: "normal"}); err == nil {
@@ -173,8 +173,8 @@ func TestFirsts_ClassDataAndErrors(t *testing.T) {
 	}
 	bad := *tbl
 	bad.Firsts = append([]First(nil), tbl.Firsts...)
-	bad.Firsts[0].DefaultByClass = map[string]string{"druid": "no"}
-	if _, err := NewTracker(&bad, cat, st, NewCodex("p1"), &ManualClock{}, Who{Class: "sorceress", Diff: "normal"}); err == nil || !strings.Contains(err.Error(), "druid") {
+	bad.Firsts[0].DefaultByClass = map[string]string{"mystic": "no"}
+	if _, err := NewTracker(&bad, cat, st, NewCodex("p1"), &ManualClock{}, Who{Class: "sorceress", Diff: "normal"}); err == nil || !strings.Contains(err.Error(), "mystic") {
 		t.Fatalf("defaultByClass with an unknown class: %v", err)
 	}
 	if _, err := sorc.Observe(FirstEvent{Kind: "weather", Name: "rain"}); err == nil {

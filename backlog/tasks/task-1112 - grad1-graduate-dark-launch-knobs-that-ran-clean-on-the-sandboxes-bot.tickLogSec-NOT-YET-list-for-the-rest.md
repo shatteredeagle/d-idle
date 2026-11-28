@@ -1,10 +1,13 @@
 ---
 id: TASK-1112
-title: 'grad1: graduate dark-launch knobs that ran clean on the sandboxes (bot.tickLogSec), NOT YET list for the rest'
-status: In Progress
+title: >-
+  grad1: graduate dark-launch knobs that ran clean on the sandboxes
+  (bot.tickLogSec), NOT YET list for the rest
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T05:33:00Z'
+updated_date: '2026-11-28T08:24:00Z'
 labels:
   - bot
   - chore

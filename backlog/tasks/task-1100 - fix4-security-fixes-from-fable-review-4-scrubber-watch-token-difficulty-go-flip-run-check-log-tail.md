@@ -33,7 +33,7 @@ owns:
   - "docs/diffready.md"
 exclusive: []
 contracts: []
-result: scrubber, watch token redirect and headers, per-hero expiring difficulty go with audit, budget and measured-run refusal, flip container run check, NUL-safe log tail, volume procedure doc; offline tests only, NOT verified live. Build-specific: nothing (the go rule is tested for two classes; GoTTL lives in internal/diffready). Hub link fix is in the ops repo, branch agent/fix4.
+result: "scrubber, watch token redirect and headers, per-hero expiring difficulty go with audit, budget and measured-run refusal, flip container run check, NUL-safe log tail, volume procedure doc; offline tests only, NOT verified live. Build-specific: nothing (the go rule is tested for two classes; GoTTL lives in internal/diffready). Hub link fix is in the ops repo, branch agent/fix4."
 ---
 
 ## Description

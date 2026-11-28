@@ -6,6 +6,7 @@ import (
 	"net/http/httptest"
 	"strings"
 	"testing"
+	"time"
 )
 
 func TestServeRefusals(t *testing.T) {
@@ -78,6 +79,61 @@ func TestTokenGateStripsTokenFromAddress(t *testing.T) {
 	w = do("/watch", "text/html", "tok")
 	if w.Code != 204 || w.Header().Get("Referrer-Policy") != "no-referrer" || w.Header().Get("Cache-Control") != "no-store" {
 		t.Errorf("cookie page: %d headers %v", w.Code, w.Header())
+	}
+}
+
+// The cookie outlives the browser session, a used page renews it, a page load without credentials explains what to
+// do, and the handlers behind the gate never see the token in the query (review 12 C1).
+func TestTokenGateCookieLifetimeAndHint(t *testing.T) {
+	var seen string
+	h := tokenGate("tok", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		seen = r.URL.RawQuery + "|" + r.RequestURI
+		w.WriteHeader(204)
+	}))
+	do := func(target, accept, cookie string) *httptest.ResponseRecorder {
+		req := httptest.NewRequest("GET", target, nil)
+		req.Header.Set("Accept", accept)
+		if cookie != "" {
+			req.AddCookie(&http.Cookie{Name: "d2dview", Value: cookie})
+		}
+		w := httptest.NewRecorder()
+		h.ServeHTTP(w, req)
+		return w
+	}
+	month := int((30 * 24 * time.Hour) / time.Second)
+	for _, target := range []string{"/watch?t=tok", "/watch?token=tok"} {
+		w := do(target, "text/html", "")
+		c := w.Result().Cookies()
+		if w.Code != http.StatusSeeOther || w.Header().Get("Location") != "/watch" || len(c) != 1 || c[0].MaxAge != month {
+			t.Errorf("%s: %d to %q cookies %v", target, w.Code, w.Header().Get("Location"), c)
+		}
+	}
+	if c := do("/watch", "text/html", "tok").Result().Cookies(); len(c) != 1 || c[0].MaxAge != month || c[0].Value != "tok" {
+		t.Errorf("a page load with the cookie renews it: %v", c)
+	}
+	if c := do("/api/status", "application/json", "tok").Result().Cookies(); len(c) != 0 {
+		t.Errorf("an API read does not set a cookie: %v", c)
+	}
+	for _, target := range []string{"/watch", "/watch?t=bad", "/watch?token=bad"} {
+		w := do(target, "text/html,*/*", "")
+		body := w.Body.String()
+		if w.Code != 401 || !strings.Contains(body, "?t=") || !strings.HasPrefix(w.Header().Get("Content-Type"), "text/html") {
+			t.Errorf("%s: %d %q %q", target, w.Code, w.Header().Get("Content-Type"), body)
+		}
+		if strings.Contains(body, "tok\"") || strings.Contains(body, "bad") || len(w.Result().Cookies()) != 0 {
+			t.Errorf("%s: the hint page echoes input or sets a cookie: %q", target, body)
+		}
+	}
+	if w := do("/api/status", "application/json", ""); w.Code != 401 || strings.Contains(w.Body.String(), "<") {
+		t.Errorf("an API read without credentials stays a plain 401: %d %q", w.Code, w.Body.String())
+	}
+	for _, target := range []string{"/api/status?t=tok&layout=cockpit", "/api/status?layout=cockpit&token=tok"} {
+		if w := do(target, "application/json", ""); w.Code != 204 || seen != "layout=cockpit|/api/status?layout=cockpit" {
+			t.Errorf("%s: %d, the handler saw %q", target, w.Code, seen)
+		}
+	}
+	if w := do("//evil.example/x?t=tok", "text/html", ""); w.Header().Get("Location") != "/evil.example/x" {
+		t.Errorf("a path with two slashes must not become another site: %q", w.Header().Get("Location"))
 	}
 }
 

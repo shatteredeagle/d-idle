@@ -1,10 +1,13 @@
 ---
 id: TASK-1114
-title: 'fix1b: item flows judged by bytes not unit id, held rule, merc key per attempt, legacy park note'
-status: In Progress
+title: >-
+  fix1b: item flows judged by bytes not unit id, held rule, merc key per
+  attempt, legacy park note
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T05:42:00Z'
+updated_date: '2026-11-28T08:06:00Z'
 labels:
   - bot
   - bug

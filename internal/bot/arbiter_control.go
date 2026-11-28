@@ -27,8 +27,13 @@ func (r *Runner) runGoalControlled(ctx context.Context, snap *d2.Snapshot, c con
 	if ok && d.Chosen != nil {
 		acted, took = r.arbAct(ctx, snap, c, d, t.ArbiterFamilies)
 		if arbHooked(t.ArbiterFamilies, arbiter.Family(d.Chosen.Source)) {
-			// Close the loop (review part 7, A3): a hook that did nothing backs its intent off, one that acted clears it.
-			sh.Report(*d.Chosen, v.Now, took)
+			// Close the loop (review part 7, A3): a hook that did nothing backs its intent off (a decline, capped at
+			// arbiter.DeclineMax), one that acted clears it.
+			if took {
+				sh.Report(*d.Chosen, v.Now, true)
+			} else {
+				sh.Decline(*d.Chosen, v.Now)
+			}
 			declined = !took
 		}
 	}
@@ -121,7 +126,7 @@ func (r *Runner) arbCompare(sh *arbiter.Shadow, d arbiter.Decision, now float64,
 	if line := sh.Compare(d, now, chain); line != "" {
 		r.e.Log.Info("arbiter shadow", "diverge", line)
 	}
-	r.noteArbiterStarved(d)
+	r.noteStarvedAll(d)
 }
 
 // arbHoldsQuest is the quest and level families' hook under control: the quest step defers to the arbiter's decision.

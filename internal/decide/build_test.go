@@ -65,7 +65,7 @@ func TestBuildErrorsNameTheCulprit(t *testing.T) {
 		want        string
 	}{
 		{"unknown point", "t9.nothing", good, "t9.nothing"},
-		{"unknown class", "t1.restock", baseObs(c, "barbarian"), "barbarian"},
+		{"unknown class", "t1.restock", baseObs(c, "mystic"), "mystic"},
 		{"missing field", "t1.restock", Obs{Class: "sorceress", Cat: good.Cat}, "gold"},
 		{"bad enum", "t1.restock", good.with(map[string]string{"belt": "overflowing"}, nil), "overflowing"},
 	} {

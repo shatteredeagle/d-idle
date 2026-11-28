@@ -39,7 +39,7 @@ func TestStandingFillerIsNotStarved(t *testing.T) {
 		t.Fatal("only a filler without a TTL is standing")
 	}
 	r := &Runner{}
-	r.noteArbiterStarved(arbiter.Decision{Starved: []arbiter.Intent{sweep, weak, farm}})
+	r.noteStarvedAll(arbiter.Decision{Starved: []arbiter.Intent{sweep, weak, farm}})
 	if got := len(r.inv.pending); got != 2 {
 		t.Fatalf("%d starved hits, want 2 (the sweep is dropped): %+v", got, r.inv.pending)
 	}
@@ -47,5 +47,35 @@ func TestStandingFillerIsNotStarved(t *testing.T) {
 		if strings.Contains(h.Detail, "level/sweep") {
 			t.Errorf("the standing filler was reported: %s", h.Detail)
 		}
+	}
+}
+
+// L6 (live review 2026-11-28): a leveling filler outranked by the quest step is not starved while that step is the
+// board's training slice; outranked by a real quest step, or another source outranked, it still is.
+func TestTrainingStepDoesNotStarveTheLevelingFiller(t *testing.T) {
+	g, _ := boardRig(t, true)
+	// A temporary filler: the standing sweep is never reported at all (TestStandingFillerIsNotStarved).
+	level := arbiter.Intent{Source: arbiter.SrcLevel, Kind: "level_up", Class: arbiter.Filler, TTL: 900, Reason: "refused: too weak, level first"}
+	d := arbiter.Decision{Chosen: &arbiter.Intent{Source: arbiter.SrcQuest, Kind: "step", Reason: "quest step in Tamoe Highland"}, Starved: []arbiter.Intent{level}}
+	hits := func() int {
+		g.r.inv.mu.Lock()
+		defer g.r.inv.mu.Unlock()
+		n := len(g.r.inv.pending)
+		g.r.inv.pending = nil
+		return n
+	}
+	g.r.noteStarvedAll(d)
+	if n := hits(); n != 1 {
+		t.Fatalf("a real quest step outranks the filler for the limit: want one hit, got %d", n)
+	}
+	g.r.boardTraining.Store(true) // set by boardTrain, cleared when the board runs or awaits a chunk
+	g.r.noteStarvedAll(d)
+	if n := hits(); n != 0 {
+		t.Fatalf("the quest step is the training slice: want no hit, got %d", n)
+	}
+	d.Starved = []arbiter.Intent{{Source: arbiter.SrcGoldFarm, Kind: "farm", Class: arbiter.Objective, Reason: "gold"}}
+	g.r.noteStarvedAll(d)
+	if n := hits(); n != 1 {
+		t.Fatalf("another source is still starved while training: got %d", n)
 	}
 }

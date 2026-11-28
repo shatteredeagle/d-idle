@@ -1,10 +1,13 @@
 package bot
 
 import (
+	"bytes"
+	"log/slog"
 	"testing"
 	"time"
 
 	"d2lod-bot/internal/d2"
+	"d2lod-bot/internal/questboard"
 	"d2lod-bot/internal/task"
 )
 
@@ -46,6 +49,58 @@ func TestPendingRewardHoldsEveryNonEmergencyTrip(t *testing.T) {
 		q.set(task.QDen, task.QuestState{Stage: task.StageDone, Ev: task.EvMemory})
 		if _, _, ok := g.r.needChores(snap()); !ok || g.r.loop.rewardSince.IsZero() == false {
 			t.Fatalf("%v: reward taken: trip due again and the hold reset (since %v)", class, g.r.loop.rewardSince)
+		}
+	}
+}
+
+// L4 (live review 2026-11-28): the reward word of a quest whose chunk the board will not run (an owner-only chunk, or
+// nothing accepted) holds no trip, and a real hold writes its line once, not three times a second.
+func TestRewardNobodyClaimsHoldsNoTripAndTheHoldLogsOnce(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		for _, board := range []bool{true, false} { // true: a board with nothing accepted; false: no board built yet (the hold stands)
+			g := newRig(t)
+			var buf bytes.Buffer
+			g.e.Log = slog.New(slog.NewTextHandler(&buf, nil))
+			g.r.e.Log = g.e.Log
+			q := &fakeQuests{}
+			g.r.d.Task = &TaskDeps{Quests: q, QuestsLive: true}
+			if board {
+				b, err := questboard.Load()
+				if err != nil {
+					t.Fatal(err)
+				}
+				st, err := questboard.Open(b, t.TempDir(), "Testy")
+				if err != nil {
+					t.Fatal(err)
+				}
+				g.r.NewQuestBoard(b, st)
+			}
+			g.w.set(func(w *world) {
+				w.area, w.gold0, w.level = 8, 0, 18
+				w.items = nil
+				for i := 0; i < 6; i++ {
+					w.items = append(w.items, d2.Unit{ID: uint32(800 + i), Type: d2.TypeItem, Class: 3, Item: &d2.Item{Where: d2.ContInventory}})
+				}
+			})
+			q.set(task.QCain, task.QuestState{Stage: task.StageCleared, Ev: task.EvMemory})
+			due := 0
+			for i := 0; i < 180; i++ { // 60 fake seconds, three asks a second
+				s, _ := g.w.snapshot()
+				s.Player.Class = class
+				if _, _, ok := g.r.needChores(s); ok {
+					due++
+				}
+				g.clock.Sleep(time.Second / 3)
+			}
+			if board && due != 180 {
+				t.Errorf("%v: a reward the board will not walk home held the trip (%d of 180 asks due)", class, due)
+			}
+			if !board && due != 0 {
+				t.Errorf("%v: without a built board the bounded hold stands (%d due)", class, due)
+			}
+			if n := count(&buf, `"trip held: a quest reward is pending, the board walks home first"`); n > 1 {
+				t.Errorf("%v board=%v: %d trip-held lines in 60 s, want at most one", class, board, n)
+			}
 		}
 	}
 }

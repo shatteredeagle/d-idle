@@ -192,7 +192,7 @@ func (r *Runner) shadowTick(v arbiter.View, acted bool) {
 		r.e.Log.Info("arbiter shadow", "diverge", line)
 	}
 	if d, ok := sh.Last(); ok {
-		r.noteArbiterStarved(d)
+		r.noteStarvedAll(d)
 	}
 }
 

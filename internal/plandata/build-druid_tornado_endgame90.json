@@ -138,7 +138,7 @@
     },
     {
      "skill": "Arctic Blast",
-     "points": 2
+     "points": 1
     }
    ]
   },
@@ -151,6 +151,10 @@
    "skills": [
     {
      "skill": "Arctic Blast",
+     "points": 1
+    },
+    {
+     "skill": "Oak Sage",
      "points": 1
     }
    ]
@@ -167,7 +171,7 @@
      "points": 1
     },
     {
-     "skill": "Arctic Blast",
+     "skill": "Oak Sage",
      "points": 1,
      "quest": "den_of_evil"
     }
@@ -194,7 +198,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Oak Sage",
+     "skill": "Arctic Blast",
      "points": 1
     }
    ]
@@ -207,7 +211,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Oak Sage",
+     "skill": "Arctic Blast",
      "points": 1
     }
    ]

@@ -761,7 +761,7 @@ func (f *Fighter) engage(ctx context.Context, snap *d2.Snapshot, tg Target, sp f
 		inReach = tg.Dist <= float64(spec.Range) // the margin is for walking, a target inside the range is shot at
 	}
 	if !meleeGo && !inReach {
-		if aimed, err := f.gapClose(snap, tg); aimed || err != nil {
+		if aimed, err := f.gapClose(snap, tg, st); aimed || err != nil {
 			return err
 		}
 	}
