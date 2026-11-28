@@ -1,0 +1,10 @@
+{
+ "name": "bot.cubeJobs",
+ "built_by": "initial snapshot (b030e4fbf)",
+ "dark_since": "2026-10-30",
+ "why_off": "Gold-free cube upgrade chore UNVERIFIED live.",
+ "enable_criteria": "Live drill: one gem and one rune upgrade",
+ "owner": "coordinator",
+ "review_by": "2026-12-09",
+ "status": "dark"
+}

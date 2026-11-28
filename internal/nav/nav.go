@@ -143,9 +143,11 @@ type Navigator struct {
 	field        *Field
 	fieldKey     fieldKey
 	black        []blocked
-	pursuitAt    time.Time    // earliest next pursuit hand-over (pursuit.go)
-	hard         []blocked    // cells the planner must not cross for a while (stuckmem.go)
-	spots        []*stuckSpot // recent stalls (stuckmem.go)
+	searches     int                      // planHard calls (the memo's test reads it)
+	noPath       map[noPathKey]noPathMemo // failed plans on the current field (nopath.go)
+	pursuitAt    time.Time                // earliest next pursuit hand-over (pursuit.go)
+	hard         []blocked                // cells the planner must not cross for a while (stuckmem.go)
+	spots        []*stuckSpot             // recent stalls (stuckmem.go)
 	walkSeq      int
 	walkLevel    int           // level of the last walk's first observation (0: none yet)
 	stayLevel    int           // level whose unwanted exits are guarded for the whole stay (FIXMOUTH3); 0: none
@@ -377,6 +379,20 @@ type planResult struct {
 // plan finds waypoints from start to goal on lm's current grid. ignore is a unit id left out of the monster
 // penalties (the unit being walked to).
 func (n *Navigator) plan(lm *d2map.LevelMap, start, goal input.Point, tol float64, units []d2.Unit, ignore uint32) (planResult, error) {
+	k := n.noPathKeyFor(lm, start, goal, tol, ignore)
+	if m, ok := n.noPathHit(k); ok {
+		return m.res, m.err
+	}
+	res, err := n.planSearch(lm, start, goal, tol, units, ignore)
+	// A partial path with monster costs may differ next time; a failed search or a partial one without units only
+	// changes with the grid, the hard blocks or the blacklist, which are in the key.
+	if err != nil || res.partial && len(units) == 0 {
+		n.noPathPut(k, res, err)
+	}
+	return res, err
+}
+
+func (n *Navigator) planSearch(lm *d2map.LevelMap, start, goal input.Point, tol float64, units []d2.Unit, ignore uint32) (planResult, error) {
 	res, err := n.planHard(lm, start, goal, tol, units, ignore, true)
 	if res.partial && gridWhole(lm) && n.tune().FullGrid {
 		// A whole grid says the goal is cut off: before giving up try the diagonal seams (narrow floors that meet at corners).
@@ -399,6 +415,7 @@ func (n *Navigator) plan(lm *d2map.LevelMap, start, goal input.Point, tol float6
 func (n *Navigator) planHard(lm *d2map.LevelMap, start, goal input.Point, tol float64, units []d2.Unit, ignore uint32, hard bool) (planResult, error) {
 	n.planMu.Lock()
 	defer n.planMu.Unlock()
+	n.searches++
 	t := n.tune()
 	f := n.fieldFor(lm)
 	res := planResult{known: lm.Grid.KnownCount()}

@@ -1,0 +1,10 @@
+{
+ "name": "watch.paletteFeed",
+ "built_by": "videofeed2 (be350cc3c)",
+ "dark_since": "2026-11-16",
+ "why_off": "Bandwidth feed not default.",
+ "enable_criteria": "Owner go after viewer check",
+ "owner": "owner",
+ "review_by": "2026-12-09",
+ "status": "dark"
+}

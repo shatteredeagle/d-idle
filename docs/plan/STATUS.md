@@ -52,6 +52,7 @@
 | bsmnight | proposed | - | `tools/provingground/scenarios/board.json`<br>`internal/questboard/` | - |
 | act2night | proposed | - | `internal/bot/`<br>`tools/provingground/scenarios/stepexec-act2chunks.json` | - |
 | townnight | proposed | - | `internal/town/`<br>`internal/supply/`<br>`tools/provingground/scenarios/townplan.json` | - |
+| led1 | in-progress | - | `data/darklaunch/`<br>`data/darklaunch.json`<br>`data/darklaunch-cap.json`<br>`tools/darklaunch/`<br>`tools/flip/`<br>`docs/process/dark-launch.md`<br>`docs/process/autoflip.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
@@ -195,14 +196,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 41fb5b723 11-28 01:52 `Merge agent/nf3: nf3: early road kit entry rule, unreachable goal searched once (TASK-1104/1107)` (nf3)
+- 04bfc9149 11-28 01:51 `Merge branch 'main' into nf3` (-)
+- cded674d7 11-28 01:50 `Merge agent/led1: led1: dark ledger split: per-knob design files + runtime state outside git (TASK-1110)` (led1)
+- b72217682 11-28 01:48 `Merge branch 'main' into led1` (-)
 - 07762b586 11-28 01:43 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
 - f8f830352 11-28 01:42 `Merge branch 'main' into nightlog` (-)
+- e9576a33f 11-28 01:29 `Merge branch 'main' into nf3` (-)
+- e4b6fc6eb 11-28 01:29 `Merge branch 'main' into led1` (-)
 - ab6763901 11-28 01:29 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
 - 317417875 11-28 01:28 `Merge branch 'main' into nightlog` (-)
-- 702b6cfd5 11-28 01:23 `Merge agent/nf1: nf1: nav strip behind a sealed frontier pocket (TASK-1102)` (nf1)
-- 6aa6ad5b9 11-28 01:22 `Merge branch 'main' into nf1` (-)
-- 93b181848 11-28 01:15 `Merge agent/fix8: fix8: build-table consistency check, capability facts, SelectProfile error, combat keys, traps list, mana_heavy in Normal (TASK-1097)` (fix8)
-- 275751034 11-28 01:13 `Merge branch 'main' into fix8` (-)
-- 028b8a1bc 11-28 01:11 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
-- d89ce280c 11-28 01:11 `Merge agent/rv4: review 13: sandbox live log review (docs)` (rv4)
 <!-- statusgen:end -->

@@ -1,0 +1,10 @@
+{
+ "name": "nav.fullGrid",
+ "built_by": "knownedge (c487cdace)",
+ "dark_since": "2026-11-21",
+ "why_off": "Whole-grid planning not verified.",
+ "enable_criteria": "A/B nav drill: no stuck regressions on 5 areas",
+ "owner": "coordinator",
+ "review_by": "2026-12-09",
+ "status": "dark"
+}
