@@ -1,0 +1,76 @@
+{
+ "total": {
+  "class": 35,
+  "skill": 112
+ },
+ "files": {
+  "internal/combat/affix.go": {
+   "class": 0,
+   "skill": 1
+  },
+  "internal/combat/assassin.go": {
+   "class": 0,
+   "skill": 1
+  },
+  "internal/combat/castfirst.go": {
+   "class": 0,
+   "skill": 1
+  },
+  "internal/combat/castgap.go": {
+   "class": 0,
+   "skill": 23
+  },
+  "internal/combat/castlog.go": {
+   "class": 0,
+   "skill": 3
+  },
+  "internal/combat/classdata.go": {
+   "class": 14,
+   "skill": 1
+  },
+  "internal/combat/druid.go": {
+   "class": 2,
+   "skill": 14
+  },
+  "internal/combat/fight.go": {
+   "class": 0,
+   "skill": 2
+  },
+  "internal/combat/gearcheck.go": {
+   "class": 1,
+   "skill": 1
+  },
+  "internal/combat/necro.go": {
+   "class": 1,
+   "skill": 5
+  },
+  "internal/combat/potioneffect.go": {
+   "class": 7,
+   "skill": 0
+  },
+  "internal/combat/resource.go": {
+   "class": 0,
+   "skill": 1
+  },
+  "internal/combat/rules.go": {
+   "class": 7,
+   "skill": 55
+  },
+  "internal/combat/skills.go": {
+   "class": 3,
+   "skill": 1
+  },
+  "internal/combat/telekey.go": {
+   "class": 0,
+   "skill": 1
+  },
+  "internal/combat/trap.go": {
+   "class": 0,
+   "skill": 1
+  },
+  "internal/power/archetype.go": {
+   "class": 0,
+   "skill": 1
+  }
+ }
+}
