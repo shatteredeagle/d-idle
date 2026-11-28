@@ -132,6 +132,7 @@ type Fighter struct {
 
 	eq               *gear.Equipped // last noted gear, nil when unknown
 	weaponProblem    string
+	profileErr       atomic.Pointer[error]
 	weaponLogged     string
 	statsFn          func(uint32) (d2.Stats, error) // test seam; nil = e.Read.UnitStats
 	skipWhy          string                         // last skipped-drink reason logged (noteDrinkSkip)
@@ -928,7 +929,45 @@ func (f *Fighter) holdFor(p *d2.Player) time.Duration {
 }
 
 // profileFor is the combat profile of the character (classdata.go).
-func (f *Fighter) profileFor(p *d2.Player) *Profile { return SelectProfile(p, f.cat, f.Build) }
+// A character without a profile gets noProfile (no band, no key: nothing is cast) and the error is kept: Clear and
+// Kill refuse to fight while ProfileErr is set, and the invariant monitor counts it (no-combat-profile).
+func (f *Fighter) profileFor(p *d2.Player) *Profile {
+	pr, err := SelectProfile(p, f.cat, f.Build)
+	if err != nil {
+		f.profileErr.CompareAndSwap(nil, &err)
+		return noProfile
+	}
+	return pr
+}
+
+var noProfile = &Profile{Class: "none"}
+
+// ProfileErr is the reason the fighter has no combat profile (class.go's plan error or a failed selection), nil when
+// it has one.
+func (f *Fighter) ProfileErr() error {
+	if e := f.profileErr.Load(); e != nil {
+		return *e
+	}
+	return nil
+}
+
+// SetProfileErr records (or with nil clears) that the character has no usable combat profile; the caller that picks
+// the build sets it at the start of every game.
+func (f *Fighter) SetProfileErr(err error) {
+	if err == nil {
+		f.profileErr.Store(nil)
+		return
+	}
+	f.profileErr.Store(&err)
+}
+
+// refuseNoProfile is the error Clear and Kill return instead of fighting on a guess.
+func (f *Fighter) refuseNoProfile() error {
+	if err := f.ProfileErr(); err != nil {
+		return fmt.Errorf("combat: not fighting without a combat profile: %w", err)
+	}
+	return nil
+}
 
 // MeleeClass reports whether p fights with a melee profile (the profile's melee block, data, not a class check).
 func (f *Fighter) MeleeClass(p *d2.Player) bool {

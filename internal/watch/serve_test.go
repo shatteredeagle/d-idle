@@ -41,6 +41,46 @@ func TestOriginsAndLoopback(t *testing.T) {
 	}
 }
 
+// A page load with ?t= ends on the clean address with the cookie set; a wrong token sets no cookie.
+func TestTokenGateStripsTokenFromAddress(t *testing.T) {
+	h := tokenGate("tok", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) { w.WriteHeader(204) }))
+	do := func(target, accept, cookie string) *httptest.ResponseRecorder {
+		req := httptest.NewRequest("GET", target, nil)
+		if accept != "" {
+			req.Header.Set("Accept", accept)
+		}
+		if cookie != "" {
+			req.AddCookie(&http.Cookie{Name: "d2dview", Value: cookie})
+		}
+		w := httptest.NewRecorder()
+		h.ServeHTTP(w, req)
+		return w
+	}
+	w := do("/watch?t=tok&layout=cockpit", "text/html,*/*", "")
+	if w.Code != http.StatusSeeOther || w.Header().Get("Location") != "/watch?layout=cockpit" {
+		t.Fatalf("page load: %d to %q", w.Code, w.Header().Get("Location"))
+	}
+	if c := w.Result().Cookies(); len(c) != 1 || c[0].Value != "tok" || !c[0].HttpOnly {
+		t.Fatalf("cookie after a valid token: %v", c)
+	}
+	if w = do("/watch?t=tok", "text/html", ""); w.Header().Get("Location") != "/watch" {
+		t.Errorf("clean path: %q", w.Header().Get("Location"))
+	}
+	if w = do("/watch?t=bad", "text/html", ""); w.Code != 401 || len(w.Result().Cookies()) != 0 {
+		t.Errorf("wrong token: %d cookies %v", w.Code, w.Result().Cookies())
+	}
+	if w = do("/watch?t=bad", "text/html", "tok"); w.Code != 401 {
+		t.Errorf("a wrong ?t= must not fall back to the cookie: %d", w.Code)
+	}
+	if w = do("/api/status?t=tok", "application/json", ""); w.Code != 204 {
+		t.Errorf("an API read with ?t= is served, not redirected: %d", w.Code)
+	}
+	w = do("/watch", "text/html", "tok")
+	if w.Code != 204 || w.Header().Get("Referrer-Policy") != "no-referrer" || w.Header().Get("Cache-Control") != "no-store" {
+		t.Errorf("cookie page: %d headers %v", w.Code, w.Header())
+	}
+}
+
 func TestTokenGate(t *testing.T) {
 	h := tokenGate("tok", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) { w.WriteHeader(204) }))
 	for _, c := range []struct {
@@ -56,5 +96,16 @@ func TestTokenGate(t *testing.T) {
 		if w.Code != c.want {
 			t.Errorf("%s %q: %d", c.target, c.auth, w.Code)
 		}
+	}
+}
+
+// Source guard: the shell reads with the cookie and never builds a ?t= address itself.
+func TestShellDoesNotCopyTokenIntoFetch(t *testing.T) {
+	sh, err := webFS.ReadFile("web/shell.js")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if strings.Contains(string(sh), "'?t='") {
+		t.Error("shell.js builds a ?t= address")
 	}
 }

@@ -43,7 +43,11 @@ type Want struct {
 
 // WantedBindings lists the bindings the build's layout asks for, for the skills the character knows, ordered by key.
 func WantedBindings(p *d2.Player, cat Catalog, b Build) []Want {
-	return wantedFor(p, cat, SelectProfile(p, cat, b).Layout)
+	pr, err := SelectProfile(p, cat, b)
+	if err != nil {
+		return nil // no profile, no bindings; the fighter carries the error (ProfileErr)
+	}
+	return wantedFor(p, cat, pr.Layout)
 }
 
 func wantedFor(p *d2.Player, cat Catalog, layout map[string]string) []Want {

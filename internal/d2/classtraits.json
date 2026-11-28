@@ -6,5 +6,6 @@
  "Paladin":     {"caster": false, "manaNeed": 1},
  "Barbarian":   {"caster": false, "manaNeed": 0},
  "Druid":       {"caster": true,  "manaNeed": 2},
- "Assassin":    {"caster": false, "manaNeed": 1}
+ "Assassin":    {"caster": false, "manaNeed": 1},
+ "default":     {"mercAura": {"normal": "Defiance", "nightmare": "Might", "hell": "Defiance", "rogue": "Cold Arrow"}}
 }

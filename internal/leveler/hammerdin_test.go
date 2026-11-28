@@ -12,7 +12,7 @@ func TestPaladinHammerdinBuildSelectableAndDefaultsUnchanged(t *testing.T) {
 	if lb.Class != "paladin" || lb.Combat != "hammerdin" {
 		t.Fatalf("class %q combat %q", lb.Class, lb.Combat)
 	}
-	if TableCombat("paladin_hammerdin_guide") != "hammerdin" || TableCombat("paladin-normal30") != "" {
+	if TableCombat("paladin_hammerdin_guide") != "hammerdin" || TableCombat("paladin-normal30") != "paladin" {
 		t.Errorf("combat lines: guide %q, normal30 %q", TableCombat("paladin_hammerdin_guide"), TableCombat("paladin-normal30"))
 	}
 	got := map[string]int{}

@@ -177,7 +177,15 @@ func (n *Navigator) ExitTo(ctx context.Context, levelNo int) error {
 					}
 					return dist(o.pos, us[i].at) < dist(o.pos, us[j].at)
 				})
-				g, ok = us[0], true
+				// a sealed pocket of the frontier (a cell no plan reaches) sorts first as often as not: take the first reachable one
+				pick := 0
+				for i, c := range us {
+					if res, err := n.plan(o.lm, o.pos, c.at, 3, o.snap.Monsters, 0); err == nil && !res.partial && !res.optimistic {
+						pick = i
+						break
+					}
+				}
+				g, ok = us[pick], true
 				g.unproven = true
 				n.log.Info("nav: crossing an unproven border strip", "to", levelNo, "strip", g.at, "push", g.push, "gates", len(us), "tried", len(all)-len(us), "scan", o.lm.BorderNote)
 			}
@@ -357,18 +365,35 @@ func (n *Navigator) gateShown(levelNo int) bool {
 // pendingWait bounds the wait for a late border (nav clock: virtual in a lockstep run, which steps the game).
 const pendingWait = 10 * time.Second
 
+// unprovenPlans bounds the plans unprovenTarget tries.
+const unprovenPlans = 60
+
 // unprovenTarget picks the nearest strip cell toward levelNo (see LevelMap.Unproven) the planner can reach.
 func (n *Navigator) unprovenTarget(o *obs, levelNo int) (input.Point, bool) {
 	cells := o.lm.UnprovenCells(levelNo)
 	sort.Slice(cells, func(i, j int) bool {
 		return math.Hypot(float64(cells[i].X-o.pos.X), float64(cells[i].Y-o.pos.Y)) < math.Hypot(float64(cells[j].X-o.pos.X), float64(cells[j].Y-o.pos.Y))
 	})
-	for i, c := range cells {
-		if i%5 != 0 { // neighbours on a strip plan alike
+	// Neighbours of a cell that was planned plan alike, so each is skipped; a rank-based sample (every fifth cell) could
+	// skip all four cells of a real gap when a sealed pocket of the frontier sorts before them (barracks-return, 131 cells).
+	var tried []input.Point
+	for _, c := range cells {
+		p := input.Point{X: c.X, Y: c.Y}
+		near := false
+		for _, t := range tried {
+			if abs(t.X-p.X) <= 2 && abs(t.Y-p.Y) <= 2 {
+				near = true
+				break
+			}
+		}
+		if near {
 			continue
 		}
-		p := input.Point{X: c.X, Y: c.Y}
-		if res, err := n.plan(o.lm, o.pos, p, 3, o.snap.Monsters, 0); err == nil && !res.partial && !res.optimistic {
+		if tried = append(tried, p); len(tried) > unprovenPlans {
+			break
+		}
+		res, err := n.plan(o.lm, o.pos, p, 3, o.snap.Monsters, 0)
+		if err == nil && !res.partial && !res.optimistic {
 			return p, true
 		}
 	}

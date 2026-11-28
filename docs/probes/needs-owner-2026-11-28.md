@@ -1,0 +1,6 @@
+# Needs owner (2026-11-28 night)
+
+- fix1 round-2 review (A): `VaultDirectEquip` defaults to 1 and Carry/Stow are exposed; review recommends setting it to 0 and hiding Carry/Stow until N1-N3 (stale unit ids after a game restart; open-order blocks only a second Equip) are fixed. Not done unattended: it removes the Equip you use. A fixer (fix1b, Fable) is fixing N1-N3/N5/B2 tonight; decide in the morning if you want the interim switch-off.
+- Questy Cain reward (live1, L4): the game pays a quest reward on first contact with the reward NPC, and the act 1 potion seller counts. Blocking passing claims means no potion buying until the owner claims the reward. Decision needed before the bot (not the user) is allowed to reach Cain's reward on Questy; for now the hold only covers a running board chunk.
+- Doofer repair mode (live1, L8): gear hit 0% durability; the hero's repair mode, not the thresholds, decides (docs/repair.md). Mode was not read: check `ops status` on Doofer.
+- Tick-line criteria (evid1): ticklog-t4's seconds-based count rule can never hold (ticks come once per goal-chain pass, median gap 16 s). Proposal: ticks at least twice the minute lines, no gap longer than the longest action timeout. Owner row: not edited.
