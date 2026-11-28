@@ -14,6 +14,7 @@ Cards on main: fix1 TASK-1095, fix2 TASK-1099, fix3 TASK-1094, fix4 TASK-1100, f
 |---|---|---|---|
 | 12 C3 | medium | `Consent.Granted` only answers: a look by another hero or by a snapshot without a hero name no longer deletes the owner's difficulty go; such a go is never used and is logged once, not at every poll. Only an ended go is dropped by a read. | `internal/diffready` `TestConsentHeroAndExpiry`; `internal/bot` `TestDifficultyGoIsPerHeroAndEnds` (Sorceress, Paladin). Both asserted the old delete and were turned round. |
 | 03 #5 (part) | medium | A gap landing (Leap Attack, Charge) is refused in a cave mouth's trigger area; gap casts and whirl legs count as casts of the fight, so the cast watchdog does not force casts into them. | `internal/combat` `TestGapAndWhirlAskTheMouthGateAndCountAsCasts` (Barbarian, Paladin) |
+| 12 low 6 | low | The rate-limit refusal of the difficulty go prints `difficultyGoPerHour`, not a literal beside it. | none (text only) |
 
 Correction to review 3 finding 5 (V, `internal/combat/fight.go` `reachable`): escape and whirl landings already ask the mouth gate, because `f.valid` refuses a point for which the mover's `NearMouth` is true. Only the gap landing did not.
 
@@ -44,7 +45,7 @@ Ordered by severity. "Why not here" says why this branch did not fix it.
 | 12 D2 | medium | "Every run recorded" compares two counts of one spool; a failed ingest still exits 0; a run cut by the nightly timeout is not counted | `cmd/d2scenario/run.go` is in flight (nf1b) |
 | 12 D3 | medium | Stability keys on the bot binary only: an edited scenario reads as a flake; agent-branch runs can make a key stable; the older report compares commits; the cell follows the latest seed | needs a setup hash in the ledger line written by `cmd/d2scenario` (in flight, nf1b) |
 | 12 E3 | medium | Docs-class and scoped gates skip Go tests that read a file by path; the flip and autoflip Python tests run in no gate | ops (merge classifier) plus `tools/ci/scripts.sh` |
-| 12 low 5, 6, 8, 9, 10 | low | `eachLine` joins the line after a NUL hole; "6 times" literal in `difficultydesk.go`; `golden.go` ignores the `scenarioHero` error; smoke marker regex pins "prep 4"; `MercAura` always answers true | OPEN, each a few lines |
+| 12 low 5, 8, 9, 10 | low | `eachLine` joins the line after a NUL hole; `golden.go` ignores the `scenarioHero` error; smoke marker regex pins "prep 4"; `MercAura` always answers true | OPEN, each a few lines |
 | 02 #9 | low | Reward hold is per pending stretch, not per quest id | live1 rewrote the same function for L4 (V card): fix after it merges |
 | 02 smaller | low | No duplicate check on step executor adapter keys (questspec rule 15); seven dead SM events; `refused_repeatedly` nearly unreachable | OPEN |
 | 03 #7 | low | Crowd aura held against a single boss; War Cry cast without line of sight; zone lock reopens after 8 h | OPEN |
