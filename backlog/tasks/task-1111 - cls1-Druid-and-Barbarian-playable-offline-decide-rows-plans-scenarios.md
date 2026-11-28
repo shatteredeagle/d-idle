@@ -1,10 +1,11 @@
 ---
 id: TASK-1111
 title: 'cls1: Druid and Barbarian playable offline (decide rows, plans, scenarios)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T05:32:00Z'
+updated_date: '2026-11-28T08:47:00Z'
 labels:
   - bot
   - feature
