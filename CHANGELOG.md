@@ -8,6 +8,8 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- grad1: graduate bot.tickLogSec (TASK-1112) <!--sg:agent/grad1-->
+- cls2: Amazon and Assassin (TASK-1109) <!--sg:agent/cls2-->
 - ops4: backlog check fails invalid YAML cards, quote values, repair cards (TASK-1124) <!--sg:agent/ops4-->
 - sweep1: review sweep, consent fix (TASK-1122) <!--sg:agent/sweep1-->
 - live1: live log findings L1-L6 (TASK-1119) <!--sg:agent/live1-->

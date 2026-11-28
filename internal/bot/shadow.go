@@ -63,10 +63,8 @@ func (r *Runner) runGoalArb(ctx context.Context, snap *d2.Snapshot, c control) b
 	t := r.e.Tune.Bot
 	if t.ArbiterShadow == 0 {
 		acted := r.runGoal(ctx, snap, c)
-		if t.TickLogSec > 0 {
-			if v, ok := r.arbView(snap, c); ok {
-				r.tickLog(snap, v, acted)
-			}
+		if v, ok := r.arbView(snap, c); ok {
+			r.tickLog(snap, v, acted)
 		}
 		return acted
 	}
