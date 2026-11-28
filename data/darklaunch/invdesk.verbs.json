@@ -1,0 +1,10 @@
+{
+ "name": "invdesk.verbs",
+ "built_by": "itemverbs (41395d8d1)",
+ "dark_since": "2026-11-12",
+ "why_off": "Needs fork verbs advertised in caps.",
+ "enable_criteria": "Live equip via verbs on a sandbox; click fallback tested",
+ "owner": "coordinator",
+ "review_by": "2026-12-09",
+ "status": "dark"
+}

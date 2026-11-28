@@ -1,0 +1,10 @@
+{
+ "name": "bot.zoneModel",
+ "built_by": "survivaldesign (a4135cf62)",
+ "dark_since": "2026-11-14",
+ "why_off": "Until the A/B of docs/survival/ab-harness.md passes.",
+ "enable_criteria": "A/B harness passes",
+ "owner": "coordinator",
+ "review_by": "2026-12-09",
+ "status": "dark"
+}

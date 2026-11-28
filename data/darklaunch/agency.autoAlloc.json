@@ -1,0 +1,10 @@
+{
+ "name": "agency.autoAlloc",
+ "built_by": "autoalloc (095630714)",
+ "dark_since": "2026-11-21",
+ "why_off": "Off: points banked for the player; build lock exists.",
+ "enable_criteria": "Owner go; build-lock drill green",
+ "owner": "owner",
+ "review_by": "2026-12-09",
+ "status": "dark"
+}

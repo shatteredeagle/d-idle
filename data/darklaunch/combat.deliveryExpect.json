@@ -1,0 +1,10 @@
+{
+ "name": "combat.deliveryExpect",
+ "built_by": "dlv-expect (b91908a8b)",
+ "dark_since": "2026-11-21",
+ "why_off": "Mode 1 records only; 2 skips failing skills.",
+ "enable_criteria": "Mode 1 failure log reviewed; then scenario/drill green, then flip on the sandboxes with a 24 h invariant-monitor watch and automatic revert on a hard breach",
+ "owner": "coordinator",
+ "review_by": "2026-12-09",
+ "status": "enabled"
+}

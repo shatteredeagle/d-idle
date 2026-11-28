@@ -44,7 +44,6 @@
 | cellar3gate | in-progress | - | `internal/nav/exit.go`<br>`internal/nav/cellar3gate_test.go`<br>`internal/questboard/`<br>`docs/probes/cellar3-gate-capture.md` | - |
 | holereach | proposed | - | `internal/bot/zonemodel.go`<br>`internal/bot/zonemodel_test.go` | - |
 | pgfix | proposed | - | `cmd/d2scenario`<br>`internal/scenario`<br>`tools/provingground/scenarios`<br>`docs/process/proving-ground.md` | - |
-| fix8 | in-progress | - | `internal/plandata/`<br>`data/build-cap-ratchet.json`<br>`data/capabilities/`<br>`tools/ci/check.sh`<br>`internal/combat/`<br>`cmd/d2bot/`<br>`internal/leveler/`<br>`internal/task/`<br>`internal/bot/`<br>`internal/d2/`<br>`internal/town/`<br>`internal/resource/`<br>`docs/plan/data/`<br>`docs/sme/capability-gaps.md`<br>`docs/invariants.md`<br>`tools/rigs/` | - |
 | fix4 | in-progress | - | `deploy/d2d-container/tester-report.sh`<br>`deploy/d2d-container/tester_report_test.go`<br>`internal/watch/serve.go`<br>`internal/watch/serve_test.go`<br>`internal/watch/gate.go`<br>`internal/watch/web/shell.js`<br>`internal/watch/difficultydesk.go`<br>`internal/watch/difficultydesk_test.go`<br>`internal/diffready/`<br>`internal/bot/diffready.go`<br>`internal/bot/diffready_test.go`<br>`tools/flip/flip.py`<br>`tools/flip/test_flip.py`<br>`internal/logx/sink.go`<br>`internal/logx/sink_test.go`<br>`docs/ops/docker-volumes.md`<br>`docs/diffready.md` | - |
 | navbarracks | proposed | - | `internal/nav/`<br>`internal/d2dworld/` | - |
 | cainspin | proposed | - | `internal/bot/` | - |
@@ -53,6 +52,7 @@
 | bsmnight | proposed | - | `tools/provingground/scenarios/board.json`<br>`internal/questboard/` | - |
 | act2night | proposed | - | `internal/bot/`<br>`tools/provingground/scenarios/stepexec-act2chunks.json` | - |
 | townnight | proposed | - | `internal/town/`<br>`internal/supply/`<br>`tools/provingground/scenarios/townplan.json` | - |
+| led1 | in-progress | - | `data/darklaunch/`<br>`data/darklaunch.json`<br>`data/darklaunch-cap.json`<br>`tools/darklaunch/`<br>`tools/flip/`<br>`docs/process/dark-launch.md`<br>`docs/process/autoflip.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
@@ -196,14 +196,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- cded674d7 11-28 01:50 `Merge agent/led1: led1: dark ledger split: per-knob design files + runtime state outside git (TASK-1110)` (led1)
+- b72217682 11-28 01:48 `Merge branch 'main' into led1` (-)
+- 07762b586 11-28 01:43 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
+- f8f830352 11-28 01:42 `Merge branch 'main' into nightlog` (-)
+- e4b6fc6eb 11-28 01:29 `Merge branch 'main' into led1` (-)
 - ab6763901 11-28 01:29 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
 - 317417875 11-28 01:28 `Merge branch 'main' into nightlog` (-)
 - 702b6cfd5 11-28 01:23 `Merge agent/nf1: nf1: nav strip behind a sealed frontier pocket (TASK-1102)` (nf1)
 - 6aa6ad5b9 11-28 01:22 `Merge branch 'main' into nf1` (-)
 - 93b181848 11-28 01:15 `Merge agent/fix8: fix8: build-table consistency check, capability facts, SelectProfile error, combat keys, traps list, mana_heavy in Normal (TASK-1097)` (fix8)
-- 275751034 11-28 01:13 `Merge branch 'main' into fix8` (-)
-- 028b8a1bc 11-28 01:11 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
-- d89ce280c 11-28 01:11 `Merge agent/rv4: review 13: sandbox live log review (docs)` (rv4)
-- af0509e9f 11-28 01:09 `Merge branch 'main' into rv4` (-)
-- 76fbf6545 11-28 01:00 `Merge branch 'main' into fix8` (-)
 <!-- statusgen:end -->
