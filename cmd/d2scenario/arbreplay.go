@@ -19,7 +19,7 @@ const defaultOutcomes = "tools/provingground/arbiter-outcomes"
 // Each file holds decision points (an incident pre-state or a recorded divergence) and the data rules that say which
 // invariant a choice would hit. Hard and soft come from invariants.json. Report-only tier: the exit code is 0 unless
 // -strict is given and a family's verdict fails. With -session the cases are not scored: the rules of all files are
-// applied to every tick of a recorded session (the bot's tick lines, knob bot.tickLogSec), chain against arbiter
+// applied to every tick of a recorded session (the bot's tick lines), chain against arbiter
 // (arbiter.ScoreSession); -follow lets the simulated hero obey the arbiter as in d2arbiter -follow.
 func cmdArbiterReplay(args []string, w io.Writer) error {
 	fs := newFlags("arbiter-replay")
