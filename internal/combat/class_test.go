@@ -825,6 +825,30 @@ func TestProfileErrClearsOnGoodSelection(t *testing.T) {
 	}
 }
 
+// Review 14 H5: Clear and Kill select again themselves; one bad class read does not stop them until the runner's
+// next tick (two classes).
+func TestFightRetriesProfileSelection(t *testing.T) {
+	for _, c := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		good := true
+		f := &Fighter{cat: testCatalog()}
+		f.snapFn = func() (*d2.Snapshot, error) {
+			if good {
+				return &d2.Snapshot{State: d2.StateInGame, Player: &d2.Player{Class: c}}, nil
+			}
+			return &d2.Snapshot{State: d2.StateInGame, Player: &d2.Player{Class: d2.Class(99)}}, nil
+		}
+		f.profileFor(&d2.Player{Class: d2.Class(99)}) // the torn read
+		if err := f.refuseNoProfile(); err != nil {
+			t.Fatalf("%v: one bad read still refuses the fight: %v", c, err)
+		}
+		good = false
+		f.profileFor(&d2.Player{Class: d2.Class(99)})
+		if err := f.refuseNoProfile(); err == nil {
+			t.Fatalf("%v: fights while the class has no profile", c)
+		}
+	}
+}
+
 // Review 8 C3: the trap ladder is profile data. The Assassin's sentries are in its traps list and in no attack band
 // (the driver lays them); a profile without the list (a second class) gives the trap driver nothing to lay.
 func TestTrapLadderIsProfileData(t *testing.T) {
