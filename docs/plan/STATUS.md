@@ -43,6 +43,7 @@
 | releasenotes-next | proposed | - | `docs/releases/next-draft.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
+| refusalpark | proposed | - | `internal/questboard/`<br>`data/questboard/`<br>`internal/bot/questboard.go`<br>`internal/bot/questauto.go`<br>`internal/bot/invariants.go`<br>`internal/bot/loop.go`<br>`internal/bot/failsafe_test.go`<br>`internal/env/tuning_quests.go`<br>`data/darklaunch.json`<br>`docs/knobs.md`<br>`docs/questboard.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
@@ -133,7 +134,6 @@
 | qdmatrix | proposed | - | `docs/probes/quest-drill-matrix-2026-11-23.md`<br>`tools/provingground/scenarios/questdrill.json`<br>`internal/power/archetype.go`<br>`internal/power/skilldamage_test.go`<br>`internal/questboard/state.go`<br>`internal/questboard/state_test.go`<br>`internal/d2dsrc/items.go`<br>`internal/d2dsrc/srv_test.go`<br>`internal/nav/nav.go`<br>`internal/task/act2.go`<br>`internal/task/act2_test.go`<br>`data/questboard/act2.json`<br>`internal/nav/act2hints.go`<br>`internal/nav/act2hints_test.go`<br>`internal/nav/exit_test.go`<br>`internal/task/act4.go`<br>`internal/bot/questboard.go`<br>`internal/bot/questboard_s7b_test.go`<br>`tools/probes/presets.py`<br>`tools/emu/am_batch.sh`<br>`tools/emu/am_model.py`<br>`internal/scenario/scenario.go`<br>`internal/scenario/setup.go`<br>`internal/scenario/setup_test.go`<br>`internal/saves/progress.go`<br>`tools/probes/objectlist.py`<br>`cmd/d2bot/task_test.go`<br>`internal/nav/exit.go`<br>`internal/nav/gatedoor.go`<br>`internal/nav/gatedoor_test.go`<br>`internal/nav/exitgoal_test.go`<br>`internal/nav/mouthgate.go`<br>`internal/bot/goal.go`<br>`internal/bot/goal_acts_test.go`<br>`cmd/d2bot/task.go`<br>`cmd/d2bot/acts_test.go`<br>`internal/talk/talk.go`<br>`internal/talk/talk_test.go` | - |
 | fid-boss-skills | deferred | - | `docs/probes/fid/fid-boss-skills.md` | - |
 | fid-sorc-upstream | deferred | - | `docs/probes/fid/fid-sorc-upstream.md` | - |
-| stage1fix | proposed | - | `internal/nav/exit.go`<br>`internal/nav/exit_test.go`<br>`internal/bot/goal.go`<br>`internal/bot/questboard.go`<br>`internal/bot/questboard_test.go`<br>`cmd/d2scenario/tap.go`<br>`cmd/d2scenario/tap_test.go`<br>`tools/provingground/scenarios/navexit.json`<br>`tools/provingground/scenarios/necro.json`<br>`docs/probes/necromancer-act1-drill-2026-11-22.md` | - |
 | m1-liveproof | deferred | drills | `docs/basics-audit.md`<br>`docs/basics-live.md`<br>`docs/primitives.md`<br>`docs/probes/basics/**`<br>`cmd/d2drill/**`<br>`internal/drill/**`<br>`docs/probes/drills/**` | `soak-slot:0` |
 | fid-teleport | deferred | - | `docs/probes/fid/fid-teleport.md` | - |
 | fid-lab-rebase | deferred | - | `docs/probes/fid/fid-lab-rebase.md` | - |
@@ -192,14 +192,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
-- d894a57bf 11-27 18:20 `Merge agent/bsmprep: bsmprep: boardLegacy seam, boardSM removal plan, drill scenarios (TASK-983 prep)` (bsmprep)
-- 25c9ee658 11-27 18:18 `Merge branch 'main' into bsmprep` (-)
-- ee98b56f4 11-27 18:15 `Merge agent/docsweep: docsweep: stale citations, roadmap refresh, 2 h wording` (docsweep)
-- 9e7ad03c9 11-27 18:13 `Merge origin/main into bsmprep (card result lines combined, docs sections both kept)` (-)
-- 5da31f09f 11-27 18:13 `Merge origin/main into docsweep (docs/gear.md: take main, the gearcopy wording)` (-)
-- 1d9770f19 11-27 18:04 `Merge agent/combattelem: combattelem: fight-end aim/stance/minion summaries, skill-id test (TASK-1073)` (combattelem)
-- 3b4e20513 11-27 18:03 `Merge branch 'main' into combattelem` (-)
-- 6692346c5 11-27 17:55 `Merge agent/nightcheck: nightcheck: night plan preflight script and corrected launch commands (TASK-1075)` (nightcheck)
-- 84cb68578 11-27 17:55 `Merge agent/mercaura: mercaura: per-class per-difficulty merc aura data, HirePolicy takes the class (TASK-1074)` (mercaura)
-- 05cc47c95 11-27 17:55 `Merge agent/combatscen2: combatscen2: eight combat drill scenarios (TASK-1072)` (combatscen2)
+- 8b8ab22f6 11-27 19:12 `Merge agent/refusalpark: refusalpark: quests.refusalPark dark knob, refused_repeatedly park (TASK-1081)` (refusalpark)
+- e6efa4ef6 11-27 19:11 `Merge branch 'main' into refusalpark` (-)
+- e13415294 11-27 18:52 `Merge agent/recoverydeath: recoverydeath: no-potion recovery farm picks the safest area below clvl 8 (TASK-1080)` (recoverydeath)
+- 9d9f28b47 11-27 18:51 `Merge branch 'main' into recoverydeath` (-)
+- 0bf8865a2 11-27 18:39 `Merge agent/zonepace: zonepace: lock lapses by time, zones far below the hero dropped (under bot.zoneModel) (TASK-1078)` (zonepace)
+- c72327077 11-27 18:39 `Merge agent/relaunches: relaunches: relaunch reason log line + minute-line counters, refusal-storm top list (TASK-1079)` (relaunches)
+- 2865b726c 11-27 18:38 `Merge branch 'main' into zonepace` (-)
+- 94912298e 11-27 18:38 `Merge branch 'main' into relaunches` (-)
+- dbbe1e8c0 11-27 18:31 `Merge agent/tuningwrite: tuningwrite: refuse tiny tuning writes, restore warn, flip verify hard-fails on zero bytes (TASK-1077)` (tuningwrite)
+- 20f13e0a4 11-27 18:31 `Merge agent/racefix: racefix: hand-in rebuilds the cached world before signalling done (TASK-1076)` (racefix)
 <!-- statusgen:end -->

@@ -8,6 +8,13 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- refusalpark: quests.refusalPark dark knob, refused_repeatedly park (TASK-1081) <!--sg:agent/refusalpark-->
+- recoverydeath: no-potion recovery farm picks the safest area below clvl 8 (TASK-1080) <!--sg:agent/recoverydeath-->
+- zonepace: lock lapses by time, zones far below the hero dropped (under bot.zoneModel) (TASK-1078) <!--sg:agent/zonepace-->
+- relaunches: relaunch reason log line + minute-line counters, refusal-storm top list (TASK-1079) <!--sg:agent/relaunches-->
+- tuningwrite: refuse tiny tuning writes, restore warn, flip verify hard-fails on zero bytes (TASK-1077) <!--sg:agent/tuningwrite-->
+- racefix: hand-in rebuilds the cached world before signalling done (TASK-1076) <!--sg:agent/racefix-->
+- denreward: hold every non-emergency trip while a quest reward is pending, nav.barracks-return scenario (TASK-880) <!--sg:agent/denreward-->
 - bsmprep: boardLegacy seam, boardSM removal plan, drill scenarios (TASK-983 prep) <!--sg:agent/bsmprep-->
 - docsweep: stale citations, roadmap refresh, 2 h wording <!--sg:agent/docsweep-->
 - combattelem: fight-end aim/stance/minion summaries, skill-id test (TASK-1073) <!--sg:agent/combattelem-->

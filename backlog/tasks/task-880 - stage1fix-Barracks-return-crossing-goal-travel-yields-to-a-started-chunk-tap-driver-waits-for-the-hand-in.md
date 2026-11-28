@@ -1,10 +1,13 @@
 ---
 id: TASK-880
-title: 'stage1fix: Barracks return crossing, goal travel yields to a started chunk, tap driver waits for the hand-in'
-status: Proposed
+title: >-
+  stage1fix: Barracks return crossing, goal travel yields to a started chunk,
+  tap driver waits for the hand-in
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-23T09:02:00Z'
+updated_date: '2026-11-27T23:46:00Z'
 labels:
   - bot
   - bot-fix
@@ -18,6 +21,7 @@ owns:
   - "internal/bot/goal.go"
   - "internal/bot/questboard.go"
   - "internal/bot/questboard_test.go"
+  - "internal/bot/denreward_test.go"
   - "cmd/d2scenario/tap.go"
   - "cmd/d2scenario/tap_test.go"
   - "tools/provingground/scenarios/navexit.json"
@@ -25,7 +29,7 @@ owns:
   - "docs/probes/necromancer-act1-drill-2026-11-22.md"
 exclusive: []
 contracts: []
-result: "Three fixes with offline must-fail tests (nav strip crossing, goal travel yields to a started chunk, tap driver waits for the hand-in); stage 1 GREEN in the lab afterwards (drill doc section 12: the fixture had no mana potion, so the kit gate sent the hero to town between clear and hand-in; CHEATED setup, mechanics only). Open: den hand-in after a town trip loses the reward (separate card); nav.barracks-return scenario pending (hero start cannot reproduce the arrival)."
+result: "Three fixes with offline must-fail tests (nav strip crossing, goal travel yields to a started chunk, tap driver waits for the hand-in); stage 1 GREEN in the lab afterwards (drill doc section 12: the fixture had no mana potion, so the kit gate sent the hero to town between clear and hand-in; CHEATED setup, mechanics only). Open: den hand-in after a town trip loses the reward (separate card); nav.barracks-return scenario pending (hero start cannot reproduce the arrival). denreward follow-up (2026-11-27): the pending-reward hold now covers every non-emergency trip (pack full, rebuy, merc) and the guard, must-fail test on Sorceress and Paladin (TestPendingRewardHoldsEveryNonEmergencyTrip), offline only; nav.barracks-return authored with a walked-arrival warp start (validate ok, not run live). Earlier: three fixes with offline must-fail tests (nav strip crossing, goal travel yields to a started chunk, tap driver waits for the hand-in); stage 1 still RED at the Den hand-in in the stage-1 setup (Den alone GREEN at clvl 10, 14, 16): cause open; nav.barracks-return scenario pending (hero start cannot reproduce the arrival). Not ready to play."
 lane: next
 ---
 

@@ -2,6 +2,7 @@ package bot
 
 import (
 	"fmt"
+	"log/slog"
 	"sort"
 	"sync"
 
@@ -37,6 +38,10 @@ type tunerState struct {
 // post, if given, runs on every tuning the Tuner builds (a saved file at start, every later edit) and on tune now: it
 // carries command-line switches that a rebuilt tuning must not drop (--ladder).
 func NewTuner(tune *env.Tuning, cfg Config, path string, post ...func(*env.Tuning)) (*Tuner, error) {
+	return newTuner(slog.Default(), tune, cfg, path, post...)
+}
+
+func newTuner(log *slog.Logger, tune *env.Tuning, cfg Config, path string, post ...func(*env.Tuning)) (*Tuner, error) {
 	t := &Tuner{tune: tune, custom: cfg.Custom, profile: cfg.Profile, overrides: map[string]float64{}, dash: map[string]bool{}, post: post}
 	t.apply(tune)
 	if cfg.Custom != nil {
@@ -53,6 +58,11 @@ func NewTuner(tune *env.Tuning, cfg Config, path string, post ...func(*env.Tunin
 		st, info, err := t.file.Load()
 		if err != nil {
 			return nil, err
+		}
+		if info.Quarantined != "" || info.Warning != "" {
+			// one loud line: a bad tuning file silently drops every flip knob unless the backup restores them
+			log.Warn("tuning file damaged", "path", path, "restoredFromBackup", info.FromBackup, "knobsRestored", len(st.Overrides),
+				"quarantined", info.Quarantined, "detail", info.Warning)
 		}
 		if info.Exists {
 			if st.Profile != "" {

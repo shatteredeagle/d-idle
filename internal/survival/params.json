@@ -29,6 +29,8 @@
  "yieldMaxWeight": 0.9,
  "starveCasts": 5,
  "starveValueMul": 0.5,
+ "lockHoldMinutes": 480,
+ "bandDrop": {"normal": 6, "nightmare": 8, "hell": 8},
  "archetypes": {
   "caster": {"yieldShrinkMinutes": 6, "starveCasts": 3, "yieldMinMinutes": 1.5, "starveValueMul": 0.25, "yieldStarveRatio": 0.25, "yieldStarveMinutes": 3, "yieldStarveMul": 0.5, "unvisitedFloor": 0.3, "unvisitedBelow": 0.8},
   "bruiser": {"starveCasts": 8}
@@ -39,6 +41,8 @@
   "bold": {"either": 0, "deaths": 1, "typicalEnter": 5, "badFloor": 0.4, "riskValueMul": 0.9, "riskMinGold": 150, "riskMaxK": 2.9, "poolUnvisitedK": true}
  },
  "tags": {
+  "lockHoldMinutes": "I: a left-for-cost lock lapses after this long away (card zonepace, was: only a 10 percent power change lifted it; Questy 2026-11-27 sat at level 15 to 16 in Dark Wood for a day), U",
+  "bandDrop": "I: levels the hero may be above a zone's monster level before the zone leaves the candidates (card zonepace; Questy at clvl 15 to 16 farmed mlvl 8 zones at a quarter of the XP rate), U",
   "halfLifeMinutes": "design 5.4, U",
   "heroHalfLifeMinutes": "I (pooled over zones, slower than a zone), U",
   "hardHalfLifeMinutes": "I: how fast a hard event is forgiven by time away, U",

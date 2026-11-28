@@ -45,6 +45,15 @@ type runnerRef struct {
 	aw   *agencyWire                 // the shadow skill planner (agencywire.go); nil without game tables
 }
 
+// noteLeave tells the runner that combat's Leave hook ran (a relaunch with a reason line); no-op before the runner exists.
+func (r *runnerRef) noteLeave() {
+	if r != nil {
+		if run := r.p.Load(); run != nil {
+			run.NoteLeave()
+		}
+	}
+}
+
 // beat stamps the runner's watchdog heartbeat (a finished sub-step of a long restart); no-op before the runner exists.
 func (r *runnerRef) beat() {
 	if r != nil {
@@ -132,7 +141,7 @@ func buildBehaviors(ctx context.Context, e *env.Env, o options, gameDir string, 
 	if cheat.CheckCharacter(charName()) == nil { // a real character never had god mode: no ledger noise on every save
 		flow.BeforeSave = guardSave(cheat.Gate{Allow: true, Env: cheat.DefaultEnv(), Actor: "d2bot"}, log)
 	}
-	cb.Leave = func(ctx context.Context) error { return flow.LeaveGame(ctx, 20*time.Second) }
+	cb.Leave = func(ctx context.Context) error { ref.noteLeave(); return flow.LeaveGame(ctx, 20*time.Second) }
 	bh := &behaviors{
 		Mover: moverAdapter{nv}, Fighter: fighterAdapter{cb}, Town: townAdapter{t: tw, e: e, mv: nv}, Loot: looterAdapter{lt},
 		Cycler: cycler{flow: flow, name: charName, world: e.World}, combat: cb,

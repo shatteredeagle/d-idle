@@ -11,6 +11,9 @@ type QuestsTuning struct {
 	// ResumeAfterDeaths 1: a chunk parked after the hero died on it too often lifts the park by itself after a quiet stretch (data/questboard/resume.json: minutes without a death, life percent, one resume in a row, caps per day); needs BoardSM 1. 0 (default): only the player's Try again clears it.
 	ResumeAfterDeaths int
 
+	// RefusalPark 1: parkAfter identical coded refusals of one chunk (data/questboard/refusal.json) park it as refused_repeatedly with the refusal's code and text, and the failsafe skips its game restart (rung 4) for a stall of refusals only. 0 (default): such refusals count as failures and park as gave_up.
+	RefusalPark int
+
 	Board int // 1 (default): the quest board drives quests (player taps Start and Hand in); 0: the old floor planner drives them (measured runs)
 
 	// Opt-in auto-start (slice S8); nothing here acts while Board is 0 or while no quest is marked auto.
@@ -42,6 +45,8 @@ func questsKnobs() []Knob {
 			Desc: "[dark-launch] 1: quest steps that carry an exec row in data/questspec run on the generic step executor of internal/questspec (approach, act, wait for the declared fact read from the game, bounded retries with backoff, a typed outcome): the Cain scroll (take_scroll), Akara reading it (read_scroll), the Horadric Staff transmute and placing the Staff in the orifice; 0 (default): the old handlers. Card stepexec1, ledger row in data/darklaunch.json."},
 		{Key: "quests.resumeAfterDeaths", Label: "Quest board: resume death parks", Unit: "bool", Default: 0, Min: 0, Max: 1, NoHandicap: true,
 			Desc: "[dark-launch] 1: a quest chunk parked because the hero died on it twice lifts the park by itself once the hero has been quiet (no death) for the minutes in data/questboard/resume.json and is back at its life percent and out of purse recovery; once in a row (a park that follows an automatic resume waits for Try again) and at most the day cap a day; the page shows the park as paused_after_deaths with since and what clears it. Needs quests.boardSM 1. 0 (default): only the player's Try again clears a park. Card questresume, ledger row in data/darklaunch.json."},
+		{Key: "quests.refusalPark", Label: "Quest board: park repeated refusals", Unit: "bool", Default: 0, Min: 0, Max: 1, NoHandicap: true,
+			Desc: "[dark-launch] 1: a guard that refuses the same quest chunk with the same code parkAfter times in a row (data/questboard/refusal.json, 3) parks the chunk as refused_repeatedly, with the refusal's code and text in /api/quests reason and on the Return screen's Quests paused section, instead of counting failures that park it as gave_up; the failsafe also skips rung 4 (the game restart) for a stall that is only refusals and goes to the visible pause. A refusal without a code keeps today's behaviour. Needs quests.boardSM 1. 0 (default): as before. Card refusalpark, ledger row in data/darklaunch.json."},
 		{Key: "quests.autoDelaySec", Label: "Auto-start countdown", Unit: "s", Default: 20, Min: 0, Max: 300, NoHandicap: true,
 			Desc: "Seconds an opted-in quest counts down (shown on the page, with Cancel) before it starts by itself; 0 starts at once. Only a SAFE offer ever auto-starts."},
 		{Key: "quests.awayMin", Label: "Away after", Unit: "min", Default: 10, Min: 1, Max: 240, NoHandicap: true,

@@ -90,6 +90,9 @@ func (d *Desk) chunkReason(quest string, cv ChunkView, run *Run, a *Active, hand
 		if run != nil {
 			args["n"] = strconv.Itoa(max(run.Failures, run.Deaths, 1))
 		}
+		if run != nil && code == "refused_repeatedly" {
+			args = refusalArgs(titles["quest"], *run)
+		}
 		rv := reasonView(code, args, cv.Why)
 		if run != nil && run.Status == RunParked && rv != nil {
 			if code == "died_too_often" {
