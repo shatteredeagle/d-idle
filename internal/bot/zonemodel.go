@@ -44,8 +44,9 @@ type zoneState struct {
 	noted  string // merc note already logged
 	failed string // last error logged
 	reask  zoneReask
-	burn   map[int]zoneBurn // zones that just cost the hero something (zonerecover)
-	recov  map[int]zoneHold // answers of the recovery/return questions, kept for recoverHold
+	burn   map[int]zoneBurn     // zones that just cost the hero something (zonerecover)
+	recov  map[int]zoneHold     // answers of the recovery/return questions, kept for recoverHold
+	noted1 map[string]time.Time // once-per-hour notes (dropped unreachable area, hole fallback, empty field), by key
 }
 
 // Cost-event re-ask (card survreask). A chicken, a death, a merc death or a potion crisis feeds the ledger at once, but
@@ -169,6 +170,41 @@ func (r *Runner) zoneCands(eligible []Step, diff string, cleared map[int]bool) [
 	return out
 }
 
+// zoneNoteHour logs msg at most once an hour per key.
+func (r *Runner) zoneNoteHour(key, msg string) {
+	z, now := &r.zst, r.e.Clock.Now()
+	z.mu.Lock()
+	if at, ok := z.noted1[key]; ok && now.Sub(at) < time.Hour {
+		z.mu.Unlock()
+		return
+	}
+	if z.noted1 == nil {
+		z.noted1 = map[string]time.Time{}
+	}
+	z.noted1[key] = now
+	z.mu.Unlock()
+	r.e.Log.Info(msg)
+}
+
+// zoneReachableCands drops the zones the hero cannot get to now (no route, a guarded area on the way, a long walk with
+// no activated waypoint): the controller used to rank them, pick a hole among them and the walk then failed
+// ("area skipped unreachable" 14 times in 26 minutes, audit postdeploy2).
+func (r *Runner) zoneReachableCands(s *d2.Snapshot, cands []ZoneCand) []ZoneCand {
+	out := cands[:0:0]
+	for _, c := range cands {
+		if c.Depleted {
+			out = append(out, c) // a cleared zone is only a depleted yardstick, never walked to by this pick
+			continue
+		}
+		if why := r.unreachable(context.Background(), s, c.Area); why != "" {
+			r.zoneNoteHour(fmt.Sprintf("drop:%d", c.Area), fmt.Sprintf("zone candidate dropped: %s not reachable now (%s)", r.areaName(c.Area), why))
+			continue
+		}
+		out = append(out, c)
+	}
+	return out
+}
+
 // zoneModelPick is PickOptions.Model for the goal's leveling pick; nil while the model is off.
 func (r *Runner) zoneModelPick(s *d2.Snapshot, diff string, cleared map[int]bool) func([]Step) (int, bool, bool) {
 	if !r.zoneModelOn() || s == nil || s.Player == nil {
@@ -179,7 +215,11 @@ func (r *Runner) zoneModelPick(s *d2.Snapshot, diff string, cleared map[int]bool
 		if healing, _, known := r.beltAndInv(s); known {
 			potions = healing
 		}
-		cands := r.zoneCands(eligible, diff, cleared)
+		cands := r.zoneReachableCands(s, r.zoneCands(eligible, diff, cleared))
+		if len(cands) == 0 {
+			r.zoneNoteHour("empty", "zone choice: no eligible candidate (every zone of the plan is unreachable now), the plan tables decide")
+			return 0, false, false
+		}
 		v, err := r.d.ZoneDecide(s, s.Player.Area, diff, potions, r.zoneDial(), cands)
 		z := &r.zst
 		if err != nil {
@@ -214,7 +254,17 @@ func (r *Runner) zoneModelPick(s *d2.Snapshot, diff string, cleared map[int]bool
 			}
 			r.e.Log.Info(fmt.Sprintf("zone reask: reason=%s k %.2f -> %.2f choice %d (%s)", reason, kBefore, v.K, v.Area, act))
 		}
+		if v.Hole && v.Area != s.Player.Area && !r.fullKit(s) {
+			// the first-field fallback walks a hero who is not safe here into a zone below the margin: only with the kit
+			// the plan itself asks for (potions and a town portal); otherwise the plan tables decide
+			r.zoneNoteHour(fmt.Sprintf("holekit:%d", v.Area), fmt.Sprintf("zone choice: hole fallback to area %d refused, the kit is short; %s", v.Area, v.Line))
+			return 0, false, false
+		}
 		for _, line := range splitLines(v.Line) {
+			if v.Hole {
+				r.zoneNoteHour(fmt.Sprintf("hole:%d", v.Area), line) // the same hole every dwell is one line an hour
+				continue
+			}
 			r.e.Log.Info(line)
 		}
 		if v.MercDead { // every revive decision, with the numbers (the plain `zone revive:` line has the words)
