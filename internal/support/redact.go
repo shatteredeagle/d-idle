@@ -187,3 +187,41 @@ func RedactN(s string, lits Literals) (string, int) {
 	}
 	return s, n
 }
+
+// credentialRx is a labelled credential with a value that ends at white space (a log line keeps the rest).
+var credentialRx = regexp.MustCompile(`(?i)(["']?\b(?:[\w.-]*[_.-])?(?:token|secret|passw(?:or)?d|passphrase|pass[_-]?code|pwd|cookie|credentials?|authorization|api[_-]?key|cd[_-]?key|cdkey|private[_-]?key)(?:[_.-][\w.-]*)?["']?\s*[:=]\s*)("(?:[^"\\\n]|\\.)*"|'[^'\n]*'|[^\s,}"'<]+)`)
+
+var credentialClasses = map[string]bool{"pem": true, "bearer": true, "barepass": true, "urluser": true, "urltoken": true, "urlpath": true, "token": true}
+
+var plainValue = regexp.MustCompile(`^(?:true|false|null|\d{1,7})$`)
+
+// RedactCredentials hides only what lets someone in (tokens, passcodes, keys in links and headers) and keeps hosts,
+// addresses, paths and ids: it is for the operator's own terminal (`d2bot ops log`), where the output is read for
+// diagnosis and then pasted into a chat. The rules are the bundle's own, by class, plus the labelled form.
+func RedactCredentials(s string) string {
+	for _, r := range rules {
+		if !credentialClasses[r.class] {
+			continue
+		}
+		s = r.rx.ReplaceAllStringFunc(s, func(m string) string {
+			if r.fix != nil {
+				if out, ok := r.fix(m); ok {
+					return out
+				}
+				return m
+			}
+			return r.rx.ReplaceAllString(m, r.repl)
+		})
+	}
+	s = credentialRx.ReplaceAllStringFunc(s, func(m string) string {
+		sub := credentialRx.FindStringSubmatch(m)
+		if plainValue.MatchString(sub[2]) {
+			return m
+		}
+		if strings.HasPrefix(sub[2], `"`) {
+			return sub[1] + `"<secret>"`
+		}
+		return sub[1] + "<secret>"
+	})
+	return s
+}

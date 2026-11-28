@@ -15,6 +15,7 @@ import (
 	"d2lod-bot/internal/logx"
 	"d2lod-bot/internal/ops"
 	"d2lod-bot/internal/questboard"
+	"d2lod-bot/internal/support"
 )
 
 const opsUsage = `usage: d2bot ops quest status [--json] [--why]
@@ -297,8 +298,9 @@ func opsLog(args []string, out io.Writer) (int, error) {
 	if err != nil {
 		return 1, err
 	}
+	// the output goes to a terminal and from there into chats: no credential, no control character (review 4 finding 7)
 	for _, l := range lines {
-		fmt.Fprintln(out, l)
+		fmt.Fprintln(out, logx.Printable(support.RedactCredentials(l)))
 	}
 	return 0, nil
 }
