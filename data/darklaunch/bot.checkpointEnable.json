@@ -1,0 +1,10 @@
+{
+ "name": "bot.checkpointEnable",
+ "built_by": "checkpoint1 (4c80a8b75)",
+ "dark_since": "2026-11-25",
+ "why_off": "Checkpoint portal at danger areas: UNVERIFIED live. Card ckptlive runs the live drill.",
+ "enable_criteria": "Live drill green (portal cast healthy, retreat at low life, return after death); scenario/drill green, then flip on the sandboxes with a 24 h invariant-monitor watch and automatic revert on a hard breach",
+ "owner": "coordinator",
+ "review_by": "2026-12-09",
+ "status": "enabled"
+}

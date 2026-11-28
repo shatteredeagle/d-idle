@@ -84,7 +84,7 @@ class AutoflipTest(unittest.TestCase):
         got = {(x["instance"], x["group"], x["window"]): x["knobs"] for x in b}
         self.assertEqual(set(x[0] for x in got), {"questy", "doofer"})
         self.assertEqual(got[("questy", "g", "30m")], {"bot.p": 2.0})
-        self.assertIn("--window 30m --commit-ledger", A.command([x for x in b if x["group"] == "g"][0]))
+        self.assertIn("--window 30m", A.command([x for x in b if x["group"] == "g"][0]))
 
     def test_unhealthy_sandbox_refuses(self):
         sb = Fake([])

@@ -8,6 +8,7 @@ import (
 
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/diffready"
+	"d2lod-bot/internal/gear"
 	"d2lod-bot/internal/leveler"
 	"d2lod-bot/internal/supply"
 	"d2lod-bot/internal/task"
@@ -143,6 +144,7 @@ func (r *Runner) diffVerdict(s *d2.Snapshot, target string) (diffready.Verdict, 
 	p := s.Player
 	h := diffready.Hero{Class: p.Class, Level: p.Level, MaxLife: p.MaxLife, Res: leveler.RawResists(p), MaxRes: p.MaxResist,
 		KeySkillLevel: -1, Healing: -1, ManaOrRejuv: -1, Portals: -1}
+	h.KeySkillLevel = r.keySkillLevel(p)
 	if s.Merc != nil {
 		h.Merc = diffready.Yes // U: a read MercSheet is taken as a living merc
 	}
@@ -191,6 +193,24 @@ func (r *Runner) wantedDifficultyV2(s *d2.Snapshot) string {
 		return ""
 	}
 	return next
+}
+
+// keySkillLevel is the base level of the build's main attack at the hero's level (the table's main_attack, data), for
+// the readiness row's key_skill_min. -1 (not read, never blocks) when the skill table is not loaded, the table has no
+// main_attack or it names a weapon attack that is not a skill. U: base points only, +skills from gear do not count.
+func (r *Runner) keySkillLevel(p *d2.Player) int {
+	if r.e.Data == nil {
+		return -1
+	}
+	return keySkillLevelOf(r.buildName(p), p.Level, leveler.OwnedSkills(r.e.Data, p), func(n string) bool { return r.e.Data.SkillByName(n) != nil })
+}
+
+func keySkillLevelOf(build string, clvl int, owned map[string]int, isSkill func(string) bool) int {
+	ma, err := gear.MainAttackAt(build, clvl)
+	if err != nil || ma.Skill == "" || !isSkill(ma.Skill) {
+		return -1
+	}
+	return owned[ma.Skill]
 }
 
 // diffHopStarted consumes the owner's go for want: the new game of the hop was made (ensureDifficulty). One go, one hop.

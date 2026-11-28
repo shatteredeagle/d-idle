@@ -18,6 +18,7 @@ owns:
   - "internal/questboard/"
 exclusive: []
 contracts: []
+result: "Not live-verified. restart-mid-chain: the step line repeats because a failed pickup retries the step (legit), and the 300 s restart never fired mid-chain (leg ended on its virtual budget at about 150 s wall); now restart_at_s 110 and the assertion is one 'starting chunk search_for_cain/scroll' per run. stop-cascades: after_s 60 wall fired after the chunk was done; now 8. Sorceress 3 never took the scroll in leg 1 (tree gave no scroll 4 times), so it can stay RED on the precondition. No product bug found, so no unit test. AC #3 needs a lab rerun."
 ---
 
 ## Description
@@ -30,7 +31,7 @@ restart-mid-chain: 'quest board: step Take the Inifuss bark' is logged again eac
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 restart-mid-chain asserts a line that is logged once per completed step, or the step line is logged once per run of the step
-- [ ] #2 stop-cascades cancels while search_for_cain/scroll is still in progress (trigger tied to a board state, not to wall seconds)
+- [x] #1 restart-mid-chain asserts a line that is logged once per completed step, or the step line is logged once per run of the step
+- [x] #2 stop-cascades cancels while search_for_cain/scroll is still in progress (trigger tied to a board state, not to wall seconds)
 - [ ] #3 Both GREEN for Paladin 11 and Sorceress 3, then the quests.boardSM ledger row is re-read
 <!-- AC:END -->

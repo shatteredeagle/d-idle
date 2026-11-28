@@ -1,0 +1,10 @@
+{
+ "name": "nav.warpRead",
+ "built_by": "warptrigger (4d063a52f)",
+ "dark_since": "2026-11-21",
+ "why_off": "Needs the fork debug verb; not verified live.",
+ "enable_criteria": "Warp drill across 5 areas with the read on",
+ "owner": "coordinator",
+ "review_by": "2026-12-09",
+ "status": "dark"
+}

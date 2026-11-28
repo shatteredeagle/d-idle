@@ -1,0 +1,10 @@
+{
+ "name": "quests.resumeAfterDeaths",
+ "built_by": "questresume (branch agent/questresume)",
+ "dark_since": "2026-11-27",
+ "why_off": "A quest chunk parked after two deaths waited for the player's Try again for ever (a sandbox hero did no quest for 42 h). The pause policy lifts such a park after a quiet stretch, once in a row, three times a day; built and tested offline only (fake clock, two classes), never run on a live hero.",
+ "enable_criteria": "Flip on one sandbox whose quests.boardSM is 1 with a 24 h watch: a death park shows reason paused_after_deaths with its clears text in /api/quests, lifts itself after afterMin quiet minutes at the policy life, and a second park on the same chunk stays until Try again; at least one resume seen in the window, no hard breach (docs/process/dark-launch.md).",
+ "owner": "coordinator",
+ "review_by": "2026-12-11",
+ "status": "dark"
+}

@@ -19,7 +19,7 @@ func TestPlanSellKeepTwoBuilds(t *testing.T) {
 		var c supply.Count
 		c.Belt[supply.HP], c.Belt[supply.MP] = capHP, capMP
 		c.Purse, c.StashKnown, c.PortalCharges, c.HasTome = 2000, true, 5, true
-		pl, err := solveShadow(class, band, belt.Columns, c, ChorePlan{Profile: "monastery_road"}, &lt, &rs)
+		pl, err := solveShadow(class, "", band, belt.Columns, c, ChorePlan{Profile: "monastery_road"}, &lt, &rs)
 		if err != nil {
 			t.Fatalf("%v: %v", class, err)
 		}
@@ -75,7 +75,7 @@ func TestPlanKeepBeltRefillTwoBuilds(t *testing.T) {
 		full.Belt[supply.HP], one.Belt[supply.HP] = capHP, 1
 		var keeps [2]int
 		for i, c := range []supply.Count{full, one} {
-			pl, err := solveShadow(class, band, belt.Columns, c, ChorePlan{}, &lt, &rs)
+			pl, err := solveShadow(class, "", band, belt.Columns, c, ChorePlan{}, &lt, &rs)
 			if err != nil {
 				t.Fatalf("%v: %v", class, err)
 			}
