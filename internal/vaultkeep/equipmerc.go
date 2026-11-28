@@ -199,12 +199,17 @@ func (k *Keeper) EquipMerc(ctx context.Context, id string) (Result, bool) {
 	if ir.Displaced >= 0 {
 		// The record is written BEFORE the piece leaves the pack (its bytes are readable while it lies there), as Stow does.
 		have, ferr := k.API.ItemFull(ctx, ir.Displaced)
-		if ferr != nil || len(have) != 1 {
-			where = "backpack"
+		switch {
+		case ferr != nil: // cannot look now: the intent stays and the next pass files the piece by the pack difference
+			where, open = "backpack", true
 			names = append(names, "an item")
 			k.Hand.Protect(uint32(ir.Displaced))
-			k.note("eqm-off-"+id, "The piece the mercenary took off is in your backpack: the bot could not read it to file it.")
-		} else {
+			k.note("eqm-off-"+id, "The piece the mercenary took off is in your backpack; the bot files it at the next step.")
+		case len(have) != 1:
+			where = "backpack"
+			names = append(names, "an item")
+			k.note("eqm-off-"+id, "The piece the mercenary took off could not be found in your backpack: check it.")
+		default:
 			var n string
 			n, where, open = k.mercFile(ctx, st, have[0], order)
 			names = append(names, n)
