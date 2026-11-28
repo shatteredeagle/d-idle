@@ -300,3 +300,40 @@ func TestGameLostRestartFailureIsFatal(t *testing.T) {
 	g.waitFor("fatal", func() bool { return g.r.Health().Fatal != "" })
 	g.finish()
 }
+
+// Card refusalpark: a stall made only of refusals skips the game restart (rung 4) and ends in the visible pause; the
+// same stall without refusals, or with the knob off, still restarts (TestFailsafeTravelWithNoProgress).
+func TestFailsafeRung4SkippedForRefusalOnlyStall(t *testing.T) {
+	for _, on := range []bool{true, false} {
+		g := failsafeRig(t, func(c *Config, d *Deps, tu *env.Tuning) {
+			if on {
+				tu.Quests.RefusalPark = 1
+			}
+		})
+		g.mover.exitBlock = true
+		g.run()
+		stop := make(chan struct{})
+		go func() { // a guard keeps refusing a quest step during the stall
+			for {
+				select {
+				case <-stop:
+					return
+				default:
+					g.r.inv.noteRefusal("step x: refused")
+					time.Sleep(2 * time.Millisecond)
+				}
+			}
+		}()
+		g.r.Start(farm("Blood Moor"))
+		assertPausedWithReason(t, g)
+		close(stop)
+		restarted := strings.Contains(g.w.log(), "restart")
+		g.finish()
+		if on && restarted {
+			t.Fatalf("knob on: the refusal-only stall restarted the game: %s", g.w.log())
+		}
+		if !on && !restarted {
+			t.Fatalf("knob off: no restart: %s", g.w.log())
+		}
+	}
+}
