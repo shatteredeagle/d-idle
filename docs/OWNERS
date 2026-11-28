@@ -213,6 +213,7 @@ docs/knobs.md  credit-runner  dlv-upkeep-state
 docs/knobs.md  live-agent  arbmig
 docs/onboarding-tour.md  credit-runner  onboardtour
 docs/onboarding.md  credit-runner  reconnectux
+docs/probes/cellar3-gate-capture.md  credit-runner  cellar3gate
 docs/probes/checkpoint-live-drill.md  live-agent  ckptlive
 docs/probes/classorder1.md  user  classorder1
 docs/probes/flipwave2.md  live-agent  flipwave2
@@ -352,6 +353,8 @@ internal/levelplan/necro_test.go  live-agent  epic-class-necromancer
 internal/nav/  live-agent  dlv-move-tele
 internal/nav/act2hints.go  credit-runner  qdmatrix
 internal/nav/act2hints_test.go  credit-runner  qdmatrix
+internal/nav/cellar3gate_test.go  credit-runner  cellar3gate
+internal/nav/exit.go  credit-runner  cellar3gate
 internal/nav/exit.go  credit-runner  qdmatrix
 internal/nav/exit_test.go  credit-runner  qdmatrix
 internal/nav/exitgoal_test.go  credit-runner  qdmatrix
@@ -369,6 +372,7 @@ internal/power/skilldamage_test.go  credit-runner  qdmatrix
 internal/quest/baaldone.go  credit-runner  diffbaal
 internal/quest/baaldone_test.go  credit-runner  diffbaal
 internal/questboard  live-agent  bsmdef
+internal/questboard/  credit-runner  cellar3gate
 internal/questboard/def.go  credit-runner  cainfix3
 internal/questboard/state.go  credit-runner  qdmatrix
 internal/questboard/state_test.go  credit-runner  qdmatrix
