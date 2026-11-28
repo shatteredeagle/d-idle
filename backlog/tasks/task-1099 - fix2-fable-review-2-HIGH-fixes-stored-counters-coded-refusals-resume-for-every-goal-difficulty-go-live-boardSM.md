@@ -14,8 +14,8 @@ ordinal: 524000
 card: "fix2"
 lane: next
 owns:
-  - "internal/questboard"
-  - "internal/bot"
+  - "internal/questboard/"
+  - "internal/bot/"
   - "docs/questboard.md"
 exclusive: []
 contracts: []
