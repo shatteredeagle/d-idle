@@ -624,8 +624,10 @@ func (e *Exec) reset(parks bool) {
 		act = e.open(vs, plan, diff)
 	}
 	e.rs = map[string]*runState{}
-	if parks && !e.boardLegacy() && err == nil {
-		e.smRetryAll() // the player's Reset is the one explicit way a stored park is cleared
+	if parks && err == nil && (!e.boardLegacy() || plan.anyStoredPark(Difficulties[diff])) {
+		// The player's Reset is the one explicit way a stored park is cleared. The legacy board honours stored parks too
+		// (Next), so its Reset clears them as well; it writes the runs only when there is one (card fix1b, review B2).
+		e.smRetryAll()
 	}
 	e.mu.Unlock()
 	for _, r := range act {

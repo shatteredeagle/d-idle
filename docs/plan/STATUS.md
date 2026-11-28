@@ -47,11 +47,14 @@
 | fix4 | in-progress | - | `deploy/d2d-container/tester-report.sh`<br>`deploy/d2d-container/tester_report_test.go`<br>`internal/watch/serve.go`<br>`internal/watch/serve_test.go`<br>`internal/watch/gate.go`<br>`internal/watch/web/shell.js`<br>`internal/watch/difficultydesk.go`<br>`internal/watch/difficultydesk_test.go`<br>`internal/diffready/`<br>`internal/bot/diffready.go`<br>`internal/bot/diffready_test.go`<br>`tools/flip/flip.py`<br>`tools/flip/test_flip.py`<br>`internal/logx/sink.go`<br>`internal/logx/sink_test.go`<br>`docs/ops/docker-volumes.md`<br>`docs/diffready.md` | - |
 | navbarracks | proposed | - | `internal/nav/`<br>`internal/d2dworld/` | - |
 | cainspin | proposed | - | `internal/bot/` | - |
-| summonerstall | proposed | - | `internal/bot/`<br>`internal/nav/` | - |
-| drillskills | proposed | - | `internal/scenario/`<br>`cmd/d2scenario/`<br>`tools/provingground/scenarios/combatdrills.json`<br>`tools/provingground/scenarios/necro.json` | - |
+| summonerstall | proposed | - | `internal/bot/`<br>`internal/nav/`<br>`cmd/d2bot/boss.go`<br>`cmd/d2bot/boss_test.go`<br>`backlog/tasks/task-1107 - act2night-three-Act-2-stepexec-drill-findings-Duriel-stall-shaft-road-without-a-portal-potion-not-drunk-in-the-cube-drill.md` | - |
+| drillskills | proposed | - | `internal/scenario/`<br>`cmd/d2scenario/`<br>`tools/provingground/scenarios/combatdrills.json`<br>`tools/provingground/scenarios/necro.json`<br>`tools/provingground/golden/setup-played.tsv` | - |
 | bsmnight | proposed | - | `tools/provingground/scenarios/board.json`<br>`internal/questboard/` | - |
 | act2night | proposed | - | `internal/bot/`<br>`tools/provingground/scenarios/stepexec-act2chunks.json` | - |
 | townnight | proposed | - | `internal/town/`<br>`internal/supply/`<br>`tools/provingground/scenarios/townplan.json` | - |
+| led1 | in-progress | - | `data/darklaunch/`<br>`data/darklaunch.json`<br>`data/darklaunch-cap.json`<br>`tools/darklaunch/`<br>`tools/flip/`<br>`docs/process/dark-launch.md`<br>`docs/process/autoflip.md` | - |
+| fix1b | in-progress | - | `internal/vaultkeep`<br>`internal/questboard`<br>`internal/d2dctl` | - |
+| fix7b | in-progress | - | `internal/bot/`<br>`internal/arbiter/`<br>`internal/survival/`<br>`internal/combat/`<br>`cmd/d2bot/`<br>`docs/arbiter.md`<br>`docs/design/arbiter-target-and-migration.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
@@ -195,14 +198,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
-- 5716e032a 11-28 00:57 `Merge agent/forkrebase: fork rebase doc 2026-11-28 (docs)` (forkrebase)
-- 80c57400c 11-28 00:57 `Merge agent/nightlog: nightlog tick (docs)` (nightlog)
-- 7b2f0d961 11-28 00:55 `Merge branch 'main' into forkrebase` (-)
-- 813997be4 11-28 00:55 `Merge branch 'main' into nightlog` (-)
-- 767f5edba 11-28 00:53 `Merge agent/rv3: round-2 review C: security, PG, data, pipeline (docs)` (rv3)
-- 9da05821e 11-28 00:52 `Merge agent/rv1: round-2 review A: fix1 and fix2 (docs)` (rv1)
-- 9fd88574f 11-28 00:52 `Merge agent/rv2: round-2 review B: fix3 and fix7 (docs)` (rv2)
-- e5c21ff85 11-28 00:48 `Merge branch 'main' into rv3` (-)
-- 4b7a0cd83 11-28 00:48 `Merge branch 'main' into rv1` (-)
-- cc179624e 11-28 00:48 `Merge branch 'main' into rv2` (-)
+- 13bbafe89 11-28 02:50 `Merge agent/fix1b: fix1b: vault equip by bytes etc (TASK-1114)` (fix1b)
+- 090e4434c 11-28 02:49 `Merge branch 'main' into fix1b` (-)
+- f9b1c3551 11-28 02:40 `Merge agent/nf3b: nf3b: nav seam, mapKillErr, Approach field NPC (TASK-1104/1107)` (nf3b)
+- 1315f88eb 11-28 02:39 `Merge branch 'main' into nf3b` (-)
+- 2179c58a0 11-28 02:30 `Merge agent/fix7b: fix7b: arbiter fixes N1-N6 (TASK-1115)` (fix7b)
+- 1f1c3a73a 11-28 02:29 `Merge branch 'main' into fix7b` (-)
+- e982e2703 11-28 02:23 `Merge agent/roadfresh: roadfresh: roadmap refresh (TASK-1123)` (roadfresh)
+- 1bc4edc57 11-28 02:23 `Merge agent/road4: road4: d2shadow (TASK-1121)` (road4)
+- 14942d262 11-28 02:23 `Merge agent/vault2: vault2: atomic Reserve, merc journal (TASK-1113)` (vault2)
+- d7efb045a 11-28 02:20 `Merge branch 'main' into roadfresh` (-)
 <!-- statusgen:end -->

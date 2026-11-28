@@ -1,0 +1,10 @@
+{
+ "name": "quests.layoutRead",
+ "built_by": "k1layout (d92832130)",
+ "dark_since": "2026-11-20",
+ "why_off": "Needs the fork levelmap verb; not verified live.",
+ "enable_criteria": "Quest layout drill: quest objects found by read in 3 areas",
+ "owner": "coordinator",
+ "review_by": "2026-12-09",
+ "status": "dark"
+}

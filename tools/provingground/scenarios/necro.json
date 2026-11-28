@@ -355,7 +355,9 @@
     "internal/bot/",
     "internal/campaign/"
    ],
-   "pre": {"hero_profile": "banked"},
+   "pre": {
+    "hero_profile": "banked"
+   },
    "trigger": {
     "goals": "campaign:normal_act1",
     "build": "necromancer_summoner_sme",
@@ -1327,6 +1329,18 @@
       "monster": "fallen1",
       "n": 10
      }
+    ],
+    "bind": [
+     {
+      "skill": "Corpse Explosion",
+      "hand": "right"
+     }
+    ],
+    "summon": [
+     {
+      "skill": "Clay Golem",
+      "n": 1
+     }
     ]
    },
    "trigger": {
@@ -1354,7 +1368,7 @@
     "lab-verbs-attach",
     "read.minions"
    ],
-   "provenance": "SETUP: level 24 with the points a played level gives (spent by the bot's leveler table), purse 3000, field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position and encounter: mechanics only, never evidence about balance).",
+   "provenance": "SETUP: level 24 with the points a played level gives (spent by the bot's leveler table), purse 3000, field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position and encounter: mechanics only, never evidence about balance). TASK-1105: the drill's skill bound by name with `cmd select` after the points (pre.bind: Corpse Explosion on the right hand); one Clay Golem cast at setup with `cmd skill` (pre.summon; the self-check wants 1 summon standing). CHEATED setup: mechanics only.",
    "notes": "Half of the pair for card necrocorpse: identical setup and seed, only the build differs (necromancer_summoner_normal30 has 5 Corpse Explosion points, necromancer_summoner_ce1 has 1 and the freed points in minions). The pair is read together: the default table moves to 1 point only when the ce1 half is GREEN and its minute-line numbers (minions, life, kills) are equal or better over the same seeds. Thresholds are U (SME numbers U).",
    "assert": [
     {
@@ -1390,6 +1404,18 @@
       "monster": "fallen1",
       "n": 10
      }
+    ],
+    "bind": [
+     {
+      "skill": "Corpse Explosion",
+      "hand": "right"
+     }
+    ],
+    "summon": [
+     {
+      "skill": "Clay Golem",
+      "n": 1
+     }
     ]
    },
    "trigger": {
@@ -1417,7 +1443,7 @@
     "lab-verbs-attach",
     "read.minions"
    ],
-   "provenance": "SETUP: level 24 with the points a played level gives (spent by the bot's leveler table), purse 3000, field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position and encounter: mechanics only, never evidence about balance).",
+   "provenance": "SETUP: level 24 with the points a played level gives (spent by the bot's leveler table), purse 3000, field start in the Blood Moor by debug goto 2 and monsters by debug spawn (CHEATED position and encounter: mechanics only, never evidence about balance). TASK-1105: the drill's skill bound by name with `cmd select` after the points (pre.bind: Corpse Explosion on the right hand); one Clay Golem cast at setup with `cmd skill` (pre.summon; the self-check wants 1 summon standing). CHEATED setup: mechanics only.",
    "notes": "Half of the pair for card necrocorpse: identical setup and seed, only the build differs (necromancer_summoner_normal30 has 5 Corpse Explosion points, necromancer_summoner_ce1 has 1 and the freed points in minions). The pair is read together: the default table moves to 1 point only when the ce1 half is GREEN and its minute-line numbers (minions, life, kills) are equal or better over the same seeds. Thresholds are U (SME numbers U).",
    "assert": [
     {

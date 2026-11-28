@@ -124,7 +124,7 @@ func smokePrep(s scenario.Scenario, r scenario.Run, g *smokeGame) scenario.Resul
 		return fail("fake d2d: %v", err)
 	}
 	defer live.Close()
-	live.NoHands = g.NoHands
+	live.NoHands, live.DeafSelect, live.NoSummon = g.NoHands, g.DeafSelect, g.NoSummon
 	work, err := os.MkdirTemp("", "pgsmoke-work")
 	if err != nil {
 		return fail("%v", err)

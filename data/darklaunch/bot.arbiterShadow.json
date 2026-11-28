@@ -1,0 +1,11 @@
+{
+ "name": "bot.arbiterShadow",
+ "built_by": "arbitershadow (a8751bd8d)",
+ "dark_since": "2026-11-19",
+ "why_off": "Shadow only. The agreement exit rule of docs/arbiter.md is replaced (owner approved 2026-11-26) by an outcome rule; the card arbmig rewrites the migration table. Needs P2 (outcome1) and recorded ticks (ticklog) first. Tracker: docs/roadmap-fable.md.",
+ "enable_criteria": "Outcome rule on replays and incident scenarios (arbiter-led run has fewer monitor hits than the chain, no new ones); first family on one sandbox with a 24 h watch and automatic revert on a hard breach; owner go per family",
+ "owner": "coordinator",
+ "review_by": "2026-12-09",
+ "status": "dark",
+ "note": "live on sandbox since 2026-11-27 06:00Z, enable after a night of replay evidence"
+}

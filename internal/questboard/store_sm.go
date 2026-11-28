@@ -47,6 +47,16 @@ func (p Plan) storedPark(quest, chunk, diff string) *Run {
 	return nil
 }
 
+// anyStoredPark reports a parked run of any accepted chunk in this difficulty.
+func (p Plan) anyStoredPark(diff string) bool {
+	for _, a := range p.Accepted {
+		if a.Diff == diff && p.storedPark(a.Quest, a.Chunk, diff) != nil {
+			return true
+		}
+	}
+	return false
+}
+
 // reconcile makes the runs agree with Accepted (the older code may have changed it since the runs were written) and
 // runs the D4 repair: a record without a live or finished run is imported (a record whose chunk reads done becomes a
 // finished run with a latch at the tier read, any other a queued run), a live run without a record was withdrawn and is

@@ -1560,6 +1560,17 @@ func (r *Runner) sweepPass(ctx context.Context, area int) error {
 	radius := r.e.Tune.Bot.ClearRadius
 	name := r.areaName(area)
 	r.noteArea(area)
+	if l.cleared[area] {
+		// A pass over an area cleared in this game that kills nothing must still take a tick: the hold paths that sweep
+		// where the hero stands (flail, area done gap, board hold) are timed in virtual time, which under lockstep only
+		// moves when the bot waits (TASK-1103).
+		k0 := l.sweepKills[area]
+		defer func() {
+			if l.sweepKills[area] == k0 {
+				r.pause(ctx, time.Duration(r.e.Tune.Bot.TickMs)*time.Millisecond)
+			}
+		}()
+	}
 	if l.levelSlice {
 		r.farmNote(area)
 	}

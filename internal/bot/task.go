@@ -980,13 +980,18 @@ func (a taskActs) HireMerc(ctx context.Context, act int, aura string) error {
 	return a.tag(td.HireMerc(ctx, act, aura))
 }
 
-// MercAura implements task.MercAuraChooser: the class row for the snapshot's difficulty.
+// MercAura implements task.MercAuraChooser: the class row for the snapshot's difficulty, else the default row.
 func (a taskActs) MercAura() (string, bool, error) {
 	s, err := a.r.e.Snapshot()
 	if err != nil {
 		return "", false, err
 	}
-	return town.ClassMercAura(s.Player.Class, data.Difficulty(s.Player.Difficulty))
+	want, ok, err := town.HirePolicy(s.Player.Class, data.Difficulty(s.Player.Difficulty), d2.Merc{}, 0)
+	_ = ok // gold is the hire step's own check; only the aura is asked here
+	if err != nil {
+		return "", false, err
+	}
+	return want.Aura, true, nil // the class row, else the data default of this difficulty (classtraits.json)
 }
 
 // ClaimFreeMerc implements task.MercClaimer over TaskDeps.ClaimMerc. Without a backend it is a logged no-op, never an error.

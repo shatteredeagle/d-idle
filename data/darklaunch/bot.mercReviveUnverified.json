@@ -1,0 +1,10 @@
+{
+ "name": "bot.mercReviveUnverified",
+ "built_by": "initial snapshot (b030e4fbf)",
+ "dark_since": "2026-10-30",
+ "why_off": "Revive dialog click UNVERIFIED live.",
+ "enable_criteria": "Live probe of the revive dialog",
+ "owner": "coordinator",
+ "review_by": "2026-12-09",
+ "status": "dark"
+}

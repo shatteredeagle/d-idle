@@ -1,0 +1,10 @@
+{
+ "name": "loot.vault",
+ "built_by": "vault (TASK-576) (cad96c4e2)",
+ "dark_since": "2026-11-16",
+ "why_off": "Vault preset not enabled by default; sub-knobs (vaultEquip, vaultAll, ...) depend on it.",
+ "enable_criteria": "Vault page live check; owner go",
+ "owner": "owner",
+ "review_by": "2026-12-09",
+ "status": "dark"
+}

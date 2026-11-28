@@ -117,27 +117,32 @@ const ReasonNoRoom = "the Vault has no room for the item you would take off and 
 
 // EquipOrder is one one-tap order.
 type EquipOrder struct {
-	ID         string    `json:"id"` // vault record id
-	Name       string    `json:"name"`
-	Slot       string    `json:"slot"` // auto, left, right
-	Group      []string  `json:"group,omitempty"`
-	State      string    `json:"state"`
-	Reason     string    `json:"reason,omitempty"`
-	Code       string    `json:"code,omitempty"`
-	Unit       int       `json:"unit,omitempty"`
-	Worn       string    `json:"worn,omitempty"`        // desk slot it went to
-	Displaced  []string  `json:"displaced,omitempty"`   // names of the items that came off
-	Where      string    `json:"where,omitempty"`       // "vault", or "backpack" when the vault had no room
-	Direct     bool      `json:"direct,omitempty"`      // done by the direct verbs (equipdirect.go)
-	Applied    bool      `json:"applied,omitempty"`     // direct: the engine did the swap; Removed still has to become vault records
-	Removed    []string  `json:"removed,omitempty"`     // direct: raw hex of what came off, kept until it is a record
-	Order      string    `json:"order,omitempty"`       // direct: the order id (ledger, record mark)
-	Piece      int       `json:"piece,omitempty"`       // direct: index in a wearset call
-	Reply      string    `json:"reply,omitempty"`       // direct: an engine answer that did not parse, kept as received
-	BeforeUnit int       `json:"before_unit,omitempty"` // direct: the unit worn in the slot before the call
-	Before     string    `json:"before,omitempty"`      // direct: its item bytes (norm hex), the copy an unanswered swap is filed from
-	At         time.Time `json:"at"`
-	Updated    time.Time `json:"updated"`
+	ID         string   `json:"id"` // vault record id
+	Name       string   `json:"name"`
+	Slot       string   `json:"slot"` // auto, left, right
+	Group      []string `json:"group,omitempty"`
+	State      string   `json:"state"`
+	Reason     string   `json:"reason,omitempty"`
+	Code       string   `json:"code,omitempty"`
+	Unit       int      `json:"unit,omitempty"`
+	Worn       string   `json:"worn,omitempty"`        // desk slot it went to
+	Displaced  []string `json:"displaced,omitempty"`   // names of the items that came off
+	Where      string   `json:"where,omitempty"`       // "vault", or "backpack" when the vault had no room
+	Direct     bool     `json:"direct,omitempty"`      // done by the direct verbs (equipdirect.go)
+	Applied    bool     `json:"applied,omitempty"`     // direct: the engine did the swap; Removed still has to become vault records
+	Removed    []string `json:"removed,omitempty"`     // direct: raw hex of what came off, kept until it is a record
+	Order      string   `json:"order,omitempty"`       // direct: the order id (ledger, record mark)
+	Piece      int      `json:"piece,omitempty"`       // direct: index in a wearset call
+	Reply      string   `json:"reply,omitempty"`       // direct: an engine answer that did not parse, kept as received
+	BeforeUnit int      `json:"before_unit,omitempty"` // direct: the unit worn in the slot before the call (0: empty; never compared, ids do not survive a game)
+	New        string   `json:"new,omitempty"`         // direct: the bytes (norm hex) of the item being worn; an unanswered swap is judged by them
+	Before     string   `json:"before,omitempty"`      // direct: its item bytes (norm hex), the copy an unanswered swap is filed from
+	// direct, a hand slot only: the unit and bytes worn in the OTHER hand before the call. A two-hander pushes the shield off
+	// too, and after a lost reply this copy is the only one the bot has (card vault2).
+	BeforeOffUnit int       `json:"before_off_unit,omitempty"`
+	BeforeOff     string    `json:"before_off,omitempty"`
+	At            time.Time `json:"at"`
+	Updated       time.Time `json:"updated"`
 }
 
 func (o EquipOrder) active() bool {
@@ -157,7 +162,7 @@ type equipBook struct {
 
 // unfiled: a direct order that still holds the only copy of a displaced item.
 func (o EquipOrder) unfiled() bool {
-	return o.Direct && o.active() && (len(o.Removed) > 0 || o.Reply != "" || o.Before != "")
+	return o.Direct && o.active() && (len(o.Removed) > 0 || o.Reply != "" || o.Before != "" || o.BeforeOff != "")
 }
 
 // put stores the order under its record id. An earlier order of the same record that still holds a displaced item is
@@ -323,7 +328,7 @@ func (k *Keeper) EquipEnqueue(ctx context.Context, id, slot string, wantNow bool
 		return res
 	}
 	k.mu.Unlock()
-	if rec.State != vault.Recorded {
+	if rec.State != vault.Recorded || rec.Hold != "" {
 		res.Code, res.Why = "state", "the item is not in the vault any more or is busy ("+string(rec.State)+")"
 		return res
 	}
