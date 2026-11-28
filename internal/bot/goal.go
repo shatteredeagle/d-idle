@@ -1254,6 +1254,7 @@ func (r *Runner) ensureDifficulty(ctx context.Context, s *d2.Snapshot, c control
 		return r.d.Cycler.NewGame(ctx, want)
 	}))
 	if ok {
+		r.diffHopStarted(want)
 		r.verifyDifficulty(want)
 	} else if l.diffBan == nil || l.diffBan[want].IsZero() {
 		if l.diffBan == nil {
