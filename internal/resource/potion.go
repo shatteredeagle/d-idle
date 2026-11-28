@@ -146,34 +146,29 @@ func PlanFor(c d2.Class, level int) BeltPlan {
 	if p.PrefTier > p.MaxTier {
 		p.PrefTier = p.MaxTier
 	}
-	hp, mp, rv := PotionLife, PotionMana, PotionRejuv
-	switch ManaNeed(c) {
-	case 2:
-		p.Cols = [4]Potion{hp, hp, mp, mp}
-		if level >= 31 {
-			p.Cols = [4]Potion{hp, hp, mp, rv}
-		}
-		if level >= 61 {
-			p.Cols = [4]Potion{hp, rv, mp, rv}
-		}
-	case 1:
-		p.Cols = [4]Potion{hp, hp, hp, mp}
-		if level >= 31 {
-			p.Cols = [4]Potion{hp, hp, mp, rv}
-		}
-		if level >= 61 {
-			p.Cols = [4]Potion{hp, rv, mp, rv}
-		}
-	default:
-		p.Cols = [4]Potion{hp, hp, hp, hp}
-		if level >= 31 {
-			p.Cols = [4]Potion{hp, hp, hp, rv}
-		}
-		if level >= 61 {
-			p.Cols = [4]Potion{hp, rv, hp, rv}
-		}
-	}
+	p.Cols = colsForNeed(ManaNeed(c), level)
 	return p
+}
+
+// colsForNeed is the default column layout for a mana need (ManaNeedFor): two mana columns for need 2 before clvl 31,
+// one for need 1, none for need 0. The one place the need becomes belt columns, so kit, shop and belt cannot disagree.
+func colsForNeed(need, level int) [4]Potion {
+	hp, mp, rv := PotionLife, PotionMana, PotionRejuv
+	third := hp // the column a mana user gives to mana from clvl 31 on
+	if need > 0 {
+		third = mp
+	}
+	switch {
+	case level >= 61:
+		return [4]Potion{hp, rv, third, rv}
+	case level >= 31:
+		return [4]Potion{hp, hp, third, rv}
+	case need >= 2:
+		return [4]Potion{hp, hp, mp, mp}
+	case need == 1:
+		return [4]Potion{hp, hp, hp, mp}
+	}
+	return [4]Potion{hp, hp, hp, hp}
 }
 
 // Prices are vendor prices per tier (index 0 = tier 1).

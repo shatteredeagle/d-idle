@@ -132,7 +132,8 @@ type Fighter struct {
 
 	eq               *gear.Equipped // last noted gear, nil when unknown
 	weaponProblem    string
-	profileErr       atomic.Pointer[error]
+	planErr          atomic.Pointer[error] // set by the caller that picks the build (SetProfileErr)
+	selErr           atomic.Pointer[error] // the last profile selection failed; cleared by the next good one
 	weaponLogged     string
 	statsFn          func(uint32) (d2.Stats, error) // test seam; nil = e.Read.UnitStats
 	skipWhy          string                         // last skipped-drink reason logged (noteDrinkSkip)
@@ -929,36 +930,52 @@ func (f *Fighter) holdFor(p *d2.Player) time.Duration {
 }
 
 // profileFor is the combat profile of the character (classdata.go).
-// A character without a profile gets noProfile (no band, no key: nothing is cast) and the error is kept: Clear and
-// Kill refuse to fight while ProfileErr is set, and the invariant monitor counts it (no-combat-profile).
+// A character without a profile gets noProfile (no band, no key: nothing is cast) and the error is kept until the next
+// good selection: Clear and Kill refuse to fight while ProfileErr is set, the runner parks the hero in town and the
+// invariant monitor counts it (no-combat-profile).
 func (f *Fighter) profileFor(p *d2.Player) *Profile {
 	pr, err := SelectProfile(p, f.cat, f.Build)
 	if err != nil {
-		f.profileErr.CompareAndSwap(nil, &err)
+		f.selErr.Store(&err)
 		return noProfile
+	}
+	if f.selErr.Load() != nil { // one bad read must not stop the fighting for the rest of the game
+		f.selErr.Store(nil)
 	}
 	return pr
 }
 
 var noProfile = &Profile{Class: "none"}
 
-// ProfileErr is the reason the fighter has no combat profile (class.go's plan error or a failed selection), nil when
-// it has one.
+// ProfileErr is the reason the fighter has no combat profile (class.go's plan error, else the last failed selection),
+// nil when it has one.
 func (f *Fighter) ProfileErr() error {
-	if e := f.profileErr.Load(); e != nil {
+	if e := f.planErr.Load(); e != nil {
+		return *e
+	}
+	if e := f.selErr.Load(); e != nil {
 		return *e
 	}
 	return nil
 }
 
-// SetProfileErr records (or with nil clears) that the character has no usable combat profile; the caller that picks
-// the build sets it at the start of every game.
+// CheckProfile selects the profile for p now and returns ProfileErr: the runner asks every tick, so a hero without a
+// profile is known before the first fight and a profile that resolves again clears the selection error.
+func (f *Fighter) CheckProfile(p *d2.Player) error {
+	if p != nil {
+		f.profileFor(p)
+	}
+	return f.ProfileErr()
+}
+
+// SetProfileErr records (or with nil clears) the plan error of the caller that picks the build (a table of another
+// class, a table without a combat key). A selection error is not touched: the next selection decides it.
 func (f *Fighter) SetProfileErr(err error) {
 	if err == nil {
-		f.profileErr.Store(nil)
+		f.planErr.Store(nil)
 		return
 	}
-	f.profileErr.Store(&err)
+	f.planErr.Store(&err)
 }
 
 // refuseNoProfile is the error Clear and Kill return instead of fighting on a guess.
