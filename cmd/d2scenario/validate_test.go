@@ -49,12 +49,13 @@ func TestStaticCheckRows(t *testing.T) {
 		}
 	}
 	nec := fightScenario(4)
+	nec.Pre.HeroProfile = scenario.HeroPlayed // the attack row is the played profile's
 	nec.Trigger.Build = "necromancer_summoner_normal30"
 	su, _ := scenario.BuildSetup(nec, "Necromancer", 1)
 	if err := staticCheck(nec, "Necromancer", su, hero.NameTables()); err == nil || !strings.Contains(err.Error(), "attack:") {
 		t.Errorf("summoner clvl 4 fighting without its main attack: %v", err)
 	}
-	nec.Covers = []string{"points.autoalloc"}
+	nec.Pre.HeroProfile = "" // banked by default: no attack row
 	if err := staticCheck(nec, "Necromancer", su, hero.NameTables()); err != nil {
 		t.Errorf("a points scenario is banked, no attack row: %v", err)
 	}
@@ -65,7 +66,7 @@ func TestStaticCheckRows(t *testing.T) {
 func TestScenarioHeroSelfCheck(t *testing.T) {
 	for _, class := range []string{"Sorceress", "Paladin"} {
 		s := fightScenario(12)
-		s.Pre.HeroProfile = scenario.HeroBanked // the state below is a banked hero's; the played one is in herospend_test.go
+		// no pre.hero_profile: banked by default, the state below is a banked hero's
 		h, f := scenarioHero(s, class, hero.NameTables())
 		if f.Purse != 2000 || f.Potions != 6 {
 			t.Fatalf("floors %+v", f)
@@ -82,7 +83,6 @@ func TestScenarioHeroSelfCheck(t *testing.T) {
 		}
 	}
 	s := fightScenario(12)
-	s.Pre.HeroProfile = scenario.HeroBanked
 	s.Pre.Stats = []scenario.StatSet{{Stat: 4, Value: 0}}
 	if h, _ := scenarioHero(s, "Paladin", hero.NameTables()); h.StatPts != 0 {
 		t.Errorf("a raw statpts write sets the expectation: %d", h.StatPts)

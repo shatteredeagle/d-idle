@@ -32,6 +32,7 @@
     "quest.radament.radament"
    ],
    "pre": {
+    "hero_profile": "played",
     "start": "field",
     "area": 40,
     "level": 24,
@@ -199,6 +200,7 @@
     "quest.horadric_staff.cube"
    ],
    "pre": {
+    "hero_profile": "played",
     "start": "field",
     "area": 40,
     "level": 22,
@@ -372,6 +374,7 @@
     "quest.horadric_staff.shaft"
    ],
    "pre": {
+    "hero_profile": "played",
     "start": "field",
     "area": 40,
     "level": 30,
@@ -546,6 +549,7 @@
     "quest.tainted_sun.amulet"
    ],
    "pre": {
+    "hero_profile": "played",
     "start": "field",
     "area": 40,
     "level": 24,
@@ -714,6 +718,7 @@
     "quest.horadric_staff.assemble"
    ],
    "pre": {
+    "hero_profile": "played",
     "start": "field",
     "area": 40,
     "level": 22,
@@ -900,6 +905,7 @@
     "quest.summoner.kill_summoner"
    ],
    "pre": {
+    "hero_profile": "played",
     "start": "field",
     "area": 40,
     "level": 30,
@@ -1081,6 +1087,7 @@
     "quest.seven_tombs.duriel"
    ],
    "pre": {
+    "hero_profile": "played",
     "start": "field",
     "area": 40,
     "level": 30,
@@ -1266,6 +1273,7 @@
     "quest.radament.radament"
    ],
    "pre": {
+    "hero_profile": "played",
     "start": "field",
     "area": 40,
     "level": 24,
@@ -1435,6 +1443,7 @@
     "quest.lam_esen.tome"
    ],
    "pre": {
+    "hero_profile": "played",
     "start": "field",
     "area": 75,
     "level": 28,
@@ -1603,6 +1612,7 @@
     "quest.blade_old_religion.gidbinn"
    ],
    "pre": {
+    "hero_profile": "played",
     "start": "field",
     "area": 75,
     "level": 28,
@@ -1772,6 +1782,7 @@
     "quest.golden_bird.bird"
    ],
    "pre": {
+    "hero_profile": "played",
     "start": "field",
     "area": 75,
     "level": 28,
@@ -1940,6 +1951,7 @@
     "quest.blackened_temple.council"
    ],
    "pre": {
+    "hero_profile": "played",
     "start": "field",
     "area": 75,
     "level": 28,
@@ -2108,6 +2120,7 @@
     "quest.izual.izual"
    ],
    "pre": {
+    "hero_profile": "played",
     "start": "field",
     "area": 103,
     "level": 60,
@@ -2279,6 +2292,7 @@
     "quest.hellforge.hammer"
    ],
    "pre": {
+    "hero_profile": "played",
     "start": "field",
     "area": 103,
     "level": 60,
@@ -2454,6 +2468,7 @@
     "quest.siege_harrogath.shenk"
    ],
    "pre": {
+    "hero_profile": "played",
     "start": "field",
     "area": 109,
     "level": 60,
@@ -2636,6 +2651,7 @@
     "quest.prison_of_ice.find"
    ],
    "pre": {
+    "hero_profile": "played",
     "start": "field",
     "area": 109,
     "level": 60,
@@ -2823,6 +2839,7 @@
     "quest.betrayal_harrogath.nihlathak"
    ],
    "pre": {
+    "hero_profile": "played",
     "start": "field",
     "area": 109,
     "level": 60,
@@ -3014,6 +3031,7 @@
     "quest.rite_of_passage.ancients"
    ],
    "pre": {
+    "hero_profile": "played",
     "start": "field",
     "area": 109,
     "level": 60,
@@ -3210,6 +3228,7 @@
     "quest.eve_of_destruction.baal"
    ],
    "pre": {
+    "hero_profile": "played",
     "start": "field",
     "area": 109,
     "level": 60,

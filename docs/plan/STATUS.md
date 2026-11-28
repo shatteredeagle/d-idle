@@ -42,6 +42,8 @@
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
 | qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | cellar3gate | in-progress | - | `internal/nav/exit.go`<br>`internal/nav/cellar3gate_test.go`<br>`internal/questboard/`<br>`docs/probes/cellar3-gate-capture.md` | - |
+| holereach | proposed | - | `internal/bot/zonemodel.go`<br>`internal/bot/zonemodel_test.go` | - |
+| pgfix | proposed | - | `cmd/d2scenario`<br>`internal/scenario`<br>`tools/provingground/scenarios`<br>`docs/process/proving-ground.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
 | qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
@@ -185,14 +187,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
-- 0f7ecea7f 11-27 21:36 `Merge agent/postdeploy2: postdeploy2: second post-deploy audit (docs)` (postdeploy2)
-- 25916ea02 11-27 21:35 `Merge branch 'main' into postdeploy2` (-)
-- 90dde084a 11-27 21:28 `Merge agent/townapply: townapply: SME town profile rows, beltSlots and tierFloor loader fields (TASK-1087)` (townapply)
-- 0f92b2853 11-27 21:27 `Merge branch 'main' into townapply` (-)
-- db2f6c04f 11-27 21:17 `Merge agent/smetown: smetown: SME advice on town supply profiles (TASK-765)` (smetown)
-- 912f71256 11-27 21:16 `Merge branch 'main' into smetown` (-)
-- e3ad47351 11-27 21:12 `Merge agent/cardclose4: cardclose4: card status sync after the afternoon merges` (cardclose4)
-- 263da1e33 11-27 21:10 `Merge remote-tracking branch 'origin/main' into agent/cardclose4` (-)
-- 3210c3a77 11-27 21:09 `Merge agent/devupdatefix: devupdatefix: dev-update.sh local mode, per-run stage dir, host line (TASK-1086)` (devupdatefix)
-- 1db8a65e9 11-27 19:59 `Merge agent/questautovis: questautovis: auto/waitingFor visible in ops, api and Return screen (TASK-1085)` (questautovis)
+- e340dc50e 11-27 22:25 `Merge agent/darkthrottle: darkthrottle: ledger cap, by_design status, flip_plan, sandbox-first doc (TASK-1091)` (darkthrottle)
+- af5382fe3 11-27 22:24 `Merge branch 'main' into darkthrottle` (-)
+- a9fc9ca8c 11-27 22:13 `Merge agent/pgfix: pgfix: banked default hero profile, setup tags on blocked runs, hand skills in the point dump (TASK-1093)` (pgfix)
+- f8a505433 11-27 22:12 `Merge branch 'main' into pgfix` (-)
+- f4865d49e 11-27 22:04 `Merge agent/farmresetretire: farmresetretire: bot.farmReset graduated to always-on, knob removed (TASK-1090)` (farmresetretire)
+- b540e608c 11-27 22:03 `Merge branch 'main' into farmresetretire` (-)
+- 4e171e621 11-27 21:56 `Merge agent/flipjson: flipjson: flip.py parses the first JSON document of ops status --why` (flipjson)
+- 98a9c9be9 11-27 21:56 `Merge agent/xplostfalse: xplostfalse: believe an xp fall only when repeated, relaunch-aware Save and Exit level, auto-start held-back reasons (TASK-1089)` (xplostfalse)
+- f956c040e 11-27 21:53 `Merge branch 'main' into flipjson` (-)
+- da6cf18c4 11-27 21:53 `Merge branch 'main' into xplostfalse` (-)
 <!-- statusgen:end -->

@@ -442,7 +442,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [exploredpct.md](exploredpct.md): Explored share: when a zone counts as explored (bot.exploredPct) (status: CURRENT. Tags: V = read from the code in this worktree and covered by a unit test, U = not run in a live game.)
 - [farm.md](farm.md): Farm runs (FARMRUNS, 2026-10-29)
 - [farmfallback.md](farmfallback.md): farmfallback: the gold farm as data, with a fallback
-- [farmloop.md](farmloop.md): The farm loop: reset a mostly cleared leveling zone with a fresh game (status: current (2026-11-15, agent farmloop). Shipped OFF (`bot.farmReset` 0): the simulation shows a small gain...)
+- [farmloop.md](farmloop.md): The farm loop: reset a mostly cleared leveling zone with a fresh game (status: current (2026-11-27, farmresetretire). The loop is ALWAYS ON: the knob `bot.farmReset` was removed...)
 - [first-hour.md](first-hour.md): First hour: the daily table tool
 - [first-session.md](first-session.md): First play session guide (TASK-134) (status: written 2026-11-08 from docs on main only; sections D, H and I brought up to date 2026-11-27 (TASK-27)...)
 - [fixbank.md](fixbank.md): FIXBANK: gold deposit and repair gold (card fix-bank) (status: current. Findings of the D3 drills (docs/probes/drills/2026-10-31-d3.txt); live proof is a drill rerun.)
@@ -960,7 +960,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [credit.md](process/credit.md): Credit for work carried upstream (status: current (card creditkit, approved by the maintainer 2026-11-02).)
 - [d2d-worker-host.md](process/d2d-worker-host.md): d2d worker host (status: moved to the private ops repo (d2lod-ops, `docs/process/d2d-worker-host.md`). Not part of the public tree.)
 - [d2dfarm.md](process/d2dfarm.md): d2dfarm: distributed d2d test nodes (status: v1 (ssh push). Spec: `openspec/changes/d2dfarm/specs/d2d-farm/spec.md`. Tags: V = run, U = not run. Hidden...)
-- [dark-launch.md](process/dark-launch.md): Dark-launch rule: built behind a default-off knob means a ledger row (status: current (card darklaunch, 2026-11-25). Why: the arbiter, `town.plan` and `quests.boardSM` were built,...)
+- [dark-launch.md](process/dark-launch.md): Dark-launch rule: sandbox first, graduate fast, the ledger never grows (status: current (card darkthrottle, 2026-11-27, user directive). Supersedes the 14-day dark window of card...)
 - [dispatcher-brief-proposed.md](process/dispatcher-brief-proposed.md): Dispatcher brief, proposed replacement (agent ROADMAP, 2026-10-31) (status: PROPOSAL (its WIP limit 3 and milestone rule were ADOPTED by the user on 2026-10-31, docs/roadmap.md...)
 - [dispatcher-brief.md](process/dispatcher-brief.md): Dispatcher brief (status: moved to the private ops repo (d2lod-ops, `docs/process/dispatcher-brief.md`). Not part of the public tree.)
 - [doc-audit.md](process/doc-audit.md): Doc audit (2026-10-30)

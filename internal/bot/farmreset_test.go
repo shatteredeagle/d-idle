@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"d2lod-bot/internal/d2"
+	"d2lod-bot/internal/env"
 	"d2lod-bot/internal/goals"
 )
 
@@ -31,7 +32,7 @@ func farmLoopRig(t *testing.T, cl d2.Class, pct int) *rig {
 	g := ladderRig(t, cl, 6)
 	g.w.set(func(w *world) { w.area = 2; w.life, w.maxL = 100, 100; w.level = 5; w.exp = 5000 })
 	g.r.d.Mover = covMover{fakeMover: g.mover, v: pct, m: 100}
-	g.r.e.Tune.Bot.FarmReset, g.r.e.Tune.Bot.FarmResetPct, g.r.e.Tune.Bot.FarmResetCooldownMin = 1, 85, 5
+	g.r.e.Tune.Bot.FarmResetPct, g.r.e.Tune.Bot.FarmResetCooldownMin = 85, 5
 	g.r.loop.levelSlice = true
 	g.r.poll()
 	g.r.farmNote(2)
@@ -64,11 +65,6 @@ func TestFarmResetDueAndGuards(t *testing.T) {
 				t.Fatal("below the knob's coverage")
 			}
 			g.r.e.Tune.Bot.FarmResetPct = 85
-			g.r.e.Tune.Bot.FarmReset = 0
-			if g.r.farmResetDue(2) {
-				t.Fatal("knob off")
-			}
-			g.r.e.Tune.Bot.FarmReset = 1
 			g.r.loop.run = &LevelRun{Area: 2, Kind: RunQuest}
 			if g.r.farmResetDue(2) {
 				t.Fatal("a quest run keeps roaming")
@@ -198,12 +194,10 @@ func TestFarmResetThrashCap(t *testing.T) {
 	if g.r.Status().FarmResetOff == "" {
 		t.Fatal("the Needs you row has no source")
 	}
-	g.r.e.Tune.Bot.FarmReset = 0
-	g.r.farmNote(2)
-	g.r.e.Tune.Bot.FarmReset = 1
+	g.r.loop.farm.seenOn = false
 	g.r.farmNote(2)
 	if g.r.farmOffWhy() != "" || len(g.r.loop.farm.fresh) != 0 {
-		t.Fatal("a knob flip must start clean")
+		t.Fatal("the first call of a session must start clean")
 	}
 }
 
@@ -235,5 +229,14 @@ func TestStartFreshGameGuard(t *testing.T) {
 	g.r.freshBusy.Store(false)
 	if err := g.r.startFreshGame(context.Background(), g.r.latest()); err != nil || g.w.count("newgame") != 1 || len(g.r.loop.cleared) != 0 {
 		t.Fatalf("one game and a forgotten cleared set: %d %v", g.w.count("newgame"), g.r.loop.cleared)
+	}
+}
+
+// A tuning file of the sandbox still names the retired knob: it must load and change nothing.
+func TestRetiredFarmResetKeyLoads(t *testing.T) {
+	nt := env.DefaultTuning()
+	want := nt.Bot
+	if err := ApplyOverrides(&nt, map[string]float64{"bot.farmReset": 1}); err != nil || nt.Bot != want {
+		t.Fatalf("retired key: %v", err)
 	}
 }

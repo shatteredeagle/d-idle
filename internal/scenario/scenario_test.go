@@ -371,10 +371,10 @@ func TestClassIndexMatchesSmokeRulesFile(t *testing.T) {
 	}
 }
 
-// pre.hero_profile: the default is played, a typo or a played hero with raw point writes is refused.
+// pre.hero_profile: the default is banked (legacy), a typo or a played hero with raw point writes is refused.
 func TestHeroProfileValidate(t *testing.T) {
 	s := baseScenario()
-	if s.HeroProfile() != HeroPlayed {
+	if s.HeroProfile() != HeroBanked {
 		t.Fatalf("default %q", s.HeroProfile())
 	}
 	s.Pre.HeroProfile = "bank"

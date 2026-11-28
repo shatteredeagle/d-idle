@@ -12,7 +12,6 @@
   [data-panel="zoneclear"] .zc-lab { font-size: var(--d-fs-1); font-weight: 600; white-space: nowrap; }
   [data-panel="zoneclear"] .zc-range { inline-size: 100%; min-block-size: 44px; accent-color: var(--d-accent); cursor: pointer; }
   [data-panel="zoneclear"] .zc-val { font-family: var(--d-font-num); font-size: var(--d-fs-1); text-align: end; }
-  [data-panel="zoneclear"] .zc-toggle { flex: none; align-items: center; }
   [data-panel="zoneclear"] .zc-acts { flex: none; display: flex; gap: var(--d-sp-2); }
   [data-panel="zoneclear"] .zc-acts .d-btn { flex: 1 1 0; align-items: center; }
   [data-panel="zoneclear"] .zc-msg { flex: none; min-block-size: 1.2em; font-size: var(--d-fs-1); color: var(--d-warn); }
