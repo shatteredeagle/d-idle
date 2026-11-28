@@ -14,11 +14,10 @@ ordinal: 524000
 card: "fix6"
 lane: next
 owns:
-  - "cmd/d2scenario"
-  - "internal/scenario"
-  - "tools/provingground"
+  - "cmd/d2scenario/"
+  - "internal/scenario/"
+  - "tools/provingground/"
   - "tools/ci/check.sh"
-  - "cmd/stepcat"
   - "docs/process/proving-ground.md"
   - "docs/process/proving-ground-status.md"
   - "docs/probes/pg-ops-handoff-2026-11-28.md"
