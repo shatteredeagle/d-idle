@@ -1,10 +1,13 @@
 ---
 id: TASK-1101
-title: 'labtriage: classify the lab night 2026-11-28 results, fix scenario-side faults, ledger verdicts'
-status: In Progress
+title: >-
+  labtriage: classify the lab night 2026-11-28 results, fix scenario-side
+  faults, ledger verdicts
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-28T05:18:00Z'
+updated_date: '2026-11-28T05:48:00Z'
 labels:
   - docs
   - research

@@ -127,13 +127,6 @@ docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-extras.jsonl.gz  gaterun  gate
 
 # BEGIN GENERATED OWNERS (tools/sharedgen/sharedgen.py from the owns: keys of open tasks; do not edit between the markers)
 .github/workflows/tester-image.yml  credit-runner  ghcrpublish
-backlog/tasks/task-1102 - navbarracks-no-route-from-the-Barracks-up-to-the-Outer-Cloister-when-the-hero-starts-in-the-Barracks.md  credit-runner  labtriage
-backlog/tasks/task-1103 - cainspin-cain.chain-seed-11-with-bot.portalRetryWaitSec-0-spins-on-run-finished-and-is-cut-by-the-wall.md  credit-runner  labtriage
-backlog/tasks/task-1104 - summonerstall-drill.act2.summoner.stepexec-ends-in-the-runner-watchdog-after-a-nav-stuck-loop.md  credit-runner  labtriage
-backlog/tasks/task-1105 - drillskills-combat-and-necro-drills-with-hero_profile-played-run-without-the-builds-skills-no-leveler-line-last_skill-Attack.md  credit-runner  labtriage
-backlog/tasks/task-1106 - bsmnight-board.sm.restart-mid-chain-and-stop-cascades-RED-on-both-classes-assertion-and-trigger-timing-against-the-log.md  credit-runner  labtriage
-backlog/tasks/task-1107 - act2night-three-Act-2-stepexec-drill-findings-Duriel-stall-shaft-road-without-a-portal-potion-not-drunk-in-the-cube-drill.md  credit-runner  labtriage
-backlog/tasks/task-1108 - townnight-town.plan-stage-4-and-5-REDs-of-the-lab-night-route-kept-the-list-Charsi-talk-not-credited-scroll-before-potions.md  credit-runner  labtriage
 backlog/tasks/task-726 - dlv-cast-verbs-input-caps-cast-unit-cast-point-cast-hold.md  live-agent  inputl3
 backlog/tasks/task-765 - town12-SME-review-of-the-supply-profile-numbers-advice-only.md  live-agent  town11
 cmd/d2bot/adapters.go  credit-runner  cainfix3
@@ -163,9 +156,12 @@ cmd/d2scenario/tap.go  live-agent  pgtaps
 cmd/d2scenario/tap_test.go  live-agent  pgtaps
 cmd/d2scenario/validate.go  credit-runner  pgearned
 data/capabilities/  live-agent  dlv-stance-pack
+data/darklaunch-cap.json  credit-runner  led1
 data/darklaunch.json  credit-runner  dlv-upkeep-state
+data/darklaunch.json  credit-runner  led1
 data/darklaunch.json  live-agent  arbmig
 data/darklaunch.json  live-agent  ticklog
+data/darklaunch/  credit-runner  led1
 data/input/caps/  live-agent  inputl3
 data/input/caps_test.go  live-agent  inputl3
 data/questboard/act1.json  credit-runner  cainfix3
@@ -225,7 +221,6 @@ docs/probes/classorder1.md  user  classorder1
 docs/probes/flipwave2.md  live-agent  flipwave2
 docs/probes/h1-baseline.md  user  h1baseline
 docs/probes/h3-verdict.md  user  h3verdict
-docs/probes/lab-night-results-2026-11-28.md  credit-runner  labtriage
 docs/probes/provingground-act1more-2026-11-20.md  credit-runner  pgpage
 docs/probes/provingground-act1next-2026-11-20.md  credit-runner  pgpage
 docs/probes/provingground-cain-2026-11-19.md  credit-runner  pgpage
@@ -238,6 +233,8 @@ docs/probes/ready-audit.md  live-agent  ready-audit
 docs/probes/test-characters.md  live-agent  fid-fixtures
 docs/probes/town-plan-stage3-2026-11-22.md  live-agent  town5
 docs/probes/tpreserve.md  live-agent  tpreserve-live
+docs/process/autoflip.md  credit-runner  led1
+docs/process/dark-launch.md  credit-runner  led1
 docs/process/pg-ledger-ops.md  credit-runner  pgledgeron
 docs/process/pg-ops-mgonejob.md  credit-runner  mgonejob
 docs/process/proving-ground-status.md  credit-runner  pgpage
@@ -461,6 +458,7 @@ tools/ci/check.sh  credit-runner  inputl5
 tools/ci/pointercount-baseline.json  credit-runner  inputl5
 tools/ci/pointercount.py  credit-runner  inputl5
 tools/ci/test_pointercount.py  credit-runner  inputl5
+tools/darklaunch/  credit-runner  led1
 tools/emu/mb_act2.py  credit-runner  decomp43
 tools/emu/mb_block.py  credit-runner  decomp43
 tools/emu/mb_col.py  credit-runner  decomp43
@@ -470,6 +468,7 @@ tools/emu/mb_gate.py  credit-runner  decomp43
 tools/emu/mb_mut.py  credit-runner  decomp43
 tools/emu/mb_mut2.py  credit-runner  decomp43
 tools/emu/zd_*  credit-runner  zealdiff
+tools/flip/  credit-runner  led1
 tools/flip/flip.py  credit-runner  fix4
 tools/flip/test_flip.py  credit-runner  fix4
 tools/friendpack/README.txt  credit-runner  cut012
@@ -488,13 +487,11 @@ tools/provingground/scenarios/board.json  live-agent  bsmdef
 tools/provingground/scenarios/cain.json  credit-runner  cainfix3
 tools/provingground/scenarios/cain.json  credit-runner  pgearned
 tools/provingground/scenarios/combatdrills.json  credit-runner  drillskills
-tools/provingground/scenarios/combatdrills.json  credit-runner  labtriage
 tools/provingground/scenarios/necro-acts.json  live-agent  epic-class-necromancer
 tools/provingground/scenarios/necro-epic.json  live-agent  epic-class-necromancer
 tools/provingground/scenarios/necro.json  credit-runner  drillskills
 tools/provingground/scenarios/stepexec-act2chunks.json  credit-runner  act2night
 tools/provingground/scenarios/tiers.json  live-agent  epic-class-necromancer
-tools/provingground/scenarios/townplan.json  credit-runner  labtriage
 tools/provingground/scenarios/townplan.json  credit-runner  townnight
 tools/provingground/scenarios/townplan.json  live-agent  town5
 tools/provingground/status_doc.sh  credit-runner  pgpage

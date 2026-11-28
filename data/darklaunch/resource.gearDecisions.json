@@ -1,0 +1,10 @@
+{
+ "name": "resource.gearDecisions",
+ "built_by": "gearplayer (ee900f837)",
+ "dark_since": "2026-11-10",
+ "why_off": "Default 0 = the player decides equipment (user decision); 1 is legacy for measured runs.",
+ "enable_criteria": "Owner go only; stays 0 by design",
+ "owner": "owner",
+ "review_by": "2026-12-09",
+ "status": "by_design"
+}
