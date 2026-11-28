@@ -24,6 +24,10 @@ owns:
   - "tools/provingground/scenarios/"
   - "docs/classes/"
   - "docs/plan/data/"
+  - "internal/watch/policysheet_test.go"
+  - "internal/watch/policypreview_test.go"
+  - "internal/watch/stance_test.go"
+  - "internal/watch/unlockrisk_test.go"
 exclusive: []
 contracts: []
 ---
