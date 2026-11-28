@@ -183,6 +183,26 @@
               "combat.kiteLifePct": 85,
               "combat.crowdAbandonN": 10
             },
+            "druid": {
+              "bot.clearRadius": 24,
+              "combat.drinkLifePct": 65,
+              "combat.chickenPct": 35,
+              "combat.championEarlyPct": 20,
+              "combat.townPotionMin": 3,
+              "combat.maxApproaches": 8,
+              "combat.kiteLifePct": 85,
+              "combat.crowdAbandonN": 8
+            },
+            "barbarian": {
+              "bot.clearRadius": 20,
+              "combat.drinkLifePct": 65,
+              "combat.chickenPct": 35,
+              "combat.championEarlyPct": 20,
+              "combat.townPotionMin": 3,
+              "combat.maxApproaches": 8,
+              "combat.kiteLifePct": 75,
+              "combat.crowdAbandonN": 12
+            },
             "amazon": {
               "bot.clearRadius": 24,
               "combat.drinkLifePct": 65,
@@ -243,6 +263,26 @@
               "combat.townPotionMin": 1,
               "combat.maxApproaches": 16,
               "combat.kiteLifePct": 55,
+              "combat.crowdAbandonN": 20
+            },
+            "druid": {
+              "bot.clearRadius": 36,
+              "combat.drinkLifePct": 50,
+              "combat.chickenPct": 20,
+              "combat.championEarlyPct": 5,
+              "combat.townPotionMin": 1,
+              "combat.maxApproaches": 16,
+              "combat.kiteLifePct": 60,
+              "combat.crowdAbandonN": 16
+            },
+            "barbarian": {
+              "bot.clearRadius": 40,
+              "combat.drinkLifePct": 50,
+              "combat.chickenPct": 22,
+              "combat.championEarlyPct": 8,
+              "combat.townPotionMin": 1,
+              "combat.maxApproaches": 18,
+              "combat.kiteLifePct": 60,
               "combat.crowdAbandonN": 20
             },
             "amazon": {

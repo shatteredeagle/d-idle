@@ -180,8 +180,8 @@ func TestPreviewNoPreviewRowsAndErrors(t *testing.T) {
 		t.Errorf("missing baseline: %v", err)
 	}
 	// an unknown class is an error naming it, no silent fallback
-	_, err = sp.Preview(PreviewInput{Row: srow, Class: "barbarian", Current: "default", New: "cautious", Baseline: pvBaseline, Events: fights(1, 2, 3), Now: 1000, Window: 3600})
-	if err == nil || !strings.Contains(err.Error(), "barbarian") {
+	_, err = sp.Preview(PreviewInput{Row: srow, Class: "mystic", Current: "default", New: "cautious", Baseline: pvBaseline, Events: fights(1, 2, 3), Now: 1000, Window: 3600})
+	if err == nil || !strings.Contains(err.Error(), "mystic") {
 		t.Errorf("unknown class: %v", err)
 	}
 	for _, bad := range []string{`{"version":1,"minEvents":3,"rows":{"x":{"kind":"zzz"}}}`, `{"version":1,"minEvents":3,"rows":{"x":{"kind":"none"}}}`, `{"version":2,"minEvents":3,"rows":{}}`} {

@@ -30,7 +30,7 @@
   "barbarian": {
    "active": false,
    "build": "barbarian_melee_normal30",
-   "tag": "U: entries are today's melee rows of progression-normal.json (no Barbarian survival model); only the XP-table changes are applied (Tamoe and the Catacombs farmed, Burial Grounds, Crypt and Mausoleum dropped as farms).",
+   "tag": "S: today's melee rows of progression-normal.json, judged against the ready table of docs/sme/class-barbarian.md section 10 (Den and Blood Raven at clvl 5-7, Andariel at 15-17 with life 260): the Den follows Blood Moor (exit 4), Blood Raven follows Stony Field (entry 7), the Catacombs run to 18. No Barbarian survival model; only the XP-table changes are applied (Tamoe and the Catacombs farmed, Burial Grounds, Crypt and Mausoleum dropped as farms). U live, review-only (active false).",
    "slices": [
     {"id": "blood_moor", "kind": "farm", "areas": [2], "entry": 1, "exit": 4, "way_in": "walk", "why": "today's row"},
     {"id": "den", "kind": "quest", "chapter": "den_of_evil", "why": "once"},
@@ -73,7 +73,7 @@
   "druid": {
    "active": false,
    "build": "druid_fire_normal30",
-   "tag": "U: copied from the sorceress row (gap list of SME review 2026-11-27, confidence low): nobody has judged this class's entries, exits and life gates; the build and the class name are the only changes.",
+   "tag": "S: caster rows judged against the ready table of docs/sme/class-druid.md section 10 (Den and Blood Raven at clvl 6-8, Andariel at 16-18 with life 190 and a merc): the Den follows Cold Plains (entry 5), Blood Raven follows the woods (entry 9), the Catacombs run to 18. The numbers equal the sorceress rows because the caster floors of progression-normal.json are the same for both; there is no Druid survival model. U live, review-only (active false).",
    "slices": [
     {"id": "blood_moor", "kind": "farm", "areas": [2], "entry": 1, "exit": 4, "way_in": "walk", "why": "today's row"},
     {"id": "cold_plains", "kind": "farm", "areas": [3], "entry": 5, "exit": 8, "kit_clvl": 4, "way_in": "waypoint", "via_wp": 3, "why": "today's caster row"},

@@ -62,7 +62,7 @@ func TestPolicyTableErrors(t *testing.T) {
 		"unknown point":  {row(`"options":[{"id":"d","label":"D"},{"id":"x","label":"X","rules":[{"point":"t9.nope","answer":"a"}]}]`), "t9.nope"},
 		"unknown answer": {row(`"options":[{"id":"d","label":"D"},{"id":"x","label":"X","rules":[{"point":"t1.repair","answer":"melt"}]}]`), `"melt"`},
 		"unknown field":  {row(`"options":[{"id":"d","label":"D"},{"id":"x","label":"X","rules":[{"point":"t1.repair","when":{"zzz":"1"},"answer":"skip"}]}]`), `"zzz"`},
-		"unknown class":  {row(`"classes":["druid"],"options":[{"id":"d","label":"D"}]`), `"druid"`},
+		"unknown class":  {row(`"classes":["mystic"],"options":[{"id":"d","label":"D"}]`), `"mystic"`},
 		"no default":     {row(`"options":[{"id":"x","label":"X"}]`), `no option "d"`},
 		"default acts":   {row(`"options":[{"id":"d","label":"D","rules":[{"point":"t1.repair","answer":"skip"}]}]`), "change nothing"},
 		"no risk":        {row(`"options":[{"id":"d","label":"D"},{"id":"x","label":"X","suboptimal":true}]`), "risk line"},
@@ -91,7 +91,7 @@ func TestRowsForClass(t *testing.T) {
 			t.Fatalf("%s: %v %d", c, err, len(rows))
 		}
 	}
-	if _, err := tbl.RowsFor(cat, "barbarian"); err == nil || !strings.Contains(err.Error(), `"barbarian"`) {
+	if _, err := tbl.RowsFor(cat, "mystic"); err == nil || !strings.Contains(err.Error(), `"mystic"`) {
 		t.Fatalf("unknown class: %v", err)
 	}
 	if _, err := tbl.Row("nope"); err == nil || !strings.Contains(err.Error(), `"nope"`) {

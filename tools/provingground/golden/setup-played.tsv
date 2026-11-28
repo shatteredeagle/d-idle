@@ -2,6 +2,7 @@
 # scenario	class	level	stat_pts	skill_pts	attack	hand	spend_cmds	setup_sha
 amazon.soak-3h-kit	Amazon	14	0	0	Exploding Arrow	right	18	53f83c7b0971
 assassin.soak-3h-kit	Assassin	14	0	0	Wake of Fire Sentry	right	17	3a2963ad14d0
+barbarian.soak-3h-kit	Barbarian	14	0	0	Double Swing	left	17	d492ef02d6a3
 combat.army-holds	Necromancer	24	0	0	Corpse Explosion	right	27	786985e8dcfd
 combat.army-holds.control	Necromancer	24	0	0	Corpse Explosion	right	27	ced11fadcf98
 combat.corpse-explodes	Necromancer	24	0	0	Corpse Explosion	right	28	f39bacd3bfae
@@ -25,6 +26,7 @@ drill.act2.radament.stepexec	Paladin	24	0	0	Blessed Hammer	left	27	aafa71a48673
 drill.act2.radament.stepexec	Sorceress	24	0	0	Charged Bolt	left	25	961583f338e4
 drill.act2.shaft.stepexec	Paladin	30	0	0	Blessed Hammer	left	33	5a75000d1ff5
 drill.act2.shaft.stepexec	Sorceress	30	0	0	Blizzard	left	32	623e31cbe3c1
+druid.soak-3h-kit	Druid	14	0	0	Eruption	right	16	a508be1ab407
 necro.act1-andariel	Necromancer	26	0	0	Attack	left	29	491e33a2791d
 necro.act1-stage1	Necromancer	16	0	0	Attack	left	19	473234c3bf4c
 necro.act1-stage1-nomp	Necromancer	16	0	0	Attack	left	19	aefc1591849e
